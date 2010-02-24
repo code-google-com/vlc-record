@@ -231,6 +231,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>CPlayer</name>
+    <message>
+        <location filename="cplayer.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="200"/>
+        <source>LibVLC Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="201"/>
+        <source>LibVLC reports following error:
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CSettingsDlg</name>
     <message>
         <location filename="csettingsdlg.ui" line="426"/>
