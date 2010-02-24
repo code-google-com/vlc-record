@@ -10,6 +10,8 @@ CONFIG += debug_and_release \
 CONFIG(debug, debug|release):CONFIG += shared
 else:CONFIG += static
 TEMPLATE = app
+INCLUDEPATH += . \
+    include
 SOURCES += main.cpp \
     recorder.cpp \
     cinifile.cpp \
@@ -23,7 +25,8 @@ SOURCES += main.cpp \
     cchanlogo.cpp \
     ctimerrec.cpp \
     cvlcctrl.cpp \
-    ctranslit.cpp
+    ctranslit.cpp \
+    cplayer.cpp
 HEADERS += recorder.h \
     chanlistwidgetitem.h \
     cinifile.h \
@@ -42,15 +45,35 @@ HEADERS += recorder.h \
     ctimerrec.h \
     cvlcctrl.h \
     customization.h \
-    ctranslit.h
+    ctranslit.h \
+    include/vlc/deprecated.h \
+    include/vlc/libvlc.h \
+    include/vlc/libvlc_events.h \
+    include/vlc/libvlc_media.h \
+    include/vlc/libvlc_media_discoverer.h \
+    include/vlc/libvlc_media_library.h \
+    include/vlc/libvlc_media_list.h \
+    include/vlc/libvlc_media_list_player.h \
+    include/vlc/libvlc_media_list_view.h \
+    include/vlc/libvlc_media_player.h \
+    include/vlc/libvlc_structures.h \
+    include/vlc/libvlc_vlm.h \
+    include/vlc/mediacontrol.h \
+    include/vlc/mediacontrol_structures.h \
+    include/vlc/vlc.h \
+    cplayer.h
 FORMS += recorder.ui \
     csettingsdlg.ui \
     caboutdialog.ui \
-    ctimerrec.ui
+    ctimerrec.ui \
+    cplayer.ui
+
 RESOURCES += vlc-record.qrc
 RC_FILE = vlc-record.rc
 TRANSLATIONS = lang_de.ts \
     lang_ru.ts
+LIBS += -Llib \
+    -lvlc
 
 # for static build ...
 static {
