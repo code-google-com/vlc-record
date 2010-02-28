@@ -34,6 +34,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 
    // init exception structure ...
    libvlc_exception_init(&vlcExcpt);
+
+   // connect volume slider with volume change function ...
+   connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(changeVolume(int)));
 }
 
 /* -----------------------------------------------------------------\
@@ -191,12 +194,18 @@ void CPlayer::initPlayer(QStringList &slArgs)
       raise (&vlcExcpt);
 
       // Create a media player playing environement
+      libvlc_exception_init(&vlcExcpt);
       pMediaPlayer = libvlc_media_player_new (pVlcInstance, &vlcExcpt);
       raise (&vlcExcpt);
 
       // add player to window ...
+      libvlc_exception_init(&vlcExcpt);
       connect_to_wnd(pMediaPlayer, ui->fVideo->winId(), &vlcExcpt);
+      raise(&vlcExcpt);
 
+      // get volume ...
+      libvlc_exception_init(&vlcExcpt);
+      ui->volSlider->setSliderPosition(libvlc_audio_get_volume (pVlcInstance, &vlcExcpt));
       raise(&vlcExcpt);
 
       freeArgs(args);
@@ -241,6 +250,26 @@ void CPlayer::setMedia(const QString &sMrl)
    // add media ...
    libvlc_media_player_set_media (pMediaPlayer, pMedia, &vlcExcpt);
    raise(&vlcExcpt);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: changeVolume
+|  Begin: 28.02.2010 / 19:00:51
+|  Author: Jo2003
+|  Description: set volume
+|
+|  Parameters: new volume
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::changeVolume(int newVolume)
+{
+   if (pVlcInstance)
+   {
+      libvlc_exception_clear(&vlcExcpt);
+      libvlc_audio_set_volume (pVlcInstance, newVolume, &vlcExcpt);
+      raise(&vlcExcpt);
+   }
 }
 
 /* -----------------------------------------------------------------\

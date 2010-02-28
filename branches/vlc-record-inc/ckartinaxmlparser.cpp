@@ -318,7 +318,7 @@ QString CKartinaXMLParser::ParseArchivURL()
 {
    QString              url;
    QXmlStreamAttributes attrs;
-   QRegExp              rx("^.*//([^ ]*).*$");
+   QRegExp              rx("^([^ ]*).*$");
 
    xml.clear();
    xml.addData(stream);
@@ -357,7 +357,7 @@ QString CKartinaXMLParser::ParseArchivURL()
 
    if (rx.indexIn(url) > -1)
    {
-      url = QString("rtsp://%1").arg(rx.cap(1));
+      url = rx.cap(1);
    }
    else
    {
@@ -437,8 +437,49 @@ int CKartinaXMLParser::FixTime (uint &uiTime)
    return 0;
 }
 
+/* -----------------------------------------------------------------\
+|  Method: GetSelectOptions
+|  Begin: 27.02.2010 / 18:42:54
+|  Author: Jo2003
+|  Description: parse srv form and get server list and active server
+|
+|  Parameters: html src, srv vector, act server
+|
+|  Returns: 0 ==> ok
+|          -1 ==> any error
+\----------------------------------------------------------------- */
+int CKartinaXMLParser::GetSelectOptions(const QString &src,
+                                        QVector<int> &lOpts,
+                                        int &iActOpt)
+{
+   QRegExp rx("<option value=\"([0-9]+)\"(.*)>");
+   int     iIdx = 0;
+   int     iRV  = -1;
+
+   while (iIdx > -1)
+   {
+      iIdx = src.indexOf(rx, iIdx);
+
+      if (iIdx > -1)
+      {
+         lOpts.push_back(rx.cap(1).toInt());
+
+         if (rx.cap(2).contains("selected"))
+         {
+            iActOpt = rx.cap(1).toInt();
+            iRV     = 0;
+         }
+
+         iIdx ++;
+      }
+   }
+
+   return iRV;
+}
+
 /*=============================================================================\
 |                                    History:
 | ---------------------------------------------------------------------------
 | 05.Jan.2010 -
 \=============================================================================*/
+
