@@ -34,6 +34,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QWindowStateChangeEvent>
+#include <QMap>
 
 #include "csettingsdlg.h"
 #include "ckartinaclnt.h"
@@ -45,6 +46,8 @@
 #include "ctimerrec.h"
 #include "cvlcctrl.h"
 #include "ctranslit.h"
+#include "cfavaction.h"
+#include "cplayer.h"
 
 // for logging ...
 extern CLogFile VlcLog;
@@ -78,7 +81,7 @@ public:
     Recorder(QTranslator *trans = 0, QWidget *parent = 0);
     ~Recorder();
 
- public slots:
+public slots:
     virtual void accept();
     virtual void show();
 
@@ -105,6 +108,12 @@ private:
     CVlcCtrl                       vlcCtrl;
     CTranslit                      translit;
     int                            iFontSzChg;
+    QList<int>                     lFavourites;
+    QToolButton                   *pFavBtn[MAX_NO_FAVOURITES];
+    CFavAction                    *pFavAct[MAX_NO_FAVOURITES];
+    QMap<int, QString>             chanMap;
+    QMenu                          favContext;
+    CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
 
 protected:
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
@@ -118,6 +127,9 @@ protected:
     void CreateSystray ();
     bool WantToClose ();
     bool WantToQuitVlc ();
+    void HandleFavourites ();
+    void FillChanMap (const QVector<cparser::SChan> &chanlist);
+    void CleanContextMenu ();
 
     virtual void showEvent (QShowEvent * event);
     virtual void hideEvent (QHideEvent * event);
@@ -146,6 +158,7 @@ private slots:
     void slotEPG(QString str);
     void slotStreamURL (QString str);
     void slotArchivURL (QString str);
+    void slotServerForm (QString str);
     void slotCookie ();
     void slotTimeShift ();
     void slotEpgAnchor (const QUrl & link);
@@ -160,6 +173,10 @@ private slots:
     void slotShutdown ();
     void slotTimerStatusMsg (const QString &sMsg, const QString &sColor);
     void slotSystrayActivated (QSystemTrayIcon::ActivationReason reason);
+    void slotChanListContext (const QPoint &pt);
+    void slotChgFavourites (QAction *pAct);
+    void slotHandleFavAction (QAction *pAct);
+    void slotFavBtnContext (const QPoint &pt);
 
 signals:
     void sigShow ();

@@ -266,6 +266,37 @@ void CSettingsDlg::on_pushDelLogos_clicked()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: SetStreamServerCbx
+|  Begin: 28.02.2010 / 16:55:39
+|  Author: Jo2003
+|  Description: fill / mark combobox for stream server
+|
+|  Parameters: ref. to server list, act server
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::SetStreamServerCbx (const QVector<int> &lSrvList, int iActSrv)
+{
+   int iActIdx = 0;
+
+   m_ui->cbxStreamServer->clear();
+
+   // add all servers ...
+   for (int i = 0; i < lSrvList.count(); i++)
+   {
+      m_ui->cbxStreamServer->addItem(QString::number(i + 1), QVariant(lSrvList[i]));
+
+      if (lSrvList[i] == iActSrv)
+      {
+         iActIdx = i;
+      }
+   }
+
+   // mark active server ...
+   m_ui->cbxStreamServer->setCurrentIndex(iActIdx);
+}
+
+/* -----------------------------------------------------------------\
 |  Method: on_btnSaveStreamServer_clicked
 |  Begin: 21.01.2010 / 11:22:39
 |  Author: Jo2003
@@ -278,28 +309,9 @@ void CSettingsDlg::on_pushDelLogos_clicked()
 void CSettingsDlg::on_btnSaveStreamServer_clicked()
 {
    // which server was choosed ... ?
-   // available servers: 1 and 3!
-   // index 0 --> server 1
-   // index 1 --> server 3
    int iSrv = m_ui->cbxStreamServer->currentIndex();
 
-   if (iSrv == 0)
-   {
-      iSrv = 1;
-   }
-   else if (iSrv == 1)
-   {
-      iSrv = 3;
-   }
-   else
-   {
-      iSrv = -1;
-   }
-
-   if (iSrv != -1)
-   {
-      emit sigSetServer(iSrv);
-   }
+   emit sigSetServer(m_ui->cbxStreamServer->itemData(iSrv).toInt());
 }
 
 /* -----------------------------------------------------------------\
@@ -371,7 +383,7 @@ QRect CSettingsDlg::GetWindowRect (bool *ok)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::SaveSplitterSizes (const QList<int> &sz)
+void CSettingsDlg::SaveSplitterSizes (const QString &name, const QList<int> &sz)
 {
    QString     sSz;
    QTextStream str(&sSz);
@@ -381,7 +393,30 @@ void CSettingsDlg::SaveSplitterSizes (const QList<int> &sz)
       str << sz[i] << ";";
    }
 
-   IniFile.AddData ("SplitterSz", sSz);
+   IniFile.AddData (name, sSz);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: SaveFavourites
+|  Begin: 25.02.2010 / 14:22:39
+|  Author: Jo2003
+|  Description: save favourites
+|
+|  Parameters: list of favourites
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::SaveFavourites(const QList<int> &favList)
+{
+   QString     sFav;
+   QTextStream str(&sFav);
+
+   for (int i = 0; i < favList.size(); i++)
+   {
+      str << favList[i] << ";";
+   }
+
+   IniFile.AddData ("Favorites", sFav);
 }
 
 /* -----------------------------------------------------------------\
@@ -394,9 +429,9 @@ void CSettingsDlg::SaveSplitterSizes (const QList<int> &sz)
 |
 |  Returns:  size of chan list group box
 \----------------------------------------------------------------- */
-QList<int> CSettingsDlg::GetSplitterSizes(bool *ok)
+QList<int> CSettingsDlg::GetSplitterSizes(const QString &name, bool *ok)
 {
-   QString    sSz = IniFile.GetStringData("SplitterSz");
+   QString    sSz = IniFile.GetStringData(name);
    QList<int> sz;
 
    if (ok)
@@ -421,6 +456,45 @@ QList<int> CSettingsDlg::GetSplitterSizes(bool *ok)
    }
 
    return sz;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: GetFavourites
+|  Begin: 25.02.2010 / 14:22:39
+|  Author: Jo2003
+|  Description: get favourites
+|
+|  Parameters: pointer to ok flag
+|
+|  Returns:  list of favourites
+\----------------------------------------------------------------- */
+QList<int> CSettingsDlg::GetFavourites(bool *ok)
+{
+   QString    sFav = IniFile.GetStringData("Favorites");
+   QList<int> lFav;
+
+   if (ok)
+   {
+      *ok = false;
+   }
+
+   if (sFav.length() > 0)
+   {
+      for (int i = 0; i < sFav.count(';'); i++)
+      {
+         lFav << sFav.section(';', i, i).toInt();
+      }
+
+      if (ok)
+      {
+         if (lFav.size() > 0)
+         {
+            *ok = true;
+         }
+      }
+   }
+
+   return lFav;
 }
 
 /* -----------------------------------------------------------------\
@@ -643,4 +717,6 @@ QString CSettingsDlg::GetShutdownCmd()
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
+
+
 

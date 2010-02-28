@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2009-12-27T18:33:08
 # -------------------------------------------------
-TARGET = vlc-record
+TARGET = vlc-record-inc
 QT += network
 CONFIG += debug_and_release \
     windows
@@ -61,7 +61,8 @@ HEADERS += recorder.h \
     include/vlc/mediacontrol.h \
     include/vlc/mediacontrol_structures.h \
     include/vlc/vlc.h \
-    cplayer.h
+    cplayer.h \
+    cfavaction.h
 FORMS += recorder.ui \
     csettingsdlg.ui \
     caboutdialog.ui \
