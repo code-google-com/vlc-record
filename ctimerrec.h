@@ -28,6 +28,7 @@
 #include "cwaittrigger.h"
 #include "csettingsdlg.h"
 #include "cvlcctrl.h"
+#include "cplayer.h"
 
 //===================================================================
 // namespace
@@ -89,6 +90,7 @@ public:
    void SetKartinaTrigger (CWaitTrigger *pTrig);
    void SetSettings (CSettingsDlg *pSet);
    void SetVlcCtrl (CVlcCtrl *pCtrl);
+   void SetPlayer (CPlayer *pPlay);
    int  SaveRecordList ();
    int  ReadRecordList ();
    int  AddRow (const rec::SRecEntry &entry);
@@ -119,6 +121,7 @@ private:
    CWaitTrigger      *pTrigger;
    CSettingsDlg      *pSettings;
    CVlcCtrl          *pVlcCtrl;
+   CPlayer           *pPlayer;
 
 signals:
    void sigRecDone ();
