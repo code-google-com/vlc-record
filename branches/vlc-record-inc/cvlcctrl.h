@@ -72,12 +72,12 @@ public:
 
 private:
    QTimer     tRunTime;
-   QString    sHttpPlay;
-   QString    sRtspPlay;
-   QString    sHttpRec;
-   QString    sRtspRec;
-   QString    sHttpSilentRec;
-   QString    sRtspSilentRec;
+   QString    sLivePlay;
+   QString    sArchPlay;
+   QString    sLiveRec;
+   QString    sArchRec;
+   QString    sLiveSilentRec;
+   QString    sArchSilentRec;
    bool       bForcedTranslit;
    bool       bTranslit;
    CTranslit *pTranslit;

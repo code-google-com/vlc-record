@@ -96,7 +96,17 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    timeRec.SetSettings(&Settings);
    timeRec.SetVlcCtrl(&vlcCtrl);
 
-
+   // do we use libVLC ?
+   if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
+   {
+      iUseLibVLC = 1;
+      timeRec.SetPlayer(ui->player);
+   }
+   else
+   {
+      iUseLibVLC = 0;
+      timeRec.SetPlayer(NULL);
+   }
 
    // connect signals and slots ...
    connect (&KartinaTv,  SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
@@ -728,10 +738,12 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 \----------------------------------------------------------------- */
 int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv)
 {
-   int       iRV      = -1;
-   QDateTime now      = QDateTime::currentDateTime();
-   QString   sExt     = "ts", fileName;
-   QString   sCmdLine;
+   int         iRV      = -1;
+   Q_PID       vlcpid   = 0;
+   QDateTime   now      = QDateTime::currentDateTime();
+   QString     sExt     = "ts", fileName;
+   QString     sCmdLine;
+   QStringList lArgs;
 
    // should we ask for file name ... ?
    if (Settings.AskForRecFile())
@@ -773,8 +785,6 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
 
    if (fileName != "")
    {
-      Q_PID vlcpid = 0;
-
       if (bArchiv)
       {
          // archiv using RTSP ...
@@ -794,18 +804,50 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
 
       if (sCmdLine != "")
       {
-         if (Settings.DetachPlayer())
+         if (iUseLibVLC)
          {
-            mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+            // ---------------------
+            // use libvlc ...
+            // ---------------------
+            lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
 
-            if (QProcess::startDetached(sCmdLine))
+            mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
+
+            // init player ...
+            iRV = ui->player->initPlayer(lArgs);
+
+            if (!iRV)
+            {
+               // load media ...
+               iRV = ui->player->setMedia(sURL);
+            }
+
+            if (!iRV)
+            {
+               // start play ...
+               iRV = ui->player->play();
+            }
+
+            if (!iRV)
             {
                vlcpid = (Q_PID)99; // any value != 0 ...
             }
          }
          else
          {
-            vlcpid = vlcCtrl.start(sCmdLine);
+            if (Settings.DetachPlayer())
+            {
+               mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+
+               if (QProcess::startDetached(sCmdLine))
+               {
+                  vlcpid = (Q_PID)99; // any value != 0 ...
+               }
+            }
+            else
+            {
+               vlcpid = vlcCtrl.start(sCmdLine);
+            }
          }
       }
 
@@ -837,21 +879,10 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
 \----------------------------------------------------------------- */
 int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
 {
-   QStringList args;
-   args << "-I" << "dummy" << "--ignore-config"
-         << "--http-caching=3000"
-         << "--no-http-reconnect";
-
-   ui->player->initPlayer(args);
-
-   ui->player->setMedia(sURL);
-
-   ui->player->play();
-
-   /*
-   int     iRV      = 0;
-   Q_PID   vlcpid   = 0;
-   QString sCmdLine;
+   int         iRV      = 0;
+   Q_PID       vlcpid   = 0;
+   QString     sCmdLine;
+   QStringList lArgs;
 
    if (bArchiv)
    {
@@ -870,18 +901,51 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
 
    if (sCmdLine != "")
    {
-      if (Settings.DetachPlayer())
+      if (iUseLibVLC)
       {
-         mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+         // ---------------------
+         // use libvlc ...
+         // ---------------------
+         lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
 
-         if(QProcess::startDetached(sCmdLine))
+         mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
+
+         // init player ...
+         iRV = ui->player->initPlayer(lArgs);
+
+         if (!iRV)
+         {
+            // load media ...
+            iRV = ui->player->setMedia(sURL);
+         }
+
+         if (!iRV)
+         {
+            // start play ...
+            iRV = ui->player->play();
+         }
+
+         if (!iRV)
          {
             vlcpid = (Q_PID)99; // any value != 0 ...
          }
+
       }
       else
       {
-         vlcpid = vlcCtrl.start(sCmdLine);
+         if (Settings.DetachPlayer())
+         {
+            mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+
+            if(QProcess::startDetached(sCmdLine))
+            {
+               vlcpid = (Q_PID)99; // any value != 0 ...
+            }
+         }
+         else
+         {
+            vlcpid = vlcCtrl.start(sCmdLine);
+         }
       }
    }
 
@@ -896,9 +960,6 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
       mInfo(tr("Started VLC with pid #%1!").arg((uint)vlcpid));
    }
    return iRV;
-   */
-
-   return 0;
 }
 
 /* -----------------------------------------------------------------\
@@ -937,6 +998,18 @@ void Recorder::on_pushSettings_clicked()
 
       // set language as read ...
       pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()), QApplication::applicationDirPath());
+
+      // do we use libVLC ?
+      if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
+      {
+         iUseLibVLC = 1;
+         timeRec.SetPlayer(ui->player);
+      }
+      else
+      {
+         iUseLibVLC = 0;
+         timeRec.SetPlayer(NULL);
+      }
 
       // give vlcCtrl needed infos ...
       vlcCtrl.LoadPlayerModule(Settings.GetPlayerModule());

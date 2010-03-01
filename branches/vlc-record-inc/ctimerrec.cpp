@@ -36,6 +36,7 @@ CTimerRec::CTimerRec(QWidget *parent) : QDialog(parent), r_ui(new Ui::CTimerRec)
    pXmlParser = NULL;
    pSettings  = NULL;
    itActJob   = NULL;
+   pPlayer    = NULL;
    InitTab();
    connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
 }
@@ -193,6 +194,21 @@ void CTimerRec::SetSettings(CSettingsDlg *pSet)
 void CTimerRec::SetVlcCtrl(CVlcCtrl *pCtrl)
 {
    pVlcCtrl = pCtrl;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: SetPlayer
+|  Begin: 01.03.2010 / 15:05:00
+|  Author: Jo2003
+|  Description: set libvlc player
+|
+|  Parameters: pointer to libvlc player class
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CTimerRec::SetPlayer(CPlayer *pPlay)
+{
+   pPlayer = pPlay;
 }
 
 /* -----------------------------------------------------------------\
@@ -921,10 +937,12 @@ void CTimerRec::slotTimerStreamUrl(QString str)
 {
    pXmlParser->SetByteArray(str.toUtf8());
 
-   QString sCmdLine;
-   QString sUrl = pXmlParser->ParseURL();
-
-   QString sDst = QString("%1/%2").arg(pSettings->GetTargetDir()).arg((*itActJob).sName);
+   QString     sCmdLine;
+   int         iRV;
+   QStringList lArgs;
+   Q_PID       vlcpid = 0;
+   QString     sUrl   = pXmlParser->ParseURL();
+   QString     sDst   = QString("%1/%2").arg(pSettings->GetTargetDir()).arg((*itActJob).sName);
 
    if (r_ui->checkRecMini->isChecked())
    {
@@ -941,7 +959,36 @@ void CTimerRec::slotTimerStreamUrl(QString str)
                                         pSettings->GetBufferTime(), sDst, "ts");
    }
 
-   Q_PID vlcpid = pVlcCtrl->start(sCmdLine);
+   if (pPlayer)
+   {
+      // ---------------------
+      // use libvlc ...
+      // ---------------------
+      lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
+
+      mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
+
+      iRV = pPlayer->initPlayer(lArgs);
+
+      if (!iRV)
+      {
+         iRV = pPlayer->setMedia(sUrl);
+      }
+
+      if (!iRV)
+      {
+         iRV = pPlayer->play();
+      }
+
+      if(!iRV)
+      {
+         vlcpid = (Q_PID)99;
+      }
+   }
+   else
+   {
+      vlcpid = pVlcCtrl->start(sCmdLine);
+   }
 
    // successfully started ?
    if (!vlcpid)

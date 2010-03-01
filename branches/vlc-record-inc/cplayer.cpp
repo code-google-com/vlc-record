@@ -12,6 +12,14 @@
 #include "cplayer.h"
 #include "ui_cplayer.h"
 
+// -----------------------------------------------------------------------------
+// macro definition for state changes ...
+// -----------------------------------------------------------------------------
+#define mCaseStateChg(__state__) case __state__: emit pPlayer->sendStateMsg(#__state__); break
+
+// log file functions ...
+extern CLogFile VlcLog;
+
 /* -----------------------------------------------------------------\
 |  Method: CPlayer / constructor
 |  Begin: 24.02.2010 / 12:17:51
@@ -31,12 +39,23 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pMedia       = NULL;
    pMediaPlayer = NULL;
    pVlcInstance = NULL;
+   pEMMedia     = NULL;
+   pEMPlay      = NULL;
+   pLibVlcLog   = NULL;
 
    // init exception structure ...
    libvlc_exception_init(&vlcExcpt);
 
    // connect volume slider with volume change function ...
-   connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(changeVolume(int)));
+   connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
+
+   // connect state change signal with state label in dialog ...
+   connect(this, SIGNAL(sigStateChg(QString)), ui->labState, SLOT(setText(QString)));
+
+   // do periodical logging ...
+   connect(&poller, SIGNAL(timeout()), this, SLOT(slotDoLog()));
+
+   poller.start(1000);
 }
 
 /* -----------------------------------------------------------------\
@@ -67,6 +86,8 @@ CPlayer::~CPlayer()
 \----------------------------------------------------------------- */
 void CPlayer::releasePlayer()
 {
+   mutex.lock();
+
    // release player ...
    if (pMediaPlayer)
    {
@@ -82,6 +103,13 @@ void CPlayer::releasePlayer()
       pMedia       = NULL;
    }
 
+   // close log if opened ...
+   if (pLibVlcLog)
+   {
+      libvlc_log_close (pLibVlcLog, &vlcExcpt);
+      pLibVlcLog = NULL;
+   }
+
    // release vlc instance ...
    if (pVlcInstance)
    {
@@ -90,6 +118,8 @@ void CPlayer::releasePlayer()
    }
 
    bIsPlaying = false;
+
+   mutex.unlock();
 }
 
 /* -----------------------------------------------------------------\
@@ -156,27 +186,22 @@ void CPlayer::freeArgs (Ui::vlcArgs &args)
 |
 |  Parameters: list of arguments
 |
-|  Returns: --
+|  Returns: 0 --> ok
+|          -1 --> any error
 \----------------------------------------------------------------- */
-void CPlayer::initPlayer(QStringList &slArgs)
+int CPlayer::initPlayer(QStringList &slArgs)
 {
+   int iRV = -1;
    Ui::vlcArgs args;
 
    releasePlayer();
 
-   // reset exception stuff ...
-   libvlc_exception_init(&vlcExcpt);
-
    if (slArgs.size() == 0)
    {
       // no arguments given ... create standard arguments ...
-      slArgs << "-I";
-      slArgs << "dummy";
-      slArgs << "--ignore-config";
-#ifndef QT_NO_DEBUG
-      slArgs << "--extraintf=logger";
-      slArgs << "--verbose=2";
-#endif
+      slArgs << "-I"
+             << "dummy"
+             << "--ignore-config";
    }
 
    // add plugin path ...
@@ -190,26 +215,66 @@ void CPlayer::initPlayer(QStringList &slArgs)
    if (args.argArray)
    {
       //create a new libvlc instance
+      libvlc_exception_clear(&vlcExcpt);
       pVlcInstance = libvlc_new(args.argc, args.argArray, &vlcExcpt);
-      raise (&vlcExcpt);
+      iRV = raise (&vlcExcpt);
 
-      // Create a media player playing environement
-      libvlc_exception_init(&vlcExcpt);
-      pMediaPlayer = libvlc_media_player_new (pVlcInstance, &vlcExcpt);
-      raise (&vlcExcpt);
 
-      // add player to window ...
-      libvlc_exception_init(&vlcExcpt);
-      connect_to_wnd(pMediaPlayer, ui->fVideo->winId(), &vlcExcpt);
-      raise(&vlcExcpt);
+      if (!iRV)
+      {
+         // open logger ...
+         pLibVlcLog = libvlc_log_open(pVlcInstance, &vlcExcpt);
+         iRV = raise (&vlcExcpt);
+      }
 
-      // get volume ...
-      libvlc_exception_init(&vlcExcpt);
-      ui->volSlider->setSliderPosition(libvlc_audio_get_volume (pVlcInstance, &vlcExcpt));
-      raise(&vlcExcpt);
+      if (!iRV)
+      {
+         // set verbose mode ...
+         libvlc_set_log_verbosity (pVlcInstance, 1, &vlcExcpt);
+         iRV = raise (&vlcExcpt);
+      }
+
+      if (!iRV)
+      {
+         // Create a media player playing environement
+         pMediaPlayer = libvlc_media_player_new (pVlcInstance, &vlcExcpt);
+         iRV = raise (&vlcExcpt);
+      }
+
+      if (!iRV)
+      {
+         // add player to window ...
+         connect_to_wnd(pMediaPlayer, ui->fVideo->winId(), &vlcExcpt);
+         iRV = raise(&vlcExcpt);
+      }
+
+      if (!iRV)
+      {
+         // get volume ...
+         ui->volSlider->setSliderPosition(libvlc_audio_get_volume (pVlcInstance, &vlcExcpt));
+         iRV = raise(&vlcExcpt);
+      }
+
+      if (!iRV)
+      {
+         // get event manager ...
+         pEMPlay = libvlc_media_player_event_manager(pMediaPlayer, &vlcExcpt);
+         iRV = raise(&vlcExcpt);
+      }
+
+      if (!iRV)
+      {
+         /*
+         libvlc_event_attach(pEventManager, libvlc_MediaStateChanged, CPlayer::eventCallback,
+                             (void *)this, &vlcExcpt);
+         iRV = raise(&vlcExcpt);
+         */
+      }
 
       freeArgs(args);
    }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -220,11 +285,15 @@ void CPlayer::initPlayer(QStringList &slArgs)
 |
 |  Parameters: media MRL
 |
-|  Returns: --
+|  Returns: 0 --> ok
+|          -1 --> any error
 \----------------------------------------------------------------- */
-void CPlayer::setMedia(const QString &sMrl)
+int CPlayer::setMedia(const QString &sMrl)
 {
+   int iRV = -1;
+
    // is player playing ... ?
+   libvlc_exception_clear(&vlcExcpt);
    libvlc_media_t *curMedia = libvlc_media_player_get_media (pMediaPlayer, &vlcExcpt);
 
    // if playing, stop and then release media ...
@@ -232,6 +301,7 @@ void CPlayer::setMedia(const QString &sMrl)
    {
       if (bIsPlaying)
       {
+         libvlc_exception_clear(&vlcExcpt);
          libvlc_media_player_stop(pMediaPlayer, &vlcExcpt);
       }
 
@@ -240,20 +310,37 @@ void CPlayer::setMedia(const QString &sMrl)
       pMedia = NULL;
    }
 
-   // reset exception stuff ...
-   libvlc_exception_init(&vlcExcpt);
-
    // create new media ...
+   libvlc_exception_clear(&vlcExcpt);
    pMedia = libvlc_media_new (pVlcInstance, sMrl.toAscii().constData(), &vlcExcpt);
-   raise(&vlcExcpt);
+   iRV = raise(&vlcExcpt);
 
-   // add media ...
-   libvlc_media_player_set_media (pMediaPlayer, pMedia, &vlcExcpt);
-   raise(&vlcExcpt);
+   if (!iRV)
+   {
+      // get event manager ...
+      pEMMedia = libvlc_media_event_manager(pMedia, &vlcExcpt);
+      iRV = raise(&vlcExcpt);
+   }
+
+   if (!iRV)
+   {
+      // attach media state change event ...
+      libvlc_event_attach(pEMMedia, libvlc_MediaStateChanged, CPlayer::eventCallback, (void *)this, &vlcExcpt);
+      iRV = raise(&vlcExcpt);
+   }
+
+   if (!iRV)
+   {
+      // add media ...
+      libvlc_media_player_set_media (pMediaPlayer, pMedia, &vlcExcpt);
+      iRV = raise(&vlcExcpt);
+   }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
-|  Method: changeVolume
+|  Method: slotChangeVolume
 |  Begin: 28.02.2010 / 19:00:51
 |  Author: Jo2003
 |  Description: set volume
@@ -262,7 +349,7 @@ void CPlayer::setMedia(const QString &sMrl)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CPlayer::changeVolume(int newVolume)
+void CPlayer::slotChangeVolume(int newVolume)
 {
    if (pVlcInstance)
    {
@@ -280,19 +367,24 @@ void CPlayer::changeVolume(int newVolume)
 |
 |  Parameters: --
 |
-|  Returns: --
+|  Returns: 0 --> ok
+|          -1 --> any error
 \----------------------------------------------------------------- */
-void CPlayer::play()
+int CPlayer::play()
 {
+   int iRV;
+
    // reset exception stuff ...
-   libvlc_exception_init(&vlcExcpt);
-
+   libvlc_exception_clear(&vlcExcpt);
    libvlc_media_player_play (pMediaPlayer, &vlcExcpt);
+   iRV = raise(&vlcExcpt);
 
-   if (!raise(&vlcExcpt))
+   if (!iRV)
    {
       bIsPlaying = true;
    }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -303,15 +395,22 @@ void CPlayer::play()
 |
 |  Parameters: --
 |
-|  Returns: --
+|  Returns: 0 --> ok
+|          -1 --> any error
 \----------------------------------------------------------------- */
-void CPlayer::stop()
+int CPlayer::stop()
 {
+   int iRV = 0;
+
    if (bIsPlaying)
    {
+      libvlc_exception_clear(&vlcExcpt);
       libvlc_media_player_stop (pMediaPlayer, &vlcExcpt);
       bIsPlaying = false;
+      iRV = raise(&vlcExcpt);
    }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -322,21 +421,28 @@ void CPlayer::stop()
 |
 |  Parameters: --
 |
-|  Returns: --
+|  Returns: 0 --> ok
+|          -1 --> any error
 \----------------------------------------------------------------- */
-void CPlayer::pause()
+int CPlayer::pause()
 {
+   int iRV = 0;
+
    // reset exception stuff ...
-   libvlc_exception_init(&vlcExcpt);
+   libvlc_exception_clear(&vlcExcpt);
 
    if (bIsPlaying && libvlc_media_player_can_pause(pMediaPlayer, &vlcExcpt))
    {
-      if (!raise(&vlcExcpt))
+      iRV = raise(&vlcExcpt);
+
+      if (!iRV)
       {
          libvlc_media_player_pause(pMediaPlayer, &vlcExcpt);
-         raise(&vlcExcpt);
+         iRV = raise(&vlcExcpt);
       }
    }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -383,6 +489,113 @@ int CPlayer::raise(libvlc_exception_t * ex)
    }
 
    return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: eventCallback
+|  Begin: 01.03.2010 / 11:00:10
+|  Author: Jo2003
+|  Description: callback for vlc events
+|
+|  Parameters: pointer to event raised, pointer to player class
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
+{
+   CPlayer *pPlayer = (CPlayer *)player;
+
+   switch (ev->type)
+   {
+   case libvlc_MediaStateChanged:
+      {
+         // media state changed ... what is the new state ...
+         switch (ev->u.media_state_changed.new_state)
+         {
+         mCaseStateChg(libvlc_NothingSpecial);
+         mCaseStateChg(libvlc_Opening);
+         mCaseStateChg(libvlc_Buffering);
+         mCaseStateChg(libvlc_Playing);
+         mCaseStateChg(libvlc_Paused);
+         mCaseStateChg(libvlc_Stopped);
+         mCaseStateChg(libvlc_Ended);
+         mCaseStateChg(libvlc_Error);
+         default:
+            break;
+         }
+      }
+      break;
+   default:
+      break;
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: sendStateMsg
+|  Begin: 01.03.2010 / 14:00:10
+|  Author: Jo2003
+|  Description: short state string and emit signal ...
+|
+|  Parameters: ref. to state message ...
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::sendStateMsg (const QString &msg)
+{
+   // remove "libvlc_" from string ...
+   QString sMsg = msg;
+   sMsg.replace("libvlc_", "", Qt::CaseInsensitive);
+   emit sigStateChg(sMsg);
+}
+
+void CPlayer::slotDoLog()
+{
+   int iRV;
+
+   mutex.lock();
+
+   if (pLibVlcLog)
+   {
+      // how many entries in log ... ?
+      uint iEntryCount = 0;
+
+
+      // reset exception stuff ...
+      libvlc_exception_clear(&vlcExcpt);
+      iEntryCount = libvlc_log_count (pLibVlcLog, &vlcExcpt);
+      iRV         = raise(&vlcExcpt);
+
+      if (!iRV && iEntryCount)
+      {
+         libvlc_log_message_t   logMsg;
+         libvlc_log_message_t  *pLogMsg;
+         libvlc_log_iterator_t *it = libvlc_log_get_iterator(pLibVlcLog, &vlcExcpt);
+         iRV = raise (&vlcExcpt);
+
+         while (!iRV)
+         {
+            pLogMsg = libvlc_log_iterator_next (it, &logMsg, &vlcExcpt);
+            iRV     = raise(&vlcExcpt);
+
+            if (!iRV)
+            {
+               mInfo(tr("libVlc msg %1, severity %2, type %3:\n --> %4")
+                     .arg(pLogMsg->psz_name).arg(pLogMsg->i_severity)
+                     .arg(pLogMsg->psz_type).arg(pLogMsg->psz_message));
+
+               if (!libvlc_log_iterator_has_next(it, &vlcExcpt))
+               {
+                  iRV = 1;
+               }
+            }
+         }
+
+         libvlc_log_clear(pLibVlcLog, &vlcExcpt);
+         libvlc_log_iterator_free (it, &vlcExcpt);
+      }
+   }
+
+   mutex.unlock();
 }
 
 /************************* History ***************************\

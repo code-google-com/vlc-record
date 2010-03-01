@@ -16,7 +16,11 @@
 #include <QMessageBox>
 #include <QWidget>
 #include <QFrame>
+#include <QTimer>
+#include <QMutex>
 #include <vlc/vlc.h>
+
+#include "clogfile.h"
 
 //===================================================================
 // namespace
@@ -56,11 +60,13 @@ class CPlayer : public QWidget
 public:
    CPlayer(QWidget *parent = 0);
    ~CPlayer();
-   void initPlayer (QStringList &slArgs);
-   void setMedia (const QString &sMrl);
-   void play();
-   void stop();
-   void pause();
+   int initPlayer (QStringList &slArgs);
+   int setMedia (const QString &sMrl);
+   int play();
+   int stop();
+   int pause();
+   void sendStateMsg (const QString &msg);
+   static void eventCallback (const libvlc_event_t *ev, void *player);
 
 protected:
    void changeEvent(QEvent *e);
@@ -70,15 +76,24 @@ protected:
    void freeArgs (Ui::vlcArgs& args);
 
 private:
-   Ui::CPlayer           *ui;
-   bool                   bIsPlaying;
-   libvlc_exception_t     vlcExcpt;
-   libvlc_instance_t     *pVlcInstance;
-   libvlc_media_player_t *pMediaPlayer;
-   libvlc_media_t        *pMedia;
+   Ui::CPlayer            *ui;
+   QTimer                  poller;
+   QMutex                  mutex;
+   bool                    bIsPlaying;
+   libvlc_exception_t      vlcExcpt;
+   libvlc_instance_t      *pVlcInstance;
+   libvlc_media_player_t  *pMediaPlayer;
+   libvlc_media_t         *pMedia;
+   libvlc_event_manager_t *pEMPlay;
+   libvlc_event_manager_t *pEMMedia;
+   libvlc_log_t           *pLibVlcLog;
 
 private slots:
-   void changeVolume(int newVolume);
+   void slotChangeVolume(int newVolume);
+   void slotDoLog ();
+
+signals:
+   void sigStateChg(const QString &str);
 };
 
 #endif /* __022410__CPLAYER_H */

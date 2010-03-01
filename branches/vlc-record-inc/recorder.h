@@ -114,6 +114,7 @@ private:
     QMap<int, QString>             chanMap;
     QMenu                          favContext;
     CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
+    int                            iUseLibVLC;
 
 protected:
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
