@@ -371,6 +371,15 @@ int CPlayer::setMedia(const QString &sMrl)
 \----------------------------------------------------------------- */
 void CPlayer::slotChangeVolume(int newVolume)
 {
+   if (!newVolume)
+   {
+      ui->labSound->setPixmap(QPixmap(":/player/sound_off"));
+   }
+   else
+   {
+      ui->labSound->setPixmap(QPixmap(":/player/sound_on"));
+   }
+
    if (pVlcInstance)
    {
       libvlc_exception_clear(&vlcExcpt);

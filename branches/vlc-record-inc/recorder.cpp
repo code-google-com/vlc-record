@@ -189,7 +189,8 @@ void Recorder::show()
    CreateSystray();
 
    // set language as read ...
-   pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()), QApplication::applicationDirPath());
+   pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()),
+                     QString("%1/language").arg(QApplication::applicationDirPath()));
 
    // get player module ...
    vlcCtrl.LoadPlayerModule(Settings.GetPlayerModule());
