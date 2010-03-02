@@ -43,6 +43,12 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pEMPlay      = NULL;
    pLibVlcLog   = NULL;
 
+#ifndef QT_NO_DEBUG
+   uiVerboseLevel = 3;
+#else
+   uiVerboseLevel = 1;
+#endif /* QT_NO_DEBUG */
+
    // init exception structure ...
    libvlc_exception_init(&vlcExcpt);
 
@@ -53,9 +59,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(this, SIGNAL(sigStateChg(QString)), ui->labState, SLOT(setText(QString)));
 
    // do periodical logging ...
-   connect(&poller, SIGNAL(timeout()), this, SLOT(slotDoLog()));
+   connect(&poller, SIGNAL(timeout()), this, SLOT(slotLibVLCLog()));
 
-   poller.start(1000);
+   poller.start(500);
 }
 
 /* -----------------------------------------------------------------\
@@ -198,10 +204,8 @@ int CPlayer::initPlayer(QStringList &slArgs)
 
    if (slArgs.size() == 0)
    {
-      // no arguments given ... create standard arguments ...
-      slArgs << "-I"
-             << "dummy"
-             << "--ignore-config";
+      // no arguments given --> create standard arguments ...
+      slArgs << "-I" << "dummy" << "--ignore-config";
    }
 
    // add plugin path ...
@@ -219,18 +223,17 @@ int CPlayer::initPlayer(QStringList &slArgs)
       pVlcInstance = libvlc_new(args.argc, args.argArray, &vlcExcpt);
       iRV = raise (&vlcExcpt);
 
-
       if (!iRV)
       {
-         // open logger ...
-         pLibVlcLog = libvlc_log_open(pVlcInstance, &vlcExcpt);
+         // set verbose mode ...
+         libvlc_set_log_verbosity (pVlcInstance, uiVerboseLevel, &vlcExcpt);
          iRV = raise (&vlcExcpt);
       }
 
       if (!iRV)
       {
-         // set verbose mode ...
-         libvlc_set_log_verbosity (pVlcInstance, 1, &vlcExcpt);
+         // open logger ...
+         pLibVlcLog = libvlc_log_open(pVlcInstance, &vlcExcpt);
          iRV = raise (&vlcExcpt);
       }
 
@@ -372,16 +375,19 @@ void CPlayer::slotChangeVolume(int newVolume)
 \----------------------------------------------------------------- */
 int CPlayer::play()
 {
-   int iRV;
+   int iRV = 0;
 
-   // reset exception stuff ...
-   libvlc_exception_clear(&vlcExcpt);
-   libvlc_media_player_play (pMediaPlayer, &vlcExcpt);
-   iRV = raise(&vlcExcpt);
-
-   if (!iRV)
+   if (pMediaPlayer)
    {
-      bIsPlaying = true;
+      // reset exception stuff ...
+      libvlc_exception_clear(&vlcExcpt);
+      libvlc_media_player_play (pMediaPlayer, &vlcExcpt);
+      iRV = raise(&vlcExcpt);
+
+      if (!iRV)
+      {
+         bIsPlaying = true;
+      }
    }
 
    return iRV;
@@ -402,7 +408,7 @@ int CPlayer::stop()
 {
    int iRV = 0;
 
-   if (bIsPlaying)
+   if (pMediaPlayer && bIsPlaying)
    {
       libvlc_exception_clear(&vlcExcpt);
       libvlc_media_player_stop (pMediaPlayer, &vlcExcpt);
@@ -428,17 +434,20 @@ int CPlayer::pause()
 {
    int iRV = 0;
 
-   // reset exception stuff ...
-   libvlc_exception_clear(&vlcExcpt);
-
-   if (bIsPlaying && libvlc_media_player_can_pause(pMediaPlayer, &vlcExcpt))
+   if (pMediaPlayer)
    {
-      iRV = raise(&vlcExcpt);
+      // reset exception stuff ...
+      libvlc_exception_clear(&vlcExcpt);
 
-      if (!iRV)
+      if (bIsPlaying && libvlc_media_player_can_pause(pMediaPlayer, &vlcExcpt))
       {
-         libvlc_media_player_pause(pMediaPlayer, &vlcExcpt);
          iRV = raise(&vlcExcpt);
+
+         if (!iRV)
+         {
+            libvlc_media_player_pause(pMediaPlayer, &vlcExcpt);
+            iRV = raise(&vlcExcpt);
+         }
       }
    }
 
@@ -544,53 +553,80 @@ void CPlayer::sendStateMsg (const QString &msg)
 {
    // remove "libvlc_" from string ...
    QString sMsg = msg;
-   sMsg.replace("libvlc_", "", Qt::CaseInsensitive);
+   sMsg.remove("libvlc_", Qt::CaseInsensitive);
+   sMsg = sMsg.toUpper();
    emit sigStateChg(sMsg);
 }
 
-void CPlayer::slotDoLog()
+/* -----------------------------------------------------------------\
+|  Method: slotDoLog
+|  Begin: 02.03.2010 / 08:30:10
+|  Author: Jo2003
+|  Description: check libvlc_log for new entries in write into
+|               log file
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::slotLibVLCLog()
 {
-   int iRV;
+   int     iRV;
 
+   // make sure log handle will not be deleted while
+   // we collect the log entries ...
    mutex.lock();
 
+   // do we have a logger handle ... ?
    if (pLibVlcLog)
    {
       // how many entries in log ... ?
-      uint iEntryCount = 0;
-
+      uint uiEntryCount = 0;
 
       // reset exception stuff ...
       libvlc_exception_clear(&vlcExcpt);
-      iEntryCount = libvlc_log_count (pLibVlcLog, &vlcExcpt);
-      iRV         = raise(&vlcExcpt);
 
-      if (!iRV && iEntryCount)
+      // are there entries available ... ?
+      uiEntryCount = libvlc_log_count (pLibVlcLog, &vlcExcpt);
+      iRV          = raise(&vlcExcpt);
+
+      // no error and entries there ...
+      if (!iRV && uiEntryCount)
       {
+         // log message buffer ...
          libvlc_log_message_t   logMsg;
          libvlc_log_message_t  *pLogMsg;
-         libvlc_log_iterator_t *it = libvlc_log_get_iterator(pLibVlcLog, &vlcExcpt);
-         iRV = raise (&vlcExcpt);
 
+         // get iterator to go through log entries ...
+         libvlc_log_iterator_t *it = libvlc_log_get_iterator(pLibVlcLog, &vlcExcpt);
+         iRV                       = raise (&vlcExcpt);
+
+         // while there are entries ...
          while (!iRV)
          {
+            // get log message presented by log iterator ...
             pLogMsg = libvlc_log_iterator_next (it, &logMsg, &vlcExcpt);
             iRV     = raise(&vlcExcpt);
 
             if (!iRV)
             {
-               mInfo(tr("libVlc msg %1, severity %2, type %3:\n --> %4")
-                     .arg(pLogMsg->psz_name).arg(pLogMsg->i_severity)
-                     .arg(pLogMsg->psz_type).arg(pLogMsg->psz_message));
+               // build log message ...
+               mInfo(tr("Name: \"%1\", Type: \"%2\", Severity: %3\n --> %4")
+                      .arg(pLogMsg->psz_name).arg(pLogMsg->psz_type)
+                      .arg(pLogMsg->i_severity).arg(pLogMsg->psz_message));
 
+               // is there a next entry ... ?
                if (!libvlc_log_iterator_has_next(it, &vlcExcpt))
                {
+                  // no --> break while ...
                   iRV = 1;
                }
             }
          }
 
+         // delete all log entries ...
          libvlc_log_clear(pLibVlcLog, &vlcExcpt);
+
+         // free log iterator ...
          libvlc_log_iterator_free (it, &vlcExcpt);
       }
    }

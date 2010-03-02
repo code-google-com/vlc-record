@@ -87,10 +87,11 @@ private:
    libvlc_event_manager_t *pEMPlay;
    libvlc_event_manager_t *pEMMedia;
    libvlc_log_t           *pLibVlcLog;
+   uint                    uiVerboseLevel;
 
 private slots:
    void slotChangeVolume(int newVolume);
-   void slotDoLog ();
+   void slotLibVLCLog ();
 
 signals:
    void sigStateChg(const QString &str);

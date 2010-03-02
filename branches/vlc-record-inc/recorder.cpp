@@ -10,7 +10,13 @@
 | $Id$
 \*************************************************************/
 #include "recorder.h"
-#include "ui_recorder.h"
+
+#ifndef INCLUDE_LIBVLC
+   #include "ui_recorder.h"
+#else
+   #include "ui_recorder_inc.h"
+#endif
+
 #include "chanlistwidgetitem.h"
 
 /* -----------------------------------------------------------------\
@@ -37,6 +43,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    iEpgOffset     = 0;
    uiArchivGmt    = 0;
    iFontSzChg     = 0;
+   iUseLibVLC     = 0;
    sLogoPath      = dwnLogos.GetLogoPath();
 
    // init favourite buttons ...
@@ -96,6 +103,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    timeRec.SetSettings(&Settings);
    timeRec.SetVlcCtrl(&vlcCtrl);
 
+#ifdef INCLUDE_LIBVLC
    // do we use libVLC ?
    if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
    {
@@ -107,6 +115,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
       iUseLibVLC = 0;
       timeRec.SetPlayer(NULL);
    }
+#endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
    connect (&KartinaTv,  SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
@@ -244,12 +253,13 @@ void Recorder::show()
       ui->hSplitterChannels->setSizes(sSplit);
    }
 
+#ifdef INCLUDE_LIBVLC
    sSplit = Settings.GetSplitterSizes("spEpgPlay", &ok);
    if (ok)
    {
       ui->hSplitterEpgPlayer ->setSizes(sSplit);
    }
-
+#endif /* INCLUDE_LIBVLC */
 
    QWidget::show();
 }
@@ -281,7 +291,11 @@ Recorder::~Recorder()
 
    Settings.SaveSplitterSizes("spChanEpg", ui->vSplitterChanEpg->sizes());
    Settings.SaveSplitterSizes("spChan", ui->hSplitterChannels->sizes());
+
+#ifdef INCLUDE_LIBVLC
    Settings.SaveSplitterSizes("spEpgPlay", ui->hSplitterEpgPlayer->sizes());
+#endif /* INCLUDE_LIBVLC */
+
    Settings.SetCustFontSize(iFontSzChg);
    Settings.SaveFavourites(lFavourites);
 
@@ -806,6 +820,7 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
       {
          if (iUseLibVLC)
          {
+#ifdef INCLUDE_LIBVLC
             // ---------------------
             // use libvlc ...
             // ---------------------
@@ -832,6 +847,7 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
             {
                vlcpid = (Q_PID)99; // any value != 0 ...
             }
+#endif /* INCLUDE_LIBVLC */
          }
          else
          {
@@ -903,6 +919,7 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
    {
       if (iUseLibVLC)
       {
+#ifdef INCLUDE_LIBVLC
          // ---------------------
          // use libvlc ...
          // ---------------------
@@ -929,7 +946,7 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
          {
             vlcpid = (Q_PID)99; // any value != 0 ...
          }
-
+#endif /* INCLUDE_LIBVLC */
       }
       else
       {
@@ -999,6 +1016,7 @@ void Recorder::on_pushSettings_clicked()
       // set language as read ...
       pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()), QApplication::applicationDirPath());
 
+#ifdef INCLUDE_LIBVLC
       // do we use libVLC ?
       if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
       {
@@ -1010,6 +1028,7 @@ void Recorder::on_pushSettings_clicked()
          iUseLibVLC = 0;
          timeRec.SetPlayer(NULL);
       }
+#endif /* INCLUDE_LIBVLC */
 
       // give vlcCtrl needed infos ...
       vlcCtrl.LoadPlayerModule(Settings.GetPlayerModule());
