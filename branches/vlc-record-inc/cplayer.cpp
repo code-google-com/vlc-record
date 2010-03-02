@@ -285,7 +285,7 @@ int CPlayer::initPlayer(QStringList &slArgs)
       if (!iRV)
       {
          /*
-         libvlc_event_attach(pEventManager, libvlc_MediaStateChanged, CPlayer::eventCallback,
+         libvlc_event_attach(pEMPlay, libvlc_MediaPlayerOpening, CPlayer::eventCallback,
                              (void *)this, &vlcExcpt);
          iRV = raise(&vlcExcpt);
          */
