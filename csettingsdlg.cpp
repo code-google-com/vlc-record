@@ -76,8 +76,8 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    }
 
    // fill player module box with available modules ...
-   QDir appDir (QApplication::applicationDirPath());
-   m_ui->cbxPlayerMod->addItems(appDir.entryList(QStringList("*.mod"), QDir::Files, QDir::Name));
+   QDir modDir(QString("%1/modules").arg(QApplication::applicationDirPath()));
+   m_ui->cbxPlayerMod->addItems(modDir.entryList(QStringList("*.mod"), QDir::Files, QDir::Name));
 
    // combo boxes ...
    int iIdx;
@@ -630,7 +630,7 @@ QString CSettingsDlg::GetPlayerModule()
 
    if (m_ui->cbxPlayerMod->currentText() != "")
    {
-      sPlayModule = QString("%1/%2").arg(QApplication::applicationDirPath())
+      sPlayModule = QString("%1/modules/%2").arg(QApplication::applicationDirPath())
                     .arg(m_ui->cbxPlayerMod->currentText());
    }
 
