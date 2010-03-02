@@ -107,8 +107,6 @@ void CPlayer::setPlugInPath(const QString &sPath)
 \----------------------------------------------------------------- */
 void CPlayer::releasePlayer()
 {
-   mutex.lock();
-
    // release player ...
    if (pMediaPlayer)
    {
@@ -139,8 +137,6 @@ void CPlayer::releasePlayer()
    }
 
    bIsPlaying = false;
-
-   mutex.unlock();
 }
 
 /* -----------------------------------------------------------------\
@@ -598,10 +594,6 @@ void CPlayer::slotLibVLCLog()
 {
    int     iRV;
 
-   // make sure log handle will not be deleted while
-   // we collect the log entries ...
-   mutex.lock();
-
    // do we have a logger handle ... ?
    if (pLibVlcLog)
    {
@@ -656,8 +648,6 @@ void CPlayer::slotLibVLCLog()
          libvlc_log_iterator_free (it, &vlcExcpt);
       }
    }
-
-   mutex.unlock();
 }
 
 /************************* History ***************************\
