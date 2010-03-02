@@ -17,7 +17,6 @@
 #include <QWidget>
 #include <QFrame>
 #include <QTimer>
-#include <QMutex>
 #include <vlc/vlc.h>
 
 #include "clogfile.h"
@@ -79,7 +78,6 @@ protected:
 private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
-   QMutex                  mutex;
    bool                    bIsPlaying;
    libvlc_exception_t      vlcExcpt;
    libvlc_instance_t      *pVlcInstance;
