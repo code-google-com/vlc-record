@@ -47,7 +47,10 @@
 #include "cvlcctrl.h"
 #include "ctranslit.h"
 #include "cfavaction.h"
-#include "cplayer.h"
+
+#ifdef INCLUDE_LIBVLC
+   #include "cplayer.h"
+#endif
 
 // for logging ...
 extern CLogFile VlcLog;
