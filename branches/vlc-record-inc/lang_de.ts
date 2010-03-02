@@ -4,72 +4,6 @@
 <context>
     <name>CAboutDialog</name>
     <message>
-        <location filename="caboutdialog.cpp" line="83"/>
-        <source>&lt;style type=&apos;text/css&apos;&gt;
-  a:link, a:visited, a:active { text-decoration: underline; color: #0482FE;}
-&lt;/style&gt;
-&lt;span style=&apos;font-weight: bold; font-size: 16px;&apos;&gt;vlc-record&lt;/span&gt;&lt;br /&gt;
-&lt;table border=&apos;0&apos; cellpadding=&apos;0&apos; cellspacing=&apos;0&apos;&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Version:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;%1&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Author:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;&lt;a href=&apos;mailto:coujo@gmx.net&apos;&gt;Jo2003&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Inspired by:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Olenka!&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;SDK:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Qt %2 by &lt;a href=&apos;http://qt.nokia.com&apos;&gt;Nokia&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Icons:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;by &lt;a href=&apos;http://dryicons.com&apos;&gt;dryicons.com&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; sent from %3. To do this it will authenticate you with username and password at %4. It then will start the &lt;a href=&apos;http://www.videolan.org&apos;&gt;vlc media player&lt;/a&gt; to display (and record) the selected stream. It supports &lt;b&gt;EPG and TimeShift&lt;/b&gt;.&lt;br /&gt;
-For News and Updates please visit my site at &lt;a href=&apos;http://vlc-record.coujo.de&apos;&gt;http://vlc-record.coujo.de&lt;/a&gt;.
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record is free software!&lt;/b&gt; 
-Nevertheless ... if you like this software, please support me: 
-&lt;a href=&apos;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11286909&apos;&gt;Donate some $ and / or &amp;euro;&lt;/a&gt; at PayPal for my work.
-&lt;br /&gt; &lt;br /&gt;
-Thank you,&lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;J&amp;ouml;rg</source>
-        <oldsource>&lt;style type=&apos;text/css&apos;&gt;
-  a:link, a:visited, a:active { text-decoration: underline; color: #0482FE;}
-&lt;/style&gt;
-&lt;span style=&apos;font-weight: bold; font-size: 16px;&apos;&gt;vlc-record&lt;/span&gt;&lt;br /&gt;
-&lt;table border=&apos;0&apos; cellpadding=&apos;0&apos; cellspacing=&apos;0&apos;&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Version:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;%1&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Author:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;&lt;a href=&apos;mailto:coujo@gmx.net&apos;&gt;J&amp;ouml;rg Neubert&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Inspired by:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Olga!&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;SDK:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Qt %2 by &lt;a href=&apos;http://qt.nokia.com&apos;&gt;Nokia&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Icons:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;by &lt;a href=&apos;http://dryicons.com&apos;&gt;dryicons.com&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; sent from %3. To do this it will authenticate you with username and password at %4. It then will start the &lt;a href=&apos;http://www.videolan.org&apos;&gt;vlc media player&lt;/a&gt; to display (and record) the selected stream. It supports &lt;b&gt;EPG and TimeShift&lt;/b&gt;.&lt;br /&gt;
-For News and Updates please visit my site at &lt;a href=&apos;http://www.coujo.de/ib2/index.php?act=module&amp;module=include&amp;incl_name=vlc-record&apos;&gt;http://www.coujo.de&lt;/a&gt;.
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record is free software!&lt;/b&gt; 
-Nevertheless ... if you like this software, please support me: 
-&lt;a href=&apos;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11286909&apos;&gt;Donate some $ and / or &amp;euro;&lt;/a&gt; at PayPal for my work.
-&lt;br /&gt; &lt;br /&gt;
-Thank you,&lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;J&amp;ouml;rg</oldsource>
-        <translation>&lt;style type=&apos;text/css&apos;&gt;
-  a:link, a:visited, a:active { text-decoration: underline; color: #0482FE;}
-&lt;/style&gt;
-&lt;span style=&apos;font-weight: bold; font-size: 16px;&apos;&gt;vlc-record&lt;/span&gt;&lt;br /&gt;
-&lt;table border=&apos;0&apos; cellpadding=&apos;0&apos; cellspacing=&apos;0&apos;&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Version:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;%1&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Autor:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;&lt;a href=&apos;mailto:coujo@gmx.net&apos;&gt;Jo2003&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Inspiriert von:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Olenka!&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;SDK:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;Qt %2 von &lt;a href=&apos;http://qt.nokia.com&apos;&gt;Nokia&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Icons:&lt;/b&gt;&lt;/td&gt;&lt;td style=&apos;padding-left: 15px;&apos;&gt;von &lt;a href=&apos;http://dryicons.com&apos;&gt;dryicons.com&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record&lt;/b&gt; - ein Tool, um Programm-Streams von %3 &lt;b&gt;anzusehen und mitzuschneiden&lt;/b&gt;. Um das zu tun wird es Dich mit Benutzername und Passwort bei %4 authentifizieren. Dann wird es den &lt;a href=&apos;http://www.videolan.org&apos;&gt;VLC-Media Player&lt;/a&gt; starten, um den Programm-Stream zu zeigen (und mitzuschneiden). Es unterstützt &lt;b&gt;EPG und TimeShift&lt;/b&gt;.&lt;br /&gt;
-News und Updates findet Ihr auf meiner Homepage: &lt;a href=&apos;http://vlc-record.coujo.de&apos;&gt;http://vlc-record.coujo.de&lt;/a&gt;.
-&lt;br /&gt; &lt;br /&gt;
-&lt;b&gt;vlc-record ist Freeware!&lt;/b&gt;
-Aber ... wenn Dir das Programm gefällt, unterstütze mich:
-&lt;a href=&apos;https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=11286909&apos;&gt;Spende ein paar $ und / oder &amp;euro;&lt;/a&gt; bei PayPal für meine Arbeit.
-&lt;br /&gt; &lt;br /&gt;
-Danke,&lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;J&amp;ouml;rg</translation>
-    </message>
-    <message>
         <location filename="forms/caboutdialog.ui" line="14"/>
         <source>About ...</source>
         <translation>Über ...</translation>
@@ -87,6 +21,67 @@ p, li { white-space: pre-wrap; }
         <location filename="forms/caboutdialog.ui" line="66"/>
         <source>&amp;Thank you!</source>
         <translation>&amp;Danke!</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="91"/>
+        <source>Version:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="92"/>
+        <source>Author:</source>
+        <translation>Autor:</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="93"/>
+        <source>Inspired by:</source>
+        <translation>Für:</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="97"/>
+        <source>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; sent from %1.</source>
+        <translation>&lt;b&gt;vlc-record&lt;/b&gt; - ein Tool, um Programm-Streams von %1 &lt;b&gt;anzusehen und mitzuschneiden&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="98"/>
+        <source>To do this it will authenticate you with username and password at %1.</source>
+        <translation>Um das zu tun wird es Dich mit Benutzername und Passwort bei %1 authentifizieren.</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="99"/>
+        <source>It then will start the %1 to display (and record) the selected stream.</source>
+        <translation>Dann wird es den %1 starten, um den Programm-Stream zu zeigen (und mitzuschneiden).</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="100"/>
+        <source>It supports &lt;b&gt;EPG and TimeShift&lt;/b&gt;.</source>
+        <translation>Es unterstützt &lt;b&gt;EPG und TimeShift&lt;/b&gt;.</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="101"/>
+        <source>For News and Updates please visit my site at %1.</source>
+        <oldsource>For News and Updates please visit my site at %1</oldsource>
+        <translation>News und Updates findet Ihr auf meiner Homepage: %1.</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="102"/>
+        <source>&lt;b&gt;vlc-record is free software!&lt;/b&gt;</source>
+        <translation>&lt;b&gt;vlc-record ist Freeware!&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="103"/>
+        <source>Nevertheless ... if you like this software, please support me: </source>
+        <translation>Aber ... wenn Dir das Programm gefällt, unterstütze mich: </translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="105"/>
+        <source>Donate some $ and / or &amp;euro; at Paypal for my work.</source>
+        <translation>Spende ein paar $ und / oder &amp;euro; bei PayPal für meine Arbeit.</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="106"/>
+        <source>Thank you,</source>
+        <translation>Danke,</translation>
     </message>
 </context>
 <context>
