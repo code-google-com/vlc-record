@@ -233,19 +233,19 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="495"/>
+        <location filename="cplayer.cpp" line="512"/>
         <source>LibVLC Error!</source>
         <translation>libVLC Fehler!</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="496"/>
+        <location filename="cplayer.cpp" line="513"/>
         <source>LibVLC reports following error:
 %1</source>
         <translation>LibVLC meldet folgenden Fehler:
 %1</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="613"/>
+        <location filename="cplayer.cpp" line="630"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
  --&gt; %4</source>
         <translation></translation>

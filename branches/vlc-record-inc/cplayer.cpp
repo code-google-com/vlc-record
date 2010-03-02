@@ -81,6 +81,21 @@ CPlayer::~CPlayer()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: setPlugInPath
+|  Begin: 02.03.2010 / 14:17:51
+|  Author: Jo2003
+|  Description: set the plugin path ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::setPlugInPath(const QString &sPath)
+{
+   sPlugInPath = sPath;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: releasePlayer
 |  Begin: 24.02.2010 / 12:25:51
 |  Author: Jo2003
@@ -208,9 +223,11 @@ int CPlayer::initPlayer(QStringList &slArgs)
       slArgs << "-I" << "dummy" << "--ignore-config";
    }
 
-   // add plugin path ...
-   slArgs << QString("--plugin-path=\"%1/plugins\"")
-              .arg(QApplication::applicationDirPath());
+   // is plugin path set ...
+   if (sPlugInPath.length() > 0)
+   {
+      slArgs << QString("--plugin-path=\"%1\"").arg(sPlugInPath);
+   }
 
    // fill vlcArgs struct ...
    createArgs(slArgs, args);

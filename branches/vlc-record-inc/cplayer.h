@@ -66,6 +66,7 @@ public:
    int stop();
    int pause();
    void sendStateMsg (const QString &msg);
+   void setPlugInPath(const QString &sPath);
    static void eventCallback (const libvlc_event_t *ev, void *player);
 
 protected:
@@ -88,6 +89,7 @@ private:
    libvlc_event_manager_t *pEMMedia;
    libvlc_log_t           *pLibVlcLog;
    uint                    uiVerboseLevel;
+   QString                 sPlugInPath;
 
 private slots:
    void slotChangeVolume(int newVolume);
