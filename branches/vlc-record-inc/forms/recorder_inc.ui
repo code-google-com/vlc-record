@@ -14,7 +14,7 @@
    <string>VLC Recorder</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="vlc-record.qrc">
+   <iconset resource="../vlc-record.qrc">
     <normaloff>:/app/tv</normaloff>:/app/tv</iconset>
   </property>
   <property name="styleSheet">
@@ -266,8 +266,17 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ee
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <property name="margin">
+              <property name="leftMargin">
                <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
               </property>
               <item>
                <widget class="QFrame" name="frameChan">
@@ -288,13 +297,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ee
                   <number>4</number>
                  </property>
                  <property name="topMargin">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <property name="rightMargin">
                   <number>4</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <item>
                   <widget class="QLabel" name="labChanIcon">
@@ -351,13 +360,13 @@ color: white;
                   <number>6</number>
                  </property>
                  <property name="topMargin">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <property name="rightMargin">
                   <number>6</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <item>
                   <widget class="QLabel" name="labCurrDay">
@@ -418,8 +427,17 @@ border-top: 0px;
               <number>1</number>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <property name="margin">
+              <property name="leftMargin">
                <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
               </property>
               <item>
                <widget class="QFrame" name="frTextsize">
@@ -437,10 +455,10 @@ border-top: 0px;
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <property name="topMargin">
-                  <number>4</number>
+                  <number>0</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>4</number>
+                  <number>0</number>
                  </property>
                  <item>
                   <widget class="QToolButton" name="btnFontSmaller">
@@ -448,7 +466,7 @@ border-top: 0px;
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="vlc-record.qrc">
+                    <iconset resource="../vlc-record.qrc">
                      <normaloff>:/app/zoom-out</normaloff>:/app/zoom-out</iconset>
                    </property>
                    <property name="iconSize">
@@ -481,7 +499,7 @@ color: white;
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="vlc-record.qrc">
+                    <iconset resource="../vlc-record.qrc">
                      <normaloff>:/app/zoom-in</normaloff>:/app/zoom-in</iconset>
                    </property>
                    <property name="iconSize">
@@ -516,7 +534,7 @@ color: white;
                 <property name="minimumSize">
                  <size>
                   <width>100</width>
-                  <height>24</height>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -538,13 +556,13 @@ color: white;
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="vlc-record.qrc">
+                 <iconset resource="../vlc-record.qrc">
                   <normaloff>:/app/find</normaloff>:/app/find</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>24</width>
-                  <height>24</height>
+                  <width>16</width>
+                  <height>16</height>
                  </size>
                 </property>
                 <property name="shortcut">
@@ -709,7 +727,7 @@ background-attachment: fixed;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="vlc-record.qrc">
+            <iconset resource="../vlc-record.qrc">
              <normaloff>:/app/play</normaloff>:/app/play</iconset>
            </property>
            <property name="iconSize">
@@ -744,7 +762,7 @@ background-attachment: fixed;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="vlc-record.qrc">
+            <iconset resource="../vlc-record.qrc">
              <normaloff>:/app/record</normaloff>:/app/record</iconset>
            </property>
            <property name="iconSize">
@@ -788,7 +806,7 @@ background-attachment: fixed;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="vlc-record.qrc">
+            <iconset resource="../vlc-record.qrc">
              <normaloff>:/app/stop</normaloff>:/app/stop</iconset>
            </property>
            <property name="iconSize">
@@ -827,7 +845,7 @@ background-attachment: fixed;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="vlc-record.qrc">
+            <iconset resource="../vlc-record.qrc">
              <normaloff>:/app/timerrec</normaloff>:/app/timerrec</iconset>
            </property>
            <property name="iconSize">
@@ -904,7 +922,7 @@ color: white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/app/settings</normaloff>:/app/settings</iconset>
         </property>
         <property name="iconSize">
@@ -945,7 +963,7 @@ color: white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/app/info</normaloff>:/app/info</iconset>
         </property>
         <property name="iconSize">
@@ -986,7 +1004,7 @@ color: white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/app/quit</normaloff>:/app/quit</iconset>
         </property>
         <property name="iconSize">
@@ -1036,7 +1054,7 @@ color: white;
   <tabstop>pushAbout</tabstop>
  </tabstops>
  <resources>
-  <include location="vlc-record.qrc"/>
+  <include location="../vlc-record.qrc"/>
  </resources>
  <connections>
   <connection>
