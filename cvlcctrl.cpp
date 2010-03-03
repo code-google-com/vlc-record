@@ -26,10 +26,13 @@ extern CLogFile VlcLog;
 \----------------------------------------------------------------- */
 CVlcCtrl::CVlcCtrl(const QString &path, QObject *parent) : QProcess(parent)
 {
-   bForcedTranslit = false;
-   sFrcMx          = "no";
-   bTranslit       = false;
-   pTranslit       = NULL;
+   bForcedTranslit   = false;
+   sFrcMx            = "no";
+   bTranslit         = false;
+   pTranslit         = NULL;
+#ifdef INCLUDE_LIBVLC
+   pLibVLCPlayer     = NULL;
+#endif
 
    if (path != "")
    {
@@ -64,6 +67,24 @@ CVlcCtrl::~CVlcCtrl()
       waitForFinished(3000);
    }
 }
+
+#ifdef INCLUDE_LIBVLC
+/* -----------------------------------------------------------------\
+|  Method: SetLibVLCPlayer
+|  Begin: 03.03.2010 / 08:45:00
+|  Author: Jo2003
+|  Description: set libVlc player instance
+|
+|  Parameters: pointer to CPlayer
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CVlcCtrl::SetLibVLCPlayer(CPlayer *pPlay)
+{
+   pLibVLCPlayer = pPlay;
+   connect(pLibVLCPlayer, SIGNAL(sigPlayerError()), this, SLOT(slotLibVlcError()));
+}
+#endif // INCLUDE_LIBVLC
 
 /* -----------------------------------------------------------------\
 |  Method: SetTranslitPointer
@@ -201,39 +222,105 @@ int CVlcCtrl::LoadPlayerModule(const QString &sPath)
 |  Author: Jo2003
 |  Description: start vlc
 |
-|  Parameters: command line, optional runtime in seconds
+|  Parameters: command line, optional runtime in seconds, detach flag
 |
 |  Returns: <= 0 --> error starting vlc
 |           else --> process id
 \----------------------------------------------------------------- */
-Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime)
+Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime, bool bDetach)
 {
-   Q_PID   vlcPid   = 0;
+   Q_PID vlcPid = 0;
 
-   if (IsRunning())
+#ifdef INCLUDE_LIBVLC
+   // -------------------------------------------------------
+   // use libVLC player ...
+   // -------------------------------------------------------
+   if (pLibVLCPlayer)
    {
-      QMessageBox::warning(NULL, tr("Warning!"), tr("Player is already running!"));
-   }
-   else
-   {
-      mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+      // detach isn't possible ...
+      bDetach = false;
 
-      QProcess::start(sCmdLine);
+      // emit starting message ...
+      emit stateChanged(QProcess::Starting);
 
-      if (waitForStarted(3000))
+      // play media ...
+      if (!pLibVLCPlayer->playMedia(sCmdLine))
       {
-         vlcPid = pid();
+         vlcPid = (Q_PID)99; // anything but 0 ...
+
+         // emit state change ...
+         emit stateChanged(QProcess::Running);
       }
       else
       {
-         kill();
+         // can't start ...
+         emit stateChanged(QProcess::NotRunning);
       }
-
-      // set runtime ...
-      if (iRunTime > 0)
+   }
+   else
+#endif /* INCLUDE_LIBVLC */
+   {
+      // -------------------------------------------------------
+      // external player ...
+      // -------------------------------------------------------
+      if (bDetach)
       {
-         tRunTime.singleShot(iRunTime * 1000, this, SLOT(terminate()));
+         // detach player ...
+         mInfo(tr("Start player detached using folling command line:\n  --> %1").arg(sCmdLine));
+
+         if (QProcess::startDetached(sCmdLine))
+         {
+            vlcPid = (Q_PID)99; // anything but 0 ...
+         }
       }
+      else
+      {
+         // player is under control. check if it is running ...
+         QMessageBox::StandardButton btn = QMessageBox::Yes;
+
+         if (IsRunning())
+         {
+            btn = QMessageBox::question(NULL, tr("Warning!"),
+                                        tr("Player is already running! Do you want to proceed?"),
+                                        QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+
+            // we want to proceed -> stop former started player ...
+            if (btn == QMessageBox::Yes)
+            {
+               // stop process kindly ...
+               QProcess::terminate();
+
+               if (!waitForFinished(1000))
+               {
+                  // process not stopped -> kill it ...
+                  kill();
+               }
+            }
+         }
+
+         // now player shouldn't run ... however ...
+         if (btn == QMessageBox::Yes)
+         {
+            mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
+
+            QProcess::start(sCmdLine);
+
+            if (waitForStarted(3000))
+            {
+               vlcPid = pid();
+            }
+            else
+            {
+               kill();
+            }
+         }
+      }
+   }
+
+   // should we stop the player after a while ... ?
+   if ((iRunTime > 0) && (vlcPid != 0) && !bDetach)
+   {
+      tRunTime.singleShot(iRunTime * 1000, this, SLOT(terminate()));
    }
 
    return vlcPid;
@@ -301,18 +388,28 @@ void CVlcCtrl::SetTimer(uint uiTime)
 \----------------------------------------------------------------- */
 bool CVlcCtrl::IsRunning()
 {
-   bool bRV;
+   bool bRV = false;
 
-   switch (state())
+#ifdef INCLUDE_LIBVLC
+   if (pLibVLCPlayer)
    {
-   case QProcess::Running:
-   case QProcess::Starting:
-      bRV = true;
-      break;
+      // Does internal player play ?
+      bRV = pLibVLCPlayer->isPlaying();
+   }
+   else
+#endif
+   {
+      switch (state())
+      {
+      case QProcess::Running:
+      case QProcess::Starting:
+         bRV = true;
+         break;
 
-   default:
-      bRV = false;
-      break;
+      default:
+         bRV = false;
+         break;
+      }
    }
 
    return bRV;
@@ -454,6 +551,58 @@ void CVlcCtrl::slotStateChanged(QProcess::ProcessState newState)
    }
 }
 
+/* -----------------------------------------------------------------\
+|  Method: terminate [slot]
+|  Begin: 03.03.2010 / 10:05:00
+|  Author: Jo2003
+|  Description: override terminate slot with own one ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CVlcCtrl::terminate()
+{
+#ifdef INCLUDE_LIBVLC
+   if (pLibVLCPlayer)
+   {
+      // This is no external process,
+      // simply stop the player ...
+      emit finished(pLibVLCPlayer->stop(), QProcess::NormalExit);
+      emit stateChanged(QProcess::NotRunning);
+   }
+   else
+#endif
+   {
+      // terminate only if it is running ...
+      if (IsRunning())
+      {
+         QProcess::terminate();
+      }
+      else
+      {
+         emit finished(0, QProcess::NormalExit);
+      }
+   }
+}
+
+#ifdef INCLUDE_LIBVLC
+/* -----------------------------------------------------------------\
+|  Method: slotLibVlcError [slot]
+|  Begin: 03.03.2010 / 12:05:00
+|  Author: Jo2003
+|  Description: got error from libVlc player ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CVlcCtrl::slotLibVlcError ()
+{
+   mWarn(tr("libVLC player reports an error!"));
+   emit stateChanged(QProcess::NotRunning);
+}
+#endif
 /************************* History ***************************\
 | $Log$
 \*************************************************************/

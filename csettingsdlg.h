@@ -56,6 +56,7 @@ public:
     QString GetLanguage ();
     QString GetShutdownCmd ();
     QString GetPlayerModule ();
+    QString GetCookie ();
 
     bool UseProxy ();
     bool AllowEros ();
@@ -83,6 +84,7 @@ public:
     void  SaveFavourites (const QList<int> &favList);
     QList<int> GetFavourites (bool *ok = NULL);
     void  SetStreamServerCbx (const QVector<int> &lSrvList, int iActSrv);
+    void  SaveCookie (const QString &str);
 
 protected:
     void changeEvent(QEvent *e);

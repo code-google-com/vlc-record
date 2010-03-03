@@ -560,6 +560,36 @@ int CSettingsDlg::GetCustFontSize()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: GetCookie
+|  Begin: 03.03.2010 / 12:22:39
+|  Author: Jo2003
+|  Description: get last used cookie
+|
+|  Parameters: --
+|
+|  Returns:  cookie string
+\----------------------------------------------------------------- */
+QString CSettingsDlg::GetCookie()
+{
+   return IniFile.GetStringData("LastCookie");
+}
+
+/* -----------------------------------------------------------------\
+|  Method: SaveCookie
+|  Begin: 03.03.2010 / 12:22:39
+|  Author: Jo2003
+|  Description: save cookie into ini file
+|
+|  Parameters: ref. cookie string
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::SaveCookie(const QString &str)
+{
+   IniFile.AddData ("LastCookie", str);
+}
+
+/* -----------------------------------------------------------------\
 |  Method: SaveOtherSettings
 |  Begin: 18.02.2010 / 11:22:39
 |  Author: Jo2003

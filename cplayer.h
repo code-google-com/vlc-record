@@ -59,11 +59,13 @@ class CPlayer : public QWidget
 public:
    CPlayer(QWidget *parent = 0);
    ~CPlayer();
-   int initPlayer (QStringList &slArgs);
-   int setMedia (const QString &sMrl);
-   int play();
-   int stop();
-   int pause();
+   int  initPlayer (QStringList &slArgs);
+   int  setMedia (const QString &sMrl);
+   int  playMedia (const QString &sCmdLine);
+   bool isPlaying ();
+   int  play();
+   int  stop();
+   int  pause();
    void sendStateMsg (const QString &msg);
    void setPlugInPath(const QString &sPath);
    static void eventCallback (const libvlc_event_t *ev, void *player);
@@ -78,7 +80,6 @@ protected:
 private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
-   bool                    bIsPlaying;
    libvlc_exception_t      vlcExcpt;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
@@ -95,6 +96,7 @@ private slots:
 
 signals:
    void sigStateChg(const QString &str);
+   void sigPlayerError ();
 };
 
 #endif /* __022410__CPLAYER_H */

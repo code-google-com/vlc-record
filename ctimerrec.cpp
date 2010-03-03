@@ -36,9 +36,6 @@ CTimerRec::CTimerRec(QWidget *parent) : QDialog(parent), r_ui(new Ui::CTimerRec)
    pXmlParser = NULL;
    pSettings  = NULL;
    itActJob   = NULL;
-#ifdef INCLUDE_LIBVLC
-   pPlayer    = NULL;
-#endif /* INCLUDE_LIBVLC */
    InitTab();
    connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
 }
@@ -197,24 +194,6 @@ void CTimerRec::SetVlcCtrl(CVlcCtrl *pCtrl)
 {
    pVlcCtrl = pCtrl;
 }
-
-#ifdef INCLUDE_LIBVLC
-/* -----------------------------------------------------------------\
-|  Method: SetPlayer
-|  Begin: 01.03.2010 / 15:05:00
-|  Author: Jo2003
-|  Description: set libvlc player
-|
-|  Parameters: pointer to libvlc player class
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CTimerRec::SetPlayer(CPlayer *pPlay)
-{
-   pPlayer = pPlay;
-}
-#endif /* INCLUDE_LIBVLC */
-
 
 /* -----------------------------------------------------------------\
 |  Method: SetRecInfo
@@ -962,48 +941,16 @@ void CTimerRec::slotTimerStreamUrl(QString str)
                                         pSettings->GetBufferTime(), sDst, "ts");
    }
 
-#ifdef INCLUDE_LIBVLC
-   if (pPlayer)
-   {
-      // ---------------------
-      // use libvlc ...
-      // ---------------------
-      int         iRV   = 0;
-      QStringList lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
-
-      mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
-
-      iRV = pPlayer->initPlayer(lArgs);
-
-      if (!iRV)
-      {
-         iRV = pPlayer->setMedia(sUrl);
-      }
-
-      if (!iRV)
-      {
-         iRV = pPlayer->play();
-      }
-
-      if(!iRV)
-      {
-         vlcpid = (Q_PID)99;
-      }
-   }
-   else
-#endif /* INCLUDE_LIBVLC */
-   {
-      vlcpid = pVlcCtrl->start(sCmdLine);
-   }
+   vlcpid = pVlcCtrl->start(sCmdLine);
 
    // successfully started ?
    if (!vlcpid)
    {
-      QMessageBox::critical(this, tr("Error!"), tr("Can't start VLC-Media Player!"));
+      QMessageBox::critical(this, tr("Error!"), tr("Can't start Player!"));
    }
    else
    {
-      mInfo(tr("Started VLC with pid #%1!").arg((uint)vlcpid));
+      mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
    }
 }
 

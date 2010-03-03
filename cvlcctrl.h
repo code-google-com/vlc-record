@@ -26,6 +26,10 @@
 #include "templates.h"
 #include "ctranslit.h"
 
+#ifdef INCLUDE_LIBVLC
+   #include "cplayer.h"
+#endif
+
 namespace vlcctrl
 {
    class CVlcCtrl;
@@ -57,7 +61,7 @@ public:
    virtual ~CVlcCtrl();
 
    void    SetProgPath(const QString &str);
-   Q_PID   start (const QString& sCmdLine, int iRunTime = -1);
+   Q_PID   start (const QString& sCmdLine, int iRunTime = -1, bool bDetach = false);
    void    CancelTimer ();
    void    SetTimer (uint uiTime);
    void    stop ();
@@ -69,6 +73,9 @@ public:
                          const QString &mux = QString());
 
    int     LoadPlayerModule (const QString &sPath);
+#ifdef INCLUDE_LIBVLC
+   void    SetLibVLCPlayer (CPlayer *pPlay);
+#endif
 
 private:
    QTimer     tRunTime;
@@ -82,9 +89,18 @@ private:
    bool       bTranslit;
    CTranslit *pTranslit;
    QString    sFrcMx;
+#ifdef INCLUDE_LIBVLC
+   CPlayer   *pLibVLCPlayer;
+#endif
 
 private slots:
    void slotStateChanged (QProcess::ProcessState newState);
+#ifdef INCLUDE_LIBVLC
+   void slotLibVlcError ();
+#endif
+
+public slots:
+   virtual void terminate();
 
 signals:
    void sigVlcEnds ();
