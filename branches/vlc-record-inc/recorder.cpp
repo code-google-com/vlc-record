@@ -43,7 +43,6 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    iEpgOffset     = 0;
    uiArchivGmt    = 0;
    iFontSzChg     = 0;
-   iUseLibVLC     = 0;
    sLogoPath      = dwnLogos.GetLogoPath();
 
    // init favourite buttons ...
@@ -107,13 +106,11 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // do we use libVLC ?
    if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
    {
-      iUseLibVLC = 1;
-      timeRec.SetPlayer(ui->player);
+      vlcCtrl.SetLibVLCPlayer (ui->player);
    }
    else
    {
-      iUseLibVLC = 0;
-      timeRec.SetPlayer(NULL);
+      vlcCtrl.SetLibVLCPlayer (NULL);
    }
 #endif /* INCLUDE_LIBVLC */
 
@@ -121,7 +118,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (&KartinaTv,  SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
-   connect (&KartinaTv,  SIGNAL(sigGotCookie()), this, SLOT(slotCookie()));
+   connect (&KartinaTv,  SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotEPG(QString)), this, SLOT(slotEPG(QString)));
    connect (&KartinaTv,  SIGNAL(sigTimeShiftSet()), this, SLOT(slotTimeShift()));
    connect (&Refresh,    SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
@@ -158,6 +155,21 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // request authorisation ...
    Trigger.TriggerRequest(Kartina::REQ_COOKIE);
+
+/*
+   QString sCookie = Settings.GetCookie();
+
+   if (sCookie.length() > 0)
+   {
+      KartinaTv.SetCookie(sCookie);
+      Trigger.TriggerRequest(Kartina::REQ_GET_SERVER);
+   }
+   else
+   {
+      // request authorisation ...
+      Trigger.TriggerRequest(Kartina::REQ_COOKIE);
+   }
+*/
 
    // start refresh timer, if needed ...
    if (Settings.DoRefresh())
@@ -758,7 +770,6 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
    QDateTime   now      = QDateTime::currentDateTime();
    QString     sExt     = "ts", fileName;
    QString     sCmdLine;
-   QStringList lArgs;
 
    // should we ask for file name ... ?
    if (Settings.AskForRecFile())
@@ -817,55 +828,10 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
                                          fileName, sExt);
       }
 
+      // start player if we have a command line ...
       if (sCmdLine != "")
       {
-         if (iUseLibVLC)
-         {
-#ifdef INCLUDE_LIBVLC
-            // ---------------------
-            // use libvlc ...
-            // ---------------------
-            lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
-
-            mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
-
-            // init player ...
-            iRV = ui->player->initPlayer(lArgs);
-
-            if (!iRV)
-            {
-               // load media ...
-               iRV = ui->player->setMedia(sURL);
-            }
-
-            if (!iRV)
-            {
-               // start play ...
-               iRV = ui->player->play();
-            }
-
-            if (!iRV)
-            {
-               vlcpid = (Q_PID)99; // any value != 0 ...
-            }
-#endif /* INCLUDE_LIBVLC */
-         }
-         else
-         {
-            if (Settings.DetachPlayer())
-            {
-               mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
-
-               if (QProcess::startDetached(sCmdLine))
-               {
-                  vlcpid = (Q_PID)99; // any value != 0 ...
-               }
-            }
-            else
-            {
-               vlcpid = vlcCtrl.start(sCmdLine);
-            }
-         }
+         vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer());
       }
 
       // successfully started ?
@@ -899,7 +865,6 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
    int         iRV      = 0;
    Q_PID       vlcpid   = 0;
    QString     sCmdLine;
-   QStringList lArgs;
 
    if (bArchiv)
    {
@@ -916,55 +881,10 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
                                       Settings.GetBufferTime());
    }
 
+   // start player if we have a command line ...
    if (sCmdLine != "")
    {
-      if (iUseLibVLC)
-      {
-#ifdef INCLUDE_LIBVLC
-         // ---------------------
-         // use libvlc ...
-         // ---------------------
-         lArgs = sCmdLine.split(";;", QString::SkipEmptyParts);
-
-         mInfo(tr("Init libvlc_media_player using folling arguments:\n  --> %1").arg(lArgs.join(" ")));
-
-         // init player ...
-         iRV = ui->player->initPlayer(lArgs);
-
-         if (!iRV)
-         {
-            // load media ...
-            iRV = ui->player->setMedia(sURL);
-         }
-
-         if (!iRV)
-         {
-            // start play ...
-            iRV = ui->player->play();
-         }
-
-         if (!iRV)
-         {
-            vlcpid = (Q_PID)99; // any value != 0 ...
-         }
-#endif /* INCLUDE_LIBVLC */
-      }
-      else
-      {
-         if (Settings.DetachPlayer())
-         {
-            mInfo(tr("Start player using folling command line:\n  --> %1").arg(sCmdLine));
-
-            if(QProcess::startDetached(sCmdLine))
-            {
-               vlcpid = (Q_PID)99; // any value != 0 ...
-            }
-         }
-         else
-         {
-            vlcpid = vlcCtrl.start(sCmdLine);
-         }
-      }
+      vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer());
    }
 
    // successfully started ?
@@ -1015,20 +935,19 @@ void Recorder::on_pushSettings_clicked()
       }
 
       // set language as read ...
-      pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()), QApplication::applicationDirPath());
+      pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()),
+                        QString("%1/language").arg(QApplication::applicationDirPath()));
 
 #ifdef INCLUDE_LIBVLC
-      // do we use libVLC ?
-      if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
-      {
-         iUseLibVLC = 1;
-         timeRec.SetPlayer(ui->player);
-      }
-      else
-      {
-         iUseLibVLC = 0;
-         timeRec.SetPlayer(NULL);
-      }
+   // do we use libVLC ?
+   if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
+   {
+      vlcCtrl.SetLibVLCPlayer (ui->player);
+   }
+   else
+   {
+      vlcCtrl.SetLibVLCPlayer (NULL);
+   }
 #endif /* INCLUDE_LIBVLC */
 
       // give vlcCtrl needed infos ...
@@ -1177,8 +1096,11 @@ void Recorder::slotStreamURL(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotCookie()
+void Recorder::slotCookie (QString sCookie)
 {
+   // save cookie ...
+   // Settings.SaveCookie(sCookie);
+
    Trigger.TriggerRequest(Kartina::REQ_GET_SERVER);
 }
 
@@ -1319,16 +1241,27 @@ void Recorder::on_cbxTimeShift_currentIndexChanged(QString str)
 \----------------------------------------------------------------- */
 void Recorder::EnableDisableDlg (bool bEnable)
 {
-   if (bEnable && (bPendingRecord || bVlcRuns))
+   if (bEnable && bVlcRuns && !bPendingRecord)
    {
-      bEnable = false;
+      ui->cbxTimeShift->setEnabled(bEnable);
+      ui->pushPlay->setEnabled(bEnable);
+      ui->pushRecord->setEnabled(bEnable);
+      ui->pushStop->setEnabled(bEnable);
    }
-
-   ui->cbxTimeShift->setEnabled(bEnable);
-   ui->pushPlay->setEnabled(bEnable);
-   ui->pushRecord->setEnabled(bEnable);
-
-   ui->pushStop->setDisabled(bEnable);
+   else if (bEnable && bPendingRecord)
+   {
+      ui->cbxTimeShift->setDisabled(bEnable);
+      ui->pushPlay->setDisabled(bEnable);
+      ui->pushRecord->setDisabled(bEnable);
+      ui->pushStop->setEnabled(bEnable);
+   }
+   else
+   {
+      ui->cbxTimeShift->setEnabled(bEnable);
+      ui->pushPlay->setEnabled(bEnable);
+      ui->pushRecord->setEnabled(bEnable);
+      ui->pushStop->setDisabled(bEnable);
+   }
 }
 
 /* -----------------------------------------------------------------\

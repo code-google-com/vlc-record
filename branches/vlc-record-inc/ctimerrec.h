@@ -28,9 +28,6 @@
 #include "cwaittrigger.h"
 #include "csettingsdlg.h"
 #include "cvlcctrl.h"
-#ifdef INCLUDE_LIBVLC
-   #include "cplayer.h"
-#endif
 
 //===================================================================
 // namespace
@@ -100,9 +97,6 @@ public:
    void InitTab ();
    void StartTimer ();
    void ShutDown ();
-#ifdef INCLUDE_LIBVLC
-   void SetPlayer (CPlayer *pPlay);
-#endif
 
 protected:
    void changeEvent(QEvent *e);
@@ -125,10 +119,6 @@ private:
    CWaitTrigger      *pTrigger;
    CSettingsDlg      *pSettings;
    CVlcCtrl          *pVlcCtrl;
-#ifdef INCLUDE_LIBVLC
-   CPlayer           *pPlayer;
-#endif
-
 
 signals:
    void sigRecDone ();
