@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cfavaction.h $
+| $HeadURL$
 |
 | Author: Jo2003
 |
 | Begin: 18.01.2010 / 16:16:25
 |
-| Last edited by: $Author: Olenka.Joerg $
+| Last edited by: $Author$
 |
-| $Id: cfavaction.h 90 2010-02-26 13:32:14Z Olenka.Joerg $
+| $Id$
 \*************************************************************/
 #ifndef __022510__CFAVACTION_H
    #define __022510__CFAVACTION_H

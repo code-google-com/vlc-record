@@ -30,9 +30,8 @@ CVlcCtrl::CVlcCtrl(const QString &path, QObject *parent) : QProcess(parent)
    sFrcMx            = "no";
    bTranslit         = false;
    pTranslit         = NULL;
-#ifdef INCLUDE_LIBVLC
-   pLibVLCPlayer     = NULL;
-#endif
+   bUseLibVlc        = false;
+   libVlcPlayState   = IncPlay::PS_WTF;
 
    if (path != "")
    {
@@ -68,7 +67,6 @@ CVlcCtrl::~CVlcCtrl()
    }
 }
 
-#ifdef INCLUDE_LIBVLC
 /* -----------------------------------------------------------------\
 |  Method: SetLibVLCPlayer
 |  Begin: 03.03.2010 / 08:45:00
@@ -79,12 +77,10 @@ CVlcCtrl::~CVlcCtrl()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CVlcCtrl::SetLibVLCPlayer(CPlayer *pPlay)
+void CVlcCtrl::UseLibVlc(bool bUsage)
 {
-   pLibVLCPlayer = pPlay;
-   connect(pLibVLCPlayer, SIGNAL(sigPlayerError()), this, SLOT(slotLibVlcError()));
+   bUseLibVlc = bUsage;
 }
-#endif // INCLUDE_LIBVLC
 
 /* -----------------------------------------------------------------\
 |  Method: SetTranslitPointer
@@ -231,34 +227,21 @@ Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime, bool bDetach)
 {
    Q_PID vlcPid = 0;
 
-#ifdef INCLUDE_LIBVLC
    // -------------------------------------------------------
    // use libVLC player ...
    // -------------------------------------------------------
-   if (pLibVLCPlayer)
+   if (bUseLibVlc)
    {
       // detach isn't possible ...
       bDetach = false;
 
-      // emit starting message ...
-      emit stateChanged(QProcess::Starting);
-
       // play media ...
-      if (!pLibVLCPlayer->playMedia(sCmdLine))
-      {
-         vlcPid = (Q_PID)99; // anything but 0 ...
+      emit sigLibVlcPlayMedia(sCmdLine);
 
-         // emit state change ...
-         emit stateChanged(QProcess::Running);
-      }
-      else
-      {
-         // can't start ...
-         emit stateChanged(QProcess::NotRunning);
-      }
+      // assume that all is well ...
+      vlcPid = (Q_PID)99; // anything but 0 ...
    }
    else
-#endif /* INCLUDE_LIBVLC */
    {
       // -------------------------------------------------------
       // external player ...
@@ -390,14 +373,21 @@ bool CVlcCtrl::IsRunning()
 {
    bool bRV = false;
 
-#ifdef INCLUDE_LIBVLC
-   if (pLibVLCPlayer)
+   if (bUseLibVlc)
    {
-      // Does internal player play ?
-      bRV = pLibVLCPlayer->isPlaying();
+      switch (libVlcPlayState)
+      {
+      case IncPlay::PS_BUFFER:
+      case IncPlay::PS_OPEN:
+      case IncPlay::PS_PAUSE:
+      case IncPlay::PS_PLAY:
+         bRV = true;
+         break;
+      default:
+         break;
+      }
    }
    else
-#endif
    {
       switch (state())
       {
@@ -407,7 +397,6 @@ bool CVlcCtrl::IsRunning()
          break;
 
       default:
-         bRV = false;
          break;
       }
    }
@@ -563,16 +552,14 @@ void CVlcCtrl::slotStateChanged(QProcess::ProcessState newState)
 \----------------------------------------------------------------- */
 void CVlcCtrl::terminate()
 {
-#ifdef INCLUDE_LIBVLC
-   if (pLibVLCPlayer)
+   if (bUseLibVlc)
    {
       // This is no external process,
       // simply stop the player ...
-      emit finished(pLibVLCPlayer->stop(), QProcess::NormalExit);
-      emit stateChanged(QProcess::NotRunning);
+      emit sigLibVlcStop();
+      emit finished(0, QProcess::NormalExit);
    }
    else
-#endif
    {
       // terminate only if it is running ...
       if (IsRunning())
@@ -586,23 +573,47 @@ void CVlcCtrl::terminate()
    }
 }
 
-#ifdef INCLUDE_LIBVLC
 /* -----------------------------------------------------------------\
-|  Method: slotLibVlcError [slot]
+|  Method: slotLibVlcStateChange [slot]
 |  Begin: 03.03.2010 / 12:05:00
 |  Author: Jo2003
-|  Description: got error from libVlc player ...
+|  Description: state change from libVlc player ...
 |
-|  Parameters: --
+|  Parameters: new play state
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CVlcCtrl::slotLibVlcError ()
+void CVlcCtrl::slotLibVlcStateChange (int ps)
 {
-   mWarn(tr("libVLC player reports an error!"));
-   emit stateChanged(QProcess::NotRunning);
+   // something changed ... ?
+   if (libVlcPlayState != (IncPlay::ePlayStates)ps)
+   {
+      libVlcPlayState = (IncPlay::ePlayStates)ps;
+
+      mInfo(tr("libVLC reports new state %1").arg((int)ps));
+
+      switch(libVlcPlayState)
+      {
+      case IncPlay::PS_OPEN:
+         emit stateChanged(QProcess::Starting);
+         break;
+
+      case IncPlay::PS_PLAY:
+         emit stateChanged(QProcess::Running);
+         break;
+
+      case IncPlay::PS_STOP:
+      case IncPlay::PS_END:
+      case IncPlay::PS_ERROR:
+         emit stateChanged(QProcess::NotRunning);
+         break;
+
+      default:
+         break;
+      }
+   }
 }
-#endif
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/

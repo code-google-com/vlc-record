@@ -20,6 +20,7 @@
 #include <vlc/vlc.h>
 
 #include "clogfile.h"
+#include "playstates.h"
 
 //===================================================================
 // namespace
@@ -61,12 +62,7 @@ public:
    ~CPlayer();
    int  initPlayer (QStringList &slArgs);
    int  setMedia (const QString &sMrl);
-   int  playMedia (const QString &sCmdLine);
    bool isPlaying ();
-   int  play();
-   int  stop();
-   int  pause();
-   void sendStateMsg (const QString &msg);
    void setPlugInPath(const QString &sPath);
    static void eventCallback (const libvlc_event_t *ev, void *player);
 
@@ -94,9 +90,15 @@ private slots:
    void slotChangeVolume(int newVolume);
    void slotLibVLCLog ();
 
+public slots:
+   int  playMedia (const QString &sCmdLine);
+   int  play();
+   int  stop();
+   int  pause();
+
 signals:
    void sigStateChg(const QString &str);
-   void sigPlayerError ();
+   void sigPlayState (int ps);
 };
 
 #endif /* __022410__CPLAYER_H */

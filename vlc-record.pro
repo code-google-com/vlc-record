@@ -17,13 +17,11 @@ else:CONFIG += static
 # values into customization.h
 # -------------------------------------
 # DEFINES += _CUST_RUSS_TELEK
-
 # -------------------------------------
 # Build with or without
 # included player or without?
 # -------------------------------------
 DEFINES += INCLUDE_LIBVLC
-
 SOURCES += main.cpp \
     recorder.cpp \
     cinifile.cpp \
@@ -57,7 +55,8 @@ HEADERS += recorder.h \
     cvlcctrl.h \
     customization.h \
     ctranslit.h \
-    cfavaction.h
+    cfavaction.h \
+    playstates.h
 FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/ctimerrec.ui
@@ -67,7 +66,7 @@ TRANSLATIONS = lang_de.ts \
     lang_ru.ts
 
 # for static build ...
-static {
+static { 
     DEFINES += DSTATIC
     DEFINES += DINCLUDEPLUGS
     QTPLUGIN += qico \
@@ -75,7 +74,7 @@ static {
         qjpeg
 }
 win32:TARGET = vlc-record
-else {
+else { 
     static:TARGET = release/vlc-record
     shared:TARGET = debug/vlc-record
 }
@@ -84,32 +83,31 @@ else {
 # add includes if we want to build
 # with included player!
 # -------------------------------------
-contains(DEFINES,INCLUDE_LIBVLC) {
-   INCLUDEPATH += include
-   HEADERS += include/vlc/deprecated.h \
-    include/vlc/libvlc.h \
-    include/vlc/libvlc_events.h \
-    include/vlc/libvlc_media.h \
-    include/vlc/libvlc_media_discoverer.h \
-    include/vlc/libvlc_media_library.h \
-    include/vlc/libvlc_media_list.h \
-    include/vlc/libvlc_media_list_player.h \
-    include/vlc/libvlc_media_list_view.h \
-    include/vlc/libvlc_media_player.h \
-    include/vlc/libvlc_structures.h \
-    include/vlc/libvlc_vlm.h \
-    include/vlc/mediacontrol.h \
-    include/vlc/mediacontrol_structures.h \
-    include/vlc/vlc.h \
-    cplayer.h
-   FORMS += forms/cplayer.ui \
-    forms/recorder_inc.ui
-   SOURCES += cplayer.cpp
-   LIBS += -Llib -lvlc
+contains(DEFINES,INCLUDE_LIBVLC) { 
+    INCLUDEPATH += include
+    HEADERS += include/vlc/deprecated.h \
+        include/vlc/libvlc.h \
+        include/vlc/libvlc_events.h \
+        include/vlc/libvlc_media.h \
+        include/vlc/libvlc_media_discoverer.h \
+        include/vlc/libvlc_media_library.h \
+        include/vlc/libvlc_media_list.h \
+        include/vlc/libvlc_media_list_player.h \
+        include/vlc/libvlc_media_list_view.h \
+        include/vlc/libvlc_media_player.h \
+        include/vlc/libvlc_structures.h \
+        include/vlc/libvlc_vlm.h \
+        include/vlc/mediacontrol.h \
+        include/vlc/mediacontrol_structures.h \
+        include/vlc/vlc.h \
+        cplayer.h
+    FORMS += forms/cplayer.ui \
+        forms/recorder_inc.ui
+    SOURCES += cplayer.cpp
+    LIBS += -Llib \
+        -lvlc
 }
-else {
-   FORMS += forms/recorder.ui
-}
+else:FORMS += forms/recorder.ui
 
 # translation stuff ...
 include (language.pri)
