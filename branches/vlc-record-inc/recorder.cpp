@@ -106,12 +106,18 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // do we use libVLC ?
    if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
    {
-      vlcCtrl.SetLibVLCPlayer (ui->player);
+      vlcCtrl.UseLibVlc(true);
    }
    else
    {
-      vlcCtrl.SetLibVLCPlayer (NULL);
+      vlcCtrl.UseLibVlc(false);
    }
+
+   // connect vlc control with libvlc player ...
+   connect (ui->player, SIGNAL(sigPlayState(int)), &vlcCtrl, SLOT(slotLibVlcStateChange(int)));
+   connect (&vlcCtrl, SIGNAL(sigLibVlcPlayMedia(QString)), ui->player, SLOT(playMedia(QString)));
+   connect (&vlcCtrl, SIGNAL(sigLibVlcStop()), ui->player, SLOT(stop()));
+
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
@@ -939,15 +945,15 @@ void Recorder::on_pushSettings_clicked()
                         QString("%1/language").arg(QApplication::applicationDirPath()));
 
 #ifdef INCLUDE_LIBVLC
-   // do we use libVLC ?
-   if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
-   {
-      vlcCtrl.SetLibVLCPlayer (ui->player);
-   }
-   else
-   {
-      vlcCtrl.SetLibVLCPlayer (NULL);
-   }
+      // do we use libVLC ?
+      if (Settings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
+      {
+         vlcCtrl.UseLibVlc(true);
+      }
+      else
+      {
+         vlcCtrl.UseLibVlc(false);
+      }
 #endif /* INCLUDE_LIBVLC */
 
       // give vlcCtrl needed infos ...

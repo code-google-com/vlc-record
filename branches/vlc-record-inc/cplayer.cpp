@@ -12,11 +12,6 @@
 #include "cplayer.h"
 #include "ui_cplayer.h"
 
-// -----------------------------------------------------------------------------
-// macro definition for state changes ...
-// -----------------------------------------------------------------------------
-#define mCaseStateChg(__state__) case __state__: emit pPlayer->sendStateMsg(#__state__); break
-
 // log file functions ...
 extern CLogFile VlcLog;
 
@@ -60,7 +55,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    // do periodical logging ...
    connect(&poller, SIGNAL(timeout()), this, SLOT(slotLibVLCLog()));
 
-   poller.start(500);
+   poller.start(1000);
 }
 
 /* -----------------------------------------------------------------\
@@ -605,14 +600,41 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
          // media state changed ... what is the new state ...
          switch (ev->u.media_state_changed.new_state)
          {
-         mCaseStateChg(libvlc_NothingSpecial);
-         mCaseStateChg(libvlc_Opening);
-         mCaseStateChg(libvlc_Buffering);
-         mCaseStateChg(libvlc_Playing);
-         mCaseStateChg(libvlc_Paused);
-         mCaseStateChg(libvlc_Stopped);
-         mCaseStateChg(libvlc_Ended);
-         mCaseStateChg(libvlc_Error);
+         case libvlc_Opening:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_OPEN);
+            emit pPlayer->sigStateChg(tr("OPENING"));
+            break;
+
+         case libvlc_Buffering:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_BUFFER);
+            emit pPlayer->sigStateChg(tr("BUFFERING"));
+            break;
+
+         case libvlc_Playing:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_PLAY);
+            emit pPlayer->sigStateChg(tr("PLAYING"));
+            break;
+
+         case libvlc_Paused:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_PAUSE);
+            emit pPlayer->sigStateChg(tr("PAUSED"));
+            break;
+
+         case libvlc_Stopped:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
+            emit pPlayer->sigStateChg(tr("STOPPED"));
+            break;
+
+         case libvlc_Ended:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_END);
+            emit pPlayer->sigStateChg(tr("ENDED"));
+            break;
+
+         case libvlc_Error:
+            emit pPlayer->sigPlayState((int)IncPlay::PS_ERROR);
+            emit pPlayer->sigStateChg(tr("ERROR"));
+            break;
+
          default:
             break;
          }
@@ -621,31 +643,13 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 
    // player error event ...
    case libvlc_MediaPlayerEncounteredError:
-      emit pPlayer->sigPlayerError();
+      emit pPlayer->sigPlayState((int)IncPlay::PS_ERROR);
+      emit pPlayer->sigStateChg(tr("ERROR"));
       break;
 
    default:
       break;
    }
-}
-
-/* -----------------------------------------------------------------\
-|  Method: sendStateMsg
-|  Begin: 01.03.2010 / 14:00:10
-|  Author: Jo2003
-|  Description: short state string and emit signal ...
-|
-|  Parameters: ref. to state message ...
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CPlayer::sendStateMsg (const QString &msg)
-{
-   // remove "libvlc_" from string ...
-   QString sMsg = msg;
-   sMsg.remove("libvlc_", Qt::CaseInsensitive);
-   sMsg = sMsg.toUpper();
-   emit sigStateChg(sMsg);
 }
 
 /* -----------------------------------------------------------------\
