@@ -1,4 +1,5 @@
 #summary Here you'll find news about the releases.
+#labels Featured
 
 = New in version ... =
 
