@@ -1,0 +1,7 @@
+#summary Here you'll find news about the releases.
+
+= New in version ... =
+
+== 2.23 ==
+ * bugfix for crash on exit if player still was playing
+ * this is *not* related to version 1.22 classic
