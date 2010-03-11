@@ -21,7 +21,7 @@ http://www.coujo.de/pix/vlc-record/settings_2.png
 <br />_second settings tab with extended settings_
 
 
-==Tiner Record==
+==Timer Record==
 
 http://www.coujo.de/pix/vlc-record/timer_rec.png
-<br />_dialog to edit / plann rimer records_
+<br />_dialog to edit / plann timer records_
