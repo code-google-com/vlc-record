@@ -3,6 +3,10 @@
 
 = VLC-Record for Linux =
 
+== At this time ==
+
+... the Ubuntu package for the 2.xx version doesn't work. To fix this I'll prepare a new version of the VLC-Player (1.05) for Ubuntu. If you then install the new player and remove the "old" player, all should work.
+
 == Intro ==
 
 For versions newer than x.20 I decided to build packages for the actual Ubuntu only. So there is no static linked application but it uses the qt4 stuff which comes with Ubuntu. The 2.xx version (the so called new version) also uses the libVLC which comes with Ubuntu. At this time this is libvlc2. Because kartina.tv changed the archiv access to http protocol the "old" version of Ubuntu is no problem.
