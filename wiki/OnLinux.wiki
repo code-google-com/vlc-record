@@ -5,7 +5,7 @@
 
 == At this time ==
 
-... the Ubuntu package for the 2.xx version doesn't work without some work. Have a look at the NewVersionOnUbuntu Wiki. Hopefully this will help you.
+... the Ubuntu package for the 2.xx version doesn't work without some handmade stuff. Have a look at the NewVersionOnUbuntu Wiki. Hopefully this will help you.
 
 == Intro ==
 
