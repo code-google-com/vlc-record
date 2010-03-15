@@ -16,7 +16,7 @@ But because for me it's really important to have a "full" Linux-Version, I tried
  * Download and install the new vlc package
  _sudo dpkg -i /path/to/vlc-1.0.5-1_i386.deb_
  * tell ld where to look for libvlc
- _sudo cat >/etc/ld.so.conf.d/libvlc.conf << EOF_<br />
+ _sudo sh -c "cat >/etc/ld.so.conf.d/libvlc.conf << EOF"_<br />
  _# where to look for libvlc ..._<br />
  _/opt/vlc-1.0.5/lib_<br />
  _EOF_
