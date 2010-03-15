@@ -13,7 +13,7 @@ But because for me it's really important to have a "full" Linux-Version, I tried
 = Let's go =
  * Uninstall the old vlc as well as dependent packages.
 {{{
-sudo apt-get remove vlc libvlc2 libvlccore2 vlcdata
+sudo apt-get remove vlc libvlc2 libvlccore2
 }}}
 
  * Download and install the new vlc package
@@ -31,7 +31,7 @@ EOF"
 
  * run ldconfig
 {{{
-sudo ldconfig -n /opt/vlc-1.0.5/lib
+sudo ldconfig
 }}}
 
  * Download and install VLC-Record
