@@ -6,8 +6,8 @@ Running VLC-Record 2.xx under Ubuntu isn't that easy as I liked it to ...
 But because for me it's really important to have a "full" Linux-Version, I tried to figure out how to make it. Don't expect a 100% clean way. I haven't the time to do so ...
 
 = What we need ... =
- * We need a "special" vlc package with last stable version of the vlc player.
- * We need the package of VLC-Record.
+ * We need [http://vlc-record.googlecode.com/files/vlc_1.0.5-1_i386.deb a "special" vlc package] with last stable version of the vlc player.
+ * We need the [http://vlc-record.googlecode.com/files/vlc-record_2.23-1_i386.deb package of VLC-Record].
  * We need a (very) little knowledge about Ubuntu.
 
 = Let's go =
