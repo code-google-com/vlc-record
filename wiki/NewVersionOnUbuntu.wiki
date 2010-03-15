@@ -12,15 +12,27 @@ But because for me it's really important to have a "full" Linux-Version, I tried
 
 = Let's go =
  * Uninstall the old vlc as well as dependent packages.
-  _sudo apt-get remove vlc libvlc2 libvlccore2 vlcdata_
+{{{
+sudo apt-get remove vlc libvlc2 libvlccore2 vlcdata
+}}}
+
  * Download and install the new vlc package
-  _sudo dpkg -i /path/to/vlc-1.0.5-1_i386.deb_
+{{{
+sudo dpkg -i /path/to/vlc-1.0.5-1_i386.deb
+}}}
+
  * tell ld where to look for libvlc
-  _sudo sh -c "cat >/etc/ld.so.conf.d/libvlc.conf << EOF_<br />
-  _# where to look for libvlc ..._<br />
-  _/opt/vlc-1.0.5/lib_<br />
-  _EOF"_
+{{{
+sudo sh -c "cat >/etc/ld.so.conf.d/libvlc.conf << EOF
+# where to look for libvlc ...
+/opt/vlc-1.0.5/lib
+EOF"
+}}}
+
  * run ldconfig
-  _sudo ldconfig -n /opt/vlc-1.0.5/lib_
+{{{
+sudo ldconfig -n /opt/vlc-1.0.5/lib
+}}}
+
  * Install VLC-Record
  * Done!
