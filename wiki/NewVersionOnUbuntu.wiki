@@ -1,5 +1,5 @@
 #summary quick'n'dirty: Get VLC-Record 2.xx to work on Ubuntu 9.10
-#labels Deprecated
+#labels Featured
 
 = Intro =
 Running VLC-Record 2.xx under Ubuntu isn't that easy as I liked it to ...
