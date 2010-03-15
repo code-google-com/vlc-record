@@ -13,7 +13,7 @@ But because for me it's really important to have a "full" Linux-Version, I tried
 = Let's go =
  * Uninstall the old vlc as well as dependent packages.
 {{{
-sudo apt-get remove vlc libvlc2 libvlccore2
+sudo apt-get remove vlc libvlc2 libvlccore2 vlc-data
 }}}
 
  * Download and install the new vlc package
