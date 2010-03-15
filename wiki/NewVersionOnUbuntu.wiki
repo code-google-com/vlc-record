@@ -18,7 +18,7 @@ sudo apt-get remove vlc libvlc2 libvlccore2 vlcdata
 
  * Download and install the new vlc package
 {{{
-sudo dpkg -i /path/to/vlc-1.0.5-1_i386.deb
+sudo dpkg -i /path/to/vlc_1.0.5-1_i386.deb
 }}}
 
  * tell ld where to look for libvlc
@@ -34,5 +34,14 @@ EOF"
 sudo ldconfig -n /opt/vlc-1.0.5/lib
 }}}
 
- * Install VLC-Record
+ * Download and install VLC-Record
+{{{
+sudo dpkg -i /path/to/vlc-record_2.23-1_i386.deb
+}}}
  * Done!
+
+= Where to find what? =
+There are no menu entries for the new installed software. Nevertheless you can use it ;-) 
+The new vlc player is now located in _/opt/vlc-1.0.5_. So if you want to start it, simply run _/opt/vlc-1.0.5/bin/vlc_. VLC-Record is located in _/opt/vlc-record_. Run it using following command line: _/opt/vlc-record/vlc-record_. Create the starter you like where you like. If all works well VLC-Record now uses the updated libVLC and you can enjoy the new version.
+
+= Howto get rid of this shit? =
