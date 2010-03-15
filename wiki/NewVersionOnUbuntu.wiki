@@ -45,3 +45,21 @@ There are no menu entries for the new installed software. Nevertheless you can u
 The new vlc player is now located in _/opt/vlc-1.0.5_. So if you want to start it, simply run _/opt/vlc-1.0.5/bin/vlc_. VLC-Record is located in _/opt/vlc-record_. Run it using following command line: _/opt/vlc-record/vlc-record_. Create the starter you like where you like. If all works well VLC-Record now uses the updated libVLC and you can enjoy the new version.
 
 = Howto get rid of this shit? =
+You don't like what you have now? Why ...? Nevertheless there a 100% clean way to get rid of the new installed stuff.
+
+ * Remove VLC-Record
+{{{
+sudo dpkg -i vlc-record
+}}}
+ * Remove the special vlc player package
+{{{
+sudo dpkg -r vlc
+}}}
+ * Remove the entry in _/etc/ld.so.conf.d_
+{{{
+sudo rm /etc/ld.so.conf.d/libvlc.conf
+}}}
+ * Update linker cache
+{{{
+sudo ldconfig
+}}}
