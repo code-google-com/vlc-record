@@ -12,6 +12,10 @@
 #include "cplayer.h"
 #include "ui_cplayer.h"
 
+#ifdef Q_OS_MAC
+   #import <VLCKit/VLCKit.h>
+#endif
+
 // log file functions ...
 extern CLogFile VlcLog;
 
@@ -42,6 +46,15 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 #else
    uiVerboseLevel = 1;
 #endif /* QT_NO_DEBUG */
+
+   // create video widget ...
+#ifdef Q_OS_MAC
+   NSAutoreleasePool *pool      = [[NSAutoreleasePool alloc] init];
+   VLCVideoView      *videoView = [[VLCVideoView alloc] init];
+   pVideoWidget                 = new QMacCocoaViewContainer (videoView, this);
+#else
+   pVideoWidget                 = new QFrame (this);
+#endif
 
    // init exception structure ...
    libvlc_exception_init(&vlcExcpt);
@@ -220,6 +233,10 @@ int CPlayer::initPlayer(QStringList &slArgs)
 #ifdef Q_OS_WIN32
    // don't catch key press events ... (should work in patched libVLC)
    slArgs << "--vout-event=3";
+#elif defined Q_WS_MAC
+   // some special Mac defines here ...
+   slArgs << "--vout=minimal_macosx"
+          << "--opengl-provider=minimal_macosx";
 #endif
 
    // fill vlcArgs struct ...

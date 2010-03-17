@@ -19,6 +19,10 @@
 #include <QTimer>
 #include <vlc/vlc.h>
 
+#ifdef Q_OS_MAC
+   #include <QMacCocoaViewContainer>
+#endif
+
 #include "clogfile.h"
 #include "playstates.h"
 
@@ -72,6 +76,7 @@ protected:
    void releasePlayer ();
    int  createArgs (const QStringList &lArgs, Ui::vlcArgs& args);
    void freeArgs (Ui::vlcArgs& args);
+   int  attach_to_wnd ();
 
 private:
    Ui::CPlayer            *ui;
@@ -85,6 +90,12 @@ private:
    libvlc_log_t           *pLibVlcLog;
    uint                    uiVerboseLevel;
    QString                 sPlugInPath;
+
+#ifdef Q_OS_MAC
+   QMacCocoaViewContainer *pVideoWidget;
+#else
+   QFrame                 *pVideoWidget;
+#endif
 
 private slots:
    void on_cbxAspect_currentIndexChanged(QString str);
