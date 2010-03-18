@@ -1,0 +1,61 @@
+#summary howto build vlc-record on Linux (tested on Ubuntu)
+
+= Introduction =
+Since Linux is such a wide field it's impossible to provide you with all possible packages so that you find the version that you need. So what we can do? Of course - make it on your own ;-)
+
+= What do we need? =
+At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, make and in addition checkinstall. To get these things on Ubuntu we run:
+
+{{{
+sudo apt-get install make g++ libqt4-dev checkinstall subversion
+}}}
+
+This also will install some additional packages our packages depend on. 
+
+= Prepare =
+Create a directory where we'll put the sources of vlc-record. We could make it that way:
+{{{
+mkdir -p ~/src/vlc-record
+}}}
+
+Now we go into the created _src_ folder and check out the vlc-record sources.
+
+{{{
+cd ~/src
+svn checkout http://vlc-record.googlecode.com/svn/trunk/vlc-record vlc-record
+}}}
+
+Now it's time to have a look at vlc-records project file. If we have made our own build of the vlc player to get a working libVLC we *must* also change the project file of vlc-record because we'd like to link against the new created libVLC and we want to use only that library. Keep cool, if you know how you can write an e-Mail, you'll get this project stuff done. You need to know where you have installed the vlc player. So in case you installed it into _/opt/vlc-1.0.5_ you have to remember that path. If you used my compiled version of the vlc player it's also that path.<br />
+Open the project file (vlc-record.pro) with the editor you like. Find following lines:
+
+{{{
+    FORMS += forms/cplayer.ui \
+        forms/recorder_inc.ui
+    SOURCES += cplayer.cpp
+    LIBS += -lvlc
+    win32:LIBS += -Llib
+}}}
+
+You now have to insert the path to vlc player so the linker will find the library we want to use. So change these line in that way:
+
+{{{
+    FORMS += forms/cplayer.ui \
+        forms/recorder_inc.ui
+    SOURCES += cplayer.cpp
+    LIBS += -lvlc
+    win32:LIBS += -Llib
+    unix:LIBS += -L/path/to/vlc/lib \
+        -Wl,-rpath /path/to/vlc/lib
+}}}
+
+So if - as in our case - the player is installed into _/opt/vlc-1.0.5_ these lines should look like:
+
+{{{
+    FORMS += forms/cplayer.ui \
+        forms/recorder_inc.ui
+    SOURCES += cplayer.cpp
+    LIBS += -lvlc
+    win32:LIBS += -Llib
+    unix:LIBS += -L/opt/vlc-1.0.5/lib \
+        -Wl,-rpath /opt/vlc-1.0.5/lib
+}}}
