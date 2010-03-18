@@ -50,6 +50,8 @@ You haven't found any libvlc file at all? Look below!
 
 == Use your own (or my) vlc player ==
 
+Please have a look to this [BuildVlcPlayer wiki] to find out howto build vlc player at your own from the source code. 
+
 Now it's time to have a look at vlc-records project file. If we have made our own build of the vlc player to get a working libVLC we *must* also change the project file of vlc-record because we'd like to link against the new created libVLC and we want to use only that library. Keep cool, if you know how you can write an e-Mail, you'll get this project stuff done. You need to know where you have installed the vlc player. So in case you installed it into _/opt/vlc-1.0.5_ you have to remember that path. If you used my compiled version of the vlc player it's also that path.<br />
 Open the project file (vlc-record.pro) with the editor you like. Find following lines:
 
