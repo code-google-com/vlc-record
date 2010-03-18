@@ -1,9 +1,10 @@
 #summary howto build vlc-record on Linux (tested on Ubuntu)
+#labels Featured,Phase-Deploy
+
+<wiki:toc max_depth="2" />
 
 = Introduction =
 Since Linux is such a wide field it's impossible to provide you with all possible packages so that you find the version that you need. So what we can do? Of course - make it on your own ;-)
-
-<wiki:toc max_depth="2" />
 
 = What do we need? =
 At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, make and in addition checkinstall. To get these things on Ubuntu we run:
