@@ -34,7 +34,7 @@ find /usr -name "libvlc*" 2>/dev/null
 
 If there are some files - fine. Look for _libvlc2.so_. If there is this file you can go on to [#Build build] vlc-record.
 
-If there is no file _libvlc2.so_, but a file _libvlc2.so.x_ (where 'x' is a number) you have to create a symbolic link to that file. First go into the directory where these files are located.
+If there is no file _libvlc2.so_, but a file _libvlc2.so.x_ (where 'x' is a number) you have to create a symbolic link to this file. First go into the directory where these files are located.
 
 {{{
 cd /usr/lib
@@ -99,3 +99,26 @@ make release
 }}}
 
 Hopefully all went well?! If there is an error, telling you that the linker can't find the -lvlc ... you made a mistake editing the project file. 
+
+= Install = 
+I have prepared some simple install scripts. These scripts will install vlc-record into _/opt/vlc-record_ (using checkinstall). To use these scripts, type following command:
+
+{{{
+make -f install.mak
+}}}
+
+After that vlc-record should be installed. If you don't like the place for vlc-record, copy the needed files where you like. You need following directory structure:
+
+{{{
+vlc-record (dir)
+\__  modules (dir)
+      \__ 1_vlc-player.mod (all from _vlc-record/modules_)
+      \__ 2_MPlayer.mod
+      \__ 3_vlc-mp4.mod
+      \__ 4_vlc-player-avi.mod
+      \__ 5_libvlc.mod
+\__ language (dir)
+      \__ lang_de.qm (all from _vlc-record_ folder)
+      \__ lang_ru.qm
+\__ vlc-record (binary from _vlc-record/release_)
+}}}
