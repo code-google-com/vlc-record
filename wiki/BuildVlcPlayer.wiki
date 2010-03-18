@@ -2,9 +2,13 @@
 
 = Introduction =
 
-Although vlc is part of the Ubuntu distros it maybe helpful to build the player at your own because often feature updates will not be taken into the distrebution.
+Although vlc is part of the Ubuntu distros it maybe helpful to build the player at your own because often feature updates will not be taken into the distribution.
 
-There is already a good [http://wiki.videolan.org/UnixCompile wiki] which descripes the build process. I have taken this as source to make it more clear for Ubuntu users.
+There is already a good [http://wiki.videolan.org/UnixCompile wiki] which describes the build process. I have taken this as source to make it more clear for Ubuntu users.
+
+= Goal =
+
+We want to build a vlc player which is *independent* from a maybe already installed version of the vlc player. So an existing installation will not be touched nor changed.
 
 = Get the sources =
 
