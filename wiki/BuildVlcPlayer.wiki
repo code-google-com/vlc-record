@@ -88,7 +88,28 @@ To be sure that you can remove the package if you don't like it, we install it u
 sudo checkinstall
 }}}
 
-Make sure you don't use _vlc_ only for package name. We want to be independent from a maybe already installed version of vlc. So name it _myvlc_ or something like that. If you then want to remove your package, you can simply run:
+Make sure you don't use _vlc_ only for package name. We want to be independent from a maybe already installed version of vlc. So name it _myvlc_ or something like that:
+
+{{{
+Das Paket wird entsprechend dieser Vorgaben erstellt:
+
+0 -  Maintainer: [ root@joergn-bunteku ]
+1 -  Summary: [ my own special build of vlc ]
+2 -  Name:    [ myvlc ]
+3 -  Version: [ 1.0.5 ]
+4 -  Release: [ 4 ]
+5 -  License: [ GPL ]
+6 -  Group:   [ checkinstall ]
+7 -  Architecture: [ i386 ]
+8 -  Source location: [ vlc-1.0.5 ]
+9 -  Alternate source location: [  ]
+10 - Requires: [  ]
+11 - Provides: [ myvlc ]
+
+Geben Sie die betreffende Nummer ein, um die Vorgaben zu ändern:
+}}}
+
+If you then want to remove your package, you can simply run:
 
 {{{
 sudo dpkg -r myvlc
