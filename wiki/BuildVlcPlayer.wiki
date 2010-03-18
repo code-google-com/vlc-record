@@ -15,6 +15,7 @@ There is already a good [http://wiki.videolan.org/UnixCompile wiki] which descri
 
 {{{
 sudo apt-get build-dep vlc
+sudo apt-get install autoconf
 }}}
 
 = Prepare =
@@ -33,9 +34,55 @@ Open file _~/src/live/config.linux_ and add option *-fPIC* to COMPILE_OPTS line.
 COMPILE_OPTS =          $(INCLUDES) -fPIC -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
 }}}
 
-= Details =
+Close the file and create make files and make. *Don't run make install!*
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+{{{
+cd ~/src/live
+./genMakefiles linux
+make
+}}}
+
+Extract the player sources:
+
+{{{
+cd ~/src
+tar -xvjpf /path/to/vlc-1.0.5.tar.bz2
+mkdir -p vlc-build
+}}}
+
+= Build =
+Make bootstrap
+
+{{{
+cd vlc-1.0.5
+./bootstrap
+cd ..
+}}}
+
+Go into the build directory and configure vlc:
+
+{{{
+cd vlc-build
+../vlc-1.0.5/configure --prefix=/opt/vlc-1.0.5 \
+ --enable-live555 --with-live555-tree=~/src/live \
+ --enable-release --disable-gme
+}}}
+
+Compile vlc player:
+
+{{{
+make
+}}}
+
+= Install =
+To be sure that you can remove the package if you don't like it, we install it using _checkinstall_.
+
+{{{
+sudo checkinstall
+}}}
+
+Make sure you don't use _vlc_ only for package name. We want to be independent from a maybe already installed version of vlc. So name it _myvlc_ or something like that. If you then want to remove your package, you can simply run:
+
+{{{
+dpkg -r myvlc
+}}}
