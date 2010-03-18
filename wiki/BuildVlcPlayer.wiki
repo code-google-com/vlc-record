@@ -71,7 +71,7 @@ Go into the build directory and configure vlc:
 {{{
 cd vlc-build
 ../vlc-1.0.5/configure --prefix=/opt/vlc-1.0.5 \
- --enable-live555 --with-live555-tree=~/src/live \
+ --enable-live555 --with-live555-tree=$HOME/src/live \
  --enable-release --disable-gme
 }}}
 
