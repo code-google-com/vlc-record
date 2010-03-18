@@ -25,7 +25,27 @@ cd ~/src
 svn checkout http://vlc-record.googlecode.com/svn/trunk/vlc-record vlc-record
 }}}
 
-If you want to you the packaged libVLC you haven't to change the project file and can go on to the [#Build build] section.
+== Use the packaged vlc player ==
+In case you want to use the vlc player (libVLC) which was included into your distro, you have to make sure that there are all symbolic links to libvlc as needed. First find the library itself.
+
+{{{
+find /usr -name "libvlc*" 2>/dev/null
+}}}
+
+If there are some files - fine. Look for _libvlc2.so_. If there is this file you can go on to [#Build build] vlc-record.
+
+If there is no file _libvlc2.so_, but a file _libvlc2.so.x_ (where 'x' is a number) you have to create a symbolic link to that file. First go into the directory where these files are located.
+
+{{{
+cd /usr/lib
+sudo ln -s libvlc2.so.x libvlc2.so
+}}}
+
+Make sure that the 'x' matches the number in the filename we found above. You now can go on to the [#Build build] section.
+
+You haven't found any libvlc file at all? Look below!
+
+== Use your own (or my) vlc player ==
 
 Now it's time to have a look at vlc-records project file. If we have made our own build of the vlc player to get a working libVLC we *must* also change the project file of vlc-record because we'd like to link against the new created libVLC and we want to use only that library. Keep cool, if you know how you can write an e-Mail, you'll get this project stuff done. You need to know where you have installed the vlc player. So in case you installed it into _/opt/vlc-1.0.5_ you have to remember that path. If you used my compiled version of the vlc player it's also that path.<br />
 Open the project file (vlc-record.pro) with the editor you like. Find following lines:
@@ -65,3 +85,17 @@ So if - as in our case - the player is installed into _/opt/vlc-1.0.5_ these lin
 Save and close the project file.
 
 = Build =
+Go into the source directory and create the make files using the qmake command:
+
+{{{
+cd ~/src/vlc-record
+qmake vlc-record.pro
+}}}
+
+Cause we have the make files, let's start to build vlc-records binary.
+
+{{{
+make release
+}}}
+
+Hopefully all went well?! If there is an error, telling you that the linker can't find the -lvlc ... you made a mistake editing the project file. 
