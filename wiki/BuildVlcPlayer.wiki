@@ -84,5 +84,5 @@ sudo checkinstall
 Make sure you don't use _vlc_ only for package name. We want to be independent from a maybe already installed version of vlc. So name it _myvlc_ or something like that. If you then want to remove your package, you can simply run:
 
 {{{
-dpkg -r myvlc
+sudo dpkg -r myvlc
 }}}
