@@ -1,4 +1,7 @@
 #summary A (very) short and quick howto to build vlc player from souces on Ubuntu
+#labels Featured,Phase-Deploy
+
+<wiki:toc max_depth="1" />
 
 = Introduction =
 
