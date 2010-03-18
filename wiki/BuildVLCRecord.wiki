@@ -3,6 +3,8 @@
 = Introduction =
 Since Linux is such a wide field it's impossible to provide you with all possible packages so that you find the version that you need. So what we can do? Of course - make it on your own ;-)
 
+<wiki:toc max_depth="2" />
+
 = What do we need? =
 At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, make and in addition checkinstall. To get these things on Ubuntu we run:
 
@@ -112,13 +114,16 @@ After that vlc-record should be installed. If you don't like the place for vlc-r
 {{{
 vlc-record (dir)
 \__  modules (dir)
-      \__ 1_vlc-player.mod (all from _vlc-record/modules_)
+      \__ 1_vlc-player.mod (all from 'vlc-record/modules')
       \__ 2_MPlayer.mod
       \__ 3_vlc-mp4.mod
       \__ 4_vlc-player-avi.mod
       \__ 5_libvlc.mod
 \__ language (dir)
-      \__ lang_de.qm (all from _vlc-record_ folder)
+      \__ lang_de.qm (all from 'vlc-record' source folder)
       \__ lang_ru.qm
-\__ vlc-record (binary from _vlc-record/release_)
+\__ vlc-record (binary from 'vlc-record/release')
 }}}
+
+If all was well, you now can use vlc-record ... and you can ...
+[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=11286909 https://www.paypal.com/de_DE/DE/i/btn/btn_donateCC_LG.gif]
