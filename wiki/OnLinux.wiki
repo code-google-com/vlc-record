@@ -13,7 +13,7 @@ For versions newer than x.20 I decided to build packages for the actual Ubuntu o
 
 == Other Linux Distributions ==
 
-If you need VLC-Record for another Linux distribution feel free to build it at your own. Simply install the qt4dev package from your distribution and install the QtCreator from [http://qt.nokia.com Nokia]. libvlc and libvlccore including the plugins are also needed. If you need help building vlc-record, simply ask.
+If you need VLC-Record for another Linux distribution feel free to build it at your own. Simply install the qt4dev package from your distribution and install the QtCreator from [http://qt.nokia.com Nokia]. libvlc and libvlccore including the plugins are also needed. If you need help building vlc-record, [BuildVLCRecord have a look] or simply ask.
 
 == Installation ==
 
