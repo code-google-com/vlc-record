@@ -2,7 +2,7 @@
  * events.c: Windows DirectX video output events handler
  *****************************************************************************
  * Copyright (C) 2001-2009 the VideoLAN team
- * $Id: 53760a335c4b9b00d205fbc3989cc64d7b6b0908 $
+ * $Id$
  *
  * Authors: Gildas Bazin <gbazin@videolan.org>
  *
@@ -164,6 +164,31 @@ void* EventThread( vlc_object_t *p_this )
              */
             if( p_event->p_vout->p_sys->parent_window != NULL )
             {
+                switch ( msg.message )
+                {
+                case WM_KEYDOWN:
+                case WM_KEYUP:
+                case WM_SYSKEYDOWN:
+                case WM_SYSKEYUP:
+                   /*
+                    * Messages we don't handle directly are dispatched to the
+                    * window procedure
+                    */
+                   TranslateMessage(&msg);
+                   DispatchMessage(&msg);
+
+                   /*
+                    * event handled by windows routine -->
+                    * bypass following code and wait
+                    * for next event ...
+                    */
+                   continue;
+                   break;
+
+                default:
+                   break;
+                }
+
                 if(( msg.message == WM_KEYDOWN )          /* key pressed     */
                    || ( msg.message == WM_SYSKEYDOWN ))   /* sys key pressed */
                 {
