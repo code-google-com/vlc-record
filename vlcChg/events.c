@@ -174,8 +174,8 @@ void* EventThread( vlc_object_t *p_this )
                     * Messages we don't handle directly are dispatched to the
                     * window procedure
                     */
-                   TranslateMessage(&msg);
-                   DispatchMessage(&msg);
+                   PostMessage(p_event->p_vout->p_sys->hparent, msg.message,
+                                  msg.wParam, msg.lParam);
 
                    /*
                     * event handled by windows routine -->
@@ -188,66 +188,7 @@ void* EventThread( vlc_object_t *p_this )
                 default:
                    break;
                 }
-
-                if(( msg.message == WM_KEYDOWN )          /* key pressed     */
-                   || ( msg.message == WM_SYSKEYDOWN ))   /* sys key pressed */
-                {
-                   switch ( msg.wParam )
-                   {
-                   case VK_CONTROL: /* Ctrl Key  */
-                   case VK_SHIFT:   /* Shift Key */
-                   case VK_MENU:    /* Alt Key   */
-                      /*
-                       * let modifier keys pass thru ...
-                       */
-                      PostMessage(p_event->p_vout->p_sys->hparent, msg.message,
-                                  msg.wParam, msg.lParam);
-                      break;
-
-                   default:
-                      if (DirectXConvertKey( msg.wParam ))
-                      {
-                         /*
-                          * any special 'non ascii' key
-                          * --> don't touch, but post it ...
-                          */
-                         PostMessage(p_event->p_vout->p_sys->hparent, msg.message,
-                                     msg.wParam, msg.lParam);
-                      }
-                      else
-                      {
-                         /*
-                          * ascii key --> check if modifiers are pressed ...
-                          * (alt, ctrl, shift)
-                          */
-                         if (( GetKeyState(VK_CONTROL) & 0x8000 ) /* Ctrl Key  */
-                            || ( GetKeyState(VK_SHIFT) & 0x8000 ) /* Shift Key */
-                            || ( GetKeyState(VK_MENU) & 0x8000 )) /* Alt Key   */
-                         {
-                            /*
-                             * modifier pressed, don't post WM_KEYDOWN,
-                             * but WM_CHAR message ...
-                             */
-                            PostMessage(p_event->p_vout->p_sys->hparent, WM_CHAR,
-                                        msg.wParam, msg.lParam);
-                         }
-                         else
-                         {
-                            /*
-                             * nothing special ...
-                             * --> don't touch, but post it ...
-                             */
-                            PostMessage(p_event->p_vout->p_sys->hparent, msg.message,
-                                        msg.wParam, msg.lParam);
-                         }
-                      }
-                      break;
-                   }
-
-                   /* event handled in parent window --> wait for next event ... */
-                   continue;
-               }
-           }
+            }
         }
 
         switch( msg.message )
