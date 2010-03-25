@@ -3,6 +3,12 @@
 
 = New in version ... =
 
+== 2010-03-25: Version x.25 ==
+ * fake shortcut keypress from player class
+ * Hotkey Alt+{x} now also works on fullscreen (Windows only)
+ * bugfix for APPDATA unicode problem
+ * jump 2 minutes forward on hotkey *CTRL+ALT+F* and 2 minutes backward on hotkey *CTRL+ALT+B*
+
 == 2010-03-11: Version 2.23 ==
  * bugfix for crash on exit if player still was playing
  * this is *not* related to version 1.22 classic
