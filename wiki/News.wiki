@@ -1,6 +1,12 @@
 #summary Hopefully new News
 #labels Featured
 
+===2010-03-30 22:00===
+
+VLC-Record x.26 supports record as MPEG2 program stream (have a look at the mod files).
+
+----
+
 ===2010-03-18 11:45===
 
 I've added two wikis which describe [BuildVLCRecord how to build vlc-record] (and the needed [BuildVlcPlayer vlc player]) at your own.
