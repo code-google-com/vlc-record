@@ -1,6 +1,12 @@
 #summary Hopefully new News
 #labels Featured
 
+===2010-04-10 12:16===
+
+Version x.28 fixes some bugs in stream control when archive is viewed and adds some more info to the pseudo LCD.
+
+----
+
 ===2010-03-30 22:00===
 
 VLC-Record x.26 supports record as MPEG2 program stream (have a look at the mod files).
