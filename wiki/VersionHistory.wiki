@@ -3,6 +3,13 @@
 
 = New in version ... =
 
+== 2010-04-09: Version x.28 ==
+ * add some more info to LCD display
+ * fix unpause problem in archive
+ * for time jump take care of pause
+ * encapsulate playtime / pause stuff into CTimerEx class
+ * fix for non working second+ time jump
+
 == 2010-03-30: Version x.26 ==
  * shortcuts for favourites added
  * missing shortcuts for font size added
