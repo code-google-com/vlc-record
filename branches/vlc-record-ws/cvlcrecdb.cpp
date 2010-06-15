@@ -40,7 +40,7 @@ CVlcRecDB::CVlcRecDB()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: CVlcRecDB / destructor
+|  Method: ~CVlcRecDB / destructor
 |  Begin: 13.06.2010 / 16:17:51
 |  Author: Jo2003
 |  Description: clean on destruction ...
@@ -126,7 +126,7 @@ int CVlcRecDB::deleteDb()
       db.close();
    }
 
-   return (int)QFile::remove(QString("%1/%2").arg(pFolders->getDataDir()).arg(VLC_REC_DB));
+   return QFile::remove(QString("%1/%2").arg(pFolders->getDataDir()).arg(VLC_REC_DB)) ? 0 : -1;
 }
 
 /* -----------------------------------------------------------------\
