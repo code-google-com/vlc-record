@@ -54,15 +54,14 @@ public:
    |  Returns: 0 --> ok
    |          -1 --> error
    \----------------------------------------------------------------- */
-   template <typename T>
-         int setValue (const QString &sKey, const T& val)
+   template <typename T> int setValue (const QString &sKey, const T& val)
    {
       QSqlQuery query;
       query.prepare("INSERT OR REPLACE INTO settings (name, val) VALUES (?, ?)");
       query.addBindValue(sKey);
       query.addBindValue(val);
 
-      return (int)query.exec();
+      return query.exec() ? 0 : -1;
    }
 
    QString stringValue(const QString &sKey);
