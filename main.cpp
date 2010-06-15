@@ -1,17 +1,18 @@
 /*********************** Information *************************\
 | $HeadURL$
-| 
+|
 | Author: Jo2003
 |
 | Begin: 19.01.2010 / 15:57:06
-| 
+|
 | Last edited by: $Author$
-| 
+|
 | $Id$
 \*************************************************************/
 #include <QtGui/QApplication>
 #include <QTranslator>
 #include "recorder.h"
+#include "cvlcrecdb.h"
 
 #ifdef DINCLUDEPLUGS
 #include <QtPlugin>
@@ -24,6 +25,9 @@ CLogFile VlcLog;
 
 // make directory names available globally ...
 CDirStuff *pFolders;
+
+// db storage class must be global ...
+CVlcRecDB *pDb;
 
 /* -----------------------------------------------------------------\
 |  Method: main / program entry
@@ -51,9 +55,17 @@ int main(int argc, char *argv[])
       // is folder stuff initialized successfully ...?
       if (pFolders->isInitialized())
       {
-         Recorder w(&trans);
-         w.show();
-         iRV = a.exec();
+         pDb = new CVlcRecDB();
+
+         if (pDb)
+         {
+            Recorder w(&trans);
+            w.show();
+            iRV = a.exec();
+
+            // free / close database ...
+            delete pDb;
+         }
       }
 
       // free mem ...

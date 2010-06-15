@@ -17,7 +17,8 @@
 #include <QMessageBox>
 #include <QDir>
 
-#include "cinifile.h"
+// #include "cinifile.h"
+#include "cvlcrecdb.h"
 #include "clogfile.h"
 #include "defdef.h"
 #include "customization.h"
@@ -93,7 +94,7 @@ protected:
 
 private:
     Ui::CSettingsDlg *m_ui;
-    CIniFile IniFile;
+    // CIniFile IniFile;
 
 signals:
     void sigReloadLogos ();

@@ -1195,6 +1195,21 @@ void CPlayer::pausePlayTimer()
    timer.pause();
 }
 
+/* -----------------------------------------------------------------\
+|  Method: on_btnFullScreen_clicked
+|  Begin: 27.05.2010 / 11:10:10
+|  Author: Jo2003
+|  Description: change to full screen
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::on_btnFullScreen_clicked()
+{
+   slotToggleFullScreen();
+}
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/

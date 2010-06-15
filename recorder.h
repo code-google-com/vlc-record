@@ -114,7 +114,7 @@ protected:
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
     int StartVlcPlay (const QString &sURL, bool bArchiv = false);
-    void TouchPlayCtrlBtns (bool bEnable = true);
+    void TouchPlayCtrlBtns (bool bEnable = true, bool bArchive = false);
     void SetProgress (const uint &start, const uint &end);
     void changeEvent(QEvent *e);
     void TouchEpgNavi (bool bCreate);
@@ -130,6 +130,7 @@ protected:
     bool TimeJumpAllowed ();
     void InitShortCuts ();
     void ClearShortCuts ();
+    void savePositions ();
 
     virtual void showEvent (QShowEvent * event);
     virtual void hideEvent (QHideEvent * event);

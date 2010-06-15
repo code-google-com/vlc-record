@@ -11,14 +11,14 @@
 ; General
 
   ;Name and file
-  Name "${APPNAME} ${VER_INC}"
-  OutFile "${PACKAGES}\${APPNAME}-${VER_INC}-win-x86-setup.exe"
+  Name "${APPNAME} Classic ${VER_CLASSIC}"
+  OutFile "${PACKAGES}\${APPNAME}-${VER_CLASSIC}-win-x86-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\${APPNAME}"
+  InstallDir "$PROGRAMFILES\${APPNAME} Classic"
   
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\${APPNAME}" ""
+  InstallDirRegKey HKCU "Software\${APPNAME} Classic" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -59,6 +59,7 @@ Section "VLC-Record" SecInst
   SectionIn RO
   SetOutPath "$INSTDIR"
   File "${SRCDIR}\release\vlc-record.exe"
+  File "${QTLIBS}\libgcc_s_dw2-1.dll"
 
   SetOutPath "$INSTDIR\language"
   File "${SRCDIR}\lang_de.qm"
@@ -69,49 +70,49 @@ Section "VLC-Record" SecInst
   File "${SRCDIR}\modules\2_MPlayer.mod"
   File "${SRCDIR}\modules\3_vlc-mp4.mod"
   File "${SRCDIR}\modules\4_vlc-player-avi.mod"
-  File "${SRCDIR}\modules\5_libvlc.mod"
-  File "${SRCDIR}\modules\6_libvlc-mpeg2.mod"
   File "${SRCDIR}\modules\7_vlc-mpeg2.mod"
 
 SectionEnd
 
 ;-------------------------------------------------------
-; Installer Sections for libVLC
-Section "libVLC Framework" SecFw
+; Installer Sections for qt libraries
+Section "qt Framework" SecQt
    SetOutPath "$INSTDIR"
-   File "${LIBVLCFW}\libvlc.dll"
-   File "${LIBVLCFW}\libvlccore.dll"
-   FILE "${LIBVLCFW}\libvlc.dll.manifest"
-;   File "${LIBVLCFW}\axvlc.dll"
-;   File "${LIBVLCFW}\npvlc.dll"
+   File "${QTLIBS}\QtCore4.dll"
+   File "${QTLIBS}\QtSql4.dll"
+   FILE "${QTLIBS}\QtGui4.dll"
+   FILE "${QTLIBS}\QtNetwork4.dll"
 
-   SetOutPath "$INSTDIR\plugins"
-   File /r "${LIBVLCFW}\plugins\*.dll"
+   SetOutPath "$INSTDIR\imageformats"
+   File /r "${QTLIBS}\imageformats\*.dll"
+
+   SetOutPath "$INSTDIR\sqldrivers"
+   File /r "${QTLIBS}\sqldrivers\*.dll"
 SectionEnd
 
 ;-------------------------------------------------------
 ; start menu entries 
 Section "Start Menu Entries" SecStart
-	CreateDirectory "$SMPROGRAMS\${APPNAME}"
-	CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\vlc-record.exe"
-	CreateShortCut "$SMPROGRAMS\${APPNAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+	CreateDirectory "$SMPROGRAMS\${APPNAME} Classic"
+	CreateShortCut "$SMPROGRAMS\${APPNAME} Classic\${APPNAME} Classic.lnk" "$INSTDIR\vlc-record.exe"
+	CreateShortCut "$SMPROGRAMS\${APPNAME} Classic\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;-------------------------------------------------------
 ; desktop shortcut ...
 Section /o "Desktop Shortcut" SecDesktop
-	CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\vlc-record.exe"
+	CreateShortCut "$DESKTOP\${APPNAME} Classic.lnk" "$INSTDIR\vlc-record.exe"
 SectionEnd
 
 ;-------------------------------------------------------
 ; write uninstall stuff ...
 Section -FinishSection
   ;store installation folder ...
-  WriteRegStr HKLM "Software\${APPNAME}" "" "$INSTDIR"
+  WriteRegStr HKLM "Software\${APPNAME} Classic" "" "$INSTDIR"
 	
   ; create uninstall entries in registry ...
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME} Classic" "DisplayName" "${APPNAME} Classic"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME} Classic" "UninstallString" "$INSTDIR\uninstall.exe"
 
   ; write uninstaller ...
   WriteUninstaller "$INSTDIR\uninstall.exe"
@@ -122,22 +123,23 @@ SectionEnd
 ; Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 	!insertmacro MUI_DESCRIPTION_TEXT ${SecInst} "The vlc-record executable, the language files and player modules."
-	!insertmacro MUI_DESCRIPTION_TEXT ${SecFw} "The libVLC framework. Only disable this section if you have already installed this framework or you want install it manually."
+	!insertmacro MUI_DESCRIPTION_TEXT ${SecQt} "The Qt framework. Only disable this section if you have already installed the Qt framework and have set the QTDIR environment variable."
 	!insertmacro MUI_DESCRIPTION_TEXT ${SecStart} "Creates a start menu entry for ${APPNAME}"
 	!insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} "Creates a desktop shortcut for ${APPNAME}"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;-------------------------------------------------------
-; Uninstaller Section framework ...
-Section "un.Framework"
-  ; delete vlc framework ...
-  Delete "$INSTDIR\plugins\*.dll"
-  Delete "$INSTDIR\libvlc.dll"
-  Delete "$INSTDIR\libvlccore.dll"
-  Delete "$INSTDIR\libvlc.dll.manifest"
-;  Delete "$INSTDIR\axvlc.dll"
-;  Delete "$INSTDIR\npvlc.dll"
-  RMDir  "$INSTDIR\plugins"
+; Uninstaller Section Qt ...
+Section "un.Qt"
+  ; delete Qt framework ...
+  Delete "$INSTDIR\imageformats\*.dll"
+  Delete "$INSTDIR\sqldrivers\*.dll"
+  Delete "$INSTDIR\QtCore4.dll"
+  Delete "$INSTDIR\QtSql4.dll"
+  Delete "$INSTDIR\QtGui4.dll"
+  Delete "$INSTDIR\QtNetwork4.dll"
+  RMDir  "$INSTDIR\imageformats"
+  RMDir  "$INSTDIR\sqldrivers"
 SectionEnd
 
 ;-------------------------------------------------------
@@ -152,8 +154,6 @@ Section "un.Program"
   Delete "$INSTDIR\modules\2_MPlayer.mod"
   Delete "$INSTDIR\modules\3_vlc-mp4.mod"
   Delete "$INSTDIR\modules\4_vlc-player-avi.mod"
-  Delete "$INSTDIR\modules\5_libvlc.mod"
-  Delete "$INSTDIR\modules\6_libvlc-mpeg2.mod"
   Delete "$INSTDIR\modules\7_vlc-mpeg2.mod"
 
   ; delete directories ...
@@ -162,23 +162,24 @@ Section "un.Program"
 
   ; delete vlc-record itself ...
   Delete "$INSTDIR\vlc-record.exe"
+  Delete "$INSTDIR\libgcc_s_dw2-1.dll"
 
 SectionEnd
 
 ;-------------------------------------------------------
 ; Remove from registry...
 Section "un.registry"
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-	DeleteRegKey HKLM "SOFTWARE\${APPNAME}"
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME} Classic"
+	DeleteRegKey HKLM "SOFTWARE\${APPNAME} Classic"
 SectionEnd
 
 ;-------------------------------------------------------
 ; Delete Shortcuts
 Section "un.Shortcuts"
-	Delete "$DESKTOP\${APPNAME}.lnk"
-	Delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
-	Delete "$SMPROGRAMS\${APPNAME}\Uninstall.lnk"
-	RMDir  "$SMPROGRAMS\${APPNAME}"
+	Delete "$DESKTOP\${APPNAME} Classic.lnk"
+	Delete "$SMPROGRAMS\${APPNAME} Classic\${APPNAME} Classic.lnk"
+	Delete "$SMPROGRAMS\${APPNAME} Classic\Uninstall.lnk"
+	RMDir  "$SMPROGRAMS\${APPNAME} Classic"
 SectionEnd
 
 ;-------------------------------------------------------

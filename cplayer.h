@@ -107,6 +107,7 @@ private:
    bool                    bCtrlStream;
 
 private slots:
+   void on_btnFullScreen_clicked();
    void on_cbxAspect_currentIndexChanged(QString str);
    void on_cbxCrop_currentIndexChanged(QString str);
    void slotChangeVolume(int newVolume);

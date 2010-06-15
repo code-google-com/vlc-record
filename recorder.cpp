@@ -19,7 +19,6 @@
 
 #include "chanlistwidgetitem.h"
 
-
 // for logging ...
 extern CLogFile VlcLog;
 
@@ -143,6 +142,10 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // get state if libVLC player to change player state display ...
    connect (ui->player, SIGNAL(sigPlayState(int)), this, SLOT(slotIncPlayState(int)));
+
+   // forward and backward jump ...
+   connect (ui->pushFwd, SIGNAL(clicked()), ui->player, SLOT(slotStreamJumpFwd()));
+   connect (ui->pushBwd, SIGNAL(clicked()), ui->player, SLOT(slotStreamJumpBwd()));
 
 #endif /* INCLUDE_LIBVLC */
 
@@ -288,7 +291,9 @@ void Recorder::show()
    // -------------------------------------------
    // set splitter sizes as last used
    // -------------------------------------------
-   QList<int> sSplit = Settings.GetSplitterSizes("spChanEpg", &ok);
+   QList<int> sSplit;
+#ifndef INCLUDE_LIBVLC
+   sSplit = Settings.GetSplitterSizes("spChanEpg", &ok);
    if (ok)
    {
       ui->vSplitterChanEpg->setSizes(sSplit);
@@ -299,12 +304,23 @@ void Recorder::show()
    {
       ui->hSplitterChannels->setSizes(sSplit);
    }
-
-#ifdef INCLUDE_LIBVLC
-   sSplit = Settings.GetSplitterSizes("spEpgPlay", &ok);
+#else /* ifdef INCLUDE_LIBVLC */
+   sSplit = Settings.GetSplitterSizes("spVChanEpg", &ok);
    if (ok)
    {
-      ui->hSplitterEpgPlayer ->setSizes(sSplit);
+      ui->vSplitterChanEpg->setSizes(sSplit);
+   }
+
+   sSplit = Settings.GetSplitterSizes("spVChanEpgPlay", &ok);
+   if (ok)
+   {
+      ui->vSplitterChanEpgPlay->setSizes(sSplit);
+   }
+
+   sSplit = Settings.GetSplitterSizes("spHPlay", &ok);
+   if (ok)
+   {
+      ui->hSplitterPlayer ->setSizes(sSplit);
    }
 #endif /* INCLUDE_LIBVLC */
 
@@ -329,6 +345,31 @@ void Recorder::show()
 \----------------------------------------------------------------- */
 Recorder::~Recorder()
 {
+   // clear shortcuts ...
+   ClearShortCuts ();
+
+   // clean favourites ...
+   lFavourites.clear();
+   HandleFavourites();
+
+   // delete context menu stuff ...
+   CleanContextMenu();
+
+   delete ui;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: savePositions
+|  Begin: 13.06.2010 / 17:33:40
+|  Author: Jo2003
+|  Description: save dialog positions to db
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::savePositions()
+{
    // -------------------------------------------
    // save gui settings ...
    // -------------------------------------------
@@ -342,29 +383,17 @@ Recorder::~Recorder()
       Settings.SetIsMaximized(true);
    }
 
+#ifndef INCLUDE_LIBVLC
    Settings.SaveSplitterSizes("spChanEpg", ui->vSplitterChanEpg->sizes());
    Settings.SaveSplitterSizes("spChan", ui->hSplitterChannels->sizes());
-
-#ifdef INCLUDE_LIBVLC
-   Settings.SaveSplitterSizes("spEpgPlay", ui->hSplitterEpgPlayer->sizes());
+#else  /* ifdef INCLUDE_LIBVLC */
+   Settings.SaveSplitterSizes("spVChanEpg", ui->vSplitterChanEpg->sizes());
+   Settings.SaveSplitterSizes("spVChanEpgPlay", ui->vSplitterChanEpgPlay->sizes());
+   Settings.SaveSplitterSizes("spHPlay", ui->hSplitterPlayer ->sizes());
 #endif /* INCLUDE_LIBVLC */
 
    Settings.SetCustFontSize(iFontSzChg);
    Settings.SaveFavourites(lFavourites);
-
-   Settings.SaveOtherSettings();
-
-   // clear shortcuts ...
-   ClearShortCuts ();
-
-   // clean favourites ...
-   lFavourites.clear();
-   HandleFavourites();
-
-   // delete context menu stuff ...
-   CleanContextMenu();
-
-   delete ui;
 }
 
 /* -----------------------------------------------------------------\
@@ -723,6 +752,8 @@ void Recorder::changeEvent(QEvent *e)
 \----------------------------------------------------------------- */
 void Recorder::closeEvent(QCloseEvent *event)
 {
+   bool bAccept = true;
+
    // if vlc is running, ask if we want
    // to close it ...
    switch (ePlayState)
@@ -730,20 +761,30 @@ void Recorder::closeEvent(QCloseEvent *event)
    case IncPlay::PS_RECORD:
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
-      if (WantToStopRec())
+      if (!WantToStopRec())
       {
-         event->accept();
-      }
-      else
-      {
-         event->ignore();
+         bAccept = false;
       }
       break;
 
    default:
-      event->accept();
       break;
    }
+
+   if (bAccept)
+   {
+      // We want to close program, store all needed values ...
+      // Note: putting this function in destructor doesn't work!
+      savePositions();
+
+      // now that all is saved, allow program to close.
+      event->accept();
+   }
+   else
+   {
+      event->ignore();
+   }
+
 }
 
 /* -----------------------------------------------------------------\
@@ -1412,11 +1453,11 @@ void Recorder::on_cbxTimeShift_currentIndexChanged(QString str)
 |  Author: Jo2003
 |  Description: enable / disable buttons
 |
-|  Parameters: enable flag
+|  Parameters: enable flag, archive flag
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::TouchPlayCtrlBtns (bool bEnable)
+void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
 {
    switch (ePlayState)
    {
@@ -1425,12 +1466,21 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
+
+      // only on archive stream jump ic active ...
+      if (bArchive && bEnable)
+      {
+         ui->pushBwd->setEnabled(true);
+         ui->pushFwd->setEnabled(true);
+      }
       break;
    case IncPlay::PS_RECORD:
       ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
+      ui->pushBwd->setEnabled(false);
+      ui->pushFwd->setEnabled(false);
       break;
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
@@ -1438,7 +1488,16 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
+      ui->pushBwd->setEnabled(false);
+      ui->pushFwd->setEnabled(false);
       break;
+   case IncPlay::PS_STOP:
+   case IncPlay::PS_END:
+   case IncPlay::PS_ERROR:
+      ui->pushBwd->setEnabled(false);
+      ui->pushFwd->setEnabled(false);
+
+      // fall thru here ...
    default:
       ui->cbxTimeShift->setEnabled(bEnable);
       ui->pushPlay->setEnabled(bEnable);
@@ -1760,7 +1819,7 @@ void Recorder::slotArchivURL(QString str)
       StartVlcPlay(sUrl, true);
    }
 
-   TouchPlayCtrlBtns();
+   TouchPlayCtrlBtns(true, true);
 }
 
 /* -----------------------------------------------------------------\
@@ -1896,8 +1955,17 @@ void Recorder::on_lineSearch_returnPressed()
 \----------------------------------------------------------------- */
 void Recorder::on_pushTimerRec_clicked()
 {
-   uint now = QDateTime::currentDateTime().toTime_t();
-   timeRec.SetRecInfo(now, now, -1);
+   int                  iCid  = 0;
+   uint                 now   = QDateTime::currentDateTime().toTime_t();
+   CChanListWidgetItem *pItem = (CChanListWidgetItem *)ui->listWidget->currentItem();
+
+   if (pItem)
+   {
+      iCid = pItem->GetId();
+   }
+
+   // timeRec.SetRecInfo(now, now, -1);
+   timeRec.SetRecInfo(now, now, iCid);
    timeRec.exec();
 }
 
