@@ -13,6 +13,7 @@
 #include <QTranslator>
 #include "recorder.h"
 #include "cvlcrecdb.h"
+#include "cshowinfo.h"
 
 #ifdef DINCLUDEPLUGS
 #include <QtPlugin>
@@ -28,6 +29,9 @@ CDirStuff *pFolders;
 
 // db storage class must be global ...
 CVlcRecDB *pDb;
+
+// make show info global available ...
+CShowInfo showInfo;
 
 /* -----------------------------------------------------------------\
 |  Method: main / program entry

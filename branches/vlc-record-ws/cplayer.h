@@ -26,11 +26,15 @@
 
 #include <vlc/vlc.h>
 
+#include "cvlcrecdb.h"
 #include "clogfile.h"
 #include "playstates.h"
 #include "cshortcutex.h"
 #include "defdef.h"
 #include "ctimerex.h"
+#include "cshowinfo.h"
+#include "csettingsdlg.h"
+#include "cwaittrigger.h"
 
 //===================================================================
 // namespace
@@ -77,6 +81,9 @@ public:
    void setShortCuts (QVector<CShortcutEx *> *pvSc);
    void startPlayTimer ();
    void pausePlayTimer ();
+   void setSettings (CSettingsDlg *pDlg);
+   void setTrigger (CWaitTrigger *pTrig);
+   void triggerAspectChange ();
    static void eventCallback (const libvlc_event_t *ev, void *player);
 
 protected:
@@ -105,6 +112,8 @@ private:
    Qt::Key                 kModifier;
    QVector<CShortcutEx *> *pvShortcuts;
    bool                    bCtrlStream;
+   CSettingsDlg           *pSettings;
+   CWaitTrigger           *pTrigger;
 
 private slots:
    void on_btnFullScreen_clicked();
@@ -127,6 +136,7 @@ public slots:
    int  slotTimeJumpFwd();
    int  slotTimeJumpRelative (int iSeconds);
    int  slotStreamJumpRelative (int iSeconds);
+   void slotUseStoredAspectCrop ();
 
 signals:
    void sigPlayState (int ps);

@@ -1,7 +1,8 @@
 # -------------------------------------------------
 # Project created by QtCreator 2009-12-27T18:33:08
 # -------------------------------------------------
-QT += network sql
+QT += network \
+    sql
 
 # build debug and release ...
 CONFIG += debug_and_release \
@@ -39,7 +40,8 @@ SOURCES += main.cpp \
     cvlcctrl.cpp \
     ctranslit.cpp \
     cdirstuff.cpp \
-    clcddisplay.cpp
+    clcddisplay.cpp \
+    cshowinfo.cpp
 HEADERS += recorder.h \
     chanlistwidgetitem.h \
     csettingsdlg.h \
@@ -63,7 +65,8 @@ HEADERS += recorder.h \
     cshortcutex.h \
     clcddisplay.h \
     playstates.h \
-    ctimerex.h
+    ctimerex.h \
+    cshowinfo.h
 FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/ctimerrec.ui
@@ -74,7 +77,7 @@ TRANSLATIONS = lang_de.ts \
     lang_ru.ts
 
 # for static build ...
-static {
+static { 
     DEFINES += DSTATIC
     DEFINES += DINCLUDEPLUGS
     QTPLUGIN += qico \
@@ -84,7 +87,7 @@ static {
 
 # where the target should be stored ...
 win32:TARGET = vlc-record
-else {
+else { 
     CONFIG(debug, debug|release):TARGET = debug/vlc-record
     else:TARGET = release/vlc-record
 }
@@ -93,7 +96,7 @@ else {
 # add includes if we want to build
 # with included player!
 # -------------------------------------
-contains(DEFINES,INCLUDE_LIBVLC) {
+contains(DEFINES,INCLUDE_LIBVLC) { 
     INCLUDEPATH += include
     HEADERS += include/vlc/deprecated.h \
         include/vlc/libvlc.h \

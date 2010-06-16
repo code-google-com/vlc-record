@@ -15,6 +15,12 @@
 // log file functions ...
 extern CLogFile VlcLog;
 
+// storage db ...
+extern CVlcRecDB *pDb;
+
+// global showinfo class ...
+extern CShowInfo showInfo;
+
 /* -----------------------------------------------------------------\
 |  Method: CPlayer / constructor
 |  Begin: 24.02.2010 / 12:17:51
@@ -37,6 +43,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pEMPlay      = NULL;
    pLibVlcLog   = NULL;
    pvShortcuts  = NULL;
+   pSettings    = NULL;
    bCtrlStream  = false;
 
 #ifndef QT_NO_DEBUG
@@ -102,6 +109,36 @@ void CPlayer::setPlugInPath(const QString &sPath)
 void CPlayer::setShortCuts(QVector<CShortcutEx *> *pvSc)
 {
    pvShortcuts = pvSc;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setSettings
+|  Begin: 16.06.2010 / 14:17:51
+|  Author: Jo2003
+|  Description: store a pointer to settings class
+|
+|  Parameters: pointer to settings class
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::setSettings(CSettingsDlg *pDlg)
+{
+   pSettings = pDlg;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setTrigger
+|  Begin: 16.06.2010 / 16:17:51
+|  Author: Jo2003
+|  Description: store a pointer to trigger class
+|
+|  Parameters: pointer to trigger class
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::setTrigger(CWaitTrigger *pTrig)
+{
+   pTrigger = pTrig;
 }
 
 /* -----------------------------------------------------------------\
@@ -338,6 +375,7 @@ int CPlayer::initPlayer(QStringList &slArgs)
       {
          libvlc_event_attach(pEMPlay, libvlc_MediaPlayerEncounteredError, CPlayer::eventCallback,
                              (void *)this, &vlcExcpt);
+
          iRV = raise(&vlcExcpt);
       }
 
@@ -734,6 +772,7 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
          case libvlc_Playing:
             emit pPlayer->sigPlayState((int)IncPlay::PS_PLAY);
             pPlayer->startPlayTimer();
+            pPlayer->triggerAspectChange();
             break;
 
          case libvlc_Paused:
@@ -855,6 +894,8 @@ void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
 {
    if (pMediaPlayer)
    {
+      QString sAspect, sCrop;
+
       // reset exception stuff ...
       libvlc_exception_clear(&vlcExcpt);
 
@@ -862,6 +903,15 @@ void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
       libvlc_video_set_aspect_ratio(pMediaPlayer, str.toAscii().data(), &vlcExcpt);
 
       raise(&vlcExcpt);
+
+      // save aspect if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sAspect != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), str, ui->cbxCrop->currentText());
+      }
 
       mInfo(tr("Aspect ratio: %1")
             .arg(libvlc_video_get_aspect_ratio(pMediaPlayer, &vlcExcpt)));
@@ -882,6 +932,8 @@ void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
 {
    if (pMediaPlayer)
    {
+      QString sAspect, sCrop;
+
       // reset exception stuff ...
       libvlc_exception_clear(&vlcExcpt);
 
@@ -889,6 +941,15 @@ void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
       libvlc_video_set_crop_geometry(pMediaPlayer, str.toAscii().data(), &vlcExcpt);
 
       raise(&vlcExcpt);
+
+      // save crop if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sCrop != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), ui->cbxAspect->currentText(), str);
+      }
 
       mInfo(tr("Crop ratio: %1")
             .arg(libvlc_video_get_crop_geometry(pMediaPlayer, &vlcExcpt)));
@@ -1208,6 +1269,49 @@ void CPlayer::pausePlayTimer()
 void CPlayer::on_btnFullScreen_clicked()
 {
    slotToggleFullScreen();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotUseStoredAspectCrop [slot]
+|  Begin: 15.06.2010 / 16:10:10
+|  Author: Jo2003
+|  Description: use stored aspect / crop for channel
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::slotUseStoredAspectCrop ()
+{
+   QString sAspect, sCrop;
+
+   if(!pDb->aspect(showInfo.channelId(), sAspect, sCrop))
+   {
+      ui->cbxAspect->setCurrentIndex(ui->cbxAspect->findText(sAspect));
+      ui->cbxCrop->setCurrentIndex(ui->cbxCrop->findText(sCrop));
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: triggerAspectChange
+|  Begin: 16.06.2010 / 16:10:10
+|  Author: Jo2003
+|  Description: start timer to change aspect ratio ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::triggerAspectChange()
+{
+   // Note: I haven't found a nice way to get the info
+   // if there is already some videooutput from the libVLC.
+   // Aspect ratio only can be set, if there is already video
+   // displayed. Maybe in the upcoming libVLC 1.10 this will
+   // work as needed. So far we wait the buffer time and then
+   // change the aspect ratio. Hope this will work as needed.
+   QTimer::singleShot(pSettings->GetBufferTime() + 1000,
+                      this, SLOT(slotUseStoredAspectCrop()));
 }
 
 /************************* History ***************************\

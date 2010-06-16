@@ -27,6 +27,7 @@
 #include "csettingsdlg.h"
 #include "cvlcctrl.h"
 #include "cdirstuff.h"
+#include "cshowinfo.h"
 
 //===================================================================
 // namespace

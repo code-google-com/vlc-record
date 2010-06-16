@@ -140,7 +140,7 @@ int CVlcRecDB::deleteDb()
 |  Returns: 0 --> ok
 |          -1 --> error
 \----------------------------------------------------------------- */
-int CVlcRecDB::aspect(int iCid, int &iAspect, int &iCrop)
+int CVlcRecDB::aspect(int iCid, QString &sAspect, QString &sCrop)
 {
    int       iRV = 0;
    QSqlQuery query;
@@ -149,8 +149,8 @@ int CVlcRecDB::aspect(int iCid, int &iAspect, int &iCrop)
    query.exec();
    if(query.next())
    {
-      iAspect = query.value(0).toInt();
-      iCrop   = query.value(1).toInt();
+      sAspect = query.value(0).toString();
+      sCrop   = query.value(1).toString();
    }
    else
    {
@@ -171,14 +171,14 @@ int CVlcRecDB::aspect(int iCid, int &iAspect, int &iCrop)
 |  Returns: 0 --> ok
 |          -1 --> error
 \----------------------------------------------------------------- */
-int CVlcRecDB::addAspect(int iCid, int iAspect, int iCrop)
+int CVlcRecDB::addAspect(int iCid, const QString &sAspect, const QString &sCrop)
 {
    int       iRV = 0;
    QSqlQuery query;
    query.prepare("INSERT OR REPLACE INTO aspect (cid, asp, crop) VALUES (?, ?, ?)");
    query.addBindValue(iCid);
-   query.addBindValue(iAspect);
-   query.addBindValue(iCrop);
+   query.addBindValue(sAspect);
+   query.addBindValue(sCrop);
 
    if (!query.exec())
    {

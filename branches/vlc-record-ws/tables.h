@@ -15,8 +15,8 @@
 #define TAB_ASPECT \
 "CREATE TABLE aspect ("\
       "cid integer PRIMARY KEY UNIQUE,"\
-      "asp integer,"\
-      "crop integer)"
+      "asp char(32),"\
+      "crop char(32))"
 
 #define TAB_SETTINGS \
 "CREATE TABLE settings ("\
