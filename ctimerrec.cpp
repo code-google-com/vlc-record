@@ -21,6 +21,9 @@ extern CDirStuff *pFolders;
 // storage db ...
 extern CVlcRecDB *pDb;
 
+// global showinfo class ...
+extern CShowInfo showInfo;
+
 /* -----------------------------------------------------------------\
 |  Method: CTimerRec / constructor
 |  Begin: 26.01.2010 / 16:05:00
@@ -854,6 +857,15 @@ void CTimerRec::slotRecTimer()
                   emit sigRecActive((int)IncPlay::PS_TIMER_RECORD);
                   (*it).eState = rec::REC_RUNNING;
                   itActJob     = it;
+
+                  showInfo.setChanId((*it).cid);
+                  showInfo.setShowName((*it).sName);
+                  showInfo.setArchive(false);
+                  showInfo.setStartTime((*it).uiStart);
+                  showInfo.setEndTime((*it).uiEnd);
+                  showInfo.setPlayState(IncPlay::PS_TIMER_RECORD);
+                  showInfo.setChanName(ChanList[(*it).cid].Name);
+
                   pTrigger->TriggerRequest(Kartina::REQ_TIMERREC, (*it).cid);
                }
 

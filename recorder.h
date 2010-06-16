@@ -49,6 +49,7 @@
 #include "cfavaction.h"
 #include "cdirstuff.h"
 #include "cshortcutex.h"
+#include "cshowinfo.h"
 
 //===================================================================
 // namespace
@@ -95,7 +96,7 @@ private:
     int                            iEpgOffset;
     QTabBar                       *pEpgNavbar;
     CTimerRec                      timeRec;
-    uint                           uiArchivGmt;
+    // uint                           uiArchivGmt;
     QSystemTrayIcon                trayIcon;
     QRect                          sizePos;
     CVlcCtrl                       vlcCtrl;

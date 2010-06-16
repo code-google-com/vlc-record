@@ -25,6 +25,9 @@ extern CLogFile VlcLog;
 // for folders ...
 extern CDirStuff *pFolders;
 
+// global showinfo class ...
+extern CShowInfo showInfo;
+
 /* -----------------------------------------------------------------\
 |  Method: Recorder / constructor
 |  Begin: 19.01.2010 / 16:01:44
@@ -49,7 +52,6 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    bLogosReady    = false;
    pTranslator    = trans;
    iEpgOffset     = 0;
-   uiArchivGmt    = 0;
    iFontSzChg     = 0;
 
    // init favourite buttons ...
@@ -129,6 +131,10 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // give player the list of shortcuts ...
    ui->player->setShortCuts (&vShortcutPool);
+
+   // give player settings and wait trigger access ...
+   ui->player->setSettings(&Settings);
+   ui->player->setTrigger(&Trigger);
 
    // connect vlc control with libvlc player ...
    connect (ui->player, SIGNAL(sigPlayState(int)), &vlcCtrl, SLOT(slotLibVlcStateChange(int)));
@@ -1397,6 +1403,14 @@ void Recorder::on_pushRecord_clicked()
       {
          if (AllowAction(IncPlay::PS_RECORD))
          {
+            showInfo.setChanId(pItem->GetId());
+            showInfo.setChanName(pItem->GetName());
+            showInfo.setArchive(false);
+            showInfo.setShowName(pItem->GetProgram());
+            showInfo.setStartTime(pItem->GetStartTime());
+            showInfo.setEndTime(pItem->GetEndTime());
+            showInfo.setPlayState(IncPlay::PS_RECORD);
+
             TouchPlayCtrlBtns(false);
             Trigger.TriggerRequest(Kartina::REQ_STREAM, pItem->GetId());
          }
@@ -1424,6 +1438,14 @@ void Recorder::on_pushPlay_clicked()
       {
          if (AllowAction(IncPlay::PS_PLAY))
          {
+            showInfo.setChanId(pItem->GetId());
+            showInfo.setChanName(pItem->GetName());
+            showInfo.setArchive(false);
+            showInfo.setShowName(pItem->GetProgram());
+            showInfo.setStartTime(pItem->GetStartTime());
+            showInfo.setEndTime(pItem->GetEndTime());
+            showInfo.setPlayState(IncPlay::PS_PLAY);
+
             TouchPlayCtrlBtns(false);
             Trigger.TriggerRequest(Kartina::REQ_STREAM, pItem->GetId());
          }
@@ -1664,7 +1686,9 @@ void Recorder::slotEpgAnchor (const QUrl &link)
       QString req    = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
                        .arg(cid.toInt()).arg(gmt.toUInt());
 
-      uiArchivGmt    = gmt.toUInt();
+      showInfo.setChanId(cid.toInt());
+      showInfo.setArchive(true);
+      showInfo.setPlayState(ePlayState);
 
       Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
    }
@@ -1805,6 +1829,11 @@ void Recorder::slotArchivURL(QString str)
    sShow = CleanShowName(aInfo.sTitle);
    sTime = tr("Length: %1 min.").arg((int)((aInfo.uiEnd - aInfo.uiStart) / 60));
 
+   showInfo.setChanName(sChan);
+   showInfo.setShowName(aInfo.sTitle);
+   showInfo.setStartTime(aInfo.uiStart);
+   showInfo.setEndTime(aInfo.uiEnd);
+
 
    // add additional info to LCD ...
    ui->labState->setHeader(sChan + tr(" (Ar.)"));
@@ -1883,6 +1912,14 @@ void Recorder::on_listWidget_itemDoubleClicked(QListWidgetItem* item)
       {
          if (AllowAction(IncPlay::PS_PLAY))
          {
+            showInfo.setChanId(pItem->GetId());
+            showInfo.setChanName(pItem->GetName());
+            showInfo.setArchive(false);
+            showInfo.setShowName(pItem->GetProgram());
+            showInfo.setStartTime(pItem->GetStartTime());
+            showInfo.setEndTime(pItem->GetEndTime());
+            showInfo.setPlayState(IncPlay::PS_PLAY);
+
             TouchPlayCtrlBtns(false);
             Trigger.TriggerRequest(Kartina::REQ_STREAM, pItem->GetId());
          }
