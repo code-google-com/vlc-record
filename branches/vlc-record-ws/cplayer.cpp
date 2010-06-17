@@ -44,7 +44,11 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pLibVlcLog   = NULL;
    pvShortcuts  = NULL;
    pSettings    = NULL;
+   pTrigger     = NULL;
    bCtrlStream  = false;
+
+   // set aspect shot as single shot timer ...
+   tAspectShot.setSingleShot(true);
 
 #ifndef QT_NO_DEBUG
    uiVerboseLevel = 3;
@@ -60,6 +64,8 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 
    // do periodical logging ...
    connect(&poller, SIGNAL(timeout()), this, SLOT(slotLibVLCLog()));
+   connect(this, SIGNAL(sigStartAspectShot()), this, SLOT(slotTriggerAspectChange()));
+   connect(&tAspectShot, SIGNAL(timeout()), this, SLOT(slotUseStoredAspectCrop()));
 
    poller.start(1000);
 }
@@ -772,7 +778,7 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
          case libvlc_Playing:
             emit pPlayer->sigPlayState((int)IncPlay::PS_PLAY);
             pPlayer->startPlayTimer();
-            pPlayer->triggerAspectChange();
+            emit pPlayer->sigStartAspectShot();
             break;
 
          case libvlc_Paused:
@@ -1283,6 +1289,7 @@ void CPlayer::on_btnFullScreen_clicked()
 \----------------------------------------------------------------- */
 void CPlayer::slotUseStoredAspectCrop ()
 {
+   mInfo(tr("Aspect change requested ..."));
    QString sAspect, sCrop;
 
    if(!pDb->aspect(showInfo.channelId(), sAspect, sCrop))
@@ -1293,7 +1300,7 @@ void CPlayer::slotUseStoredAspectCrop ()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: triggerAspectChange
+|  Method: slotTriggerAspectChange [slot]
 |  Begin: 16.06.2010 / 16:10:10
 |  Author: Jo2003
 |  Description: start timer to change aspect ratio ...
@@ -1302,7 +1309,7 @@ void CPlayer::slotUseStoredAspectCrop ()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CPlayer::triggerAspectChange()
+void CPlayer::slotTriggerAspectChange()
 {
    // Note: I haven't found a nice way to get the info
    // if there is already some videooutput from the libVLC.
@@ -1310,8 +1317,10 @@ void CPlayer::triggerAspectChange()
    // displayed. Maybe in the upcoming libVLC 1.10 this will
    // work as needed. So far we wait the buffer time and then
    // change the aspect ratio. Hope this will work as needed.
-   QTimer::singleShot(pSettings->GetBufferTime() + 1000,
-                      this, SLOT(slotUseStoredAspectCrop()));
+   tAspectShot.start(pSettings->GetBufferTime() + 1000);
+
+   mInfo(tr("Trigger aspect change in %1 seconds...")
+         .arg((pSettings->GetBufferTime() + 1000) / 1000));
 }
 
 /************************* History ***************************\

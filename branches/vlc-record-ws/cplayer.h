@@ -83,7 +83,6 @@ public:
    void pausePlayTimer ();
    void setSettings (CSettingsDlg *pDlg);
    void setTrigger (CWaitTrigger *pTrig);
-   void triggerAspectChange ();
    static void eventCallback (const libvlc_event_t *ev, void *player);
 
 protected:
@@ -99,6 +98,7 @@ protected:
 private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
+   QTimer                  tAspectShot;
    CTimerEx                timer;
    libvlc_exception_t      vlcExcpt;
    libvlc_instance_t      *pVlcInstance;
@@ -137,9 +137,11 @@ public slots:
    int  slotTimeJumpRelative (int iSeconds);
    int  slotStreamJumpRelative (int iSeconds);
    void slotUseStoredAspectCrop ();
+   void slotTriggerAspectChange();
 
 signals:
    void sigPlayState (int ps);
+   void sigStartAspectShot();
 };
 
 #endif /* __022410__CPLAYER_H */

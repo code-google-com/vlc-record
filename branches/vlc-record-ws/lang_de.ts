@@ -379,12 +379,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="95"/>
+        <location filename="cplayer.cpp" line="101"/>
         <source>Set PlugIn path to &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="596"/>
+        <location filename="cplayer.cpp" line="602"/>
         <source>starting libVLC play of:
   --&gt; %2
   --&gt; with following arguments: %1</source>
@@ -394,30 +394,40 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="916"/>
+        <location filename="cplayer.cpp" line="922"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="954"/>
+        <location filename="cplayer.cpp" line="960"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="734"/>
-        <source>LibVLC Error!</source>
-        <translation>libVLC Fehler!</translation>
+        <location filename="cplayer.cpp" line="1292"/>
+        <source>Aspect change requested ...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="169"/>
+        <location filename="cplayer.cpp" line="1322"/>
+        <source>Trigger aspect change in %1 seconds...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="740"/>
+        <source>LibVLC Error!</source>
+        <translation type="unfinished">libVLC Fehler!</translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="175"/>
         <source>Activate shortcut: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="735"/>
+        <location filename="cplayer.cpp" line="741"/>
         <source>LibVLC reports following error:
 %1</source>
-        <translation>LibVLC meldet folgenden Fehler:
+        <translation type="unfinished">LibVLC meldet folgenden Fehler:
 %1</translation>
     </message>
     <message>
@@ -449,7 +459,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FEHLER</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="859"/>
+        <location filename="cplayer.cpp" line="865"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
