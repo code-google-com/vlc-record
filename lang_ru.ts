@@ -383,12 +383,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="101"/>
+        <location filename="cplayer.cpp" line="96"/>
         <source>Set PlugIn path to &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="602"/>
+        <location filename="cplayer.cpp" line="556"/>
         <source>starting libVLC play of:
   --&gt; %2
   --&gt; with following arguments: %1</source>
@@ -398,40 +398,33 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="922"/>
+        <location filename="cplayer.cpp" line="835"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="960"/>
+        <location filename="cplayer.cpp" line="868"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1292"/>
-        <source>Aspect change requested ...</source>
+        <location filename="cplayer.cpp" line="1205"/>
+        <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1322"/>
-        <source>Trigger aspect change in %1 seconds...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="740"/>
         <source>LibVLC Error!</source>
-        <translation type="unfinished">Ошибка libVLC!</translation>
+        <translation type="obsolete">Ошибка libVLC!</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="175"/>
+        <location filename="cplayer.cpp" line="170"/>
         <source>Activate shortcut: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="741"/>
         <source>LibVLC reports following error:
 %1</source>
-        <translation type="unfinished">Ошибка LibVLC:
+        <translation type="obsolete">Ошибка LibVLC:
 %1</translation>
     </message>
     <message>
@@ -463,7 +456,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">ОШИБКА</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="865"/>
+        <location filename="cplayer.cpp" line="783"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -538,7 +531,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="322"/>
+        <location filename="forms/cplayer.ui" line="372"/>
         <source>0:00:00</source>
         <translation type="unfinished"></translation>
     </message>
