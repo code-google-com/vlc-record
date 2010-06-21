@@ -35,6 +35,7 @@
 #include "cshowinfo.h"
 #include "csettingsdlg.h"
 #include "cwaittrigger.h"
+#include "cvideoframe.h"
 
 //===================================================================
 // namespace
@@ -53,11 +54,11 @@ namespace Ui
 // macro to connect player to hardware ...
 //===================================================================
 #ifdef Q_OS_WIN        // on windows ...
-   #define connect_to_wnd(a, b, c) libvlc_media_player_set_hwnd (a, b, c)
+   #define connect_to_wnd(a, b) libvlc_media_player_set_hwnd (a, b)
 #elif defined Q_OS_MAC // on MAC OS
-   #define connect_to_wnd(a, b, c) libvlc_media_player_set_agl (a, b, c)
+   #define connect_to_wnd(a, b) libvlc_media_player_set_agl (a, b)
 #else                  // on Linux
-   #define connect_to_wnd(a, b, c) libvlc_media_player_set_xwindow (a, b, c)
+   #define connect_to_wnd(a, b) libvlc_media_player_set_xwindow (a, b)
 #endif
 
 /********************************************************************\
@@ -87,20 +88,18 @@ public:
 
 protected:
    void changeEvent(QEvent *e);
-   int  raise(libvlc_exception_t * ex);
    void releasePlayer ();
    int  createArgs (const QStringList &lArgs, Ui::vlcArgs& args);
    void freeArgs (Ui::vlcArgs& args);
    int  fakeShortCut (const QKeySequence &seq);
+   int  myToggleFullscreen ();
 
    virtual void keyPressEvent (QKeyEvent *pEvent);
 
 private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
-   QTimer                  tAspectShot;
    CTimerEx                timer;
-   libvlc_exception_t      vlcExcpt;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
    libvlc_media_t         *pMedia;
@@ -136,12 +135,10 @@ public slots:
    int  slotTimeJumpFwd();
    int  slotTimeJumpRelative (int iSeconds);
    int  slotStreamJumpRelative (int iSeconds);
-   void slotUseStoredAspectCrop ();
-   void slotTriggerAspectChange();
+   void slotStoredAspectCrop ();
 
 signals:
    void sigPlayState (int ps);
-   void sigStartAspectShot();
 };
 
 #endif /* __022410__CPLAYER_H */

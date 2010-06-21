@@ -60,6 +60,7 @@ Section "VLC-Record" SecInst
   SetOutPath "$INSTDIR"
   File "${SRCDIR}\release\vlc-record.exe"
   File "${QTLIBS}\libgcc_s_dw2-1.dll"
+  File "${QTLIBS}\mingwm10.dll"
 
   SetOutPath "$INSTDIR\language"
   File "${SRCDIR}\lang_de.qm"
@@ -163,6 +164,7 @@ Section "un.Program"
   ; delete vlc-record itself ...
   Delete "$INSTDIR\vlc-record.exe"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
+  Delete "$INSTDIR\mingwm10.dll"
 
 SectionEnd
 

@@ -243,9 +243,9 @@
     </layout>
    </item>
    <item>
-    <widget class="QFrame" name="fVideo">
+    <widget class="QFrame" name="fMaster">
      <property name="styleSheet">
-      <string notr="true">QFrame#fVideo {
+      <string notr="true">QFrame#fMaster {
    background-color: black;
    background-image: url(:/app/tv);
    background-repeat: no-repeat;
@@ -261,6 +261,56 @@
      <property name="lineWidth">
       <number>1</number>
      </property>
+     <layout class="QVBoxLayout" name="vlMasterFrame">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="fParent">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <layout class="QVBoxLayout" name="vlParent">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="CVideoFrame" name="fVideo">
+           <property name="styleSheet">
+            <string notr="true">QFrame#fVideo {
+   background-color: black;
+   background-image: url(:/app/tv);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="lineWidth">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -327,6 +377,14 @@ QSlider::sub-page:horizontal {
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CVideoFrame</class>
+   <extends>QFrame</extends>
+   <header>cvideoframe.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../vlc-record.qrc"/>
  </resources>
