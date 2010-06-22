@@ -17,11 +17,7 @@
 #include <QWidget>
 #include <QFrame>
 #include <QTimer>
-#include <QVector>
-
 #include <QEvent>
-#include <QKeyEvent>
-
 #include <QTime>
 
 #include <vlc/vlc.h>
@@ -29,7 +25,6 @@
 #include "cvlcrecdb.h"
 #include "clogfile.h"
 #include "playstates.h"
-#include "cshortcutex.h"
 #include "defdef.h"
 #include "ctimerex.h"
 #include "cshowinfo.h"
@@ -82,6 +77,7 @@ public:
    void setShortCuts (QVector<CShortcutEx *> *pvSc);
    void startPlayTimer ();
    void pausePlayTimer ();
+   void stopPlayTimer ();
    void setSettings (CSettingsDlg *pDlg);
    void setTrigger (CWaitTrigger *pTrig);
    static void eventCallback (const libvlc_event_t *ev, void *player);
@@ -91,14 +87,12 @@ protected:
    void releasePlayer ();
    int  createArgs (const QStringList &lArgs, Ui::vlcArgs& args);
    void freeArgs (Ui::vlcArgs& args);
-   int  fakeShortCut (const QKeySequence &seq);
    int  myToggleFullscreen ();
-
-   virtual void keyPressEvent (QKeyEvent *pEvent);
 
 private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
+   QTimer                  sliderTimer;
    CTimerEx                timer;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
@@ -108,8 +102,6 @@ private:
    libvlc_log_t           *pLibVlcLog;
    uint                    uiVerboseLevel;
    QString                 sPlugInPath;
-   Qt::Key                 kModifier;
-   QVector<CShortcutEx *> *pvShortcuts;
    bool                    bCtrlStream;
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
@@ -120,6 +112,7 @@ private slots:
    void on_cbxCrop_currentIndexChanged(QString str);
    void slotChangeVolume(int newVolume);
    void slotLibVLCLog ();
+   void slotUpdateSlider ();
 
 public slots:
    int  playMedia (const QString &sCmdLine, bool bAllowCtrl);

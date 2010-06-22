@@ -42,7 +42,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pEMMedia     = NULL;
    pEMPlay      = NULL;
    pLibVlcLog   = NULL;
-   pvShortcuts  = NULL;
    pSettings    = NULL;
    pTrigger     = NULL;
    bCtrlStream  = false;
@@ -62,7 +61,11 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    // connect double click signal from videoframe with fullscreen toggle ...
    connect(ui->fVideo, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToggleFullScreen()));
 
+   // connect slider timer with slider position slot ...
+   connect(&sliderTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSlider()));
+
    poller.start(1000);
+   sliderTimer.start(500);
 }
 
 /* -----------------------------------------------------------------\
@@ -109,7 +112,7 @@ void CPlayer::setPlugInPath(const QString &sPath)
 \----------------------------------------------------------------- */
 void CPlayer::setShortCuts(QVector<CShortcutEx *> *pvSc)
 {
-   pvShortcuts = pvSc;
+   ui->fVideo->setShortCuts(pvSc);
 }
 
 /* -----------------------------------------------------------------\
@@ -140,46 +143,6 @@ void CPlayer::setSettings(CSettingsDlg *pDlg)
 void CPlayer::setTrigger(CWaitTrigger *pTrig)
 {
    pTrigger = pTrig;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: fakeShortCut
-|  Begin: 24.03.2010 / 14:30:51
-|  Author: Jo2003
-|  Description: fake shortcut press if needed
-|
-|  Parameters: key sequence
-|
-|  Returns: 0 --> shortcut sent
-|          -1 --> not handled
-\----------------------------------------------------------------- */
-int CPlayer::fakeShortCut (const QKeySequence &seq)
-{
-   int iRV = -1;
-   QVector<CShortcutEx *>::const_iterator cit;
-
-   if (pvShortcuts)
-   {
-      // test all shortcuts if one matches the now incoming ...
-      for (cit = pvShortcuts->constBegin(); (cit != pvShortcuts->constEnd()) && iRV; cit ++)
-      {
-         // is key sequence equal ... ?
-         if ((*cit)->key() == seq)
-         {
-            // this shortcut matches ...
-            mInfo (tr("Activate shortcut: %1").arg(seq.toString()));
-
-            // fake shortcut keypress ...
-            (*cit)->activate();
-
-            // only one shortcut should match this sequence ...
-            // so we're done!
-            iRV = 0;
-         }
-      }
-   }
-
-   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -314,11 +277,6 @@ int CPlayer::initPlayer(QStringList &slArgs)
       slArgs << QString("--plugin-path=\"%1\"").arg(sPlugInPath);
    }
 
-#ifdef Q_OS_WIN32
-   // don't catch key press events ... (should work in patched libVLC)
-   // slArgs << "--vout-event=3";
-#endif
-
    // fill vlcArgs struct ...
    createArgs(slArgs, args);
 
@@ -350,9 +308,9 @@ int CPlayer::initPlayer(QStringList &slArgs)
          pEMPlay = libvlc_media_player_event_manager(pMediaPlayer);
 
          // switch off handling of hotkeys ...
-         // libvlc_video_set_key_input(pMediaPlayer, 0);
+         libvlc_video_set_key_input(pMediaPlayer, 0);
 
-         // libvlc_video_set_mouse_input(pMediaPlayer, 0);
+         libvlc_video_set_mouse_input(pMediaPlayer, 0);
       }
 
       if (pEMPlay)
@@ -493,6 +451,8 @@ int CPlayer::stop()
       libvlc_media_player_stop (pMediaPlayer);
    }
 
+   stopPlayTimer();
+
    return iRV;
 }
 
@@ -543,9 +503,15 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    // reset play timer stuff ...
    timer.reset();
 
+   // enable / disable position slider ...
+   ui->posSlider->setValue(0);
+   ui->posSlider->setEnabled(bCtrlStream);
+   ui->labPos->setEnabled(bCtrlStream);
+   ui->labPos->setText("00:00:00");
+
    // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   // QString     sMrl  = "d:/bbb.avi";
+   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
 
@@ -568,7 +534,56 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
       iRV = play();
    }
 
+   if (!iRV && bCtrlStream)
+   {
+      // set slider to position ...
+      int iSliderPos = 0;
+
+      // set slider range to seconds ...
+
+      // we add 5 minutes at start and 5 minutes at end because start
+      // and end time are not always accurate ...
+      ui->posSlider->setRange(0, showInfo.ends() - showInfo.starts() + 2 * TIMER_REC_OFFSET);
+
+      if (showInfo.lastJump())
+      {
+         iSliderPos += showInfo.lastJump() - showInfo.starts();
+      }
+
+      ui->posSlider->setValue(iSliderPos + TIMER_REC_OFFSET);
+      ui->labPos->setText(QTime(0, 0, iSliderPos).toString("hh:mm:ss"));
+   }
+
    return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotUpdateSlider
+|  Begin: 22.06.2010 / 17:16:51
+|  Author: Jo2003
+|  Description: update slider
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::slotUpdateSlider()
+{
+   if (isPlaying() && bCtrlStream)
+   {
+      int iSliderPos = timer.elapsedEx() / 1000 + showInfo.lastJump();
+
+      if (showInfo.lastJump())
+      {
+         iSliderPos += showInfo.lastJump() - showInfo.starts();
+      }
+
+      if (!ui->posSlider->isSliderDown())
+      {
+         ui->posSlider->setValue(iSliderPos + TIMER_REC_OFFSET);
+         ui->labPos->setText(QTime(0, 0, iSliderPos).toString("hh:mm:ss"));
+      }
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -633,43 +648,6 @@ void CPlayer::changeEvent(QEvent *e)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: keyPressEvent
-|  Begin: 23.03.2010 / 22:46:10
-|  Author: Jo2003
-|  Description: catch keypress events to emulate shortcuts
-|
-|  Parameters: pointer to event
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CPlayer::keyPressEvent(QKeyEvent *pEvent)
-{
-   QString sShortCut;
-   int     iRV;
-
-   // can we create a shortcut string for this key ... ?
-   iRV = CShortcutEx::createShortcutString(pEvent->modifiers(),
-                                           pEvent->text(), sShortCut);
-
-   if (!iRV)
-   {
-      // check if shortcut string matches one of our shortcuts ...
-      iRV = fakeShortCut(QKeySequence (sShortCut));
-
-      if (!iRV)
-      {
-         pEvent->accept();
-      }
-   }
-
-   // event not yet handled ... give it to base class ...
-   if (iRV == -1)
-   {
-      QWidget::keyPressEvent(pEvent);
-   }
-}
-
-/* -----------------------------------------------------------------\
 |  Method: eventCallback
 |  Begin: 01.03.2010 / 11:00:10
 |  Author: Jo2003
@@ -712,14 +690,17 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 
          case libvlc_Stopped:
             emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
+            pPlayer->stopPlayTimer();
             break;
 
          case libvlc_Ended:
             emit pPlayer->sigPlayState((int)IncPlay::PS_END);
+            pPlayer->stopPlayTimer();
             break;
 
          case libvlc_Error:
             emit pPlayer->sigPlayState((int)IncPlay::PS_ERROR);
+            pPlayer->stopPlayTimer();
             break;
 
          default:
@@ -731,6 +712,7 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
    // player error event ...
    case libvlc_MediaPlayerEncounteredError:
       emit pPlayer->sigPlayState((int)IncPlay::PS_ERROR);
+      pPlayer->stopPlayTimer();
       break;
 
    default:
@@ -969,19 +951,28 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
 {
    if (isPlaying() && bCtrlStream)
    {
-      // get actual position ...
-      int iPos = (int)libvlc_media_player_get_time(pMediaPlayer);
+      // how long we're watching this show?
+      uint uiTime = (uint)timer.elapsedEx() / 1000;
 
-      // set new position ...
-      iPos += (iSeconds * 1000); // ms!
+      // add the start time in GMT ...
+      uiTime     += (showInfo.lastJump()) ? showInfo.lastJump() : showInfo.starts();
 
-      // make sure value is positive ...
-      if (iPos < 0)
-      {
-         iPos = 0;
-      }
+      // add the jump value ...
+      uiTime     += iSeconds;
 
-      libvlc_media_player_set_time(pMediaPlayer, (libvlc_time_t)iPos);
+      // we now have the new GMT value for the archive stream ...
+
+      // stop playback ...
+      stop();
+
+      // store time jump value ...
+      showInfo.setLastJumpTime(uiTime);
+
+      // trigger request for the new stream position ...
+      QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
+                       .arg(showInfo.channelId()).arg(uiTime);
+
+      pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
    }
 
    return 0;
@@ -1135,6 +1126,21 @@ void CPlayer::pausePlayTimer()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: stopPlayTimer
+|  Begin: 22.06.2010 / 11:10:10
+|  Author: Jo2003
+|  Description: stop play timer
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::stopPlayTimer()
+{
+   timer.reset();
+}
+
+/* -----------------------------------------------------------------\
 |  Method: on_btnFullScreen_clicked
 |  Begin: 27.05.2010 / 11:10:10
 |  Author: Jo2003
@@ -1192,11 +1198,21 @@ int CPlayer::myToggleFullscreen()
          ui->fParent->showNormal();
          ui->fParent->setParent(ui->fMaster);
          ui->fParent->show();
+
+         // video frame doesn't need any focus when in windowed mode ...
+         ui->fVideo->setFocusPolicy(Qt::NoFocus);
       }
       else
       {
          ui->fParent->setParent(NULL, Qt::SplashScreen);
          ui->fParent->showFullScreen();
+
+         // to grab keyboard input we need the focus ...
+         // set policy so we can get focus ...
+         ui->fVideo->setFocusPolicy(Qt::StrongFocus);
+
+         // get the focus ...
+         ui->fVideo->setFocus(Qt::OtherFocusReason);
       }
    }
    else

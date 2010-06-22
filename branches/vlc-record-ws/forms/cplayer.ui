@@ -317,6 +317,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QSlider" name="posSlider">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -362,6 +365,9 @@ QSlider::sub-page:horizontal {
      </item>
      <item>
       <widget class="QLabel" name="labPos">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="frameShape">
         <enum>QFrame::Panel</enum>
        </property>

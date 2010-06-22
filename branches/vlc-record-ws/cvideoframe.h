@@ -14,6 +14,12 @@
 
 #include <QFrame>
 #include <QMouseEvent>
+#include <QKeyEvent>
+#include <QVector>
+
+#include "clogfile.h"
+#include "cshortcutex.h"
+
 
 /********************************************************************\
 |  Class: CVideoFrame
@@ -29,9 +35,16 @@ class CVideoFrame : public QFrame
 public:
    CVideoFrame(QWidget * parent = NULL, Qt::WindowFlags f = 0);
    virtual ~CVideoFrame();
+   void setShortCuts (QVector<CShortcutEx *> *pvSc);
 
 protected:
+   int  fakeShortCut (const QKeySequence &seq);
+
    virtual void mouseDoubleClickEvent(QMouseEvent *pEvent);
+   virtual void keyPressEvent (QKeyEvent *pEvent);
+
+private:
+   QVector<CShortcutEx *> *pvShortcuts;
 
 signals:
    void sigToggleFullscreen ();

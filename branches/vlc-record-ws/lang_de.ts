@@ -379,12 +379,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="96"/>
+        <location filename="cplayer.cpp" line="99"/>
         <source>Set PlugIn path to &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="556"/>
+        <location filename="cplayer.cpp" line="522"/>
         <source>starting libVLC play of:
   --&gt; %2
   --&gt; with following arguments: %1</source>
@@ -394,28 +394,23 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="835"/>
+        <location filename="cplayer.cpp" line="817"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="868"/>
+        <location filename="cplayer.cpp" line="850"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1205"/>
+        <location filename="cplayer.cpp" line="1221"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LibVLC Error!</source>
         <translation type="obsolete">libVLC Fehler!</translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="170"/>
-        <source>Activate shortcut: %1</source>
-        <translation></translation>
     </message>
     <message>
         <source>LibVLC reports following error:
@@ -452,7 +447,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FEHLER</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="783"/>
+        <location filename="cplayer.cpp" line="765"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -527,7 +522,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="372"/>
+        <location filename="forms/cplayer.ui" line="378"/>
         <source>0:00:00</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1092,6 +1087,14 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
 </context>
 <context>
+    <name>CVideoFrame</name>
+    <message>
+        <location filename="cvideoframe.cpp" line="141"/>
+        <source>Activate shortcut: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CVlcCtrl</name>
     <message>
         <location filename="cvlcctrl.cpp" line="207"/>
@@ -1225,7 +1228,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="840"/>
-        <location filename="recorder.cpp" line="2213"/>
+        <location filename="recorder.cpp" line="2214"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
@@ -1245,55 +1248,55 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation>Ende:</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1830"/>
+        <location filename="recorder.cpp" line="1831"/>
         <source>Length: %1 min.</source>
         <translation>Länge: %1 min.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1839"/>
+        <location filename="recorder.cpp" line="1840"/>
         <source> (Ar.)</source>
         <oldsource>(Ar.)</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2065"/>
+        <location filename="recorder.cpp" line="2066"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2083"/>
+        <location filename="recorder.cpp" line="2084"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2209"/>
+        <location filename="recorder.cpp" line="2210"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <oldsource>VLC is still running.&lt;br /&gt; &lt;br /&gt;Do you really want to close the VLC Player now?</oldsource>
         <translation>Der VLC Player läuft noch.&lt;br /&gt; &lt;br /&gt;Bist Du sicher, dass Du ihn schließen willst?</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2323"/>
-        <location filename="recorder.cpp" line="2553"/>
+        <location filename="recorder.cpp" line="2324"/>
+        <location filename="recorder.cpp" line="2554"/>
         <source>Remove from favourites</source>
         <translation>Von Favoriten entfernen</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2331"/>
+        <location filename="recorder.cpp" line="2332"/>
         <source>Add to favourites</source>
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2376"/>
+        <location filename="recorder.cpp" line="2377"/>
         <source>Note</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2377"/>
+        <location filename="recorder.cpp" line="2378"/>
         <source>Max. number of favourites (%1) reached.</source>
         <translation>Maximale Anzahl an Favoriten (%1) erreicht.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2580"/>
+        <location filename="recorder.cpp" line="2581"/>
         <source>Active stream server is No. %1</source>
         <translation></translation>
     </message>
@@ -1311,7 +1314,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1265"/>
-        <location filename="recorder.cpp" line="1816"/>
+        <location filename="recorder.cpp" line="1817"/>
         <source>%1 sends following url:
   --&gt; %2</source>
         <translation></translation>
@@ -1325,12 +1328,12 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation type="obsolete">Timer Record aktiv!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2023"/>
+        <location filename="recorder.cpp" line="2024"/>
         <source>timeRec reports: record done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2041"/>
+        <location filename="recorder.cpp" line="2042"/>
         <source>timeRec reports: record active!</source>
         <translation></translation>
     </message>
