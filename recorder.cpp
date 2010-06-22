@@ -1689,6 +1689,7 @@ void Recorder::slotEpgAnchor (const QUrl &link)
       showInfo.setChanId(cid.toInt());
       showInfo.setArchive(true);
       showInfo.setPlayState(ePlayState);
+      showInfo.setLastJumpTime(0);
 
       Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
    }

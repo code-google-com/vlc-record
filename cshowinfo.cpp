@@ -29,6 +29,7 @@ CShowInfo::CShowInfo()
    ePlayState = IncPlay::PS_WTF;
    uiStart    = 0;
    uiEnd      = 0;
+   uiJumpTime = 0;
 }
 
 /* -----------------------------------------------------------------\
@@ -104,6 +105,21 @@ void CShowInfo::setArchive (bool arch)
 void CShowInfo::setStartTime (uint start)
 {
    uiStart = start;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setLastJumpTime
+|  Begin: 22.06.2010 / 14:25:00
+|  Author: Jo2003
+|  Description: stores the last jump time
+|
+|  Parameters: time in seconds
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CShowInfo::setLastJumpTime(uint start)
+{
+   uiJumpTime = start;
 }
 
 /* -----------------------------------------------------------------\
@@ -194,6 +210,21 @@ const int &CShowInfo::channelId()
 const uint &CShowInfo::starts()
 {
    return uiStart;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: lastJump
+|  Begin: 22.06.2010 / 14:25:00
+|  Author: Jo2003
+|  Description: get the last jump time
+|
+|  Parameters: --
+|
+|  Returns: ref. to value
+\----------------------------------------------------------------- */
+const uint &CShowInfo::lastJump()
+{
+   return uiJumpTime;
 }
 
 /* -----------------------------------------------------------------\
