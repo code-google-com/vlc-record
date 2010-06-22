@@ -170,6 +170,7 @@ static void UpdateCursor( event_thread_t *p_event, bool b_show )
     }
 }
 
+#ifndef UNDER_CE
 static HCURSOR EmptyCursor( HINSTANCE instance )
 {
     const int cw = GetSystemMetrics(SM_CXCURSOR);
@@ -189,6 +190,7 @@ static HCURSOR EmptyCursor( HINSTANCE instance )
 
     return cursor;
 }
+#endif
 
 static void MousePressed( event_thread_t *p_event, HWND hwnd, unsigned button )
 {
@@ -558,7 +560,9 @@ static int DirectXCreateWindow( event_thread_t *p_event )
     }
     #endif
     p_event->cursor_arrow = LoadCursor(NULL, IDC_ARROW);
+#ifndef UNDER_CE
     p_event->cursor_empty = EmptyCursor(hInstance);
+#endif
 
     /* Get the Icon from the main app */
     vlc_icon = NULL;
@@ -739,7 +743,9 @@ static void DirectXCloseWindow( event_thread_t *p_event )
     UnregisterClass( p_event->class_video, hInstance );
     UnregisterClass( p_event->class_main, hInstance );
 
+#ifndef UNDER_CE
     DestroyCursor( p_event->cursor_empty );
+#endif
 }
 
 /*****************************************************************************
