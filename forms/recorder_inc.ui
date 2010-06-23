@@ -802,6 +802,13 @@ border-top: 0px;
                </widget>
               </item>
               <item>
+               <widget class="Line" name="line_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="pushBwd">
                 <property name="enabled">
                  <bool>false</bool>
@@ -831,6 +838,49 @@ border-top: 0px;
                 <property name="flat">
                  <bool>true</bool>
                 </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cbxTimeJumpVal">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>Time Jump Value in minutes</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>2</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>3</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>4</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>5</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
                </widget>
               </item>
               <item>

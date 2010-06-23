@@ -70,6 +70,7 @@ class CPlayer : public QWidget
 public:
    CPlayer(QWidget *parent = 0);
    ~CPlayer();
+   void cleanExit ();
    int  initPlayer (QStringList &slArgs);
    int  setMedia (const QString &sMrl);
    bool isPlaying ();
@@ -84,10 +85,10 @@ public:
 
 protected:
    void changeEvent(QEvent *e);
-   void releasePlayer ();
    int  createArgs (const QStringList &lArgs, Ui::vlcArgs& args);
    void freeArgs (Ui::vlcArgs& args);
    int  myToggleFullscreen ();
+   void releasePlayer ();
 
 private:
    Ui::CPlayer            *ui;
@@ -107,6 +108,8 @@ private:
    CWaitTrigger           *pTrigger;
 
 private slots:
+   void on_posSlider_valueChanged(int value);
+   void on_posSlider_sliderReleased();
    void on_btnFullScreen_clicked();
    void on_cbxAspect_currentIndexChanged(QString str);
    void on_cbxCrop_currentIndexChanged(QString str);
@@ -122,12 +125,7 @@ public slots:
    int  slotToggleFullScreen ();
    int  slotToggleAspectRatio ();
    int  slotToggleCropGeometry ();
-   int  slotStreamJumpFwd ();
-   int  slotStreamJumpBwd ();
-   int  slotTimeJumpBwd();
-   int  slotTimeJumpFwd();
    int  slotTimeJumpRelative (int iSeconds);
-   int  slotStreamJumpRelative (int iSeconds);
    void slotStoredAspectCrop ();
 
 signals:

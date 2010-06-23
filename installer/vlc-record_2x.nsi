@@ -88,7 +88,7 @@ Section "libVLC Framework" SecFw
 ;   File "${LIBVLCFW}\npvlc.dll"
 
    SetOutPath "$INSTDIR\plugins"
-   File /r "${LIBVLCFW}\plugins\*.dll"
+   File /r "${LIBVLCFW}\plugins\*.*"
 SectionEnd
 
 ;-------------------------------------------------------

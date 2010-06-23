@@ -353,6 +353,20 @@ QSlider::add-page:horizontal {
 QSlider::sub-page:horizontal {
    background: #FFCC00;
    border-radius: 3px;
+}
+
+QSlider::add-page:horizontal:disabled {
+   background: #bbb;
+   border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+   background: #bbb;
+   border-radius: 3px;
+}
+
+QSlider::handle:horizontal:disabled {
+      background-color: #bbb;
 }</string>
        </property>
        <property name="maximum">
@@ -367,6 +381,11 @@ QSlider::sub-page:horizontal {
       <widget class="QLabel" name="labPos">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#labPos {
+color: white;
+}</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::Panel</enum>

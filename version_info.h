@@ -31,12 +31,21 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".30beta" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".33beta" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
-| - new layout!!!
+| - more buffering values to support bad connections
+| - when opening timer record window, active channel
+|   is the default one
+| - time jump with variable time value
+| - new position slider for archive play (works exactly)
+| - stores aspect ratio + crop ratio for every channel
+| - uses SQLite to store data
+| - uses libVLC 1.10 (with patch for event handling)
+| - new layout optimized for widescreen!!!
+|
 | 2010-04-18: Version x.29
 | - bug: if show title contains slashes or backslashes
 |   record will not work because vlc will not create the
