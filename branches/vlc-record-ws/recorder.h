@@ -96,7 +96,6 @@ private:
     int                            iEpgOffset;
     QTabBar                       *pEpgNavbar;
     CTimerRec                      timeRec;
-    // uint                           uiArchivGmt;
     QSystemTrayIcon                trayIcon;
     QRect                          sizePos;
     CVlcCtrl                       vlcCtrl;
@@ -139,6 +138,10 @@ protected:
     virtual void keyPressEvent (QKeyEvent *event);
 
 private slots:
+#ifdef INCLUDE_LIBVLC
+    void on_pushBwd_clicked();
+    void on_pushFwd_clicked();
+#endif /* INCLUDE_LIBVLC */
     void on_btnFontSmaller_clicked();
     void on_btnFontLarger_clicked();
     void on_pushStop_clicked();

@@ -379,12 +379,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="99"/>
+        <location filename="cplayer.cpp" line="117"/>
         <source>Set PlugIn path to &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="522"/>
+        <location filename="cplayer.cpp" line="540"/>
         <source>starting libVLC play of:
   --&gt; %2
   --&gt; with following arguments: %1</source>
@@ -394,19 +394,24 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="817"/>
+        <location filename="cplayer.cpp" line="835"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="850"/>
+        <location filename="cplayer.cpp" line="868"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1221"/>
+        <location filename="cplayer.cpp" line="1116"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="1147"/>
+        <source>Ignore slightly slider position change...</source>
+        <translation></translation>
     </message>
     <message>
         <source>LibVLC Error!</source>
@@ -447,7 +452,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FEHLER</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="765"/>
+        <location filename="cplayer.cpp" line="783"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -466,7 +471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/cplayer.ui" line="28"/>
         <source>Aspect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seitenverhältnis: </translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="36"/>
@@ -519,28 +524,28 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/cplayer.ui" line="223"/>
         <source>Switch to Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fullscreen</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="378"/>
+        <location filename="forms/cplayer.ui" line="397"/>
         <source>0:00:00</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="123"/>
         <source>Jump Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>springe zurück</translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="126"/>
         <location filename="forms/cplayer.ui" line="146"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="143"/>
         <source>Jump Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>springe vorwärts</translation>
     </message>
     <message>
         <source>Volume: </source>
@@ -743,27 +748,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="177"/>
         <source>20000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="182"/>
         <source>30000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="187"/>
         <source>45000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="192"/>
         <source>60000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="197"/>
         <source>90000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="369"/>
@@ -887,7 +892,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <location filename="ctimerrec.cpp" line="322"/>
         <location filename="ctimerrec.cpp" line="450"/>
         <source>SQL Error String: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL Fehler String: %1</translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="566"/>
@@ -1091,7 +1096,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="cvideoframe.cpp" line="141"/>
         <source>Activate shortcut: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1169,55 +1174,55 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="cvlcrecdb.cpp" line="34"/>
         <source>Error!</source>
-        <translation type="unfinished">Fehler!</translation>
+        <translation>Fehler!</translation>
     </message>
     <message>
         <location filename="cvlcrecdb.cpp" line="34"/>
         <source>Can&apos;t create / open SQLite database ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann SQL Datenbank nicht anlegen / öffnen ...</translation>
     </message>
 </context>
 <context>
     <name>Recorder</name>
     <message>
-        <location filename="recorder.cpp" line="548"/>
-        <location filename="recorder.cpp" line="568"/>
+        <location filename="recorder.cpp" line="544"/>
+        <location filename="recorder.cpp" line="564"/>
         <source>Mon</source>
         <translation>Mo.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="549"/>
-        <location filename="recorder.cpp" line="569"/>
+        <location filename="recorder.cpp" line="545"/>
+        <location filename="recorder.cpp" line="565"/>
         <source>Tue</source>
         <translation>Di.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="550"/>
-        <location filename="recorder.cpp" line="570"/>
+        <location filename="recorder.cpp" line="546"/>
+        <location filename="recorder.cpp" line="566"/>
         <source>Wed</source>
         <translation>Mi.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="551"/>
-        <location filename="recorder.cpp" line="571"/>
+        <location filename="recorder.cpp" line="547"/>
+        <location filename="recorder.cpp" line="567"/>
         <source>Thu</source>
         <translation>Do.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="552"/>
-        <location filename="recorder.cpp" line="572"/>
+        <location filename="recorder.cpp" line="548"/>
+        <location filename="recorder.cpp" line="568"/>
         <source>Fri</source>
         <translation>Fr.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="553"/>
-        <location filename="recorder.cpp" line="573"/>
+        <location filename="recorder.cpp" line="549"/>
+        <location filename="recorder.cpp" line="569"/>
         <source>Sat</source>
         <translation>Sa.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="562"/>
-        <location filename="recorder.cpp" line="574"/>
+        <location filename="recorder.cpp" line="558"/>
+        <location filename="recorder.cpp" line="570"/>
         <source>Sun</source>
         <translation>So.</translation>
     </message>
@@ -1338,8 +1343,8 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="507"/>
-        <location filename="recorder.cpp" line="581"/>
+        <location filename="recorder.cpp" line="503"/>
+        <location filename="recorder.cpp" line="577"/>
         <source>1 week backward</source>
         <translation>1 Woche zurück</translation>
     </message>
@@ -1379,13 +1384,13 @@ dataDir: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="441"/>
+        <location filename="recorder.cpp" line="437"/>
         <source>vlc-record - Click to activate!</source>
         <translation>vlc-record - Klicken zum aktivieren!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="539"/>
-        <location filename="recorder.cpp" line="586"/>
+        <location filename="recorder.cpp" line="535"/>
+        <location filename="recorder.cpp" line="582"/>
         <source>1 week forward</source>
         <translation>1 Woche nach vorn</translation>
     </message>
@@ -1436,13 +1441,13 @@ dataDir: %1
     </message>
     <message>
         <location filename="forms/recorder.ui" line="176"/>
-        <location filename="forms/recorder_inc.ui" line="929"/>
+        <location filename="forms/recorder_inc.ui" line="979"/>
         <source>Short EPG</source>
         <translation>Kurzer EPG</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="195"/>
-        <location filename="forms/recorder_inc.ui" line="948"/>
+        <location filename="forms/recorder_inc.ui" line="998"/>
         <source>Time Progress for played programm</source>
         <translation>Zeitschiene für laufendes Proframm</translation>
     </message>
@@ -1513,24 +1518,28 @@ dataDir: %1
     <message>
         <location filename="forms/recorder.ui" line="606"/>
         <location filename="forms/recorder_inc.ui" line="637"/>
+        <location filename="forms/recorder_inc.ui" line="856"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="611"/>
         <location filename="forms/recorder_inc.ui" line="642"/>
+        <location filename="forms/recorder_inc.ui" line="861"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="616"/>
         <location filename="forms/recorder_inc.ui" line="647"/>
+        <location filename="forms/recorder_inc.ui" line="866"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="621"/>
         <location filename="forms/recorder_inc.ui" line="652"/>
+        <location filename="forms/recorder_inc.ui" line="871"/>
         <source>4</source>
         <translation></translation>
     </message>
@@ -1549,6 +1558,7 @@ dataDir: %1
     <message>
         <location filename="forms/recorder.ui" line="636"/>
         <location filename="forms/recorder_inc.ui" line="667"/>
+        <location filename="forms/recorder_inc.ui" line="881"/>
         <source>10</source>
         <translation></translation>
     </message>
@@ -1590,13 +1600,13 @@ dataDir: %1
     </message>
     <message>
         <location filename="forms/recorder.ui" line="800"/>
-        <location filename="forms/recorder_inc.ui" line="884"/>
+        <location filename="forms/recorder_inc.ui" line="934"/>
         <source>Timer Record</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="908"/>
-        <location filename="forms/recorder_inc.ui" line="1065"/>
+        <location filename="forms/recorder_inc.ui" line="1115"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -1608,54 +1618,64 @@ dataDir: %1
     </message>
     <message>
         <location filename="forms/recorder.ui" line="816"/>
-        <location filename="forms/recorder_inc.ui" line="900"/>
+        <location filename="forms/recorder_inc.ui" line="950"/>
         <source>Alt+T</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="924"/>
-        <location filename="forms/recorder_inc.ui" line="1081"/>
+        <location filename="forms/recorder_inc.ui" line="1131"/>
         <source>Alt+O</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="949"/>
-        <location filename="forms/recorder_inc.ui" line="1106"/>
+        <location filename="forms/recorder_inc.ui" line="1156"/>
         <source>About ...</source>
         <translation>Über ...</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="965"/>
-        <location filename="forms/recorder_inc.ui" line="1122"/>
+        <location filename="forms/recorder_inc.ui" line="1172"/>
         <source>Alt+I</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="990"/>
-        <location filename="forms/recorder_inc.ui" line="1147"/>
+        <location filename="forms/recorder_inc.ui" line="1197"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="1006"/>
-        <location filename="forms/recorder_inc.ui" line="1163"/>
+        <location filename="forms/recorder_inc.ui" line="1213"/>
         <source>Alt+Q</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="522"/>
         <source> Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Player</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="816"/>
+        <location filename="forms/recorder_inc.ui" line="823"/>
         <source>Jump Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>springe zurück</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="848"/>
+        <location filename="forms/recorder_inc.ui" line="852"/>
+        <source>Time Jump Value in minutes</source>
+        <translation>Sprungwert in Minuten</translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="876"/>
+        <source>5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="898"/>
         <source>Jump Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>springe vorwärts</translation>
     </message>
 </context>
 </TS>

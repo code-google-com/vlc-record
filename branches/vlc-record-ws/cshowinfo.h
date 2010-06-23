@@ -37,7 +37,7 @@ public:
    void setStartTime (uint start);
    void setEndTime (uint end);
    void setPlayState (IncPlay::ePlayStates state);
-   void setLastJumpTime (uint start);
+   void setLastJumpTime (int start);
 
    // get values ...
    const QString &showName();
@@ -45,7 +45,7 @@ public:
    const int &channelId();
    const uint &starts();
    const uint &ends();
-   const uint &lastJump();
+   const int &lastJump();
    const IncPlay::ePlayStates &playState();
    const bool &archive();
 
@@ -56,7 +56,7 @@ private:
    bool                 bIsArchive;
    uint                 uiStart;
    uint                 uiEnd;
-   uint                 uiJumpTime;
+   int                  iJumpTime;
    IncPlay::ePlayStates ePlayState;
 };
 

@@ -149,10 +149,6 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // get state if libVLC player to change player state display ...
    connect (ui->player, SIGNAL(sigPlayState(int)), this, SLOT(slotIncPlayState(int)));
 
-   // forward and backward jump ...
-   connect (ui->pushFwd, SIGNAL(clicked()), ui->player, SLOT(slotStreamJumpFwd()));
-   connect (ui->pushBwd, SIGNAL(clicked()), ui->player, SLOT(slotStreamJumpBwd()));
-
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
@@ -637,7 +633,7 @@ void Recorder::InitShortCuts()
    pShortCut = new CShortcutEx (QKeySequence("CTRL+ALT+F"), this);
    if (pShortCut)
    {
-      connect (pShortCut, SIGNAL(activated()), ui->player, SLOT(slotStreamJumpFwd()));
+      connect (pShortCut, SIGNAL(activated()), this, SLOT(on_pushFwd_clicked()));
 
       // save shortcut ...
       vShortcutPool.push_back(pShortCut);
@@ -647,7 +643,7 @@ void Recorder::InitShortCuts()
    pShortCut = new CShortcutEx (QKeySequence("CTRL+ALT+B"), this);
    if (pShortCut)
    {
-      connect (pShortCut, SIGNAL(activated()), ui->player, SLOT(slotStreamJumpBwd()));
+      connect (pShortCut, SIGNAL(activated()), this, SLOT(on_pushBwd_clicked()));
 
       // save shortcut ...
       vShortcutPool.push_back(pShortCut);
@@ -782,6 +778,10 @@ void Recorder::closeEvent(QCloseEvent *event)
       // We want to close program, store all needed values ...
       // Note: putting this function in destructor doesn't work!
       savePositions();
+#ifdef INCLUDE_LIBVLC
+      // end player ...
+      ui->player->cleanExit();
+#endif /* INCLUDE_LIBVLC */
 
       // now that all is saved, allow program to close.
       event->accept();
@@ -1481,6 +1481,21 @@ void Recorder::on_cbxTimeShift_currentIndexChanged(QString str)
 \----------------------------------------------------------------- */
 void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
 {
+#ifdef INCLUDE_LIBVLC
+   if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY) && showInfo.archive())
+   {
+      ui->pushBwd->setEnabled(true);
+      ui->pushFwd->setEnabled(true);
+      ui->cbxTimeJumpVal->setEnabled(true);
+   }
+   else
+   {
+      ui->pushBwd->setEnabled(false);
+      ui->pushFwd->setEnabled(false);
+      ui->cbxTimeJumpVal->setEnabled(false);
+   }
+#endif /* INCLUDE_LIBVLC */
+
    switch (ePlayState)
    {
    case IncPlay::PS_PLAY:
@@ -1488,38 +1503,23 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
-
-      // only on archive stream jump ic active ...
-      if (bArchive && bEnable)
-      {
-         ui->pushBwd->setEnabled(true);
-         ui->pushFwd->setEnabled(true);
-      }
       break;
+
    case IncPlay::PS_RECORD:
       ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
-      ui->pushBwd->setEnabled(false);
-      ui->pushFwd->setEnabled(false);
       break;
+
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
       ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
-      ui->pushBwd->setEnabled(false);
-      ui->pushFwd->setEnabled(false);
       break;
-   case IncPlay::PS_STOP:
-   case IncPlay::PS_END:
-   case IncPlay::PS_ERROR:
-      ui->pushBwd->setEnabled(false);
-      ui->pushFwd->setEnabled(false);
 
-      // fall thru here ...
    default:
       ui->cbxTimeShift->setEnabled(bEnable);
       ui->pushPlay->setEnabled(bEnable);
@@ -2737,6 +2737,47 @@ bool Recorder::TimeJumpAllowed()
 
    return bRV;
 }
+
+#ifdef INCLUDE_LIBVLC
+/* -----------------------------------------------------------------\
+|  Method: on_btnBwd_clicked
+|  Begin: 23.06.2010 / 12:32:12
+|  Author: Jo2003
+|  Description: jump backward
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_pushBwd_clicked()
+{
+   // we have minutres but need seconds --> x 60!!!
+   int iJmpVal = ui->cbxTimeJumpVal->currentText().toInt() * 60;
+
+   // jump ...
+   ui->player->slotTimeJumpRelative(-iJmpVal);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_btnFwd_clicked
+|  Begin: 23.06.2010 / 12:32:12
+|  Author: Jo2003
+|  Description: jump forward
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_pushFwd_clicked()
+{
+   // we have minutres but need seconds --> x 60!!!
+   int iJmpVal = ui->cbxTimeJumpVal->currentText().toInt() * 60;
+
+   // jump ...
+   ui->player->slotTimeJumpRelative(iJmpVal);
+}
+
+#endif /* INCLUDE_LIBVLC */
 
 /************************* History ***************************\
 | $Log$

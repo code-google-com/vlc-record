@@ -85,6 +85,24 @@ CPlayer::~CPlayer()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: cleanExit
+|  Begin: 23.06.2010 / 16:17:51
+|  Author: Jo2003
+|  Description: pseudo destructor should be called from outside ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::cleanExit()
+{
+   timer.reset();
+   poller.stop();
+   sliderTimer.stop();
+   releasePlayer();
+}
+
+/* -----------------------------------------------------------------\
 |  Method: setPlugInPath
 |  Begin: 02.03.2010 / 14:17:51
 |  Author: Jo2003
@@ -510,8 +528,8 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    ui->labPos->setText("00:00:00");
 
    // get MRL ...
-   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   QString     sMrl  = "d:/bbb.avi";
+   QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   // QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
 
@@ -537,21 +555,21 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    if (!iRV && bCtrlStream)
    {
       // set slider to position ...
-      int iSliderPos = 0;
+      int iSliderPos;
 
       // set slider range to seconds ...
 
       // we add 5 minutes at start and 5 minutes at end because start
       // and end time are not always accurate ...
-      ui->posSlider->setRange(0, showInfo.ends() - showInfo.starts() + 2 * TIMER_REC_OFFSET);
+      ui->posSlider->setRange(0, showInfo.ends() - showInfo.starts());
 
-      if (showInfo.lastJump())
-      {
-         iSliderPos += showInfo.lastJump() - showInfo.starts();
-      }
+      iSliderPos = showInfo.lastJump();
 
-      ui->posSlider->setValue(iSliderPos + TIMER_REC_OFFSET);
-      ui->labPos->setText(QTime(0, 0, iSliderPos).toString("hh:mm:ss"));
+      ui->posSlider->setValue(iSliderPos);
+
+      ui->labPos->setText(QTime((int)iSliderPos / 3600,
+                                (int)(iSliderPos % 3600) / 60,
+                                iSliderPos % 60).toString("hh:mm:ss"));
    }
 
    return iRV;
@@ -569,19 +587,19 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
 \----------------------------------------------------------------- */
 void CPlayer::slotUpdateSlider()
 {
-   if (isPlaying() && bCtrlStream)
+   if (pMediaPlayer)
    {
-      int iSliderPos = timer.elapsedEx() / 1000 + showInfo.lastJump();
-
-      if (showInfo.lastJump())
+      if (libvlc_media_player_is_playing(pMediaPlayer) && bCtrlStream)
       {
-         iSliderPos += showInfo.lastJump() - showInfo.starts();
-      }
+         int iSliderPos = timer.elapsedEx() / 1000 + showInfo.lastJump();
 
-      if (!ui->posSlider->isSliderDown())
-      {
-         ui->posSlider->setValue(iSliderPos + TIMER_REC_OFFSET);
-         ui->labPos->setText(QTime(0, 0, iSliderPos).toString("hh:mm:ss"));
+         if (!ui->posSlider->isSliderDown())
+         {
+            ui->posSlider->setValue(iSliderPos);
+            ui->labPos->setText(QTime((int)iSliderPos / 3600,
+                                      (int)(iSliderPos % 3600) / 60,
+                                      iSliderPos % 60).toString("hh:mm:ss"));
+         }
       }
    }
 }
@@ -951,145 +969,22 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
 {
    if (isPlaying() && bCtrlStream)
    {
-      // how long we're watching this show?
-      uint uiTime = (uint)timer.elapsedEx() / 1000;
+      int  iNewPos = ui->posSlider->value() + iSeconds;
+      uint uiGmt   = 0;
 
-      // add the start time in GMT ...
-      uiTime     += (showInfo.lastJump()) ? showInfo.lastJump() : showInfo.starts();
+      // save new position ...
+      showInfo.setLastJumpTime(iNewPos);
 
       // add the jump value ...
-      uiTime     += iSeconds;
+      uiGmt        = (uint)(iNewPos + showInfo.starts());
 
       // we now have the new GMT value for the archive stream ...
 
-      // stop playback ...
-      stop();
-
-      // store time jump value ...
-      showInfo.setLastJumpTime(uiTime);
-
       // trigger request for the new stream position ...
       QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
-                       .arg(showInfo.channelId()).arg(uiTime);
+                       .arg(showInfo.channelId()).arg(uiGmt);
 
       pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
-   }
-
-   return 0;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotTimeJumpFwd
-|  Begin: 24.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: jump 120s. forward
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotTimeJumpFwd()
-{
-   return slotTimeJumpRelative(JUMP_TIME);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotTimeJumpBwd
-|  Begin: 24.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: jump ~120s. backward
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotTimeJumpBwd()
-{
-   return slotTimeJumpRelative(-JUMP_TIME);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotStreamJumpBwd
-|  Begin: 24.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: jump ~120s. backward
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotStreamJumpBwd()
-{
-   return slotStreamJumpRelative (-JUMP_TIME);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotStreamJumpFwd
-|  Begin: 24.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: jump ~120s. forward
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotStreamJumpFwd()
-{
-   return slotStreamJumpRelative (JUMP_TIME);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotStreamJumpRelative
-|  Begin: 25.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: try time jump in stream
-|
-|  Parameters: seconds to jump ...
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotStreamJumpRelative (int iSeconds)
-{
-   // time jumping in streams using set_time doesn't work.
-   // Therefore we use a funky rule which includes
-   // the playtime and the position we have now
-   // in the stream. This doesn't work 100% exactly.
-   int iPlayTime = timer.elapsedEx();
-
-   if (isPlaying() && bCtrlStream)
-   {
-      // get actual position ...
-      float factPos = libvlc_media_player_get_position(pMediaPlayer);
-
-      float newPos = factPos * (float)(iPlayTime + iSeconds * 1000) // mseconds
-                     / (float)iPlayTime;
-
-      // make sure we haven't a negative position ...
-      if (newPos < 0)
-      {
-         newPos = 0;
-      }
-
-      // set new position ...
-      libvlc_media_player_set_position(pMediaPlayer, newPos);
-
-      if (newPos == (float)0)
-      {
-         // we started again new (from 0) ...
-         // so set starttime to now ...
-         timer.reset();
-         timer.start();
-      }
-      else
-      {
-         // update play start time to reflect our changes ...
-         timer.addSecsEx(iSeconds);
-      }
    }
 
    return 0;
@@ -1222,6 +1117,72 @@ int CPlayer::myToggleFullscreen()
    }
 
    return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_posSlider_sliderReleased
+|  Begin: 23.06.2010 / 09:10:10
+|  Author: Jo2003
+|  Description: update position label to relect
+|               slider position change
+|  Parameters: actual slider position
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::on_posSlider_sliderReleased()
+{
+   if (isPlaying() && bCtrlStream)
+   {
+      uint position = (uint)ui->posSlider->value();
+
+      // ignore slider position change of +/- 10 seconds ...
+      uint uiPlayTime = showInfo.lastJump();
+
+      // play position ...
+      uiPlayTime += (uint)(timer.elapsedEx() / 1000);
+
+      // check if slider position is in 10 sec. limit ...
+      if ((position >= (uiPlayTime - 10)) && (position <= (uiPlayTime + 10)))
+      {
+         mInfo(tr("Ignore slightly slider position change..."));
+      }
+      else
+      {
+         // request new stream ...
+         QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
+                      .arg(showInfo.channelId())
+                      .arg(showInfo.starts() + position);
+
+         // update last jump time ...
+         showInfo.setLastJumpTime(position);
+
+         // trigger stream request ...
+         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
+      }
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_posSlider_valueChanged
+|  Begin: 23.06.2010 / 09:10:10
+|  Author: Jo2003
+|  Description: update position label to relect
+|               slider position change
+|  Parameters: actual slider position
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::on_posSlider_valueChanged(int value)
+{
+   if (isPlaying() && bCtrlStream)
+   {
+      if (ui->posSlider->isSliderDown())
+      {
+         ui->labPos->setText(QTime((int)value / 3600,
+                                   (int)(value % 3600) / 60,
+                                   value % 60).toString("hh:mm:ss"));
+      }
+   }
 }
 
 /************************* History ***************************\
