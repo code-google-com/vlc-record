@@ -408,12 +408,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1116"/>
+        <location filename="cplayer.cpp" line="1149"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1147"/>
+        <location filename="cplayer.cpp" line="1180"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>

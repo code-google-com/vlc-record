@@ -1066,8 +1066,41 @@ void CPlayer::slotStoredAspectCrop ()
 
    if(!pDb->aspect(showInfo.channelId(), sAspect, sCrop))
    {
-      ui->cbxAspect->setCurrentIndex(ui->cbxAspect->findText(sAspect));
-      ui->cbxCrop->setCurrentIndex(ui->cbxCrop->findText(sCrop));
+      int iIdxOld, iIdxNew;
+
+      // change combo box value for aspect ratio ...
+      iIdxOld = ui->cbxAspect->currentIndex();
+      iIdxNew = ui->cbxAspect->findText(sAspect);
+
+      if (iIdxOld != iIdxNew)
+      {
+         // updating combobox' actual value will also
+         // trigger the libVLC call ...
+         ui->cbxAspect->setCurrentIndex (iIdxNew);
+      }
+      else
+      {
+         // since values don't differ, updating combobox will not
+         // trigger format change. So set it directly to libVLC ...
+         libvlc_video_set_aspect_ratio(pMediaPlayer, sAspect.toAscii().data());
+      }
+
+      // change combo box value for crop ratio ...
+      iIdxOld = ui->cbxCrop->currentIndex();
+      iIdxNew = ui->cbxCrop->findText(sCrop);
+
+      if (iIdxOld != iIdxNew)
+      {
+         // updating combobox' actual value will also
+         // trigger the libVLC call ...
+         ui->cbxCrop->setCurrentIndex (iIdxNew);
+      }
+      else
+      {
+         // since values don't differ, updating combobox will not
+         // trigger format change. So set it directly to libVLC ...
+         libvlc_video_set_crop_geometry(pMediaPlayer, sCrop.toAscii().data());
+      }
    }
 }
 
