@@ -1482,17 +1482,26 @@ void Recorder::on_cbxTimeShift_currentIndexChanged(QString str)
 void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
 {
 #ifdef INCLUDE_LIBVLC
-   if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY) && showInfo.archive())
+   if (vlcCtrl.withLibVLC())
    {
-      ui->pushBwd->setEnabled(true);
-      ui->pushFwd->setEnabled(true);
-      ui->cbxTimeJumpVal->setEnabled(true);
-   }
-   else
-   {
-      ui->pushBwd->setEnabled(false);
-      ui->pushFwd->setEnabled(false);
-      ui->cbxTimeJumpVal->setEnabled(false);
+      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY) && bArchive)
+      {
+         ui->pushBwd->setEnabled(true);
+         ui->pushFwd->setEnabled(true);
+         ui->cbxTimeJumpVal->setEnabled(true);
+      }
+      else
+      {
+         ui->pushBwd->setEnabled(false);
+         ui->pushFwd->setEnabled(false);
+         ui->cbxTimeJumpVal->setEnabled(false);
+      }
+/*
+      if ((showInfo.playState() == IncPlay::PS_PLAY) && bArchive)
+      {
+         ui->pushPlay->setIcon(QIcon(":/app/pause"));
+      }
+*/
    }
 #endif /* INCLUDE_LIBVLC */
 
@@ -2751,7 +2760,7 @@ bool Recorder::TimeJumpAllowed()
 \----------------------------------------------------------------- */
 void Recorder::on_pushBwd_clicked()
 {
-   // we have minutres but need seconds --> x 60!!!
+   // we have minutes but need seconds --> x 60!!!
    int iJmpVal = ui->cbxTimeJumpVal->currentText().toInt() * 60;
 
    // jump ...
@@ -2770,7 +2779,7 @@ void Recorder::on_pushBwd_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_pushFwd_clicked()
 {
-   // we have minutres but need seconds --> x 60!!!
+   // we have minutes but need seconds --> x 60!!!
    int iJmpVal = ui->cbxTimeJumpVal->currentText().toInt() * 60;
 
    // jump ...

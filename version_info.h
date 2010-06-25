@@ -36,7 +36,9 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2010-06-25: Version x.33Beta2
 | - fix a bug where aspect or crop wasn't updated
+|
 | 2010-06-23: Version x.33Beta
 | - more buffering values to support bad connections
 | - when opening timer record window, active channel
