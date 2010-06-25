@@ -1248,7 +1248,7 @@ or start time is later than end time!</source>
     </message>
     <message>
         <location filename="recorder.cpp" line="840"/>
-        <location filename="recorder.cpp" line="2214"/>
+        <location filename="recorder.cpp" line="2223"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
@@ -1269,61 +1269,61 @@ or start time is later than end time!</source>
     </message>
     <message>
         <location filename="recorder.cpp" line="1265"/>
-        <location filename="recorder.cpp" line="1817"/>
+        <location filename="recorder.cpp" line="1826"/>
         <source>%1 sends following url:
   --&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1831"/>
+        <location filename="recorder.cpp" line="1840"/>
         <source>Length: %1 min.</source>
         <translation>Длин. %1 мин.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1840"/>
+        <location filename="recorder.cpp" line="1849"/>
         <source> (Ar.)</source>
         <oldsource>(Ar.)</oldsource>
         <translation> (Ар.)</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2066"/>
+        <location filename="recorder.cpp" line="2075"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2084"/>
+        <location filename="recorder.cpp" line="2093"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2210"/>
+        <location filename="recorder.cpp" line="2219"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <oldsource>VLC is still running.&lt;br /&gt; &lt;br /&gt;Do you really want to close the VLC Player now?</oldsource>
         <translation>VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2324"/>
-        <location filename="recorder.cpp" line="2554"/>
+        <location filename="recorder.cpp" line="2333"/>
+        <location filename="recorder.cpp" line="2563"/>
         <source>Remove from favourites</source>
         <translation>Удалить от фаворитов</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2332"/>
+        <location filename="recorder.cpp" line="2341"/>
         <source>Add to favourites</source>
         <translation>Добавить к фаворитам</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2377"/>
+        <location filename="recorder.cpp" line="2386"/>
         <source>Note</source>
         <translation>Кстати</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2378"/>
+        <location filename="recorder.cpp" line="2387"/>
         <source>Max. number of favourites (%1) reached.</source>
         <translation>Максимальное число фаворитов (%1) достигло.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2581"/>
+        <location filename="recorder.cpp" line="2590"/>
         <source>Active stream server is No. %1</source>
         <translation></translation>
     </message>
@@ -1348,12 +1348,12 @@ or start time is later than end time!</source>
         <translation type="obsolete">Идёт запись!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2024"/>
+        <location filename="recorder.cpp" line="2033"/>
         <source>timeRec reports: record done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2042"/>
+        <location filename="recorder.cpp" line="2051"/>
         <source>timeRec reports: record active!</source>
         <translation></translation>
     </message>
