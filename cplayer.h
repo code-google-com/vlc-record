@@ -19,6 +19,7 @@
 #include <QTimer>
 #include <QEvent>
 #include <QTime>
+#include <QMutex>
 
 #include <vlc/vlc.h>
 
@@ -106,6 +107,7 @@ private:
    bool                    bCtrlStream;
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
+   QMutex                  mtLogMutex;
 
 private slots:
    void on_posSlider_valueChanged(int value);

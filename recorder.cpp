@@ -778,6 +778,7 @@ void Recorder::closeEvent(QCloseEvent *event)
       // We want to close program, store all needed values ...
       // Note: putting this function in destructor doesn't work!
       savePositions();
+
 #ifdef INCLUDE_LIBVLC
       // end player ...
       ui->player->cleanExit();
@@ -1484,7 +1485,8 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
 #ifdef INCLUDE_LIBVLC
    if (vlcCtrl.withLibVLC())
    {
-      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY) && bArchive)
+      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY)
+         && showInfo.archive())
       {
          ui->pushBwd->setEnabled(true);
          ui->pushFwd->setEnabled(true);
@@ -1502,6 +1504,12 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable, bool bArchive)
          ui->pushPlay->setIcon(QIcon(":/app/pause"));
       }
 */
+   }
+   else
+   {
+      ui->pushBwd->setEnabled(false);
+      ui->pushFwd->setEnabled(false);
+      ui->cbxTimeJumpVal->setEnabled(false);
    }
 #endif /* INCLUDE_LIBVLC */
 

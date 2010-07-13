@@ -55,16 +55,15 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    // connect volume slider with volume change function ...
    connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
 
-   // do periodical logging ...
-   connect(&poller, SIGNAL(timeout()), this, SLOT(slotLibVLCLog()));
-
    // connect double click signal from videoframe with fullscreen toggle ...
    connect(ui->fVideo, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToggleFullScreen()));
 
    // connect slider timer with slider position slot ...
    connect(&sliderTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSlider()));
 
-   poller.start(1000);
+   // do periodical logging ...
+   poller.singleShot(1000, this, SLOT(slotLibVLCLog()));
+
    sliderTimer.start(500);
 }
 
@@ -195,8 +194,13 @@ void CPlayer::releasePlayer()
    // close log if opened ...
    if (pLibVlcLog)
    {
+      // lock logging stuff before closing it ...
+      mtLogMutex.lock();
+
       libvlc_log_close (pLibVlcLog);
       pLibVlcLog = NULL;
+
+      mtLogMutex.unlock();
    }
 
    // release vlc instance ...
@@ -364,10 +368,7 @@ int CPlayer::setMedia(const QString &sMrl)
    // if playing, stop and then release media ...
    if (curMedia)
    {
-      if (isPlaying())
-      {
-         libvlc_media_player_stop(pMediaPlayer);
-      }
+      libvlc_media_player_stop(pMediaPlayer);
 
       // release media ...
       libvlc_media_release (curMedia);
@@ -464,7 +465,7 @@ int CPlayer::stop()
 {
    int iRV = 0;
 
-   if (pMediaPlayer && isPlaying())
+   if (pMediaPlayer)
    {
       libvlc_media_player_stop (pMediaPlayer);
    }
@@ -752,6 +753,10 @@ void CPlayer::slotLibVLCLog()
 {
    int iRV = 0;
 
+   // make sure logging stuff isn't destroyed while
+   // we process the log entries ...
+   mtLogMutex.lock();
+
    // do we have a logger handle ... ?
    if (pLibVlcLog)
    {
@@ -802,6 +807,12 @@ void CPlayer::slotLibVLCLog()
          libvlc_log_iterator_free (it);
       }
    }
+
+   // grant access to logging stuff ...
+   mtLogMutex.unlock();
+
+   // check log again in a second ...
+   poller.singleShot(1000, this, SLOT(slotLibVLCLog()));
 }
 
 /* -----------------------------------------------------------------\
@@ -972,6 +983,16 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
       int  iNewPos = ui->posSlider->value() + iSeconds;
       uint uiGmt   = 0;
 
+      // check that we don't reach another show ...
+      if (iNewPos < 0)
+      {
+         iNewPos = 0;
+      }
+      else if (iNewPos > (int)(showInfo.ends() - showInfo.starts()))
+      {
+         iNewPos = showInfo.ends() - showInfo.starts();
+      }
+
       // save new position ...
       showInfo.setLastJumpTime(iNewPos);
 
@@ -1121,10 +1142,16 @@ int CPlayer::myToggleFullscreen()
 
    if (pMediaPlayer)
    {
+      // check if fullscreen is enabled ...
       if (ui->fParent->isFullScreen())
       {
+         // end fullscreen ...
          ui->fParent->showNormal();
+
+         // reparent to frame inside player dialog ...
          ui->fParent->setParent(ui->fMaster);
+
+         // show normal ...
          ui->fParent->show();
 
          // video frame doesn't need any focus when in windowed mode ...
@@ -1132,7 +1159,17 @@ int CPlayer::myToggleFullscreen()
       }
       else
       {
-         ui->fParent->setParent(NULL, Qt::SplashScreen);
+         Qt::WindowFlags f;
+
+         // frameless window which stays on top ...
+         f  = Qt::Window | Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint;
+
+#ifdef Q_OS_LINUX
+         f |= Qt::X11BypassWindowManagerHint;
+#endif // Q_OS_LINUX
+
+         // reparent to no parent ...
+         ui->fParent->setParent(NULL, f);
          ui->fParent->showFullScreen();
 
          // to grab keyboard input we need the focus ...

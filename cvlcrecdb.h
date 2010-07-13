@@ -13,7 +13,7 @@
    #define __120610_VLC_REC_DB_H
 
 #include <QObject>
-#include <QSqlDataBase>
+#include <QSqlDatabase>
 #include <QMessageBox>
 #include <QStringList>
 #include <QSqlError>

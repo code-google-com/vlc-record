@@ -31,11 +31,19 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".33beta2" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".33beta3" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+|
+| 2010-07-13: Version x.33Beta3
+| - lock logging stuff with mutex
+| - trigger next log check only when leaving actual check
+| - use optimized window flags when reparenting
+| - when jumping forward / backward make sure we're
+|   not entering another show
+|
 | 2010-06-25: Version x.33Beta2
 | - fix a bug where aspect or crop wasn't updated
 |
