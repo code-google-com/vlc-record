@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CPlayer</class>
+ <widget class="QWidget" name="CPlayer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>403</width>
+    <height>337</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,90,0">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="margin">
+    <number>2</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="hlTop">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Aspect:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbxAspect">
+       <item>
+        <property name="text">
+         <string>std.</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4:3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16:9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16:10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1:1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5:4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2.35</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Crop: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbxCrop">
+       <item>
+        <property name="text">
+         <string>std.</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>4:3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16:9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>16:10</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1:1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>5:4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2.35</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnBwd">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Jump Backward</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/player/bwd</normaloff>:/player/bwd</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnFwd">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Jump Forward</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/player/fwd</normaloff>:/player/fwd</iconset>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labSound">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../vlc-record.qrc">:/player/sound_on</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="volSlider">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSlider::groove:horizontal {
+     border: 1px solid #999999;
+     height: 3px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+     background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);
+     margin: 2px 0;
+ }
+
+ QSlider::handle:horizontal {
+     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee, 	stop:0.7 grey, stop:1 #dedede);
+     border: 1px solid #5c5c5c;
+     width: 6px;
+     margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
+     border-radius: 3px;
+ }</string>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="sliderPosition">
+        <number>50</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btnFullScreen">
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Switch to Fullscreen</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../vlc-record.qrc">
+         <normaloff>:/player/fullscreen</normaloff>:/player/fullscreen</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>18</width>
+         <height>18</height>
+        </size>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="fVideo">
+     <property name="styleSheet">
+      <string notr="true">QFrame#fVideo {
+   background-color: black;
+   background-image: url(:/app/tv);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSlider" name="posSlider">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSlider::groove:horizontal {
+     border: 1px solid #999999;
+     height: 3px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+     margin: 2px 0;
+ }
+
+ QSlider::handle:horizontal {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee, 	stop:0.7 grey, stop:1 #dedede);
+     border: 1px outset gray;/* solid #5c5c5c; */
+     width: 6px;
+     margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
+     border-radius: 3px;
+ }
+
+QSlider::handle:horizontal:hover {
+      background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee, 	stop:0.7 #800, stop:1 #dedede);
+}
+
+QSlider::add-page:horizontal {
+   background: rgb(77, 231, 0);
+   border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal {
+   background: #FFCC00;
+   border-radius: 3px;
+}
+
+QSlider::add-page:horizontal:disabled {
+   background: #bbb;
+   border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+   background: #bbb;
+   border-radius: 3px;
+}
+
+QSlider::handle:horizontal:disabled {
+      background-color: #bbb;
+}</string>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labPos">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#labPos {
+color: white;
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="text">
+        <string>0:00:00</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../vlc-record.qrc"/>
+ </resources>
+ <connections/>
+</ui>
