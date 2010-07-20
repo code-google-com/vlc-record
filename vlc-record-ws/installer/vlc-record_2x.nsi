@@ -60,6 +60,7 @@ Section "VLC-Record" SecInst
   SetOutPath "$INSTDIR"
   File "${SRCDIR}\release\vlc-record.exe"
   File "${QTLIBS}\libgcc_s_dw2-1.dll"
+  File "${QTLIBS}\mingwm10.dll"
 
   SetOutPath "$INSTDIR\language"
   File "${SRCDIR}\lang_de.qm"
@@ -83,8 +84,6 @@ Section "libVLC Framework" SecFw
    File "${LIBVLCFW}\libvlc.dll"
    File "${LIBVLCFW}\libvlccore.dll"
    FILE "${LIBVLCFW}\libvlc.dll.manifest"
-;   File "${LIBVLCFW}\axvlc.dll"
-;   File "${LIBVLCFW}\npvlc.dll"
 
    SetOutPath "$INSTDIR\plugins"
    File /r "${LIBVLCFW}\plugins\*.dll"
@@ -149,12 +148,10 @@ SectionEnd
 ; Uninstaller Section framework ...
 Section "un.Framework"
   ; delete vlc framework ...
-  Delete "$INSTDIR\plugins\*.dll"
+  Delete "$INSTDIR\plugins\*.*"
   Delete "$INSTDIR\libvlc.dll"
   Delete "$INSTDIR\libvlccore.dll"
   Delete "$INSTDIR\libvlc.dll.manifest"
-;  Delete "$INSTDIR\axvlc.dll"
-;  Delete "$INSTDIR\npvlc.dll"
   RMDir  "$INSTDIR\plugins"
 SectionEnd
 
@@ -162,8 +159,8 @@ SectionEnd
 ; Uninstaller Section Qt ...
 Section "un.Qt"
   ; delete Qt framework ...
-  Delete "$INSTDIR\imageformats\*.dll"
-  Delete "$INSTDIR\sqldrivers\*.dll"
+  Delete "$INSTDIR\imageformats\*.*"
+  Delete "$INSTDIR\sqldrivers\*.*"
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\QtSql4.dll"
   Delete "$INSTDIR\QtGui4.dll"
@@ -195,6 +192,7 @@ Section "un.Program"
   ; delete vlc-record itself ...
   Delete "$INSTDIR\vlc-record.exe"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
+  Delete "$INSTDIR\mingwm10.dll"
 
 SectionEnd
 
