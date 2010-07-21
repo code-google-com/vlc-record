@@ -20,6 +20,7 @@
 #include <QEvent>
 #include <QTime>
 #include <QMutex>
+#include <QDesktopWidget>
 
 #include <vlc/vlc.h>
 
@@ -95,6 +96,7 @@ private:
    Ui::CPlayer            *ui;
    QTimer                  poller;
    QTimer                  sliderTimer;
+   QTimer                  tAspectShot;
    CTimerEx                timer;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
@@ -132,6 +134,7 @@ public slots:
 
 signals:
    void sigPlayState (int ps);
+   void sigTriggerAspectChg ();
 };
 
 #endif /* __022410__CPLAYER_H */

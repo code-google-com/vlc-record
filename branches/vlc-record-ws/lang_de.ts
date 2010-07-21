@@ -379,12 +379,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="116"/>
+        <location filename="cplayer.cpp" line="130"/>
         <source>Set PlugIn path to &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="541"/>
+        <location filename="cplayer.cpp" line="560"/>
         <source>starting libVLC play of:
   --&gt; %2
   --&gt; with following arguments: %1</source>
@@ -394,22 +394,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="846"/>
+        <location filename="cplayer.cpp" line="857"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="879"/>
+        <location filename="cplayer.cpp" line="890"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1186"/>
+        <location filename="cplayer.cpp" line="1181"/>
+        <source>Can&apos;t get active screen QWidget!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="1206"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1217"/>
+        <location filename="cplayer.cpp" line="1237"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
@@ -452,7 +457,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FEHLER</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="788"/>
+        <location filename="cplayer.cpp" line="805"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3

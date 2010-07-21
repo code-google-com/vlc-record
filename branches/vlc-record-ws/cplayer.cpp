@@ -46,6 +46,13 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pTrigger     = NULL;
    bCtrlStream  = false;
 
+   // set log poller to single shot ...
+   poller.setSingleShot(true);
+
+   // set aspect shot timer to single shot ...
+   tAspectShot.setSingleShot (true);
+   tAspectShot.setInterval (500);
+
 #ifndef QT_NO_DEBUG
    uiVerboseLevel = 3;
 #else
@@ -62,8 +69,15 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(&sliderTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSlider()));
 
    // do periodical logging ...
-   poller.singleShot(1000, this, SLOT(slotLibVLCLog()));
+   connect(&poller, SIGNAL(timeout()), this, SLOT(slotLibVLCLog()));
 
+   // connect aspect shot timer with aspect change function ...
+   connect(&tAspectShot, SIGNAL(timeout()), this, SLOT(slotStoredAspectCrop()));
+
+   // connect aspect trigger signal with timer start ...
+   connect(this, SIGNAL(sigTriggerAspectChg()), &tAspectShot, SLOT(start()));
+
+   poller.start(1000);
    sliderTimer.start(500);
 }
 
@@ -177,6 +191,18 @@ void CPlayer::releasePlayer()
    // stop player if needed ...
    stop();
 
+   // close log if opened ...
+   if (pLibVlcLog)
+   {
+      // lock logging stuff before closing it ...
+      mtLogMutex.lock();
+
+      libvlc_log_close (pLibVlcLog);
+      pLibVlcLog = NULL;
+
+      mtLogMutex.unlock();
+   }
+
    // release player ...
    if (pMediaPlayer)
    {
@@ -189,18 +215,6 @@ void CPlayer::releasePlayer()
    {
       libvlc_media_release(pMedia);
       pMedia       = NULL;
-   }
-
-   // close log if opened ...
-   if (pLibVlcLog)
-   {
-      // lock logging stuff before closing it ...
-      mtLogMutex.lock();
-
-      libvlc_log_close (pLibVlcLog);
-      pLibVlcLog = NULL;
-
-      mtLogMutex.unlock();
    }
 
    // release vlc instance ...
@@ -286,6 +300,11 @@ int CPlayer::initPlayer(QStringList &slArgs)
    Ui::vlcArgs args;
 
    releasePlayer();
+
+   // reset crop and aspect cbx ... because it should show the state
+   // as used ...
+   ui->cbxAspect->setCurrentIndex(0);
+   ui->cbxCrop->setCurrentIndex(0);
 
    if (slArgs.size() == 0)
    {
@@ -698,8 +717,8 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 
          case libvlc_Playing:
             emit pPlayer->sigPlayState((int)IncPlay::PS_PLAY);
+            emit pPlayer->sigTriggerAspectChg ();
             pPlayer->startPlayTimer();
-            pPlayer->slotStoredAspectCrop();
             break;
 
          case libvlc_Paused:
@@ -751,8 +770,6 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 \----------------------------------------------------------------- */
 void CPlayer::slotLibVLCLog()
 {
-   int iRV = 0;
-
    // make sure logging stuff isn't destroyed while
    // we process the log entries ...
    mtLogMutex.lock();
@@ -761,10 +778,7 @@ void CPlayer::slotLibVLCLog()
    if (pLibVlcLog)
    {
       // how many entries in log ... ?
-      uint uiEntryCount = 0;
-
-      // are there entries available ... ?
-      uiEntryCount = libvlc_log_count (pLibVlcLog);
+      uint uiEntryCount = libvlc_log_count (pLibVlcLog);
 
       // no error and entries there ...
       if (uiEntryCount > 0)
@@ -776,35 +790,32 @@ void CPlayer::slotLibVLCLog()
          // get iterator to go through log entries ...
          libvlc_log_iterator_t *it = libvlc_log_get_iterator(pLibVlcLog);
 
-         // while there are entries ...
-         while (!iRV)
+         // do we have an iterator ... ?
+         if (it)
          {
-            // get log message presented by log iterator ...
-            pLogMsg = libvlc_log_iterator_next (it, &logMsg);
-
-            if (pLogMsg)
+            // while there are entries in log ...
+            while (libvlc_log_iterator_has_next(it))
             {
-               // build log message ...
-               mInfo(tr("Name: \"%1\", Type: \"%2\", Severity: %3\n  --> %4")
-                      .arg(QString::fromUtf8(pLogMsg->psz_name))
-                      .arg(QString::fromUtf8(pLogMsg->psz_type))
-                      .arg(pLogMsg->i_severity)
-                      .arg(QString::fromUtf8(pLogMsg->psz_message)));
+               // get log message presented by log iterator ...
+               pLogMsg = libvlc_log_iterator_next (it, &logMsg);
 
-               // is there a next entry ... ?
-               if (!libvlc_log_iterator_has_next(it))
+               if (pLogMsg)
                {
-                  // no --> break while ...
-                  iRV = 1;
+                  // build log message ...
+                  mInfo(tr("Name: \"%1\", Type: \"%2\", Severity: %3\n  --> %4")
+                         .arg(QString::fromUtf8(pLogMsg->psz_name))
+                         .arg(QString::fromUtf8(pLogMsg->psz_type))
+                         .arg(pLogMsg->i_severity)
+                         .arg(QString::fromUtf8(pLogMsg->psz_message)));
                }
             }
+
+            // free log iterator ...
+            libvlc_log_iterator_free (it);
          }
 
          // delete all log entries ...
          libvlc_log_clear(pLibVlcLog);
-
-         // free log iterator ...
-         libvlc_log_iterator_free (it);
       }
    }
 
@@ -812,7 +823,7 @@ void CPlayer::slotLibVLCLog()
    mtLogMutex.unlock();
 
    // check log again in a second ...
-   poller.singleShot(1000, this, SLOT(slotLibVLCLog()));
+   poller.start(1000);
 }
 
 /* -----------------------------------------------------------------\
@@ -1161,6 +1172,15 @@ int CPlayer::myToggleFullscreen()
       {
          Qt::WindowFlags f;
 
+         // get active desktop widget ...
+         QDesktopWidget *pDesktop   = QApplication::desktop ();
+         QWidget        *pActScreen = pDesktop->screen (pDesktop->screenNumber (this));
+
+         if (!pActScreen)
+         {
+            mInfo(tr("Can't get active screen QWidget!"));
+         }
+
          // frameless window which stays on top ...
          f  = Qt::Window | Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint;
 
@@ -1168,8 +1188,8 @@ int CPlayer::myToggleFullscreen()
          f |= Qt::X11BypassWindowManagerHint;
 #endif // Q_OS_LINUX
 
-         // reparent to no parent ...
-         ui->fParent->setParent(NULL, f);
+         // reparent to active screen ...
+         ui->fParent->setParent(pActScreen, f);
          ui->fParent->showFullScreen();
 
          // to grab keyboard input we need the focus ...
