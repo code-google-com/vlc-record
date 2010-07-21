@@ -133,8 +133,8 @@ SectionEnd
 ; Uninstaller Section Qt ...
 Section "un.Qt"
   ; delete Qt framework ...
-  Delete "$INSTDIR\imageformats\*.dll"
-  Delete "$INSTDIR\sqldrivers\*.dll"
+  Delete "$INSTDIR\imageformats\*.*"
+  Delete "$INSTDIR\sqldrivers\*.*"
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\QtSql4.dll"
   Delete "$INSTDIR\QtGui4.dll"

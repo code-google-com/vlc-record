@@ -329,7 +329,7 @@ void Recorder::show()
    // display splash screen ...
    if (!Settings.DisableSplashScreen())
    {
-      QTimer::singleShot(500, this, SLOT(slotSplashScreen()));
+      QTimer::singleShot(1500, this, SLOT(slotSplashScreen()));
    }
 
    QWidget::show();
