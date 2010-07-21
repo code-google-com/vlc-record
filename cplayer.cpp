@@ -53,10 +53,10 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    tAspectShot.setSingleShot (true);
    tAspectShot.setInterval (500);
 
-#ifndef QT_NO_DEBUG
-   uiVerboseLevel = 3;
-#else
+#ifdef QT_NO_DEBUG
    uiVerboseLevel = 1;
+#else
+   uiVerboseLevel = 3;
 #endif /* QT_NO_DEBUG */
 
    // connect volume slider with volume change function ...
