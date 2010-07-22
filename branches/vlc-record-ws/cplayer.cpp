@@ -548,8 +548,8 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    ui->labPos->setText("00:00:00");
 
    // get MRL ...
-   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   QString     sMrl  = "d:/bbb.avi";
+   QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   // QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
 
