@@ -548,8 +548,8 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    ui->labPos->setText("00:00:00");
 
    // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   // QString     sMrl  = "d:/bbb.avi";
+   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
 
@@ -1154,13 +1154,17 @@ int CPlayer::myToggleFullscreen()
    if (pMediaPlayer)
    {
       // check if fullscreen is enabled ...
-      if (ui->fParent->isFullScreen())
+      if (ui->fParent->isFullScreen ())
       {
+         // hide screen ...
+         ui->fParent->hide ();
+
          // end fullscreen ...
          ui->fParent->showNormal();
 
-         // reparent to frame inside player dialog ...
-         ui->fParent->setParent(ui->fMaster);
+         // put parent frame back into the layout where it belongs to ...
+         // this also sets parent and resizes as needed ...
+         ui->vlMasterFrame->addWidget (ui->fParent);
 
          // show normal ...
          ui->fParent->show();
@@ -1173,8 +1177,17 @@ int CPlayer::myToggleFullscreen()
          Qt::WindowFlags f;
 
          // get active desktop widget ...
-         QDesktopWidget *pDesktop   = QApplication::desktop ();
-         QWidget        *pActScreen = pDesktop->screen (pDesktop->screenNumber (this));
+         QDesktopWidget *pDesktop    = QApplication::desktop ();
+         int             iScreen     = pDesktop->screenNumber (this);
+         QWidget        *pActScreen  = pDesktop->screen (iScreen);
+         QRect           sizeDesktop = pDesktop->screenGeometry (this);
+
+         mInfo(tr("\n  --> Player Widget is located at %2 screen "
+                  "(Screen No. %1, Resolution %3px x %4px) ...")
+                  .arg(iScreen)
+                  .arg((iScreen == pDesktop->primaryScreen ()) ? "primary" : "secondary")
+                  .arg(sizeDesktop.width ())
+                  .arg(sizeDesktop.height ()));
 
          if (!pActScreen)
          {
@@ -1188,9 +1201,13 @@ int CPlayer::myToggleFullscreen()
          f |= Qt::X11BypassWindowManagerHint;
 #endif // Q_OS_LINUX
 
+         // hide screen ...
+         ui->fParent->hide ();
+
          // reparent to active screen ...
          ui->fParent->setParent(pActScreen, f);
-         ui->fParent->showFullScreen();
+         ui->fParent->setGeometry (sizeDesktop);
+         ui->fParent->showFullScreen ();
 
          // to grab keyboard input we need the focus ...
          // set policy so we can get focus ...

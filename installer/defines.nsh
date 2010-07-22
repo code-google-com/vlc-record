@@ -1,6 +1,6 @@
 ;------------------------------
 ; define versions ...
-!define VER_MINOR   "36Beta"
+!define VER_MINOR   "36Beta2"
 !define VER_CLASSIC "1.${VER_MINOR}"
 !define VER_INC     "2.${VER_MINOR}"
 

@@ -408,17 +408,23 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1181"/>
+        <location filename="cplayer.cpp" line="1185"/>
+        <source>
+  --&gt; Player Widget is located at %2 screen (Screen No. %1, %3 x %4px) ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="1194"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1206"/>
+        <location filename="cplayer.cpp" line="1223"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1237"/>
+        <location filename="cplayer.cpp" line="1254"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
