@@ -31,11 +31,14 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".36Beta2" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".36Beta3" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2010-07-23: Version x.36Beta3
+| - use official build of libVLC 1.1.1
+|
 | 2010-07-22: Version x.26Beta2
 | - uses libVLC 1.11
 | - fullscreen is located on screen where player widget is

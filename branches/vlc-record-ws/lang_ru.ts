@@ -410,7 +410,9 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="1185"/>
         <source>
-  --&gt; Player Widget is located at %2 screen (Screen No. %1, %3 x %4px) ...</source>
+  --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
+        <oldsource>
+  --&gt; Player Widget is located at %2 screen (Screen No. %1, %3 x %4px) ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
