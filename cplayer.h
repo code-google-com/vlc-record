@@ -91,6 +91,7 @@ protected:
    void freeArgs (Ui::vlcArgs& args);
    int  myToggleFullscreen ();
    void releasePlayer ();
+   void enableDisablePlayControl (bool bEnable);
 
 private:
    Ui::CPlayer            *ui;
@@ -110,6 +111,7 @@ private:
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
    QMutex                  mtLogMutex;
+   bool                    bSpoolPending;
 
 private slots:
    void on_posSlider_valueChanged(int value);
