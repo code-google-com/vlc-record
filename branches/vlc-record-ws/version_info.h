@@ -31,11 +31,14 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".36Beta3" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".36Beta4" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2010-07-25: Version x.36Beta4
+| - disable spooling while another spool request is active
+|
 | 2010-07-23: Version x.36Beta3
 | - use official build of libVLC 1.1.1
 |

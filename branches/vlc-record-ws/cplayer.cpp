@@ -36,22 +36,23 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    ui->setupUi(this);
 
    // nothing playing so far ...
-   pMedia       = NULL;
-   pMediaPlayer = NULL;
-   pVlcInstance = NULL;
-   pEMMedia     = NULL;
-   pEMPlay      = NULL;
-   pLibVlcLog   = NULL;
-   pSettings    = NULL;
-   pTrigger     = NULL;
-   bCtrlStream  = false;
+   pMedia        = NULL;
+   pMediaPlayer  = NULL;
+   pVlcInstance  = NULL;
+   pEMMedia      = NULL;
+   pEMPlay       = NULL;
+   pLibVlcLog    = NULL;
+   pSettings     = NULL;
+   pTrigger      = NULL;
+   bCtrlStream   = false;
+   bSpoolPending = true;
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
 
    // set aspect shot timer to single shot ...
    tAspectShot.setSingleShot (true);
-   tAspectShot.setInterval (500);
+   tAspectShot.setInterval (800);
 
 #ifdef QT_NO_DEBUG
    uiVerboseLevel = 1;
@@ -541,9 +542,13 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
    // reset play timer stuff ...
    timer.reset();
 
+   // while not showing video, disable spooling ...
+   bSpoolPending = true;
+   enableDisablePlayControl (false);
+
    // enable / disable position slider ...
    ui->posSlider->setValue(0);
-   ui->posSlider->setEnabled(bCtrlStream);
+   // ui->posSlider->setEnabled(bCtrlStream);
    ui->labPos->setEnabled(bCtrlStream);
    ui->labPos->setText("00:00:00");
 
@@ -989,7 +994,7 @@ int CPlayer::slotToggleCropGeometry()
 \----------------------------------------------------------------- */
 int CPlayer::slotTimeJumpRelative (int iSeconds)
 {
-   if (isPlaying() && bCtrlStream)
+   if (isPlaying() && bCtrlStream &&!bSpoolPending)
    {
       int  iNewPos = ui->posSlider->value() + iSeconds;
       uint uiGmt   = 0;
@@ -1015,6 +1020,11 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
       // trigger request for the new stream position ...
       QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
                        .arg(showInfo.channelId()).arg(uiGmt);
+
+      // mark spooling as active ...
+      bSpoolPending = true;
+
+      enableDisablePlayControl (false);
 
       pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
    }
@@ -1095,6 +1105,10 @@ void CPlayer::on_btnFullScreen_clicked()
 void CPlayer::slotStoredAspectCrop ()
 {
    QString sAspect, sCrop;
+
+   // enable spooling again ...
+   bSpoolPending = false;
+   enableDisablePlayControl (true);
 
    if(!pDb->aspect(showInfo.channelId(), sAspect, sCrop))
    {
@@ -1238,7 +1252,7 @@ int CPlayer::myToggleFullscreen()
 \----------------------------------------------------------------- */
 void CPlayer::on_posSlider_sliderReleased()
 {
-   if (isPlaying() && bCtrlStream)
+   if (isPlaying() && bCtrlStream && !bSpoolPending)
    {
       uint position = (uint)ui->posSlider->value();
 
@@ -1262,6 +1276,11 @@ void CPlayer::on_posSlider_sliderReleased()
 
          // update last jump time ...
          showInfo.setLastJumpTime(position);
+
+         // mark spooling as active ...
+         bSpoolPending = true;
+
+         enableDisablePlayControl (false);
 
          // trigger stream request ...
          pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
@@ -1290,6 +1309,23 @@ void CPlayer::on_posSlider_valueChanged(int value)
                                    value % 60).toString("hh:mm:ss"));
       }
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: enableDisablePlayControl
+|  Begin: 25.07.2010 / 09:10:10
+|  Author: Jo2003
+|  Description: enable / disable play control items
+|
+|  Parameters: enable / or disable
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::enableDisablePlayControl (bool bEnable)
+{
+   ui->btnFwd->setEnabled (bEnable && bCtrlStream);
+   ui->btnBwd->setEnabled (bEnable && bCtrlStream);
+   ui->posSlider->setEnabled (bEnable && bCtrlStream);
 }
 
 /************************* History ***************************\
