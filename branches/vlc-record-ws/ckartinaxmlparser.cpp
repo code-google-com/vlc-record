@@ -253,7 +253,7 @@ QString CKartinaXMLParser::ParseURL()
 {
    QString              url;
    QXmlStreamAttributes attrs;
-   QRegExp              rx("^.*//([^ ]*).*$");
+   QRegExp              rx("^([^ ]*).*$");
 
    xml.clear();
    xml.addData(stream);
@@ -292,7 +292,7 @@ QString CKartinaXMLParser::ParseURL()
 
    if (rx.indexIn(url) > -1)
    {
-      url        = QString("http://%1").arg(rx.cap(1));
+      url = rx.cap(1);
    }
    else
    {

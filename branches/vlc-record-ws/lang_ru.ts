@@ -340,27 +340,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaxmlparser.cpp" line="162"/>
         <location filename="ckartinaxmlparser.cpp" line="233"/>
-        <location filename="ckartinaxmlparser.cpp" line="289"/>
-        <location filename="ckartinaxmlparser.cpp" line="361"/>
+        <location filename="ckartinaxmlparser.cpp" line="290"/>
+        <location filename="ckartinaxmlparser.cpp" line="363"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="163"/>
         <location filename="ckartinaxmlparser.cpp" line="234"/>
-        <location filename="ckartinaxmlparser.cpp" line="290"/>
-        <location filename="ckartinaxmlparser.cpp" line="362"/>
+        <location filename="ckartinaxmlparser.cpp" line="291"/>
+        <location filename="ckartinaxmlparser.cpp" line="364"/>
         <source>XML Error String: %1</source>
         <translation>Информация о XML ошибке %1</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="400"/>
+        <location filename="ckartinaxmlparser.cpp" line="402"/>
         <source>%1 reports client time as %2</source>
         <oldsource>Kartina.tv reports client time as %1</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="418"/>
+        <location filename="ckartinaxmlparser.cpp" line="420"/>
         <source>Set time offset to %1 seconds!</source>
         <translation></translation>
     </message>
@@ -383,32 +383,40 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="131"/>
-        <source>Set PlugIn path to &apos;%1&apos;</source>
-        <translation></translation>
+        <location filename="cplayer.cpp" line="401"/>
+        <source>Use following URL:
+  --&gt; %1</source>
+        <oldsource>Use following MRL:
+  --&gt; %1</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="565"/>
-        <source>starting libVLC play of:
-  --&gt; %2
-  --&gt; with following arguments: %1</source>
-        <oldsource>starting libVLC play of:
- --&gt; %2
-... with following arguments: %1</oldsource>
-        <translation></translation>
+        <location filename="cplayer.cpp" line="409"/>
+        <source>Add MRL Option: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="862"/>
+        <location filename="cplayer.cpp" line="421"/>
+        <source>Can&apos;t create media description ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="607"/>
+        <source>Unknown Event No. %1 received ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="701"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="895"/>
+        <location filename="cplayer.cpp" line="734"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1199"/>
+        <location filename="cplayer.cpp" line="1038"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <oldsource>
@@ -416,17 +424,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1208"/>
+        <location filename="cplayer.cpp" line="1047"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1237"/>
+        <location filename="cplayer.cpp" line="1076"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1268"/>
+        <location filename="cplayer.cpp" line="1107"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
@@ -469,7 +477,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">ОШИБКА</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="810"/>
+        <location filename="cplayer.cpp" line="652"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -544,7 +552,7 @@ p, li { white-space: pre-wrap; }
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="397"/>
+        <location filename="forms/cplayer.ui" line="400"/>
         <source>0:00:00</source>
         <translation></translation>
     </message>
@@ -1122,7 +1130,7 @@ or start time is later than end time!</source>
 <context>
     <name>CVideoFrame</name>
     <message>
-        <location filename="cvideoframe.cpp" line="141"/>
+        <location filename="cvideoframe.cpp" line="203"/>
         <source>Activate shortcut: %1</source>
         <translation></translation>
     </message>

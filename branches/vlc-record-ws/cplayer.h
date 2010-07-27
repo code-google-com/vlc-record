@@ -19,7 +19,6 @@
 #include <QTimer>
 #include <QEvent>
 #include <QTime>
-#include <QMutex>
 #include <QDesktopWidget>
 
 #include <vlc/vlc.h>
@@ -73,10 +72,8 @@ public:
    CPlayer(QWidget *parent = 0);
    ~CPlayer();
    void cleanExit ();
-   int  initPlayer (QStringList &slArgs);
-   int  setMedia (const QString &sMrl);
+   int  initPlayer ();
    bool isPlaying ();
-   void setPlugInPath(const QString &sPath);
    void setShortCuts (QVector<CShortcutEx *> *pvSc);
    void startPlayTimer ();
    void pausePlayTimer ();
@@ -87,10 +84,7 @@ public:
 
 protected:
    void changeEvent(QEvent *e);
-   int  createArgs (const QStringList &lArgs, Ui::vlcArgs& args);
-   void freeArgs (Ui::vlcArgs& args);
    int  myToggleFullscreen ();
-   void releasePlayer ();
    void enableDisablePlayControl (bool bEnable);
 
 private:
@@ -101,16 +95,12 @@ private:
    CTimerEx                timer;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
-   libvlc_media_t         *pMedia;
    libvlc_event_manager_t *pEMPlay;
-   libvlc_event_manager_t *pEMMedia;
    libvlc_log_t           *pLibVlcLog;
    uint                    uiVerboseLevel;
-   QString                 sPlugInPath;
    bool                    bCtrlStream;
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
-   QMutex                  mtLogMutex;
    bool                    bSpoolPending;
 
 private slots:

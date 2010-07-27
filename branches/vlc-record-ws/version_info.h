@@ -31,11 +31,14 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".36Beta4" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".36Beta5" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2010-07-27: Version x.36Beta5
+| - hide mouse pointer in fullscreen mode after 1 second
+|
 | 2010-07-25: Version x.36Beta4
 | - disable spooling while another spool request is active
 |
