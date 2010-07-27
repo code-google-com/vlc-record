@@ -28,6 +28,15 @@ CVideoFrame::CVideoFrame(QWidget * parent, Qt::WindowFlags f)
    : QFrame(parent, f)
 {
    pvShortcuts = NULL;
+
+   // set mouse hide timer to single shot timer ...
+   tMouseHide.setSingleShot (true);
+
+   // ... with 1000 ms. interval ...
+   tMouseHide.setInterval (1000);
+
+   // hide mouse when timer has timeout ...
+   connect (&tMouseHide, SIGNAL(timeout()), this, SLOT(slotHideMouse()));
 }
 
 /* -----------------------------------------------------------------\
@@ -59,6 +68,59 @@ void CVideoFrame::mouseDoubleClickEvent(QMouseEvent *pEvent)
 {
    emit sigToggleFullscreen();
    pEvent->accept();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: mouseMoveEvent
+|  Begin: 27.07.2010 / 11:45:00
+|  Author: Jo2003
+|  Description: mouse was moved, special handling to hide mouse
+|               if we are in fullScreen ...
+|  Parameters: pointer to event ...
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CVideoFrame::mouseMoveEvent (QMouseEvent *pEvent)
+{
+   // is cursor hidden ... ?
+   if (cursor().shape() == Qt::BlankCursor)
+   {
+      // remove blank cursor (means unhide cursor) ...
+      unsetCursor ();
+   }
+
+   // if we're in fullscreen, start mouse hide timer ...
+   if (parentWidget()->isFullScreen())
+   {
+      // trigger or re-trigger mouse hide timer ...
+      tMouseHide.start ();
+   }
+
+   // always accept event ...
+   pEvent->accept ();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotHideMouse
+|  Begin: 27.07.2010 / 11:45:00
+|  Author: Jo2003
+|  Description: hide mouse cursore if we're in fullscreen
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CVideoFrame::slotHideMouse()
+{
+   // hide mouse if we're in fullscreen ...
+   if (parentWidget()->isFullScreen())
+   {
+      // hide cursor if not hidden ...
+      if (cursor().shape() != Qt::BlankCursor)
+      {
+         setCursor(QCursor(Qt::BlankCursor));
+      }
+   }
 }
 
 /* -----------------------------------------------------------------\
