@@ -16,6 +16,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QVector>
+#include <QTimer>
 
 #include "clogfile.h"
 #include "cshortcutex.h"
@@ -41,13 +42,18 @@ protected:
    int  fakeShortCut (const QKeySequence &seq);
 
    virtual void mouseDoubleClickEvent(QMouseEvent *pEvent);
+   virtual void mouseMoveEvent (QMouseEvent *pEvent);
    virtual void keyPressEvent (QKeyEvent *pEvent);
 
 private:
    QVector<CShortcutEx *> *pvShortcuts;
+   QTimer                  tMouseHide;
 
 signals:
    void sigToggleFullscreen ();
+
+public slots:
+   void slotHideMouse ();
 };
 
 #endif // __062010__CVIDEOFRAME_H
