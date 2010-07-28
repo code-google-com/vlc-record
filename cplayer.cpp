@@ -113,6 +113,16 @@ void CPlayer::cleanExit()
    poller.stop();
    sliderTimer.stop();
 
+   /**
+    * Note: Closing the log here leads to
+    * segmentation faults. Also disabling
+    * and cleaning the log first doesn't help.
+    * Therefore I assume that this is a libVLC
+    * problem. But since this function only is called
+    * when program ends, not closing the log shouldn't
+    * be a big problem!
+    */
+
    stop();
 
    if (pMediaPlayer)
