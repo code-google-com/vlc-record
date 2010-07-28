@@ -47,33 +47,59 @@ CShowInfo showInfo;
 int main(int argc, char *argv[])
 {
    int          iRV = -1;
-   QTranslator  trans;
-   QApplication a(argc, argv);
-   a.installTranslator(&trans);
 
-   // create directory stuff ...
-   pFolders = new CDirStuff;
+   QTranslator  *pTrans = NULL;
+   QApplication *pApp   = NULL;
+   Recorder     *pRec   = NULL;
 
-   if (pFolders)
+   pApp   = new QApplication(argc, argv);
+   pTrans = new QTranslator();
+
+   if (pApp && pTrans)
    {
-      // is folder stuff initialized successfully ...?
-      if (pFolders->isInitialized())
+      // install translator ...
+      pApp->installTranslator(pTrans);
+
+      // create directory stuff ...
+      pFolders = new CDirStuff;
+
+      if (pFolders)
       {
-         pDb = new CVlcRecDB();
-
-         if (pDb)
+         // is folder stuff initialized successfully ...?
+         if (pFolders->isInitialized())
          {
-            Recorder w(&trans);
-            w.show();
-            iRV = a.exec();
+            pDb = new CVlcRecDB();
 
-            // free / close database ...
-            delete pDb;
+            if (pDb)
+            {
+               pRec = new Recorder(pTrans);
+
+               if (pRec)
+               {
+                  pRec->show();
+
+                  iRV = pApp->exec();
+
+                  pRec->deleteLater();
+               }
+
+               delete pDb;
+            }
          }
-      }
 
-      // free mem ...
-      delete pFolders;
+         delete pFolders;
+      }
+   }
+
+   if (pApp)
+   {
+      // delete pApp;
+      pApp->deleteLater();
+   }
+
+   if (pTrans)
+   {
+      delete pTrans;
    }
 
    return iRV;
