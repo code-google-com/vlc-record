@@ -91,10 +91,13 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    iIdx = m_ui->cbxBufferSeconds->findText(pDb->stringValue("HttpCache"));
    m_ui->cbxBufferSeconds->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 
-   m_ui->cbxLogLevel->setCurrentIndex((int)pDb->intValue("LogLevel"));
-
    iIdx = m_ui->cbxInterval->findText(pDb->stringValue("RefIntv"));
    m_ui->cbxInterval->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
+
+   m_ui->cbxLogLevel->setCurrentIndex((int)pDb->intValue("LogLevel"));
+
+   iIdx = m_ui->cbxPlayerMod->findText(pDb->stringValue("PlayerModule"));
+   m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 }
 
 /* -----------------------------------------------------------------\
