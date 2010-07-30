@@ -867,7 +867,7 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
       // we now have the new GMT value for the archive stream ...
 
       // trigger request for the new stream position ...
-      QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
+      QString req = QString("cid=%1&gmt=%2")
                        .arg(showInfo.channelId()).arg(uiGmt);
 
       // mark spooling as active ...
@@ -1119,7 +1119,7 @@ void CPlayer::on_posSlider_sliderReleased()
       else
       {
          // request new stream ...
-         QString req = QString("m=channels&act=get_stream_url&cid=%1&gmt=%2")
+         QString req = QString("cid=%1&gmt=%2")
                       .arg(showInfo.channelId())
                       .arg(showInfo.starts() + position);
 

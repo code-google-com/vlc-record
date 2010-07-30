@@ -62,7 +62,6 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    m_ui->lineProxyPort->setText(pDb->stringValue("ProxyPort"));
    m_ui->lineProxyUser->setText(pDb->stringValue("ProxyUser"));
    m_ui->lineProxyPassword->setText(pDb->stringValue("ProxyPasswd"));
-   m_ui->lineInterval->setText(pDb->stringValue("RefIntv"));
 
    // check boxes ...
    m_ui->useProxy->setCheckState((Qt::CheckState)pDb->intValue("UseProxy"));
@@ -94,8 +93,8 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
 
    m_ui->cbxLogLevel->setCurrentIndex((int)pDb->intValue("LogLevel"));
 
-   iIdx = m_ui->cbxPlayerMod->findText(pDb->stringValue("PlayerModule"));
-   m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
+   iIdx = m_ui->cbxInterval->findText(pDb->stringValue("RefIntv"));
+   m_ui->cbxInterval->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 }
 
 /* -----------------------------------------------------------------\
@@ -134,6 +133,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
           int iLogIdx = m_ui->cbxLogLevel->currentIndex();
           int iBufIdx = m_ui->cbxBufferSeconds->currentIndex();
           int iModIdx = m_ui->cbxPlayerMod->currentIndex();
+          int iIntIdx = m_ui->cbxInterval->currentIndex();
 
           m_ui->retranslateUi(this);
 
@@ -142,6 +142,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
           m_ui->cbxLogLevel->setCurrentIndex(iLogIdx);
           m_ui->cbxBufferSeconds->setCurrentIndex(iBufIdx);
           m_ui->cbxPlayerMod->setCurrentIndex(iModIdx);
+          m_ui->cbxInterval->setCurrentIndex(iIntIdx);
 
           // set company name ...
           QString s = m_ui->groupAccount->title();
@@ -218,7 +219,6 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("ProxyPort", m_ui->lineProxyPort->text());
    pDb->setValue("ProxyUser", m_ui->lineProxyUser->text());
    pDb->setValue("ProxyPasswd", m_ui->lineProxyPassword->text());
-   pDb->setValue("RefIntv", m_ui->lineInterval->text());
    pDb->setValue("ShutdwnCmd", m_ui->lineShutdown->text());
 
    // check boxes ...
@@ -236,6 +236,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("HttpCache", m_ui->cbxBufferSeconds->currentText());
    pDb->setValue("LogLevel", m_ui->cbxLogLevel->currentIndex());
    pDb->setValue("PlayerModule", m_ui->cbxPlayerMod->currentText());
+   pDb->setValue("RefIntv", m_ui->cbxInterval->currentText());
 }
 
 /* -----------------------------------------------------------------\
@@ -275,21 +276,26 @@ void CSettingsDlg::on_pushDelLogos_clicked()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::SetStreamServerCbx (const QVector<int> &lSrvList, int iActSrv)
+void CSettingsDlg::SetStreamServerCbx (const QVector<cparser::SSrv> &vSrvList, const QString &sActSrv)
 {
    int iActIdx = 0;
+   int iCount  = 0;
+   QVector<cparser::SSrv>::const_iterator cit;
+
 
    m_ui->cbxStreamServer->clear();
 
    // add all servers ...
-   for (int i = 0; i < lSrvList.count(); i++)
+   for (cit = vSrvList.constBegin(); cit != vSrvList.constEnd(); cit++)
    {
-      m_ui->cbxStreamServer->addItem(QString::number(i + 1), QVariant(lSrvList[i]));
+      m_ui->cbxStreamServer->addItem((*cit).sName, QVariant((*cit).sIp));
 
-      if (lSrvList[i] == iActSrv)
+      if ((*cit).sIp == sActSrv)
       {
-         iActIdx = i;
+         iActIdx = iCount;
       }
+
+      iCount ++;
    }
 
    // mark active server ...
@@ -311,7 +317,7 @@ void CSettingsDlg::on_btnSaveStreamServer_clicked()
    // which server was choosed ... ?
    int iSrv = m_ui->cbxStreamServer->currentIndex();
 
-   emit sigSetServer(m_ui->cbxStreamServer->itemData(iSrv).toInt());
+   emit sigSetServer(m_ui->cbxStreamServer->itemData(iSrv).toString());
 }
 
 /* -----------------------------------------------------------------\
@@ -728,15 +734,7 @@ int CSettingsDlg::GetProxyPort ()
 
 int CSettingsDlg::GetRefrInt()
 {
-   int i = m_ui->lineInterval->text().toInt();
-
-   // make sure the interfal is not 0 !!!
-   if (i < 1)
-   {
-      i = 1;
-   }
-
-   return i;
+   return m_ui->cbxInterval->currentText().toInt();;
 }
 
 vlclog::eLogLevel CSettingsDlg::GetLogLevel()

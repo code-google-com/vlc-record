@@ -31,11 +31,16 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".36Beta5" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".37Beta" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+|
+| 2010-07-30: Version x.37Beta
+| - major code change to support kartinas Rest API
+| - logout when closing app
+|
 | 2010-07-27: Version x.36Beta5
 | - hide mouse pointer in fullscreen mode after 1 second
 | - major code cleaning in player so libvlc is allocated
@@ -43,6 +48,7 @@
 | - set options for playback / record per media
 | - therefore changes in modules
 | - allocate memory for app and dialog dynamically
+| - mark recorder dialog for delete later
 |
 | 2010-07-25: Version x.36Beta4
 | - disable spooling while another spool request is active

@@ -500,22 +500,25 @@
           <item row="6" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QLineEdit" name="lineInterval">
+             <widget class="QComboBox" name="cbxInterval">
               <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>60</width>
-                <height>16777215</height>
-               </size>
-              </property>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>10</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>15</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item>
@@ -656,22 +659,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>checkRefresh</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineInterval</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>98</x>
-     <y>336</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>235</x>
-     <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushSave</sender>
    <signal>clicked()</signal>
    <receiver>CSettingsDlg</receiver>
@@ -679,7 +666,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>179</x>
-     <y>461</y>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
      <x>188</x>
@@ -695,7 +682,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>355</x>
-     <y>461</y>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
      <x>366</x>
@@ -710,12 +697,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>122</x>
-     <y>341</y>
+     <x>143</x>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
-     <x>205</x>
-     <y>372</y>
+     <x>250</x>
+     <y>348</y>
     </hint>
    </hints>
   </connection>
@@ -726,12 +713,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>341</y>
+     <x>91</x>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
      <x>428</x>
-     <y>372</y>
+     <y>348</y>
     </hint>
    </hints>
   </connection>
@@ -743,11 +730,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>250</x>
-     <y>341</y>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
-     <x>224</x>
-     <y>403</y>
+     <x>250</x>
+     <y>376</y>
     </hint>
    </hints>
   </connection>
@@ -758,12 +745,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>201</x>
-     <y>341</y>
+     <x>222</x>
+     <y>320</y>
     </hint>
     <hint type="destinationlabel">
      <x>428</x>
-     <y>403</y>
+     <y>376</y>
     </hint>
    </hints>
   </connection>
@@ -780,6 +767,22 @@
     <hint type="destinationlabel">
      <x>325</x>
      <y>125</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkRefresh</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>cbxInterval</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
