@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
+    <width>937</width>
     <height>656</height>
    </rect>
   </property>
@@ -627,51 +627,6 @@ border-top: 0px;
                 <property name="whatsThis">
                  <string>TimeShift Selector</string>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>1</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>2</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>3</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>4</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>8</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>9</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>10</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>11</string>
-                 </property>
-                </item>
                </widget>
               </item>
               <item>
@@ -1237,15 +1192,15 @@ border-top: 0px;
    <header>cepgbrowser.h</header>
   </customwidget>
   <customwidget>
+   <class>CLCDDisplay</class>
+   <extends>QLabel</extends>
+   <header>clcddisplay.h</header>
+  </customwidget>
+  <customwidget>
    <class>CPlayer</class>
    <extends>QWidget</extends>
    <header>cplayer.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CLCDDisplay</class>
-   <extends>QLabel</extends>
-   <header>clcddisplay.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -104,7 +104,7 @@ private:
     QList<int>                     lFavourites;
     QToolButton                   *pFavBtn[MAX_NO_FAVOURITES];
     CFavAction                    *pFavAct[MAX_NO_FAVOURITES];
-    QMap<int, QString>             chanMap;
+    QMap<int, cparser::SChan>      chanMap;
     QMenu                          favContext;
     CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
     IncPlay::ePlayStates           ePlayState;
@@ -114,7 +114,7 @@ protected:
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
     int StartVlcPlay (const QString &sURL, bool bArchiv = false);
-    void TouchPlayCtrlBtns (bool bEnable = true, bool bArchive = false);
+    void TouchPlayCtrlBtns (bool bEnable = true);
     void SetProgress (const uint &start, const uint &end);
     void changeEvent(QEvent *e);
     void TouchEpgNavi (bool bCreate);
@@ -164,13 +164,13 @@ private slots:
     void slotStreamURL (QString str);
     void slotArchivURL (QString str);
     void slotServerForm (QString str);
-    void slotCookie (QString sCookie);
-    void slotTimeShift ();
+    void slotCookie (QString str);
+    void slotTimeShift (QString str);
     void slotEpgAnchor (const QUrl & link);
     void slotLogosReady ();
     void slotReloadLogos ();
     void slotDayTabChanged (int iIdx);
-    void slotSetSServer (int iSrv);
+    void slotSetSServer (QString sIp);
     void slotTimerRecActive (int iState);
     void slotTimerRecordDone ();
     void slotVlcStarts (int iState);
@@ -183,6 +183,7 @@ private slots:
     void slotFavBtnContext (const QPoint &pt);
     void slotSplashScreen ();
     void slotIncPlayState (int);
+    void slotGotTimeShift (QString str);
 
 signals:
     void sigShow ();

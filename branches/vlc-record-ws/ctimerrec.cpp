@@ -888,38 +888,40 @@ void CTimerRec::slotRecTimer()
 \----------------------------------------------------------------- */
 void CTimerRec::slotTimerStreamUrl(QString str)
 {
-   pXmlParser->SetByteArray(str.toUtf8());
-
    QString sCmdLine;
    Q_PID   vlcpid = 0;
-   QString sUrl   = pXmlParser->ParseURL();
-   QString sDst   = QString("%1/%2").arg(pSettings->GetTargetDir()).arg((*itActJob).sName);
+   QString sUrl, sDst;
 
-   if (r_ui->checkRecMini->isChecked())
+   if (!pXmlParser->parseUrl(str, sUrl))
    {
-      // silent record ...
-      sCmdLine = pVlcCtrl->CreateClArgs(vlcctrl::VLC_REC_LIVE_SILENT,
-                                        pSettings->GetVLCPath(), sUrl,
-                                        pSettings->GetBufferTime(), sDst, "ts");
-   }
-   else
-   {
-      // normal record ...
-      sCmdLine = pVlcCtrl->CreateClArgs(vlcctrl::VLC_REC_LIVE,
-                                        pSettings->GetVLCPath(), sUrl,
-                                        pSettings->GetBufferTime(), sDst, "ts");
-   }
+      sDst = QString("%1/%2").arg(pSettings->GetTargetDir()).arg((*itActJob).sName);
 
-   vlcpid = pVlcCtrl->start(sCmdLine, -1, false, IncPlay::PS_TIMER_RECORD);
+      if (r_ui->checkRecMini->isChecked())
+      {
+         // silent record ...
+         sCmdLine = pVlcCtrl->CreateClArgs(vlcctrl::VLC_REC_LIVE_SILENT,
+                                           pSettings->GetVLCPath(), sUrl,
+                                           pSettings->GetBufferTime(), sDst, "ts");
+      }
+      else
+      {
+         // normal record ...
+         sCmdLine = pVlcCtrl->CreateClArgs(vlcctrl::VLC_REC_LIVE,
+                                           pSettings->GetVLCPath(), sUrl,
+                                           pSettings->GetBufferTime(), sDst, "ts");
+      }
 
-   // successfully started ?
-   if (!vlcpid)
-   {
-      QMessageBox::critical(this, tr("Error!"), tr("Can't start Player!"));
-   }
-   else
-   {
-      mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
+      vlcpid = pVlcCtrl->start(sCmdLine, -1, false, IncPlay::PS_TIMER_RECORD);
+
+      // successfully started ?
+      if (!vlcpid)
+      {
+         QMessageBox::critical(this, tr("Error!"), tr("Can't start Player!"));
+      }
+      else
+      {
+         mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
+      }
    }
 }
 

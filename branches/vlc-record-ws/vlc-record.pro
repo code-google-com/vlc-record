@@ -54,7 +54,6 @@ HEADERS += recorder.h \
     caboutdialog.h \
     version_info.h \
     clogfile.h \
-    chttptime.h \
     cchanlogo.h \
     defdef.h \
     ctimerrec.h \
@@ -80,7 +79,7 @@ TRANSLATIONS = lang_de.ts \
     lang_ru.ts
 
 # for static build ...
-static {
+static { 
     DEFINES += DSTATIC
     DEFINES += DINCLUDEPLUGS
     QTPLUGIN += qico \
@@ -90,8 +89,8 @@ static {
 
 # where the target should be stored ...
 win32:TARGET = vlc-record
-else {
-    CONFIG(debug, debug|release):TARGET = debug/vlc-record
+else { 
+    CONFIG(debug, debug|release):TARGET = debug/bin/vlc-record
     else:TARGET = release/vlc-record
 }
 
@@ -99,7 +98,7 @@ else {
 # add includes if we want to build
 # with included player!
 # -------------------------------------
-contains(DEFINES,INCLUDE_LIBVLC) {
+contains(DEFINES,INCLUDE_LIBVLC) { 
     INCLUDEPATH += include
     HEADERS += include/vlc/deprecated.h \
         include/vlc/libvlc.h \
@@ -121,6 +120,9 @@ contains(DEFINES,INCLUDE_LIBVLC) {
         cvideoframe.cpp
     LIBS += -lvlc
     win32:LIBS += -Llib
+    unix:LIBS += -L/opt/vlc-1.1.1/lib \
+        -Wl,-rpath \
+        /opt/vlc-1.1.1/lib
 }
 else:FORMS += forms/recorder.ui
 

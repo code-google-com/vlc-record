@@ -22,6 +22,7 @@
 #include "defdef.h"
 #include "customization.h"
 #include "cdirstuff.h"
+#include "ckartinaxmlparser.h"
 
 //===================================================================
 // namespace
@@ -84,7 +85,7 @@ public:
     int   SaveOtherSettings ();
     void  SaveFavourites (const QList<int> &favList);
     QList<int> GetFavourites (bool *ok = NULL);
-    void  SetStreamServerCbx (const QVector<int> &lSrvList, int iActSrv);
+    void  SetStreamServerCbx (const QVector<cparser::SSrv>& vSrvList, const QString& sActSrv);
     void  SaveCookie (const QString &str);
     bool  DisableSplashScreen ();
 
@@ -96,7 +97,7 @@ private:
 
 signals:
     void sigReloadLogos ();
-    void sigSetServer (int iSrv);
+    void sigSetServer (QString sIp);
     void sigSetBuffer (int iBuffer);
 
 private slots:
