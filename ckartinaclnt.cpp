@@ -151,8 +151,6 @@ void CKartinaClnt::Logout ()
 {
    mInfo(tr("Logout ..."));
 
-   sCookie      = "";
-
    GetRequest(Kartina::REQ_LOGOUT, KARTINA_API_PATH "logout");
 }
 
@@ -517,6 +515,7 @@ void CKartinaClnt::handleEndRequest(int id, bool err)
             emit sigSrvForm (QString::fromUtf8(baPageContent.constData()));
             break;
          case Kartina::REQ_LOGOUT:
+            sCookie = "";
             emit sigLogout (QString::fromUtf8(baPageContent.constData()));
             break;
          case Kartina::REQ_GETTIMESHIFT:

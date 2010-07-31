@@ -109,6 +109,7 @@ private:
     CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
     IncPlay::ePlayStates           ePlayState;
     QVector<CShortcutEx *>         vShortcutPool;
+    bool                           bDoInitDlg;
 
 protected:
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
@@ -131,6 +132,7 @@ protected:
     void InitShortCuts ();
     void ClearShortCuts ();
     void savePositions ();
+    void initDialog ();
 
     virtual void showEvent (QShowEvent * event);
     virtual void hideEvent (QHideEvent * event);
@@ -184,6 +186,7 @@ private slots:
     void slotSplashScreen ();
     void slotIncPlayState (int);
     void slotGotTimeShift (QString str);
+    void slotLogout (QString str);
 
 signals:
     void sigShow ();

@@ -53,6 +53,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    pTranslator    = trans;
    iEpgOffset     = 0;
    iFontSzChg     = 0;
+   bDoInitDlg     = true;
 
    // init favourite buttons ...
    for (int i = 0; i < MAX_NO_FAVOURITES; i++)
@@ -152,8 +153,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
+   connect (&KartinaTv,  SIGNAL(sigLogout(QString)), this, SLOT(slotLogout(QString)));
    connect (&KartinaTv,  SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
-   connect (&KartinaTv, SIGNAL(sigGotTimeShift(QString)), this, SLOT(slotGotTimeShift(QString)));
+   connect (&KartinaTv,  SIGNAL(sigGotTimeShift(QString)), this, SLOT(slotGotTimeShift(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
    connect (&KartinaTv,  SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
@@ -215,16 +217,6 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 \----------------------------------------------------------------- */
 Recorder::~Recorder()
 {
-   // clear shortcuts ...
-   ClearShortCuts ();
-
-   // clean favourites ...
-   lFavourites.clear();
-   HandleFavourites();
-
-   // delete context menu stuff ...
-   CleanContextMenu();
-
    delete ui;
 }
 
@@ -322,6 +314,9 @@ void Recorder::closeEvent(QCloseEvent *event)
 
    if (bAccept)
    {
+      // disconnect trayicon stuff ...
+      disconnect (&trayIcon);
+
       // We want to close program, store all needed values ...
       // Note: putting this function in destructor doesn't work!
       savePositions();
@@ -331,10 +326,22 @@ void Recorder::closeEvent(QCloseEvent *event)
       ui->player->cleanExit();
 #endif /* INCLUDE_LIBVLC */
 
-      KartinaTv.Logout();
+      // clear shortcuts ...
+      ClearShortCuts ();
 
-      // now that all is saved, allow program to close.
-      event->accept();
+      // clean favourites ...
+      lFavourites.clear();
+      HandleFavourites();
+
+      // delete context menu stuff ...
+      CleanContextMenu();
+
+      // logout from kartina ...
+      Trigger.TriggerRequest (Kartina::REQ_LOGOUT);
+
+      // ignore event here ...
+      // we'll close app in logout slot ...
+      event->ignore ();
    }
    else
    {
@@ -876,107 +883,10 @@ void Recorder::on_pushFwd_clicked()
 \----------------------------------------------------------------- */
 void Recorder::show()
 {
-   // -------------------------------------------
-   // create epg nav bar ...
-   // -------------------------------------------
-   TouchEpgNavi (true);
-
-   // -------------------------------------------
-   // create systray ...
-   // -------------------------------------------
-   CreateSystray();
-
-   // set language as read ...
-   pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()),
-                     pFolders->getLangDir());
-
-   // get player module ...
-   vlcCtrl.LoadPlayerModule(Settings.GetPlayerModule());
-
-   // -------------------------------------------
-   // set last windows size / position ...
-   // -------------------------------------------
-   bool ok = false;
-   sizePos = Settings.GetWindowRect(&ok);
-
-   if (ok)
+   if (bDoInitDlg)
    {
-      setGeometry(sizePos);
-   }
-   else
-   {
-      // store default size ...
-      sizePos = geometry();
-   }
-
-   // -------------------------------------------
-   // maximize if it was maximized
-   // -------------------------------------------
-   if (Settings.IsMaximized())
-   {
-      setWindowState(Qt::WindowMaximized);
-   }
-
-   // -------------------------------------------
-   // set font size to last used
-   // -------------------------------------------
-   iFontSzChg = Settings.GetCustFontSize();
-
-   if (iFontSzChg)
-   {
-      QFont font;
-      ui->textEpg->ChangeFontSize(iFontSzChg);
-      ui->textEpgShort->ChangeFontSize(iFontSzChg);
-
-      font = ui->listWidget->font();
-      font.setPointSize(font.pointSize() + iFontSzChg);
-      ui->listWidget->setFont(font);
-
-      font = ui->cbxChannelGroup->font();
-      font.setPointSize(font.pointSize() + iFontSzChg);
-      ui->cbxChannelGroup->setFont(font);
-   }
-
-   // -------------------------------------------
-   // set splitter sizes as last used
-   // -------------------------------------------
-   QList<int> sSplit;
-#ifndef INCLUDE_LIBVLC
-   sSplit = Settings.GetSplitterSizes("spChanEpg", &ok);
-   if (ok)
-   {
-      ui->vSplitterChanEpg->setSizes(sSplit);
-   }
-
-   sSplit = Settings.GetSplitterSizes("spChan", &ok);
-   if (ok)
-   {
-      ui->hSplitterChannels->setSizes(sSplit);
-   }
-#else /* ifdef INCLUDE_LIBVLC */
-   sSplit = Settings.GetSplitterSizes("spVChanEpg", &ok);
-   if (ok)
-   {
-      ui->vSplitterChanEpg->setSizes(sSplit);
-   }
-
-   sSplit = Settings.GetSplitterSizes("spVChanEpgPlay", &ok);
-   if (ok)
-   {
-      ui->vSplitterChanEpgPlay->setSizes(sSplit);
-   }
-
-   sSplit = Settings.GetSplitterSizes("spHPlay", &ok);
-   if (ok)
-   {
-      ui->hSplitterPlayer ->setSizes(sSplit);
-   }
-#endif /* INCLUDE_LIBVLC */
-
-   // display splash screen ...
-   if (!Settings.DisableSplashScreen())
-   {
-      QTimer::singleShot(1500, this, SLOT(slotSplashScreen()));
+      bDoInitDlg = false;
+      initDialog ();
    }
 
    QWidget::show();
@@ -1027,6 +937,31 @@ void Recorder::slotErr(QString str)
                          tr("%1 Client API reports some errors: %2")
                          .arg(COMPANY_NAME).arg(str));
    TouchPlayCtrlBtns();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotLogout
+|  Begin: 19.01.2010 / 16:08:51
+|  Author: Jo2003
+|  Description: display errors signaled by other threads
+|
+|  Parameters: error string
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotLogout(QString str)
+{
+   QString sErr;
+
+   if (XMLParser.kartinaError (str, sErr))
+   {
+      QMessageBox::critical(this, tr("Error"), sErr);
+      mErr (sErr);
+   }
+
+   mInfo(tr("logout done ..."));
+
+   QDialog::accept ();
 }
 
 /* -----------------------------------------------------------------\
@@ -1857,6 +1792,122 @@ void Recorder::slotIncPlayState(int iState)
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
+
+/* -----------------------------------------------------------------\
+|  Method: initDialog
+|  Begin: 31.07.2010 / 15:33:40
+|  Author: Jo2003
+|  Description: do first dialog init
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::initDialog ()
+{
+   // -------------------------------------------
+   // create epg nav bar ...
+   // -------------------------------------------
+   TouchEpgNavi (true);
+
+   // -------------------------------------------
+   // create systray ...
+   // -------------------------------------------
+   CreateSystray();
+
+   // set language as read ...
+   pTranslator->load(QString("lang_%1").arg(Settings.GetLanguage ()),
+                     pFolders->getLangDir());
+
+   // get player module ...
+   vlcCtrl.LoadPlayerModule(Settings.GetPlayerModule());
+
+   // -------------------------------------------
+   // set last windows size / position ...
+   // -------------------------------------------
+   bool ok = false;
+   sizePos = Settings.GetWindowRect(&ok);
+
+   if (ok)
+   {
+      setGeometry(sizePos);
+   }
+   else
+   {
+      // store default size ...
+      sizePos = geometry();
+   }
+
+   // -------------------------------------------
+   // maximize if it was maximized
+   // -------------------------------------------
+   if (Settings.IsMaximized())
+   {
+      setWindowState(Qt::WindowMaximized);
+   }
+
+   // -------------------------------------------
+   // set font size to last used
+   // -------------------------------------------
+   iFontSzChg = Settings.GetCustFontSize();
+
+   if (iFontSzChg)
+   {
+      QFont font;
+      ui->textEpg->ChangeFontSize(iFontSzChg);
+      ui->textEpgShort->ChangeFontSize(iFontSzChg);
+
+      font = ui->listWidget->font();
+      font.setPointSize(font.pointSize() + iFontSzChg);
+      ui->listWidget->setFont(font);
+
+      font = ui->cbxChannelGroup->font();
+      font.setPointSize(font.pointSize() + iFontSzChg);
+      ui->cbxChannelGroup->setFont(font);
+   }
+
+   // -------------------------------------------
+   // set splitter sizes as last used
+   // -------------------------------------------
+   QList<int> sSplit;
+#ifndef INCLUDE_LIBVLC
+   sSplit = Settings.GetSplitterSizes("spChanEpg", &ok);
+   if (ok)
+   {
+      ui->vSplitterChanEpg->setSizes(sSplit);
+   }
+
+   sSplit = Settings.GetSplitterSizes("spChan", &ok);
+   if (ok)
+   {
+      ui->hSplitterChannels->setSizes(sSplit);
+   }
+#else /* ifdef INCLUDE_LIBVLC */
+   sSplit = Settings.GetSplitterSizes("spVChanEpg", &ok);
+   if (ok)
+   {
+      ui->vSplitterChanEpg->setSizes(sSplit);
+   }
+
+   sSplit = Settings.GetSplitterSizes("spVChanEpgPlay", &ok);
+   if (ok)
+   {
+      ui->vSplitterChanEpgPlay->setSizes(sSplit);
+   }
+
+   sSplit = Settings.GetSplitterSizes("spHPlay", &ok);
+   if (ok)
+   {
+      ui->hSplitterPlayer ->setSizes(sSplit);
+   }
+#endif /* INCLUDE_LIBVLC */
+
+   // display splash screen ...
+   if (!Settings.DisableSplashScreen())
+   {
+      QTimer::singleShot(1500, this, SLOT(slotSplashScreen()));
+   }
+}
 
 /* -----------------------------------------------------------------\
 |  Method: savePositions
