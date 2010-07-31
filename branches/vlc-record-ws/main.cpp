@@ -47,7 +47,34 @@ CShowInfo showInfo;
 int main(int argc, char *argv[])
 {
    int          iRV = -1;
+   QTranslator  trans;
+   QApplication app(argc, argv);
+   QApplication::installTranslator (&trans);
 
+   pFolders = new CDirStuff();
+
+   if (pFolders)
+   {
+      if (pFolders->isInitialized ())
+      {
+         pDb = new CVlcRecDB();
+
+         if (pDb)
+         {
+            Recorder rec(&trans);
+
+            rec.show ();
+
+            iRV = app.exec ();
+
+            delete pDb;
+         }
+      }
+
+      delete pFolders;
+   }
+
+/*
    QTranslator  *pTrans = NULL;
    QApplication *pApp   = NULL;
    Recorder     *pRec   = NULL;
@@ -101,7 +128,7 @@ int main(int argc, char *argv[])
    {
       delete pTrans;
    }
-
+*/
    return iRV;
 }
 
