@@ -1,7 +1,3 @@
-<<<<<<< .mine
 MINORVER=37B2
-=======
-MINORVER=36B5
->>>>>>> .r253
 CLMAJORVER=1
 NWMAJORVER=2
