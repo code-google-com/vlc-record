@@ -1818,6 +1818,15 @@ void Recorder::slotIncPlayState(int iState)
       emit sigLCDStateChange ((int)IncPlay::PS_STOP);
       break;
 
+   case IncPlay::PS_ERROR:
+      // note about the error also in showInfo class ...
+      showInfo.setPlayState((IncPlay::ePlayStates)iState);
+
+      // update play buttons ...
+      TouchPlayCtrlBtns(true);
+
+      // fall thru here | |
+      //                V V
    default:
       emit sigLCDStateChange (iState);
       break;
