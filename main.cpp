@@ -33,6 +33,7 @@ CVlcRecDB *pDb;
 // make show info global available ...
 CShowInfo showInfo;
 
+#ifdef Q_OS_WIN32
 /* -----------------------------------------------------------------\
 |  Method: main / program entry
 |  Begin: 19.01.2010 / 15:57:36
@@ -74,7 +75,25 @@ int main(int argc, char *argv[])
       delete pFolders;
    }
 
-/*
+   return iRV;
+}
+
+#else
+
+/* -----------------------------------------------------------------\
+|  Method: main / program entry
+|  Begin: 19.01.2010 / 15:57:36
+|  Author: Jo2003
+|  Description: program entry point
+|
+|  Parameters: command line parameters
+|
+|  Returns: 0 ==> ok
+|        else ==> any error
+\----------------------------------------------------------------- */
+int main(int argc, char *argv[])
+{
+   int           iRV = -1;
    QTranslator  *pTrans = NULL;
    QApplication *pApp   = NULL;
    Recorder     *pRec   = NULL;
@@ -128,9 +147,10 @@ int main(int argc, char *argv[])
    {
       delete pTrans;
    }
-*/
+
    return iRV;
 }
+#endif
 
 /************************* History ***************************\
 | $Log$
