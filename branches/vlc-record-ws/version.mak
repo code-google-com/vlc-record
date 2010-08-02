@@ -1,5 +1,5 @@
 <<<<<<< .mine
-MINORVER=37B
+MINORVER=37B2
 =======
 MINORVER=36B5
 >>>>>>> .r253
