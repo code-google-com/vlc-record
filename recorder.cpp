@@ -534,27 +534,59 @@ void Recorder::on_pushRecord_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_pushPlay_clicked()
 {
-   CChanListWidgetItem *pItem = (CChanListWidgetItem *)ui->listWidget->currentItem();
-
-   if (pItem)
+#ifdef INCLUDE_LIBVLC
+   // play or pause functionality ...
+   if ((showInfo.playState() == IncPlay::PS_PLAY)
+      && showInfo.archive())
    {
-      if (pItem->GetId() != -1)
-      {
-         if (AllowAction(IncPlay::PS_PLAY))
-         {
-            showInfo.setChanId(pItem->GetId());
-            showInfo.setChanName(pItem->GetName());
-            showInfo.setArchive(false);
-            showInfo.setShowName(pItem->GetProgram());
-            showInfo.setStartTime(pItem->GetStartTime());
-            showInfo.setEndTime(pItem->GetEndTime());
-            showInfo.setPlayState(IncPlay::PS_PLAY);
+      // we're playing ... we want pause ...
+      ui->player->pause();
 
-            TouchPlayCtrlBtns(false);
-            Trigger.TriggerRequest(Kartina::REQ_STREAM, pItem->GetId());
+      // update showInfo ...
+      showInfo.setPlayState(IncPlay::PS_PAUSE);
+
+      // update buttons ...
+      TouchPlayCtrlBtns(true);
+   }
+   else if ((showInfo.playState() == IncPlay::PS_PAUSE)
+      && showInfo.archive())
+   {
+      // we're pausing ... want to play ...
+      ui->player->play();
+
+      // update showInfo ...
+      showInfo.setPlayState(IncPlay::PS_PLAY);
+
+      // update buttons ...
+      TouchPlayCtrlBtns(true);
+   }
+   else
+   {
+#endif // INCLUDE_LIBVLC
+      CChanListWidgetItem *pItem = (CChanListWidgetItem *)ui->listWidget->currentItem();
+
+      if (pItem)
+      {
+         if (pItem->GetId() != -1)
+         {
+            if (AllowAction(IncPlay::PS_PLAY))
+            {
+               showInfo.setChanId(pItem->GetId());
+               showInfo.setChanName(pItem->GetName());
+               showInfo.setArchive(false);
+               showInfo.setShowName(pItem->GetProgram());
+               showInfo.setStartTime(pItem->GetStartTime());
+               showInfo.setEndTime(pItem->GetEndTime());
+               showInfo.setPlayState(IncPlay::PS_PLAY);
+
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, pItem->GetId());
+            }
          }
       }
+#ifdef INCLUDE_LIBVLC
    }
+#endif // INCLUDE_LIBVLC
 }
 
 /* -----------------------------------------------------------------\
@@ -770,6 +802,9 @@ void Recorder::on_pushStop_clicked()
       ui->labState->setHeader("");
       ui->labState->setFooter("");
       vlcCtrl.stop();
+
+      showInfo.setPlayState(IncPlay::PS_STOP);
+      TouchPlayCtrlBtns(true);
    }
 }
 
@@ -977,8 +1012,6 @@ void Recorder::slotLogout(QString str)
 void Recorder::slotStreamURL(QString str)
 {
    QString sChan, sShow, sUrl, sTime;
-
-   mInfo(tr("%1 sends following url:\n  --> %2").arg(COMPANY_NAME).arg(str));
 
    if (!XMLParser.parseUrl(str, sUrl))
    {
@@ -1392,17 +1425,19 @@ void Recorder::slotArchivURL(QString str)
 {
    QString sUrl;
 
-   mInfo(tr("%1 sends following url:\n  --> %2").arg(COMPANY_NAME).arg(str));
-
    if (!XMLParser.parseUrl(str, sUrl))
    {
       if (ePlayState == IncPlay::PS_RECORD)
       {
          StartVlcRec(sUrl, CleanShowName(showInfo.showName()), true);
+
+         showInfo.setPlayState(IncPlay::PS_RECORD);
       }
       else if (ePlayState == IncPlay::PS_PLAY)
       {
          StartVlcPlay(sUrl, true);
+
+         showInfo.setPlayState(IncPlay::PS_PLAY);
       }
    }
 
@@ -2173,7 +2208,8 @@ void Recorder::InitShortCuts()
    pShortCut = new CShortcutEx (QKeySequence("CTRL+ALT+P"), this);
    if (pShortCut)
    {
-      connect (pShortCut, SIGNAL(activated()), ui->player, SLOT(pause()));
+      // connect (pShortCut, SIGNAL(activated()), ui->player, SLOT(pause()));
+      connect (pShortCut, SIGNAL(activated()), this, SLOT(on_pushPlay_clicked()));
 
       // save shortcut ...
       vShortcutPool.push_back(pShortCut);
@@ -2524,12 +2560,17 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
          ui->pushFwd->setEnabled(false);
          ui->cbxTimeJumpVal->setEnabled(false);
       }
-/*
-      if ((showInfo.playState() == IncPlay::PS_PLAY) && bArchive)
+
+      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY)
+         && showInfo.archive()
+         && bEnable)
       {
          ui->pushPlay->setIcon(QIcon(":/app/pause"));
       }
-*/
+      else
+      {
+         ui->pushPlay->setIcon(QIcon(":/app/play"));
+      }
    }
    else
    {

@@ -31,11 +31,16 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".37Beta" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".37Beta2" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+|
+| 2010-08-02: Version x.37Beta2
+| - play button changes to pause butto when supported
+| - use different main functions for windows | others
+| - new install script creates plugin cache
 |
 | 2010-07-30: Version x.37Beta
 | - major code change to support kartinas Rest API

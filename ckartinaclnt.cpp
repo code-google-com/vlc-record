@@ -437,7 +437,7 @@ void CKartinaClnt::GetEPG(int iChanID, int iOffset)
 \-----------------------------------------------------------------------------*/
 void CKartinaClnt::GetArchivURL (const QString &prepared)
 {
-   mInfo(tr("Request Archiv URL:\n  --> %1").arg(prepared));
+   mInfo(tr("Request Archiv URL ..."));
 
    QString req = prepared;
 
