@@ -25,7 +25,7 @@ CONFIG += shared
 # Build with or without
 # included player or without?
 # -------------------------------------
-# DEFINES += INCLUDE_LIBVLC
+DEFINES += INCLUDE_LIBVLC
 SOURCES += main.cpp \
     recorder.cpp \
     csettingsdlg.cpp \
