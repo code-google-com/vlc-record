@@ -135,9 +135,10 @@ function makeFavTab()
       }
       else
       {
-         echo "<td><img src='".LOC_KARTINA_URL."/images/help.png' alt='empty favorite' title='пустое место для фаворита' />"
+         echo "<td><img src='".LOC_IMG_PATH."/help.png' alt='empty favorite' title='пустое место для фаворита' />"
              ."</td>\n";
       }
+
           
       if (($colcount % FAVCOLS) === 0)
       {

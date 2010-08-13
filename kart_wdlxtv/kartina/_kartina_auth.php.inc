@@ -18,6 +18,7 @@ define (LOC_KARTINA_UMSP, "umsp://plugins/kartina");
 define (DOTRACE,          "NO");
 define (KARTCHANLIST,     "/tmp/kartchanlist.xml");
 define (KARTFAVLIST,      "/tmp/kartfavorites.xml");
+define (LOC_IMG_PATH,     "/umsp/plugins/kartina/images");
 
 // ------------------------------------------------------------------
 // create kartinaAPI instance ...
