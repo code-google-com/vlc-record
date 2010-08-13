@@ -1,0 +1,629 @@
+<?php
+/*********************** Information *************************\
+| $HeadURL$
+| 
+| Author: Jo2003
+|
+| Begin: 8/10/2010 / 4:48p
+| 
+| Last edited by: $Author$
+| 
+| $Id$
+\*************************************************************/
+
+
+/********************************************************************\
+|  Class: kartinaAPI
+|  Date:  8/10/2010 / 4:48p
+|  Author: Jo2003
+|  Description: implementation of kartinas Rest API to use in PHP
+|
+\********************************************************************/
+class kartinaAPI 
+{
+   private $_cookie;
+   private $_host;
+   private $_username;
+   private $_passwd;
+   private $_reader;
+   private $_logfile;
+
+   /* -----------------------------------------------------------------\
+   |  Method: __construct
+   |  Begin: 8/10/2010 / 4:48p
+   |  Author: Jo2003
+   |  Description: constructs a class instance
+   |
+   |  Parameters: optional user, pass amd host
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function __construct($username = "", $passwd = "", $host = "")
+   {
+      $this->_host     = $host;
+      $this->_username = $username;
+      $this->_passwd   = $passwd;
+      $this->_cookie   = "";
+      $this->_reader   = new XMLReader();
+      if (DOTRACE == "YES")
+      {
+        $this->_logfile = fopen("/tmp/kartina_api.log", "a+");
+      }
+      
+      $this->log("construct ...\n");
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: __destruct
+   |  Begin: 8/10/2010 / 4:50p
+   |  Author: Jo2003
+   |  Description: clean on destruction
+   |
+   |  Parameters: --
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function __destruct()
+   {
+      $this->_reader = NULL;
+      $this->logout();
+      if (DOTRACE == "YES")
+      {
+         fclose ($this->_logfile);
+      }
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: setConnectionData
+   |  Begin: 8/10/2010 / 4:58p
+   |  Author: Jo2003
+   |  Description: set connection data 
+   |
+   |  Parameters: optional username, password and host
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function setConnectionData ($username = "", $passwd = "", $host = "")
+   {
+      $this->_host     = $host;
+      $this->_username = $username;
+      $this->_passwd   = $passwd;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: postReq
+   |  Begin: 8/10/2010 / 5:00p
+   |  Author: Jo2003
+   |  Description: send a post request
+   |
+   |  Parameters: complete url, request string, optional headers
+   |
+   |  Returns: response string
+   \----------------------------------------------------------------- */
+   protected function postReq ($url, $request, $headerExt = "") 
+   {
+      $parsedUrl = parse_url($url);
+      $host      = $parsedUrl['host'];
+      $path      = $parsedUrl['path'];
+      $errno     = 0;
+      $errstr    = "";
+      $reply     = "";
+
+      if ($path == "") 
+      {
+         $path = "/";
+      }
+
+      $header  = "POST "  .$path ." HTTP/1.1\r\n";
+      $header .= "Host: " .$host ."\r\n";
+      $header .= "User-Agent: Mozilla/5.0\r\n";
+      $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+      $header .= "Content-Length: " . strlen($request) . "\r\n";
+      $header .= "Connection: Close\r\n";
+
+      if ($this->_cookie != "")
+      {
+         $header .= "Cookie: " .$this->_cookie. "\r\n";
+      }
+
+      $header .= $headerExt;
+      $header .= "\r\n";
+
+      $fp = fsockopen($host, 80, $errno, $errstr, 30); 
+
+      if (!$fp) 
+      {
+         die ("Cannot open $host");
+      }
+
+      fputs($fp, $header . $request);
+
+      $reply = stream_get_contents($fp);
+
+      fclose($fp);
+
+      return $reply;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: getReq
+   |  Begin: 8/10/2010 / 5:00p
+   |  Author: Jo2003
+   |  Description: send a get request
+   |
+   |  Parameters: complete url, optional request string,
+   |              optional headers
+   |
+   |  Returns: response string
+   \----------------------------------------------------------------- */
+   protected function getReq ($url, $request = "", $headerExt = "") 
+   {
+      $parsedUrl = parse_url($url);
+      $host      = $parsedUrl['host'];
+      $path      = $parsedUrl['path'];
+      $reply     = "";
+
+      if ($path == "") 
+      {
+         $path = "/";
+      }
+
+      $header  = "GET "   .$path .(($request != "") ? "?".$request : ""). " HTTP/1.1\r\n";
+      $header .= "Host: " .$host ."\r\n";
+      $header .= "User-Agent: Mozilla/5.0\r\n";
+      $header .= "Connection: Close\r\n";
+
+      if ($this->_cookie != "")
+      {
+         $header .= "Cookie: " .$this->_cookie. "\r\n";
+      }
+
+      $header .= $headerExt;
+      $header .= "\r\n";
+
+      $fp = fsockopen($host, 80, $errno, $errstr, 30); 
+
+      if (!$fp) 
+      {
+         die ("Cannot open $host");
+      }
+
+      fputs($fp, $header);
+
+      $reply = stream_get_contents($fp);
+
+      fclose($fp);
+
+      return $reply;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: authenticate
+   |  Begin: 8/10/2010 / 5:02p
+   |  Author: Jo2003
+   |  Description: authenticate at kartina ...
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 ==> ok
+   |          -1 ==> any error
+   \----------------------------------------------------------------- */
+   public function authenticate ()
+   {
+      $this->_cookie = "";
+      $sid           = "";
+      $sid_name      = "";
+      $reply         = $this->postReq($this->_host . API_PATH . "login", 
+                                     "login=" . $this->_username . "&pass=" . $this->_passwd);
+      $reply         = $this->cleanReply($reply);
+
+      $rv            = 0;
+
+      $this->_reader->XML($reply);
+
+      while ($this->_reader->read())
+      {
+         switch($this->_reader->nodeType)
+         {
+         case XMLReader::ELEMENT:
+            if ($this->_reader->localName == "sid")
+            {
+               if($this->_reader->read())
+               {
+                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  {
+                     $sid = $this->_reader->value;
+                  }
+               }
+            }
+            else if ($this->_reader->localName == "sid_name")
+            {
+               if($this->_reader->read())
+               {
+                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  {
+                     $sid_name = $this->_reader->value;
+                  }
+               }
+            }
+            break;
+
+         default:
+            break;
+         }
+      }
+
+      $this->_reader->close();
+
+      if (($sid != "") && ($sid_name != ""))
+      {
+         $this->_cookie = $sid_name ."=". $sid;
+      }
+      else
+      {
+         $rv = -1;
+      }
+      
+      $this->log("Cookie: ".$this->_cookie."\n");
+
+      return $rv;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: logout
+   |  Begin: 8/10/2010 / 5:03p
+   |  Author: Jo2003
+   |  Description: logout from host
+   |
+   |  Parameters: --
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function logout ()
+   {
+      if ($this->_cookie != "")
+      {
+         $this->getReq($this->_host . API_PATH . "logout");
+      }
+      $this->_cookie = "";
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: isAuthenticated
+   |  Begin: 8/10/2010 / 5:04p
+   |  Author: Jo2003
+   |  Description: are we authenticated?
+   |
+   |  Parameters: --
+   |
+   |  Returns: true --> yes
+   |          false --> no
+   \----------------------------------------------------------------- */
+   public function isAuthenticated ()
+   {
+      if ($this->_cookie != "")
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: getChannelList
+   |  Begin: 8/10/2010 / 5:05p
+   |  Author: Jo2003
+   |  Description: get channel list from kartina
+   |
+   |  Parameters: --
+   |
+   |  Returns: array of arrays(id, name, icon)
+   \----------------------------------------------------------------- */
+   public function getChannelList ()
+   {
+      $reply    = $this->getReq($this->_host . API_PATH . "channel_list");
+      $reply    = $this->cleanReply($reply);
+      $entries  = array();
+      
+      if ($this->noError($reply))
+      {
+         $dom      = new DomDocument();
+         $dom->loadXML($reply);
+         $xp       = new DOMXpath($dom);
+         $entries  = array();
+   
+         $channels = $xp->query("/response/groups/item/channels/item/id");
+         $names    = $xp->query("/response/groups/item/channels/item/name");
+         $icons    = $xp->query("/response/groups/item/channels/item/icon");
+   
+         $all = $channels->length;
+   
+         for ($i = 0; $i < $all; $i++)
+         {
+            $entries[$i] = array(
+               'id'   => $channels->item($i)->nodeValue,
+               'name' => $names->item($i)->nodeValue,
+               'icon' => $icons->item($i)->nodeValue
+               );
+         }
+      }
+
+      return $entries;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: saveChannelList
+   |  Begin: 8/11/2010 / 5:05p
+   |  Author: Jo2003
+   |  Description: get and save channel list from kartina
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 --> ok
+   |          -1 --> any error
+   \----------------------------------------------------------------- */
+   public function saveChannelList ()
+   {
+      $reply    = $this->getReq($this->_host . API_PATH . "channel_list");
+      $reply    = $this->cleanReply($reply);
+      
+      $fp       = fopen(KARTCHANLIST, "w+");
+      
+      if ($fp)
+      {
+         fwrite ($fp, $reply);
+         fclose ($fp);
+         return 0;
+      }
+      else
+      {
+         return -1;
+      }
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: getStreamUrl
+   |  Begin: 8/10/2010 / 5:06p
+   |  Author: Jo2003
+   |  Description: get live stream url from given channel
+   |
+   |  Parameters: channel id
+   |
+   |  Returns: stream url
+   \----------------------------------------------------------------- */
+   public function getStreamUrl ($cid, $gmt = -1)
+   {
+      $req   = "cid=".$cid."&protect_code=".$this->_passwd;
+
+      if ($gmt !== -1)
+      {
+         $req .= "&gmt=".$gmt;
+      }
+
+      $reply = $this->postReq($this->_host . API_PATH . "get_url", $req);
+      $reply = $this->cleanReply($reply);
+      $url   = "";
+
+      $this->_reader->XML($reply);
+
+      while ($this->_reader->read())
+      {
+         switch ($this->_reader->nodeType)
+         {
+         // element start ...
+         case XMLReader::ELEMENT:
+            if ($this->_reader->localName == "url")
+            {
+               if($this->_reader->read())
+               {
+                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  {
+                     $url = $this->_reader->value;
+   
+                     // replace buffer values ...
+                     $url = preg_replace('/^.*(\/\/[^ ]*).*$/', 'http:$1', $url); 
+                  }
+               }
+            }
+            break;
+
+         default:
+            break;
+         }
+      }
+
+      $this->_reader->close();
+
+      return $url;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: cleanReply
+   |  Begin: 8/10/2010 / 5:07p
+   |  Author: Jo2003
+   |  Description: remove http header and remove chunked transmission
+   |
+   |  Parameters: response string
+   |
+   |  Returns: cleaned response without header
+   \----------------------------------------------------------------- */
+   protected function cleanReply($reply)
+   {
+      list($header, $html) = explode("\r\n\r\n", $reply);
+
+      if (strpos(strtolower($header), "transfer-encoding: chunked") !== FALSE) 
+      {
+         $html = $this->unchunkHttp11($html);
+      }
+      
+      // remove anything which comes before xml open tags ...
+      $html = strstr($html, "<?xml");
+      
+      $this->log($header.$html);
+
+      return $html;
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: unchunkHttp11
+   |  Begin: 8/10/2010 / 5:08p
+   |  Author: Jo2003
+   |  Description: remove chunked transmission stuff
+   |
+   |  Parameters: response string to clean
+   |
+   |  Returns: cleaned response
+   \----------------------------------------------------------------- */
+   protected function unchunkHttp11($data) 
+   {
+      $fp = 0;
+      $outData = "";
+      while ($fp < strlen($data)) 
+      {
+         $rawnum   = substr($data, $fp, strpos(substr($data, $fp), "\r\n") + 2);
+         $num      = hexdec(trim($rawnum));
+         $fp      += strlen($rawnum);
+         $chunk    = substr($data, $fp, $num);
+         $outData .= $chunk;
+         $fp      += strlen($chunk);
+      }
+      return $outData;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: log
+   |  Begin: 8/11/2010 / 9:24a
+   |  Author: Jo2003
+   |  Description: write string to logfile
+   |
+   |  Parameters: string to log
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function log($str)
+   {
+      if (DOTRACE == "YES")
+      {
+         fwrite($this->_logfile, $str."\n");
+      }   
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getFavorites
+   |  Begin: 8/12/2010 / 9:24a
+   |  Author: Jo2003
+   |  Description: get stored favorites from kartina
+   |
+   |  Parameters: --
+   |
+   |  Returns: array of arrays(place, cid)
+   \----------------------------------------------------------------- */
+   public function getFavorites()
+   {
+   	  $favorites = array();
+   	  $place     = 0;
+      $cid       = 0;
+      $reply     = $this->getReq($this->_host.API_PATH."/favorites");
+      $reply     = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         $dom       = new DOMDocument();
+         $dom->loadXML($reply);
+         
+         $xp        = new DOMXPath($dom);
+         
+         $places    = $xp->query("/response/favorites/item/place");
+         $cids      = $xp->query("/response/favorites/item/channel_id");
+         
+         $count     = $places->length;
+         
+         for ($i = 0; $i < $count; $i ++)
+         {
+            $favorites[] = array(
+            	'place' => $places->item($i)->nodeValue, 
+   				'cid'   => $cids->item($i)->nodeValue
+            );
+         }
+      }
+      
+      return $favorites;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: saveFavorites
+   |  Begin: 8/12/2010 / 9:24a
+   |  Author: Jo2003
+   |  Description: get and save favorites to file
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 --> ok
+   |          -1 --> error writing file
+   \----------------------------------------------------------------- */
+   public function saveFavorites()
+   {
+      $rv    = 0;
+      $reply = $this->getReq($this->_host.API_PATH."/favorites");
+      $reply = $this->cleanReply($reply);
+      
+      $fp    = fopen(KARTFAVLIST, "w+");
+      
+      if ($fp)
+      {
+         fwrite($fp, $reply);
+         fclose($fp);
+      }
+      else
+      {
+         $rv = -1;
+      }
+      
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: setFavorite
+   |  Begin: 8/12/2010 / 9:24a
+   |  Author: Jo2003
+   |  Description: set 1 favorite
+   |
+   |  Parameters: place (1 - 12), channel id (o to delete) 
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function setFavorite($place, $cid)
+   {
+      $this->postReq($this->_host.API_PATH."/favorites_set", "place=".$place."&cid=".$cid);
+      
+      // update favorites file ...
+      $this->saveFavorites();
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: noError
+   |  Begin: 8/12/2010 / 9:24a
+   |  Author: Jo2003
+   |  Description: check reply for no error
+   |
+   |  Parameters: reply 
+   |
+   |  Returns: 1 --> no error
+   |           0 --> error
+   \----------------------------------------------------------------- */
+   protected function noError($reply)
+   {
+      if (strstr($reply, "<message>") && strstr($reply, "<code>"))
+      {
+         return 0;
+      } 
+      else 
+      {
+         return 1;
+      }
+   }
+};
+
+?>
