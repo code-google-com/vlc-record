@@ -130,7 +130,7 @@ function makeFavTab()
          $name     = $xpchan->query("name", $chan)->item(0)->nodeValue;
          
          echo "<td><a href='".$_SERVER['PHP_SELF']."?act=fav&amp;del=".$place."'>"
-             ."<img src='".KARTINA_HOST.$icon."' alt='channel icon' title='удалить ".$name." от фаворитов' />"
+             ."<img src='".KARTINA_HOST.$icon."' alt='channel icon' title='удалить ".$name." из фаворитов' />"
              ."</a></td>\n";
       }
       else
