@@ -72,6 +72,7 @@ function _pluginCreateChannelList($groupid)
    $channels  = $xp->query("channels/item/id", $group);
    $names     = $xp->query("channels/item/name", $group);
    $icons     = $xp->query("channels/item/icon", $group);
+   $videoinfo = $xp->query("channels/item/is_video", $group);
 
    $all = $channels->length;
 
@@ -79,13 +80,14 @@ function _pluginCreateChannelList($groupid)
    {
       $url = LOC_KARTINA_URL."/stream.php?id=".$channels->item($i)->nodeValue;
       
-      $url_data = array('itemurl' => $url);
+      $url_data        = array('itemurl' => $url);
       $url_data_string = http_build_query($url_data);
+      $upnp_class      = ((integer)$videoinfo->item($i)->nodeValue === 1) ? "object.item.videoitem" : "object.item.audioItem";
 
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
          'dc:title'       => $names->item($i)->nodeValue,
-         'upnp:class'     => "object.item.videoitem",
+         'upnp:class'     => $upnp_class,
          'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
          'protocolInfo'   => "http-get:*:*:*",
          'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue,
@@ -179,6 +181,7 @@ function _pluginCreateFavList()
       
       $icon     = $xpchan->query("icon", $chan)->item(0)->nodeValue;
       $name     = $xpchan->query("name", $chan)->item(0)->nodeValue; 
+      $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
       $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
       
       $url_data = array('itemurl' => $url);
@@ -187,7 +190,7 @@ function _pluginCreateFavList()
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
          'dc:title'       => $name,
-         'upnp:class'     => "object.item.videoitem",
+         'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioItem",
          'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
          'protocolInfo'   => "http-get:*:*:*",
          'upnp:album_art' => KARTINA_HOST.$icon,
