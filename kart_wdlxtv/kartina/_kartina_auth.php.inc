@@ -1,9 +1,10 @@
 <?php
 
 require_once(dirname(__FILE__) . "/kartinaAPI.php.inc");
+require_once(dirname(__FILE__) . "/wdtvConfig.php.inc");
 
 // ------------------------------------------------------------------
-// insert connectioin data here ...
+// default (demo) connectioin data ...
 // ------------------------------------------------------------------
 define (KARTINA_ACCOUNT,  "144");
 define (KARTINA_PASS,     "441");
@@ -19,17 +20,42 @@ define (DOTRACE,          "NO");
 define (KARTCHANLIST,     "/tmp/kartchanlist.xml");
 define (KARTFAVLIST,      "/tmp/kartfavorites.xml");
 define (LOC_IMG_PATH,     "/umsp/plugins/kartina/images");
+define (WDTV_CONF_FILE,   "/conf/config");
+
+// ------------------------------------------------------------------
+// create CWdtvConfig instance ...
+// ------------------------------------------------------------------
+$wdtvConf = new CWdtvConfig (WDTV_CONF_FILE);
+
+// if there are values in config for ntp, we should set the time right now ...
+if (!$wdtvConf->isTimeSet())
+{
+   // this will only work if there is a timeserver stored in config ...
+   // this maybe needed later when we want to use the archive ...
+   $wdtvConf->setTime();
+}
+
+// get username and password for kartina.tv ...
+$kartAcc  = $wdtvConf->getVal("KARTINA_ACCOUNT");
+$kartPw   = $wdtvConf->getVal("KARTINA_PASSWD");
+
+// use default values if not stored in config file ...
+if (($kartAcc === "") || ($kartPw === ""))
+{
+   $kartAcc = KARTINA_ACCOUNT;
+   $kartPw  = KARTINA_PASS;
+}
 
 // ------------------------------------------------------------------
 // create kartinaAPI instance ...
 // ------------------------------------------------------------------
-$kartAPI = new kartinaAPI(KARTINA_ACCOUNT, KARTINA_PASS, KARTINA_HOST);
+$kartAPI = new kartinaAPI($kartAcc, $kartPw, KARTINA_HOST);
 
 // authenticate ...
 $kartAPI->authenticate();
 
 // get / save channel list if not already there ...
-if (!file_exists(KARTCHANLIST))
+if (!file_exists(KARTCHANLIST) || filetime())
 {
    $kartAPI->saveChannelList();
 }
