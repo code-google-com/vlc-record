@@ -1,0 +1,230 @@
+<?php
+/*********************** Information *************************\
+| $HeadURL$
+| 
+| Author: Jo2003
+|
+| Begin: 8/27/2010 / 12:20
+| 
+| Last edited by: $Author$
+| 
+| $Id$
+\*************************************************************/
+
+/********************************************************************\
+|  Class: CWdtvConfig
+|  Date:  8/27/2010 / 12:20
+|  Author: Jo2003
+|  Description: PHP config class for WDTV Live
+|
+\********************************************************************/
+class CWdtvConfig
+{
+   private $_confFile;
+   private $_settings;
+   
+   /* -----------------------------------------------------------------\
+   |  Method: __construct / constructor
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: construct object
+   |
+   |  Parameters: optional config file name
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function __construct($filename = "")
+   {
+      $this->_settings = array();
+      $this->_confFile = $filename;
+      
+      if ($filename != "")
+      {
+         $this->readSettings();
+      }
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: __destruct / destructor
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: clean at destruction 
+   |
+   |  Parameters: --
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function __destruct()
+   {
+      // nothing to do so far ...
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: setConfigFile
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: set config file name and read settings
+   |
+   |  Parameters: config file name
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function setConfigFile($filename)
+   {
+      $this->_confFile = $filename;
+      $this->readSettings();
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: writeConf
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: write one config value to file and store cache it 
+   |               internally
+   |  Parameters: key name, value
+   |
+   |  Returns: 0 --> ok
+   |   any other --> any error
+   \----------------------------------------------------------------- */
+   public function writeConf($key, $val)
+   {
+      $rv     = 0;
+      $output = array();
+      
+      exec ("sudo config_tool -c ".$key."=".$val, $output, $rv);
+      
+      if ($rv === 0)
+      {
+         $this->_settings[$key] = $val;
+      }
+      
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: readSettings
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: read settings from config file and cache it
+   |               internally
+   |  Parameters: --
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function readSettings()
+   {
+      $content = file($this->_confFile);
+      $matched = "";
+      $count   = 0;
+      
+      unset($this->_settings);
+      $this->_settings = array();
+      
+      
+      for ($i = 0; $i < count($content); $i ++)
+      {
+         $count   = 0;
+         $matched = preg_replace("/^[ \t]*([a-zA-Z0-9_-]+)[ \t=]+'([^']+)'.*$/", "\1<<[:]>>\2", $content[$i], -1, $count);
+         
+         if ($count > 0)
+         {
+            $tmpArray = explode("<<[:]>>", $matched);
+            
+            $this->_settings[$tmpArray[0]] = $tmpArray[1];
+         }
+      }
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getVal
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: get value for specified key from cache
+   |
+   |  Parameters: key name
+   |
+   |  Returns: value or empty string if there is no such value
+   \----------------------------------------------------------------- */
+   public function getVal($key)
+   {
+      if (isset($this->_settings[$key]))
+      {
+         return $this->_settings[$key];
+      }
+      else
+      {
+         return "";
+      }
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: setTime
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: set device time if ntp server is stored in config
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 --> ok
+   |          -1 --> any error
+   \----------------------------------------------------------------- */
+   public function setTime()
+   {
+      $ntpsrv = $this->getVal("NTPSERVER");
+      $output = array();
+      $rv     = -1;
+      
+      if ($ntpsrv != "")
+      {
+         exec ("sudo ntpdate ".$ntpsrv, $output, $rv);
+         
+         if ($rv != 0)
+         {
+            $rv = -1;
+         }
+      }
+      
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: setTimezone
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: set devices time zone
+   |
+   |  Parameters: time zone shortcut (e.g. "CET")
+   |
+   |  Returns: 0 --> ok
+   |        else --> any error
+   \----------------------------------------------------------------- */
+   public function setTimezone($tz)
+   {
+      return $this->writeConf("TIMEZONE", $tz);
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: isTimeSet
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: check if time was already set
+   |
+   |  Parameters: --
+   |
+   |  Returns: true --> was set
+   |          false --> wasn't set
+   \----------------------------------------------------------------- */
+   public function isTimeSet()
+   {
+      if (time() > (30 * 365 * 24 * 3600)) // ~30 years ... means somewhere in 1999
+      {
+         // means we are much later that 1970 (date as wdtv starts) ...
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+}
+?>

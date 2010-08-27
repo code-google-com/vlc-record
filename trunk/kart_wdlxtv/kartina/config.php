@@ -80,6 +80,30 @@ function makeFooter()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: makeAccForm
+|  Begin: 8/27/2010 / 15:00
+|  Author: Jo2003
+|  Description: make account form
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+function makeAccForm()
+{
+   global $wdtvConf;
+   echo "<h3>Картина.тв Аккаунт</h3>\n"
+       ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
+       ."<input type='hidden' name='act' value='setacc' />&nbsp;\n"
+       ."Аккаунт:&nbsp;\n"
+       ."<input type='text' name='acc' value='".$wdtvConf->getVal("KARTINA_ACCOUNT")."' />&nbsp;\n"
+       ."Пароль:&nbsp;\n"
+       ."<input type='password' name='passwd' value='".$wdtvConf->getVal("KARTINA_PASSWD")."' />&nbsp;\n"
+       ."<input type='submit' value='Сохранять' />\n"
+       ."</form>\n";
+}
+
+/* -----------------------------------------------------------------\
 |  Method: makeFavTab
 |  Begin: 8/13/2010 / 1:24p
 |  Author: Jo2003
@@ -253,7 +277,7 @@ function makeNavi()
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."'>Домой</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=fav'>Фавориты</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=delxml'>Удалить файлы XML</a>]</td>\n"
-       ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=timeshift'>Задержка времени</a>]</td>\n"
+       ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=acc'>Картина.тв Аккаунт</a>]</td>\n"
        ."</tr>\n</table>\n";
 }
 
@@ -306,7 +330,34 @@ if (isset($_GET['act']))
       @unlink(KARTFAVLIST);
       header("Location: ".$_SERVER['PHP_SELF']);
    }
-} 
+}
+
+if (isset($_POST['act']))
+{
+   // save kartina account data ...
+   if ($_POST['act'] === "setacc")
+   {
+      if (isset($_POST['acc']) && isset($_POST['passwd']))
+      {
+         if (($_POST['acc'] != "") && ($_POST['passwd'] != ""))
+         {
+            // save new kartina account config ...
+            $wdtvConf->writeConf("KARTINA_ACCOUNT", $_POST['acc']);
+            $wdtvConf->writeConf("KARTINA_PASSWD", $_POST['passwd']);
+            
+            // delete xml files because they may change due to account change ...
+            @unlink(KARTCHANLIST);
+            @unlink(KARTFAVLIST);
+            
+            // make sure kartina api is reloaded ...
+            $kartAPI = NULL;
+            
+            // reload page ...
+            header("Location: ".$_SERVER['PHP_SELF']);
+         }
+      }
+   }
+}
 
 // create document header ...
 makeHeader(isset($_GET['act']) ? $_GET['act'] : "Установка");
@@ -324,6 +375,10 @@ if (isset($_GET['act']))
       echo "</td>\n<td>\n";
       makeChanTab();
       echo "</td>\n</tr>\n</table>\n";
+   }
+   else if($_GET['act'] === "acc")
+   {
+      makeAccForm();
    }
 }
 else
