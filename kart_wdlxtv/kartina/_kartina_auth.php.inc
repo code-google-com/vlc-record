@@ -55,7 +55,7 @@ $kartAPI = new kartinaAPI($kartAcc, $kartPw, KARTINA_HOST);
 $kartAPI->authenticate();
 
 // get / save channel list if not already there ...
-if (!file_exists(KARTCHANLIST) || filetime())
+if (!file_exists(KARTCHANLIST))
 {
    $kartAPI->saveChannelList();
 }

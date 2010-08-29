@@ -124,8 +124,7 @@ class CWdtvConfig
       for ($i = 0; $i < count($content); $i ++)
       {
          $count   = 0;
-         $matched = preg_replace("/^[ \t]*([a-zA-Z0-9_-]+)[ \t=]+'([^']+)'.*$/", "\1<<[:]>>\2", $content[$i], -1, $count);
-         
+         $matched = preg_replace("/^[ \t]*([a-zA-Z0-9-_]+)[ \t=]+'([^']+)'.*$/", "$1<<[:]>>$2", $content[$i], -1, $count);
          if ($count > 0)
          {
             $tmpArray = explode("<<[:]>>", $matched);
@@ -216,7 +215,10 @@ class CWdtvConfig
    \----------------------------------------------------------------- */
    public function isTimeSet()
    {
-      if (time() > (30 * 365 * 24 * 3600)) // ~30 years ... means somewhere in 1999
+      // date starts at 01.01.2000 when box starts ...
+      // so test, if we're later then 2009 to find out that
+      // we're already synchronized ...
+      if (time() > (40 * 365 * 24 * 3600)) // ~40 years ... means somewhere in 2009
       {
          // means we are much later that 1970 (date as wdtv starts) ...
          return true;
