@@ -104,6 +104,43 @@ function makeAccForm()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: makeTZForm
+|  Begin: 8/30/2010 / 12:00
+|  Author: Jo2003
+|  Description: create timezone / server form
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+function makeTZForm()
+{
+   global $wdtvConf;
+   include (dirname(__FILE__)."/_timezones.php.inc");
+   
+   // default time zone ...
+   $def_tz = $wdtvConf->getVal("TIMEZONE");
+   
+   echo "<h3>Установка времени</h3>\n"
+       ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
+       ."<input type='hidden' name='act' value='settimestuff' />\n"
+       ."Зона времени:&nbsp;\n"
+       ."<select name='timezone'>\n";
+       
+   foreach ($_timeZone as $key => $val)
+   {
+      $sel = ($key === $def_tz) ? " selected='selected'" : "";
+      echo "<option value='".$key."'".$sel.">".$val."</option>\n";
+   }
+   
+   echo "</select>&nbsp;\n"
+       ."Сервер NTP:&nbsp;\n"
+       ."<input type='text' name='ntpsrv' value='".$wdtvConf->getVal("NTPSERVER")."' />&nbsp;\n"
+       ."<input type='submit' value='Сохранять' />\n"
+       ."</form>\n";
+}
+
+/* -----------------------------------------------------------------\
 |  Method: makeFavTab
 |  Begin: 8/13/2010 / 1:24p
 |  Author: Jo2003
@@ -278,6 +315,7 @@ function makeNavi()
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=fav'>Фавориты</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=delxml'>Удалить файлы XML</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=acc'>Картина.тв Аккаунт</a>]</td>\n"
+       ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=timestuff'>Установка Времени</a>]</td>\n"
        ."</tr>\n</table>\n";
 }
 
@@ -357,6 +395,21 @@ if (isset($_POST['act']))
          }
       }
    }
+   else if($_POST['act'] === "settimestuff") // set time zone and time server ...
+   {
+      if (isset($_POST['timezone']) && isset($_POST['ntpsrv']))
+      {
+         if (($_POST['timezone'] != "") && ($_POST['ntpsrv'] != ""))
+         {
+            // save new timer server and time zone values ...
+            $wdtvConf->writeConf("NTPSERVER", $_POST['ntpsrv']);
+            $wdtvConf->writeConf("TIMEZONE", $_POST['timezone']);
+            
+            // reload page ...
+            header("Location: ".$_SERVER['PHP_SELF']);
+         }
+      }
+   }
 }
 
 // create document header ...
@@ -379,6 +432,10 @@ if (isset($_GET['act']))
    else if($_GET['act'] === "acc")
    {
       makeAccForm();
+   }
+   else if($_GET['act'] === "timestuff")
+   {
+      makeTZForm();
    }
 }
 else
