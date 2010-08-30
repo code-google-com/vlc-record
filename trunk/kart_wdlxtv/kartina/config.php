@@ -94,7 +94,7 @@ function makeAccForm()
    global $wdtvConf;
    echo "<h3>Картина.тв Аккаунт</h3>\n"
        ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
-       ."<input type='hidden' name='act' value='setacc' />&nbsp;\n"
+       ."<input type='hidden' name='act' value='setacc' />\n"
        ."Аккаунт:&nbsp;\n"
        ."<input type='text' name='acc' value='".$wdtvConf->getVal("KARTINA_ACCOUNT")."' />&nbsp;\n"
        ."Пароль:&nbsp;\n"
