@@ -129,7 +129,7 @@ class CWdtvConfig
          {
             $tmpArray = explode("<<[:]>>", $matched);
             
-            $this->_settings[$tmpArray[0]] = $tmpArray[1];
+            $this->_settings[trim($tmpArray[0])] = trim($tmpArray[1]);
          }
       }
    }
