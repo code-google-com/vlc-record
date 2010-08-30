@@ -21,6 +21,7 @@ define (KARTCHANLIST,     "/tmp/kartchanlist.xml");
 define (KARTFAVLIST,      "/tmp/kartfavorites.xml");
 define (LOC_IMG_PATH,     "/umsp/plugins/kartina/images");
 define (WDTV_CONF_FILE,   "/conf/config");
+define (XML_RENEW_TIME,   300); // 5 min.
 
 // ------------------------------------------------------------------
 // create CWdtvConfig instance ...
@@ -60,6 +61,14 @@ $kartAPI->authenticate();
 if (!file_exists(KARTCHANLIST))
 {
    $kartAPI->saveChannelList();
+}
+else
+{
+   // is file older than 5 minutes ... ?
+   if ((time() - filemtime(KARTCHANLIST)) > XML_RENEW_TIME)
+   {
+      $kartAPI->saveChannelList();
+   }
 }
 
 // get / save favorites list if not already there ...

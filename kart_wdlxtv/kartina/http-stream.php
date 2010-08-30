@@ -80,9 +80,13 @@ function _pluginCreateChannelList($groupid)
    {
       $url = LOC_KARTINA_URL."/stream.php?id=".$channels->item($i)->nodeValue;
       
-      $url_data        = array('itemurl' => $url);
+      $url_data = array(
+         'itemurl'  => $url,
+         'is_video' => (integer)$videoinfo->item($i)->nodeValue
+      );
+      
       $url_data_string = http_build_query($url_data);
-      $upnp_class      = ((integer)$videoinfo->item($i)->nodeValue === 1) ? "object.item.videoitem" : "object.item.audioItem";
+      $upnp_class      = ((integer)$videoinfo->item($i)->nodeValue === 1) ? "object.item.videoitem" : "object.item.audioitem";
 
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
@@ -184,13 +188,17 @@ function _pluginCreateFavList()
       $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
       $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
       
-      $url_data = array('itemurl' => $url);
+      $url_data = array(
+         'itemurl'  => $url,
+         'is_video' => $isvideo
+      );
+      
       $url_data_string = http_build_query($url_data);
 
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
          'dc:title'       => $name,
-         'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioItem",
+         'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
          'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
          'protocolInfo'   => "http-get:*:*:*",
          'upnp:album_art' => KARTINA_HOST.$icon,
