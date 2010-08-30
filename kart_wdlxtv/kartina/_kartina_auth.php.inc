@@ -28,12 +28,14 @@ define (WDTV_CONF_FILE,   "/conf/config");
 $wdtvConf = new CWdtvConfig (WDTV_CONF_FILE);
 
 // if there are values in config for ntp, we should set the time right now ...
+/*
 if (!$wdtvConf->isTimeSet())
 {
    // this will only work if there is a timeserver stored in config ...
    // this maybe needed later when we want to use the archive ...
    $wdtvConf->setTime();
 }
+*/
 
 // get username and password for kartina.tv ...
 $kartAcc  = $wdtvConf->getVal("KARTINA_ACCOUNT");
