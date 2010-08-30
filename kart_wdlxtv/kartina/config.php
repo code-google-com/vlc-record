@@ -47,6 +47,7 @@ function makeHeader($title = "")
        ."<!--\n"
        ."   body {font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; margin: 0px; padding: 0px; text-align: left; color: #3A3A3A; background-color: #F4F4F4}\n"
        ."   table {width: 10%; background-color:#ddd;color:white;padding:0px;border:1px outset}\n"
+       ."  .timetab {background-color:#ddd;color:#333;padding:0px;border:1px outset;}\n"
        ."  .navitab {background-color:#333333; color:white; padding:0px; border: 1px outset;}\n"
        ."  .tdnavitab {background-color:#ddd; color:black; padding:5px; border: 0px;}\n"
        ."  .favtab  {background-color:#333333; color:white; padding:0px; border: 1px outset;}\n"
@@ -54,6 +55,7 @@ function makeHeader($title = "")
        ."   img {border: 0px;}\n"
        ."   td {width:50%;text-align:center;vertical-align:middle;border:0px;padding:2px}\n"
        ."   th {background-color:#333333;color:white; text-align: left;}\n"
+       ."  .timetab td {text-align: left;}\n"
        ."   td.row {background-color:white;color:black;}\n"
        ."   a:link, a:visited, a:active { text-decoration: underline; color: #444444;}\n"
        ."   a:hover { text-decoration: underline; color: #0482FE;}\n"
@@ -124,8 +126,10 @@ function makeTZForm()
    echo "<h3>Установка времени</h3>\n"
        ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
        ."<input type='hidden' name='act' value='settimestuff' />\n"
-       ."Зона времени:&nbsp;\n"
-       ."<select name='timezone'>\n";
+       ."<table class='timetab'>\n"
+       ."<tr>\n"
+       ."<td nowrap='nowrap'>Часовой пояс:</td>\n"
+       ."<td><select name='timezone'>\n";
        
    foreach ($_timeZone as $key => $val)
    {
@@ -133,10 +137,16 @@ function makeTZForm()
       echo "<option value='".$key."'".$sel.">".$val."</option>\n";
    }
    
-   echo "</select>&nbsp;\n"
-       ."Сервер NTP:&nbsp;\n"
-       ."<input type='text' name='ntpsrv' value='".$wdtvConf->getVal("NTPSERVER")."' />&nbsp;\n"
-       ."<input type='submit' value='Сохранять' />\n"
+   echo "</select></td>\n"
+       ."</tr>\n"
+       ."<tr>\n"
+       ."<td nowrap='nowrap'>Сервер NTP:</td>\n"
+       ."<td><input type='text' name='ntpsrv' value='".$wdtvConf->getVal("NTPSERVER")."' /></td>\n"
+       ."</tr>\n"
+       ."<tr>\n"
+       ."<td colspan='2'><input type='submit' value='Сохранять' /></td>\n"
+       ."</tr>\n"
+       ."</table>\n"
        ."</form>\n";
 }
 
