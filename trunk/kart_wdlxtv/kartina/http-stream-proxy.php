@@ -63,18 +63,7 @@ function _http_streamGet($prmHost, $prmPath, $prmPort, $videoFlag)
             }
             else
             {
-               /*
-                  audio/basic: mulaw audio at 8 kHz, 1 channel; Defined in RFC 2046
-                  audio/mp4: MP4 audio
-                  audio/mpeg: MP3 or other MPEG audio; Defined in RFC 3003
-                  audio/ogg: Ogg Vorbis, Speex, Flac and other audio; Defined in RFC 5334
-                  audio/vorbis: Vorbis encoded audio; Defined in RFC 5215
-                  audio/x-ms-wma: Windows Media Audio; Documented in Microsoft KB 288102
-                  audio/x-ms-wax: Windows Media Audio Redirector; Documented in Microsoft help page
-                  audio/vnd.rn-realaudio: RealAudio; Documented in RealPlayer Customer Support Answer 2559
-                  audio/vnd.wave: WAV audio; Defined in RFC 2361
-               */
-               header("Content-Type: audio/mp4");
+               header("Content-Type: audio/aac");
             }
             
             header("Content-Size: 65535");
