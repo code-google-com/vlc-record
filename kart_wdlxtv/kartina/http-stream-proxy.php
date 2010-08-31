@@ -74,7 +74,7 @@ function _http_streamGet($prmHost, $prmPath, $prmPort, $videoFlag)
                   audio/vnd.rn-realaudio: RealAudio; Documented in RealPlayer Customer Support Answer 2559
                   audio/vnd.wave: WAV audio; Defined in RFC 2361
                */
-               header("Content-Type: audio/mpeg");
+               header("Content-Type: audio/mp4");
             }
             
             header("Content-Size: 65535");
