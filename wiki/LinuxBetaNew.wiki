@@ -5,7 +5,7 @@
 There is a new *Beta version* of VLC-Record for Ubuntu 10.4 x86. This beta includes libVLC of vlc media player 1.14! 
 
 == Requirements ==
-You need Qt installed (libqr4-dev, libqt4-sql-sqlite2). Also you need the vlc installed which is shipped with Ubuntu. This package will not be used, but makes sure you have installed needed libraries. I might miss something which should also be installed ... I can't check it here.
+You need Qt installed (libqt4-dev, libqt4-sql-sqlite2). Also you need the vlc installed which is shipped with Ubuntu. This package will not be used, but makes sure you have installed needed libraries. I might miss something which should also be installed ... I can't check it here.
 
 == Installation ==
 You *MUST* extract the archive to _/opt/vlc-record_. It will not work, if you use another path! To extract the package, type in following command line:
