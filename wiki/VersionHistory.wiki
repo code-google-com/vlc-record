@@ -2,6 +2,11 @@
 #labels Featured
 
 = New in version ... =
+== 2010-10-01: Version x.39 ==
+ * use libvlc 1.14
+ * fix 20 minutes archive bug
+ * add test module for avi / xvid re-encode
+
 == 2010-08-08: Version x.38 ==
  * no changes from the last beta x.37B2
 
