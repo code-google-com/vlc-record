@@ -522,8 +522,8 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function getFavorites()
    {
-   	  $favorites = array();
-   	  $place     = 0;
+        $favorites = array();
+        $place     = 0;
       $cid       = 0;
       $reply     = $this->getReq($this->_host.API_PATH."/favorites");
       $reply     = $this->cleanReply($reply);
@@ -543,8 +543,8 @@ class kartinaAPI
          for ($i = 0; $i < $count; $i ++)
          {
             $favorites[] = array(
-            	'place' => $places->item($i)->nodeValue, 
-   				'cid'   => $cids->item($i)->nodeValue
+               'place' => $places->item($i)->nodeValue, 
+               'cid'   => $cids->item($i)->nodeValue
             );
          }
       }
@@ -583,7 +583,7 @@ class kartinaAPI
       
       return $rv;
    }
-   
+
    /* -----------------------------------------------------------------\
    |  Method: setFavorite
    |  Begin: 8/12/2010 / 9:24a
@@ -600,6 +600,46 @@ class kartinaAPI
       
       // update favorites file ...
       $this->saveFavorites();
+   }
+
+   /* -----------------------------------------------------------------\
+   |  Method: getDayEpg
+   |  Begin: 10/05/2010 / 3:30p
+   |  Author: Jo2003
+   |  Description: get epg for cid and day
+   |
+   |  Parameters: channel id, day in form ddmmyy
+   |
+   |  Returns: array of arrays(id, name, icon)
+   \----------------------------------------------------------------- */
+   public function getDayEpg ($cid, $day)
+   {
+      $reply    = $this->getReq($this->_host . API_PATH . "epg?cid=".$cid."&day=".$day);
+      $reply    = $this->cleanReply($reply);
+      $entries  = array();
+      
+      if ($this->noError($reply))
+      {
+         $dom     = new DomDocument();
+         $dom->loadXML($reply);
+         $xp      = new DOMXpath($dom);
+         $entries = array();
+   
+         $start   = $xp->query("/response/epg/item/ut_start");
+         $names   = $xp->query("/response/epg/item/progname");
+   
+         $all     = $start->length;
+   
+         for ($i = 0; $i < $all; $i++)
+         {
+            $entries[] = array(
+               'timestamp' => $start->item($i)->nodeValue,
+               'programm'  => $names->item($i)->nodeValue
+            );
+         }
+      }
+
+      return $entries;
    }
    
    /* -----------------------------------------------------------------\

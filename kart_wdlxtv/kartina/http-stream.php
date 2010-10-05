@@ -29,20 +29,28 @@ function _pluginMain($prmQuery)
    $items     = array();
    
    parse_str($prmQuery, $queryData);
-   
-   if (!isset($queryData['changrp']))
+
+   if (!isset($queryData['action']))
    {
       $items = _pluginCreateChannelGroupList();
    }
    else
    {
-      if ($queryData['changrp'] == 0) // favorites ...
+      if ($queryData['action'] === "favorites")
       {
          $items = _pluginCreateFavList();
       }
-      else
+      else if ($queryData['action'] === "channels")
       {
          $items = _pluginCreateChannelList($queryData['changrp']);
+      }
+      else if ($queryData['action'] === "arch_main")
+      {
+         $items = _pluginCreateArchMainFolder ($queryData['cid']);
+      }
+      else if ($queryData['action'] === "archive")
+      {
+         $items = _pluginCreateArchiveEpg ($queryData['cid'], $queryData['day']);
       }
    }
    
@@ -73,29 +81,51 @@ function _pluginCreateChannelList($groupid)
    $names     = $xp->query("channels/item/name", $group);
    $icons     = $xp->query("channels/item/icon", $group);
    $videoinfo = $xp->query("channels/item/is_video", $group);
+   $archinfo  = $xp->query("channels/item/have_archive", $group);
 
    $all = $channels->length;
 
    for ($i = 0; $i < $all; $i++)
    {
-      $url = LOC_KARTINA_URL."/stream.php?id=".$channels->item($i)->nodeValue;
-      
-      $url_data = array(
-         'itemurl'  => $url,
-         'is_video' => (integer)$videoinfo->item($i)->nodeValue
-      );
-      
-      $url_data_string = http_build_query($url_data);
-      $upnp_class      = ((integer)$videoinfo->item($i)->nodeValue === 1) ? "object.item.videoitem" : "object.item.audioitem";
+      // check if channel has archive. If so, create a extra folder to choose
+      // between live stream and archive. If not, request live stream ...
+      if ((integer)$archinfo->item($i)->nodeValue === 1)
+      {
+         // has archive ...
+         $data       = array('action' => 'arch_main', 
+                             'cid'    => $channels->item($i)->nodeValue);
 
-      $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
-         'dc:title'       => $names->item($i)->nodeValue,
-         'upnp:class'     => $upnp_class,
-         'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
-         'protocolInfo'   => "http-get:*:*:*",
-         'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue,
-      );
+         $dataString = http_build_query($data, 'pluginvar_');
+         
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'dc:title'       => $names->item($i)->nodeValue,
+            'upnp:class'     => 'object.container',
+            'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue
+         );
+      }
+      else
+      {
+         // no archive ...
+         $url = LOC_KARTINA_URL."/stream.php?id=".$channels->item($i)->nodeValue;
+      
+         $url_data = array(
+            'itemurl'  => $url,
+            'is_video' => (integer)$videoinfo->item($i)->nodeValue
+         );
+         
+         $url_data_string = http_build_query($url_data);
+         $upnp_class      = ((integer)$videoinfo->item($i)->nodeValue === 1) ? "object.item.videoitem" : "object.item.audioitem";
+   
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
+            'dc:title'       => $names->item($i)->nodeValue,
+            'upnp:class'     => $upnp_class,
+            'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
+            'protocolInfo'   => "http-get:*:*:*",
+            'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue
+         );
+      }
    }
    
    return $retMediaItems;
@@ -117,7 +147,8 @@ function _pluginCreateChannelGroupList()
    $dom           = new DomDocument();
    
    // first add favorites folder ...
-   $data       = array('changrp' => '0');
+   $data       = array('action' => 'favorites');
+
    $dataString = http_build_query($data, 'pluginvar_');
    
    $retMediaItems[] = array (
@@ -126,7 +157,7 @@ function _pluginCreateChannelGroupList()
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/favorite.png",
    );
-			
+         
    $dom->load(KARTCHANLIST);
    
    $xp         = new DOMXpath($dom);
@@ -138,7 +169,9 @@ function _pluginCreateChannelGroupList()
 
    for ($i = 0; $i < $all; $i++)
    {
-      $data       = array('changrp' => $groups->item($i)->nodeValue);
+      $data       = array('action'  => 'channels',
+                          'changrp' => $groups->item($i)->nodeValue);
+
       $dataString = http_build_query($data, 'pluginvar_');
       
       $retMediaItems[] = array (
@@ -209,6 +242,126 @@ function _pluginCreateFavList()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: _pluginCreateArchMainFolder
+|  Begin: 10/5/2010 / 1:56p
+|  Author: Jo2003
+|  Description: create the archive main folder with live stream and 
+|               day folders
+|  Parameters: channel id
+|
+|  Returns: array of media items
+\----------------------------------------------------------------- */
+function _pluginCreateArchMainFolder ($cid)
+{
+   $retMediaItems = array();
+
+   // first item is always the live stream ...
+
+   // get info / url from given channel ...
+   $domChanList = new DOMDocument();
+   $domChanList->load(KARTCHANLIST);
+
+   $xpchan   = new DOMXpath($domChanList);
+
+   $chanitem = $xpchan->query("/response/groups/item/channels/item[id='".$cid."']");
+   $chan     = $chanitem->item(0); // there is only one such item ...
+
+   $icon     = $xpchan->query("icon", $chan)->item(0)->nodeValue;
+   $name     = $xpchan->query("name", $chan)->item(0)->nodeValue; 
+   $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
+   $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
+
+   $url_data = array(
+      'itemurl'  => $url,
+      'is_video' => $isvideo
+   );
+
+   $url_data_string = http_build_query($url_data);
+
+   // first item is always the live stream ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
+      'dc:title'       => $name . " - Live Stream",
+      'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => KARTINA_HOST.$icon
+   );
+
+   // make folders for all 14 days of the archive ... 
+   $now       = time();
+   $archstart = $now - MAX_ARCH_DAYS * DAY_IN_SECONDS;
+
+   for ($i = $archstart; $i <= $now; $i += DAY_IN_SECONDS)
+   {
+      // first add favorites folder ...
+      $data       = array('action' => 'archive',
+                          'day'    => date ("mdy", $i),
+                          'cid'    => $cid);
+
+      $dataString = http_build_query($data, 'pluginvar_');
+   
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'dc:title'       => "Архив - " . date("d.m.Y", $i),
+         'upnp:class'     => 'object.container',
+         'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
+      );
+   }
+  
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: _pluginCreateArchiveEpg
+|  Begin: 10/5/2010 / 1:56p
+|  Author: Jo2003
+|  Description: create the archive epg for one channel / day
+|               day folders
+|  Parameters: channel id, day in form ddmmyy
+|
+|  Returns: array of media items
+\----------------------------------------------------------------- */
+function _pluginCreateArchiveEpg ($cid, $day)
+{
+   global $kartAPI;
+
+   $retMediaItems = array();
+
+   $epg = $kartAPI->getDayEpg($cid, $day);
+
+   $all = count($epg);
+
+   for ($i = 0; $i < $all; $i ++)
+   {
+      // display this show if it is in archive ...
+      if (inArchive($epg[$i]['timestamp']))
+      {
+         $tok = strtok($epg[$i]['programm'], "\n");
+         $url = LOC_KARTINA_URL."/stream.php?id=".$cid."&gmt=".$epg[$i]['timestamp'];
+
+         $url_data = array(
+            'itemurl'  => $url,
+            'is_video' => 1
+         );
+
+         $url_data_string = http_build_query($url_data);
+
+         // add show to archiv for this day ...
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
+            'dc:title'       => date("H:i" , $epg[$i]['timestamp']) . " - " . $tok,
+            'upnp:class'     => "object.item.videoitem",
+            'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
+            'protocolInfo'   => "http-get:*:*:*"
+         );
+      }
+   }
+
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: printItems
 |  Begin: 8/13/2010 / 1:24p
 |  Author: Jo2003
@@ -251,6 +404,32 @@ function printItems()
       echo $items[$i]['dc:title'] . " (".$items[$i]['id'].")<br />\n";
       echo "<img src='".$items[$i]['upnp:album_art']."' alt='' /><br />\n";
       echo "<hr /><br />\n";
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: inArchive
+|  Begin: 10/5/2010 / 3:46p
+|  Author: Joerg Neubert
+|  Description: check if show is in archive time
+|
+|  Parameters: timestamp
+|
+|  Returns: 0 ==> ok
+|          -1 ==> any error
+\----------------------------------------------------------------- */
+function inArchive ($gmt)
+{
+   $now = time();
+
+   if (($gmt >= ($now - MAX_ARCH_DAYS * DAY_IN_SECONDS)) // 14 days ...
+      && ($gmt <= ($now - 600))                          // 10 minutes ...
+   {
+      return TRUE;
+   }
+   else
+   {
+      return FALSE;
    }
 }
 
