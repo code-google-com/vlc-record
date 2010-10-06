@@ -30,27 +30,29 @@ function _pluginMain($prmQuery)
    
    parse_str($prmQuery, $queryData);
 
-   if (!isset($queryData['action']))
+   if (!isset($queryData['s_data']))
    {
       $items = _pluginCreateChannelGroupList();
    }
    else
    {
-      if ($queryData['action'] === "favorites")
+      $data = unserialize($queryData['s_data']);
+      
+      if ($data['action'] === "favorites")
       {
          $items = _pluginCreateFavList();
       }
-      else if ($queryData['action'] === "channels")
+      else if ($data['action'] === "channels")
       {
-         $items = _pluginCreateChannelList($queryData['changrp']);
+         $items = _pluginCreateChannelList($data['changrp']);
       }
-      else if ($queryData['action'] === "arch_main")
+      else if ($data['action'] === "arch_main")
       {
-         $items = _pluginCreateArchMainFolder ($queryData['cid']);
+         $items = _pluginCreateArchMainFolder ($data['cid']);
       }
-      else if ($queryData['action'] === "archive")
+      else if ($data['action'] === "archive")
       {
-         $items = _pluginCreateArchiveEpg ($queryData['cid'], $queryData['day']);
+         $items = _pluginCreateArchiveEpg ($data['cid'], $data['day']);
       }
    }
    
@@ -94,8 +96,10 @@ function _pluginCreateChannelList($groupid)
          // has archive ...
          $data       = array('action' => 'arch_main', 
                              'cid'    => $channels->item($i)->nodeValue);
+                             
+         $s_data     = serialize($data);
 
-         $dataString = http_build_query($data, 'pluginvar_');
+         $dataString = http_build_query(array('s_data' => $s_data));
          
          $retMediaItems[] = array (
             'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -148,8 +152,9 @@ function _pluginCreateChannelGroupList()
    
    // first add favorites folder ...
    $data       = array('action' => 'favorites');
+   $s_data     = serialize($data);
 
-   $dataString = http_build_query($data, 'pluginvar_');
+   $dataString = http_build_query(array('s_data' => $s_data));
    
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -171,8 +176,10 @@ function _pluginCreateChannelGroupList()
    {
       $data       = array('action'  => 'channels',
                           'changrp' => $groups->item($i)->nodeValue);
+                          
+      $s_data     = serialize($data);
 
-      $dataString = http_build_query($data, 'pluginvar_');
+      $dataString = http_build_query(array('s_data' => $s_data));
       
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -298,8 +305,10 @@ function _pluginCreateArchMainFolder ($cid)
       $data       = array('action' => 'archive',
                           'day'    => date ("mdy", $i),
                           'cid'    => $cid);
+                          
+      $s_data     = serialize($data);
 
-      $dataString = http_build_query($data, 'pluginvar_');
+      $dataString = http_build_query(array('s_data' => $s_data));
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -324,12 +333,23 @@ function _pluginCreateArchMainFolder ($cid)
 \----------------------------------------------------------------- */
 function _pluginCreateArchiveEpg ($cid, $day)
 {
-   global $kartAPI;
+   // Please note that all global variables
+   // are wiped out! Therefore we have to instantiate
+   // a local instance here .... 
+   // global $kartAPI;
+   
+   // don't break your head about login / logout at kartina!
+   // we will load the cookie from file so no authentication
+   // is needed here ... we also don't need username and PW ...
+   $tmpKartAPI = new kartinaAPI("", "", KARTINA_HOST);
+   
+   // load cookie ...
+   $tmpKartAPI->loadCookie();
 
    $retMediaItems = array();
 
-   $epg = $kartAPI->getDayEpg($cid, $day);
-
+   $epg = $tmpKartAPI->getDayEpg($cid, $day);
+   
    $all = count($epg);
 
    for ($i = 0; $i < $all; $i ++)
@@ -353,7 +373,8 @@ function _pluginCreateArchiveEpg ($cid, $day)
             'dc:title'       => date("H:i" , $epg[$i]['timestamp']) . " - " . $tok,
             'upnp:class'     => "object.item.videoitem",
             'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
-            'protocolInfo'   => "http-get:*:*:*"
+            'protocolInfo'   => "http-get:*:*:*",
+            'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
          );
       }
    }

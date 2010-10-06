@@ -323,7 +323,7 @@ function makeNavi()
    echo "<table class='navitab' border='0' cellpadding='1' cellspacing='1'>\n<tr>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."'>Домой</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=fav'>Фавориты</a>]</td>\n"
-       ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=delxml'>Удалить файлы XML</a>]</td>\n"
+       ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=delxml'>Удалить файлы</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=acc'>Картина.тв Аккаунт</a>]</td>\n"
        ."<td class='tdnavitab' nowrap='nowrap'>[<a href='".$_SERVER['PHP_SELF']."?act=timestuff'>Установка Времени</a>]</td>\n"
        ."</tr>\n</table>\n";
@@ -376,6 +376,9 @@ if (isset($_GET['act']))
    {
       @unlink(KARTCHANLIST);
       @unlink(KARTFAVLIST);
+      
+      // delete cookie as well ...
+      @unlink(COOKIE_FILE);
       header("Location: ".$_SERVER['PHP_SELF']);
    }
 }
@@ -396,6 +399,9 @@ if (isset($_POST['act']))
             // delete xml files because they may change due to account change ...
             @unlink(KARTCHANLIST);
             @unlink(KARTFAVLIST);
+            
+            // delete cookie file as well ...
+            @unlink(COOKIE_FILE);
             
             // make sure kartina api is reloaded ...
             $kartAPI = NULL;
