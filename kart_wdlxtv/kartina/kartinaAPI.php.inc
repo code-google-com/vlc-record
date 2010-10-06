@@ -664,6 +664,65 @@ class kartinaAPI
          return 1;
       }
    }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: saveCookie
+   |  Begin: 06.10.2010 / 15:10
+   |  Author: Jo2003
+   |  Description: save cookie to file
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 --> no error
+   |          -1 --> error
+   \----------------------------------------------------------------- */
+   public function saveCookie()
+   {
+      $rv = -1;
+      if ($this->_cookie != "")
+      {
+         $f = fopen (COOKIE_FILE, "w+");
+         
+         if ($f)
+         {
+            if (fwrite ($f, $this->_cookie))
+            {
+               $rv = 0;
+               $this->log("Cookie successfully saved to file!");
+            }
+            
+            fclose ($f);
+         }
+      }
+
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: saveCookie
+   |  Begin: 06.10.2010 / 15:30
+   |  Author: Jo2003
+   |  Description: load cookie from file
+   |
+   |  Parameters: --
+   |
+   |  Returns: 0 --> no error
+   |          -1 --> error
+   \----------------------------------------------------------------- */
+   public function loadCookie ()
+   {
+      $rv        = -1;
+      $tmpCookie = file_get_contents (COOKIE_FILE);
+      
+      if ($tmpCookie)
+      {
+         $this->_cookie = $tmpCookie;
+         $rv            = 0;
+         $this->log("Cookie successfully read from file!");
+      }
+      
+      return $rv;
+   }
 };
 
 ?>
