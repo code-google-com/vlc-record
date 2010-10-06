@@ -65,8 +65,10 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function __destruct()
    {
+      // please note: since we work with stored cookies
+      // now, it wouldn't be good to logout at destruction!!!
       $this->_reader = NULL;
-      $this->logout();
+
       if (DOTRACE == "YES")
       {
          fclose ($this->_logfile);
@@ -284,6 +286,10 @@ class kartinaAPI
       if ($this->_cookie != "")
       {
          $this->getReq($this->_host . API_PATH . "logout");
+         
+         // since we're logged out now, make sure 
+         // to delete the cookie also!
+         @unlink(COOKIE_FILE);
       }
       $this->_cookie = "";
    }
