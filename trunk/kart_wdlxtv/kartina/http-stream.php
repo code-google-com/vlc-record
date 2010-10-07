@@ -27,16 +27,23 @@ function _pluginMain($prmQuery)
 {
    $queryData = array();
    $items     = array();
+   $data      = array();
    
-   parse_str($prmQuery, $queryData);
-
-   if (!isset($queryData['s_data']))
+   if (is_string($prmQuery))
+   {
+      simpleLog(__FUNCTION__."():".__LINE__." Raw query: ".$prmQuery);
+      $serialized = urldecode($prmQuery);
+      simpleLog(__FUNCTION__."():".__LINE__." Decoded query: ".$serialized);
+      $data       = unserialize($serialized);
+   }
+   
+   if (!isset($data['action']))
    {
       $items = _pluginCreateChannelGroupList();
    }
    else
    {
-      $data = unserialize($queryData['s_data']);
+      simpleLog(__FUNCTION__."():".__LINE__." Action: ".$data['action']);
       
       if ($data['action'] === "favorites")
       {
@@ -97,9 +104,8 @@ function _pluginCreateChannelList($groupid)
          $data       = array('action' => 'arch_main', 
                              'cid'    => $channels->item($i)->nodeValue);
                              
-         $s_data     = serialize($data);
-
-         $dataString = http_build_query(array('s_data' => $s_data));
+         $serialized = serialize($data);
+         $dataString = urlencode($serialized);
          
          $retMediaItems[] = array (
             'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -152,9 +158,9 @@ function _pluginCreateChannelGroupList()
    
    // first add favorites folder ...
    $data       = array('action' => 'favorites');
-   $s_data     = serialize($data);
 
-   $dataString = http_build_query(array('s_data' => $s_data));
+   $serialized = serialize($data);
+   $dataString = urlencode($serialized);
    
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -176,10 +182,9 @@ function _pluginCreateChannelGroupList()
    {
       $data       = array('action'  => 'channels',
                           'changrp' => $groups->item($i)->nodeValue);
-                          
-      $s_data     = serialize($data);
 
-      $dataString = http_build_query(array('s_data' => $s_data));
+      $serialized = serialize($data);
+      $dataString = urlencode($serialized);
       
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -306,9 +311,8 @@ function _pluginCreateArchMainFolder ($cid)
                           'day'    => date ("mdy", $i),
                           'cid'    => $cid);
                           
-      $s_data     = serialize($data);
-
-      $dataString = http_build_query(array('s_data' => $s_data));
+      $serialized = serialize($data);
+      $dataString = urlencode($serialized);
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -431,7 +435,7 @@ function printItems()
 /* -----------------------------------------------------------------\
 |  Method: inArchive
 |  Begin: 10/5/2010 / 3:46p
-|  Author: Joerg Neubert
+|  Author: Jo2003
 |  Description: check if show is in archive time
 |
 |  Parameters: timestamp
@@ -451,6 +455,29 @@ function inArchive ($gmt)
    else
    {
       return FALSE;
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: simpleLog
+|  Begin: 10/07/2010 / 14:10
+|  Author: Jo2003
+|  Description: write log to log file
+|
+|  Parameters: log entry
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+function simpleLog($str)
+{
+   if (DOTRACE == "YES")
+   {
+      $f = fopen("/tmp/kart_umsp.log", "a+");
+      if ($f)
+      {
+         fwrite($f, date("d.m.y H:i:s").": ".$str."\n");
+         fclose($f);
+      }
    }
 }
 
