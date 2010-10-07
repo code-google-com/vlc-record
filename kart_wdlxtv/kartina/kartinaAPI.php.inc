@@ -348,7 +348,7 @@ class kartinaAPI
    
          for ($i = 0; $i < $all; $i++)
          {
-            $entries[$i] = array(
+            $entries[] = array(
                'id'   => $channels->item($i)->nodeValue,
                'name' => $names->item($i)->nodeValue,
                'icon' => $icons->item($i)->nodeValue
@@ -705,7 +705,7 @@ class kartinaAPI
    }
    
    /* -----------------------------------------------------------------\
-   |  Method: saveCookie
+   |  Method: loadCookie
    |  Begin: 06.10.2010 / 15:30
    |  Author: Jo2003
    |  Description: load cookie from file
