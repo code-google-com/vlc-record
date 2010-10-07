@@ -27,39 +27,36 @@ function _pluginMain($prmQuery)
 {
    $queryData = array();
    $items     = array();
-   $data      = array();
+   simpleLog(__FUNCTION__."():".__LINE__." Raw query: ".$prmQuery);
    
-   if (is_string($prmQuery))
-   {
-      simpleLog(__FUNCTION__."():".__LINE__." Raw query: ".$prmQuery);
-      $serialized = urldecode($prmQuery);
-      simpleLog(__FUNCTION__."():".__LINE__." Decoded query: ".$serialized);
-      $data       = unserialize($serialized);
-   }
-   
-   if (!isset($data['action']))
+   parse_str($prmQuery, $queryData);
+
+   if (!isset($queryData['action']))
    {
       $items = _pluginCreateChannelGroupList();
    }
    else
    {
-      simpleLog(__FUNCTION__."():".__LINE__." Action: ".$data['action']);
-      
-      if ($data['action'] === "favorites")
+      simpleLog(__FUNCTION__."():".__LINE__." Action: ".$queryData['action']);
+      if ($queryData['action'] === "favorites")
       {
          $items = _pluginCreateFavList();
       }
-      else if ($data['action'] === "channels")
+      else if ($queryData['action'] === "channels")
       {
-         $items = _pluginCreateChannelList($data['changrp']);
+         simpleLog(__FUNCTION__."():".__LINE__." Changrp: ".$queryData['changrp']);
+         $items = _pluginCreateChannelList($queryData['changrp']);
       }
-      else if ($data['action'] === "arch_main")
+      else if ($queryData['action'] === "arch_main")
       {
-         $items = _pluginCreateArchMainFolder ($data['cid']);
+         simpleLog(__FUNCTION__."():".__LINE__." ChanID: ".$queryData['cid']);
+         $items = _pluginCreateArchMainFolder ($queryData['cid']);
       }
-      else if ($data['action'] === "archive")
+      else if ($queryData['action'] === "archive")
       {
-         $items = _pluginCreateArchiveEpg ($data['cid'], $data['day']);
+         simpleLog(__FUNCTION__."():".__LINE__." ChanID: ".$queryData['cid']
+                  ."; Day: ".$queryData['day']);
+         $items = _pluginCreateArchiveEpg ($queryData['cid'], $queryData['day']);
       }
    }
    
@@ -104,8 +101,7 @@ function _pluginCreateChannelList($groupid)
          $data       = array('action' => 'arch_main', 
                              'cid'    => $channels->item($i)->nodeValue);
                              
-         $serialized = serialize($data);
-         $dataString = urlencode($serialized);
+         $dataString = http_build_query($data, "", "&amp;");
          
          $retMediaItems[] = array (
             'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -159,8 +155,7 @@ function _pluginCreateChannelGroupList()
    // first add favorites folder ...
    $data       = array('action' => 'favorites');
 
-   $serialized = serialize($data);
-   $dataString = urlencode($serialized);
+   $dataString = http_build_query($data, "", "&amp;");
    
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -182,9 +177,8 @@ function _pluginCreateChannelGroupList()
    {
       $data       = array('action'  => 'channels',
                           'changrp' => $groups->item($i)->nodeValue);
-
-      $serialized = serialize($data);
-      $dataString = urlencode($serialized);
+                          
+      $dataString = http_build_query($data, "", "&amp;");
       
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -293,7 +287,7 @@ function _pluginCreateArchMainFolder ($cid)
    // first item is always the live stream ...
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
-      'dc:title'       => $name . " - Live Stream",
+      'dc:title'       => $name . " - Прямой эфир",
       'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
       'protocolInfo'   => "http-get:*:*:*",
@@ -308,11 +302,10 @@ function _pluginCreateArchMainFolder ($cid)
    {
       // first add favorites folder ...
       $data       = array('action' => 'archive',
-                          'day'    => date ("mdy", $i),
+                          'day'    => date ("dmy", $i),
                           'cid'    => $cid);
                           
-      $serialized = serialize($data);
-      $dataString = urlencode($serialized);
+      $dataString = http_build_query($data, "", "&amp;");
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
@@ -355,6 +348,9 @@ function _pluginCreateArchiveEpg ($cid, $day)
    $epg = $tmpKartAPI->getDayEpg($cid, $day);
    
    $all = count($epg);
+   
+   simpleLog(__FUNCTION__."():".__LINE__." We found ".$all." EPG entries...");
+   
 
    for ($i = 0; $i < $all; $i ++)
    {
@@ -363,6 +359,8 @@ function _pluginCreateArchiveEpg ($cid, $day)
       {
          $tok = strtok($epg[$i]['programm'], "\n");
          $url = LOC_KARTINA_URL."/stream.php?id=".$cid."&gmt=".$epg[$i]['timestamp'];
+         
+         simpleLog(__FUNCTION__."():".__LINE__." Request URL: ".$url);
 
          $url_data = array(
             'itemurl'  => $url,
@@ -480,7 +478,6 @@ function simpleLog($str)
       }
    }
 }
-
 //////////////////////////////////////////////////////////////////
 // for debug only                                               //
 //////////////////////////////////////////////////////////////////
