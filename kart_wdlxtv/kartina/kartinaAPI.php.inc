@@ -110,6 +110,8 @@ class kartinaAPI
       $errno     = 0;
       $errstr    = "";
       $reply     = "";
+      
+      $this->log($request);
 
       if ($path == "") 
       {
@@ -164,6 +166,8 @@ class kartinaAPI
       $host      = $parsedUrl['host'];
       $path      = $parsedUrl['path'];
       $reply     = "";
+      
+      $this->log($request);
 
       if ($path == "") 
       {
@@ -220,43 +224,46 @@ class kartinaAPI
       $reply         = $this->cleanReply($reply);
 
       $rv            = 0;
-
-      $this->_reader->XML($reply);
-
-      while ($this->_reader->read())
+      
+      if ($this->noError($reply))
       {
-         switch($this->_reader->nodeType)
+         $this->_reader->XML($reply);
+
+         while ($this->_reader->read())
          {
-         case XMLReader::ELEMENT:
-            if ($this->_reader->localName == "sid")
+            switch($this->_reader->nodeType)
             {
-               if($this->_reader->read())
+            case XMLReader::ELEMENT:
+               if ($this->_reader->localName == "sid")
                {
-                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  if($this->_reader->read())
                   {
-                     $sid = $this->_reader->value;
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $sid = $this->_reader->value;
+                     }
                   }
                }
-            }
-            else if ($this->_reader->localName == "sid_name")
-            {
-               if($this->_reader->read())
+               else if ($this->_reader->localName == "sid_name")
                {
-                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  if($this->_reader->read())
                   {
-                     $sid_name = $this->_reader->value;
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $sid_name = $this->_reader->value;
+                     }
                   }
                }
-            }
-            break;
+               break;
 
-         default:
-            break;
+            default:
+               break;
+            }
          }
+
+         $this->_reader->close();
       }
-
-      $this->_reader->close();
-
+      
       if (($sid != "") && ($sid_name != ""))
       {
          $this->_cookie = $sid_name ."=". $sid;
@@ -372,21 +379,23 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function saveChannelList ()
    {
+      $rv       = -1;
       $reply    = $this->getReq($this->_host . API_PATH . "channel_list");
       $reply    = $this->cleanReply($reply);
       
-      $fp       = fopen(KARTCHANLIST, "w+");
+      if ($this->noError($reply))
+      {
+         $fp = fopen(KARTCHANLIST, "w+");
       
-      if ($fp)
-      {
-         fwrite ($fp, $reply);
-         fclose ($fp);
-         return 0;
+         if ($fp)
+         {
+            fwrite ($fp, $reply);
+            fclose ($fp);
+            $rv = 0;
+         }
       }
-      else
-      {
-         return -1;
-      }
+      
+      return $rv;
    }
 
    /* -----------------------------------------------------------------\
@@ -411,36 +420,39 @@ class kartinaAPI
       $reply = $this->postReq($this->_host . API_PATH . "get_url", $req);
       $reply = $this->cleanReply($reply);
       $url   = "";
-
-      $this->_reader->XML($reply);
-
-      while ($this->_reader->read())
+      
+      if ($this->noError($reply))
       {
-         switch ($this->_reader->nodeType)
+         $this->_reader->XML($reply);
+
+         while ($this->_reader->read())
          {
-         // element start ...
-         case XMLReader::ELEMENT:
-            if ($this->_reader->localName == "url")
+            switch ($this->_reader->nodeType)
             {
-               if($this->_reader->read())
+            // element start ...
+            case XMLReader::ELEMENT:
+               if ($this->_reader->localName == "url")
                {
-                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  if($this->_reader->read())
                   {
-                     $url = $this->_reader->value;
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $url = $this->_reader->value;
    
-                     // replace buffer values ...
-                     $url = preg_replace('/^.*(\/\/[^ ]*).*$/', 'http:$1', $url); 
+                        // replace buffer values ...
+                        $url = preg_replace('/^.*(\/\/[^ ]*).*$/', 'http:$1', $url); 
+                     }
                   }
                }
+               break;
+
+            default:
+               break;
             }
-            break;
-
-         default:
-            break;
          }
+         
+         $this->_reader->close();
       }
-
-      $this->_reader->close();
 
       return $url;
    }
@@ -571,20 +583,20 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function saveFavorites()
    {
-      $rv    = 0;
+      $rv    = -1;
       $reply = $this->getReq($this->_host.API_PATH."/favorites");
       $reply = $this->cleanReply($reply);
       
-      $fp    = fopen(KARTFAVLIST, "w+");
+      if ($this->noError($reply))
+      {
+         $fp = fopen(KARTFAVLIST, "w+");
       
-      if ($fp)
-      {
-         fwrite($fp, $reply);
-         fclose($fp);
-      }
-      else
-      {
-         $rv = -1;
+         if ($fp)
+         {
+            fwrite($fp, $reply);
+            fclose($fp);
+            $rv = 0;
+         }
       }
       
       return $rv;
@@ -620,7 +632,7 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function getDayEpg ($cid, $day)
    {
-      $reply    = $this->getReq($this->_host . API_PATH . "epg?cid=".$cid."&day=".$day);
+      $reply    = $this->getReq($this->_host . API_PATH . "epg", "cid=".$cid."&day=".$day);
       $reply    = $this->cleanReply($reply);
       $entries  = array();
       
@@ -663,6 +675,12 @@ class kartinaAPI
    {
       if (strstr($reply, "<message>") && strstr($reply, "<code>"))
       {
+         // on error log out ...
+         $this->logout();
+         
+         // delete stored files ...
+         @unlink (KARTCHANLIST);
+         @unlink (KARTFAVLIST);      
          return 0;
       } 
       else 

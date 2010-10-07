@@ -13,9 +13,10 @@
 
 require_once(dirname(__FILE__) . "/_kartina_auth.php.inc");
 
-$id  = isset($_GET['id']) ? $_GET['id'] : 7;
+$id  = isset($_GET['id'])  ? $_GET['id']  :  7;
+$gmt = isset($_GET['gmt']) ? $_GET['gmt'] : -1; 
 
-$url = $kartAPI->getStreamUrl($id);
+$url = $kartAPI->getStreamUrl($id, $gmt);
 
 header("Location: ".$url);
 
