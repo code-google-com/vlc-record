@@ -528,8 +528,8 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function getFavorites()
    {
-        $favorites = array();
-        $place     = 0;
+      $favorites = array();
+      $place     = 0;
       $cid       = 0;
       $reply     = $this->getReq($this->_host.API_PATH."/favorites");
       $reply     = $this->cleanReply($reply);
