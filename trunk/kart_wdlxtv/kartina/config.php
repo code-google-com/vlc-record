@@ -123,6 +123,30 @@ function makeTZForm()
    // default time zone ...
    $def_tz = $wdtvConf->getVal("TIMEZONE");
    
+   // NTP value ...
+   $ntp    = $wdtvConf->getVal("NTP");
+   
+   if (strtoupper($ntp) === "ON")
+   {
+      $ntp = 1;
+   }
+   else
+   {
+      $ntp = 0;
+   }
+   
+   // IPUP value ...
+   $ipup   = $wdtvConf->getVal("IPUP");
+   
+   if (strtoupper($ipup) === "ON")
+   {
+      $ipup = 1;
+   }
+   else
+   {
+      $ipup = 0;
+   }
+   
    echo "<h3>Установка времени</h3>\n"
        ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
        ."<input type='hidden' name='act' value='settimestuff' />\n"
@@ -142,6 +166,23 @@ function makeTZForm()
        ."<tr>\n"
        ."<td nowrap='nowrap'>Сервер NTP:</td>\n"
        ."<td><input type='text' name='ntpsrv' value='".$wdtvConf->getVal("NTPSERVER")."' /></td>\n"
+       ."</tr>\n"
+       ."<tr>\n"
+       ."<td nowrap='nowrap'>Вкл. NTP:</td>\n"
+       ."<td>\n"
+       ."нет <input type='radio' name='ntp' value='OFF' ".(($ntp) ? "" : "checked='checked' ")."/>\n"
+       ."да <input type='radio' name='ntp' value='ON' ".(($ntp) ? "checked='checked' " : "")."/>\n"
+       ."</td>\n"
+       ."</tr>\n"
+       ."<tr>\n"
+       ."<td nowrap='nowrap'>Вкл. IPUP:</td>\n"
+       ."<td>\n"
+       ."нет <input type='radio' name='ipup' value='OFF' ".(($ipup) ? "" : "checked='checked' ")."/>\n"
+       ."да <input type='radio' name='ipup' value='ON' ".(($ipup) ? "checked='checked' " : "")."/>\n"
+       ."</td>\n"
+       ."</tr>\n"
+       ."<tr>\n"
+       ."<td colspan='2'>*Требуется перезагрузка WDTV</td>\n"
        ."</tr>\n"
        ."<tr>\n"
        ."<td colspan='2'><input type='submit' value='Сохранять' /></td>\n"
@@ -420,6 +461,10 @@ if (isset($_POST['act']))
             // save new timer server and time zone values ...
             $wdtvConf->writeConf("NTPSERVER", $_POST['ntpsrv']);
             $wdtvConf->writeConf("TIMEZONE", $_POST['timezone']);
+            
+            // save ntp and ipup stuff ...
+            $wdtvConf->writeConf("NTP", $_POST['ntp']);
+            $wdtvConf->writeConf("IPUP", $_POST['ipup']);
             
             // reload page ...
             header("Location: ".$_SERVER['PHP_SELF']);
