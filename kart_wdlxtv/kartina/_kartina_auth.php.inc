@@ -64,7 +64,7 @@ else
    // ------------------------------------------------------------------
    // create kartinaAPI instance ...
    // ------------------------------------------------------------------
-   $kartAPI = new kartinaAPI("", "", KARTINA_HOST);
+   $kartAPI = new kartinaAPI();
    
    // load cookie ...
    $kartAPI->loadCookie();

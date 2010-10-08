@@ -225,23 +225,46 @@ function _pluginCreateFavList()
       $icon     = $xpchan->query("icon", $chan)->item(0)->nodeValue;
       $name     = $xpchan->query("name", $chan)->item(0)->nodeValue; 
       $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
-      $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
+      $hasarch  = (integer)$xpchan->query("have_archive", $chan)->item(0)->nodeValue;
       
-      $url_data = array(
-         'itemurl'  => $url,
-         'is_video' => $isvideo
-      );
+      // check if channel has archive. If so, create a extra folder to choose
+      // between live stream and archive. If not, request live stream ...
+      if ($hasarch === 1)
+      {
+         // has archive ...
+         $data       = array('action' => 'arch_main', 
+                             'cid'    => $cid);
+                             
+         $dataString = http_build_query($data, "", "&amp;");
+         
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'dc:title'       => $name,
+            'upnp:class'     => 'object.container',
+            'upnp:album_art' => KARTINA_HOST.$icon,
+         );
+      }
+      else
+      {
+         // no archive --> live stream ...
+         $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
       
-      $url_data_string = http_build_query($url_data);
-
-      $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
-         'dc:title'       => $name,
-         'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
-         'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
-         'protocolInfo'   => "http-get:*:*:*",
-         'upnp:album_art' => KARTINA_HOST.$icon,
-      );
+         $url_data = array(
+            'itemurl'  => $url,
+            'is_video' => $isvideo
+         );
+         
+         $url_data_string = http_build_query($url_data);
+   
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
+            'dc:title'       => $name,
+            'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
+            'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
+            'protocolInfo'   => "http-get:*:*:*",
+            'upnp:album_art' => KARTINA_HOST.$icon,
+         );
+      }
    }
    
    return $retMediaItems;
@@ -338,7 +361,7 @@ function _pluginCreateArchiveEpg ($cid, $day)
    // don't break your head about login / logout at kartina!
    // we will load the cookie from file so no authentication
    // is needed here ... we also don't need username and PW ...
-   $tmpKartAPI = new kartinaAPI("", "", KARTINA_HOST);
+   $tmpKartAPI = new kartinaAPI();
    
    // load cookie ...
    $tmpKartAPI->loadCookie();

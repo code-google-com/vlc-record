@@ -705,11 +705,16 @@ class kartinaAPI
       $rv = -1;
       if ($this->_cookie != "")
       {
+         $cookieData = array('cookie'  => $this->_cookie,
+                             'account' => $this->_username,
+                             'passwd'  => $this->_passwd,
+                             'host'    => $this->_host);
+                          
          $f = fopen (COOKIE_FILE, "w+");
          
          if ($f)
          {
-            if (fwrite ($f, $this->_cookie))
+            if (fwrite ($f, serialize($cookieData)))
             {
                $rv = 0;
                $this->log("Cookie successfully saved to file!");
@@ -740,8 +745,13 @@ class kartinaAPI
       
       if ($tmpCookie)
       {
-         $this->_cookie = $tmpCookie;
-         $rv            = 0;
+         $cookieData = unserialize($tmpCookie);
+         
+         $this->_cookie   = $cookieData['cookie'];
+         $this->_host     = $cookieData['host'];
+         $this->_username = $cookieData['account'];
+         $this->_passwd   = $cookieData['passwd'];
+         $rv              = 0;
          $this->log("Cookie successfully read from file!");
       }
       
