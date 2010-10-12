@@ -63,7 +63,8 @@ function _http_streamGet($prmHost, $prmPath, $prmPort, $videoFlag)
             }
             else
             {
-               header("Content-Type: audio/aac");
+               // header("Content-Type: audio/x-m4a"); // mp4 audio ...
+               header("Content-Type: audio/x-aac"); // aac audio ...
             }
             
             header("Content-Size: 65535");
