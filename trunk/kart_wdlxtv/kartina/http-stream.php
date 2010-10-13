@@ -283,6 +283,14 @@ function _pluginCreateFavList()
 function _pluginCreateArchMainFolder ($cid)
 {
    $retMediaItems = array();
+   
+   $days = array(1 => "Пн.",
+                 2 => "Вт.",
+                 3 => "Ср.",
+                 4 => "Чт.",
+                 5 => "Пт.",
+                 6 => "Сб.",
+                 7 => "Вс.");
 
    // first item is always the live stream ...
 
@@ -296,9 +304,14 @@ function _pluginCreateArchMainFolder ($cid)
    $chan     = $chanitem->item(0); // there is only one such item ...
 
    $icon     = $xpchan->query("icon", $chan)->item(0)->nodeValue;
-   $name     = $xpchan->query("name", $chan)->item(0)->nodeValue; 
+   $epgname  = $xpchan->query("epg_progname", $chan)->item(0)->nodeValue;
+   $epgstart = (integer)$xpchan->query("epg_start", $chan)->item(0)->nodeValue;    
+   $epgend   = (integer)$xpchan->query("epg_end", $chan)->item(0)->nodeValue;
    $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
    $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
+   
+   // build title ...
+   $title    = "Пр. эфир: ".date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
 
    $url_data = array(
       'itemurl'  => $url,
@@ -310,7 +323,7 @@ function _pluginCreateArchMainFolder ($cid)
    // first item is always the live stream ...
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
-      'dc:title'       => $name . " - Прямой эфир",
+      'dc:title'       => $title,
       'upnp:class'     => ($isvideo === 1) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
       'protocolInfo'   => "http-get:*:*:*",
@@ -332,7 +345,7 @@ function _pluginCreateArchMainFolder ($cid)
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
-         'dc:title'       => "Архив - " . date("d.m.Y", $i),
+         'dc:title'       => "Ар. " .$days[date("N", $i)]. ", " .date("d.m.Y", $i),
          'upnp:class'     => 'object.container',
          'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
       );
