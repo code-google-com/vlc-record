@@ -284,13 +284,13 @@ function _pluginCreateArchMainFolder ($cid)
 {
    $retMediaItems = array();
    
-   $days = array(1 => "Пн.",
-                 2 => "Вт.",
-                 3 => "Ср.",
-                 4 => "Чт.",
-                 5 => "Пт.",
-                 6 => "Сб.",
-                 7 => "Вс.");
+   $days = array(1 => "Понедельник",
+                 2 => "Вторник",
+                 3 => "Среда",
+                 4 => "Четверг",
+                 5 => "Пятница",
+                 6 => "Суббота",
+                 7 => "Воскресенье");
 
    // first item is always the live stream ...
 
@@ -311,7 +311,7 @@ function _pluginCreateArchMainFolder ($cid)
    $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
    
    // build title ...
-   $title    = "Пр. эфир: ".date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
+   $title    = date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
 
    $url_data = array(
       'itemurl'  => $url,
@@ -345,7 +345,7 @@ function _pluginCreateArchMainFolder ($cid)
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
-         'dc:title'       => "Ар. " .$days[date("N", $i)]. ", " .date("d.m.Y", $i),
+         'dc:title'       => "Архив - " .$days[date("N", $i)]. ", " .date("d.m.Y", $i),
          'upnp:class'     => 'object.container',
          'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
       );
