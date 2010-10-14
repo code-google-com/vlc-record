@@ -13,6 +13,7 @@
 
 // include kartinaAPI class instance ...
 require_once(dirname(__FILE__)."/_kartina_auth.php.inc");
+require_once(dirname(__FILE__)."/_timezones.php.inc");
 
 // define column count ...
 define (CHANCOLS, 8);
@@ -118,7 +119,6 @@ function makeAccForm()
 function makeTZForm()
 {
    global $wdtvConf;
-   include (dirname(__FILE__)."/_timezones.php.inc");
    
    // default time zone ...
    $def_tz = $wdtvConf->getVal("TIMEZONE");
@@ -154,13 +154,17 @@ function makeTZForm()
        ."<tr>\n"
        ."<td nowrap='nowrap'>Часовой пояс:</td>\n"
        ."<td><select name='timezone'>\n";
-       
-   foreach ($_timeZone as $key => $val)
-   {
-      $sel = ($key === $def_tz) ? " selected='selected'" : "";
-      echo "<option value='".$key."'".$sel.">".$val."</option>\n";
-   }
+
+
+   $tz   = createZoneinfoArray();
+   $notz = count($tz);
    
+   for ($i = 0; $i < $notz; $i++)
+   {
+      $sel = ($tz[$i] === $def_tz) ? " selected='selected'" : "";
+      echo "<option value='".$tz[$i]."'".$sel.">".$tz[$i]."</option>\n";
+   }
+
    echo "</select></td>\n"
        ."</tr>\n"
        ."<tr>\n"
