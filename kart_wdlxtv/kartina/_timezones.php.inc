@@ -34,7 +34,7 @@ function createZoneinfoArray ()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-function addTimeZone (string $dir, array &$zones)
+function addTimeZone ($dir, &$zones)
 {
    $thisdir = ($dir === "") ? ZONEDIR : ZONEDIR."/".$dir;
    $zonedir = opendir($thisdir);
@@ -43,7 +43,7 @@ function addTimeZone (string $dir, array &$zones)
    {
       while (($file = readdir($zonedir)) !== false)
       {
-         if (strstr($file, ".") === false)
+         if (isTz($file))
          {
             if (is_dir($thisdir."/".$file))
             {
@@ -58,6 +58,35 @@ function addTimeZone (string $dir, array &$zones)
       
       closedir($zonedir);
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: isTz
+|  Begin: 10/14/2010 / 19:10
+|  Author: Jo2003
+|  Description: quick 'n' dirty check for timezone:  
+|               - there shouldn't be a '.' in name
+|               - first char must be uppercase 
+|
+|  Parameters: reference to file name
+|
+|  Returns: true --> timezone
+|          false --> no timezone
+\----------------------------------------------------------------- */
+function isTz(&$file) 
+{
+   $rv = false;
+   
+   if (strstr($file, ".") === false)
+   {
+      $i = substr($file, 0, 1);
+      
+      if (strtoupper($i) === $i)
+      {
+         $rv = true;
+      }
+   }
+   return $rv;
 }
 
 ?>
