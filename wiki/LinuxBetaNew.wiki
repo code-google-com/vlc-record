@@ -1,30 +1,33 @@
 #summary Sone infos about the new Beta version for Ubuntu
-#labels Featured,Beta,Linux
+#labels Featured,Beta,Linux,Ubuntu10.10
 
 = Summary =
-There is a new *Beta version* of VLC-Record for Ubuntu 10.4 x86. This beta includes libVLC of vlc media player 1.14! 
+There is a new *Beta version* of VLC-Record for Ubuntu *10.10 x86*. This version uses the vlc player which comes with Ubuntu 10.10. 
 
 == Requirements ==
-You need Qt installed (libqt4-dev, libqt4-sql-sqlite2). Also you need the vlc installed which is shipped with Ubuntu. This package will not be used, but makes sure you have installed needed libraries. I might miss something which should also be installed ... I can't check it here.
+Your package manager should take care about the dependencies.
 
 == Installation ==
-You *MUST* extract the archive to _/opt/vlc-record_. It will not work, if you use another path! To extract the package, type in following command line:
+Use the package manager to install the package. A double click on the package will do this job.
+
+== Removing ==
+Use the package manager to remove vlc-record. You can also use following command line:
 
 {{{
-cd /
-sudo tar -xvjpf /path/to/vlc-record_2.xxBETA_ubuntu_10_4_x86.tar.bz2
+sudo apt-get remove vlc-record
 }}}
 
 == Start the program ==
-The binary is located in _/opt/vlc-record/bin_. So if you want to start it, create a shortcut with following command line:
+The binary is located in _/usr/local/bin_. This should be in the path. So if you want to start it, create a shortcut with following command line:
 
 {{{
-/opt/vlc-record/bin/vlc-record
+vlc-record
 }}}
 
 ... or type in this command line in your terminal.
 
 == Known Limitations ===
+ * If the vlc player which comes with Ubuntu is crippled, vlc-record will have the same problems.
  * There are problems with the shortcuts. I have no idea how to fix it. After pressing some key combinations often, shortcuts will not work until you restart VLC-Record.
  * When changing aspect ratio, video frame is sometimes not shrinked / positioned as needed.
  * Programm might freeze when you close it the first time.
