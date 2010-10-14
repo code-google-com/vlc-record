@@ -1,126 +1,63 @@
 <?php
-$_timeZone['ACDT'] = "\"ACDT\" - Australian Central Daylight Time UTC+10:30";
-$_timeZone['ACST'] = "\"ACST\" - Australian Central Standard Time UTC+9:30";
-$_timeZone['ACT'] = "\"ACT\" - ASEAN Common Time UTC+8";
-$_timeZone['ADT'] = "\"ADT\" - Atlantic Daylight Time UTC-3";
-$_timeZone['AEDT'] = "\"AEDT\" - Australian Eastern Daylight Time UTC+11";
-$_timeZone['AEST'] = "\"AEST\" - Australian Eastern Standard Time UTC+10";
-$_timeZone['AFT'] = "\"AFT\" - Afghanistan Time UTC+4:30";
-$_timeZone['AKDT'] = "\"AKDT\" - Alaska Daylight Time UTC-8";
-$_timeZone['AKST'] = "\"AKST\" - Alaska Standard Time UTC-9";
-$_timeZone['AMST'] = "\"AMST\" - Armenia Summer Time UTC+5";
-$_timeZone['AMT'] = "\"AMT\" - Armenia Time UTC+4";
-$_timeZone['ART'] = "\"ART\" - Argentina Time UTC-3";
-$_timeZone['AST'] = "\"AST\" - Arab Standard Time (Kuwait, Riyadh) UTC+3";
-$_timeZone['AST'] = "\"AST\" - Arabian Standard Time (Abu Dhabi, Muscat) UTC+4";
-$_timeZone['AST'] = "\"AST\" - Arabic Standard Time (Baghdad) UTC+3";
-$_timeZone['AST'] = "\"AST\" - Atlantic Standard Time UTC-4";
-$_timeZone['AWDT'] = "\"AWDT\" - Australian Western Daylight Time UTC+9";
-$_timeZone['AWST'] = "\"AWST\" - Australian Western Standard Time UTC+8";
-$_timeZone['AZOST'] = "\"AZOST\" - Azores Standard Time UTC-1";
-$_timeZone['AZT'] = "\"AZT\" - Azerbaijan Time UTC+4";
-$_timeZone['BDT'] = "\"BDT\" - Brunei Time UTC+8";
-$_timeZone['BIOT'] = "\"BIOT\" - British Indian Ocean Time UTC+6";
-$_timeZone['BIT'] = "\"BIT\" - Baker Island Time UTC-12";
-$_timeZone['BOT'] = "\"BOT\" - Bolivia Time UTC-4";
-$_timeZone['BRT'] = "\"BRT\" - Brasilia Time UTC-3";
-$_timeZone['BST'] = "\"BST\" - Bangladesh Standard Time UTC+6";
-$_timeZone['BTT'] = "\"BTT\" - Bhutan Time UTC+6";
-$_timeZone['CAT'] = "\"CAT\" - Central Africa Time UTC+2";
-$_timeZone['CCT'] = "\"CCT\" - Cocos Islands Time UTC+6:30";
-$_timeZone['CDT'] = "\"CDT\" - Central Daylight Time (North America) UTC-5";
-$_timeZone['CEDT'] = "\"CEDT\" - Central European Daylight Time UTC+2";
-$_timeZone['CEST'] = "\"CEST\" - Central European Summer Time UTC+2";
-$_timeZone['CET'] = "\"CET\" - Central European Time UTC+1";
-$_timeZone['CHAST'] = "\"CHAST\" - Chatham Standard Time UTC+12:45";
-$_timeZone['CIST'] = "\"CIST\" - Clipperton Island Standard Time UTC-8";
-$_timeZone['CKT'] = "\"CKT\" - Cook Island Time UTC-10";
-$_timeZone['CLST'] = "\"CLST\" - Chile Summer Time UTC-3";
-$_timeZone['CLT'] = "\"CLT\" - Chile Standard Time UTC-4";
-$_timeZone['COST'] = "\"COST\" - Colombia Summer Time UTC-4";
-$_timeZone['COT'] = "\"COT\" - Colombia Time UTC-5";
-$_timeZone['CST'] = "\"CST\" - Central Standard Time (North America) UTC-6";
-$_timeZone['CST'] = "\"CST\" - China Standard Time UTC+8";
-$_timeZone['CUT'] = "\"CUT\" - Coordinated Universal Time UTC";
-$_timeZone['CVT'] = "\"CVT\" - Cape Verde Time UTC-1";
-$_timeZone['CXT'] = "\"CXT\" - Christmas Island Time UTC+7";
-$_timeZone['ChST'] = "\"ChST\" - Chamorro Standard Time UTC+10";
-$_timeZone['DST'] = "\"DST\" - Daylight saving time Depending";
-$_timeZone['DFT'] = "\"DFT\" - AIX specific equivalent of Central European Time CUT +1";
-$_timeZone['EAST'] = "\"EAST\" - Easter Island Standard Time UTC-6";
-$_timeZone['EAT'] = "\"EAT\" - East Africa Time UTC+3";
-$_timeZone['ECT'] = "\"ECT\" - Eastern Caribbean Time (does not recognise DST) UTC-4";
-$_timeZone['ECT'] = "\"ECT\" - Ecuador Time UTC-5";
-$_timeZone['EDT'] = "\"EDT\" - Eastern Daylight Time (North America) UTC-4";
-$_timeZone['EEDT'] = "\"EEDT\" - Eastern European Daylight Time UTC+3";
-$_timeZone['EEST'] = "\"EEST\" - Eastern European Summer Time UTC+3";
-$_timeZone['EET'] = "\"EET\" - Eastern European Time UTC+2";
-$_timeZone['EST'] = "\"EST\" - Eastern Standard Time (North America) UTC-5";
-$_timeZone['FJT'] = "\"FJT\" - Fiji Time UTC+12";
-$_timeZone['FKST'] = "\"FKST\" - Falkland Islands Standard Time UTC-4";
-$_timeZone['GALT'] = "\"GALT\" - Galapagos Time UTC-6";
-$_timeZone['GET'] = "\"GET\" - Georgia Standard Time UTC+4";
-$_timeZone['GFT'] = "\"GFT\" - French Guiana Time UTC-3";
-$_timeZone['GILT'] = "\"GILT\" - Gilbert Island Time UTC+12";
-$_timeZone['GIT'] = "\"GIT\" - Gambier Island Time UTC-9";
-$_timeZone['GMT'] = "\"GMT\" - Greenwich Mean Time UTC";
-$_timeZone['GST'] = "\"GST\" - South Georgia and the South Sandwich Islands UTC-2";
-$_timeZone['GYT'] = "\"GYT\" - Guyana Time UTC-4";
-$_timeZone['HADT'] = "\"HADT\" - Hawaii-Aleutian Daylight Time UTC-9";
-$_timeZone['HAST'] = "\"HAST\" - Hawaii-Aleutian Standard Time UTC-10";
-$_timeZone['HKT'] = "\"HKT\" - Hong Kong Time UTC+8";
-$_timeZone['HMT'] = "\"HMT\" - Heard and McDonald Islands Time UTC+5";
-$_timeZone['HST'] = "\"HST\" - Hawaii Standard Time UTC-10";
-$_timeZone['IRKT'] = "\"IRKT\" - Irkutsk Time UTC+8";
-$_timeZone['IRST'] = "\"IRST\" - Iran Standard Time UTC+3:30";
-$_timeZone['IST'] = "\"IST\" - Indian Standard Time UTC+5:30";
-$_timeZone['IST'] = "\"IST\" - Irish Summer Time UTC+1";
-$_timeZone['IST'] = "\"IST\" - Israel Standard Time UTC+2";
-$_timeZone['JST'] = "\"JST\" - Japan Standard Time UTC+9";
-$_timeZone['KRAT'] = "\"KRAT\" - Krasnoyarsk Time UTC+7";
-$_timeZone['KST'] = "\"KST\" - Korea Standard Time UTC+9";
-$_timeZone['LHST'] = "\"LHST\" - Lord Howe Standard Time UTC+10:30";
-$_timeZone['LINT'] = "\"LINT\" - Line Islands Time UTC+14";
-$_timeZone['MAGT'] = "\"MAGT\" - Magadan Time UTC+11";
-$_timeZone['MDT'] = "\"MDT\" - Mountain Daylight Time (North America) UTC-6";
-$_timeZone['MIT'] = "\"MIT\" - Marquesas Islands Time UTC-9:30";
-$_timeZone['MSD'] = "\"MSD\" - Moscow Summer Time UTC+4";
-$_timeZone['MSK'] = "\"MSK\" - Moscow Standard Time UTC+3";
-$_timeZone['MST'] = "\"MST\" - Malaysian Standard Time UTC+8";
-$_timeZone['MST'] = "\"MST\" - Mountain Standard Time (North America) UTC-7";
-$_timeZone['MST'] = "\"MST\" - Myanmar Standard Time UTC+6:30";
-$_timeZone['MUT'] = "\"MUT\" - Mauritius Time UTC+4";
-$_timeZone['NDT'] = "\"NDT\" - Newfoundland Daylight Time UTC-2:30";
-$_timeZone['NFT'] = "\"NFT\" - Norfolk Time[1] UTC+11:30";
-$_timeZone['NPT'] = "\"NPT\" - Nepal Time UTC+5:45";
-$_timeZone['NST'] = "\"NST\" - Newfoundland Standard Time UTC-3:30";
-$_timeZone['NT'] = "\"NT\" - Newfoundland Time UTC-3:30";
-$_timeZone['OMST'] = "\"OMST\" - Omsk Time UTC+6";
-$_timeZone['PDT'] = "\"PDT\" - Pacific Daylight Time (North America) UTC-7";
-$_timeZone['PETT'] = "\"PETT\" - Kamchatka Time UTC+12";
-$_timeZone['PHOT'] = "\"PHOT\" - Phoenix Island Time UTC+13";
-$_timeZone['PKT'] = "\"PKT\" - Pakistan Standard Time UTC+5";
-$_timeZone['PST'] = "\"PST\" - Pacific Standard Time (North America) UTC-8";
-$_timeZone['PST'] = "\"PST\" - Philippine Standard Time UTC+8";
-$_timeZone['RET'] = "\"RET\" - Réunion Time UTC+4";
-$_timeZone['SAMT'] = "\"SAMT\" - Samara Time UTC+4";
-$_timeZone['SAST'] = "\"SAST\" - South African Standard Time UTC+2";
-$_timeZone['SBT'] = "\"SBT\" - Solomon Islands Time UTC+11";
-$_timeZone['SCT'] = "\"SCT\" - Seychelles Time UTC+4";
-$_timeZone['SLT'] = "\"SLT\" - Sri Lanka Time UTC+5:30";
-$_timeZone['SST'] = "\"SST\" - Samoa Standard Time UTC-11";
-$_timeZone['SST'] = "\"SST\" - Singapore Standard Time UTC+8";
-$_timeZone['TAHT'] = "\"TAHT\" - Tahiti Time UTC-10";
-$_timeZone['THA'] = "\"THA\" - Thailand Standard Time UTC+7";
-$_timeZone['UTC'] = "\"UTC\" - Coordinated Universal Time UTC";
-$_timeZone['UYST'] = "\"UYST\" - Uruguay Summer Time UTC-2";
-$_timeZone['UYT'] = "\"UYT\" - Uruguay Standard Time UTC-3";
-$_timeZone['VET'] = "\"VET\" - Venezuelan Standard Time UTC-4:30";
-$_timeZone['VLAT'] = "\"VLAT\" - Vladivostok Time UTC+10";
-$_timeZone['WAT'] = "\"WAT\" - West Africa Time UTC+1";
-$_timeZone['WEDT'] = "\"WEDT\" - Western European Daylight Time UTC+1";
-$_timeZone['WEST'] = "\"WEST\" - Western European Summer Time UTC+1";
-$_timeZone['WET'] = "\"WET\" - Western European Time UTC";
-$_timeZone['YAKT'] = "\"YAKT\" - Yakutsk Time UTC+9";
-$_timeZone['YEKT'] = "\"YEKT\" - Yekaterinburg Time UTC+5";
+
+define ('ZONEDIR', "/usr/share/zoneinfo");
+
+/* -----------------------------------------------------------------\
+|  Method: createZoneinfoArray
+|  Begin: 10/14/2010 / 12:42
+|  Author: Jo2003
+|  Description: create timezone array
+|
+|  Parameters: --
+|
+|  Returns: all timezones in an array
+\----------------------------------------------------------------- */
+function createZoneinfoArray ()
+{
+   $timeZones = array();
+   
+   addTimeZone("", $timeZones);
+   
+   sort($timeZones);
+   
+   return $timeZones; 
+}
+
+/* -----------------------------------------------------------------\
+|  Method: addTimeZone
+|  Begin: 10/14/2010 / 12:45
+|  Author: Jo2003
+|  Description: add timezones in given directory, 
+|               ready for recursive call
+|
+|  Parameters: dir to add, reference to tz array
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+function addTimeZone (string $dir, array &$zones)
+{
+   $thisdir = ($dir === "") ? ZONEDIR : ZONEDIR."/".$dir;
+   $zonedir = opendir($thisdir);
+   
+   if ($zonedir)
+   {
+      while (($file = readdir($zonedir)) !== false)
+      {
+         if (strstr($file, ".") === false)
+         {
+            if (is_dir($thisdir."/".$file))
+            {
+               addTimeZone(($dir === "") ? $file : $dir."/".$file, $zones);
+            }
+            else
+            {
+               $zones[] = ($dir === "") ? $file : $dir."/".$file;
+            }
+         }
+      }
+      
+      closedir($zonedir);
+   }
+}
+
 ?>
