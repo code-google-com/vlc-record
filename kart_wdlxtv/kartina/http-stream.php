@@ -312,6 +312,13 @@ function _pluginCreateArchMainFolder ($cid)
    
    // build title ...
    $title    = date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
+   
+
+   // cut title cause it makes trouble when it's too long ...
+   if (strlen($title) > 60)
+   {
+      $title = substr($title, 0, 56)." ...";
+   }
 
    $url_data = array(
       'itemurl'  => $url,
