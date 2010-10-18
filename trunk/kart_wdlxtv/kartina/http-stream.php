@@ -314,9 +314,9 @@ function _pluginCreateArchMainFolder ($cid)
    // to find a good place to cut the string.
    // Cutting the string inside an UTF-8 block
    // will break the whole output ...
-   if (strlen($epgname) > 160)
+   if (strlen($epgname) > 100)
    {
-      for ($i = 160; $i > 0; $i --)
+      for ($i = 100; $i > 0; $i --)
       {
          if (substr($epgname, $i, 1) === " ")
          {
@@ -457,7 +457,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = 0, $isVideo = 1)
    // add play item ...
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".$url,
-      'dc:title'       => "Посмотреть",
+      'dc:title'       => "Просмотр",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-proxy.php?".$url_data_string,
       'protocolInfo'   => "http-get:*:*:*",
