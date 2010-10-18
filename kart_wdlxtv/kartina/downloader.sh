@@ -17,11 +17,11 @@ PHPPID=$3
 
 # print options ...
 usage() {
-  echo "rec.sh \"url to open\" \"output file\" \"pid for watch\"" 
+  echo "downloader.sh \"url to open\" \"output file\" \"pid for watch\"" 
 }
 
 # start wget to download stream ...
-wget -O "$2" "$1" >/dev/null 2>&1 &
+wget -O "$OFILE" "$URL" >/dev/null 2>&1 &
 
 # get pid of wget ...
 WGETPID=$!

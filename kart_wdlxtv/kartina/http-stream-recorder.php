@@ -53,36 +53,36 @@ if ($strurl != "")
    // 2. The started wget is send to background so exec returns immediately.
    // 3. Stopping play / record will end this thread and therefore end wget.
    // 4. This is all theoretical ;-)
-   $cmd      = "wget -o /tmp/kart_stream_rec.log -O \"".$folder."/".$recfile."\" ".$strurl." >/dev/null 2>&1 &";
+   // $cmd      = "wget -o /tmp/kart_stream_rec.log -O \"".$folder."/".$recfile."\" ".$strurl." >/dev/null 2>&1 &";
+   $cmd      = dirname(__FILE__)."/downloader.sh  \"".$strurl."\" \"".$folder."/".$recfile."\" ".posix_getpid()." &";
 
    exec($cmd);
    
+   // fake http answer ...
+   if ($isVideo)
+   {
+      header("Content-Type: video/mpeg");
+   }
+   else
+   {
+      header("Content-Type: audio/mpeg"); // any mpeg audio ...
+   }
+   
+   header("Content-Size: unknown");
+   header("Content-Length: unknown");
+   
    // give wget the time to start download ... 
-   sleep(5);
+   sleep(10);
    
    // open new generated output file ...
    if (file_exists($folder."/".$recfile))
    {
-      $fp = fopen ($folder."/".$recfile , "r");
+      set_time_limit(0);
+
+      $fp = fopen ($folder."/".$recfile , "rb");
       
       if ($fp)
       {
-         // fake http answer ...
-         if ($isVideo)
-         {
-            header("Content-Type: video/mpeg");
-         }
-         else
-         {
-            header("Content-Type: audio/mpeg"); // any mpeg audio ...
-         }
-         
-         header("Content-Size: 65535");
-         header("Content-Length: 65535");
-   
-         // unset time limit ...
-         set_time_limit(0);
-         
          // pass file content to player ...
          fpassthru($fp);
          fclose($fp);
