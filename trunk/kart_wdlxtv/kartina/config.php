@@ -104,6 +104,16 @@ function makeAccForm()
        ."<input type='password' name='passwd' value='".$wdtvConf->getVal("KARTINA_PASSWD")."' />&nbsp;\n"
        ."<input type='submit' value='Сохранять' />\n"
        ."</form>\n";
+
+   // test test test ...
+   echo "<br /> <br />\n"
+       ."<h3>Папка для Записьи</h3>\n"
+       ."<form name='folderform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
+       ."<input type='hidden' name='act' value='setrecfolder' />\n"
+       ."Папка:&nbsp;\n"
+       ."<input type='text' name='folder' value='".$wdtvConf->getVal("KART_REC_FOLDER")."' />&nbsp;\n"
+       ."<input type='submit' value='Сохранять' />\n"
+       ."</form>\n";
 }
 
 /* -----------------------------------------------------------------\
@@ -473,6 +483,14 @@ if (isset($_POST['act']))
             // reload page ...
             header("Location: ".$_SERVER['PHP_SELF']);
          }
+      }
+   }
+   else if($_POST['act'] === "setrecfolder") // set time zone and time server ...
+   {
+      if (isset($_POST['folder']))
+      {
+         // save folder ...
+         $wdtvConf->writeConf("KART_REC_FOLDER", $_POST['folder']);
       }
    }
 }

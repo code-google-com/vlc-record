@@ -310,16 +310,27 @@ function _pluginCreateArchMainFolder ($cid)
    $isvideo  = (integer)$xpchan->query("is_video", $chan)->item(0)->nodeValue;
    $url      = LOC_KARTINA_URL."/stream.php?id=".$cid;
    
+   // cut prog name cause it makes trouble when it's too long ...
+   // Note: UTF-8 uses up too 4 byte for one char ...
+   // So we take max. useable chars and count backward 
+   // to find a good place to cut the string.
+   // Cutting the string inside an UTF-8 block
+   // will break the whole output ...
+   if (strlen($epgname) > 160)
+   {
+      for ($i = 160; $i > 0; $i --)
+      {
+         if (substr($epgname, $i, 1) === " ")
+         {
+            $epgname = substr($epgname, 0, $i)." ...";
+            break;
+         }
+      }
+   }
+   
    // build title ...
    $title    = date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
    
-
-   // cut title cause it makes trouble when it's too long ...
-   if (strlen($title) > 60)
-   {
-      $title = substr($title, 0, 56)." ...";
-   }
-
    $url_data = array(
       'itemurl'  => $url,
       'is_video' => $isvideo
