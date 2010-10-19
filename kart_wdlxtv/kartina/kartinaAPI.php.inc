@@ -524,7 +524,7 @@ class kartinaAPI
    {
       if (DOTRACE == "YES")
       {
-         fwrite($this->_logfile, $str."\n");
+         fwrite($this->_logfile, date("d.m.y H:i:s").": ".$str."\n");
       }   
    }
    
