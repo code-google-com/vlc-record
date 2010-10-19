@@ -12,6 +12,7 @@
 \*************************************************************/
 
 require_once(dirname(__FILE__) . "/_kartina_auth.php.inc");
+require_once(dirname(__FILE__) . "/crecctrl.php.inc"); 
 
 /*
  * How the stream recorder works:
@@ -47,45 +48,54 @@ if ($strurl != "")
    $recfile  = ($gmt === -1) ? date("d_m_Y-H_i") : date("d_m_Y-H_i", $gmt);
    $recfile .= "__".$cid.".ts";
    
-   // create wget command ...
-   // some thoughts:
-   // 1. This php thread is the parent of the created process.
-   // 2. The started wget is send to background so exec returns immediately.
-   // 3. Stopping play / record will end this thread and therefore end wget.
-   // 4. This is all theoretical ;-)
-   // $cmd      = "wget -o /tmp/kart_stream_rec.log -O \"".$folder."/".$recfile."\" ".$strurl." >/dev/null 2>&1 &";
-   $cmd      = dirname(__FILE__)."/downloader.sh  \"".$strurl."\" \"".$folder."/".$recfile."\" ".posix_getpid()." &";
-
-   exec($cmd);
+   // Some thoughts:
+   // The problem here isn't the starting of the record but the stopping!
+   // Starting wget in background doesn't stop it when this script ends.
+   // So we try to use the destructor of a class here: The destructor
+   // will be called when the last script which uses the class instance
+   // ends. Since we create this instance here it should be destroyed
+   // when this script ends ... theoretically.
+   $ctrl = new CRecCtrl();
    
-   // fake http answer ...
-   if ($isVideo)
+   if (!$ctrl->startRec($folder."/".$recfile, $strurl))
    {
-      header("Content-Type: video/mpeg");
-   }
-   else
-   {
-      header("Content-Type: audio/mpeg"); // any mpeg audio ...
-   }
-   
-   header("Content-Size: unknown");
-   header("Content-Length: unknown");
-   
-   // give wget the time to start download ... 
-   sleep(10);
-   
-   // open new generated output file ...
-   if (file_exists($folder."/".$recfile))
-   {
+      // avoid timeouts ...
       set_time_limit(0);
-
-      $fp = fopen ($folder."/".$recfile , "rb");
       
-      if ($fp)
+      // fake http answer ...
+      if ($isVideo)
       {
-         // pass file content to player ...
-         fpassthru($fp);
-         fclose($fp);
+         header("Content-Type: video/mpeg");
+      }
+      else
+      {
+         header("Content-Type: audio/mpeg"); // any mpeg audio ...
+      }
+      
+      header("Content-Size: unknown");
+      header("Content-Length: unknown");
+      
+      // give wget the time to start download ... 
+      sleep(10);
+      
+      // open new generated output file ...
+      if (file_exists($folder."/".$recfile))
+      {
+         $fp = fopen ($folder."/".$recfile , "rb");
+         
+         if ($fp)
+         {
+            // pass file content to player ...
+            // Don't try to read all at once! It will stop
+            // the player shortly.
+            while (!feof($fp))
+            {
+               echo fread($fp, 8192);
+               flush();
+            }
+
+            fclose($fp);
+         }
       }
    }
 } 
