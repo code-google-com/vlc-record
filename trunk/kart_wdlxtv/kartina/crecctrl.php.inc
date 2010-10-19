@@ -80,12 +80,12 @@ class CRecCtrl
    |  Author: Jo2003
    |  Description: stop record process
    |
-   |  Parameters: --
+   |  Parameters: optional signal SIGTERM=15, SIGKILL=9
    |
    |  Returns: 0 ==> ok
    |          -1 ==> any error
    \----------------------------------------------------------------- */
-   public function stopRec($sig = SIGTERM)
+   public function stopRec($sig = 15)
    {
       $rv = -1;
       if ($this->_recpid > -1)
@@ -119,15 +119,14 @@ class CRecCtrl
    {
       $rv  = -1; 
       // create command line ...
-      $cmd = "wget ".((DOTRACE == "YES") ? "-o ".WGETLOG." " : "")
-            ."-O \"".$fileName."\" \"".$srcUrl
-            ."\" >/dev/null 2>&1 &; WGETPID=\$!; "
-            ."echo \${WGETPID} >".PIDFILE;
+      $cmd = dirname(__FILE__)."/downloader.sh "
+            ."\"".$srcUrl."\" \"".$fileName."\""
+            .((DOTRACE == "YES") ? " \"".WGETLOG."\"" : "");
       
       $this->log("Starting Download using following command line:\n --> ".$cmd);
             
       // execute command ...
-      @shell_exec($cmd);
+      exec($cmd);
       
       // get process id from started process ...
       $tmpPid = file_get_contents(PIDFILE);
@@ -160,7 +159,7 @@ class CRecCtrl
    {
       if (DOTRACE == "YES")
       {
-         fwrite($this->_logfile, $str."\n");
+         fwrite($this->_logfile, date("d.m.y H:i:s").": ".$str."\n");
       }   
    }
    
