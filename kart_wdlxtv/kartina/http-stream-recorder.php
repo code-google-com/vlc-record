@@ -12,100 +12,150 @@
 \*************************************************************/
 
 require_once(dirname(__FILE__) . "/_kartina_auth.php.inc");
-require_once(dirname(__FILE__) . "/crecctrl.php.inc"); 
 
-/*
- * How the stream recorder works:
- * - request stream url at kartina.tv
- * - use wget to save this stream to disk
- * - open the file wget is saving right now 
- *   for playing
- */
+// How the stream recorder works:
+// - request stream url at kartina.tv
+// - open the stream
+// - send stream data to player 
+// - save stream data to file on disk
  
-// get requested itemurl ...
-$rawURL     = $_GET['itemurl'];
-$parsedURL  = parse_url($rawURL);
-$query      = $parsedURL['query'];
-$isVideo    = (isset($_GET['is_video'])) ? (integer)$_GET['is_video'] : 1;
-$queryitems = array();
+// we get channel id (cid), record flag (dorec), timestamp (gmt) 
+// video flag (is_video) and record file name (recfile) ...
+$query_array = array();
+parse_str($_SERVER['QUERY_STRING'], $query_array);
 
-parse_str($query, $queryitems);
+$cid     = isset($query_array['cid'])      ? (integer)$query_array['cid']      :     7;
+$dorec   = isset($query_array['dorec'])    ? (boolean)$query_array['dorec']    : false;
+$gmt     = isset($query_array['gmt'])      ? (integer)$query_array['gmt']      :    -1;
+$isVideo = isset($query_array['is_video']) ? (boolean)$query_array['is_video'] :  true;
+$recfile = isset($query_array['recfile'])  ? (string)$query_array['recfile']   :    "";
 
-// get channel id and timestamp ...
-$cid        = (isset($queryitems['id']))  ? $queryitems['id']  :  7;
-$gmt        = (isset($queryitems['gmt'])) ? $queryitems['gmt'] : -1;
+// get stream url ...
+$url     = $kartAPI->getStreamUrl($cid, $gmt);
 
-// request stream url at kartina.tv ...
-$strurl     = $kartAPI->getStreamUrl($cid, $gmt);
-
-if ($strurl != "")
+if ($url != "")
 {
-   // create output file name ...
-   $folder   = $wdtvConf->getVal("KART_REC_FOLDER");
+   $url_array = parse_url($url);
+   $host      = $url_array['host'];
+   $path      = isset($url_array['path'])  ? $url_array['path']          : "/";
+   $port      = isset($url_array['port'])  ? (integer)$url_array['port'] : 80;
+   $query     = isset($url_array['query']) ? "?".$url_array['query']     : "";
    
-   // for now we create a simple file name
-   // we'll maybe better next time ...
-   $recfile  = ($gmt === -1) ? date("d_m_Y-H_i") : date("d_m_Y-H_i", $gmt);
-   $recfile .= "__".$cid.".ts";
+   $errno     = 0;
+   $errstr    = "";
    
-   // Some thoughts:
-   // The problem here isn't the starting of the record but the stopping!
-   // Starting wget in background doesn't stop it when this script ends.
-   // So we try to use the destructor of a class here: The destructor
-   // will be called when the last script which uses the class instance
-   // ends. Since we create this instance here it should be destroyed
-   // when this script ends ... theoretically.
-   $ctrl = new CRecCtrl();
+   $sock      = fsockopen($host, $port, $errno, $errstr, 30);
    
-   if (!$ctrl->startRec($folder."/".$recfile, $strurl))
+   if ($sock === false)
    {
-      // fake http answer ...
-      if ($isVideo)
+      echo $errstr." (".$errno.")<br />\n";
+   }
+   else
+   {
+      // create / open record file if needed ...
+      $recfp     = false;
+      if ($dorec)
       {
-         header("Content-Type: video/mpeg");
-      }
-      else
-      {
-         header("Content-Type: audio/mpeg"); // any mpeg audio ...
-      }
-      
-      header("Content-Size: unknown");
-      header("Content-Length: unknown");
-      
-      // give wget the time to start download ...
-      if (!$ctrl->waitForFile($folder."/".$recfile))
-      {
-         $fp = fopen ($folder."/".$recfile , "rb");
+         $recfolder = $wdtvConf->getVal("KART_REC_FOLDER");
          
-         if ($fp)
+         // do we have a rec file name ... ?
+         if ($recfile == "")
+         {
+            $recfile  = ($gmt === -1) ? date("d_m_Y-H_i") : date("d_m_Y-H_i", $gmt);
+            $recfile .= "__".$cid;
+         }
+         
+         // open rec file ...
+         $recfp = fopen($recfolder."/".$recfile.".ts", "wb");
+      }
+      
+      // create http get request ...
+      $req  = "GET ". $path . $query ." HTTP/1.1" ."\r\n";
+      $req .= "User-Agent: Wget/1.12 (elf)" ."\r\n";
+      $req .= "Host: " . $host . "\r\n";
+      $req .= "Cache-Control: no-cache" ."\r\n";
+      $req .= "Connection: Close"."\r\n"."\r\n";
+      
+      // send request ...
+      fwrite($sock, $req);
+      
+      // header passed flag ....
+      $header_passed = false;
+      
+      // read header from answer ...
+      while ($header_passed === false)
+      {
+         $line = fgets($sock);
+
+         // empty line tells about the end of the header ...
+         if (trim($line) == "") 
+         {
+            $header_passed = true;
+            
+            if ($isVideo)
+            {
+               header("Content-Type: video/mpeg");
+            }
+            else
+            {
+               // header("Content-Type: audio/x-m4a"); // mp4 audio ...
+               // header("Content-Type: audio/x-aac"); // aac audio ...
+               header("Content-Type: audio/mpeg");     // any mpeg audio ...
+            }
+            
+            header("Content-Size: unknown");
+            header("Content-Length: unknown");
+         }
+
+         header($line);
+      }
+      
+      // from now on we get binary data only ...
+      $eofcnt = 0;
+            
+      // avoid timeouts ...
+      set_time_limit(0);
+      
+      // pass file content to player and - if needed -
+      // to file on disk ...
+      while ($eofcnt <= 3)
+      {
+         // read small chunk from socket ...
+         $chunk = fread($sock, 8192);
+         
+         // write it to file if needed ...
+         if ($recfp)
+         {
+            if (fwrite($recfp, $chunk) === false) // error ...
+            {
+               fclose($recfp);
+               $recfp = false;
+            }
+         }
+         
+         // pass chunk to player ...
+         echo $chunk;
+         
+         // simple eof check ...
+         if(feof($sock))
+         {
+            // on eof we'll wait a second ...
+            $eofcnt ++;
+            sleep(1);
+         }
+         else
          {
             $eofcnt = 0;
-            
-            // avoid timeouts ...
-            set_time_limit(0);
-            
-            // pass file content to player ...
-            // Don't try to read all at once! It will stop
-            // the player shortly.
-            while ($eofcnt <= 3)
-            {
-               echo fread($fp, 8192);
-               
-               if(feof($fp))
-               {
-                  $eofcnt ++;
-                  sleep(1);
-               }
-               else
-               {
-                  $eofcnt = 0;
-               }
-            }
-
-            fclose($fp);
          }
       }
+      
+      if ($recfp)
+      {
+         fclose($recfp);
+      }
+
+      fclose($sock);
    }
-} 
+}
 
 ?>
