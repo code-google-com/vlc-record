@@ -73,7 +73,7 @@ if ($strurl != "")
       header("Content-Length: unknown");
       
       // give wget the time to start download ... 
-      sleep(5);
+      sleep(4);
       
       // open new generated output file ...
       if (file_exists($folder."/".$recfile))
@@ -82,17 +82,27 @@ if ($strurl != "")
          
          if ($fp)
          {
+            $eofcnt = 0;
+            
             // avoid timeouts ...
             set_time_limit(0);
             
             // pass file content to player ...
             // Don't try to read all at once! It will stop
             // the player shortly.
-            while (!feof($fp))
+            while ($eofcnt <= 3)
             {
                echo fread($fp, 8192);
-               // flush();
-               usleep(10000);
+               
+               if(feof($fp))
+               {
+                  $eofcnt ++;
+                  sleep(1);
+               }
+               else
+               {
+                  $eofcnt = 0;
+               }
             }
 
             fclose($fp);
