@@ -66,7 +66,8 @@ if ($url != "")
          }
          
          // open rec file ...
-         $recfp = fopen($recfolder."/".$recfile.".ts", "wb");
+         $recfp = fopen($recfolder."/".$recfile.".ts", "ab");
+         // $recfp = fopen("/tmp/".$recfile.".ts", "ab");
       }
       
       // create http get request ...
@@ -103,8 +104,8 @@ if ($url != "")
                header("Content-Type: audio/mpeg");     // any mpeg audio ...
             }
             
-            header("Content-Size: unknown");
-            header("Content-Length: unknown");
+            header("Content-Size: 65535");
+            header("Content-Length: 65535");
          }
 
          header($line);
@@ -118,7 +119,7 @@ if ($url != "")
       
       // pass file content to player and - if needed -
       // to file on disk ...
-      while ($eofcnt <= 3)
+      while ($eofcnt <= 300)
       {
          // read small chunk from socket ...
          $chunk = fread($sock, 8192);
@@ -126,7 +127,7 @@ if ($url != "")
          // write it to file if needed ...
          if ($recfp)
          {
-            if (fwrite($recfp, $chunk) === false) // error ...
+            if (fwrite($recfp, $chunk) === false)
             {
                fclose($recfp);
                $recfp = false;
@@ -141,7 +142,7 @@ if ($url != "")
          {
             // on eof we'll wait a second ...
             $eofcnt ++;
-            sleep(1);
+            usleep(1000);
          }
          else
          {
