@@ -17,6 +17,7 @@
 define ('PIDFILE', '/var/run/kartrec.pid');
 define ('LOGFILE', '/tmp/CRecCtrl.log');
 define ('WGETLOG', '/tmp/kart_wget.log');
+define ('RECBUFF', 1000000);
 
 
 /********************************************************************\
@@ -143,6 +144,74 @@ class CRecCtrl
       }
       
       return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: waitForFile
+   |  Begin: 20.10.2010 / 9:00
+   |  Author: Jo2003
+   |  Description: wait for the recorded file to become ready
+   |
+   |  Parameters: file name
+   |
+   |  Returns: 0 ==> ok
+   |          -1 ==> any error
+   \----------------------------------------------------------------- */
+   public function waitForFile ($fileName)
+   {
+      $ok      = true;
+      $counter = 0;
+      
+      // wait for file to be created ...
+      while (!file_exists($fileName))
+      {
+         $counter ++;
+         
+         if ($counter >= 20) // 2 seconds ...
+         {
+            $ok = false;
+            break;
+         }
+         else
+         {
+            usleep(100000);
+         }
+      }
+      
+      if ($ok)
+      {
+         // now wait that file become big enough ...
+         // also known as buffering ... ;-)
+         $sz      = 0;
+         $counter = 0;
+   
+         // actually we wait for 1.000.000 Bytes here!
+         // If we assume a line speed of 1Mbit/s we have
+         // to wait 8 seconds at full line speed to get
+         // this buffer filled. Kartina works with speed
+         // >2Mbit/s. So buffer should be filled much
+         // faster!
+         while (($sz = filesize($fileName)) !== false)
+         {
+            if (($sz < RECBUFF) && ($counter < 15))
+            {
+               $counter ++;
+               sleep (1);
+               clearstatcache();
+            }
+            else if ($sz >= RECBUFF)
+            {
+               // break loop ... all is well!
+               break;
+            }
+            else if ($counter >= 15)
+            {
+               $ok = false;
+            }
+         }
+      }
+      
+      return ($ok) ? 0 : -1;
    }
    
    /* -----------------------------------------------------------------\

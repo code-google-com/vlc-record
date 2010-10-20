@@ -72,11 +72,8 @@ if ($strurl != "")
       header("Content-Size: unknown");
       header("Content-Length: unknown");
       
-      // give wget the time to start download ... 
-      sleep(4);
-      
-      // open new generated output file ...
-      if (file_exists($folder."/".$recfile))
+      // give wget the time to start download ...
+      if (!$ctrl->waitForFile($folder."/".$recfile))
       {
          $fp = fopen ($folder."/".$recfile , "rb");
          
