@@ -66,8 +66,7 @@ if ($url != "")
          }
          
          // open rec file ...
-         $recfp = fopen($recfolder."/".$recfile.".ts", "ab");
-         // $recfp = fopen("/tmp/".$recfile.".ts", "ab");
+         $recfp = fopen($recfolder."/".$recfile.".ts", "wb");
       }
       
       // create http get request ...
@@ -112,7 +111,11 @@ if ($url != "")
       }
       
       // from now on we get binary data only ...
-      $eofcnt = 0;
+      $eofcnt     = 0;
+      
+      // file buffer help variables ...
+      $chunkfile  = "";
+      $chunkcount = 0;
             
       // avoid timeouts ...
       set_time_limit(0);
@@ -127,10 +130,26 @@ if ($url != "")
          // write it to file if needed ...
          if ($recfp)
          {
-            if (fwrite($recfp, $chunk) === false)
+            // add chunk to file buffer ...
+            if ($chunkcount === 0)
             {
-               fclose($recfp);
-               $recfp = false;
+               $chunkfile  = $chunk;
+            }
+            else
+            {
+               $chunkfile .= $chunk;
+            }
+            $chunkcount ++;
+         
+            // don't write any small part to file ...
+            // collect a good amount of data and then
+            // flush at once ...
+            if ($chunkcount >= 120)
+            {
+               fwrite($recfp, $chunkfile);
+               
+               $chunkcount = 0;
+               $chunkfile  = "";
             }
          }
          
