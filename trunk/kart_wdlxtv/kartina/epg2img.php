@@ -15,12 +15,14 @@
 $query_array = array();
 parse_str($_SERVER['QUERY_STRING'], $query_array);
 
-$gmt   = $query_array['gmt'];
+$start = $query_array['ut_start'];
+$end   = $query_array['ut_end'];
 $title = $query_array['title'];
 $descr = $query_array['descr'];
 $chan  = $query_array['channel'];
 
-$im = imagecreatefrompng("/path/to/img");
+// 1280x800
+$im = imagecreatefromjpeg("/osd/image/villa_bg.jpg");
 
 header('Content-type: image/jpeg');
 imagejpeg($im, NULL, 80);
