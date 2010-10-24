@@ -515,6 +515,29 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
       'upnp:album_art' => LOC_KARTINA_URL."/images/record.png"
    );
    
+   // epg data array ...
+   $epg_data = array (
+      'ut_start' => 1000000,
+      'ut_end'   => 1007200,
+      'title'    => "Show title comes here!",
+      'descr'    => "Here comes the show description. Very long and even longer!",
+      'channel'  => "Первый",
+      'icon'     => KARTINA_HOST."/img/ico/5.gif"
+   );
+   
+   $epg_data_query = http_build_query($epg_data);
+   
+   // for test only ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($epg_data_query)),
+      'dc:title'       => "EPG",
+      'upnp:class'     => "object.item.imageitem",
+      'res'            => LOC_KARTINA_URL."/epg2img.php?".$epg_data_query,
+      'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
+      'resolution'     => "1920x1080",
+      'colorDepth'     => 24
+   );
+   
    return $retMediaItems;
 }
 
