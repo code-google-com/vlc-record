@@ -14,7 +14,7 @@
 define ('EPGFONT',        dirname(__FILE__).'/fonts/arial.ttf');
 define ('EPGFONTBD',      dirname(__FILE__).'/fonts/arialbd.ttf');
 define ('EPGIMG',         dirname(__FILE__).'/images/epg_back.jpg');
-define ('DESCR_LINE_LEN', 85);
+define ('DESCR_LINE_LEN', 90);
 
 require_once (dirname(__FILE__)."/_kartina_auth.php.inc");
 
