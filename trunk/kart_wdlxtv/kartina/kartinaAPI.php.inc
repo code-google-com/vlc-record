@@ -661,6 +661,129 @@ class kartinaAPI
    }
    
    /* -----------------------------------------------------------------\
+   |  Method: getShowInfo
+   |  Begin: 25.10.2010 / 10:30
+   |  Author: Jo2003
+   |  Description: get show info for one show
+   |
+   |  Parameters: channel id, optional unix timestamp
+   |
+   |  Returns: showinfo array with following keys:
+   |        channel, icon, start, end, name, descr
+   \----------------------------------------------------------------- */
+   public function getShowInfo ($cid, $gmt = -1)
+   {
+      $showinfo = array();
+      
+      // get channel name and channel icon ...
+      $domChanList = new DOMDocument();
+      $domChanList->load(KARTCHANLIST);
+      
+      $xpchan   = new DOMXpath($domChanList);
+      $chanitem = $xpchan->query("/response/groups/item/channels/item[id='".$cid."']");
+      $chan     = $chanitem->item(0); // there is only one such item ...
+      
+      // name ...
+      $showinfo['channel'] = $xpchan->query("name", $chan)->item(0)->nodeValue;
+      
+      // icon ...
+      $showinfo['icon']    = KARTINA_HOST.$xpchan->query("icon", $chan)->item(0)->nodeValue;
+      
+      // is gmt given here ... ?
+      if ($gmt == -1)
+      {
+         // not given --> get info from channel list ...
+         
+         // start ...
+         $showinfo['start'] = $xpchan->query("epg_start", $chan)->item(0)->nodeValue;
+         
+         // end ...
+         $showinfo['end'] = $xpchan->query("epg_end", $chan)->item(0)->nodeValue;
+         
+         // get cut position ...
+         $name = $xpchan->query("epg_progname", $chan)->item(0)->nodeValue;
+         
+         // cut between name and decription ...
+         $cutpos = strpos($epgname, "\n");
+         
+         if ($cutpos !== false)
+         {
+            // show name ...
+            $showinfo['name']  = substr($name, 0, $cutpos);
+         
+            // show description ...
+            $showinfo['descr'] = substr($name, $cutpos + 1);
+         }
+         else
+         {
+            // show name ...
+            $showinfo['name']  = $name;
+         
+            // no show description ...
+            $showinfo['descr'] = "";
+         }
+      }
+      else
+      {
+         // gmt is set, get epg for this day ...
+         $epg = $this->getDayEpg($cid, date("dmy", $gmt));
+         
+         if (is_array($epg))
+         {
+            $count = count($epg);
+            
+            for ($i = 0; $i < $count; $i ++)
+            {
+               if ($epg[$i]['timestamp'] == $gmt)
+               {
+                  // found entry ...
+                  
+                  // get start time ...
+                  $showinfo['start'] = $epg[$i]['timestamp'];
+                  
+                  // is there a next entry ... ?
+                  if ($i < ($count - 1))
+                  {
+                     // start of next show is end of this show ...
+                     $showinfo['end'] = $epg[$i + 1]['timestamp'];
+                  }
+                  else
+                  {
+                     // no info --> use one hour ...
+                     $showinfo['end'] = $showinfo['start'] + 3600;
+                  }
+                  
+                  // get cut position ...
+                  $cutpos = strpos($epg[$i]['programm'], "\n");
+                  
+                  if ($cutpos !== false)
+                  {
+                     // show name ...
+                     $showinfo['name']  = substr($epg[$i]['programm'], 0, $cutpos);
+                  
+                     // show description ...
+                     $showinfo['descr'] = substr($epg[$i]['programm'], $cutpos + 1);
+                  }
+                  else
+                  {
+                     // show name ...
+                     $showinfo['name']  = $epg[$i]['programm'];
+                  
+                     // no show description ...
+                     $showinfo['descr'] = "";
+                  }
+
+                  // we found what we're looking for --> break for loop ...
+                  break;
+               }
+            }
+         }
+      }
+      
+      return $showinfo;
+   }
+   
+   /* -----------------------------------------------------------------\
    |  Method: noError
    |  Begin: 8/12/2010 / 9:24a
    |  Author: Jo2003

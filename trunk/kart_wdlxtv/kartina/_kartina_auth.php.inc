@@ -25,6 +25,7 @@ define ('COOKIE_FILE',      "/tmp/kartCookie.txt");
 define ('XML_RENEW_TIME',   300); // 5 min.
 define ('DAY_IN_SECONDS',   3600 * 24);
 define ('MAX_ARCH_DAYS',    14);
+define ('MAX_EPG_DAYS',     7);
 
 // ------------------------------------------------------------------
 // create CWdtvConfig instance ...
