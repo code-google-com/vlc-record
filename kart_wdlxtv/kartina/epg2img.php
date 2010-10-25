@@ -14,7 +14,7 @@
 define ('EPGFONT',        dirname(__FILE__).'/fonts/arial.ttf');
 define ('EPGFONTBD',      dirname(__FILE__).'/fonts/arialbd.ttf');
 define ('EPGIMG',         dirname(__FILE__).'/images/epg_back.jpg');
-define ('DESCR_LINE_LEN', 130);
+define ('DESCR_LINE_LEN', 155);
 
 require_once (dirname(__FILE__)."/_kartina_auth.php.inc");
 
@@ -60,10 +60,9 @@ if ($im && is_array($showinfo))
    }
    
    // colors ...
-   $red   = imagecolorallocate ($im, 136, 0, 0);   // dark red ...
-   $black = imagecolorallocate ($im, 0, 0, 0);     // black ...
-   $gray  = imagecolorallocate ($im, 50, 50, 50);  // gray ...
-   $blue  = imagecolorallocate ($im, 0, 51, 102);  // dark blue ...
+   $white  = imagecolorallocate ($im, 255, 255, 255);
+   $cyan   = imagecolorallocate ($im, 50, 198, 215);
+   $yellow = imagecolorallocate ($im, 243, 246, 14);
    
    // top and left margin: 150px
    $x = 150;
@@ -76,43 +75,36 @@ if ($im && is_array($showinfo))
    $y += 60; 
    
    // add channel ...
-   imagettftext($im, 40, 0, $x, $y, $red, EPGFONTBD, $showinfo['channel']);
+   imagettftext($im, 40, 0, $x, $y, $cyan, EPGFONTBD, $showinfo['channel']);
    
    // get next y position ...
-   // font height(40) + line spacing(10) 
-   // + space for "down under chars" (font height / 2)
+   // font height(24) + line spacing(20) 
+   // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 90;
+   $y += 76;
    
    // create date string ...
-   $date  = $days[date("N", $showinfo['start'])].", ".date("d.m.Y", $showinfo['start']);
-   imagettftext($im, 40, 0, $x, $y, $blue, EPGFONTBD, $date);
+   $date  = $days[date("N", $showinfo['start'])].", "
+           .date("d.m.Y", $showinfo['start']).", "
+           .date("H:i", $showinfo['start'])."ч. - "
+           .date("H:i", $showinfo['end'])."ч.";
+   imagettftext($im, 24, 0, $x, $y, $white, EPGFONTBD, $date);
    
    // get next y position ...
-   // font height(40) + line spacing(10) 
-   // + space for "down under chars" (font height / 2)
+   // font height(40) + line spacing(15) 
+   // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 90;
-   
-   // create time string ...
-   $time  = date("H:i", $showinfo['start'])."ч. - ".date("H:i", $showinfo['end'])."ч.";
-   imagettftext($im, 40, 0, $x, $y, $blue, EPGFONTBD, $time);
-   
-   // get next y position ...
-   // font height(40) + line spacing(10) 
-   // + space for "down under chars" (font height / 2)
-   // + space for accent (font height / 2)
-   $y += 90;
+   $y += 87;
    
    // show name ...
    $showinfo['name'] = htmlspecialchars_decode($showinfo['name']);
-   imagettftext($im, 40, 0, $x, $y, $black, EPGFONTBD, $showinfo['name']);
+   imagettftext($im, 40, 0, $x, $y, $yellow, EPGFONTBD, $showinfo['name']);
    
    // get next y position ...
-   // font height(30) + line spacing(5) 
+   // font height(26) + line spacing(5) 
    // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 70;
+   $y += 64;
    
    $dodesc            = 1;
    $offset            = 0;
@@ -136,16 +128,16 @@ if ($im && is_array($showinfo))
       }
       
       // paint description line ...
-      imagettftext($im, 30, 0, $x, $y, $gray, EPGFONT, $line);
+      imagettftext($im, 26, 0, $x, $y, $white, EPGFONT, $line);
       
       // get next y position ...
-      // font height(30) + line spacing(5) 
+      // font height(26) + line spacing(5) 
       // + space for "down under chars" (above font height / 2)
       // + space for accent (font height / 2)
-      $y += 65;
+      $y += 57;
    }
    
-   imagejpeg($im, NULL, 85);
+   imagejpeg($im, NULL, 80);
 }
 
 if ($im)
