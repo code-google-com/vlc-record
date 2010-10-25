@@ -14,7 +14,7 @@
 define ('EPGFONT',        dirname(__FILE__).'/fonts/arial.ttf');
 define ('EPGFONTBD',      dirname(__FILE__).'/fonts/arialbd.ttf');
 define ('EPGIMG',         dirname(__FILE__).'/images/epg_back.jpg');
-define ('DESCR_LINE_LEN', 145);
+define ('DESCR_LINE_LEN', 85);
 
 require_once (dirname(__FILE__)."/_kartina_auth.php.inc");
 
@@ -114,17 +114,17 @@ if ($im && is_array($showinfo))
    {
       $line = "";
       
-      if ((strlen($showinfo['descr']) - $offset) > DESCR_LINE_LEN)
+      if ((mb_strlen($showinfo['descr'], "UTF-8") - $offset) > DESCR_LINE_LEN)
       {
-         $token   = substr($showinfo['descr'], $offset, DESCR_LINE_LEN);
-         $cutpos  = strrpos($token, " ");
-         $line    = substr($token, 0, $cutpos);
+         $token   = mb_substr($showinfo['descr'], $offset, DESCR_LINE_LEN, "UTF-8");
+         $cutpos  = mb_strrpos($token, " ", 0, "UTF-8");
+         $line    = mb_substr($token, 0, $cutpos, "UTF-8");
          $offset += $cutpos + 1; 
       }
       else
       {
          $dodesc  = 0;
-         $line    = substr($showinfo['descr'], $offset); 
+         $line    = mb_substr($showinfo['descr'], $offset, mb_strlen($showinfo['descr'], "UTF-8") - $offset, "UTF-8"); 
       }
       
       // paint description line ...
