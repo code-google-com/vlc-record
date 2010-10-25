@@ -470,7 +470,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
    // epg info image ...
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($epg_data_query)),
-      'dc:title'       => "Информации",
+      'dc:title'       => "Информация",
       'upnp:class'     => "object.item.imageitem",
       'res'            => LOC_KARTINA_URL."/epg2img.php?".$epg_data_query,
       'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
