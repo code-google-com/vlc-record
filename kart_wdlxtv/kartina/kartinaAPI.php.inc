@@ -704,7 +704,7 @@ class kartinaAPI
          $name = $xpchan->query("epg_progname", $chan)->item(0)->nodeValue;
          
          // cut between name and decription ...
-         $cutpos = strpos($epgname, "\n");
+         $cutpos = strpos($name, "\n");
          
          if ($cutpos !== false)
          {

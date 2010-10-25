@@ -14,7 +14,7 @@
 define ('EPGFONT',        dirname(__FILE__).'/fonts/arial.ttf');
 define ('EPGFONTBD',      dirname(__FILE__).'/fonts/arialbd.ttf');
 define ('EPGIMG',         dirname(__FILE__).'/images/epg_back.jpg');
-define ('DESCR_LINE_LEN', 155);
+define ('DESCR_LINE_LEN', 145);
 
 require_once (dirname(__FILE__)."/_kartina_auth.php.inc");
 
@@ -91,20 +91,20 @@ if ($im && is_array($showinfo))
    imagettftext($im, 24, 0, $x, $y, $white, EPGFONTBD, $date);
    
    // get next y position ...
-   // font height(40) + line spacing(15) 
+   // font height(36) + line spacing(54) 
    // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 87;
+   $y += 120;
    
    // show name ...
    $showinfo['name'] = htmlspecialchars_decode($showinfo['name']);
-   imagettftext($im, 40, 0, $x, $y, $yellow, EPGFONTBD, $showinfo['name']);
+   imagettftext($im, 36, 0, $x, $y, $yellow, EPGFONTBD, $showinfo['name']);
    
    // get next y position ...
    // font height(26) + line spacing(5) 
    // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 64;
+   $y += 62;
    
    $dodesc            = 1;
    $offset            = 0;
