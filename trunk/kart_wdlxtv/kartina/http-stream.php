@@ -548,7 +548,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
 |
 |  Returns: array of media items
 \----------------------------------------------------------------- */
-function _pluginCreatePlayRewind($cid, $gmt, $isvideo)
+function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
 {
    $retMediaItems = array();
    
