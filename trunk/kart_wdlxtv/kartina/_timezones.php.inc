@@ -1,6 +1,5 @@
 <?php
-
-define ('ZONEDIR', "/usr/share/zoneinfo");
+require_once(dirname(__FILE__) . "/_defines.php.inc");
 
 /* -----------------------------------------------------------------\
 |  Method: createZoneinfoArray

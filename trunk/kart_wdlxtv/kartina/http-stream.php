@@ -68,6 +68,14 @@ function _pluginMain($prmQuery)
                   
          $items = _pluginChooseRecOrPlay($queryData['cid'], $gmt, $isVideo);
       }
+      else if ($queryData['action'] === "play_rewind")
+      {
+         simpleLog(__FUNCTION__."():".__LINE__." ChanID: ".$queryData['cid']
+                  ."; GMT: ".$queryData['gmt']."; IsVideo: ".$queryData['is_video']);
+                  
+         $items = _pluginCreatePlayRewind($queryData['cid'], $queryData['gmt'], 
+                                          $queryData['is_video']);
+      }
    }
    
    return $items;
@@ -271,7 +279,7 @@ function _pluginCreateArchMainFolder ($cid)
    }
    
    // build title ...
-   $title    = date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
+   $title    = "Сейчас: ".date("H:i", $epgstart)."-".date("H:i", $epgend)." ".$epgname;
    
    // prepare data to choose between rec and play ...
    $data     = array('action'   => 'chooserecplay',
@@ -286,9 +294,23 @@ function _pluginCreateArchMainFolder ($cid)
       'upnp:class'     => 'object.container',
       'upnp:album_art' => KARTINA_HOST.$icon
    );
-   
+
+   // 2nd entry will be todays entry ...
+   $now   = time();
+   $data  = array('action'  => 'archive',
+                  'day'     => date ("dmy", $now),
+                  'cid'     => $cid);
+
+   $dataString = http_build_query($data, "", "&amp;");
+
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'dc:title'       => 'Сегодня',
+      'upnp:class'     => 'object.container',
+      'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
+   );
+
    // make folders for all 14 days of the archive ... 
-   $now       = time();
    $archstart = $now;
    
    if ($hasarch)
@@ -300,19 +322,23 @@ function _pluginCreateArchMainFolder ($cid)
 
    for ($i = $archstart; $i <= $epgend; $i += DAY_IN_SECONDS)
    {
-      // first add favorites folder ...
-      $data       = array('action'  => 'archive',
-                          'day'     => date ("dmy", $i),
-                          'cid'     => $cid);
-
-      $dataString = http_build_query($data, "", "&amp;");
+      // today was already handled above ...
+      if ($i != $now)
+      {
+         // first add favorites folder ...
+         $data       = array('action'  => 'archive',
+                             'day'     => date ("dmy", $i),
+                             'cid'     => $cid);
    
-      $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
-         'dc:title'       => $days[date("N", $i)]. ", " .date("d.m.Y", $i),
-         'upnp:class'     => 'object.container',
-         'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
-      );
+         $dataString = http_build_query($data, "", "&amp;");
+      
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'dc:title'       => $days[date("N", $i)]. ", " .date("d.m.Y", $i),
+            'upnp:class'     => 'object.container',
+            'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
+         );
+      }
    }
   
    return $retMediaItems;
@@ -400,8 +426,53 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
    $recname  = $xpchan->query("name", $chan)->item(0)->nodeValue;
    $hasarch  = (integer)$xpchan->query("have_archive", $chan)->item(0)->nodeValue;
    
-   if (($gmt == -1) || ($hasarch && inArchive($gmt)))
+   /////////////////////////////////////////////////////////////////////////////
+   // add epg info first ...
+   
+   // epg data array ...
+   $epg_data = array ('cid' => $cid,
+                      'gmt' => $gmt);
+   
+   $epg_data_query = http_build_query($epg_data);
+   
+   // epg info image ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($epg_data_query)),
+      'dc:title'       => "Информация",
+      'upnp:class'     => "object.item.imageitem",
+      'res'            => LOC_KARTINA_URL."/epg2img.php?".$epg_data_query,
+      'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
+      'resolution'     => "1920x1080",
+      'colorDepth'     => 24
+   );
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // play item ...
+   
+   // if we have an archive, we can jump backward and forward.
+   // To make this accessable, create a new play folder ...
+   if (($gmt != -1) && $hasarch && inArchive($gmt))
    {
+      $data       = array('action'   => 'play_rewind',
+                          'gmt'      => $gmt,
+                          'is_video' => $isVideo,
+                          'cid'      => $cid);
+                          
+      simpleLog(__FUNCTION__."():".__LINE__." Add Play / Rewind Item (cid=".$cid
+               .", gmt=".$gmt.", is_video=".$isVideo.")");
+                       
+      $dataString = http_build_query($data, "", "&amp;");
+      
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'dc:title'       => "Просмотр / Перемотка",
+         'upnp:class'     => 'object.container',
+         'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
+      );
+   }
+   else if ($gmt == -1)
+   {
+      // live stream doesn't allow forward / backward jumping ...
       // play data array ...
       $play_data = array(
          'cid'      => $cid,     // channel id
@@ -424,9 +495,12 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
          'protocolInfo'   => "http-get:*:*:*",
          'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
       );
-      
-      // record entry ...
+   }
 
+   /////////////////////////////////////////////////////////////////////////////
+   // record entry ...
+   if (($gmt == -1) || ($hasarch && inArchive($gmt)))
+   {
       // replace some funky characters which could lead to problems ...
       $recname  = str_replace(" ", "_", $recname)."-";
       $recname  = str_replace("/", "-", $recname);
@@ -460,22 +534,145 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
          'upnp:album_art' => LOC_KARTINA_URL."/images/record.png"
       );
    }
+
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: _pluginCreatePlayRewind
+|  Begin: 01.11.2010
+|  Author: Jo2003
+|  Description: create play rewind folder ...
+|
+|  Parameters: channel id, gmt timestamp, video flag
+|
+|  Returns: array of media items
+\----------------------------------------------------------------- */
+function _pluginCreatePlayRewind($cid, $gmt, $isvideo)
+{
+   $retMediaItems = array();
    
-   // epg data array ...
-   $epg_data = array ('cid' => $cid,
-                      'gmt' => $gmt);
+   // in this folder we create backward / forward jump items ...
    
-   $epg_data_query = http_build_query($epg_data);
+   /////////////////////////////////////////////////////////////////////////////
+   // 10 minutes backward ...
+   $play_data = array(
+      'cid'      => $cid,     // channel id
+      'gmt'      => $gmt,     // timestamp for archive
+      'is_video' => $isVideo, // video flag
+      'dorec'    => false,    // record flag
+      'offset'   => -600      // jump offset
+   );
    
-   // epg info image ...
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"10 min. back\" Play Item (cid=".$cid
+            .", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($epg_data_query)),
-      'dc:title'       => "Информация",
-      'upnp:class'     => "object.item.imageitem",
-      'res'            => LOC_KARTINA_URL."/epg2img.php?".$epg_data_query,
-      'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
-      'resolution'     => "1920x1080",
-      'colorDepth'     => 24
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "10 мин. назад",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
+   );
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // 5 minutes backward ...
+   $play_data['offset'] = -300; // jump offset
+   
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"5 min. back\" Play Item (cid=".$cid
+            .", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "5 мин. назад",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
+   );
+   
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // add "start here" play item ...
+   $play_data['offset'] = 0; // jump offset
+   
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"Start here\" Play Item (cid=".$cid
+            .", gmt=".$gmt.", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "Старт Просмотр",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
+   );
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // 2 minutes forward ...
+   $play_data['offset'] = 120; // jump offset
+   
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"2 min. forward\" Play Item (cid=".$cid
+            .", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "2 мин. вперёд",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
+   );
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // 5 minutes forward ...
+   $play_data['offset'] = 300; // jump offset
+   
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"5 min. forward\" Play Item (cid=".$cid
+            .", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "5 мин. вперёд",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
+   );
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // 10 minutes forward ...
+   $play_data['offset'] = 600; // jump offset
+   
+   simpleLog(__FUNCTION__."():".__LINE__." Add \"10 min. forward\" Play Item (cid=".$cid
+            .", is_video=".$isVideo.", dorec=false)");
+   
+   $play_data_query = http_build_query($play_data);
+   
+   // add play item ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'dc:title'       => "10 мин. вперёд",
+      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+      'protocolInfo'   => "http-get:*:*:*",
+      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
    );
 
    return $retMediaItems;

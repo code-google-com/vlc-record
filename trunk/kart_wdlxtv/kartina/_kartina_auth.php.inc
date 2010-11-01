@@ -1,31 +1,7 @@
 <?php
-
+require_once(dirname(__FILE__) . "/_defines.php.inc");
 require_once(dirname(__FILE__) . "/kartinaAPI.php.inc");
 require_once(dirname(__FILE__) . "/wdtvConfig.php.inc");
-
-// ------------------------------------------------------------------
-// default (demo) connectioin data ...
-// ------------------------------------------------------------------
-define ('KARTINA_ACCOUNT',  "144");
-define ('KARTINA_PASS',     "441");
-
-// ------------------------------------------------------------------
-// don't touch anything beyond this line ...
-// ------------------------------------------------------------------
-define ('KARTINA_HOST',     "http://iptv.kartina.tv");
-define ('API_PATH',         "/api/xml/");
-define ('LOC_KARTINA_URL',  "http://127.0.0.1/umsp/plugins/kartina");
-define ('LOC_KARTINA_UMSP', "umsp://plugins/kartina");
-define ('DOTRACE',          "NO");
-define ('KARTCHANLIST',     "/tmp/kartchanlist.xml");
-define ('KARTFAVLIST',      "/tmp/kartfavorites.xml");
-define ('LOC_IMG_PATH',     "/umsp/plugins/kartina/images");
-define ('WDTV_CONF_FILE',   "/conf/config");
-define ('COOKIE_FILE',      "/tmp/kartCookie.txt");
-define ('XML_RENEW_TIME',   300); // 5 min.
-define ('DAY_IN_SECONDS',   3600 * 24);
-define ('MAX_ARCH_DAYS',    14);
-define ('MAX_EPG_DAYS',     7);
 
 // ------------------------------------------------------------------
 // create CWdtvConfig instance ...
