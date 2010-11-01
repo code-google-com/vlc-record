@@ -10,8 +10,7 @@
 | 
 | $Id$
 \*************************************************************/
-
-define ('TIMESTAMPFILE', '/tmp/.timestamp');
+require_once(dirname(__FILE__) . "/_defines.php.inc");
 
 /********************************************************************\
 |  Class: CSimpleTimer
@@ -22,7 +21,7 @@ define ('TIMESTAMPFILE', '/tmp/.timestamp');
 \********************************************************************/
 class CSimpleTimer
 {
-   private $tOffset;
+   private $tStartStamp;
    private $tGmtStart;
    private $doMeasure;
    
@@ -32,14 +31,14 @@ class CSimpleTimer
    |  Author: Jo2003
    |  Description: constructs a class instance
    |
-   |  Parameters: optional offet time, if time is given, measurement 
+   |  Parameters: optional start time, if time is given, measurement 
    |              starts 
    |
    |  Returns: --
    \----------------------------------------------------------------- */
-   public function __construct($offset = -1)
+   public function __construct($start = -1)
    {
-      if ($offset != -1)
+      if ($start != -1)
       {
          $this->tGmtStart = time();
          $this->doMeasure = true;
@@ -50,7 +49,7 @@ class CSimpleTimer
          $this->doMeasure = false;
       }
       
-      $this->tOffset   = $offset; 
+      $this->tStartStamp  = $start; 
    }
    
    /* -----------------------------------------------------------------\
@@ -59,15 +58,15 @@ class CSimpleTimer
    |  Author: Jo2003
    |  Description: start time measurement
    |
-   |  Parameters: offset time 
+   |  Parameters: start time 
    |
    |  Returns: --
    \----------------------------------------------------------------- */
-   public function startMeasurement ($offset)
+   public function startMeasurement ($start)
    {
-      $this->tOffset   = $offset;
-      $this->tGmtStart = time();
-      $this->doMeasure = true;
+      $this->tStartStamp = $start;
+      $this->tGmtStart   = time();
+      $this->doMeasure   = true;
    }
 
    /* -----------------------------------------------------------------\
@@ -87,8 +86,8 @@ class CSimpleTimer
          // compute runtime ...
          $runtime = time() - $this->tGmtStart;
          
-         // compute stop time using offset and runtime ...
-         $stoptime = $this->tOffset + $runtime;
+         // compute stop time using start and runtime ...
+         $stoptime = $this->tStartStamp + $runtime;
          
          // write stoptime to file ...
          if (($fp = fopen(TIMESTAMPFILE, "w")) !== false)
@@ -111,7 +110,14 @@ class CSimpleTimer
    \----------------------------------------------------------------- */
    public function getLastStopStamp()
    {
-      return file_get_contents(TIMESTAMPFILE);
+      $rv = false;
+      
+      if (file_exists(TIMESTAMPFILE))
+      {
+         $rv = file_get_contents(TIMESTAMPFILE);
+      }
+      
+      return $rv;
    }
 };
 ?>

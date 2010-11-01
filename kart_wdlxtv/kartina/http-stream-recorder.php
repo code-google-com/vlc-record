@@ -12,6 +12,7 @@
 \*************************************************************/
 
 require_once(dirname(__FILE__) . "/_kartina_auth.php.inc");
+require_once(dirname(__FILE__) . "/csimpletimer.php.inc");
 
 // How the stream recorder works:
 // - request stream url at kartina.tv
@@ -29,9 +30,55 @@ $dorec   = isset($query_array['dorec'])    ? (boolean)$query_array['dorec']    :
 $gmt     = isset($query_array['gmt'])      ? (integer)$query_array['gmt']      :    -1;
 $isVideo = isset($query_array['is_video']) ? (boolean)$query_array['is_video'] :  true;
 $recfile = isset($query_array['recfile'])  ? (string)$query_array['recfile']   :    "";
+$offset  = isset($query_array['offset'])   ? (integer)$query_array['offset']   :     0;
+
+////////////////////////////////////////////////////////////////////////////////
+// forward / backward jumping 
+
+// 1. We want relative time jumping!
+// 2. To get this, we need to measure the play time.
+// 3. Measuring the play time is done using a simple timer class.
+// The trick in the timer class is to use the destructor to write the
+// elapsed time to a file. Without this trick we have no way to find out 
+// the end of this script. 
+
+// forward declaration for timer class ...
+$sTimer = NULL;
+
+// are we in archive play ... ?
+if (!$dorec && ($gmt != -1))
+{
+   // is any offset given ...
+   if ($offset != 0)
+   {
+      // create timer class without starting the measurement ...
+      $sTimer = new CSimpleTimer ();
+      
+      // get last stop timestamp ...
+      if (($lastStamp = $sTimer->getLastStopStamp()) === false)
+      {
+         // can't get timestamp --> use given gmt to proceed with offset ...
+         $gmt += $offset;
+      }
+      else
+      {
+         // got last timestamp --> compute new gmt 
+         // using last stop stamp with offset ...
+         $gmt = $lastStamp + $offset;
+      }
+      
+      // start measurement ... 
+      $sTimer->startMeasurement ($gmt);
+   }
+   else
+   {
+      // create timer class and start measurement ...
+      $sTimer = new CSimpleTimer ($gmt);
+   }
+}
 
 // get stream url ...
-$url     = $kartAPI->getStreamUrl($cid, $gmt);
+$url = $kartAPI->getStreamUrl($cid, $gmt);
 
 if ($url != "")
 {
