@@ -167,20 +167,16 @@ class CWdtvConfig
    |  Returns: 0 --> ok
    |          -1 --> any error
    \----------------------------------------------------------------- */
-   public function setTime()
+   public function setTime($timeStamp)
    {
-      $ntpsrv = $this->getVal("NTPSERVER");
       $output = array();
       $rv     = -1;
       
-      if ($ntpsrv != "")
-      {
-         exec ("sudo ntpdate ".$ntpsrv, $output, $rv);
+      exec ("sudo date -s @".$timeStamp, $output, $rv);
          
-         if ($rv != 0)
-         {
-            $rv = -1;
-         }
+      if ($rv != 0)
+      {
+         $rv = -1;
       }
       
       return $rv;

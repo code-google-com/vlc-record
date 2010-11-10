@@ -880,6 +880,29 @@ class kartinaAPI
       
       return $rv;
    }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getServerTime
+   |  Begin: 10.11.2010 / 16:45
+   |  Author: Jo2003
+   |  Description: get server time from kartina server ...
+   |
+   |  Parameters: --
+   |
+   |  Returns: false --> error
+   |            else --> server time as unix time stamp ...
+   \----------------------------------------------------------------- */
+   public function getServerTime ()
+   {
+      // to get server time use a simple settings call.
+      // server time is included into every answer...
+      $reply = $this->getReq($this->_host . API_PATH . "settings", "var=timezone");
+      $reply = $this->cleanReply($reply);
+      $reply = str_replace("\r", "", $reply);
+      $reply = str_replace("\n", "", $reply);
+
+      return preg_filter("/.*<servertime>([0-9]+)<\/servertime>.*/", "$1", $test);
+   }
 };
 
 ?>
