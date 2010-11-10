@@ -47,6 +47,13 @@ else
    $kartAPI->loadCookie();
 }
 
+// synchronize kartinas server time with time on WDTV Live ...
+if (($serverTime = $kartAPI->getServerTime()) !== FALSE)
+{
+   wdtvConf->setTime($serverTime);
+}
+
+
 // get / save channel list if not already there ...
 if (!file_exists(KARTCHANLIST))
 {
