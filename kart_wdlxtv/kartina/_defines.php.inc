@@ -35,5 +35,6 @@ define ('EPGFONTBD',        "/usr/share/fonts/truetype/msttcorefonts/Arial_Black
 define ('EPGIMG',           dirname(__FILE__).'/images/epg_back.jpg');
 define ('DESCR_LINE_LEN',   90);
 define ('TIMESTAMPFILE',    "/tmp/.kart_tstamp");
+define ('MAX_TIME_DIFF',    10);
 
 ?>
