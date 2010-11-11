@@ -900,8 +900,12 @@ class kartinaAPI
       $reply = $this->cleanReply($reply);
       $reply = str_replace("\r", "", $reply);
       $reply = str_replace("\n", "", $reply);
+      
+      $serverTime = preg_replace("/.*<servertime>([0-9]+)<\/servertime>.*/", "$1", $test);
+      
+      $this->log("Got following server time: ".$serverTime); 
 
-      return preg_filter("/.*<servertime>([0-9]+)<\/servertime>.*/", "$1", $test);
+      return $serverTime;
    }
 };
 

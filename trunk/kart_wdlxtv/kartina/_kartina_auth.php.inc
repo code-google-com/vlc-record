@@ -6,10 +6,11 @@ require_once(dirname(__FILE__) . "/wdtvConfig.php.inc");
 // ------------------------------------------------------------------
 // create CWdtvConfig instance ...
 // ------------------------------------------------------------------
-$wdtvConf = new CWdtvConfig (WDTV_CONF_FILE);
+$wdtvConf   = new CWdtvConfig (WDTV_CONF_FILE);
 
 // initiate kartAPI class ... 
-$kartAPI  = null;
+$kartAPI    = null;
+$serverTime = false;
 
 // check if kartina cookie file exists ...
 if (!file_exists(COOKIE_FILE)) // not authenticated ...
@@ -47,12 +48,15 @@ else
    $kartAPI->loadCookie();
 }
 
-// synchronize kartinas server time with time on WDTV Live ...
-if (($serverTime = $kartAPI->getServerTime()) !== FALSE)
+// do we need to synchronise time ?
+if (($wdtvConf->getVal("NTP") !== "ON") && !$wdtvConf->isTimeSet())
 {
-   wdtvConf->setTime($serverTime);
+   // synchronize kartinas server time with time on WDTV Live ...
+   if (($serverTime = $kartAPI->getServerTime()) !== FALSE)
+   {
+      $wdtvConf->setTime($serverTime);
+   }
 }
-
 
 // get / save channel list if not already there ...
 if (!file_exists(KARTCHANLIST))
@@ -65,6 +69,20 @@ else
    if ((time() - filemtime(KARTCHANLIST)) > XML_RENEW_TIME)
    {
       $kartAPI->saveChannelList();
+      
+      // check time difference here ...
+      if ($wdtvConf->getVal("NTP") !== "ON")
+      {
+         // get time from kartina server ...
+         if(($serverTime = $kartAPI->getServerTime()) !== FALSE)
+         {
+            // if difference too big, set time on wdtv ...
+            if (abs(time() - $serverTime) > MAX_TIME_DIFF)
+            {
+               $wdtvConf->setTime($serverTime);
+            }
+         }
+      }
    }
 }
 

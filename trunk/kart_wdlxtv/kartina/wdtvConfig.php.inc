@@ -157,14 +157,13 @@ class CWdtvConfig
    }
    
    /* -----------------------------------------------------------------\
-   |  Method: setTime
-   |  Begin: 8/27/2010 / 15:30
-   |  Author: Jo2003
-   |  Description: set device time if ntp server is stored in config
+   |  \date  8/27/2010 / 15:30
+   |  \author Jo2003
+   |  \brief set device time if ntp server is stored in config
    |
-   |  Parameters: --
+   |  \param --
    |
-   |  Returns: 0 --> ok
+   |  \return  0 --> ok
    |          -1 --> any error
    \----------------------------------------------------------------- */
    public function setTime($timeStamp)
@@ -172,7 +171,11 @@ class CWdtvConfig
       $output = array();
       $rv     = -1;
       
-      exec ("sudo date -s @".$timeStamp, $output, $rv);
+      // convert timestamp into format [YYYY.]MM.DD-hh:mm[:ss] ...
+      // format -s @ doesn't work cause WDTV uses busybox ...
+      $strTime = date("Y.m.d-H:i:s", $timeStamp);
+      
+      exec ("sudo date -s ".$strTime, $output, $rv);
          
       if ($rv != 0)
       {
