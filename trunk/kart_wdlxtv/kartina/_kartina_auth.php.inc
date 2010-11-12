@@ -68,6 +68,7 @@ else
    // is file older than 5 minutes ... ?
    if ((time() - filemtime(KARTCHANLIST)) > XML_RENEW_TIME)
    {
+      // renew it !
       $kartAPI->saveChannelList();
       
       // check time difference here ...

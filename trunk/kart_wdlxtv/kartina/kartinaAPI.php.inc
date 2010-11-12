@@ -896,13 +896,39 @@ class kartinaAPI
    {
       // to get server time use a simple settings call.
       // server time is included into every answer...
-      $reply = $this->getReq($this->_host . API_PATH . "settings", "var=timezone");
-      $reply = $this->cleanReply($reply);
-      $reply = str_replace("\r", "", $reply);
-      $reply = str_replace("\n", "", $reply);
+      $reply      = $this->getReq($this->_host . API_PATH . "settings", "var=timezone");
+      $reply      = $this->cleanReply($reply);
       
-      $serverTime = preg_replace("/.*<servertime>([0-9]+)<\/servertime>.*/", "$1", $test);
+      $serverTime = false;
       
+      $this->_reader->XML($reply);
+
+      while ($this->_reader->read())
+      {
+         switch ($this->_reader->nodeType)
+         {
+         // element start ...
+         case XMLReader::ELEMENT:
+            if ($this->_reader->localName == "servertime")
+            {
+               if($this->_reader->read())
+               {
+                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  {
+                     // get server time ...
+                     $serverTime = $this->_reader->value;
+                  }
+               }
+            }
+            break;
+
+         default:
+            break;
+         }
+      }
+      
+      $this->_reader->close();
+
       $this->log("Got following server time: ".$serverTime); 
 
       return $serverTime;
