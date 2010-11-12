@@ -157,13 +157,14 @@ class CWdtvConfig
    }
    
    /* -----------------------------------------------------------------\
-   |  \date  8/27/2010 / 15:30
-   |  \author Jo2003
-   |  \brief set device time if ntp server is stored in config
+   |  Method: setTime
+   |  Begin: 8/27/2010 / 15:30
+   |  Author: Jo2003
+   |  Description: set device time to value given as param
    |
-   |  \param --
+   |  Parameters: unix timestamp
    |
-   |  \return  0 --> ok
+   |  Returns: 0 --> ok
    |          -1 --> any error
    \----------------------------------------------------------------- */
    public function setTime($timeStamp)
