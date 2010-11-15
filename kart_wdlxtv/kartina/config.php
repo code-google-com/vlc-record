@@ -132,7 +132,7 @@ function makeTZForm()
    
    // default time zone ...
    $def_tz = $wdtvConf->getVal("TIMEZONE");
-   
+/*   
    // NTP value ...
    $ntp    = $wdtvConf->getVal("NTP");
    
@@ -156,7 +156,7 @@ function makeTZForm()
    {
       $ipup = 0;
    }
-   
+*/
    echo "<h3>Установка времени</h3>\n"
        ."<form name='accountform' action='".$_SERVER['PHP_SELF']."' method='post'>\n"
        ."<input type='hidden' name='act' value='settimestuff' />\n"
@@ -181,6 +181,7 @@ function makeTZForm()
        ."<td nowrap='nowrap'>Сервер NTP:</td>\n"
        ."<td><input type='text' name='ntpsrv' value='".$wdtvConf->getVal("NTPSERVER")."' /></td>\n"
        ."</tr>\n"
+/*
        ."<tr>\n"
        ."<td nowrap='nowrap'>Вкл. NTP:</td>\n"
        ."<td>\n"
@@ -194,7 +195,8 @@ function makeTZForm()
        ."нет <input type='radio' name='ipup' value='OFF' ".(($ipup) ? "" : "checked='checked' ")."/>\n"
        ."да <input type='radio' name='ipup' value='ON' ".(($ipup) ? "checked='checked' " : "")."/>\n"
        ."</td>\n"
-       ."</tr>\n"
+       ."</tr>\n" 
+*/
        ."<tr>\n"
        ."<td colspan='2'>*Требуется перезагрузка WDTV</td>\n"
        ."</tr>\n"
@@ -211,29 +213,29 @@ function makeTZForm()
 |  Author: Jo2003
 |  Description: create favotites table
 |
-|  Parameters: --
+|  Parameters: favorites in XML, channels in XML
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-function makeFavTab()
+function makeFavTab($favXml, $chanXml)
 {
    $colcount      = 1;
    $domFavList    = new DOMDocument();
    $domChanList   = new DOMDocument();
-   
-   $domFavList->load(KARTFAVLIST);
-   $domChanList->load(KARTCHANLIST);
-   
+
+   $domFavList->loadXML($favXml);
+   $domChanList->loadXML($chanXml);
+
    $xpfav  = new DOMXpath($domFavList);
    $xpchan = new DOMXpath($domChanList);
-   
+
    $favarray  = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
    $favorites = $xpfav->query("/response/favorites/item/channel_id");
-   
+
    echo "<table class='favtab' border='0' cellspacing='1' cellpadding='1'>\n"
-       ."<colgroup span='".FAVCOLS."' />\n"
-       ."<tr><th colspan='".FAVCOLS."'>Фавориты</th></tr>\n";
-   
+      ."<colgroup span='".FAVCOLS."' />\n"
+      ."<tr><th colspan='".FAVCOLS."'>Фавориты</th></tr>\n";
+
    for ($i = 0; $i < count($favarray); $i ++)
    {
       if (($colcount % FAVCOLS) === 1)
@@ -290,18 +292,18 @@ function makeFavTab()
 |  Author: Jo2003
 |  Description: create channel table
 |
-|  Parameters: --
+|  Parameters: favorites in XML, channels in XML
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-function makeChanTab ()
+function makeChanTab ($favXml, $chanXml)
 {
    $colcount      = 1;
    $domFavList    = new DOMDocument();
    $domChanList   = new DOMDocument();
    
-   $domFavList->load(KARTFAVLIST);
-   $domChanList->load(KARTCHANLIST);
+   $domFavList->loadXML($favXml);
+   $domChanList->loadXML($chanXml);
    
    $xpfav  = new DOMXpath($domFavList);
    $xpchan = new DOMXpath($domChanList);
@@ -429,8 +431,10 @@ if (isset($_GET['act']))
    // delete XML request ...
    if ($_GET['act'] === "delxml")
    {
+      /*
       @unlink(KARTCHANLIST);
       @unlink(KARTFAVLIST);
+      */
       
       // delete cookie as well ...
       @unlink(COOKIE_FILE);
@@ -450,11 +454,11 @@ if (isset($_POST['act']))
             // save new kartina account config ...
             $wdtvConf->writeConf("KARTINA_ACCOUNT", $_POST['acc']);
             $wdtvConf->writeConf("KARTINA_PASSWD", $_POST['passwd']);
-            
+/*            
             // delete xml files because they may change due to account change ...
             @unlink(KARTCHANLIST);
             @unlink(KARTFAVLIST);
-            
+*/            
             // delete cookie file as well ...
             @unlink(COOKIE_FILE);
             
@@ -475,11 +479,11 @@ if (isset($_POST['act']))
             // save new timer server and time zone values ...
             $wdtvConf->writeConf("NTPSERVER", $_POST['ntpsrv']);
             $wdtvConf->writeConf("TIMEZONE", $_POST['timezone']);
-            
+/*            
             // save ntp and ipup stuff ...
             $wdtvConf->writeConf("NTP", $_POST['ntp']);
             $wdtvConf->writeConf("IPUP", $_POST['ipup']);
-            
+*/            
             // reload page ...
             header("Location: ".$_SERVER['PHP_SELF']);
          }
@@ -506,11 +510,15 @@ if (isset($_GET['act']))
 {
    if ($_GET['act'] === "fav")
    {
-      echo "<table>\n<tr>\n<td style='vertical-align: top;'>\n";
-      makeFavTab();
-      echo "</td>\n<td>\n";
-      makeChanTab();
-      echo "</td>\n</tr>\n</table>\n";
+      if ((($chanXml = $kartAPI->getChannelListXml()) !== FALSE)
+         && (($favXml = $kartAPI->getFavoritesXML()) !== FALSE))
+      {
+         echo "<table>\n<tr>\n<td style='vertical-align: top;'>\n";
+         makeFavTab($favXml, $chanXml);
+         echo "</td>\n<td>\n";
+         makeChanTab($favXml, $chanXml);
+         echo "</td>\n</tr>\n</table>\n";
+      }
    }
    else if($_GET['act'] === "acc")
    {
