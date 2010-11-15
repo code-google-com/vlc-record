@@ -578,7 +578,8 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
          $recname  = str_replace("\\", "", $recname);
          
          // add date ...
-         $recname .= ($gmt === -1) ? date("d.m.y-H_i") : date("d.m.y-H_i", $gmt);
+         $recname .= ($gmt === -1) ? date("d.m.y-H_i", $tmpKartAPI->getLastServerTime()) 
+                        : date("d.m.y-H_i", $gmt);
          
          // rec data array ...
          $rec_data = array(
