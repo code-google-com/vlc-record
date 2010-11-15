@@ -27,6 +27,7 @@ class kartinaAPI
    private $_passwd;
    private $_reader;
    private $_logfile;
+   private $_lastServerTime;
 
    /* -----------------------------------------------------------------\
    |  Method: __construct
@@ -40,11 +41,12 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function __construct($username = "", $passwd = "", $host = "")
    {
-      $this->_host     = $host;
-      $this->_username = $username;
-      $this->_passwd   = $passwd;
-      $this->_cookie   = "";
-      $this->_reader   = new XMLReader();
+      $this->_host           = $host;
+      $this->_username       = $username;
+      $this->_passwd         = $passwd;
+      $this->_cookie         = "";
+      $this->_reader         = new XMLReader();
+      $this->_lastServerTime = -1;
       if (DOTRACE == "YES")
       {
         $this->_logfile = fopen("/tmp/kartina_api.log", "a+");
@@ -297,6 +299,10 @@ class kartinaAPI
          // since we're logged out now, make sure 
          // to delete the cookie also!
          @unlink(COOKIE_FILE);
+         
+         // delete stored files ...
+         @unlink (KARTCHANLIST);
+         @unlink (KARTFAVLIST);
       }
       $this->_cookie = "";
    }
@@ -359,11 +365,37 @@ class kartinaAPI
                'id'   => $channels->item($i)->nodeValue,
                'name' => $names->item($i)->nodeValue,
                'icon' => $icons->item($i)->nodeValue
-               );
+            );
          }
       }
 
       return $entries;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getChannelListXml
+   |  Begin: 15.11.2010 / 09:36
+   |  Author: Jo2003
+   |  Description: get channel, don't touch anything
+   |
+   |  Parameters: --
+   |
+   |  Returns: false --> error
+   |            else --> channel list xml
+   \----------------------------------------------------------------- */
+   public function getChannelListXml()
+   {
+      $reply = $this->getReq($this->_host . API_PATH . "channel_list");
+      $reply = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         return $reply;
+      }
+      else
+      {
+         return false;
+      }
    }
    
    /* -----------------------------------------------------------------\
@@ -480,6 +512,9 @@ class kartinaAPI
       $html = strstr($html, "<?xml");
       
       $this->log($header.$html);
+      
+      // extract timestamp from answer ...
+      $this->scanServerTime ($html);
 
       return $html;
    }
@@ -571,6 +606,32 @@ class kartinaAPI
    }
    
    /* -----------------------------------------------------------------\
+   |  Method: getFavoritesXML
+   |  Begin: 15.11.2010 / 10:55
+   |  Author: Jo2003
+   |  Description: get stored favorites from kartina (XML)
+   |
+   |  Parameters: --
+   |
+   |  Returns: false --> error
+   |            else --> favorites as XML
+   \----------------------------------------------------------------- */
+   public function getFavoritesXML()
+   {
+      $reply = $this->getReq($this->_host.API_PATH."/favorites");
+      $reply = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         return $reply;
+      }
+      else
+      {
+         return false;
+      }
+   }
+   
+   /* -----------------------------------------------------------------\
    |  Method: saveFavorites
    |  Begin: 8/12/2010 / 9:24a
    |  Author: Jo2003
@@ -615,9 +676,6 @@ class kartinaAPI
    public function setFavorite($place, $cid)
    {
       $this->postReq($this->_host.API_PATH."/favorites_set", "place=".$place."&cid=".$cid);
-      
-      // update favorites file ...
-      $this->saveFavorites();
    }
 
    /* -----------------------------------------------------------------\
@@ -676,105 +734,108 @@ class kartinaAPI
       $showinfo = array();
       
       // get channel name and channel icon ...
-      $domChanList = new DOMDocument();
-      $domChanList->load(KARTCHANLIST);
-      
-      $xpchan   = new DOMXpath($domChanList);
-      $chanitem = $xpchan->query("/response/groups/item/channels/item[id='".$cid."']");
-      $chan     = $chanitem->item(0); // there is only one such item ...
-      
-      // name ...
-      $showinfo['channel'] = $xpchan->query("name", $chan)->item(0)->nodeValue;
-      
-      // icon ...
-      $showinfo['icon']    = KARTINA_HOST.$xpchan->query("icon", $chan)->item(0)->nodeValue;
-      
-      // is gmt given here ... ?
-      if ($gmt == -1)
+      if (($channelList = $this->getChannelListXml ()) !== FALSE)
       {
-         // not given --> get info from channel list ...
-         
-         // start ...
-         $showinfo['start'] = $xpchan->query("epg_start", $chan)->item(0)->nodeValue;
-         
-         // end ...
-         $showinfo['end'] = $xpchan->query("epg_end", $chan)->item(0)->nodeValue;
-         
-         // get cut position ...
-         $name = $xpchan->query("epg_progname", $chan)->item(0)->nodeValue;
-         
-         // cut between name and decription ...
-         $cutpos = strpos($name, "\n");
-         
-         if ($cutpos !== false)
+         $domChanList = new DOMDocument();
+         $domChanList->loadXML($channelList);
+      
+         $xpchan   = new DOMXpath($domChanList);
+         $chanitem = $xpchan->query("/response/groups/item/channels/item[id='".$cid."']");
+         $chan     = $chanitem->item(0); // there is only one such item ...
+      
+         // name ...
+         $showinfo['channel'] = $xpchan->query("name", $chan)->item(0)->nodeValue;
+      
+         // icon ...
+         $showinfo['icon']    = KARTINA_HOST.$xpchan->query("icon", $chan)->item(0)->nodeValue;
+      
+         // is gmt given here ... ?
+         if ($gmt == -1)
          {
-            // show name ...
-            $showinfo['name']  = substr($name, 0, $cutpos);
+            // not given --> get info from channel list ...
          
-            // show description ...
-            $showinfo['descr'] = substr($name, $cutpos + 1);
+            // start ...
+            $showinfo['start'] = $xpchan->query("epg_start", $chan)->item(0)->nodeValue;
+         
+            // end ...
+            $showinfo['end'] = $xpchan->query("epg_end", $chan)->item(0)->nodeValue;
+         
+            // get cut position ...
+            $name = $xpchan->query("epg_progname", $chan)->item(0)->nodeValue;
+         
+            // cut between name and decription ...
+            $cutpos = strpos($name, "\n");
+         
+            if ($cutpos !== false)
+            {
+               // show name ...
+               $showinfo['name']  = substr($name, 0, $cutpos);
+         
+               // show description ...
+               $showinfo['descr'] = substr($name, $cutpos + 1);
+            }
+            else
+            {
+               // show name ...
+               $showinfo['name']  = $name;
+         
+               // no show description ...
+               $showinfo['descr'] = "";
+            }
          }
          else
          {
-            // show name ...
-            $showinfo['name']  = $name;
+            // gmt is set, get epg for this day ...
+            $epg = $this->getDayEpg($cid, date("dmy", $gmt));
          
-            // no show description ...
-            $showinfo['descr'] = "";
-         }
-      }
-      else
-      {
-         // gmt is set, get epg for this day ...
-         $epg = $this->getDayEpg($cid, date("dmy", $gmt));
-         
-         if (is_array($epg))
-         {
-            $count = count($epg);
-            
-            for ($i = 0; $i < $count; $i ++)
+            if (is_array($epg))
             {
-               if ($epg[$i]['timestamp'] == $gmt)
+               $count = count($epg);
+            
+               for ($i = 0; $i < $count; $i ++)
                {
-                  // found entry ...
-                  
-                  // get start time ...
-                  $showinfo['start'] = $epg[$i]['timestamp'];
-                  
-                  // is there a next entry ... ?
-                  if ($i < ($count - 1))
+                  if ($epg[$i]['timestamp'] == $gmt)
                   {
-                     // start of next show is end of this show ...
-                     $showinfo['end'] = $epg[$i + 1]['timestamp'];
-                  }
-                  else
-                  {
-                     // no info --> use one hour ...
-                     $showinfo['end'] = $showinfo['start'] + 3600;
-                  }
+                     // found entry ...
                   
-                  // get cut position ...
-                  $cutpos = strpos($epg[$i]['programm'], "\n");
+                     // get start time ...
+                     $showinfo['start'] = $epg[$i]['timestamp'];
                   
-                  if ($cutpos !== false)
-                  {
-                     // show name ...
-                     $showinfo['name']  = substr($epg[$i]['programm'], 0, $cutpos);
+                     // is there a next entry ... ?
+                     if ($i < ($count - 1))
+                     {
+                        // start of next show is end of this show ...
+                        $showinfo['end'] = $epg[$i + 1]['timestamp'];
+                     }
+                     else
+                     {
+                        // no info --> use one hour ...
+                        $showinfo['end'] = $showinfo['start'] + 3600;
+                     }
                   
-                     // show description ...
-                     $showinfo['descr'] = substr($epg[$i]['programm'], $cutpos + 1);
-                  }
-                  else
-                  {
-                     // show name ...
-                     $showinfo['name']  = $epg[$i]['programm'];
+                     // get cut position ...
+                     $cutpos = strpos($epg[$i]['programm'], "\n");
                   
-                     // no show description ...
-                     $showinfo['descr'] = "";
-                  }
+                     if ($cutpos !== false)
+                     {
+                        // show name ...
+                        $showinfo['name']  = substr($epg[$i]['programm'], 0, $cutpos);
+                  
+                        // show description ...
+                        $showinfo['descr'] = substr($epg[$i]['programm'], $cutpos + 1);
+                     }
+                     else
+                     {
+                        // show name ...
+                        $showinfo['name']  = $epg[$i]['programm'];
+                  
+                        // no show description ...
+                        $showinfo['descr'] = "";
+                     }
 
-                  // we found what we're looking for --> break for loop ...
-                  break;
+                     // we found what we're looking for --> break for loop ...
+                     break;
+                  }
                }
             }
          }
@@ -800,10 +861,6 @@ class kartinaAPI
       {
          // on error log out ...
          $this->logout();
-         
-         // delete stored files ...
-         @unlink (KARTCHANLIST);
-         @unlink (KARTFAVLIST);      
          return 0;
       } 
       else 
@@ -932,6 +989,70 @@ class kartinaAPI
       $this->log("Got following server time: ".$serverTime); 
 
       return $serverTime;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: scanServerTime
+   |  Begin: 15.11.2010 / 09:30
+   |  Author: Jo2003
+   |  Description: get server time from xml answer
+   |
+   |  Parameters: xml answer
+   |
+   |  Returns: 0 --> ok
+   |          -1 --> any error
+   \----------------------------------------------------------------- */
+   protected function scanServerTime($xmlCode)
+   {
+      $rv = -1;
+      
+      $this->_reader->XML($xmlCode);
+
+      // scn xml for servertime element ...
+      while ($this->_reader->read())
+      {
+         switch ($this->_reader->nodeType)
+         {
+         // element start ...
+         case XMLReader::ELEMENT:
+            if ($this->_reader->localName == "servertime")
+            {
+               if($this->_reader->read())
+               {
+                  if ($this->_reader->nodeType == XMLReader::TEXT)
+                  {
+                     // cache server time value ...
+                     $this->_lastServerTime = $this->_reader->value;
+                     $rv                    = 0;
+                  }
+               }
+            }
+            break;
+
+         default:
+            break;
+         }
+      }
+      
+      $this->_reader->close();
+
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getLastServerTime
+   |  Begin: 15.11.2010 / 09:35
+   |  Author: Jo2003
+   |  Description: get last stored server time
+   |
+   |  Parameters: --
+   |
+   |  Returns: -1 --> no server time stored yet
+   |         else --> last cached server time
+   \----------------------------------------------------------------- */
+   public function getLastServerTime()
+   {
+      return $this->_lastServerTime;
    }
 };
 
