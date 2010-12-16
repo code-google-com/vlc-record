@@ -1074,12 +1074,24 @@ class kartinaAPI
 
       // in respone we search for 
       // <div class="filter" rel="[genre id]">[genre name]</div>
-      $filter = "|<div[ ]+class=\"filter\"[ ]+rel=\"([0-9]+)\">([^<]+)</div>|U";
+      $filter = '|<div[ \t]+class="filter"[ \t]+rel="([0-9]+)">([^<]+)</div>|Ui';
       
       // until now we get no xml but html here ...
-      $resp    = $this->getReq($this->host . "/?m=vod&act=home");
+      $resp   = $this->getReq($this->_host."/", "m=vod&act=home");
       
-      preg_match_all($filter, $resp, $matches, PREG_PATTERN_ORDER);
+      list($header, $html) = explode("\r\n\r\n", $resp);
+
+      if (strpos(strtolower($header), "transfer-encoding: chunked") !== FALSE) 
+      {
+         $html = $this->unchunkHttp11($html);
+      }
+      
+      $html = strstr($html, '<div class="filter"');
+      
+      $this->log($html); 
+      
+      preg_match_all($filter, $html, $matches, PREG_PATTERN_ORDER);
+      
       
       for ($i = 0; $i < count($matches[1]); $i++)
       {
@@ -1106,7 +1118,7 @@ class kartinaAPI
    public function getGenreVideos ($gid)
    {
       $videos = array();
-      $reply  = $this->getReq($this->host.API_PATH."vod_list?type=last&genre=".$gid);
+      $reply  = $this->getReq($this->_host.API_PATH."vod_list", "type=last&genre=".$gid);
       $reply  = $this->cleanReply($reply);
       
       if ($this->noError($reply))
@@ -1153,7 +1165,7 @@ class kartinaAPI
    public function getVideoTracks ($vid)
    {
       $video  = array();
-      $reply  = $this->getReq($this->host.API_PATH."vod_info?id=".$vid);
+      $reply  = $this->getReq($this->_host.API_PATH."vod_info", "id=".$vid);
       $reply  = $this->cleanReply($reply);
       
       if ($this->noError($reply))
@@ -1170,7 +1182,7 @@ class kartinaAPI
    
          for ($i = 0; $i < $all; $i++)
          {
-            $video['id'][] = $ids->item($i)->nodeValue;
+            $video['ids'][] = $ids->item($i)->nodeValue;
          }
       }
       
@@ -1245,7 +1257,7 @@ class kartinaAPI
    {
       $rv    = false;
       
-      $reply = $this->getReq($this->host.API_PATH."vod_info?id=".$vid);
+      $reply = $this->getReq($this->_host.API_PATH."vod_info", "id=".$vid);
       $reply = $this->cleanReply($reply);
       
       if ($this->noError($reply))

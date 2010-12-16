@@ -188,7 +188,7 @@ function _pluginVideoDetails ($vid)
    // create folders with genres ...
    for ($i = 0; $i < count($video['ids']); $i++)
    {
-      $play_data       = array('vod_tid' => $vid);
+      $play_data       = array('vod_tid' => $video['ids'][$i]);
       $play_data_query = http_build_query($play_data);
    
       // add play item ...
@@ -215,7 +215,7 @@ function _pluginVideoDetails ($vid)
       'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($vod_data_query)),
       'dc:title'       => "Информация",
       'upnp:class'     => "object.item.imageitem",
-      'res'            => LOC_KARTINA_URL."/vodinfo.php?".$epg_data_query,
+      'res'            => LOC_KARTINA_URL."/vodinfo.php?".$vod_data_query,
       'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
       'resolution'     => "1920x1080",
       'colorDepth'     => 24
@@ -268,6 +268,7 @@ function _pluginVodGenres()
          'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
       );
    }
+   return $retMediaItems; 
 }
 
 /* -----------------------------------------------------------------\
@@ -297,19 +298,19 @@ function _pluginGenreVideos($gid)
    $retMediaItems = array();
    
    // get videos array ...
-   $vidoes        = $tmpKartAPI->getGenreVideos ($gid);
+   $videos        = $tmpKartAPI->getGenreVideos ($gid);
    
    // create folders with genres ...
-   for ($i = 0; $i < count($vidoes); $i++)
+   for ($i = 0; $i < count($videos); $i++)
    {
       $data       = array('action' => 'video_main',
-                          'vid'    => $vidoes[$i]['id']);
+                          'vid'    => $videos[$i]['id']);
                           
       $dataString = http_build_query($data, "", "&amp;");
       
-      $title = $vidoes[$i]['name']." ("
-              .$vidoes[$i]['country']." ".
-              .$vidoes[$i]['year']")";
+      $title = $videos[$i]['name']." ("
+              .$videos[$i]['country']." "
+              .$videos[$i]['year'].")";
    
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
