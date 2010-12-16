@@ -11,6 +11,7 @@
 | $Id$
 \*************************************************************/
 require_once(dirname(__FILE__) . "/_defines.php.inc");
+require_once(dirname(__FILE__) . "/ctimer.php");
 
 /********************************************************************\
 |  Class: CSimpleTimer
@@ -22,8 +23,8 @@ require_once(dirname(__FILE__) . "/_defines.php.inc");
 class CSimpleTimer
 {
    private $tStartStamp;
-   private $tGmtStart;
    private $doMeasure;
+   private $timer;
    
    /* -----------------------------------------------------------------\
    |  Method: __construct
@@ -38,14 +39,15 @@ class CSimpleTimer
    \----------------------------------------------------------------- */
    public function __construct($start = -1)
    {
+      $this->timer = new Timer();
+      
       if ($start != -1)
       {
-         $this->tGmtStart = time();
          $this->doMeasure = true;
+         $this->timer->start();
       }
       else
       {
-         $this->tGmtStart = 0;
          $this->doMeasure = false;
       }
       
@@ -65,8 +67,8 @@ class CSimpleTimer
    public function startMeasurement ($start)
    {
       $this->tStartStamp = $start;
-      $this->tGmtStart   = time();
       $this->doMeasure   = true;
+      $this->timer->start();
    }
 
    /* -----------------------------------------------------------------\
@@ -81,13 +83,29 @@ class CSimpleTimer
    \----------------------------------------------------------------- */
    public function __destruct()
    {
+      $this->getAndSaveTime();
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getAndSaveTime
+   |  Begin: 08.12.2010 / 10:20
+   |  Author: Jo2003
+   |  Description: get measured time, compute stop stamp, save to file
+   |               if measurement was started
+   |  Parameters: -- 
+   |
+   |  Returns: --
+   \----------------------------------------------------------------- */
+   public function getAndSaveTime ()
+   {
       if ($this->doMeasure)
       {
          // compute runtime ...
-         $runtime = time() - $this->tGmtStart;
+         $this->timer->stop();
+         $runTime  = (integer)round($this->timer->get(Timer::SECONDS));
          
          // compute stop time using start and runtime ...
-         $stoptime = $this->tStartStamp + $runtime;
+         $stoptime = $this->tStartStamp + $runTime;
          
          // write stoptime to file ...
          if (($fp = fopen(TIMESTAMPFILE, "w")) !== false)
