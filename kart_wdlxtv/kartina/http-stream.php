@@ -76,6 +76,22 @@ function _pluginMain($prmQuery)
          $items = _pluginCreatePlayRewind($queryData['cid'], $queryData['gmt'], 
                                           $queryData['is_video']);
       }
+      else if ($queryData['action'] === "vod_main")
+      {
+         $items = _pluginVodGenres();
+      }
+      else if ($queryData['action'] === "genre")
+      {
+         simpleLog(__FUNCTION__."():".__LINE__." Genre ID: ".$queryData['gid']);
+         
+         $items = _pluginGenreVideos ($queryData['gid']);
+      }
+      else if ($queryData['action'] === "video_main")
+      {
+         simpleLog(__FUNCTION__."():".__LINE__." Video ID: ".$queryData['vid']);
+         
+         $items = _pluginVideoDetails ($queryData['vid']);
+      }
    }
    
    return $items;
@@ -141,6 +157,153 @@ function _pluginCreateChannelList($groupid)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: _pluginVideoDetails
+|  Begin: 16.12.2010 / 13:00
+|  Author: Jo2003
+|  Description: create video folder 
+|
+|  Parameters: --
+|
+|  Returns: array of items to be displayed
+\----------------------------------------------------------------- */
+function _pluginVideoDetails ($vid)
+{
+   // Please note that all global variables
+   // are wiped out! Therefore we have to instantiate
+   // a local instance here .... 
+   
+   // don't break your head about login / logout at kartina!
+   // we will load the cookie from file so no authentication
+   // is needed here ... we also don't need username and PW ...
+   $tmpKartAPI = new kartinaAPI();
+   
+   // load cookie ...
+   $tmpKartAPI->loadCookie();
+   
+   $retMediaItems = array();
+   
+   // get genre array ...
+   $video         = $tmpKartAPI->getVideoTracks ($vid);
+   
+   // create folders with genres ...
+   for ($i = 0; $i < count($video['ids']); $i++)
+   {
+      $play_data       = array('vod_tid' => $vid);
+      $play_data_query = http_build_query($play_data);
+   
+      // add play item ...
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+         'dc:title'       => $video['name']." Част ".($i + 1),
+         'upnp:class'     => "object.item.videoitem",
+         'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+         'protocolInfo'   => "http-get:*:*:*",
+         'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
+      );
+   }
+   
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: _pluginVodGenres
+|  Begin: 16.12.2010 / 11:00
+|  Author: Jo2003
+|  Description: create folder with vod genres
+|
+|  Parameters: --
+|
+|  Returns: array of items to be displayed
+\----------------------------------------------------------------- */
+function _pluginVodGenres()
+{
+   // Please note that all global variables
+   // are wiped out! Therefore we have to instantiate
+   // a local instance here .... 
+   
+   // don't break your head about login / logout at kartina!
+   // we will load the cookie from file so no authentication
+   // is needed here ... we also don't need username and PW ...
+   $tmpKartAPI = new kartinaAPI();
+   
+   // load cookie ...
+   $tmpKartAPI->loadCookie();
+   
+   $retMediaItems = array();
+   
+   // get genre array ...
+   $genres        = $tmpKartAPI->getVodGenres ();
+   
+   // create folders with genres ...
+   for ($i = 0; $i < count($genres); $i++)
+   {
+      $data       = array('action' => 'genre',
+                          'gid'    => $genres[$i]['id']);
+                          
+      $dataString = http_build_query($data, "", "&amp;");
+   
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'dc:title'       => $genres[$i]['name'],
+         'upnp:class'     => 'object.container',
+         'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
+      );
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: _pluginGenreVideos
+|  Begin: 16.12.2010 / 12:30
+|  Author: Jo2003
+|  Description: list all videos related to genre
+|
+|  Parameters: genre id
+|
+|  Returns: array of items to be displayed
+\----------------------------------------------------------------- */
+function _pluginGenreVideos($gid)
+{
+   // Please note that all global variables
+   // are wiped out! Therefore we have to instantiate
+   // a local instance here .... 
+   
+   // don't break your head about login / logout at kartina!
+   // we will load the cookie from file so no authentication
+   // is needed here ... we also don't need username and PW ...
+   $tmpKartAPI = new kartinaAPI();
+   
+   // load cookie ...
+   $tmpKartAPI->loadCookie();
+   
+   $retMediaItems = array();
+   
+   // get videos array ...
+   $vidoes        = $tmpKartAPI->getGenreVideos ($gid);
+   
+   // create folders with genres ...
+   for ($i = 0; $i < count($vidoes); $i++)
+   {
+      $data       = array('action' => 'video_main',
+                          'vid'    => $vidoes[$i]['id']);
+                          
+      $dataString = http_build_query($data, "", "&amp;");
+      
+      $title = $vidoes[$i]['name']." ("
+              .$vidoes[$i]['country']." ".
+              .$vidoes[$i]['year']")";
+   
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'dc:title'       => $title,
+         'upnp:class'     => 'object.container',
+         'upnp:album_art' => KARTINA_HOST.$videos[$i]['img']
+      );
+   }
+   
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: _pluginCreateChannelGroupList
 |  Begin: 8/13/2010 / 1:24p
 |  Author: Jo2003
@@ -169,7 +332,7 @@ function _pluginCreateChannelGroupList()
    
    // first add favorites folder ...
    $data       = array('action' => 'favorites');
-
+   
    $dataString = http_build_query($data, "", "&amp;");
    
    $retMediaItems[] = array (
@@ -177,6 +340,18 @@ function _pluginCreateChannelGroupList()
       'dc:title'       => "Фавориты",
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/favorite.png",
+   );
+   
+   // 2nd add VOD folder ...
+   $data       = array('action' => 'vod_main');
+   
+   $dataString = http_build_query($data, "", "&amp;");
+   
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'dc:title'       => "Видеотека",
+      'upnp:class'     => 'object.container',
+      'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
    );
    
    if (($channelList = $tmpKartAPI->getChannelListXml()) !== FALSE)
