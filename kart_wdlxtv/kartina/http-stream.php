@@ -194,13 +194,32 @@ function _pluginVideoDetails ($vid)
       // add play item ...
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
-         'dc:title'       => $video['name']." Част ".($i + 1),
+         'dc:title'       => $video['name'].((count($video['ids']) > 1) ? " Част ".($i + 1) : ""),
          'upnp:class'     => "object.item.videoitem",
          'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
          'protocolInfo'   => "http-get:*:*:*",
          'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
       );
    }
+   
+   /////////////////////////////////////////////////////////////////////////////
+   // description image ...
+
+   // vod data array ...
+   $vod_data = array ('vod_tid' => $vid);
+
+   $vod_data_query = http_build_query($vod_data);
+
+   // epg info image ...
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($vod_data_query)),
+      'dc:title'       => "Информация",
+      'upnp:class'     => "object.item.imageitem",
+      'res'            => LOC_KARTINA_URL."/vodinfo.php?".$epg_data_query,
+      'protocolInfo'   => "http-get:*:image/JPEG:DLNA.ORG_PN=JPEG_LRG",
+      'resolution'     => "1920x1080",
+      'colorDepth'     => 24
+   );
    
    return $retMediaItems;
 }
