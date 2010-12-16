@@ -25,7 +25,7 @@ $xp      = new DOMXpath($dom);
 $name     = $xp->query("/response/film/name")->item(0)->nodeValue;
 $descr    = $xp->query("/response/film/description")->item(0)->nodeValue;
 $poster   = $xp->query("/response/film/poster")->item(0)->nodeValue;
-$length   = $xp->query("/response/film/length")->item(0)->nodeValue;
+$lenght   = $xp->query("/response/film/lenght")->item(0)->nodeValue;
 $year     = $xp->query("/response/film/year")->item(0)->nodeValue;
 $director = $xp->query("/response/film/director")->item(0)->nodeValue;
 $actors   = $xp->query("/response/film/actors")->item(0)->nodeValue;
@@ -83,28 +83,60 @@ if ($im)
    $y += 76;
    
    // country, year and length ...
-   $info = $country." ".$year.", ".$length."мин.";
-   imagettftext($im, 24, 0, $x, $y, $white, EPGFONTBD, $info);
+   $info = $country." ".$year.", ".$lenght." мин.";
+   imagettftext($im, 24, 0, $x, $y, $white, EPGFONT, $info);
    
    // get next y position ...
    // font height(36) + line spacing(54) 
    // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 120;
+   $y += 60;
    
    // director ...
    $director = "Режиссер: ".$director;
-   imagettftext($im, 36, 0, $x, $y, $yellow, EPGFONTBD, $director);
+   imagettftext($im, 24, 0, $x, $y, $white, EPGFONT, $director);
    
    // get next y position ...
    // font height(26) + line spacing(5) 
    // + space for "down under chars" (above font height / 2)
    // + space for accent (font height / 2)
-   $y += 62;
+   $y += 160;
    
    $dodesc = 1;
    $offset = 0;
-   $descr  = "В ролях: ".$actors."\n".htmlspecialchars_decode($descr);
+   $actors = "В ролях: ".htmlspecialchars_decode($actors);
+   
+   while ($dodesc && ($y <= imagesy($im)))
+   {
+      $line = "";
+      
+      if ((mb_strlen($actors, "UTF-8") - $offset) > DESCR_LINE_LEN)
+      {
+         $token   = mb_substr($actors, $offset, DESCR_LINE_LEN, "UTF-8");
+         $cutpos  = mb_strrpos($token, " ", 0, "UTF-8");
+         $line    = mb_substr($token, 0, $cutpos, "UTF-8");
+         $offset += $cutpos + 1; 
+      }
+      else
+      {
+         $dodesc  = 0;
+         $line    = mb_substr($actors, $offset, mb_strlen($actors, "UTF-8") - $offset, "UTF-8"); 
+      }
+      
+      // paint description line ...
+      imagettftext($im, 26, 0, $x, $y, $yellow, EPGFONT, $line);
+      
+      // get next y position ...
+      // font height(26) + line spacing(5) 
+      // + space for "down under chars" (above font height / 2)
+      // + space for accent (font height / 2)
+      $y += 57;
+   }
+   
+   $y     += 20;
+   $dodesc = 1;
+   $offset = 0;
+   $descr  = str_replace("  ", " ", htmlspecialchars_decode($descr));
    
    while ($dodesc && ($y <= imagesy($im)))
    {
@@ -132,6 +164,8 @@ if ($im)
       // + space for accent (font height / 2)
       $y += 57;
    }
+   
+   
    
    imagejpeg($im, NULL, 80);
 }
@@ -182,7 +216,7 @@ function addLogo (&$img, $logo)
 {
    $rv = false;
    
-   if (($logo_img = imagecreatefromgif($logo)) !== false)
+   if (($logo_img = imagecreatefromjpeg($logo)) !== false)
    {
       // 1. We add the logo in the upper right corner of the image.
       // 2. Top- and right margin will be set to 150 px.
