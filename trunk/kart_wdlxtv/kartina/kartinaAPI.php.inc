@@ -1190,8 +1190,7 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function getVodUrl($vod_tid)
    {
-
-      $reply = $this->postReq($this->_host . API_PATH . "vod_geturl", "fileid=".$vod_tid);
+      $reply = $this->postReq($this->_host.API_PATH."vod_geturl", "fileid=".$vod_tid);
       $reply = $this->cleanReply($reply);
       $url   = "";
       
@@ -1229,6 +1228,32 @@ class kartinaAPI
       }
 
       return $url;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getVideoDetailXml
+   |  Begin: 16.12.2010 / 15:35
+   |  Author: Jo2003
+   |  Description: get video details
+   |
+   |  Parameters: video id
+   |
+   |  Returns: XML reply
+   |
+   \----------------------------------------------------------------- */
+   public function getVideoDetailXml ($vid)
+   {
+      $rv    = false;
+      
+      $reply = $this->getReq($this->host.API_PATH."vod_info?id=".$vid);
+      $reply = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         $rv = $reply;
+      }
+      
+      return $rv;
    }
 };
 
