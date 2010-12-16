@@ -1054,6 +1054,182 @@ class kartinaAPI
    {
       return $this->_lastServerTime;
    }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getVodGenres
+   |  Begin: 16.12.2010 / 11:35
+   |  Author: Jo2003
+   |  Description: get vod genres from kartina.tv
+   |               This function will change as soon as kartinas API
+   |               supports this.
+   |
+   |  Parameters: --
+   |
+   |  Returns: array with genres array(id => numb, name => genre name)
+   \----------------------------------------------------------------- */
+   public function getVodGenres()
+   {
+      $genres  = array();
+      $matches = array();
+
+      // in respone we search for 
+      // <div class="filter" rel="[genre id]">[genre name]</div>
+      $filter = "|<div[ ]+class=\"filter\"[ ]+rel=\"([0-9]+)\">([^<]+)</div>|U";
+      
+      // until now we get no xml but html here ...
+      $resp    = $this->getReq($this->host . "/?m=vod&act=home");
+      
+      preg_match_all($filter, $resp, $matches, PREG_PATTERN_ORDER);
+      
+      for ($i = 0; $i < count($matches[1]); $i++)
+      {
+         $genres[] = array('id' => $matches[1][$i], 'name' => $matches[2][$i]);
+      }
+      
+      return $genres;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getGenreVideos
+   |  Begin: 16.12.2010 / 12:35
+   |  Author: Jo2003
+   |  Description: get genre videos
+   |
+   |  Parameters: genre id
+   |
+   |  Returns: array with videos array(id      => numb, 
+   |                                   name    => video name,
+   |                                   img     => thumbnail,
+   |                                   year    => production year
+   |                                   country => filmed in)
+   \----------------------------------------------------------------- */
+   public function getGenreVideos ($gid)
+   {
+      $videos = array();
+      $reply  = $this->getReq($this->host.API_PATH."vod_list?type=last&genre=".$gid);
+      $reply  = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         $dom       = new DomDocument();
+         $dom->loadXML($reply);
+         $xp        = new DOMXpath($dom);
+   
+         $ids       = $xp->query("/response/rows/item/id");
+         $names     = $xp->query("/response/rows/item/name");
+         $imgs      = $xp->query("/response/rows/item/poster");
+         $years     = $xp->query("/response/rows/item/year");
+         $countries = $xp->query("/response/rows/item/country");
+         
+         $all       = $ids->length;
+   
+         for ($i = 0; $i < $all; $i++)
+         {
+            $videos[] = array(
+               'id'      => $ids->item($i)->nodeValue,
+               'name'    => $names->item($i)->nodeValue,
+               'img'     => $imgs->item($i)->nodeValue,
+               'year'    => $years->item($i)->nodeValue,
+               'country' => $countries->item($i)->nodeValue
+            );
+         }
+      }
+      
+      return $videos;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getVideoTracks
+   |  Begin: 16.12.2010 / 13:05
+   |  Author: Jo2003
+   |  Description: get video tracks
+   |
+   |  Parameters: video id
+   |
+   |  Returns: array(name    => video name,
+   |                 ids     => array with track ids)
+   |
+   \----------------------------------------------------------------- */
+   public function getVideoTracks ($vid)
+   {
+      $video  = array();
+      $reply  = $this->getReq($this->host.API_PATH."vod_info?id=".$vid);
+      $reply  = $this->cleanReply($reply);
+      
+      if ($this->noError($reply))
+      {
+         $dom           = new DomDocument();
+         $dom->loadXML($reply);
+         $xp            = new DOMXpath($dom);
+   
+         $ids           = $xp->query("/response/film/videos/item/id");
+         $video['name'] = $xp->query("/response/film/name")->item(0)->nodeValue;
+         
+         
+         $all           = $ids->length;
+   
+         for ($i = 0; $i < $all; $i++)
+         {
+            $video['id'][] = $ids->item($i)->nodeValue;
+         }
+      }
+      
+      return $video;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getVodUrl
+   |  Begin: 16.12.2010 / 13:35
+   |  Author: Jo2003
+   |  Description: get url for vod track
+   |
+   |  Parameters: vod track id
+   |
+   |  Returns: url
+   |
+   \----------------------------------------------------------------- */
+   public function getVodUrl($vod_tid)
+   {
+
+      $reply = $this->postReq($this->_host . API_PATH . "vod_geturl", "fileid=".$vod_tid);
+      $reply = $this->cleanReply($reply);
+      $url   = "";
+      
+      if ($this->noError($reply))
+      {
+         $this->_reader->XML($reply);
+
+         while ($this->_reader->read())
+         {
+            switch ($this->_reader->nodeType)
+            {
+            // element start ...
+            case XMLReader::ELEMENT:
+               if ($this->_reader->localName == "url")
+               {
+                  if($this->_reader->read())
+                  {
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $url = $this->_reader->value;
+   
+                        // replace buffer values ...
+                        $url = preg_replace('/^.*(\/\/[^ ]*).*$/', 'http:$1', $url); 
+                     }
+                  }
+               }
+               break;
+
+            default:
+               break;
+            }
+         }
+         
+         $this->_reader->close();
+      }
+
+      return $url;
+   }
 };
 
 ?>

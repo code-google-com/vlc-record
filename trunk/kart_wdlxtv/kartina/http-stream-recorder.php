@@ -31,6 +31,7 @@ $gmt     = isset($query_array['gmt'])      ? (integer)$query_array['gmt']      :
 $isVideo = isset($query_array['is_video']) ? (boolean)$query_array['is_video'] :  true;
 $recfile = isset($query_array['recfile'])  ? (string)$query_array['recfile']   :    "";
 $offset  = isset($query_array['offset'])   ? (integer)$query_array['offset']   :     0;
+$vod_tid = isset($query_array['vod_tid'])  ? (integer)$query_array['vod_tid']  :     0;
 
 ////////////////////////////////////////////////////////////////////////////////
 // forward / backward jumping 
@@ -46,7 +47,7 @@ $offset  = isset($query_array['offset'])   ? (integer)$query_array['offset']   :
 $sTimer = NULL;
 
 // are we in archive play ... ?
-if (!$dorec && ($gmt != -1))
+if (!$dorec && ($gmt != -1) && !$vod_tid)
 {
    // is any offset given ...
    if ($offset != 0)
@@ -77,8 +78,19 @@ if (!$dorec && ($gmt != -1))
    }
 }
 
-// get stream url ...
-$url = $kartAPI->getStreamUrl($cid, $gmt);
+// declare url ...
+$url = "";
+
+if (!$vod_tid)
+{
+   // get stream url ...
+   $url = $kartAPI->getStreamUrl($cid, $gmt);
+}
+else
+{
+   // vod stream ...
+   $url = $kartAPI->getVodUrl($vod_tid);
+}
 
 if ($url != "")
 {
