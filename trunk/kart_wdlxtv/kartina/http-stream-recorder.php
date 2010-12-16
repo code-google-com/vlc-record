@@ -153,7 +153,14 @@ if ($url != "")
             
             if ($isVideo)
             {
-               header("Content-Type: video/mpeg");
+               if (!$vod_tid)
+               {
+                  header("Content-Type: video/mpeg");
+               }
+               else
+               {
+                  header("Content-Type: video/mp4");
+               }
             }
             else
             {
