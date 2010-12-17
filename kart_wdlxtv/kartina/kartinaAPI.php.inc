@@ -1095,7 +1095,10 @@ class kartinaAPI
       
       for ($i = 0; $i < count($matches[1]); $i++)
       {
-         $genres[] = array('id' => $matches[1][$i], 'name' => $matches[2][$i]);
+         $genres[] = array(
+            'id'   => $matches[1][$i], 
+            'name' => mb_strtoupper($matches[2][$i]) // uppercase looks simply better ...
+         );
       }
       
       return $genres;
