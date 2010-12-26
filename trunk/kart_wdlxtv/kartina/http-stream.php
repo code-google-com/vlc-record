@@ -190,13 +190,15 @@ function _pluginVideoDetails ($vid)
    {
       $play_data       = array('vod_tid' => $video['ids'][$i]);
       $play_data_query = http_build_query($play_data);
+      
+      $url = $tmpKartAPI->getVodUrl($video['ids'][$i]);
    
       // add play item ...
       $retMediaItems[] = array (
          'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
          'dc:title'       => $video['name'].((count($video['ids']) > 1) ? " Част ".($i + 1) : ""),
          'upnp:class'     => "object.item.videoitem",
-         'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+         'res'            => $url,
          'protocolInfo'   => VODPROTINFO,
          'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
       );
