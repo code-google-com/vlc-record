@@ -1097,7 +1097,7 @@ class kartinaAPI
       {
          $genres[] = array(
             'id'   => $matches[1][$i], 
-            'name' => mb_strtoupper($matches[2][$i]) // uppercase looks simply better ...
+            'name' => mb_strtoupper($matches[2][$i], "UTF-8") // uppercase looks simply better ...
          );
       }
       

@@ -34,7 +34,5 @@ define ('EPGFONTBD',        "/usr/share/fonts/truetype/msttcorefonts/Arial_Black
 define ('EPGIMG',           dirname(__FILE__).'/images/epg_back.jpg');
 define ('DESCR_LINE_LEN',   90);
 define ('TIMESTAMPFILE',    "/tmp/.kart_tstamp");
-define ('VODPROTINFO',      "http-get:*:video/mp4:DLNA.ORG_PN=AVC_MP4_MP_SD_AAC_MULT5;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000");
-// define ('VODPROTINFO',      "http-get:*:video/mp4:*");
-
+define ('VODPROTINFO',      "http-get:*:video/mp4:*");
 ?>

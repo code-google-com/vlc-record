@@ -31,7 +31,6 @@ $gmt     = isset($query_array['gmt'])      ? (integer)$query_array['gmt']      :
 $isVideo = isset($query_array['is_video']) ? (boolean)$query_array['is_video'] :  true;
 $recfile = isset($query_array['recfile'])  ? (string)$query_array['recfile']   :    "";
 $offset  = isset($query_array['offset'])   ? (integer)$query_array['offset']   :     0;
-$vod_tid = isset($query_array['vod_tid'])  ? (integer)$query_array['vod_tid']  :     0;
 
 ////////////////////////////////////////////////////////////////////////////////
 // forward / backward jumping 
@@ -47,7 +46,7 @@ $vod_tid = isset($query_array['vod_tid'])  ? (integer)$query_array['vod_tid']  :
 $sTimer = NULL;
 
 // are we in archive play ... ?
-if (!$dorec && ($gmt != -1) && !$vod_tid)
+if (!$dorec && ($gmt != -1))
 {
    // is any offset given ...
    if ($offset != 0)
@@ -78,19 +77,8 @@ if (!$dorec && ($gmt != -1) && !$vod_tid)
    }
 }
 
-// declare url ...
-$url = "";
-
-if (!$vod_tid)
-{
-   // get stream url ...
-   $url = $kartAPI->getStreamUrl($cid, $gmt);
-}
-else
-{
-   // vod stream ...
-   $url = $kartAPI->getVodUrl($vod_tid);
-}
+// get stream url ...
+$url = $kartAPI->getStreamUrl($cid, $gmt);
 
 if ($url != "")
 {
@@ -153,14 +141,7 @@ if ($url != "")
             
             if ($isVideo)
             {
-               if (!$vod_tid)
-               {
-                  header("Content-Type: video/mpeg");
-               }
-               else
-               {
-                  header("Content-Type: video/mp4");
-               }
+               header("Content-Type: video/mpeg");
             }
             else
             {
@@ -168,11 +149,12 @@ if ($url != "")
                // header("Content-Type: audio/x-aac"); // aac audio ...
                header("Content-Type: audio/mpeg");     // any mpeg audio ...
             }
-            
-            header("Content-Size: 65535");
-            header("Content-Length: 65535");
          }
+         
+         header("Content-Size: 65535");
+         header("Content-Length: 65535");
 
+         // pups_log($line);
          header($line);
       }
       
