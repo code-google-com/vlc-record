@@ -1122,7 +1122,7 @@ class kartinaAPI
    {
       $videos = array();
       
-      $req    = "type=first&nums=10000"
+      $req    = "type=first&nums=10000";
       
       if ($gid != -1)
       {
