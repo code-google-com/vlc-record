@@ -31,17 +31,6 @@ $director = $xp->query("/response/film/director")->item(0)->nodeValue;
 $actors   = $xp->query("/response/film/actors")->item(0)->nodeValue;
 $country  = $xp->query("/response/film/country")->item(0)->nodeValue;
 
-/*
-$showinfo = array(
-   'channel' => "2x2",
-   'icon'    => "http://172.25.20.10/~joergn/pups/images/4.gif",
-   'name'    => "М/с &quot;Симпсоны&quot;, 19 сезон, 19-20 эп.",
-   'descr'   => "США, 1989, комедия. В ролях: Дэн Кастелланета, Джули Кэвнер, Нэнси Картрайт, Йердли Смит. Семейство Симпсонов живет в маленьком американском городке Спрингфилд. Глава семейства Гомер работает на атомной электростанции, принося предприятия больше убытков, чем пользы. Он любит пить пиво с...",
-   'start'   => 1287508860,
-   'end'     => 1287512400
-);
-*/
-
 // load background image ...
 $im = imagecreatefromjpeg(EPGIMG);
 

@@ -1118,10 +1118,19 @@ class kartinaAPI
    |                                   year    => production year
    |                                   country => filmed in)
    \----------------------------------------------------------------- */
-   public function getGenreVideos ($gid)
+   public function getGenreVideos ($gid = -1)
    {
       $videos = array();
-      $reply  = $this->getReq($this->_host.API_PATH."vod_list", "type=last&genre=".$gid);
+      
+      $req    = "type=first&nums=10000"
+      
+      if ($gid != -1)
+      {
+         $req .= "&genre=".$gid;
+      }
+      
+      $reply  = $this->getReq($this->_host.API_PATH."vod_list", $req);
+      
       $reply  = $this->cleanReply($reply);
       
       if ($this->noError($reply))

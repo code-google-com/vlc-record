@@ -188,14 +188,11 @@ function _pluginVideoDetails ($vid)
    // create folders with genres ...
    for ($i = 0; $i < count($video['ids']); $i++)
    {
-      $play_data       = array('vod_tid' => $video['ids'][$i]);
-      $play_data_query = http_build_query($play_data);
-      
       $url = $tmpKartAPI->getVodUrl($video['ids'][$i]);
    
       // add play item ...
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+         'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($url)),
          'dc:title'       => $video['name'].((count($video['ids']) > 1) ? " Част ".($i + 1) : ""),
          'upnp:class'     => "object.item.videoitem",
          'res'            => $url,
@@ -251,6 +248,19 @@ function _pluginVodGenres()
    $tmpKartAPI->loadCookie();
    
    $retMediaItems = array();
+   
+   // add "all" entry ...
+   $data       = array('action' => 'genre',
+                       'gid'    => -1);
+                       
+   $dataString = http_build_query($data, "", "&amp;");
+
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'dc:title'       => 'ВСЕ',
+      'upnp:class'     => 'object.container',
+      'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
+   );
    
    // get genre array ...
    $genres        = $tmpKartAPI->getVodGenres ();
