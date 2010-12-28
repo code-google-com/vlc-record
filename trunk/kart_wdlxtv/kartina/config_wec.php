@@ -12,6 +12,7 @@
 \*************************************************************/
 
 require_once(dirname(__FILE__)."/_timezones.php.inc");
+require_once(dirname(__FILE__)."/_kartina_auth.php.inc");
 
 ////////////////////////////////////////////////////////////////////////////////
 // config array ...
@@ -66,7 +67,7 @@ $wec_options['KART_REC_FOLDER'] = array(
 );
 
 // time zone (may not work because used in other config areas)...
-$wec_options['TIMEZONE_KARTINA'] = array(
+$wec_options['TIMEZONE'] = array(
    'configname'   => 'TIMEZONE',
    'configdesc'   => "Timezone",
    'longdesc'     => "Choose matching timezone!",
@@ -89,11 +90,11 @@ $wec_options['KARTINA_FAVORITES'] = array(
    'group'        => 'UMSP: Kartina.tv',
    'type'         => WECT_MULTI,
    'page'         => WECP_UMSP,
-   'availval'     => array(),
-   'availvalname' => array(),
+   'availval'     => wec_getCids(), 
+   'availvalname' => wec_getChans(),
    'defaultval'   => array(),
-   'currentval'   => array(),
-   'readhook'     => 'wec_kartinatv_read',
+   'currentval'   => wec_getFavs(),
+   'readhook'     => NULL,
    'writehook'    => 'wec_kartinatv_write'
 );
 
@@ -104,41 +105,25 @@ $wec_options['KARTINA_FAVORITES'] = array(
 |  Description: hook read function, at this time only used for 
 |               favorites stuff
 |
-|  Parameters: option array to fill
+|  Parameters: option array
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-function wec_kartinatv_read($wec_option_arr)
+function wec_getFavs()
 {
-   require(dirname(__FILE__)."/_kartina_auth.php.inc");
-
-   if ($wec_option_arr['configname'] === "KARTINA_FAVORITES")
+   $api = new kartinaAPI();
+   $api->loadCookie(); 
+   
+   // fill in current values ...
+   $favsarr = $api->getFavorites();
+   $favs    = array();
+    
+   for ($i = 0; $i < count($favsarr); $i++)
    {
-      // fill in current values ...
-      $favsarr = $kartAPI->getFavorites();
-      $favs    = array();
-      
-      for ($i = 0; $i < count($favsarr); $i++)
-      {
-         $favs[] = $favsarr[$i]['cid'];
-      }
-      
-      $wec_option_arr['currentval'] = $favs;
-      
-      // fill in availabe values ...
-      $chanarr = $kartAPI->getChannelList();
-      $chans   = array();
-      $cids    = array();
-      
-      for ($i = 0; $i < count($chanarr); $i++)
-      {
-         $cids[]  = $chanarr[$i]['id'];
-         $chans[] = $chanarr[$i]['name'];
-      }
-      
-      $wec_option_arr['availval']     = $cids;
-      $wec_option_arr['availvalname'] = $chans;
+      $favs[] = $favsarr[$i]['cid'];
    }
+   
+   return $favs;
 }
 
 /* -----------------------------------------------------------------\
@@ -154,16 +139,52 @@ function wec_kartinatv_read($wec_option_arr)
 \----------------------------------------------------------------- */
 function wec_kartinatv_write($wec_option_array, $value)
 {
-   require(dirname(__FILE__)."/_kartina_auth.php.inc");
+   $api = new kartinaAPI();
+   $api->loadCookie();
 
-   if ($wec_option_arr['configname'] === "KARTINA_FAVORITES")
+   if ($wec_option_array['configname'] === "KARTINA_FAVORITES")
    {
       for ($i = 1; $i <= 12; $i++)
       {
          $cid = isset($value[$i - 1]) ? $value[$i - 1] : 0;
-         $kartAPI->setFavorite($i, $cid);
+         $api->setFavorite($i, $cid);
       }
    }
+}
+
+
+function wec_getCids ()
+{
+   $api = new kartinaAPI();
+   $api->loadCookie();
+   
+   // fill in availabe values ...
+   $chanarr = $api->getChannelList();
+   $cids    = array();
+
+   for ($i = 0; $i < count($chanarr); $i++)
+   {
+      $cids[] = $chanarr[$i]['id'];
+   }
+   
+   return $cids; 
+}
+
+function wec_getChans ()
+{
+   $api = new kartinaAPI();
+   $api->loadCookie();
+   
+   // fill in availabe values ...
+   $chanarr = $api->getChannelList();
+   $chans   = array();
+
+   for ($i = 0; $i < count($chanarr); $i++)
+   {
+      $chans[] = $chanarr[$i]['name'];
+   }
+
+   return $chans; 
 }
 
 ?>
