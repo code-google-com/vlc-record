@@ -146,7 +146,7 @@ function _pluginCreateChannelList($groupid)
          $dataString = http_build_query($data, "", "&amp;");
          
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
             'dc:title'       => $names->item($i)->nodeValue,
             'upnp:class'     => 'object.container',
             'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue
@@ -192,7 +192,7 @@ function _pluginVideoDetails ($vid)
    
       // add play item ...
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($url)),
+         'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($url)),
          'dc:title'       => $video['name'].((count($video['ids']) > 1) ? " Част ".($i + 1) : ""),
          'upnp:class'     => "object.item.videoitem",
          'res'            => $url,
@@ -211,7 +211,7 @@ function _pluginVideoDetails ($vid)
 
    // epg info image ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($vod_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($vod_data_query)),
       'dc:title'       => "Информация",
       'upnp:class'     => "object.item.imageitem",
       'res'            => LOC_KARTINA_URL."/vodinfo.php?".$vod_data_query,
@@ -256,7 +256,7 @@ function _pluginVodGenres()
    $dataString = http_build_query($data, "", "&amp;");
 
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
       'dc:title'       => 'ВСЕ',
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
@@ -274,7 +274,7 @@ function _pluginVodGenres()
       $dataString = http_build_query($data, "", "&amp;");
    
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
          'dc:title'       => $genres[$i]['name'],
          'upnp:class'     => 'object.container',
          'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
@@ -325,7 +325,7 @@ function _pluginGenreVideos($gid)
               .$videos[$i]['year'].")";
    
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
          'dc:title'       => $title,
          'upnp:class'     => 'object.container',
          'upnp:album_art' => KARTINA_HOST.$videos[$i]['img']
@@ -368,7 +368,7 @@ function _pluginCreateChannelGroupList()
    $dataString = http_build_query($data, "", "&amp;");
    
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
       'dc:title'       => "Фавориты",
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/favorite.png",
@@ -380,7 +380,7 @@ function _pluginCreateChannelGroupList()
    $dataString = http_build_query($data, "", "&amp;");
    
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+      'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
       'dc:title'       => "Видеотека",
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
@@ -405,7 +405,7 @@ function _pluginCreateChannelGroupList()
          $dataString = http_build_query($data, "", "&amp;");
          
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
             'dc:title'       => $names->item($i)->nodeValue,
             'upnp:class'     => 'object.container',
             'upnp:album_art' => LOC_KARTINA_URL."/images/folder.png"
@@ -467,7 +467,7 @@ function _pluginCreateFavList()
          $dataString = http_build_query($data, "", "&amp;");
          
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
             'dc:title'       => $name,
             'upnp:class'     => 'object.container',
             'upnp:album_art' => KARTINA_HOST.$icon
@@ -552,7 +552,7 @@ function _pluginCreateArchMainFolder ($cid)
       $dataString = http_build_query($data, "", "&amp;");
    
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
          'dc:title'       => $title,
          'upnp:class'     => 'object.container',
          'upnp:album_art' => KARTINA_HOST.$icon
@@ -567,7 +567,7 @@ function _pluginCreateArchMainFolder ($cid)
       $dataString = http_build_query($data, "", "&amp;");
 
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
          'dc:title'       => 'Сегодня',
          'upnp:class'     => 'object.container',
          'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
@@ -596,7 +596,7 @@ function _pluginCreateArchMainFolder ($cid)
             $dataString = http_build_query($data, "", "&amp;");
       
             $retMediaItems[] = array (
-               'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+               'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
                'dc:title'       => $days[date("N", $i)]. ", " .date("d.m.Y", $i),
                'upnp:class'     => 'object.container',
                'upnp:album_art' => LOC_KARTINA_URL."/images/archive.png"
@@ -654,7 +654,7 @@ function _pluginCreateArchiveEpg ($cid, $day)
       $tok = strtok($epg[$i]['programm'], "\n");
 
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+         'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
          'dc:title'       => date("H:i" , $epg[$i]['timestamp']) . " - " . $tok,
          'upnp:class'     => 'object.container',
          'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
@@ -715,7 +715,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
    
       // epg info image ...
       $retMediaItems[] = array (
-         'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($epg_data_query)),
+         'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($epg_data_query)),
          'dc:title'       => "Информация",
          'upnp:class'     => "object.item.imageitem",
          'res'            => LOC_KARTINA_URL."/epg2img.php?".$epg_data_query,
@@ -742,7 +742,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
          $dataString = http_build_query($data, "", "&amp;");
       
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".$dataString,
+            'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
             'dc:title'       => "Просмотр / Перемотка",
             'upnp:class'     => 'object.container',
             'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
@@ -766,7 +766,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
       
          // add play item ...
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+            'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
             'dc:title'       => "Просмотр",
             'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
             'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -805,7 +805,7 @@ function _pluginChooseRecOrPlay ($cid, $gmt = -1, $isVideo = true)
          
          // add record item ...
          $retMediaItems[] = array (
-            'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($rec_data_query)),
+            'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($rec_data_query)),
             'dc:title'       => "Запись в &quot;".$recname.".ts&quot;",
             'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
             'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$rec_data_query,
@@ -851,7 +851,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "10 мин. назад",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -870,7 +870,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "5 мин. назад",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -889,7 +889,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "2 мин. назад",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -909,7 +909,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "Старт Просмотр",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -928,7 +928,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "2 мин. вперёд",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -947,7 +947,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "5 мин. вперёд",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
@@ -966,7 +966,7 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    
    // add play item ...
    $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/http-stream?".urlencode(md5($play_data_query)),
+      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
       'dc:title'       => "10 мин. вперёд",
       'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
       'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
