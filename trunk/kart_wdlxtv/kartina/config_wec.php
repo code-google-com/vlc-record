@@ -20,7 +20,7 @@ require_once(dirname(__FILE__)."/_kartina_auth.php.inc");
 $info = "<img src='/umsp/plugins/kartina/images/logo1.jpg' style='float: left; margin: 10px;' alt='kartina.tv' title='kartina.tv' width='40' height='50'>\n"
        ."<b>Kartina.tv PlugIn</b> by Jo2003.<br>\n"
        ."Version: " . VERSION_INFO . "<br>\n"
-       ."Newest version can always be found <a href='http://www.pristavka.de/index.php/topic,7322.0.html' target='_blank'>here</a>.\n"
+       ."Newest version can always be found <a href='http://www.pristavka.de/index.php/topic,7322.0.html' target='_blank'>here</a>.<br>\n"
        ."You also can access the old configuration script following <a href='/umsp/plugins/kartina/config.php' target='_blank'>this link</a>.";
 
 // some plugin info ...
@@ -119,7 +119,7 @@ $wec_options['KARTINA_FAVORITES'] = array(
    'page'         => WECP_UMSP,
    'availval'     => wec_kartinatv_getCids(), 
    'availvalname' => wec_kartinatv_getChans(),
-   'defaultval'   => array(),
+   'defaultval'   => wec_kartinatv_getFavs(),
    'currentval'   => wec_kartinatv_getFavs(),
    'readhook'     => 'wec_hook_donothing', // we already read data ...
    'writehook'    => 'wec_kartinatv_write' // favorites at kartina ...
