@@ -18,6 +18,6 @@ $pluginInfo = array (
 	'url'     => 'http://www.pristavka.de/index.php/board,60.0.html',
 	'id'      => 'KARTINA_TV',
 	'thumb'   => '/umsp/plugins/kartina/images/logo1.jpg',
-	'art'		  => '/umsp/plugins/kartina/images/logo1.jpg'
+	'art'     => '/umsp/plugins/kartina/images/logo1.jpg'
 );
 ?>
