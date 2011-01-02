@@ -13,22 +13,23 @@
 
 require_once(dirname(__FILE__)."/_timezones.php.inc");
 require_once(dirname(__FILE__)."/_kartina_auth.php.inc");
+require_once(dirname(__FILE__)."/info.php");
 
 ////////////////////////////////////////////////////////////////////////////////
 // config array ---->
 ////////////////////////////////////////////////////////////////////////////////
-$info = "<img src='/umsp/plugins/kartina/images/logo1.jpg' style='float: left; margin: 10px;' alt='kartina.tv' title='kartina.tv' width='40' height='50'>\n"
-       ."<b>Kartina.tv PlugIn</b> by Jo2003.<br>\n"
-       ."Version: " . VERSION_INFO . "<br>\n"
-       ."Newest version can always be found <a href='http://www.pristavka.de/index.php/topic,7322.0.html' target='_blank'>here</a>.<br>\n"
+$info = "<img src='".$pluginInfo['thumb']."' style='float: left; margin: 10px;' alt='".$pluginInfo['id']."' title='".$pluginInfo['id']."' width='40' height='50'>\n"
+       ."<b>".$pluginInfo['desc']."</b> by ".$pluginInfo['author'].".<br>\n"
+       ."Version: ".$pluginInfo['version']." / ".$pluginInfo['date']."<br>\n"
+       ."Newest version can always be found <a href='".$pluginInfo['url']."' target='_blank'>here</a>.<br>\n"
        ."You also can access the old configuration script following <a href='/umsp/plugins/kartina/config.php' target='_blank'>this link</a>.";
-
+       
 // some plugin info ...
 $wec_options['KARTINA_INFO'] = array(
    'configname'   => 'KARTINA_INFO',
    'configdesc'   => $info,
    'longdesc'     => "Plugin Info",
-   'group'        => 'UMSP: Kartina.tv',
+   'group'        => $pluginInfo['name'],
    'displaypri'   => -10,
    'type'         => WECT_DESC,
    'page'         => WECP_UMSP,
@@ -40,13 +41,32 @@ $wec_options['KARTINA_INFO'] = array(
    'writehook'    => 'wec_hook_donothing'
 );
 
+// enable disable ...
+$wec_options[$pluginInfo['id']] = array(
+   'configname'	  => $pluginInfo['id'],
+   'configdesc'	  => 'Enable '.$pluginInfo['name'].' UMSP plugin',
+   'longdesc'	    => '',
+   'group'        => $pluginInfo['name'],
+   'type'         => WECT_BOOL,
+   'page'         => WECP_UMSP,
+   'displaypri'	  => -9,
+   'availval'	    => array('off','on'),
+   'availvalname' => array(),
+   'defaultval'	  => '',
+   'currentval'	  => wec_getConfigValue($pluginInfo['id']),
+   'readhook'     => wec_umspwrap_read,
+   'writehook'    => wec_umspwrap_write,
+   'backuphook'	  => NULL,
+   'restorehook'	=> NULL
+);
+
 // account number ...
 $wec_options['KARTINA_ACCOUNT'] = array(
    'configname'   => 'KARTINA_ACCOUNT',
    'configdesc'   => "Account number",
    'longdesc'     => "Account number send to you by kartina.tv",
-   'group'        => 'UMSP: Kartina.tv',
-   'displaypri'   => -9,
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -8,
    'type'         => WECT_TEXT,
    'page'         => WECP_UMSP,
    'availval'     => array(),
@@ -62,8 +82,8 @@ $wec_options['KARTINA_PASSWD'] = array(
    'configname'   => 'KARTINA_PASSWD',
    'configdesc'   => "Password",
    'longdesc'     => "Password send to you by kartina.tv",
-   'group'        => 'UMSP: Kartina.tv',
-   'displaypri'   => -8,
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -7,
    'type'         => WECT_TEXT,
    'page'         => WECP_UMSP,
    'availval'     => array(),
@@ -79,8 +99,8 @@ $wec_options['KART_REC_FOLDER'] = array(
    'configname'   => 'KART_REC_FOLDER',
    'configdesc'   => "Target Folder",
    'longdesc'     => "Where do you want your records to be stored?",
-   'group'        => 'UMSP: Kartina.tv',
-   'displaypri'   => -7,
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -6,
    'type'         => WECT_TEXT,
    'page'         => WECP_UMSP,
    'availval'     => array(),
@@ -96,8 +116,8 @@ $wec_options['TIMEZONE'] = array(
    'configname'   => 'TIMEZONE',
    'configdesc'   => "Timezone",
    'longdesc'     => "Choose matching timezone!",
-   'group'        => 'UMSP: Kartina.tv',
-   'displaypri'   => -6,
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -5,
    'type'         => WECT_SELECT,
    'page'         => WECP_UMSP,
    'availval'     => createZoneinfoArray(),
@@ -113,8 +133,8 @@ $wec_options['KARTINA_FAVORITES'] = array(
    'configname'   => 'KARTINA_FAVORITES',
    'configdesc'   => "Favorites",
    'longdesc'     => "Choose favorites you like to have in favorites folder!",
-   'group'        => 'UMSP: Kartina.tv',
-   'displaypri'   => -5,
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -4,
    'type'         => WECT_MULTI,
    'page'         => WECP_UMSP,
    'availval'     => wec_kartinatv_getCids(), 

@@ -35,5 +35,4 @@ define ('EPGIMG',           dirname(__FILE__).'/images/epg_back.jpg');
 define ('DESCR_LINE_LEN',   90);
 define ('TIMESTAMPFILE',    "/tmp/.kart_tstamp");
 define ('VODPROTINFO',      "http-get:*:video/mp4:*");
-define ('VERSION_INFO',     "1.3 / 2010-12-29");
 ?>
