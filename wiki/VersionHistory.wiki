@@ -2,6 +2,21 @@
 #labels Featured
 
 = New in version ... =
+== 201101-07: Version x.40B5 ==
+ * in archive play, pushing record will start record at play position
+
+== 2011-01-05: Version x.40B4 ==
+ * replace stream protocol info from url with http
+
+== 2010-12-28: Version x.40B3 ==
+ * fast forward / backward in VOD possible
+ * change archive slider stuff
+
+== 2010-12-23: Version x.40B2 ==
+ * vod support
+ * own downloader added
+ * simple registration added
+
 == 2010-10-01: Version x.39 ==
  * use libvlc 1.14
  * fix 20 minutes archive bug
