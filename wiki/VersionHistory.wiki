@@ -2,7 +2,7 @@
 #labels Featured
 
 = New in version ... =
-== 201101-07: Version x.40B5 ==
+== 2011-01-07: Version x.40B5 ==
  * in archive play, pushing record will start record at play position
 
 == 2011-01-05: Version x.40B4 ==
