@@ -28,6 +28,9 @@ class kartinaAPI
    private $_reader;
    private $_logfile;
    private $_lastServerTime;
+   private $_p_name;
+   private $_p_expires;
+   private $_allowerotic;
 
    /* -----------------------------------------------------------------\
    |  Method: __construct
@@ -45,6 +48,9 @@ class kartinaAPI
       $this->_username       = $username;
       $this->_passwd         = $passwd;
       $this->_cookie         = "";
+      $this->_p_name         = "";
+      $this->_p_expires      = "";
+      $this->_allowerotic    = false;
       $this->_reader         = new XMLReader();
       $this->_lastServerTime = -1;
       if (DOTRACE == "YES")
@@ -256,6 +262,26 @@ class kartinaAPI
                      }
                   }
                }
+               else if ($this->_reader->localName == "packet_name")
+               {
+                  if($this->_reader->read())
+                  {
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $this->_p_name = $this->_reader->value;
+                     }
+                  }
+               }
+               else if ($this->_reader->localName == "packet_expire")
+               {
+                  if($this->_reader->read())
+                  {
+                     if ($this->_reader->nodeType == XMLReader::TEXT)
+                     {
+                        $this->_p_expires = $this->_reader->value;
+                     }
+                  }
+               }
                break;
 
             default:
@@ -442,7 +468,12 @@ class kartinaAPI
    \----------------------------------------------------------------- */
    public function getStreamUrl ($cid, $gmt = -1)
    {
-      $req   = "cid=".$cid."&protect_code=".$this->_passwd;
+      $req   = "cid=".$cid;
+      
+      if ($this->_allowerotic)
+      {
+         $req .= "&protect_code=".$this->_passwd;
+      }
 
       if ($gmt !== -1)
       {
@@ -885,10 +916,13 @@ class kartinaAPI
       $rv = -1;
       if ($this->_cookie != "")
       {
-         $cookieData = array('cookie'  => $this->_cookie,
-                             'account' => $this->_username,
-                             'passwd'  => $this->_passwd,
-                             'host'    => $this->_host);
+         $cookieData = array('cookie'    => $this->_cookie,
+                             'account'   => $this->_username,
+                             'passwd'    => $this->_passwd,
+                             'host'      => $this->_host,
+                             'p_name'    => $this->_p_name,
+                             'p_expires' => $this->_p_expires,
+                             'erotic'    => $this->_allowerotic);
                           
          $f = fopen (COOKIE_FILE, "w+");
          
@@ -927,11 +961,14 @@ class kartinaAPI
       {
          $cookieData = unserialize($tmpCookie);
          
-         $this->_cookie   = $cookieData['cookie'];
-         $this->_host     = $cookieData['host'];
-         $this->_username = $cookieData['account'];
-         $this->_passwd   = $cookieData['passwd'];
-         $rv              = 0;
+         $this->_cookie      = $cookieData['cookie'];
+         $this->_host        = $cookieData['host'];
+         $this->_username    = $cookieData['account'];
+         $this->_passwd      = $cookieData['passwd'];
+         $this->_p_name      = isset($cookieData['p_name'])    ? $cookieData['p_name']    : "";
+         $this->_p_expires   = isset($cookieData['p_expires']) ? $cookieData['p_expires'] : "";
+         $this->_allowerotic = isset($cookieData['erotic'])    ? $cookieData['erotic']    : false;
+         $rv                 = 0;
          $this->log("Cookie successfully read from file!");
       }
       
@@ -1087,8 +1124,6 @@ class kartinaAPI
       }
       
       $html = strstr($html, '<div class="filter"');
-      
-      $this->log($html); 
       
       preg_match_all($filter, $html, $matches, PREG_PATTERN_ORDER);
       
@@ -1278,6 +1313,44 @@ class kartinaAPI
       }
       
       return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: getAccountInfo
+   |  Begin: 10.01.2011 / 11:35
+   |  Author: Jo2003
+   |  Description: get kartina.tv account info
+   |
+   |  Parameters: --
+   |
+   |  Returns: array ('account'   => account number, 
+   |                  'p_name'    => packet name,
+   |                  'p_expires' => packet expires)
+   |
+   \----------------------------------------------------------------- */
+   public function getAccountInfo ()
+   {
+      $rv = array('account'   => $this->_username,
+                  'p_name'    => $this->_p_name,
+                  'p_expires' => $this->_p_expires);
+                  
+      return $rv;
+   }
+   
+   /* -----------------------------------------------------------------\
+   |  Method: allowErotic
+   |  Begin: 10.01.2011 / 11:35
+   |  Author: Jo2003
+   |  Description: set erotic enabled / disabled
+   |
+   |  Parameters: bool (enable / disable)
+   |
+   |  Returns: --
+   |
+   \----------------------------------------------------------------- */
+   public function allowErotic ($val)
+   {
+      $this->_allowerotic = ($val) ? true : false;
    }
 };
 

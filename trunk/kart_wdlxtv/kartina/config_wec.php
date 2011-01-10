@@ -43,21 +43,21 @@ $wec_options['KARTINA_INFO'] = array(
 
 // enable disable ...
 $wec_options[$pluginInfo['id']] = array(
-   'configname'	  => $pluginInfo['id'],
-   'configdesc'	  => 'Enable '.$pluginInfo['name'].' UMSP plugin',
-   'longdesc'	    => '',
+   'configname'   => $pluginInfo['id'],
+   'configdesc'   => 'Enable '.$pluginInfo['name'].' UMSP plugin',
+   'longdesc'     => '',
    'group'        => $pluginInfo['name'],
    'type'         => WECT_BOOL,
    'page'         => WECP_UMSP,
-   'displaypri'	  => -9,
-   'availval'	    => array('off','on'),
+   'displaypri'   => -9,
+   'availval'     => array('off','on'),
    'availvalname' => array(),
-   'defaultval'	  => '',
-   'currentval'	  => wec_getConfigValue($pluginInfo['id']),
+   'defaultval'   => '',
+   'currentval'   => wec_getConfigValue($pluginInfo['id']),
    'readhook'     => wec_umspwrap_read,
    'writehook'    => wec_umspwrap_write,
-   'backuphook'	  => NULL,
-   'restorehook'	=> NULL
+   'backuphook'   => NULL,
+   'restorehook'  => NULL
 );
 
 // account number ...
@@ -94,13 +94,30 @@ $wec_options['KARTINA_PASSWD'] = array(
    'writehook'    => NULL
 );
 
+// allow erotic channels ...
+$wec_options['KARTINA_EROTIC'] = array(
+   'configname'   => 'KARTINA_EROTIC',
+   'configdesc'   => "Allow Erotic Channels",
+   'longdesc'     => "Do you want to enable erotic channels?",
+   'group'        => $pluginInfo['name'],
+   'displaypri'   => -6,
+   'type'         => WECT_BOOL,
+   'page'         => WECP_UMSP,
+   'availval'     => array('off','on'),
+   'availvalname' => array(),
+   'defaultval'   => 'off',
+   'currentval'   => wec_getConfigValue('KARTINA_EROTIC'),
+   'readhook'     => NULL,
+   'writehook'    => NULL
+);
+
 // record folder ...
 $wec_options['KART_REC_FOLDER'] = array(
    'configname'   => 'KART_REC_FOLDER',
    'configdesc'   => "Target Folder",
    'longdesc'     => "Where do you want your records to be stored?",
    'group'        => $pluginInfo['name'],
-   'displaypri'   => -6,
+   'displaypri'   => -5,
    'type'         => WECT_TEXT,
    'page'         => WECP_UMSP,
    'availval'     => array(),
@@ -117,7 +134,7 @@ $wec_options['TIMEZONE'] = array(
    'configdesc'   => "Timezone",
    'longdesc'     => "Choose matching timezone!",
    'group'        => $pluginInfo['name'],
-   'displaypri'   => -5,
+   'displaypri'   => -4,
    'type'         => WECT_SELECT,
    'page'         => WECP_UMSP,
    'availval'     => createZoneinfoArray(),
@@ -134,7 +151,7 @@ $wec_options['KARTINA_FAVORITES'] = array(
    'configdesc'   => "Favorites",
    'longdesc'     => "Choose favorites you like to have in favorites folder!",
    'group'        => $pluginInfo['name'],
-   'displaypri'   => -4,
+   'displaypri'   => -3,
    'type'         => WECT_MULTI,
    'page'         => WECP_UMSP,
    'availval'     => wec_kartinatv_getCids(), 
