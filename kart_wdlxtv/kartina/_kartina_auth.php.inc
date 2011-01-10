@@ -17,6 +17,7 @@ if (!file_exists(COOKIE_FILE)) // not authenticated ...
    // get username and password for kartina.tv ...
    $kartAcc  = $wdtvConf->getVal("KARTINA_ACCOUNT");
    $kartPw   = $wdtvConf->getVal("KARTINA_PASSWD");
+   $eros     = $wdtvConf->getVal("KARTINA_EROTIC");
 
    // use default values if not stored in config file ...
    if (($kartAcc === "") || ($kartPw === ""))
@@ -33,6 +34,15 @@ if (!file_exists(COOKIE_FILE)) // not authenticated ...
    // authenticate ...
    if (!$kartAPI->authenticate())
    {
+      if (strtolower($eros) === "on")
+      {
+         $kartAPI->allowErotic(true);
+      }
+      else
+      {
+         $kartAPI->allowErotic(false);
+      }
+      
       $kartAPI->saveCookie();
    }
 }
