@@ -45,6 +45,28 @@ if (!file_exists(COOKIE_FILE)) // not authenticated ...
       
       $kartAPI->saveCookie();
    }
+   else
+   {
+      // account expired ... ?
+      $kartAcc = KARTINA_ACCOUNT;
+      $kartPw  = KARTINA_PASS;
+      
+      $kartAPI->setConnectionData ($kartAcc, $kartPw, KARTINA_HOST);
+      
+      if (!$kartAPI->authenticate())
+      {
+         if (strtolower($eros) === "on")
+         {
+            $kartAPI->allowErotic(true);
+         }
+         else
+         {
+            $kartAPI->allowErotic(false);
+         }
+         
+         $kartAPI->saveCookie();
+      }
+   }
 }
 else
 {
