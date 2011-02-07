@@ -92,6 +92,10 @@ function _pluginMain($prmQuery)
          
          $items = _pluginVideoDetails ($queryData['vid']);
       }
+      else if ($queryData['action'] === "quick_view")
+      {
+         $items = _pluginQuickView();
+      }
    }
    
    return $items;
@@ -149,6 +153,97 @@ function _pluginCreateChannelList($groupid)
             'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
             'dc:title'       => $names->item($i)->nodeValue,
             'upnp:class'     => 'object.container',
+            'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue
+         );
+      }
+   }
+   return $retMediaItems;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: _pluginQuickView
+|  Begin: 07.02.2011 / 15:00
+|  Author: Jo2003
+|  Description: create a channel list with all channels 
+|
+|  Parameters: --
+|
+|  Returns: array of items to be displayed
+\----------------------------------------------------------------- */
+function _pluginQuickView ()
+{
+   // Please note that all global variables
+   // are wiped out! Therefore we have to instantiate
+   // a local instance here .... 
+   
+   // don't break your head about login / logout at kartina!
+   // we will load the cookie from file so no authentication
+   // is needed here ... we also don't need username and PW ...
+   $tmpKartAPI = new kartinaAPI();
+   
+   // load cookie ...
+   $tmpKartAPI->loadCookie();
+   
+   if (($channelList = $tmpKartAPI->getChannelListXml()) !== FALSE)
+   {
+      // play data array ...
+      $play_data = array(
+         'cid'      =>  0,     // channel id (will be updated below)
+         'gmt'      => -1,     // live stream only
+         'is_video' =>  true,  // video flag (will be updated below)
+         'dorec'    =>  false  // record flag
+      );
+      
+      $retMediaItems = array();
+      $dom = new DomDocument();
+      $dom->loadXML($channelList);
+      
+      $xp        = new DOMXpath($dom);
+
+      $channels  = $xp->query("/response/groups/item/channels/item/id");
+      $names     = $xp->query("/response/groups/item/channels/item/name");
+      $icons     = $xp->query("/response/groups/item/channels/item/icon");
+      $is_video  = $xp->query("/response/groups/item/channels/item/is_video");
+      $progname  = $xp->query("/response/groups/item/channels/item/epg_progname");
+      $start     = $xp->query("/response/groups/item/channels/item/epg_start");
+      $end       = $xp->query("/response/groups/item/channels/item/epg_end");
+
+      $all = $channels->length;
+
+      for ($i = 0; $i < $all; $i++)
+      {
+         $epgname = $progname->item($i)->nodeValue;
+         
+         // cut between name and decription ...
+         $cutpos = strpos($epgname, "\n");
+   
+         if ($cutpos !== false)
+         {
+            $epgname = substr($epgname, 0, $cutpos);
+         }
+      
+         // build title ...
+         $title = $names->item($i)->nodeValue
+                 ." ".date("H:i", $start->item($i)->nodeValue)
+                 ."-".date("H:i", $end->item($i)->nodeValue)
+                 ." ".$epgname;
+                 
+         // is this video or audio ... ?
+         $isVideo = ((integer)$is_video->item($i)->nodeValue === 1) ? true : false;
+                 
+         // fill in needed values into play array ...
+         $play_data['cid']      = $channels->item($i)->nodeValue;
+         $play_data['is_video'] = $isVideo;
+      
+         $play_data_query = http_build_query($play_data);
+      
+         // add play item ...
+         $retMediaItems[] = array (
+            'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
+            'dc:title'       => $title,
+            'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+            'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+            'protocolInfo'   => "http-get:*:*:*",
             'upnp:album_art' => KARTINA_HOST.$icons->item($i)->nodeValue
          );
       }
@@ -384,6 +479,18 @@ function _pluginCreateChannelGroupList()
       'dc:title'       => "Видеотека",
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/vod.png",
+   );
+   
+   // 3rd add quick view folder ...
+   $data       = array('action' => 'quick_view');
+   
+   $dataString = http_build_query($data, "", "&amp;");
+   
+   $retMediaItems[] = array (
+      'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
+      'dc:title'       => "Quick View",
+      'upnp:class'     => 'object.container',
+      'upnp:album_art' => LOC_KARTINA_URL."/images/play.png",
    );
    
    if (($channelList = $tmpKartAPI->getChannelListXml()) !== FALSE)
