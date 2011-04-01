@@ -24,7 +24,6 @@
    #define DATA_DIR       "." APP_NAME
 #endif
 
-#define APP_NAME          "KTV-Recorder"
 #define APP_INI_FILE      "ktv-rcd.ini"
 #define APP_LOG_FILE      "ktv-recorder.log"
 #define PLAYER_LOG_FILE   "player.log"
