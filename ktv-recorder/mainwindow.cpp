@@ -2550,18 +2550,25 @@ void MainWindow::setRecentChannel(const QString &ChanName)
 
  void MainWindow::retranslateShortcutTable()
  {
-     QVector<Ui::SShortCuts>::const_iterator cit;
-
-     fillShortCutTab();
-
-     // go through table and update shortcut description ...
-     for (cit = vShortCutTab.constBegin(); cit != vShortCutTab.constEnd(); cit ++)
+     // re-translate shortcut table if there's something to
+     // translate ...
+     if (dlgSettings.shortCutCount() > 0)
      {
-        dlgSettings.updateShortcutDescr((*cit).sDescr, (*cit).pObj->objectName(), (*cit).pSlot);
-     }
+         QVector<Ui::SShortCuts>::const_iterator cit;
 
-     // add favourites ...
-     pChannelDlg->updateFavourites();
+         // update shortcut vector to include
+         // new translation ...
+         fillShortCutTab();
+
+         // go through table and update shortcut description ...
+         for (cit = vShortCutTab.constBegin(); cit != vShortCutTab.constEnd(); cit ++)
+         {
+            dlgSettings.updateShortcutDescr((*cit).sDescr, (*cit).pObj->objectName(), (*cit).pSlot);
+         }
+
+         // add favourites ...
+         pChannelDlg->updateFavourites();
+     }
  }
 
  void MainWindow::ClearShortCuts()
