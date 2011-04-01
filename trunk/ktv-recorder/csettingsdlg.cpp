@@ -11,7 +11,6 @@
 \*************************************************************/
 #include "csettingsdlg.h"
 #include "ui_csettingsdlg.h"
-#include <QMessageBox>
 
 // log file functions ...
 extern CLogFile VlcLog;
@@ -969,9 +968,7 @@ void CSettingsDlg::on_pushDoRegister_clicked()
    {
       if (hsah(m_ui->lineRegData->text()) == MASTER_HASH)
       {
-//         QMessageBox::information(this, tr("Reg Info"), hsah(m_ui->lineUser->text()));
-           str = tr("Reg Info");
-           pStatusBar->showMessage(str.append(hsah(m_ui->lineUser->text())));
+         QMessageBox::information(this, tr("Reg Info"), hsah(m_ui->lineUser->text()));
       }
    }
 
@@ -1003,7 +1000,7 @@ void CSettingsDlg::addShortCut(const QString &descr, const QString &target,
 
    pGrab->setTarget(target);
    pGrab->setSlot(slot);
-   pGrab->setKeySequence(QKeySequence(shortCut));
+   pGrab->setKeySequence(QKeySequence(shortCut), QKeySequence(keys));
 
    int iRow = m_ui->tableShortCuts->rowCount();
 
@@ -1071,6 +1068,16 @@ void CSettingsDlg::delShortCut(const QString &target, const QString &slot)
    }
 }
 
+/* -----------------------------------------------------------------\
+|  Method: updateShortcutDescr
+|  Begin: 25.03.2011 / 11:45
+|  Author: Jo2003
+|  Description: update description text
+|
+|  Parameters: description, target and slot
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
 void CSettingsDlg::updateShortcutDescr (const QString &descr, const QString &target, const QString &slot)
 {
    CShortCutGrabber *pGrab;
@@ -1088,9 +1095,42 @@ void CSettingsDlg::updateShortcutDescr (const QString &descr, const QString &tar
    }
 }
 
-void CSettingsDlg::setRowCount0()
+/* -----------------------------------------------------------------\
+|  Method: on_btnResetShortcuts_clicked
+|  Begin: 30.03.2011 / 16:45
+|  Author: Jo2003
+|  Description: reset shortcuts
+|
+|  Parameters: --
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_btnResetShortcuts_clicked()
 {
-    m_ui->tableShortCuts->setRowCount(0);
+   CShortCutGrabber *pGrab;
+   int     i;
+
+   for (i = 0; i < m_ui->tableShortCuts->rowCount(); i++)
+   {
+      pGrab = (CShortCutGrabber *)m_ui->tableShortCuts->cellWidget(i, 1);
+
+      pGrab->revert();
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: shortCutCount
+|  Begin: 30.03.2011 / 16:15
+|  Author: Jo2003
+|  Description: return number of shortcuts in shortcut table
+|
+|  Parameters: --
+|
+|  Returns:  number of shortcuts
+\----------------------------------------------------------------- */
+int CSettingsDlg::shortCutCount()
+{
+   return m_ui->tableShortCuts->rowCount();
 }
 
 void CSettingsDlg::setStatusBar(QStatusBar *pStBar)
