@@ -480,11 +480,6 @@ void CChannelsEPGdlg::initDialog (bool bInit)
        ui->vSplitterChanEpg->setSizes(sSplit);
     }
 #endif /* INCLUDE_LIBVLC */
-    // display splash screen ...
-    if (!pSettings->DisableSplashScreen())
-    {
-       QTimer::singleShot(1500, this, SLOT(slotSplashScreen()));
-    }
 }
 
 void CChannelsEPGdlg::TouchEpgNavi (bool bCreate)

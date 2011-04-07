@@ -303,77 +303,77 @@ p, li { white-space: pre-wrap; }
         <translation>Замечание: Максимальное число фаворитов (%1) достигнуто</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="514"/>
-        <location filename="cchannelsepgdlg.cpp" line="589"/>
+        <location filename="cchannelsepgdlg.cpp" line="509"/>
+        <location filename="cchannelsepgdlg.cpp" line="584"/>
         <source>1 week backward</source>
         <translation>1 неделя назад</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="546"/>
-        <location filename="cchannelsepgdlg.cpp" line="594"/>
+        <location filename="cchannelsepgdlg.cpp" line="541"/>
+        <location filename="cchannelsepgdlg.cpp" line="589"/>
         <source>1 week forward</source>
         <translation>1 неделя вперед</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="555"/>
-        <location filename="cchannelsepgdlg.cpp" line="576"/>
+        <location filename="cchannelsepgdlg.cpp" line="550"/>
+        <location filename="cchannelsepgdlg.cpp" line="571"/>
         <source>Mon</source>
         <translation>Пон.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="556"/>
-        <location filename="cchannelsepgdlg.cpp" line="577"/>
+        <location filename="cchannelsepgdlg.cpp" line="551"/>
+        <location filename="cchannelsepgdlg.cpp" line="572"/>
         <source>Tue</source>
         <translation>Вт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="557"/>
-        <location filename="cchannelsepgdlg.cpp" line="578"/>
+        <location filename="cchannelsepgdlg.cpp" line="552"/>
+        <location filename="cchannelsepgdlg.cpp" line="573"/>
         <source>Wed</source>
         <translation>Ср.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="558"/>
-        <location filename="cchannelsepgdlg.cpp" line="579"/>
+        <location filename="cchannelsepgdlg.cpp" line="553"/>
+        <location filename="cchannelsepgdlg.cpp" line="574"/>
         <source>Thu</source>
         <translation>Чт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="559"/>
-        <location filename="cchannelsepgdlg.cpp" line="580"/>
+        <location filename="cchannelsepgdlg.cpp" line="554"/>
+        <location filename="cchannelsepgdlg.cpp" line="575"/>
         <source>Fri</source>
         <translation>Пят.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="560"/>
-        <location filename="cchannelsepgdlg.cpp" line="581"/>
+        <location filename="cchannelsepgdlg.cpp" line="555"/>
+        <location filename="cchannelsepgdlg.cpp" line="576"/>
         <source>Sat</source>
         <translation>Суб.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="569"/>
-        <location filename="cchannelsepgdlg.cpp" line="582"/>
+        <location filename="cchannelsepgdlg.cpp" line="564"/>
+        <location filename="cchannelsepgdlg.cpp" line="577"/>
         <source>Sun</source>
         <translation>Воск.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="651"/>
-        <location filename="cchannelsepgdlg.cpp" line="897"/>
+        <location filename="cchannelsepgdlg.cpp" line="646"/>
+        <location filename="cchannelsepgdlg.cpp" line="892"/>
         <source>Favourite %1</source>
         <translation>Фаворит %1</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="866"/>
+        <location filename="cchannelsepgdlg.cpp" line="861"/>
         <source>Program:</source>
         <translation>Передача:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="867"/>
+        <location filename="cchannelsepgdlg.cpp" line="862"/>
         <source>Start:</source>
         <translation>Начало:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="868"/>
+        <location filename="cchannelsepgdlg.cpp" line="863"/>
         <source>End:</source>
         <translation>Окончание:</translation>
     </message>
@@ -436,9 +436,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cinstruction.cpp" line="13"/>
         <source>Instruction.</source>
-        <translation>При первом запуске программа (так же как и vlc-record) создает в ...\Documents and Settings\&lt;username&gt;\Application Data папку KTV-Recorder и в этой папке папки logos - для хранения значков каналов и vod - для хранения картинок фильмов из видеотеки, а также файл базы данных vlcrec.db.sqlite для хранения таблиц aspect, settings, timerrec и shortcuts. Затем появляется диалоговое окно Настройки - надо ввести данные аккаунта, выбрать модуль плеера (желательно из трех работающих: 1_vlc-player.mod - для использования внешнего vlc-player, хотя для данной версии это уже не актуально), 5_libvlc.mod или 9_libvlc_odl.mod - для использования внутреннего плейера , язык, ну и остальные установки, если нужно. Сохранить. Нормальные значки у каналов появляются либо после повторного старта программы, либо после  повторного сохранения настроек (так же как и в vlc-record).  После старта программа автоматически начинает воспроизводить передачу первого по списку или первого из недавних каналов канала. Так же без дополнительных кликов начинают  воспроизводиться передачи при выборе канала из любого списка или из фаворитов (для выбора фаворитов должно быть открыто окно с каналами и Телегидом/Видеотекой). Эту опцию можно отключить в меню Плееер - Немедленное воспроизведение, что полезно для просмотра Телегида во время просмотра передачи. Окно со списком каналов и Телегидом/Видеотекой  вызывается из меню Медиа. Это окно не модальное, т.е. после его открытия имеется  доступ к главному окну программы - доступны все кнопки плейера и все пункты меню,  но второе окно со списком каналов открыть нельзя. Это окно можно свернуть или закрыть - крестик в правом верхнем углу. В меню Вид можно убирать верхнюю, нижнюю панели инструментов (с кнопками) и информационное окошко о передачи,  после чего основное окно можно уменьшать практически до любых размеров. Кроме того, есть опция Не перекрывается другими окнами. В меню Инструменты находится Планировщик и Настройки, а также возможность очистить список недавних каналов. Список недавних каналов формируется автоматически при каждом выборе канала, неважно откуда, при этом выбранный канал будет на первом месте и сохранит свое место после закрытия программы. Максимальное число таких каналов в настоящиее время 10. Список недавних каналов хранится в системном реестре в ключе HKEY_CURRENT_USER\\Software\\Joerg\\KTV-Recorder в значении recentChanList. Чтобы начать запись воспроизводимой передачи (кроме архивной) надо сначала нажать на Стоп (при использовании ShortCut этого делать не обязательно). После этого будет доступна кнопка Запись. Закрывать программу лучше через пункт меню Выход, а не нажатием на крестик в верхнем правом углу окна. Имеются также Statusbar - для выдачи критических сообщений об ошибках, которые в vlc-record выдаются в отдельном окне сообщений MessageBox, и всплывающее меню с основными кнопками плеера и выбором Aspect - соотношение сторон и Crop – обрезка черныз полос (этот выбор имеется также в меню Плеер). Всплывающее меню вызывается нажатием на правую кнопку мыши. Всплывающее меню в данный момент недоступно в режиме Full-Screen (полноэкранный режим). Комбинации клавиш формируются и функционируют также как и в последней версии vlc-record. В диалоговом окне Настройки на закладке Сокращения можно изменить изначальные комбинаци клавиш. После изменения комбинаций клавиш надо нажать на кнопку Сохранить. Изменения вступают в силу после перезапуска программы. Не следует для разный действий создавать одинаковые комбинации клавиш, в этом случае они работать не будут. В настоящий момент программа не предупреждает пользователя о том, что вводимая им комбинация клавиш уже существует. На той же закладке имеется кнопка для восстановления изначальных комбинаций клавиш. После восстановления изначальных комбинаций клавиш надо нажать на кнопку Сохранить и перезапустить программу. Перебор каналов вперед осуществляется клавишами Ctrl+N, назад - Ctrl+P. Перебор осуществляется циклически. т.е. когда при последнем в списке каналов нажать Ctrl+N, то будет выбран первый по списку канал, и наоборот, когда при первом в списке каналов нажать Ctrl+P, то будет выбран последний по списку канал. При переборе каналов названия групп каналов пропускаются. Все комбинации клавиш, кроме вызова фаворитов, работают при активном главном окне программы. Для вызова канала из списка фаворитов с помощью комбинаций клавиш необходимо, чтобы было открыто окно со списком каналов и Телегидом/Видеотекой и это окно было бы активным (окно становится активным, если щелкнуть мышью на верхней синей полосе окна). При добавлении или удалении фаворитов список фаворитов сохраняется или при закрытии окна со списком каналов и Телегидом/Видеотекой, или при выходе из программы (неважно каким способом).
-
-</translation>
+        <translation>При первом запуске программа (так же как и vlc-record) создает в ...\Documents and Settings\&lt;username&gt;\Application Data папку KTV-Recorder и в этой папке папки logos - для хранения значков каналов и vod - для хранения картинок фильмов из видеотеки, а также файл базы данных vlcrec.db.sqlite для хранения таблиц aspect, settings, timerrec и shortcuts. Затем появляется диалоговое окно Настройки - надо ввести данные аккаунта, выбрать модуль плеера (желательно из трех работающих: 1_vlc-player.mod - для использования внешнего vlc-player, хотя для данной версии это уже не актуально), 5_libvlc.mod или 9_libvlc_odl.mod - для использования внутреннего плейера , язык, ну и остальные установки, если нужно. Сохранить. Нормальные значки у каналов появляются либо после повторного старта программы, либо после  повторного сохранения настроек (так же как и в vlc-record).  После старта программа автоматически начинает воспроизводить передачу первого по списку или первого из недавних каналов канала. Так же без дополнительных кликов начинают  воспроизводиться передачи при выборе канала из любого списка или из фаворитов (для выбора фаворитов должно быть открыто окно с каналами и Телегидом/Видеотекой). Эту опцию можно отключить в меню Плееер - Немедленное воспроизведение, что полезно для просмотра Телегида во время просмотра передачи. Окно со списком каналов и Телегидом/Видеотекой  вызывается из меню Медиа. Это окно не модальное, т.е. после его открытия имеется  доступ к главному окну программы - доступны все кнопки плейера и все пункты меню,  но второе окно со списком каналов открыть нельзя. Это окно можно свернуть или закрыть - крестик в правом верхнем углу. В меню Вид можно убирать верхнюю, нижнюю панели инструментов (с кнопками) и информационное окошко о передачи,  после чего основное окно можно уменьшать практически до любых размеров. Кроме того, есть опция Не перекрывается другими окнами. В меню Инструменты находится Планировщик и Настройки, а также возможность очистить список недавних каналов. Список недавних каналов формируется автоматически при каждом выборе канала, неважно откуда, при этом выбранный канал будет на первом месте и сохранит свое место после закрытия программы. Максимальное число таких каналов в настоящиее время 10. Список недавних каналов хранится в системном реестре в ключе HKEY_CURRENT_USER\\Software\\Joerg\\KTV-Recorder в значении recentChanList. Чтобы начать запись воспроизводимой передачи (кроме архивной) надо сначала нажать на Стоп (при использовании ShortCut этого делать не обязательно). После этого будет доступна кнопка Запись. Закрывать программу лучше через пункт меню Выход, а не нажатием на крестик в верхнем правом углу окна. Имеются также Statusbar - для выдачи критических сообщений об ошибках, которые в vlc-record выдаются в отдельном окне сообщений MessageBox, и всплывающее меню с основными кнопками плеера и выбором Aspect - соотношение сторон и Crop – обрезка черныз полос (этот выбор имеется также в меню Плеер). Всплывающее меню вызывается нажатием на правую кнопку мыши. Всплывающее меню в данный момент недоступно в режиме Full-Screen (полноэкранный режим). Комбинации клавиш формируются и функционируют также как и в последней версии vlc-record. В диалоговом окне Настройки на закладке Сокращения можно изменить изначальные комбинаци клавиш. Имеется всплывающее меню, которое вызывается нажатием правой кнопки мыши на комбинации клавиш в таблице. С помощью меню можно стереть имеющуюся комбинацию клавиш, восстановить предыдущую или стандартную комбинацию клавиш. Если после удаления комбинации клавиш прейти к другой, ничего не введя, то будет восстановлена стертая комбинация клавиш. При попытке ввести уже имеющуюся комбинацию клавиш будет выдано предупреждение и комбинация клавиш будет восстановлена на ту, которая была до изменения. После изменения комбинаций клавиш надо нажать на кнопку Сохранить. Изменения вступают в силу после перезапуска программы. На той же закладке имеется кнопка для восстановления изначальных комбинаций клавиш. После восстановления изначальных комбинаций клавиш надо нажать на кнопку Сохранить и перезапустить программу. Перебор каналов вперед осуществляется клавишами Ctrl+N, назад - Ctrl+P. Перебор осуществляется циклически. т.е. когда при последнем в списке каналов нажать Ctrl+N, то будет выбран первый по списку канал, и наоборот, когда при первом в списке каналов нажать Ctrl+P, то будет выбран последний по списку канал. При переборе каналов названия групп каналов пропускаются. Все комбинации клавиш, кроме вызова фаворитов, работают при активном главном окне программы. Для вызова канала из списка фаворитов с помощью комбинаций клавиш необходимо, чтобы было открыто окно со списком каналов и Телегидом/Видеотекой и это окно было бы активным (окно становится активным, если щелкнуть мышью на верхней синей полосе окна). При добавлении или удалении фаворитов список фаворитов сохраняется или при закрытии окна со списком каналов и Телегидом/Видеотекой, или при выходе из программы (неважно каким способом).</translation>
     </message>
 </context>
 <context>
@@ -951,6 +949,32 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
+        <location filename="csettingsdlg.cpp" line="1172"/>
+        <source>The same ShortCut!</source>
+        <translation>Одинаковая комбинация клавиш!</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="1173"/>
+        <source>The same ShortCut %1 is already in row %2.
+Please enter another ShortCut.</source>
+        <translation>Такая же комбинация клавиш %1 уже имеется в строке %2.
+Пожалуйста введите другую комбинацию клавиш.</translation>
+    </message>
+    <message>
+        <source>The same ShortCut %1 is already in row = %2.
+Enter please another ShortCut.</source>
+        <translation type="obsolete">Такая же комбинация клавиш %1 уже имеется в строке = %2.
+Пожалуйста введите другую комбинацию клавиш.</translation>
+    </message>
+    <message>
+        <source>Empty ShortCut!</source>
+        <translation type="obsolete">Пустая комбинация клавиш!</translation>
+    </message>
+    <message>
+        <source>ShortCut in row = %1 is empty</source>
+        <translation type="obsolete">Пустая комбинация клавиш в строке = %1</translation>
+    </message>
+    <message>
         <location filename="forms/csettingsdlg.ui" line="14"/>
         <source>Settings Dialog</source>
         <translation>Настройки</translation>
@@ -1238,52 +1262,52 @@ p, li { white-space: pre-wrap; }
         <translation>Сокращения</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="706"/>
+        <location filename="forms/csettingsdlg.ui" line="709"/>
         <source>Function</source>
         <translation>Функция</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="711"/>
+        <location filename="forms/csettingsdlg.ui" line="714"/>
         <source>ShortCut</source>
         <translation>Сокращения</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="729"/>
+        <location filename="forms/csettingsdlg.ui" line="732"/>
         <source>Changes in shortcuts take effect only after restarting the program.</source>
         <translation>Изменения в сокращениях вступят в силу только после перезагрузки программы.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="766"/>
+        <location filename="forms/csettingsdlg.ui" line="769"/>
         <source>Reset Shortcuts to default</source>
         <translation>Восстановить начальные комбинации клавиш</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="776"/>
+        <location filename="forms/csettingsdlg.ui" line="779"/>
         <source>Registration</source>
         <translation>Регистрация</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="784"/>
+        <location filename="forms/csettingsdlg.ui" line="787"/>
         <source>User:</source>
         <translation>Пользователь:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="801"/>
+        <location filename="forms/csettingsdlg.ui" line="804"/>
         <source>Registration:</source>
         <translation>Регистрация:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="794"/>
+        <location filename="forms/csettingsdlg.ui" line="797"/>
         <source>Register</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="845"/>
+        <location filename="forms/csettingsdlg.ui" line="848"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="865"/>
+        <location filename="forms/csettingsdlg.ui" line="868"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>
@@ -1291,9 +1315,19 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CShortCutGrabber</name>
     <message>
-        <location filename="cshortcutgrabber.cpp" line="77"/>
+        <location filename="cshortcutgrabber.cpp" line="78"/>
         <source>Clear Shortcut</source>
-        <translation></translation>
+        <translation>Стереть ShortCut</translation>
+    </message>
+    <message>
+        <location filename="cshortcutgrabber.cpp" line="82"/>
+        <source>Undo ShortCut</source>
+        <translation>Восстановить предыдущий ShortCut</translation>
+    </message>
+    <message>
+        <location filename="cshortcutgrabber.cpp" line="86"/>
+        <source>Reset ShortCut</source>
+        <translation>Восстановить стандартный ShortCut</translation>
     </message>
 </context>
 <context>
