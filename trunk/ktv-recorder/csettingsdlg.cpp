@@ -990,8 +990,9 @@ void CSettingsDlg::addShortCut(const QString &descr, const QString &target,
                               const QString &slot, const QString &keys)
 {
    QString shortCut;
+   int iRow = m_ui->tableShortCuts->rowCount();
    QTableWidgetItem *pItem = new QTableWidgetItem (descr);
-   CShortCutGrabber *pGrab = new CShortCutGrabber (this);
+   CShortCutGrabber *pGrab = new CShortCutGrabber (this, iRow);
 
    if((shortCut = pDb->getShortCut(target, slot)) == "")
    {
@@ -1002,13 +1003,17 @@ void CSettingsDlg::addShortCut(const QString &descr, const QString &target,
    pGrab->setSlot(slot);
    pGrab->setKeySequence(QKeySequence(shortCut), QKeySequence(keys));
 
-   int iRow = m_ui->tableShortCuts->rowCount();
+   connect(pGrab, SIGNAL(keySequenceChanged(QKeySequence,QKeySequence,int)), this,
+           SLOT(slotKeySequenceChanged(QKeySequence,QKeySequence,int)));
+   connect(pGrab, SIGNAL(emptyFocusOut(QKeySequence,QKeySequence,int)), this,
+           SLOT(slotEmptyFocusOut(QKeySequence,QKeySequence,int)));
 
    m_ui->tableShortCuts->setRowCount(iRow + 1);
    m_ui->tableShortCuts->setItem(iRow, 0, pItem);
    m_ui->tableShortCuts->setCellWidget(iRow, 1, pGrab);
 
    m_ui->tableShortCuts->resizeColumnsToContents();
+
 }
 
 /* -----------------------------------------------------------------\
@@ -1062,6 +1067,10 @@ void CSettingsDlg::delShortCut(const QString &target, const QString &slot)
 
       if ((pGrab->target() == target) && (pGrab->slot() == slot))
       {
+         disconnect(pGrab, SIGNAL(keySequenceChanged(QKeySequence,QKeySequence, int)), this,
+                    SLOT(slotKeySequenceChanged(QKeySequence,QKeySequence, int)));
+         disconnect(pGrab, SIGNAL(emptyFocusOut(QKeySequence,QKeySequence,int)), this,
+                    SLOT(slotEmptyFocusOut(QKeySequence,QKeySequence,int)));
          m_ui->tableShortCuts->removeRow(i);
          break;
       }
@@ -1136,6 +1145,55 @@ int CSettingsDlg::shortCutCount()
 void CSettingsDlg::setStatusBar(QStatusBar *pStBar)
 {
     pStatusBar = pStBar;
+}
+
+void CSettingsDlg::slotKeySequenceChanged(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow)
+{
+    QString sKeySeq0, sKeySeq;
+    CShortCutGrabber *pGrab, *pGrab0;
+    QKeySequence currentKeySequence = currKeySeq;
+
+    pGrab = (CShortCutGrabber *)m_ui->tableShortCuts->cellWidget(iRow, 1);
+    sKeySeq = custKeySeq.toString(QKeySequence::NativeText);
+    sKeySeq = sKeySeq.trimmed();
+
+    for(int i = 0; i< m_ui->tableShortCuts->rowCount(); i++)
+    {
+        pGrab0 = (CShortCutGrabber *)m_ui->tableShortCuts->cellWidget(i, 1);
+        sKeySeq0 = pGrab0->shortCutString();
+        sKeySeq0 = sKeySeq0.trimmed();
+
+        if (i != iRow)
+        {
+            if (sKeySeq == sKeySeq0)
+            {
+                pGrab0->markRed();
+
+                QMessageBox::warning(NULL, tr("The same ShortCut!"),
+                      tr("The same ShortCut %1 is already in row %2.\nPlease enter another ShortCut.").
+                      arg(sKeySeq0).arg(QString::number(i + 1)));
+
+                pGrab->rollback(currentKeySequence);
+                pGrab0->unMark();
+            }
+        }
+    }
+}
+
+void CSettingsDlg::slotEmptyFocusOut(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow)
+{
+    QString sKeySeq;
+    CShortCutGrabber *pGrab;
+    QKeySequence currentKeySequence = currKeySeq;
+
+    pGrab = (CShortCutGrabber *)m_ui->tableShortCuts->cellWidget(iRow, 1);
+    sKeySeq = custKeySeq.toString(QKeySequence::NativeText);
+    sKeySeq = sKeySeq.trimmed();
+
+    if (sKeySeq.isEmpty())
+    {
+        pGrab->rollback(currentKeySequence);
+    }
 }
 
 /************************* History ***************************\

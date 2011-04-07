@@ -132,6 +132,8 @@ private slots:
     void on_pushDir_clicked();
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
+    void slotKeySequenceChanged(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow);
+    void slotEmptyFocusOut(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow);
 
  public slots:
     void slotSplashStateChgd (bool bChecked);

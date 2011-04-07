@@ -291,77 +291,77 @@ p, li { white-space: pre-wrap; }
         <translation>Maximale Anzahl an Favoriten (%1) erreicht.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="514"/>
-        <location filename="cchannelsepgdlg.cpp" line="589"/>
+        <location filename="cchannelsepgdlg.cpp" line="509"/>
+        <location filename="cchannelsepgdlg.cpp" line="584"/>
         <source>1 week backward</source>
         <translation>1 Woche zurück</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="546"/>
-        <location filename="cchannelsepgdlg.cpp" line="594"/>
+        <location filename="cchannelsepgdlg.cpp" line="541"/>
+        <location filename="cchannelsepgdlg.cpp" line="589"/>
         <source>1 week forward</source>
         <translation>1 Woche nach vorn</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="555"/>
-        <location filename="cchannelsepgdlg.cpp" line="576"/>
+        <location filename="cchannelsepgdlg.cpp" line="550"/>
+        <location filename="cchannelsepgdlg.cpp" line="571"/>
         <source>Mon</source>
         <translation>Mo.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="556"/>
-        <location filename="cchannelsepgdlg.cpp" line="577"/>
+        <location filename="cchannelsepgdlg.cpp" line="551"/>
+        <location filename="cchannelsepgdlg.cpp" line="572"/>
         <source>Tue</source>
         <translation>Di.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="557"/>
-        <location filename="cchannelsepgdlg.cpp" line="578"/>
+        <location filename="cchannelsepgdlg.cpp" line="552"/>
+        <location filename="cchannelsepgdlg.cpp" line="573"/>
         <source>Wed</source>
         <translation>Mi.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="558"/>
-        <location filename="cchannelsepgdlg.cpp" line="579"/>
+        <location filename="cchannelsepgdlg.cpp" line="553"/>
+        <location filename="cchannelsepgdlg.cpp" line="574"/>
         <source>Thu</source>
         <translation>Do.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="559"/>
-        <location filename="cchannelsepgdlg.cpp" line="580"/>
+        <location filename="cchannelsepgdlg.cpp" line="554"/>
+        <location filename="cchannelsepgdlg.cpp" line="575"/>
         <source>Fri</source>
         <translation>Fr.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="560"/>
-        <location filename="cchannelsepgdlg.cpp" line="581"/>
+        <location filename="cchannelsepgdlg.cpp" line="555"/>
+        <location filename="cchannelsepgdlg.cpp" line="576"/>
         <source>Sat</source>
         <translation>Sa.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="569"/>
-        <location filename="cchannelsepgdlg.cpp" line="582"/>
+        <location filename="cchannelsepgdlg.cpp" line="564"/>
+        <location filename="cchannelsepgdlg.cpp" line="577"/>
         <source>Sun</source>
         <translation>So.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="651"/>
-        <location filename="cchannelsepgdlg.cpp" line="897"/>
+        <location filename="cchannelsepgdlg.cpp" line="646"/>
+        <location filename="cchannelsepgdlg.cpp" line="892"/>
         <source>Favourite %1</source>
         <translation>Favorite %1</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="866"/>
+        <location filename="cchannelsepgdlg.cpp" line="861"/>
         <source>Program:</source>
         <translation>Sendung:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="867"/>
+        <location filename="cchannelsepgdlg.cpp" line="862"/>
         <source>Start:</source>
         <translation>Beginn:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="868"/>
+        <location filename="cchannelsepgdlg.cpp" line="863"/>
         <source>End:</source>
         <translation>Ende:</translation>
     </message>
@@ -937,6 +937,32 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
+        <location filename="csettingsdlg.cpp" line="1172"/>
+        <source>The same ShortCut!</source>
+        <translation>Gleiche ShortCuts!</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="1173"/>
+        <source>The same ShortCut %1 is already in row %2.
+Please enter another ShortCut.</source>
+        <translation>Das gleiche ShortCut %1 ist schon in der Zeile %2.
+Geben Sie bitte ein anderes ShortCut ein.</translation>
+    </message>
+    <message>
+        <source>The same ShortCut %1 is already in row = %2.
+Enter please another ShortCut.</source>
+        <translation type="obsolete">Das gleiche ShortCut %1 ist schon in der Zeile = %2.
+Geben Sie bitte ein anderes ShortCut ein.</translation>
+    </message>
+    <message>
+        <source>Empty ShortCut!</source>
+        <translation type="obsolete">Leheres ShortCut!</translation>
+    </message>
+    <message>
+        <source>ShortCut in row = %1 is empty</source>
+        <translation type="obsolete">Das ShortCut in der Zeile = %1 ist leher</translation>
+    </message>
+    <message>
         <location filename="forms/csettingsdlg.ui" line="14"/>
         <source>Settings Dialog</source>
         <translation>Einstellungen</translation>
@@ -1225,52 +1251,52 @@ p, li { white-space: pre-wrap; }
         <translation>Tastenkürzel</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="706"/>
+        <location filename="forms/csettingsdlg.ui" line="709"/>
         <source>Function</source>
         <translation>Funktion</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="711"/>
+        <location filename="forms/csettingsdlg.ui" line="714"/>
         <source>ShortCut</source>
         <translation>Tastenkürzel</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="729"/>
+        <location filename="forms/csettingsdlg.ui" line="732"/>
         <source>Changes in shortcuts take effect only after restarting the program.</source>
         <translation>Shortcut-Änderungen werden erst nuch einem Programmneustart gültig.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="766"/>
+        <location filename="forms/csettingsdlg.ui" line="769"/>
         <source>Reset Shortcuts to default</source>
         <translation>Tastenkürzel zurücksetzen</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="776"/>
+        <location filename="forms/csettingsdlg.ui" line="779"/>
         <source>Registration</source>
         <translation>Registrierung</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="784"/>
+        <location filename="forms/csettingsdlg.ui" line="787"/>
         <source>User:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="801"/>
+        <location filename="forms/csettingsdlg.ui" line="804"/>
         <source>Registration:</source>
         <translation>Registrierung:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="794"/>
+        <location filename="forms/csettingsdlg.ui" line="797"/>
         <source>Register</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="845"/>
+        <location filename="forms/csettingsdlg.ui" line="848"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="865"/>
+        <location filename="forms/csettingsdlg.ui" line="868"/>
         <source>&amp;Cancel</source>
         <translation>A&amp;bbrechen</translation>
     </message>
@@ -1278,9 +1304,19 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CShortCutGrabber</name>
     <message>
-        <location filename="cshortcutgrabber.cpp" line="77"/>
+        <location filename="cshortcutgrabber.cpp" line="78"/>
         <source>Clear Shortcut</source>
-        <translation></translation>
+        <translation>Löschen ShortCut</translation>
+    </message>
+    <message>
+        <location filename="cshortcutgrabber.cpp" line="82"/>
+        <source>Undo ShortCut</source>
+        <translation>Vorheriges ShortCut</translation>
+    </message>
+    <message>
+        <location filename="cshortcutgrabber.cpp" line="86"/>
+        <source>Reset ShortCut</source>
+        <translation>Standard ShortCut</translation>
     </message>
 </context>
 <context>
