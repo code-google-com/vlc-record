@@ -1,8 +1,11 @@
 ;------------------------------
 ; define versions ...
-!define VER_MINOR   "01.04.11"
-!define VER_INC     "43.${VER_MINOR}"
-
+!define VER_MINOR   "43"
+; !define VER_INC     "43.${VER_MINOR}"
+;------------------------------
+; date string for use in 
+; file name ...
+!define /date DATESTRING "%Y%m%d"
 ;------------------------------
 ; path defines ...
 !define LIBVLCFW "..\release"
