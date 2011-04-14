@@ -36,21 +36,21 @@ extern CShowInfo showInfo;
 \----------------------------------------------------------------- */
 CTimerRec::CTimerRec(QWidget *parent) : QDialog(parent), r_ui(new Ui::CTimerRec)
 {
-   r_ui->setupUi(this);
-   iTimeShift    = 0;
-   iReqId        = -1;
-   uiActId       = 0;
-   uiEdtId       = INVALID_ID;
-   sListFile     = QString("%1/%2").arg(pFolders->getDataDir()).arg(TIMER_LIST_FILE);
-   pTrigger      = NULL;
-   pXmlParser    = NULL;
-   pSettings     = NULL;
-   itActJob      = NULL;
-   pStreamLoader = NULL;
-   pStatusBar    = NULL;
-   InitTab();
-   connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
-   connect (this, SIGNAL(accepted()), this, SLOT(slotSaveRecordList()));
+    r_ui->setupUi(this);
+    iTimeShift    = 0;
+    iReqId        = -1;
+    uiActId       = 0;
+    uiEdtId       = INVALID_ID;
+    sListFile     = QString("%1/%2").arg(pFolders->getDataDir()).arg(TIMER_LIST_FILE);
+    pTrigger      = NULL;
+    pXmlParser    = NULL;
+    pSettings     = NULL;
+    itActJob      = NULL;
+    pStreamLoader = NULL;
+    pStatusBar    = NULL;
+    InitTab();
+    connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
+    connect (this, SIGNAL(accepted()), this, SLOT(slotSaveRecordList()));
 }
 
 /* -----------------------------------------------------------------\
@@ -349,16 +349,6 @@ int CTimerRec::slotSaveRecordList()
    return iRV;
 }
 
-/* -----------------------------------------------------------------\
-|  Method: on_btnSet_clicked
-|  Begin: 26.01.2010 / 16:05:00
-|  Author: Jo2003
-|  Description: insert entry into tab and joblist
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
 void CTimerRec::on_btnSet_clicked()
 {
    // sanity check ...
@@ -455,15 +445,16 @@ int CTimerRec::ReadRecordList()
    int            iRV = 0;
    JobList.clear();
 
-   if (!pDb->ask("SELECT cid, timeshift, recstart, recend, name FROM timerrec", query))
+   if (!pDb->ask("SELECT id, cid, timeshift, recstart, recend, name FROM timerrec", query))
    {
       while (query.next())
       {
-         entry.cid        = query.value(0).toInt();
-         entry.iTimeShift = query.value(1).toInt();
-         entry.uiStart    = query.value(2).toUInt();
-         entry.uiEnd      = query.value(3).toUInt();
-         entry.sName      = query.value(4).toString();
+         entry.dbId       = query.value(0).toUInt();
+         entry.cid        = query.value(1).toInt();
+         entry.iTimeShift = query.value(2).toInt();
+         entry.uiStart    = query.value(3).toUInt();
+         entry.uiEnd      = query.value(4).toUInt();
+         entry.sName      = query.value(5).toString();
          entry.eState     = rec::REC_READY;
 
          // AddJob also adds the table row ...
@@ -767,6 +758,24 @@ void CTimerRec::DelRow(uint uiId)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: delDbEntry
+|  Begin: 13.04.2011 / 10:45
+|  Author: Jo2003
+|  Description: del row from timerrec table
+|
+|  Parameters: entry id
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CTimerRec::delDbEntry(int id)
+{
+   QSqlQuery query;
+   query.prepare("DELETE FROM timerrec WHERE id=?");
+   query.addBindValue(id);
+   pDb->ask(query);
+}
+
+/* -----------------------------------------------------------------\
 |  Method: on_btnDel_clicked
 |  Begin: 26.01.2010 / 16:05:00
 |  Author: Jo2003
@@ -833,6 +842,7 @@ void CTimerRec::slotRecTimer()
                   // old record ... delete without sending signals ...
                   mInfo(tr("Delete old entry #%1 (%2) from Joblist.").arg((*it).id).arg((*it).sName));
                   DelRow((*it).id);
+                  delDbEntry((*it).dbId);
                   it = JobList.erase(it);
                }
                else

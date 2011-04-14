@@ -27,18 +27,19 @@ extern CDirStuff *pFolders;
 \----------------------------------------------------------------- */
 CVlcRecDB::CVlcRecDB()
 {
+   pStatusBar = NULL;
+
    db = QSqlDatabase::addDatabase("QSQLITE");
    db.setDatabaseName(QString("%1/%2").arg(pFolders->getDataDir()).arg(VLC_REC_DB));
    if(!db.open())
    {
-      QMessageBox::critical(NULL, tr("Error!"), tr("Can't create / open SQLite database ..."));
+//      QMessageBox::critical(NULL, tr("Error!"), tr("Can't create / open SQLite database ..."));
+      pStatusBar->showMessage(tr("Error! Can't create / open SQLite database ..."));
    }
    else
    {
       checkDb();
    }
-
-   pStatusBar = NULL;
 }
 
 /* -----------------------------------------------------------------\
@@ -117,6 +118,22 @@ int CVlcRecDB::checkDb()
 int CVlcRecDB::ask(const QString &question, QSqlQuery &query)
 {
    return query.exec(question) ? 0 : -1;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: ask
+|  Begin: 13.04.2011 / 10:45
+|  Author: Jo2003
+|  Description: exec a query, return result
+|
+|  Parameters: ref. to query
+|
+|  Returns: 0 --> ok
+|          -1 --> error
+\----------------------------------------------------------------- */
+int CVlcRecDB::ask(QSqlQuery &query)
+{
+   return query.exec() ? 0 : -1;
 }
 
 /* -----------------------------------------------------------------\
@@ -353,7 +370,6 @@ void CVlcRecDB::setStatusBar(QStatusBar *pStBar)
 {
     pStatusBar = pStBar;
 }
-
 
 /************************* History ***************************\
 | $Log$
