@@ -1085,12 +1085,19 @@ void MainWindow::slotEPG(QString str)
       }
       else
       {
-          //it works only with the real accounts (not 140,...)!
-          // update vod stuff only at startup ...
-          if (pChannelDlg->getCbxGenre()->count() == 0)
-          {
+         //it works only with the real accounts (not 140,...)!
+         // update vod stuff only at startup ...
+         if (pChannelDlg->getCbxGenre()->count() == 0)
+         {
              Trigger.TriggerRequest(Kartina::REQ_GETVODGENRES);
-          }
+         }
+         else
+         {
+            if (ui->actionOne_Click_Play->isChecked())
+            {
+                on_pushPlay_clicked();
+            }
+         }
       }
    }
 }
