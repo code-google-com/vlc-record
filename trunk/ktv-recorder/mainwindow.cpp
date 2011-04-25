@@ -82,29 +82,39 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    ui->menuFile->addSeparator();
    ui->menuFile->addAction(ui->actionExit);
 
+   QString sAspect[] = {"std.","4:3","16:9","16:10","1:1","5:4","2.35"};
+   QString sCrop[] = {"std.","4:3","16:9","16:10","1:1","5:4","2.35"};
+
    pAspectGroup = new QActionGroup(this);
-   pAspectGroup->addAction(ui->actionAspect_Std);
-   pAspectGroup->addAction(ui->actionAspect_4_3);
-   pAspectGroup->addAction(ui->actionAspect_16_9);
-   pAspectGroup->addAction(ui->actionAspect_16_10);
-   pAspectGroup->addAction(ui->actionAspect_1_1);
-   pAspectGroup->addAction(ui->actionAspect_5_4);
-   pAspectGroup->addAction(ui->actionAspect_2_35);
-   ui->actionAspect_Std->setChecked(true);
-
    pCropGroup   = new QActionGroup(this);
-   pCropGroup->addAction(ui->actionCrop_Std);
-   pCropGroup->addAction(ui->actionCrop_4_3);
-   pCropGroup->addAction(ui->actionCrop_16_9);
-   pCropGroup->addAction(ui->actionCrop_16_10);
-   pCropGroup->addAction(ui->actionCrop_1_1);
-   pCropGroup->addAction(ui->actionCrop_5_4);
-   pCropGroup->addAction(ui->actionCrop_2_35);
-   ui->actionCrop_Std->setChecked(true);
 
-   //hide upper toolbar, status bar and shortEPG window
+   for ( int i = 0; i < MAX_ASPECTS; i++ )
+   {
+       Aspect[i] = new QAction(this);
+       Aspect[i]->setVisible(true);
+       Aspect[i]->setCheckable(true);
+       Aspect[i]->setText(sAspect[i]);
+       ui->menuAspect->addAction(Aspect[i]);
+       pAspectGroup->addAction(Aspect[i]);
+       connect(Aspect[i], SIGNAL(triggered()), this, SLOT(slotAspect()));
+   }
+
+   for ( int i = 0; i < MAX_CROPS; i++ )
+   {
+       Crop[i] = new QAction(this);
+       Crop[i]->setVisible(true);
+       Crop[i]->setCheckable(true);
+       Crop[i]->setText(sCrop[i]);
+       ui->menuCrop->addAction(Crop[i]);
+       pCropGroup->addAction(Crop[i]);
+       connect(Crop[i], SIGNAL(triggered()), this, SLOT(slotCrop()));
+   }
+
+   Aspect[0]->setChecked(true);
+   Crop[0]->setChecked(true);
+
+   // hide upper toolbar  and shortEPG window
    ui->player->getFrameTimerInfo()->hide();
-//   ui->statusBar->hide();
    ui->textEpgShort->hide();
 
    VlcLog.SetLogFile(pFolders->getDataDir(), APP_LOG_FILE);
@@ -196,6 +206,8 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 
    connect (pChannelDlg,   SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
    connect (pChannelDlg,   SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
+   connect (ui->player,    SIGNAL(sigAspectToggle(int)), this, SLOT(slotAspectToggle(int)));
+   connect (ui->player,    SIGNAL(sigCropToggle(int)), this, SLOT(slotCropToggle(int)));
 
    // trigger read of saved timer records ...
    dlgTimeRec.ReadRecordList();
@@ -456,76 +468,6 @@ void MainWindow::on_actionJumpBackward_triggered()
 void MainWindow::on_actionJumpForward_triggered()
 {
     on_pushFwd_clicked();
-}
-
-void MainWindow::on_actionAspect_Std_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(0);
-}
-
-void MainWindow::on_actionAspect_4_3_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(1);
-}
-
-void MainWindow::on_actionAspect_16_9_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(2);
-}
-
-void MainWindow::on_actionAspect_16_10_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(3);
-}
-
-void MainWindow::on_actionAspect_1_1_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(4);
-}
-
-void MainWindow::on_actionAspect_5_4_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(5);
-}
-
-void MainWindow::on_actionAspect_2_35_triggered()
-{
-    ui->player->getCbxAspect()->setCurrentIndex(6);
-}
-
-void MainWindow::on_actionCrop_Std_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(0);
-}
-
-void MainWindow::on_actionCrop_4_3_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(1);
-}
-
-void MainWindow::on_actionCrop_16_9_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(2);
-}
-
-void MainWindow::on_actionCrop_16_10_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(3);
-}
-
-void MainWindow::on_actionCrop_1_1_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(4);
-}
-
-void MainWindow::on_actionCrop_5_4_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(5);
-}
-
-void MainWindow::on_actionCrop_2_35_triggered()
-{
-    ui->player->getCbxCrop()->setCurrentIndex(6);
 }
 
 void MainWindow::on_actionShow_Upper_Tools_Panel_triggered()
@@ -1570,6 +1512,68 @@ void MainWindow::slotSelectChannel()
         pChannelDlg->getChannelList()->setCurrentIndex(idx);
         pChannelDlg->getChannelList()->scrollTo(idx);
     }
+}
+
+void MainWindow::slotAspect()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    QString sAspectName = "";
+    QString str = "";
+    int ind = 0;
+
+    sAspectName = action->text();
+    sAspectName = sAspectName.trimmed();
+
+    for ( int i = 0; i < MAX_ASPECTS; i++)
+    {
+        str = Aspect[i]->text();
+        str = str.trimmed();
+
+        if (str == sAspectName)
+        {
+            ind = i;
+            break;
+        }
+    }
+
+    ui->player->getCbxAspect()->setCurrentIndex(ind);
+}
+
+void MainWindow::slotCrop()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    QString sCropName = "";
+    QString str = "";
+    int ind = 0;
+
+    sCropName = action->text();
+    sCropName = sCropName.trimmed();
+
+    for ( int i = 0; i < MAX_CROPS; i++)
+    {
+        str = Crop[i]->text();
+        str = str.trimmed();
+
+        if (str == sCropName)
+        {
+            ind = i;
+            break;
+        }
+    }
+
+    ui->player->getCbxCrop()->setCurrentIndex(ind);
+}
+
+void MainWindow::slotAspectToggle(int idx)
+{
+    // aspect ratio was chanded in player, set new aspect ratio in menu
+    Aspect[idx]->setChecked(true);
+}
+
+void MainWindow::slotCropToggle(int idx)
+{
+    // crop ratio was chanded in player, set new crop ratio in menu
+    Crop[idx]->setChecked(true);
 }
 
 void MainWindow::slotChannelUp()
