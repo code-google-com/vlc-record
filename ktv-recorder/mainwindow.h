@@ -71,6 +71,8 @@ private:
     QMenu                         *ChanGroup[MAX_CHANNEL_GROUPS]; // define in defdef.h
     QAction                       *ChannelActs[MAX_CHANNEL_ACTS]; // define in defdef.h
     QAction                       *RecentChansActs[MAX_RECENT_CHANNELS]; // define in defdef.h
+    QAction                       *Aspect[MAX_ASPECTS]; // define in defdef.h
+    QAction                       *Crop[MAX_CROPS]; // define in defdef.h
     bool                           bFirstInit;
     bool                           bSetRecentChan;
     QActionGroup                  *pAspectGroup;
@@ -112,20 +114,6 @@ protected:
 
 private slots:
     void on_actionGuid_triggered();
-    void on_actionCrop_2_35_triggered();
-    void on_actionCrop_5_4_triggered();
-    void on_actionCrop_1_1_triggered();
-    void on_actionCrop_16_10_triggered();
-    void on_actionCrop_16_9_triggered();
-    void on_actionCrop_4_3_triggered();
-    void on_actionCrop_Std_triggered();
-    void on_actionAspect_2_35_triggered();
-    void on_actionAspect_5_4_triggered();
-    void on_actionAspect_1_1_triggered();
-    void on_actionAspect_16_10_triggered();
-    void on_actionAspect_16_9_triggered();
-    void on_actionAspect_4_3_triggered();
-    void on_actionAspect_Std_triggered();
     void on_actionShow_Status_Bar_triggered();
     void on_actionClear_Recent_Channel_List_triggered();
     void on_actionJumpForward_triggered();
@@ -187,6 +175,10 @@ private slots:
     void slotChannelDown();
     void slotChannelUp();
     void slotToggleEpgVod();
+    void slotAspect();
+    void slotCrop();
+    void slotAspectToggle(int idx);
+    void slotCropToggle(int idx);
 
 signals:
     void sigToggleFullscreen ();

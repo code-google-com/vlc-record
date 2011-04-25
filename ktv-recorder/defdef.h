@@ -53,6 +53,8 @@
 #define MAX_CHANNEL_ACTS  200         // max number of channel actions
 #define MAX_CHANNEL_GROUPS 20         // max number of channel groups
 #define MAX_RECENT_CHANNELS 10        // max number of recent channels
+#define MAX_ASPECTS         7         // max number of aspect ratios
+#define MAX_CROPS           7         // max number of crop ratios
 
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\

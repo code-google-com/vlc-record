@@ -50,11 +50,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    bSpoolPending = true;
    uiDuration    = (uint)-1;
 
-   ui->cbxAspect->hide();
-   ui->label->hide();
-   ui->cbxCrop->hide();
-   ui->label_2->hide();
-
    // set log poller to single shot ...
    poller.setSingleShot(true);
 
@@ -703,72 +698,6 @@ void CPlayer::slotLibVLCLog()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: on_cbxAspect_currentIndexChanged
-|  Begin: 08.03.2010 / 09:55:10
-|  Author: Jo2003
-|  Description: set new aspect ration ...
-|
-|  Parameters: new aspect ratio as string ...
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
-{
-   if (pMediaPlayer)
-   {
-      QString sAspect, sCrop;
-
-      // set new aspect ratio ...
-      libvlc_video_set_aspect_ratio(pMediaPlayer, str.toAscii().data());
-
-      // save aspect if changed ...
-      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
-
-      if (sAspect != str)
-      {
-         // save to database ...
-         pDb->addAspect(showInfo.channelId(), str, ui->cbxCrop->currentText());
-      }
-
-      mInfo(tr("Aspect ratio: %1")
-            .arg(libvlc_video_get_aspect_ratio(pMediaPlayer)));
-   }
-}
-
-/* -----------------------------------------------------------------\
-|  Method: on_cbxCrop_currentIndexChanged
-|  Begin: 23.03.2010 / 09:55:10
-|  Author: Jo2003
-|  Description: set new crop geometry ...
-|
-|  Parameters: new crop geometry as string ...
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
-{
-   if (pMediaPlayer)
-   {
-      QString sAspect, sCrop;
-
-      // set new aspect ratio ...
-      libvlc_video_set_crop_geometry(pMediaPlayer, str.toAscii().data());
-
-      // save crop if changed ...
-      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
-
-      if (sCrop != str)
-      {
-         // save to database ...
-         pDb->addAspect(showInfo.channelId(), ui->cbxAspect->currentText(), str);
-      }
-
-      mInfo(tr("Crop ratio: %1")
-            .arg(libvlc_video_get_crop_geometry(pMediaPlayer)));
-   }
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotToggleFullScreen
 |  Begin: 08.03.2010 / 09:55:10
 |  Author: Jo2003
@@ -782,74 +711,6 @@ void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
 int CPlayer::slotToggleFullScreen()
 {
    return myToggleFullscreen();
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotToggleAspectRatio
-|  Begin: 08.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: switch aspect ratio to next one ...
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotToggleAspectRatio()
-{
-   int iRV = -1;
-   if (pMediaPlayer)
-   {
-      int idx = ui->cbxAspect->currentIndex();
-      idx ++;
-
-      // if end reached, start with index 0 ...
-      if (idx >= ui->cbxAspect->count())
-      {
-         idx = 0;
-      }
-
-      // set new aspect ratio ...
-      ui->cbxAspect->setCurrentIndex(idx);
-
-      iRV = 0;
-   }
-
-   return iRV;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotToggleCropGeometry
-|  Begin: 08.03.2010 / 15:10:10
-|  Author: Jo2003
-|  Description: switch aspect ratio to next one ...
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotToggleCropGeometry()
-{
-   int iRV = -1;
-   if (pMediaPlayer)
-   {
-      int idx = ui->cbxCrop->currentIndex();
-      idx ++;
-
-      // if end reached, start with index 0 ...
-      if (idx >= ui->cbxCrop->count())
-      {
-         idx = 0;
-      }
-
-      // set new aspect ratio ...
-      ui->cbxCrop->setCurrentIndex(idx);
-
-      iRV = 0;
-   }
-
-   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -917,6 +778,111 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
    }
 
    return 0;
+}
+
+void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
+{
+   if (pMediaPlayer)
+   {
+      QString sAspect, sCrop;
+
+      // set new aspect ratio ...
+      libvlc_video_set_aspect_ratio(pMediaPlayer, str.toAscii().data());
+
+      // save aspect if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sAspect != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), str, ui->cbxCrop->currentText());
+      }
+
+      // now must aspect ratio in menu of MainWindow be changed
+      emit sigAspectToggle(ui->cbxAspect->currentIndex());
+
+
+      mInfo(tr("Aspect ratio: %1")
+            .arg(libvlc_video_get_aspect_ratio(pMediaPlayer)));
+   }
+}
+
+void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
+{
+   if (pMediaPlayer)
+   {
+      QString sAspect, sCrop;
+
+      // set new aspect ratio ...
+      libvlc_video_set_crop_geometry(pMediaPlayer, str.toAscii().data());
+
+      // save crop if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sCrop != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), ui->cbxAspect->currentText(), str);
+      }
+
+      // now must aspect ratio in menu of MainWindow be changed
+      emit sigCropToggle(ui->cbxCrop->currentIndex());
+
+      mInfo(tr("Crop ratio: %1")
+            .arg(libvlc_video_get_crop_geometry(pMediaPlayer)));
+   }
+}
+
+int CPlayer::slotToggleAspectRatio()
+{
+   int iRV = -1;
+   if (pMediaPlayer)
+   {
+      int idx = ui->cbxAspect->currentIndex();
+      idx ++;
+
+      // if end reached, start with index 0 ...
+      if (idx >= ui->cbxAspect->count())
+      {
+         idx = 0;
+      }
+
+      // set new aspect ratio ...
+      ui->cbxAspect->setCurrentIndex(idx);
+
+      // now must aspect ratio in menu of MainWindow be changed
+      emit sigAspectToggle(idx);
+
+      iRV = 0;
+   }
+
+   return iRV;
+}
+
+int CPlayer::slotToggleCropGeometry()
+{
+   int iRV = -1;
+   if (pMediaPlayer)
+   {
+      int idx = ui->cbxCrop->currentIndex();
+      idx ++;
+
+      // if end reached, start with index 0 ...
+      if (idx >= ui->cbxCrop->count())
+      {
+         idx = 0;
+      }
+
+      // set new crop ratio ...
+      ui->cbxCrop->setCurrentIndex(idx);
+
+      // now must crop ratio in menu of MainWindow be changed
+      emit sigCropToggle(idx);
+
+      iRV = 0;
+   }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\

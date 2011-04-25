@@ -137,6 +137,8 @@ public slots:
 signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
+   void sigAspectToggle(int idx);
+   void sigCropToggle(int idx);
 };
 
 #endif /* __022410__CPLAYER_H */
