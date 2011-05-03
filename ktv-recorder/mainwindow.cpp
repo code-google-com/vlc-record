@@ -1608,7 +1608,7 @@ void MainWindow::slotChannelUp()
 
 
     pChannelDlg->getChannelList()->setCurrentIndex(idx);
-    pChannelDlg->getChannelList()->scrollTo(idx);
+    pChannelDlg->getChannelList()->scrollTo(idx, QAbstractItemView::PositionAtTop);
 }
 
 void MainWindow::slotChannelDown()
@@ -1642,7 +1642,7 @@ void MainWindow::slotChannelDown()
     } while (!bSuccess);
 
     pChannelDlg->getChannelList()->setCurrentIndex(idx);
-    pChannelDlg->getChannelList()->scrollTo(idx);
+    pChannelDlg->getChannelList()->scrollTo(idx, QAbstractItemView::PositionAtTop);
 }
 
 void MainWindow::slotToggleEpgVod()
