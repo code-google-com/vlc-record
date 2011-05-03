@@ -1510,7 +1510,7 @@ void MainWindow::slotSelectChannel()
         //go to slotEPG and then until slotGotVideos.
         //In this case in slotEPG the recent channel must not be set
         pChannelDlg->getChannelList()->setCurrentIndex(idx);
-        pChannelDlg->getChannelList()->scrollTo(idx);
+        pChannelDlg->getChannelList()->scrollTo(idx, QAbstractItemView::PositionAtTop);
     }
 }
 

@@ -107,7 +107,7 @@ void CChannelsEPGdlg::on_cbxChannelGroup_activated(int index)
     QModelIndex idx = pModel->index(row + 1, 0);
 
     ui->channelList->setCurrentIndex(idx);
-    ui->channelList->scrollTo(idx);
+    ui->channelList->scrollTo(idx, QAbstractItemView::PositionAtTop);
 }
 
 void CChannelsEPGdlg::on_cbxGenre_currentIndexChanged(int index)
@@ -349,7 +349,7 @@ void CChannelsEPGdlg::slotHandleFavAction(QAction *pAct)
           {
              // found --> mark row ...
              ui->channelList->setCurrentIndex(idx);
-             ui->channelList->scrollTo(idx);
+             ui->channelList->scrollTo(idx, QAbstractItemView::PositionAtTop);
              break;
           }
        }
