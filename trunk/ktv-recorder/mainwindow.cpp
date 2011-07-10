@@ -2256,14 +2256,15 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
 QString MainWindow::CleanShowName(const QString &str)
 {
    QString sName = str;
+
+   // remove html code for ' " ' ...
    sName.replace(QString("&quot;"), QString(" "));
-   sName.replace(QString("\""), QString(" "));
-   sName.replace(QString("'"), QString(" "));
-   sName.replace(QString("-"), QString(" "));
-   sName.replace(QString("."), QString(" "));
-   sName.replace(QString(","), QString(" "));
-   sName.replace(QString("/"), QString("-"));
-   sName.replace(QString("\\"), QString(""));
+
+   // remove Windows forbidden characters
+   // <>:?*|"\/ and in addition '-.
+   sName.replace(QRegExp("[<>:?*/|\\\\\"'.,-]"), " ");
+
+   // remove mutliple spaces ...
    sName = sName.simplified();
 
    // find space at good position ...
