@@ -95,23 +95,33 @@ p, li { white-space: pre-wrap; }
         <translation>News und Updates findet Ihr auf meiner Homepage: %1.</translation>
     </message>
     <message>
-        <location filename="caboutdialog.cpp" line="128"/>
+        <location filename="caboutdialog.cpp" line="129"/>
         <source>&lt;b&gt;KTV-Recorder is free software!&lt;/b&gt;</source>
         <oldsource>&lt;b&gt;vlc-record is free software!&lt;/b&gt;</oldsource>
         <translation>&lt;b&gt;KTV-Recorder ist Freeware!&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="caboutdialog.cpp" line="129"/>
+        <location filename="caboutdialog.cpp" line="130"/>
         <source>Nevertheless ... if you like this software, please support me: </source>
         <translation>Aber ... wenn Dir das Programm gefällt, unterstütze mich: </translation>
     </message>
     <message>
-        <location filename="caboutdialog.cpp" line="131"/>
+        <location filename="caboutdialog.cpp" line="132"/>
         <source>Donate some $ and / or &amp;euro; at Paypal for my work.</source>
         <translation>Spende ein paar $ und / oder &amp;euro; bei PayPal für meine Arbeit.</translation>
     </message>
     <message>
-        <location filename="caboutdialog.cpp" line="132"/>
+        <location filename="caboutdialog.cpp" line="134"/>
+        <source>If you enjoy this software and would like to support its further development, please </source>
+        <translation>Wenn Dir diese Software gefällt und die die Weiterentwicklung unterstützden willst, bitte </translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="136"/>
+        <source>donate here via Paypal</source>
+        <translation>spende hier per PayPal</translation>
+    </message>
+    <message>
+        <location filename="caboutdialog.cpp" line="138"/>
         <source>Thank you,</source>
         <translation>Danke,</translation>
     </message>
@@ -581,7 +591,7 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="455"/>
         <location filename="ckartinaxmlparser.cpp" line="962"/>
         <location filename="ckartinaxmlparser.cpp" line="1033"/>
-        <location filename="ckartinaxmlparser.cpp" line="1374"/>
+        <location filename="ckartinaxmlparser.cpp" line="1381"/>
         <source>Found unused element %1 ...</source>
         <translation></translation>
     </message>
@@ -591,14 +601,174 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="461"/>
         <location filename="ckartinaxmlparser.cpp" line="968"/>
         <location filename="ckartinaxmlparser.cpp" line="1039"/>
-        <location filename="ckartinaxmlparser.cpp" line="1380"/>
+        <location filename="ckartinaxmlparser.cpp" line="1387"/>
         <source>Found unused child %1: %2 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1298"/>
-        <source>Error #%1 in %2():%3: %4</source>
-        <translation></translation>
+        <location filename="ckartinaxmlparser.cpp" line="1300"/>
+        <source>Error #%1: %2!</source>
+        <translation>Fehler #%1: %2!</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1304"/>
+        <source>Error #%1 in %2():%3: %4!</source>
+        <translation>Fehler #%1 in %2():%3: %4!</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1411"/>
+        <source>Unknown error</source>
+        <translation>Unbekannter Fehler</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1412"/>
+        <source>Incorrect request</source>
+        <translation>Falsche Anfrage</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1413"/>
+        <source>Wrong login or password</source>
+        <translation>Falsche Login-Daten</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1414"/>
+        <source>Access denied</source>
+        <translation>Zugriff verboten</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1415"/>
+        <source>Login incorrect</source>
+        <translation>Falscher Login</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1416"/>
+        <source>Your contract is inactive</source>
+        <translation>Ihr Vertrag ist nicht aktiv</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1417"/>
+        <source>Your contract is paused</source>
+        <translation>Ihr Vertrag pausiert</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1418"/>
+        <source>Channel not found or not allowed</source>
+        <translation>Kannal nicht gefunden oder nicht erlaubt</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1419"/>
+        <source>Error in request: Bad parameters</source>
+        <translation>Fehler in der Anfrage: Falsche(r) Parameter</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1420"/>
+        <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
+        <translation>Fehlender Parameter (day) in Form &lt;DDMMYY&gt;</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1421"/>
+        <source>Missing parameter (cid)</source>
+        <translation>Fehlender Parameter (cid)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1422"/>
+        <source>Another client with your data logged in</source>
+        <translation>Ein anderer Client hat sich mit Ihren Daten eingeloggt</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1423"/>
+        <source>Authentication error</source>
+        <translation>Authentifizierungsfehler</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1424"/>
+        <source>Your package expired</source>
+        <translation>Ihr Paket ist abgelaufen</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1425"/>
+        <source>Unknown API function</source>
+        <translation>Unbekannte API Funktion</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1426"/>
+        <source>Archive not available</source>
+        <translation>Archiv nicht verfügbar</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1427"/>
+        <source>Missing parameter (place)</source>
+        <translation>Fehlender Parameter (place)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1428"/>
+        <source>Missing parameter (name)</source>
+        <translation>Fehlender Parameter (name)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1429"/>
+        <source>Incorrect confirmation code</source>
+        <translation>Falscher Bestätigungscode</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1430"/>
+        <source>Current code is wrong</source>
+        <translation>Der aktuelle Code ist falsch</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1431"/>
+        <source>New code is wrong</source>
+        <translation>Neuer Code ist falsch</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1432"/>
+        <source>Missing parameter (val)</source>
+        <translation>Fehlender Parameter (val)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1433"/>
+        <source>Value not allowed</source>
+        <translation>Wert nicht zulässig</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1434"/>
+        <source>Missing parameter</source>
+        <translation>Fehlende(r) Parameter</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1435"/>
+        <source>Missing parameter (id)</source>
+        <translation>Fehlender Parameter (id)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1436"/>
+        <source>Missing parameter (fileid)</source>
+        <translation>Fehlender Parameter (fileid)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1437"/>
+        <source>Missing parameter (type)</source>
+        <translation>Fehlender Parameter (type)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1438"/>
+        <source>Missing parameter (query)</source>
+        <translation>Fehlender Parameter (query)</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1439"/>
+        <source>Bitrate not available</source>
+        <translation>Bitrate nicht verfügbar</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1440"/>
+        <source>Service not available</source>
+        <translation>Service nicht verfügbar</translation>
+    </message>
+    <message>
+        <location filename="ckartinaxmlparser.cpp" line="1441"/>
+        <source>Query limit exceeded</source>
+        <translation>Query-Limit überschritten</translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="72"/>
@@ -632,7 +802,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="426"/>
+        <location filename="cplayer.cpp" line="421"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -640,37 +810,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="434"/>
+        <location filename="cplayer.cpp" line="429"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1246"/>
+        <location filename="cplayer.cpp" line="1212"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="446"/>
+        <location filename="cplayer.cpp" line="441"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="639"/>
+        <location filename="cplayer.cpp" line="634"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="733"/>
+        <location filename="cplayer.cpp" line="805"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="766"/>
+        <location filename="cplayer.cpp" line="831"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1086"/>
+        <location filename="cplayer.cpp" line="1052"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <oldsource>
@@ -678,17 +848,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1095"/>
+        <location filename="cplayer.cpp" line="1061"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1124"/>
+        <location filename="cplayer.cpp" line="1090"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1157"/>
+        <location filename="cplayer.cpp" line="1123"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
@@ -731,7 +901,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FEHLER</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="684"/>
+        <location filename="cplayer.cpp" line="679"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -852,12 +1022,12 @@ p, li { white-space: pre-wrap; }
         <translation>Logge alles</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="224"/>
+        <location filename="csettingsdlg.cpp" line="256"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="219"/>
+        <location filename="csettingsdlg.cpp" line="251"/>
         <source>Executables (*.exe)</source>
         <translation>ausführbar (*.exe)</translation>
     </message>
@@ -922,27 +1092,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Ein Schritt zurück</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="221"/>
+        <location filename="csettingsdlg.cpp" line="253"/>
         <source>Executables (*)</source>
         <translation>ausführbar (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="242"/>
+        <location filename="csettingsdlg.cpp" line="296"/>
         <source>Target Folder</source>
         <translation>Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="971"/>
+        <location filename="csettingsdlg.cpp" line="1025"/>
         <source>Reg Info</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1172"/>
+        <location filename="csettingsdlg.cpp" line="1224"/>
         <source>The same ShortCut!</source>
         <translation>Gleiche ShortCuts!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1173"/>
+        <location filename="csettingsdlg.cpp" line="1225"/>
         <source>The same ShortCut %1 is already in row %2.
 Please enter another ShortCut.</source>
         <translation>Das gleiche ShortCut %1 ist schon in der Zeile %2.
@@ -1367,7 +1537,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="344"/>
-        <location filename="ctimerrec.cpp" line="477"/>
+        <location filename="ctimerrec.cpp" line="468"/>
         <source>Error in %1</source>
         <translation>Fehler in %1</translation>
     </message>
@@ -1377,55 +1547,55 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="345"/>
-        <location filename="ctimerrec.cpp" line="478"/>
+        <location filename="ctimerrec.cpp" line="469"/>
         <source>SQL Error String: %1</source>
         <translation>SQL Fehler String: %1</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="427"/>
+        <location filename="ctimerrec.cpp" line="417"/>
         <source>Please Correct! Please insert a name!</source>
         <translation>Bitte korrigieren! Bitte einen Namen eingeben!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="435"/>
+        <location filename="ctimerrec.cpp" line="425"/>
         <source>Please Correct! The entry you want to add overlapps with an existing entry
 or start time is later than end time!</source>
         <translation>Bitte korrigieren! Der Eintrag, den Sie eintragen wollen, überschneidet sich mit einem anderen Eintrag
 oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="594"/>
+        <location filename="ctimerrec.cpp" line="585"/>
         <source>Add Job #%1 (%2) to Joblist!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="648"/>
+        <location filename="ctimerrec.cpp" line="639"/>
         <source>Don&apos;t check ID %1 (it will be updated).</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="834"/>
+        <location filename="ctimerrec.cpp" line="843"/>
         <source>Delete old entry #%1 (%2) from Joblist.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="841"/>
+        <location filename="ctimerrec.cpp" line="851"/>
         <source>Stopping timer record #%1 (%2). End time reached!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="883"/>
+        <location filename="ctimerrec.cpp" line="893"/>
         <source>Record #%1 (%2) starts soon. Set timer to standby!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="891"/>
+        <location filename="ctimerrec.cpp" line="901"/>
         <source>Start record #%1 (%2)!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="963"/>
-        <location filename="ctimerrec.cpp" line="1032"/>
+        <location filename="ctimerrec.cpp" line="973"/>
+        <location filename="ctimerrec.cpp" line="1042"/>
         <source>Error! Can&apos;t start Player!</source>
         <translation>Fehler! Kann den Player nicht starten!</translation>
     </message>
@@ -1434,8 +1604,8 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation type="obsolete">Kann den Player nicht starten!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="967"/>
-        <location filename="ctimerrec.cpp" line="1036"/>
+        <location filename="ctimerrec.cpp" line="977"/>
+        <location filename="ctimerrec.cpp" line="1046"/>
         <source>Started player with pid #%1!</source>
         <translation></translation>
     </message>
@@ -1448,7 +1618,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation type="obsolete">Kann den VLC Mediaplayer nicht starten!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="985"/>
+        <location filename="ctimerrec.cpp" line="995"/>
         <source>All records done. Shutdown system using command line:
   --&gt; %1</source>
         <translation></translation>
@@ -1679,18 +1849,17 @@ oder die Startzeit liegt nach der Endzeit!</translation>
 <context>
     <name>CVlcRecDB</name>
     <message>
-        <location filename="cvlcrecdb.cpp" line="34"/>
         <source>Error!</source>
-        <translation>Fehler!</translation>
+        <translation type="obsolete">Fehler!</translation>
     </message>
     <message>
-        <location filename="cvlcrecdb.cpp" line="34"/>
         <source>Can&apos;t create / open SQLite database ...</source>
-        <translation>Kann SQL Datenbank nicht anlegen / öffnen ...</translation>
+        <translation type="obsolete">Kann SQL Datenbank nicht anlegen / öffnen ...</translation>
     </message>
     <message>
+        <location filename="cvlcrecdb.cpp" line="37"/>
         <source>Error! Can&apos;t create / open SQLite database ...</source>
-        <translation type="obsolete">Fehler! Kann SQL Datenbank nicht anlegen / öffnen ...</translation>
+        <translation>Fehler! Kann SQL Datenbank nicht anlegen / öffnen ...</translation>
     </message>
 </context>
 <context>
@@ -1765,35 +1934,35 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="178"/>
-        <location filename="forms/mainwindow.ui" line="647"/>
-        <location filename="mainwindow.cpp" line="2171"/>
-        <location filename="mainwindow.cpp" line="2173"/>
+        <location filename="forms/mainwindow.ui" line="633"/>
+        <location filename="mainwindow.cpp" line="2185"/>
+        <location filename="mainwindow.cpp" line="2187"/>
         <source>Play selected Channel</source>
         <translation>Zeige markierten Sender</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2164"/>
-        <location filename="mainwindow.cpp" line="2166"/>
+        <location filename="mainwindow.cpp" line="2178"/>
+        <location filename="mainwindow.cpp" line="2180"/>
         <source>Pause</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="216"/>
-        <location filename="forms/mainwindow.ui" line="656"/>
+        <location filename="forms/mainwindow.ui" line="642"/>
         <source>Record selected Channel</source>
         <translation>Nehme markierten Sender auf</translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="257"/>
-        <location filename="forms/mainwindow.ui" line="665"/>
-        <location filename="mainwindow.cpp" line="2515"/>
+        <location filename="forms/mainwindow.ui" line="651"/>
+        <location filename="mainwindow.cpp" line="2530"/>
         <source>Stop</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="314"/>
-        <location filename="forms/mainwindow.ui" line="674"/>
-        <location filename="mainwindow.cpp" line="2532"/>
+        <location filename="forms/mainwindow.ui" line="660"/>
+        <location filename="mainwindow.cpp" line="2547"/>
         <source>Jump Backward</source>
         <translation>Springe zurück</translation>
     </message>
@@ -1834,8 +2003,8 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="395"/>
-        <location filename="forms/mainwindow.ui" line="683"/>
-        <location filename="mainwindow.cpp" line="2531"/>
+        <location filename="forms/mainwindow.ui" line="669"/>
+        <location filename="mainwindow.cpp" line="2546"/>
         <source>Jump Forward</source>
         <translation>Springe vorwärts</translation>
     </message>
@@ -1880,151 +2049,109 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation>Aspect</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="567"/>
+        <location filename="forms/mainwindow.ui" line="560"/>
         <source>Crop</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="590"/>
+        <location filename="forms/mainwindow.ui" line="576"/>
         <source>View</source>
         <translation>Ansicht</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="611"/>
-        <location filename="mainwindow.cpp" line="2518"/>
+        <location filename="forms/mainwindow.ui" line="597"/>
+        <location filename="mainwindow.cpp" line="2533"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="616"/>
+        <location filename="forms/mainwindow.ui" line="602"/>
         <source>Channels, EPG and VOD</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="621"/>
+        <location filename="forms/mainwindow.ui" line="607"/>
         <source>Guide</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="630"/>
-        <location filename="mainwindow.cpp" line="2519"/>
+        <location filename="forms/mainwindow.ui" line="616"/>
+        <location filename="mainwindow.cpp" line="2534"/>
         <source>About</source>
         <translation>Programm Info</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="635"/>
+        <location filename="forms/mainwindow.ui" line="621"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="692"/>
+        <location filename="forms/mainwindow.ui" line="678"/>
         <source>Time Record</source>
         <translation>Timer Record</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="703"/>
+        <location filename="forms/mainwindow.ui" line="689"/>
         <source>Show Upper Tools-Panel</source>
         <translation>Zeige Obene Tools-Panel</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="714"/>
+        <location filename="forms/mainwindow.ui" line="700"/>
         <source>Show Channel Information</source>
         <translation>Zeige Channel Information</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="725"/>
+        <location filename="forms/mainwindow.ui" line="711"/>
         <source>Show Lower Tools-Panel</source>
         <translation>Zeige Untene Tools-Panel</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="733"/>
+        <location filename="forms/mainwindow.ui" line="719"/>
         <source>Always On Top</source>
         <translation>Immer OnTop</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="744"/>
+        <location filename="forms/mainwindow.ui" line="730"/>
         <source>One Click Play</source>
         <translation>Play sofort</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="749"/>
+        <location filename="forms/mainwindow.ui" line="735"/>
         <source>Clear Recent Channel List</source>
         <translation>Löschen Recent Channel Liste</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="760"/>
+        <location filename="forms/mainwindow.ui" line="746"/>
         <source>Show Status Bar</source>
         <translation>Zeigen Statusbar</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="768"/>
-        <location filename="forms/mainwindow.ui" line="824"/>
-        <source>std.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="776"/>
-        <location filename="forms/mainwindow.ui" line="832"/>
-        <source>4:3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="784"/>
-        <location filename="forms/mainwindow.ui" line="840"/>
-        <source>16:9</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="792"/>
-        <location filename="forms/mainwindow.ui" line="848"/>
-        <source>16:10</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="800"/>
-        <location filename="forms/mainwindow.ui" line="856"/>
-        <source>1:1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="808"/>
-        <location filename="forms/mainwindow.ui" line="864"/>
-        <source>5:4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/mainwindow.ui" line="816"/>
-        <location filename="forms/mainwindow.ui" line="872"/>
-        <source>2.35</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="123"/>
+        <location filename="mainwindow.cpp" line="133"/>
         <source>
 dataDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="124"/>
+        <location filename="mainwindow.cpp" line="134"/>
         <source>logoDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="135"/>
         <source>langDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="136"/>
         <source>modDir:  %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="127"/>
+        <location filename="mainwindow.cpp" line="137"/>
         <source>appDir:  %1</source>
         <translation></translation>
     </message>
@@ -2037,47 +2164,47 @@ dataDir: %1
         <translation type="obsolete">Die %1 Client API meldet folgenden Fehler: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="861"/>
+        <location filename="mainwindow.cpp" line="806"/>
         <source>logout done ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="930"/>
+        <location filename="mainwindow.cpp" line="875"/>
         <source>Active stream server is %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="976"/>
+        <location filename="mainwindow.cpp" line="921"/>
         <source>Using Bitrate %1 kbit/s ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1156"/>
+        <location filename="mainwindow.cpp" line="1108"/>
         <source>Length: %1 min.</source>
         <translation>Länge: %1 min.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1157"/>
+        <location filename="mainwindow.cpp" line="1109"/>
         <source> (Ar.)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1236"/>
+        <location filename="mainwindow.cpp" line="1188"/>
         <source>timeRec reports: record done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1244"/>
+        <location filename="mainwindow.cpp" line="1196"/>
         <source>timeRec reports: record active!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1258"/>
+        <location filename="mainwindow.cpp" line="1210"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1266"/>
+        <location filename="mainwindow.cpp" line="1218"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation></translation>
     </message>
@@ -2090,163 +2217,163 @@ dataDir: %1
         <translation type="obsolete">Kann den VLC Mediaplayer nicht starten!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="852"/>
+        <location filename="mainwindow.cpp" line="797"/>
         <source>Error: %1 Client API reports some errors: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1341"/>
-        <location filename="mainwindow.cpp" line="2039"/>
-        <location filename="mainwindow.cpp" line="2085"/>
+        <location filename="mainwindow.cpp" line="1293"/>
+        <location filename="mainwindow.cpp" line="2053"/>
+        <location filename="mainwindow.cpp" line="2099"/>
         <source>Error! Can&apos;t start VLC-Media Player!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1347"/>
-        <location filename="mainwindow.cpp" line="2046"/>
-        <location filename="mainwindow.cpp" line="2091"/>
+        <location filename="mainwindow.cpp" line="1299"/>
+        <location filename="mainwindow.cpp" line="2060"/>
+        <location filename="mainwindow.cpp" line="2105"/>
         <source>Started VLC with pid #%1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1362"/>
+        <location filename="mainwindow.cpp" line="1314"/>
         <source>All</source>
         <translation>Alles</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1460"/>
+        <location filename="mainwindow.cpp" line="1412"/>
         <source>Video On Demand</source>
         <translation>Videothek</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2514"/>
+        <location filename="mainwindow.cpp" line="2529"/>
         <source>Play / Pause</source>
         <translation>Wiedergabe / Pause</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2516"/>
+        <location filename="mainwindow.cpp" line="2531"/>
         <source>Record</source>
         <translation>Aufnahme</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2517"/>
+        <location filename="mainwindow.cpp" line="2532"/>
         <source>Timer Record</source>
         <translation>Timer Aufnahme</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2520"/>
+        <location filename="mainwindow.cpp" line="2535"/>
         <source>Channels, EPG/VOD</source>
         <translation>Känale, EPG/VOD</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2521"/>
+        <location filename="mainwindow.cpp" line="2536"/>
         <source>Search EPG</source>
         <translation>EPG - Suche</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2522"/>
+        <location filename="mainwindow.cpp" line="2537"/>
         <source>Text Size +</source>
         <translation>Schrift vergrößern</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2523"/>
+        <location filename="mainwindow.cpp" line="2538"/>
         <source>Text Size -</source>
         <translation>Schrift verkleinern</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2524"/>
+        <location filename="mainwindow.cpp" line="2539"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2525"/>
+        <location filename="mainwindow.cpp" line="2540"/>
         <source>Toggle Aspect Ratio</source>
         <translation>Seitensverhältnis umschalten</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2526"/>
+        <location filename="mainwindow.cpp" line="2541"/>
         <source>Toggle Crop Geometry</source>
         <translation>Videoformat zuschneiden</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2527"/>
+        <location filename="mainwindow.cpp" line="2542"/>
         <source>Toggle Fullscreen</source>
         <translation>Fullscreen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2528"/>
+        <location filename="mainwindow.cpp" line="2543"/>
         <source>Volume +</source>
         <translation>Lauter +</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2529"/>
+        <location filename="mainwindow.cpp" line="2544"/>
         <source>Volume -</source>
         <translation>Leiser -</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2530"/>
+        <location filename="mainwindow.cpp" line="2545"/>
         <source>Toggle Mute</source>
         <translation>Lautlos</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2533"/>
+        <location filename="mainwindow.cpp" line="2548"/>
         <source>Next Channel</source>
         <translation>Nächster Kanal</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2534"/>
+        <location filename="mainwindow.cpp" line="2549"/>
         <source>Previous Channel</source>
         <translation>Vorheriger Kanal</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2535"/>
+        <location filename="mainwindow.cpp" line="2550"/>
         <source>Show EPG / VOD</source>
         <translation>Zeige EPG / Videothek</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1764"/>
+        <location filename="mainwindow.cpp" line="1778"/>
         <source>VLC is still running.&lt;br /&gt;&lt;b&gt;Closing VLC record will also close the started VLC-Player.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Do you really want to close VLC Record now?</source>
         <translation>Der VLC Mediaplayer läuft noch.&lt;br /&gt;&lt;b&gt;Wenn Du vlc-record jetzt schließt, wird auch der VLC Player geschlossen.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Bist Du sicher, dass Du das willst?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1769"/>
-        <location filename="mainwindow.cpp" line="2292"/>
+        <location filename="mainwindow.cpp" line="1783"/>
+        <location filename="mainwindow.cpp" line="2307"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1887"/>
+        <location filename="mainwindow.cpp" line="1901"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2465"/>
+        <location filename="mainwindow.cpp" line="2480"/>
         <source>Program:</source>
         <translation>Sendung:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2466"/>
+        <location filename="mainwindow.cpp" line="2481"/>
         <source>Start:</source>
         <translation>Beginn:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2467"/>
+        <location filename="mainwindow.cpp" line="2482"/>
         <source>End:</source>
         <translation>Ende:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1974"/>
-        <location filename="mainwindow.cpp" line="2109"/>
+        <location filename="mainwindow.cpp" line="1988"/>
+        <location filename="mainwindow.cpp" line="2123"/>
         <source>Save Stream as</source>
         <translation>Speichere Stream als</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2288"/>
+        <location filename="mainwindow.cpp" line="2303"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <translation>Der VLC Player läuft noch.&lt;br /&gt; &lt;br /&gt;Bist Du sicher, dass Du ihn schließen willst?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2391"/>
+        <location filename="mainwindow.cpp" line="2406"/>
         <source>KTV-Recorder - Click to activate!</source>
         <translation></translation>
     </message>

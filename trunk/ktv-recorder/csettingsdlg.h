@@ -108,7 +108,7 @@ public:
     void setStatusBar(QStatusBar *pStBar);
 
 protected:
-    void changeEvent(QEvent *e);
+    virtual void changeEvent(QEvent *e);
 
 private:
     Ui::CSettingsDlg *m_ui;

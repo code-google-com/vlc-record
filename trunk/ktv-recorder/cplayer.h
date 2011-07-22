@@ -89,7 +89,7 @@ public:
    QComboBox* getCbxCrop();
 
 protected:
-   void changeEvent(QEvent *e);
+   virtual void changeEvent(QEvent *e);
    int  myToggleFullscreen ();
    void enableDisablePlayControl (bool bEnable);
 

@@ -6,8 +6,9 @@
 
 #ifdef DINCLUDEPLUGS
 #include <QtPlugin>
-Q_IMPORT_PLUGIN(qgif)
-Q_IMPORT_PLUGIN(qico)
+Q_IMPORT_PLUGIN(qsqlite)
+// Q_IMPORT_PLUGIN(qgif)
+// Q_IMPORT_PLUGIN(qico)
 #endif // DINCLUDEPLUGS
 
 #ifdef Q_WS_X11

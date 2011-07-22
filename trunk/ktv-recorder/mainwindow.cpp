@@ -276,6 +276,9 @@ void MainWindow::changeEvent(QEvent *e)
          {
              retranslateShortcutTable();
          }
+
+       // translate error strings ...
+         XMLParser.fillErrorMap();
       break;
       default:
       break;
