@@ -98,7 +98,6 @@ protected:
     void ConnectionInit();
     void CreateSystray ();
     void initDialog();
-    void changeEvent(QEvent *e);
     void setRecentChannel(const QString &ChanName);
     void updateRecentChanActions();
     int getChanId(const QString &chanName);
@@ -107,6 +106,7 @@ protected:
     void retranslateShortcutTable();
     void fillShortCutTab();
 
+    virtual void changeEvent(QEvent *e);
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void showEvent (QShowEvent * event);
     virtual void hideEvent (QHideEvent * event);

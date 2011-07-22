@@ -75,6 +75,11 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
       m_ui->lineApiServer->setText (KARTINA_HOST);
    }
 
+   // in case we use customization we should hide the API server name stuff ...
+#ifdef _IS_OEM
+   m_ui->lineApiServer->setVisible(false);
+#endif // _IS_OEM
+
    m_ui->lineProxyHost->setText(pDb->stringValue("ProxyHost"));
    m_ui->lineProxyPort->setText(pDb->stringValue("ProxyPort"));
    m_ui->lineProxyUser->setText(pDb->stringValue("ProxyUser"));
@@ -114,7 +119,21 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
 
    m_ui->cbxLogLevel->setCurrentIndex((int)pDb->intValue("LogLevel"));
 
-   iIdx = m_ui->cbxPlayerMod->findText(pDb->stringValue("PlayerModule"));
+   if ((s = pDb->stringValue("PlayerModule")) == "")
+   {
+      // no player module chossen yet ...
+
+#ifdef INCLUDE_LIBVLC
+      // default module in version 2.xx is 5_libvlc.mod
+      s = "5_libvlc.mod";
+#else
+      // default module in version 1.xx is 1_vlc-player.mod
+      s = "1_vlc-player.mod";
+#endif
+
+   }
+
+   iIdx = m_ui->cbxPlayerMod->findText(s);
    m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 }
 
@@ -193,6 +212,18 @@ void CSettingsDlg::changeEvent(QEvent *e)
 \----------------------------------------------------------------- */
 void CSettingsDlg::slotEnableApiServer()
 {
+#ifdef _IS_OEM
+   if (!m_ui->lineApiServer->isVisible())
+   {
+      m_ui->lineApiServer->setVisible(true);
+      m_ui->lineApiServer->setEnabled(true);
+   }
+   else
+   {
+      m_ui->lineApiServer->setEnabled(false);
+      m_ui->lineApiServer->setVisible(false);
+   }
+#else
    if (m_ui->lineApiServer->isEnabled())
    {
       m_ui->lineApiServer->setEnabled(false);
@@ -201,6 +232,7 @@ void CSettingsDlg::slotEnableApiServer()
    {
       m_ui->lineApiServer->setEnabled(true);
    }
+#endif // _IS_OEM
 }
 
 /* -----------------------------------------------------------------\
@@ -223,6 +255,28 @@ void CSettingsDlg::on_pushVLC_clicked()
 
    QString sVLCPath = QFileDialog::getOpenFileName(this, tr("VLC Media Player"),
                                                    m_ui->lineVLC->text(), sFilter);
+
+#ifdef Q_OS_MAC
+   // on mac get executable file name from application bundle ...
+   QFileInfo fInfo (sVLCPath);
+
+   // quick 'n' dirty check for application bundle ...
+   if (fInfo.isDir() && (fInfo.suffix().toLower() == "app"))
+   {
+      QFile bundleInfo (sVLCPath + QString("/Contents/Info.plist"));
+      if (bundleInfo.open(QIODevice::ReadOnly))
+      {
+         QString infoString = bundleInfo.readAll();
+         QRegExp rx("<key>CFBundleExecutable</key>[^<]*<string>([^<]*)</string>");
+
+         // use reg. expressions instead of xml stream parser ...
+         if (rx.indexIn(infoString) > -1)
+         {
+            sVLCPath += QString("/Contents/MacOS/%1").arg(rx.cap(1));
+         }
+      }
+   }
+#endif // Q_OS_MAC
 
    m_ui->lineVLC->setText(sVLCPath);
 }
@@ -1163,19 +1217,16 @@ void CSettingsDlg::slotKeySequenceChanged(const QKeySequence &custKeySeq, const 
         sKeySeq0 = pGrab0->shortCutString();
         sKeySeq0 = sKeySeq0.trimmed();
 
-        if (i != iRow)
+        if ((i != iRow) && (sKeySeq == sKeySeq0))
         {
-            if (sKeySeq == sKeySeq0)
-            {
-                pGrab0->markRed();
+             pGrab0->markRed();
 
-                QMessageBox::warning(NULL, tr("The same ShortCut!"),
-                      tr("The same ShortCut %1 is already in row %2.\nPlease enter another ShortCut.").
-                      arg(sKeySeq0).arg(QString::number(i + 1)));
+             QMessageBox::warning(NULL, tr("The same ShortCut!"),
+                  tr("The same ShortCut %1 is already in row %2.\nPlease enter another ShortCut.").
+                  arg(sKeySeq0).arg(QString::number(i + 1)));
 
-                pGrab->rollback(currentKeySequence);
-                pGrab0->unMark();
-            }
+             pGrab->rollback(currentKeySequence);
+             pGrab0->unMark();
         }
     }
 }

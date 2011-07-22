@@ -24,6 +24,12 @@
    #define DATA_DIR       "." APP_NAME
 #endif
 
+#ifdef __GNUC__
+   #define __UNUSED        __attribute__ ((unused))
+#else
+   #define __UNUSED
+#endif
+
 #define APP_INI_FILE      "ktv-rcd.ini"
 #define APP_LOG_FILE      "ktv-recorder.log"
 #define PLAYER_LOG_FILE   "player.log"
