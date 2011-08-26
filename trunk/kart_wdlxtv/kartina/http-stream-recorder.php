@@ -231,6 +231,7 @@ if ($url != "")
       fclose($sock);
    }
    
+   // force destruction of timer class ...
    if ($sTimer)
    {
       unset ($sTimer);
