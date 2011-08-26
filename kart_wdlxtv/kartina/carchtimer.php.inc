@@ -1,6 +1,6 @@
 <?php
 /*********************** Information *************************\
-| $HeadUR$
+| $HeadURL$
 | 
 | Author: Jo2003
 |
