@@ -12,7 +12,7 @@
 \*************************************************************/
 
 require_once(dirname(__FILE__) . "/_kartina_auth.php.inc");
-require_once(dirname(__FILE__) . "/csimpletimer.php.inc");
+require_once(dirname(__FILE__) . "/carchtimer.php.inc");
 
 // How the stream recorder works:
 // - request stream url at kartina.tv
@@ -52,10 +52,10 @@ if (!$dorec && ($gmt != -1))
    if ($offset != 0)
    {
       // create timer class without starting the measurement ...
-      $sTimer = new CSimpleTimer ();
+      $sTimer = new CArchTimer ();
       
       // get last stop timestamp ...
-      if (($lastStamp = $sTimer->getLastStopStamp()) === false)
+      if (($lastStamp = $sTimer->getLastStopTime()) === false)
       {
          // can't get timestamp --> use given gmt to proceed with offset ...
          $gmt += $offset;
@@ -68,12 +68,12 @@ if (!$dorec && ($gmt != -1))
       }
       
       // start measurement ... 
-      $sTimer->startMeasurement ($gmt);
+      $sTimer->start ($gmt);
    }
    else
    {
       // create timer class and start measurement ...
-      $sTimer = new CSimpleTimer ($gmt);
+      $sTimer = new CArchTimer ($gmt);
    }
 }
 
@@ -175,6 +175,12 @@ if ($url != "")
          // read small chunk from socket ...
          $chunk = fread($sock, 8192);
          
+         // tell the timer that we're still here ...
+         if ($sTimer)
+         {
+            $sTimer->ping();
+         }
+         
          // write it to file if needed ...
          if ($recfp)
          {
@@ -223,6 +229,11 @@ if ($url != "")
       }
 
       fclose($sock);
+   }
+   
+   if ($sTimer)
+   {
+      unset ($sTimer);
    }
 }
 
