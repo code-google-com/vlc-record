@@ -127,7 +127,7 @@ class CArchTimer
    {
       $rv = false;
       
-      if (($fp = fopen (TIMESTAMPFILE, "w")) !== false)
+      if (($fp = fopen (TIMESTAMPFILE, "w+")) !== false)
       {
          $stopStamp = $this->_iStartStamp + ($this->_iLastTriggered - $this->_iStartGmt);
          
