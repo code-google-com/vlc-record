@@ -103,9 +103,9 @@ class CArchTimer
       $now = time();
       
       // write timestamp file only once in 5 seconds ...
-      if (($time - $this->_iLastTriggered) >= 5)
+      if (($now - $this->_iLastTriggered) >= 5)
       {
-         $this->_iLastTriggered = $time;
+         $this->_iLastTriggered = $now;
          $rv = $this->writeTimeStamp();
       }
       
@@ -131,7 +131,7 @@ class CArchTimer
       {
          $stopStamp = $this->_iStartStamp + ($this->_iLastTriggered - $this->_iStartGmt);
          
-         $fwrite ($fp, (string)$stopStamp);
+         fwrite ($fp, (string)$stopStamp);
          
          $rv = true;
          
