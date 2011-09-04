@@ -152,7 +152,7 @@ class CArchTimer
    |  Returns: false --> error
    |            else --> last stop timestamp
    \----------------------------------------------------------------- */
-   public getLastStopTime ()
+   public function getLastStopTime ()
    {
       $rv = false;
       
