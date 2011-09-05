@@ -48,12 +48,12 @@ $sTimer = NULL;
 // are we in archive play ... ?
 if (!$dorec && ($gmt != -1))
 {
+   // create timer class ...
+	$sTimer = new CArchTimer();
+	
    // is any offset given ...
    if ($offset != 0)
    {
-      // create timer class without starting the measurement ...
-      $sTimer = new CArchTimer ();
-      
       // get last stop timestamp ...
       if (($lastStamp = $sTimer->getLastStopTime()) === false)
       {
@@ -66,15 +66,10 @@ if (!$dorec && ($gmt != -1))
          // using last stop stamp with offset ...
          $gmt = $lastStamp + $offset;
       }
+   }
       
-      // start measurement ... 
-      $sTimer->start ($gmt);
-   }
-   else
-   {
-      // create timer class and start measurement ...
-      $sTimer = new CArchTimer ($gmt);
-   }
+   // start measurement ... 
+   $sTimer->start ($gmt);
 }
 
 // get stream url ...

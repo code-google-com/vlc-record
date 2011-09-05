@@ -22,9 +22,9 @@ require_once(dirname(__FILE__) . "/_defines.php.inc");
 \********************************************************************/
 class CArchTimer
 {
-   private $_iStartStamp;
-   private $_iStartGmt;
-   private $_iLastTriggered;
+   private $iArchStart;
+   private $iStartTime_t;
+   private $iLastPing;
    
    /* -----------------------------------------------------------------\
    |  Method: __construct
@@ -37,20 +37,11 @@ class CArchTimer
    |
    |  Returns: --
    \----------------------------------------------------------------- */
-   public function __contruct($startTime = -1)
+   public function __construct()
    {
-      if ($startTime !== -1)
-      {
-         $this->_iStartStamp    = $startTime;
-         $this->_iStartGmt      = time();
-         $this->_iLastTriggered = 0;
-      }
-      else
-      {
-         $this->_iStartStamp    = 0;
-         $this->_iStartGmt      = 0;
-         $this->_iLastTriggered = 0;
-      }
+      $this->iArchStart   = 0;
+      $this->iStartTime_t = 0;
+      $this->iLastPing    = 0;
    }
    
    /* -----------------------------------------------------------------\
@@ -81,9 +72,9 @@ class CArchTimer
    \----------------------------------------------------------------- */
    public function start ($startTime)
    {
-      $this->_iStartStamp    = $startTime;
-      $this->_iStartGmt      = time();
-      $this->_iLastTriggered = 0;
+      $this->iArchStart   = $startTime;
+      $this->iStartTime_t = time();
+      $this->iLastPing    = 0;
    }
    
    /* -----------------------------------------------------------------\
@@ -99,13 +90,13 @@ class CArchTimer
    \----------------------------------------------------------------- */
    public function ping()
    {
-      $rv  = false;
-      $now = time();
+      $rv   = false;
+      $iNow = time();
       
       // write timestamp file only once in 5 seconds ...
-      if (($now - $this->_iLastTriggered) >= 5)
+      if (($iNow - $this->iLastPing) >= 5)
       {
-         $this->_iLastTriggered = $now;
+         $this->iLastPing = $iNow;
          $rv = $this->writeTimeStamp();
       }
       
@@ -125,20 +116,7 @@ class CArchTimer
    \----------------------------------------------------------------- */
    protected function writeTimeStamp ()
    {
-      $rv = false;
-      
-      if (($fp = fopen (TIMESTAMPFILE, "w+")) !== false)
-      {
-         $stopStamp = $this->_iStartStamp + ($this->_iLastTriggered - $this->_iStartGmt);
-         
-         fwrite ($fp, (string)$stopStamp);
-         
-         $rv = true;
-         
-         fclose ($fp);
-      }
-      
-      return $rv;
+		return file_put_contents(TIMESTAMPFILE, (string)($this->iArchStart + ($this->iLastPing - $this->iStartTime_t)));
    }
    
    /* -----------------------------------------------------------------\
