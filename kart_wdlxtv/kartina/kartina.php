@@ -958,10 +958,10 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
    for ($i = 0; $i < count($offSetArr); $i++)
    {
       // update offset time ...
-      $play_data['offset'] = (int)$offSetArr[$i];
+      $play_data['offset'] = (integer)$offSetArr[$i];
       
       // get offset in minutes ...
-      $offInMins           = (int)$offSetArr[$i] / 60;
+      $offInMins           = (integer)$offSetArr[$i] / 60;
       
       // build http query ...
       $play_data_query     = http_build_query($play_data);
