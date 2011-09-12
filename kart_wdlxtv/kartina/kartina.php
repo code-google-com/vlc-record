@@ -488,7 +488,7 @@ function _pluginCreateChannelGroupList()
    
    $retMediaItems[] = array (
       'id'             => LOC_KARTINA_UMSP."/kartina?".$dataString,
-      'dc:title'       => "Quick View",
+      'dc:title'       => "Live Streams",
       'upnp:class'     => 'object.container',
       'upnp:album_art' => LOC_KARTINA_URL."/images/play.png",
    );
@@ -939,147 +939,63 @@ function _pluginCreatePlayRewind($cid, $gmt, $isVideo)
 {
    $retMediaItems = array();
    
-   // in this folder we create backward / forward jump items ...
+   // forward / rewind values ...
+   $offSetSecs    = "-600, -300, -120, -60, 0, 60, 120, 300, 600";
    
-   /////////////////////////////////////////////////////////////////////////////
-   // 10 minutes backward ...
+   // create array from values ...
+   $offSetArr     = explode(", ", $offSetSecs);
+   
+   // master play item array ...
    $play_data = array(
       'cid'      => $cid,     // channel id
       'gmt'      => $gmt,     // timestamp for archive
       'is_video' => $isVideo, // video flag
       'dorec'    => false,    // record flag
-      'offset'   => -600      // jump offset
+      'offset'   => 0         // jump offset
    );
    
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"10 min. back\" Play Item (cid=".$cid
+   // fill list with all array entries ...
+   for ($i = 0; $i < count($offSetArr); $i++)
+   {
+      // update offset time ...
+      $play_data['offset'] = (int)$offSetArr[$i];
+      
+      // get offset in minutes ...
+      $offInMins           = (int)$offSetArr[$i] / 60;
+      
+      // build http query ...
+      $play_data_query     = http_build_query($play_data);
+      
+      // rewind / forward or simple play ...
+      if ($offInMins < 0)
+      {
+         $title = "- " .abs($offInMins) ." мин.";
+         $icon  = LOC_KARTINA_URL."/images/clock.png";
+      }
+      else if ($offInMins > 0)
+      {
+         $title = "+ " . $offInMins . " мин.";
+         $icon  = LOC_KARTINA_URL."/images/clock.png";
+      }
+      else
+      {
+         $title = "Старт Просмотр";
+         $icon  = LOC_KARTINA_URL."/images/play.png";
+      }
+      
+      simpleLog(__FUNCTION__."():".__LINE__." Add \"".$offInMins." min.\" Play Item (cid=".$cid
             .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "10 мин. назад",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // 5 minutes backward ...
-   $play_data['offset'] = -300; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"5 min. back\" Play Item (cid=".$cid
-            .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "5 мин. назад",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // 2 minutes backward ...
-   $play_data['offset'] = -120; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"5 min. back\" Play Item (cid=".$cid
-            .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "2 мин. назад",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
-   
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // add "start here" play item ...
-   $play_data['offset'] = 0; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"Start here\" Play Item (cid=".$cid
-            .", gmt=".$gmt.", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "Старт Просмотр",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/play.png"
-   );
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // 2 minutes forward ...
-   $play_data['offset'] = 120; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"2 min. forward\" Play Item (cid=".$cid
-            .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "2 мин. вперёд",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // 5 minutes forward ...
-   $play_data['offset'] = 300; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"5 min. forward\" Play Item (cid=".$cid
-            .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "5 мин. вперёд",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
-   
-   /////////////////////////////////////////////////////////////////////////////
-   // 10 minutes forward ...
-   $play_data['offset'] = 600; // jump offset
-   
-   simpleLog(__FUNCTION__."():".__LINE__." Add \"10 min. forward\" Play Item (cid=".$cid
-            .", is_video=".$isVideo.", dorec=false)");
-   
-   $play_data_query = http_build_query($play_data);
-   
-   // add play item ...
-   $retMediaItems[] = array (
-      'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
-      'dc:title'       => "10 мин. вперёд",
-      'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
-      'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
-      'protocolInfo'   => "http-get:*:*:*",
-      'upnp:album_art' => LOC_KARTINA_URL."/images/clock.png"
-   );
+      
+      // add play item ...
+      $retMediaItems[] = array (
+         'id'             => LOC_KARTINA_UMSP."/kartina?".urlencode(md5($play_data_query)),
+         'dc:title'       => $title,
+         'upnp:class'     => ($isVideo) ? "object.item.videoitem" : "object.item.audioitem",
+         'res'            => LOC_KARTINA_URL."/http-stream-recorder.php?".$play_data_query,
+         'protocolInfo'   => "http-get:*:*:*",
+         'upnp:album_art' => $icon
+      );
+   }
 
    return $retMediaItems;
 }
