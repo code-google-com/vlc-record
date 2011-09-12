@@ -62,6 +62,10 @@ if (!$dorec && ($gmt != -1))
       }
       else
       {
+         simpleLog(__FILE__.":".__LINE__." gmt: ".$gmt.", LastStop: "
+            .$lastStamp.", Offset: "
+            .$offset.", gmt new: ".($lastStamp + $offset));
+         
          // got last timestamp --> compute new gmt 
          // using last stop stamp with offset ...
          $gmt = $lastStamp + $offset;
