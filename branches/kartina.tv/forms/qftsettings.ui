@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>QFTSettings</class>
  <widget class="QDialog" name="QFTSettings">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>188</height>
+    <width>413</width>
+    <height>158</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +42,7 @@
          <string>en</string>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/flags/en</normaloff>:/flags/en</iconset>
         </property>
        </item>
@@ -48,7 +51,7 @@
          <string>de</string>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/flags/de</normaloff>:/flags/de</iconset>
         </property>
        </item>
@@ -57,7 +60,7 @@
          <string>ru</string>
         </property>
         <property name="icon">
-         <iconset resource="vlc-record.qrc">
+         <iconset resource="../vlc-record.qrc">
           <normaloff>:/flags/ru</normaloff>:/flags/ru</iconset>
         </property>
        </item>
@@ -123,14 +126,47 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>2</number>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Apply|QDialogButtonBox::RestoreDefaults</set>
-     </property>
-    </widget>
+     <item>
+      <widget class="QPushButton" name="pushReset">
+       <property name="text">
+        <string>&amp;Reset</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushSave">
+       <property name="text">
+        <string>&amp;Save</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

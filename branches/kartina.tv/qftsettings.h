@@ -37,13 +37,13 @@ class QFTSettings : public QDialog
     Q_OBJECT
 
 public:
-    QFTSettings(QWidget *parent = 0, QTranslator *pTrans);
+    QFTSettings(QWidget *parent = 0, QTranslator *pTrans = 0);
     ~QFTSettings();
 
 private slots:
-   void on_buttonBox_clicked(QAbstractButton* button);
-
    void on_cbxLanguage_currentIndexChanged(QString str);
+   void on_pushReset_clicked();
+   void on_pushSave_clicked();
 
 protected:
    void saveFTSettings();

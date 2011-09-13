@@ -45,6 +45,8 @@ QFTSettings::QFTSettings(QWidget *parent, QTranslator *pTrans) :
     // set default user and password ...
     ui->lineUsr->setText("144");
     ui->linePass->setText("441");
+
+    resize(sizeHint());
 }
 
 //---------------------------------------------------------------------------
@@ -103,40 +105,6 @@ void QFTSettings::changeEvent(QEvent *e)
 
 //---------------------------------------------------------------------------
 //
-//! \brief   button from buttonbox pressed
-//
-//! \author  Jo2003
-//! \date    13.09.2011 / 10:00
-//
-//! \param   button pointer to pressed button
-//
-//! \return  --
-//---------------------------------------------------------------------------
-void QFTSettings::on_buttonBox_clicked(QAbstractButton* button)
-{
-   switch (ui->buttonBox->buttonRole(button))
-   {
-   // save content ...
-   case QDialogButtonBox::ApplyRole:
-      saveFTSettings();
-      accept();
-      break;
-
-   // reset to defaults ...
-   case QDialogButtonBox::ResetRole:
-      ui->checkAdult->setEnabled(false);
-      ui->lineErosPass->setText("");
-      ui->lineUsr->setText("144");
-      ui->linePass->setText("441");
-      break;
-
-   default:
-      break;
-   }
-}
-
-//---------------------------------------------------------------------------
-//
 //! \brief   language changed
 //
 //! \author  Jo2003
@@ -184,4 +152,41 @@ void QFTSettings::saveFTSettings()
 #ifdef Q_OS_WIN32
    pDb->setValue("ShutdwnCmd", "shutdown.exe -s -f -t 5");
 #endif
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   button "reset" was pressed
+//
+//! \author  Jo2003
+//! \date    13.09.2011 / 12:50
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QFTSettings::on_pushReset_clicked()
+{
+   ui->checkAdult->setCheckState(Qt::Unchecked);
+   ui->lineErosPass->setText("");
+   ui->lineUsr->setText("144");
+   ui->linePass->setText("441");
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   button "save" was pressed
+//
+//! \author  Jo2003
+//! \date    13.09.2011 / 12:50
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QFTSettings::on_pushSave_clicked()
+{
+   // save content ...
+   saveFTSettings();
+   accept();
 }

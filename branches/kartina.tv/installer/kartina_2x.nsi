@@ -38,7 +38,7 @@
 
 ;-------------------------------------------------------
 ; what to run when finished ... ?
-  !define MUI_FINISHPAGE_RUN "$INSTDIR\vlc-record.exe"
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\kartina_tv.exe"
 
 ;-------------------------------------------------------
 ; Pages
@@ -63,8 +63,8 @@
 Section "VLC-Record" SecInst
   SectionIn RO
   SetOutPath "$INSTDIR"
-  File "${SRCDIR}\release\vlc-record.exe"
-  File "${SRCDIR}\resources\television.ico"
+  File "${SRCDIR}\release\kartina_tv.exe"
+  File "${SRCDIR}\resources\kartina_tv.ico"
   File "${SRCDIR}\installer\shortcut.url"
   File "${QTLIBS}\libgcc_s_dw2-1.dll"
   File "${QTLIBS}\mingwm10.dll"
@@ -140,7 +140,7 @@ SectionEnd
 ; start menu entries 
 Section "Start Menu Entries" SecStart
 	CreateDirectory "$SMPROGRAMS\${APPNAME}"
-	CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\vlc-record.exe"
+	CreateShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\kartina_tv.exe"
   CreateShortCut "$SMPROGRAMS\${APPNAME}\Clear Cache.lnk" "$INSTDIR\clearcache.bat"
 	CreateShortCut "$SMPROGRAMS\${APPNAME}\Uninstall.lnk" "$INSTDIR\uninstall.exe"
   CreateShortCut "$SMPROGRAMS\${APPNAME}\Check for new Version.lnk" "$INSTDIR\shortcut.url"
@@ -150,7 +150,7 @@ SectionEnd
 ; desktop shortcut ...
 ;Section /o "Desktop Shortcut" SecDesktop
 Section "Desktop Shortcut" SecDesktop
-	CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\vlc-record.exe"
+	CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\kartina_tv.exe"
 SectionEnd
 
 ;-------------------------------------------------------
@@ -166,7 +166,7 @@ Section -FinishSection
   ; create uninstall entries in registry ...
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$INSTDIR\television.ico"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$INSTDIR\kartina_tv.ico"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher" "Jo2003"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo" "http://code.google.com/p/vlc-record/downloads/list"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLInfoAbout" "http://code.google.com/p/vlc-record/"
@@ -244,10 +244,10 @@ Section "un.Program"
   RMDir  "$INSTDIR\language"
 
   ; delete vlc-record itself ...
-  Delete "$INSTDIR\vlc-record.exe"
+  Delete "$INSTDIR\kartina_tv.exe"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\mingwm10.dll"
-  Delete "$INSTDIR\television.ico"
+  Delete "$INSTDIR\kartina_tv.ico"
   Delete "$INSTDIR\shortcut.url"
 
 SectionEnd

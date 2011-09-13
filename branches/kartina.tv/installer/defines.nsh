@@ -15,7 +15,7 @@
 
 ;------------------------------
 ; application name ...
-!define APPNAME "VLC-Record"
+!define APPNAME "Kartina.tv"
 
 ;------------------------------
 ; directory for the packages

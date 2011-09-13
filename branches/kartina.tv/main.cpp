@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
             if ((pDb->stringValue("User") == "")
                && (pDb->stringValue("Passwd") == ""))
             {
-               QFTSettings ftSet(&trans);
-               ftSet.show();
+               QFTSettings ftSet(NULL, &trans);
+               ftSet.exec();
             }
 
             Recorder rec(&trans);
