@@ -1789,7 +1789,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <location filename="recorder.cpp" line="1775"/>
         <location filename="recorder.cpp" line="1904"/>
         <source>Remove from favourites</source>
-        <translation>Von Favoriten entfernen</translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1782"/>
