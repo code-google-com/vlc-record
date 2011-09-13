@@ -79,16 +79,6 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    vlcCtrl.setParent(this);
    favContext.setParent(this, Qt::Popup);
 
-   // if main settings aren't done, start settings dialog ...
-   if ((Settings.GetPasswd()      == "")
-#ifndef INCLUDE_LIBVLC
-        || (Settings.GetVLCPath() == "")
-#endif // INCLUDE_LIBVLC
-        || (Settings.GetUser()    == ""))
-   {
-      Settings.exec();
-   }
-
    // set logo dir and host for chan logo downloader ...
    dwnLogos.setHostAndFolder(Settings.GetAPIServer(), pFolders->getLogoDir());
    dwnVodPics.setHostAndFolder(Settings.GetAPIServer(), pFolders->getVodPixDir());

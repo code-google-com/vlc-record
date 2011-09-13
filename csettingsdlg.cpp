@@ -49,7 +49,42 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    m_ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
 
    // fill in values ...
+   readSettings();
+}
 
+/* -----------------------------------------------------------------\
+|  Method: ~CSettingsDlg / dstructor
+|  Begin: 19.01.2010 / 15:45:48
+|  Author: Jo2003
+|  Description: clean at destruction
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+CSettingsDlg::~CSettingsDlg()
+{
+   if (pShortApiServer)
+   {
+      delete pShortApiServer;
+      pShortApiServer = NULL;
+   }
+
+   delete m_ui;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: readSettings
+|  Begin: 13.09.2011 / 10:20
+|  Author: Jo2003
+|  Description: read settings from database
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::readSettings()
+{
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
    m_ui->lineDir->setText (pDb->stringValue("TargetDir"));
@@ -133,27 +168,6 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
 
    iIdx = m_ui->cbxPlayerMod->findText(s);
    m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: ~CSettingsDlg / dstructor
-|  Begin: 19.01.2010 / 15:45:48
-|  Author: Jo2003
-|  Description: clean at destruction
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-CSettingsDlg::~CSettingsDlg()
-{
-   if (pShortApiServer)
-   {
-      delete pShortApiServer;
-      pShortApiServer = NULL;
-   }
-
-   delete m_ui;
 }
 
 /* -----------------------------------------------------------------\

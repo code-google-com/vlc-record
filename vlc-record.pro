@@ -48,7 +48,8 @@ SOURCES += main.cpp \
     cpixloader.cpp \
     cshortcutgrabber.cpp \
     qchanlistdelegate.cpp \
-    qshortcuttable.cpp
+    qshortcuttable.cpp \
+    qftsettings.cpp
 HEADERS += recorder.h \
     csettingsdlg.h \
     ckartinaclnt.h \
@@ -78,10 +79,12 @@ HEADERS += recorder.h \
     cpixloader.h \
     cshortcutgrabber.h \
     qchanlistdelegate.h \
-    qshortcuttable.h
+    qshortcuttable.h \
+    qftsettings.h
 FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
-    forms/ctimerrec.ui
+    forms/ctimerrec.ui \
+    forms/qftsettings.ui
 RESOURCES += vlc-record.qrc \
     lcd.qrc
 RC_FILE = vlc-record.rc
@@ -98,10 +101,10 @@ static {
 }
 
 # where the target should be stored ...
-win32:TARGET = vlc-record
+win32:TARGET = kartina_tv
 else {
-    CONFIG(debug, debug|release):TARGET = debug/bin/vlc-record
-    else:TARGET = release/vlc-record
+    CONFIG(debug, debug|release):TARGET = debug/bin/kartina_tv
+    else:TARGET = release/kartina_tv
 }
 
 # -------------------------------------
