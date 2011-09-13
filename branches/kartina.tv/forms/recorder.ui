@@ -12,7 +12,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../vlc-record.qrc">
-    <normaloff>:/app/tv</normaloff>:/app/tv</iconset>
+    <normaloff>:/app/kartina</normaloff>:/app/kartina</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog#Recorder {

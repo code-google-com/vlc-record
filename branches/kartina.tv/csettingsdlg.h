@@ -104,6 +104,7 @@ public:
     void  updateShortcutDescr(const QString& descr, const QString& target, const QString& slot);
     QString shortCut (const QString& target, const QString& slot) const;
     int shortCutCount();
+    void readSettings ();
 
 protected:
     virtual void changeEvent(QEvent *e);
