@@ -1,6 +1,6 @@
 /*------------------------------ Information ---------------------------*//**
  *
- *  $HeadURL: svn://172.25.1.145/joergn/trunk/cfpprog/cloadclient.h $
+ *  $HeadURL$
  *
  *  @file     qftsettings.cpp
  *
@@ -8,7 +8,7 @@
  *
  *  @date     13.09.2011
  *
- *  $Id: cloadclient.h 569 2011-09-02 13:39:29Z joergn $
+ *  $Id$
  *
  *///------------------------- (c) 2011 by Jo2003  --------------------------
 #include "qftsettings.h"
