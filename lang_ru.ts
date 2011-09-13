@@ -1647,7 +1647,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/qftsettings.ui" line="17"/>
         <source>Kartina.tv First Time Settings</source>
-        <translation></translation>
+        <translation>Начальная настройка</translation>
     </message>
     <message>
         <location filename="forms/qftsettings.ui" line="28"/>
