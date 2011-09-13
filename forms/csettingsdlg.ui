@@ -197,63 +197,12 @@
           <item row="0" column="0" rowspan="2">
            <widget class="QLabel" name="labBuffer">
             <property name="text">
-             <string>Time (msec.):</string>
+             <string>Time (sec.):</string>
             </property>
            </widget>
           </item>
           <item row="0" column="2" rowspan="2">
-           <widget class="QComboBox" name="cbxBufferSeconds">
-            <item>
-             <property name="text">
-              <string>1500</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>3000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>5000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>8000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>15000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>20000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>30000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>45000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>60000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>90000</string>
-             </property>
-            </item>
-           </widget>
+           <widget class="QComboBox" name="cbxBufferSeconds"/>
           </item>
          </layout>
         </widget>
