@@ -48,6 +48,10 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    QString s = m_ui->groupAccount->title();
    m_ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
 
+   // fill in buffer values ...
+   vBuffs << 1.5 << 3 << 5 << 8 << 15 << 20 << 30 << 45 << 60 << 90;
+   qSort(vBuffs);
+
    // fill in values ...
    readSettings();
 }
@@ -146,7 +150,13 @@ void CSettingsDlg::readSettings()
    iIdx = m_ui->cbxLanguage->findText(pDb->stringValue("Language"));
    m_ui->cbxLanguage->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 
-   iIdx = m_ui->cbxBufferSeconds->findText(pDb->stringValue("HttpCache"));
+   // fill buffer box with text in seconds, but data in msec ...
+   for (QVector<float>::const_iterator cit = vBuffs.constBegin(); cit != vBuffs.constEnd(); cit ++)
+   {
+      m_ui->cbxBufferSeconds->insertItem(vBuffs.count(), QString("%1").arg(*cit), (int)((*cit) * 1000.0));
+   }
+
+   iIdx = m_ui->cbxBufferSeconds->findData(pDb->intValue("HttpCache"));
    m_ui->cbxBufferSeconds->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 
    iIdx = m_ui->cbxInterval->findText(pDb->stringValue("RefIntv"));
@@ -925,7 +935,7 @@ vlclog::eLogLevel CSettingsDlg::GetLogLevel()
 
 int CSettingsDlg::GetBufferTime()
 {
-   return m_ui->cbxBufferSeconds->currentText().toInt();
+   return m_ui->cbxBufferSeconds->itemData(m_ui->cbxBufferSeconds->currentIndex()).toInt();
 }
 
 QString CSettingsDlg::GetShutdownCmd()

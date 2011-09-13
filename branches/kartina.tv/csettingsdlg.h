@@ -112,6 +112,7 @@ protected:
 private:
     Ui::CSettingsDlg *m_ui;
     CShortcutEx *pShortApiServer;
+    QVector<float> vBuffs;
 
 signals:
     void sigReloadLogos ();
