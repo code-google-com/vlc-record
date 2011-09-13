@@ -1812,7 +1812,7 @@ or start time is later than end time!</source>
         <location filename="recorder.cpp" line="1775"/>
         <location filename="recorder.cpp" line="1904"/>
         <source>Remove from favourites</source>
-        <translation>Удалить от фаворитов</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1782"/>
@@ -2120,7 +2120,7 @@ dataDir: %1
         <location filename="forms/recorder.ui" line="274"/>
         <location filename="forms/recorder_inc.ui" line="240"/>
         <source>Program Guide</source>
-        <translation>Телегид</translation>
+        <translation>Программа</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="550"/>
@@ -2146,7 +2146,7 @@ dataDir: %1
         <location filename="forms/recorder.ui" line="514"/>
         <location filename="forms/recorder_inc.ui" line="495"/>
         <source>Textsize</source>
-        <translation>Размер шрифта</translation>
+        <translation>Шрифт</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="604"/>
