@@ -149,6 +149,13 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("PlayerModule", "5_libvlc.mod");    // default player module
    pDb->setValue("HttpCache",    8000);              // 8 sec. cache
 
+   // set windows size and position ...
+   pDb->setValue("WndRect",        "88;81;1220;752");
+   pDb->setValue("spVChanEpg",     "264;388;");
+   pDb->setValue("spVChanEpgPlay", "657;536;");
+   pDb->setValue("spHPlay",        "444;191;");
+
+
 #ifdef Q_OS_WIN32
    pDb->setValue("ShutdwnCmd", "shutdown.exe -s -f -t 5");
 #endif
