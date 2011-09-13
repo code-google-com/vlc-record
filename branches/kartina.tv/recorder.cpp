@@ -2529,9 +2529,6 @@ void Recorder::initDialog ()
    }
    else
    {
-      // resize as recommendet ...
-      resize(sizeHint());
-
       // store default size ...
       sizePos = geometry();
    }
