@@ -90,7 +90,7 @@
           <item row="1" column="2">
            <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>Password: </string>
+             <string>Parent Code: </string>
             </property>
            </widget>
           </item>
