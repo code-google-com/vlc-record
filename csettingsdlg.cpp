@@ -85,6 +85,8 @@ CSettingsDlg::~CSettingsDlg()
 \----------------------------------------------------------------- */
 void CSettingsDlg::readSettings()
 {
+   QString s;
+
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
    m_ui->lineDir->setText (pDb->stringValue("TargetDir"));

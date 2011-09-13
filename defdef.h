@@ -15,9 +15,9 @@
 #include <QtGlobal>
 
 #ifdef INCLUDE_LIBVLC
-   #define APP_NAME          "vlc-record"
+   #define APP_NAME          "kartina.tv"
 #else
-   #define APP_NAME          "vlc-record-classic"
+   #define APP_NAME          "kartina.tv-classic"
 #endif // INCLUDE_LIBVLC
 
 #ifdef Q_OS_WIN32
@@ -34,8 +34,7 @@
    #define __UNUSED
 #endif
 
-#define APP_INI_FILE      "vlc-rcd.ini"
-#define APP_LOG_FILE      "vlc-record.log"
+#define APP_LOG_FILE      "kartina_tv.log"
 #define PLAYER_LOG_FILE   "player.log"
 #define TIMER_LIST_FILE   "reclist.xml"
 #define MOD_DIR           "modules"

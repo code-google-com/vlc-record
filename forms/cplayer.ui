@@ -294,7 +294,7 @@
            <property name="styleSheet">
             <string notr="true">QFrame#fVideo {
    background-color: black;
-   background-image: url(:/app/tv);
+   background-image: url(:/app/kartina);
    background-repeat: no-repeat;
    background-position: center middle;
 }</string>
