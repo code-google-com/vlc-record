@@ -39,7 +39,7 @@
          <string>en</string>
         </property>
         <property name="icon">
-         <iconset resource="../vlc-record.qrc">
+         <iconset resource="vlc-record.qrc">
           <normaloff>:/flags/en</normaloff>:/flags/en</iconset>
         </property>
        </item>
@@ -48,7 +48,7 @@
          <string>de</string>
         </property>
         <property name="icon">
-         <iconset resource="../vlc-record.qrc">
+         <iconset resource="vlc-record.qrc">
           <normaloff>:/flags/de</normaloff>:/flags/de</iconset>
         </property>
        </item>
@@ -57,7 +57,7 @@
          <string>ru</string>
         </property>
         <property name="icon">
-         <iconset resource="../vlc-record.qrc">
+         <iconset resource="vlc-record.qrc">
           <normaloff>:/flags/ru</normaloff>:/flags/ru</iconset>
         </property>
        </item>
@@ -135,7 +135,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="vlc-record.qrc"/>
+  <include location="../vlc-record.qrc"/>
  </resources>
  <connections>
   <connection>
