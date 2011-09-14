@@ -695,10 +695,6 @@ color: white;
      <property name="styleSheet">
       <string notr="true">QFrame#frame {
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee, 	stop:0.7 grey, stop:1 #dedede);
-background-image: url(:/app/time);
-background-position: left center;
-background-repeat: no-repeat;
-background-attachment: fixed;
 };</string>
      </property>
      <property name="frameShape">
@@ -726,28 +722,6 @@ background-attachment: fixed;
       <property name="bottomMargin">
        <number>5</number>
       </property>
-      <item>
-       <widget class="QComboBox" name="cbxTimeShift">
-        <property name="minimumSize">
-         <size>
-          <width>50</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Set TimeShift in hours.</string>
-        </property>
-        <property name="whatsThis">
-         <string>TimeShift Selector</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QFrame" name="frameTimerInfo">
         <property name="frameShape">
@@ -1124,7 +1098,6 @@ background-attachment: fixed;
   <tabstop>cbxChannelGroup</tabstop>
   <tabstop>channelList</tabstop>
   <tabstop>textEpgShort</tabstop>
-  <tabstop>cbxTimeShift</tabstop>
   <tabstop>textEpg</tabstop>
   <tabstop>pushSettings</tabstop>
   <tabstop>pushQuit</tabstop>

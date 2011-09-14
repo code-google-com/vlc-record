@@ -55,6 +55,11 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    bDoInitDlg     = true;
    bFirstConnect  = true;
 
+   // init account info ...
+   accountInfo.bHasArchive = false;
+   accountInfo.bHasVOD     = false;
+   accountInfo.sExpires    = QDateTime::currentDateTime().toString();
+
    // init favourite buttons ...
    for (int i = 0; i < MAX_NO_FAVOURITES; i++)
    {
@@ -183,6 +188,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
    connect (&Settings,     SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
    connect (&Settings,     SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
+   connect (&Settings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
    connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &timeRec, SLOT(slotTimerStreamUrl(QString)));
    connect (&KartinaTv,    SIGNAL(sigSrvForm(QString)), this, SLOT(slotServerForm(QString)));
    connect (&timeRec,      SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
@@ -712,7 +718,7 @@ void Recorder::on_cbxChannelGroup_activated(int index)
 \----------------------------------------------------------------- */
 void Recorder::on_pushAbout_clicked()
 {
-   CAboutDialog dlg(this, sExpires);
+   CAboutDialog dlg(this, accountInfo.sExpires);
    dlg.ConnectSettings(&Settings);
    dlg.exec();
 }
@@ -996,27 +1002,6 @@ void Recorder::show()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: slotTimeShiftChanged
-|  Begin: 19.01.2010 / 16:13:03
-|  Author: Jo2003
-|  Description: set new timeshift
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void Recorder::slotTimeShiftChanged(const QString& str)
-{
-   TouchPlayCtrlBtns(false);
-
-   // set timeshift ...
-   ui->textEpg->SetTimeShift(str.toInt());
-   timeRec.SetTimeShift(str.toInt());
-
-   Trigger.TriggerRequest(Kartina::REQ_TIMESHIFT, str.toInt());
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotSystrayActivated
 |  Begin: 26.01.2010 / 16:05:00
 |  Author: Jo2003
@@ -1150,7 +1135,7 @@ void Recorder::slotCookie (QString str)
    QString sCookie;
 
    // parse cookie ...
-   if (!XMLParser.parseCookie(str, sCookie, sExpires))
+   if (!XMLParser.parseCookie(str, sCookie, accountInfo))
    {
       KartinaTv.SetCookie(sCookie);
 
@@ -1203,33 +1188,15 @@ void Recorder::slotGotTimeShift(QString str)
 
    if (!XMLParser.parseSettings(str, vValues, iShift, sName))
    {
-      QVector<int>::const_iterator cit;
+      Settings.fillTimeShiftCbx(vValues, iShift);
 
       // set timeshift ...
       ui->textEpg->SetTimeShift(iShift);
       timeRec.SetTimeShift(iShift);
 
-      // clear timeshift cbx ...
-      ui->cbxTimeShift->clear();
-
-      // fill timeshift cbx ...
-      for (cit = vValues.constBegin(); cit != vValues.constEnd(); cit ++)
-      {
-         ui->cbxTimeShift->addItem(QString::number(*cit));
-      }
-
-      // mark active timeshift ...
-      ui->cbxTimeShift->setCurrentIndex(ui->cbxTimeShift->findText(QString::number(iShift)));
-
       // request channel list ...
       Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
-
    }
-
-   // Former there was a "on_cbxTimeShift_currentIndexChanged" slot. But because
-   // we have to change the timeshift cbx now also when changing the
-   // channel, we need the possibility to disconnect the signal from the slot!
-   connect (ui->cbxTimeShift, SIGNAL(currentIndexChanged(QString)), this, SLOT(slotTimeShiftChanged(QString)));
 }
 
 /* -----------------------------------------------------------------\
@@ -1348,7 +1315,7 @@ void Recorder::slotEPG(QString str)
    {
       ui->textEpg->DisplayEpg(epg, chanMap.value(cid).sName,
                               cid, epgTime.toTime_t(),
-                              chanMap.value(cid).bHasArchive);
+                              accountInfo.bHasArchive ? chanMap.value(cid).bHasArchive : false);
 
       // fill epg control ...
       icon = qvariant_cast<QIcon>(idx.data(channellist::iconRole));
@@ -1362,9 +1329,12 @@ void Recorder::slotEPG(QString str)
       ui->channelList->setFocus(Qt::OtherFocusReason);
 
       // update vod stuff only at startup ...
-      if (ui->cbxGenre->count() == 0)
+      if (accountInfo.bHasVOD)
       {
-         Trigger.TriggerRequest(Kartina::REQ_GETVODGENRES);
+         if (ui->cbxGenre->count() == 0)
+         {
+            Trigger.TriggerRequest(Kartina::REQ_GETVODGENRES);
+         }
       }
    }
 }
@@ -1648,6 +1618,27 @@ void Recorder::slotSetBitrate(int iRate)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: slotSetTimeShift
+|  Begin: 14.09.2011 / 10:00
+|  Author: Jo2003
+|  Description: set timeshift
+|
+|  Parameters: timeshift in hours
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotSetTimeShift(int iShift)
+{
+   TouchPlayCtrlBtns(false);
+
+   // set timeshift ...
+   ui->textEpg->SetTimeShift(iShift);
+   timeRec.SetTimeShift(iShift);
+
+   Trigger.TriggerRequest(Kartina::REQ_TIMESHIFT, iShift);
+}
+
+/* -----------------------------------------------------------------\
 |  Method: slotTimerRecordDone
 |  Begin: 26.01.2010 / 13:58:25
 |  Author: Jo2003
@@ -1924,7 +1915,7 @@ void Recorder::slotFavBtnContext(const QPoint &pt)
 \----------------------------------------------------------------- */
 void Recorder::slotSplashScreen()
 {
-   CAboutDialog dlg(this, sExpires);
+   CAboutDialog dlg(this, accountInfo.sExpires);
    dlg.ConnectSettings(&Settings);
    dlg.exec();
 }
@@ -2359,7 +2350,7 @@ void Recorder::slotCurrentChannelChanged(const QModelIndex & current)
       }
       else
       {
-         iTs = ui->cbxTimeShift->currentText().toInt();
+         iTs = Settings.getTimeShift();
 
          if (ui->textEpg->GetTimeShift() != iTs)
          {
@@ -3286,14 +3277,12 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
    switch (ePlayState)
    {
    case IncPlay::PS_PLAY:
-      ui->cbxTimeShift->setEnabled(bEnable);
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
       break;
 
    case IncPlay::PS_RECORD:
-      ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
@@ -3301,14 +3290,12 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
 
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
-      ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
       break;
 
    default:
-      ui->cbxTimeShift->setEnabled(bEnable);
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(false);

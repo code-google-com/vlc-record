@@ -75,6 +75,7 @@ public:
     bool DetachPlayer ();
     bool regOk();
     bool extChanList();
+    int  getTimeShift();
 
     int GetRefrInt ();
     int GetProxyPort ();
@@ -103,8 +104,9 @@ public:
     void  delShortCut (const QString& target, const QString& slot);
     void  updateShortcutDescr(const QString& descr, const QString& target, const QString& slot);
     QString shortCut (const QString& target, const QString& slot) const;
-    int shortCutCount();
+    int  shortCutCount();
     void readSettings ();
+    void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -119,19 +121,22 @@ signals:
     void sigSetServer (QString sIp);
     void sigSetBitRate (int iRate);
     void sigSetBuffer (int iBuffer);
+    void sigSetTimeShift (int iShift);
 
 private slots:
     void on_btnResetShortcuts_clicked();
-    void on_pushDoRegister_clicked();
-    void on_btnSaveStreamServer_clicked();
-    void on_btnSaveBitrate_clicked();
+    void on_checkAdvanced_clicked(bool checked);
     void on_pushDelLogos_clicked();
     void on_pushSave_clicked();
     void on_pushDir_clicked();
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
+    void on_cbxStreamServer_activated(int index);
+    void on_cbxBitRate_activated(int index);
 
- public slots:
+    void on_cbxTimeShift_activated(int index);
+
+public slots:
     void slotSplashStateChgd (bool bChecked);
 };
 

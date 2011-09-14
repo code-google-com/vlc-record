@@ -757,38 +757,6 @@ border-top: 0px;
                <number>2</number>
               </property>
               <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../vlc-record.qrc">:/app/time</pixmap>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="cbxTimeShift">
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>Set TimeShift in hours.</string>
-                </property>
-                <property name="whatsThis">
-                 <string>TimeShift Selector</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <spacer name="horizontalSpacer_4">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
