@@ -31,13 +31,6 @@
 #define FORCE_MUX        "FORCE_MUX"
 #define DOWN_FIRST       "DOWN_FIRST"
 
-/*
-#define TMPL_PLAY_HTTP  "\"" TMPL_URL "\" --no-http-reconnect --http-caching=" TMPL_CACHE
-#define TMPL_PLAY_RTSP  "\"" TMPL_URL "\" --rtsp-tcp --rtsp-caching=" TMPL_CACHE
-#define TMPL_REC        " --sout=\"#duplicate{dst=display, dst=std{access=file,mux=" TMPL_MUX ",dst='" TMPL_DST "'}}\""
-#define TMPL_SILENT_REC " --sout=\"#std{access=file,mux=" TMPL_MUX ",dst='" TMPL_DST "'}\""
-*/
-
 /**********************************************************/
 /*                      HTML templates                    */
 /**********************************************************/
