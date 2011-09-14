@@ -48,6 +48,8 @@
 #define TMPL_START     "<!--{[%START%]}-->"
 #define TMPL_END       "<!--{[%END%]}-->"
 #define TMPL_TITLE     "<!--{[%TITLE%]}-->"
+#define TMPL_TITLE_L   "<!--{[%TITLE_L%]}-->"
+#define TMPL_TITLE_R   "<!--{[%TITLE_R%]}-->"
 #define TMPL_CONT      "<!--{[%CONTENT%]}-->"
 #define TMPL_VOD_L     "<!--{[%LEFTCOL%]}-->"
 #define TMPL_VOD_R     "<!--{[%RIGHTCOL%]}-->"
@@ -62,6 +64,9 @@
 "<table border='0' cellpadding='0' cellspacing='1' width='100%' style='color: black; background-color: #036; width: 100%;'>\n"\
 TMPL_ROWS \
 "</table>\n"
+
+#define TMPL_VIDEO_TITLE \
+"<span style='font-weight: bold; color: #800;'>" TMPL_TITLE "</span>"
 
 #define TMPL_VIDEO_DETAILS \
 "<img class='floatright' src='" TMPL_IMG "'>\n" \
@@ -86,8 +91,8 @@ TMPL_CSS \
 
 #define TR_VOD_LIST \
 "  <tr>\n"\
-"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_L "</div></td>\n"\
-"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_R "</div></td>\n"\
+"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_L "<br>" TMPL_TITLE_L "</div></td>\n"\
+"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_R "<br>" TMPL_TITLE_R "</div></td>\n"\
 "  </tr>\n"
 
 #define TMPL_IMG_LINK \

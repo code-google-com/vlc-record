@@ -54,6 +54,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    iDwnReqId      = -1;
    bDoInitDlg     = true;
    bFirstConnect  = true;
+   bVODLogosReady = false;
 
    // init account info ...
    accountInfo.bHasArchive = false;
@@ -220,8 +221,8 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // enable button ...
    TouchPlayCtrlBtns(false);
 
-   // fill search area combo box ...
-   touchSearchAreaCbx();
+   // fill type combo box ...
+   touchLastOrBestCbx();
 
    // start refresh timer, if needed ...
    if (Settings.DoRefresh())
@@ -310,8 +311,8 @@ void Recorder::changeEvent(QEvent *e)
       // translate systray tooltip ...
       CreateSystray();
 
-      // translate search are cbx ...
-      touchSearchAreaCbx();
+      // translate type cbx ...
+      touchLastOrBestCbx();
 
       // translate shortcut table ...
       retranslateShortcutTable();
@@ -943,7 +944,7 @@ void Recorder::on_pushFwd_clicked()
 #endif /* INCLUDE_LIBVLC */
 
 /* -----------------------------------------------------------------\
-|  Method: on_cbxGenre_currentIndexChanged [slot]
+|  Method: on_cbxGenre_activated [slot]
 |  Begin: 20.12.2010 / 14:18
 |  Author: Jo2003
 |  Description: vod genre changed
@@ -952,11 +953,46 @@ void Recorder::on_pushFwd_clicked()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::on_cbxGenre_currentIndexChanged(int index)
+void Recorder::on_cbxGenre_activated(int index)
 {
-   int iGid = ui->cbxGenre->itemData(index).toInt();
+   int     iGid  = ui->cbxGenre->itemData(index).toInt();
+   QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+   QUrl    url;
 
-   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, iGid);
+   url.addQueryItem("type", sType);
+
+   if (iGid != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGid));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxLastOrBest_activated [slot]
+|  Begin: 14.09.2011 / 12:40
+|  Author: Jo2003
+|  Description: sort type
+|
+|  Parameters: new index ...
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_cbxLastOrBest_activated(int index)
+{
+   int     iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+   QString sType = ui->cbxLastOrBest->itemData(index).toString();
+   QUrl    url;
+
+   url.addQueryItem("type", sType);
+
+   if (iGid != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGid));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 /* -----------------------------------------------------------------\
@@ -971,9 +1007,18 @@ void Recorder::on_cbxGenre_currentIndexChanged(int index)
 \----------------------------------------------------------------- */
 void Recorder::on_btnVodSearch_clicked()
 {
-   int iIdx = ui->cbxSearchArea->currentIndex();
-   vodbrowser::eSearchArea eArea = (vodbrowser::eSearchArea)ui->cbxSearchArea->itemData(iIdx).toUInt();
-   ui->vodBrowser->findVideos(ui->lineVodSearch->text(), eArea);
+   QUrl url;
+   url.addQueryItem("type", "text");
+   url.addQueryItem("query", ui->lineVodSearch->text());
+
+   int iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+   if (iGenre != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGenre));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2033,8 +2078,13 @@ void Recorder::slotGotVodGenres(QString str)
       }
    }
 
-   // changing combo box will trigger all vod request ...
    ui->cbxGenre->setCurrentIndex(0);
+
+   // trigger video load ...
+   QUrl url;
+   url.addQueryItem("type", "last");
+   url.addQueryItem("nums", "10000");
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 /* -----------------------------------------------------------------\
@@ -2051,11 +2101,14 @@ void Recorder::slotGotVideos(QString str)
 {
    QVector<cparser::SVodVideo> vVodList;
    QVector<cparser::SVodVideo>::const_iterator cit;
+   cparser::SGenreInfo gInfo;
 
-   if (!XMLParser.parseVodList(str, vVodList))
+   if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-      if (!dwnVodPics.IsRunning())
+      if (!bVODLogosReady)
       {
+         bVODLogosReady = true;
+
          // download pictures ...
          QStringList lPix;
 
@@ -2065,9 +2118,14 @@ void Recorder::slotGotVideos(QString str)
          }
 
          dwnVodPics.setPictureList(lPix);
-      }
 
-      ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText());
+         // get normal video view ...
+         on_cbxGenre_activated(0);
+      }
+      else
+      {
+         ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText(), gInfo);
+      }
    }
 }
 
@@ -2094,11 +2152,18 @@ void Recorder::slotVodAnchor(const QUrl &link)
    }
    else if (action == "backtolist")
    {
-      id = ui->cbxGenre->currentIndex();
+      QUrl    url;
+      QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+      id            = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
 
-      id = ui->cbxGenre->itemData(id).toInt();
+      url.addQueryItem("type", sType);
 
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, id);
+      if (id != -1)
+      {
+         url.addQueryItem("genre", QString::number(id));
+      }
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
    }
    else if (action == "play")
    {
@@ -2678,7 +2743,7 @@ void Recorder::CreateSystray()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: touchSearchAreaCbx
+|  Method: touchLastOrBestCbx
 |  Begin: 23.12.2010 / 10:30
 |  Author: Jo2003
 |  Description: create search area combo box
@@ -2687,15 +2752,13 @@ void Recorder::CreateSystray()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::touchSearchAreaCbx ()
+void Recorder::touchLastOrBestCbx ()
 {
    // fill search area combo box ...
-   ui->cbxSearchArea->clear();
-   ui->cbxSearchArea->addItem(tr("Title"), QVariant((int)vodbrowser::IN_TITLE));
-   ui->cbxSearchArea->addItem(tr("Description"), QVariant((int)vodbrowser::IN_DESCRIPTION));
-   ui->cbxSearchArea->addItem(tr("Year"), QVariant((int)vodbrowser::IN_YEAR));
-   ui->cbxSearchArea->addItem(tr("Everywhere"), QVariant((int)vodbrowser::IN_EVERYWHERE));
-   ui->cbxSearchArea->setCurrentIndex(0);
+   ui->cbxLastOrBest->clear();
+   ui->cbxLastOrBest->addItem(tr("Newest"), "last");
+   ui->cbxLastOrBest->addItem(tr("Best"), "best");
+   ui->cbxLastOrBest->setCurrentIndex(0);
 }
 
 /* -----------------------------------------------------------------\

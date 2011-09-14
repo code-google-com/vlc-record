@@ -16,7 +16,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDir>
-#include <QCryptographicHash>
 #include <QTableWidget>
 
 #include "cvlcrecdb.h"
@@ -73,7 +72,6 @@ public:
     bool AskForRecFile ();
     bool TranslitRecFile ();
     bool DetachPlayer ();
-    bool regOk();
     bool extChanList();
     int  getTimeShift();
 
@@ -90,15 +88,12 @@ public:
     void  SetIsMaximized (bool bMax);
     int   GetCustFontSize ();
     void  SetCustFontSize (int iSize);
-    int   SaveOtherSettings ();
     void  SaveFavourites (const QList<int> &favList);
     QList<int> GetFavourites (bool *ok = NULL);
     void  SetStreamServerCbx (const QVector<cparser::SSrv>& vSrvList, const QString& sActSrv);
     void  SetBitrateCbx (const QVector<int>& vValues, int iActrate);
     void  SaveCookie (const QString &str);
     bool  DisableSplashScreen ();
-    QString hsah (const QString &str);
-    QString& reverse (QString &str);
     int   GetBitRate ();
     void  addShortCut (const QString& descr, const QString& target, const QString& slot, const QString& keys);
     void  delShortCut (const QString& target, const QString& slot);

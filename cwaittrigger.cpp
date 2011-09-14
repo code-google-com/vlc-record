@@ -149,7 +149,7 @@ void CWaitTrigger::run()
                pClient->GetVodGenres();
                break;
             case Kartina::REQ_GETVIDEOS:
-               pClient->GetVideos(iOptArg1);
+               pClient->GetVideos(sOptArg1);
                break;
             case Kartina::REQ_GETVIDEOINFO:
                pClient->GetVideoInfo(iOptArg1);

@@ -763,12 +763,13 @@ int CKartinaXMLParser::parseGenres (const QString& sResp, QVector<cparser::SGenr
 |  Author: Jo2003
 |  Description: parse vod list
 |
-|  Parameters: ref. to response, ref. to vod list vector
+|  Parameters: ref. to response, ref. to vod list vector,
+|              ref. to genre info struct
 |
 |  Returns: 0 --> ok
 |        else --> any error
 \----------------------------------------------------------------- */
-int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodVideo> &vVodList)
+int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodVideo> &vVodList, cparser::SGenreInfo &gInfo)
 {
    QStringList            slNeeded;
    QMap<QString, QString> mResults;
@@ -782,9 +783,6 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
 
    if (!iRV)
    {
-      // we need following data ...
-      slNeeded << "id" << "name" << "description" << "year" << "country" << "poster";
-
       xmlSr.clear();
       xmlSr.addData(sCleanResp);
 
@@ -794,9 +792,35 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
          {
          // any xml element starts ...
          case QXmlStreamReader::StartElement:
-
-            if (xmlSr.name() == "item")
+            if (xmlSr.name() == "response")
             {
+               mResults.clear();
+               slNeeded.clear();
+
+               // we need following data ...
+               slNeeded << "type" << "total" << "count" << "page";
+
+               oneLevelParser("page", slNeeded, mResults);
+
+               gInfo.sType  = mResults.value("type");
+               gInfo.iCount = mResults.value("count").toInt();
+               gInfo.iPage  = mResults.value("page").toInt();
+               gInfo.iTotal = mResults.value("total").toInt();
+
+               mInfo(tr("Got Type: %1, Count: %2, Page: %3, Total: %4")
+                     .arg(gInfo.sType)
+                     .arg(gInfo.iCount)
+                     .arg(gInfo.iPage)
+                     .arg(gInfo.iTotal));
+            }
+            else if (xmlSr.name() == "item")
+            {
+               mResults.clear();
+               slNeeded.clear();
+
+               // we need following data ...
+               slNeeded << "id" << "name" << "description" << "year" << "country" << "poster";
+
                oneLevelParser("item", slNeeded, mResults);
 
                vod.uiVidId  = mResults.value("id").toUInt();
@@ -808,7 +832,6 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
 
                // store element ...
                vVodList.push_back(vod);
-
             }
             break;
 
