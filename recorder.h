@@ -125,10 +125,10 @@ private:
     bool                           bDoInitDlg;
     int                            iDwnReqId;
     bool                           bFirstConnect;
-    QString                        sExpires;
     QStandardItemModel            *pModel;
     QChanListDelegate             *pDelegate;
     QVector<Ui::SShortCuts>        vShortCutTab;
+    cparser::SAccountInfo          accountInfo;
 
 protected:
     void fillShortCutTab();
@@ -185,7 +185,6 @@ private slots:
     void on_pushPlay_clicked();
     void on_pushRecord_clicked();
     void on_pushSettings_clicked();
-    void slotTimeShiftChanged(const QString& str);
     void slotErr (QString str);
     void slotChanList (QString str);
     void slotEPG(QString str);
@@ -221,6 +220,7 @@ private slots:
     void slotVodURL(QString str);
     void slotGotBitrate (QString str);
     void slotSetBitrate (int iRate);
+    void slotSetTimeShift (int iShift);
     void slotChannelDown();
     void slotChannelUp();
     void slotToggleEpgVod();

@@ -83,6 +83,13 @@ namespace cparser
       uint    uiLength;
       QVector<uint> vVodFiles;
    };
+
+   struct SAccountInfo
+   {
+      QString sExpires;
+      bool    bHasArchive;
+      bool    bHasVOD;
+   };
 }
 
 /********************************************************************\
@@ -103,7 +110,7 @@ public:
 
    // new functions for use with API ...
    int checkResponse (const QString &sResp, const QString& sFunction, int iLine);
-   int parseCookie (const QString &sResp, QString &sCookie, QString &sExp);
+   int parseCookie (const QString &sResp, QString &sCookie, cparser::SAccountInfo &sInf);
    int parseTimeShift (const QString &sResp, QVector<int> &vValues, int &iShift);
    int parseChannelList (const QString &sResp, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgList);

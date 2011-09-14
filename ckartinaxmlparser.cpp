@@ -583,14 +583,12 @@ int CKartinaXMLParser::parseSServers(const QString &sResp, QVector<cparser::SSrv
 |  Returns: 0 ==> ok
 |        else ==> any error
 \----------------------------------------------------------------- */
-int CKartinaXMLParser::parseCookie (const QString &sResp, QString &sCookie, QString &sExp)
+int CKartinaXMLParser::parseCookie (const QString &sResp, QString &sCookie, cparser::SAccountInfo &sInf)
 {
    QString                sSid, sSidName;
    QStringList            slNeeded;
    QMap<QString, QString> mResults;
    sCookie = "";
-
-   slNeeded << "login" << "packet_name" << "packet_expire";
 
    // check for errors ...
    int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -624,12 +622,28 @@ int CKartinaXMLParser::parseCookie (const QString &sResp, QString &sCookie, QStr
             }
             else if (xmlSr.name() == "account")
             {
+               mResults.clear();
+               slNeeded.clear();
+               slNeeded << "login" << "packet_name" << "packet_expire";
+
                // get expires value ...
                oneLevelParser("account", slNeeded, mResults);
 
                // format into string ...
-               sExp = QDateTime::fromTime_t(mResults.value("packet_expire").toUInt())
-                      .toString(DEF_TIME_FORMAT);
+               sInf.sExpires = QDateTime::fromTime_t(mResults.value("packet_expire").toUInt())
+                     .toString(DEF_TIME_FORMAT);
+            }
+            else if (xmlSr.name() == "services")
+            {
+               mResults.clear();
+               slNeeded.clear();
+               slNeeded << "vod" << "archive";
+
+               // get values ...
+               oneLevelParser("services", slNeeded, mResults);
+
+               sInf.bHasVOD     = mResults.value("vod").toInt() ? true : false;
+               sInf.bHasArchive = mResults.value("archive").toInt() ? true : false;
             }
             else if (xmlSr.name() == "servertime")
             {

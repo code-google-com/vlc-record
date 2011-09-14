@@ -98,8 +98,6 @@ void CSettingsDlg::readSettings()
    m_ui->linePass->setText (pDb->stringValue("Passwd"));
    m_ui->lineErosPass->setText(pDb->stringValue("ErosPasswd"));
    m_ui->lineShutdown->setText(pDb->stringValue("ShutdwnCmd"));
-   m_ui->lineUser->setText(pDb->stringValue ("RegUser"));
-   m_ui->lineRegData->setText(pDb->stringValue ("RegData"));
    m_ui->lineApiServer->setText(pDb->stringValue ("APIServer"));
 
 #ifdef Q_OS_WIN32
@@ -134,6 +132,13 @@ void CSettingsDlg::readSettings()
    m_ui->checkTranslit->setCheckState((Qt::CheckState)pDb->intValue("TranslitRecFile"));
    m_ui->checkDetach->setCheckState((Qt::CheckState)pDb->intValue("DetachPlayer"));
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
+   m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
+   m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
+
+   if (m_ui->checkAdvanced->isChecked())
+   {
+      vBuffs.prepend(0.5);
+   }
 
    // on update the password for adult channels may not be given ...
    if (m_ui->checkAdult->isChecked() && (m_ui->lineErosPass->text() == ""))
@@ -195,7 +200,8 @@ void CSettingsDlg::readSettings()
 void CSettingsDlg::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::LanguageChange:
        {
           // save current index from comboboxes ...
@@ -359,6 +365,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("TranslitRecFile", (int)m_ui->checkTranslit->checkState());
    pDb->setValue("DetachPlayer", (int)m_ui->checkDetach->checkState());
    pDb->setValue("ExtChanList", (int)m_ui->checkExtChanInfo->checkState());
+   pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -373,6 +380,38 @@ void CSettingsDlg::on_pushSave_clicked()
    {
       pGrab = (CShortCutGrabber *)m_ui->tableShortCuts->cellWidget(i, 1);
       pDb->setShortCut(pGrab->target(), pGrab->slot(), pGrab->shortCutString());
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_checkAdvanced_clicked
+|  Begin: 14.09.2011 / 08:45
+|  Author: Jo2003
+|  Description: enable advanced settings tab
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_checkAdvanced_clicked(bool checked)
+{
+   m_ui->tabWidget->setTabEnabled(2, checked);
+
+   int iIdx = m_ui->cbxBufferSeconds->findData(500);
+
+   if (checked)
+   {
+      if (iIdx < 0)
+      {
+         m_ui->cbxBufferSeconds->insertItem(-1, QString("%1").arg(0.5), 500);
+      }
+   }
+   else
+   {
+      if (iIdx > -1)
+      {
+         m_ui->cbxBufferSeconds->removeItem(iIdx);
+      }
    }
 }
 
@@ -476,39 +515,83 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: on_btnSaveStreamServer_clicked
-|  Begin: 21.01.2010 / 11:22:39
+|  Method: fillTimeShiftCbx
+|  Begin: 14.09.2011 / 09:30
 |  Author: Jo2003
-|  Description: signal set of stream server
+|  Description: fill / mark combobox for timeshift
 |
-|  Parameters: --
+|  Parameters: ref. to timeshift vector, act timeshift
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::on_btnSaveStreamServer_clicked()
+void CSettingsDlg::fillTimeShiftCbx(const QVector<int> &vVals, int iAct)
 {
-   // which server was choosed ... ?
-   int iSrv  = m_ui->cbxStreamServer->currentIndex();
+   int iActIdx = 0;
+   int iCount  = 0;
+   QVector<int>::const_iterator cit;
 
-   emit sigSetServer(m_ui->cbxStreamServer->itemData(iSrv).toString());
+   m_ui->cbxTimeShift->clear();
+
+   // add all available timeshift values ...
+   for (cit = vVals.constBegin(); cit != vVals.constEnd(); cit++)
+   {
+      m_ui->cbxTimeShift->addItem(QString::number(*cit), QVariant(*cit));
+
+      if (*cit == iAct)
+      {
+         iActIdx = iCount;
+      }
+
+      iCount ++;
+   }
+
+   // mark active rate ...
+   m_ui->cbxTimeShift->setCurrentIndex(iActIdx);
 }
 
 /* -----------------------------------------------------------------\
-|  Method: on_btnSaveBitrate_clicked
-|  Begin: 14.01.2011 / 14:45
+|  Method: on_cbxStreamServer_activated
+|  Begin: 14.09.2011 / 09:40
 |  Author: Jo2003
-|  Description: button set bitrate pressed
+|  Description: signal set of stream server
 |
-|  Parameters: --
+|  Parameters: current index
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::on_btnSaveBitrate_clicked()
+void CSettingsDlg::on_cbxStreamServer_activated(int index)
 {
-   // which bitrate was used ... ?
-   int iRate = m_ui->cbxBitRate->currentIndex();
+   emit sigSetServer(m_ui->cbxStreamServer->itemData(index).toString());
+}
 
-   emit sigSetBitRate(m_ui->cbxBitRate->itemData(iRate).toInt());
+/* -----------------------------------------------------------------\
+|  Method: on_cbxBitRate_activated
+|  Begin: 14.09.2011 / 09:40
+|  Author: Jo2003
+|  Description: set bitrate
+|
+|  Parameters: actual index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_cbxBitRate_activated(int index)
+{
+   emit sigSetBitRate(m_ui->cbxBitRate->itemData(index).toInt());
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxTimeShift_activated
+|  Begin: 14.09.2011 / 09:40
+|  Author: Jo2003
+|  Description: set timeshift
+|
+|  Parameters: actual index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_cbxTimeShift_activated(int index)
+{
+   emit sigSetTimeShift(m_ui->cbxTimeShift->itemData(index).toInt());
 }
 
 /* -----------------------------------------------------------------\
@@ -950,7 +1033,7 @@ bool CSettingsDlg::DisableSplashScreen()
 
 bool CSettingsDlg::regOk()
 {
-   return (hsah(m_ui->lineUser->text()) == m_ui->lineRegData->text()) ? true : false;
+   return true;
 }
 
 int  CSettingsDlg::GetBitRate()
@@ -966,6 +1049,11 @@ QString CSettingsDlg::GetAPIServer()
 bool CSettingsDlg::extChanList()
 {
    return m_ui->checkExtChanInfo->isChecked();
+}
+
+int CSettingsDlg::getTimeShift()
+{
+   return m_ui->cbxTimeShift->itemData(m_ui->cbxTimeShift->currentIndex()).toInt();
 }
 
 //===================================================================
@@ -1028,30 +1116,6 @@ QString& CSettingsDlg::reverse(QString &str)
    }
 
    return str;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: reverse
-|  Begin: 23.12.2010 / 11:45
-|  Author: Jo2003
-|  Description: reverse a string
-|
-|  Parameters: ref. to string
-|
-|  Returns:  ref. to string
-\----------------------------------------------------------------- */
-void CSettingsDlg::on_pushDoRegister_clicked()
-{
-   if (hsah(m_ui->lineUser->text()) != m_ui->lineRegData->text())
-   {
-      if (hsah(m_ui->lineRegData->text()) == MASTER_HASH)
-      {
-         QMessageBox::information(this, tr("Reg Info"), hsah(m_ui->lineUser->text()));
-      }
-   }
-
-   pDb->setValue ("RegUser", m_ui->lineUser->text());
-   pDb->setValue ("RegData", m_ui->lineRegData->text());
 }
 
 /* -----------------------------------------------------------------\
@@ -1148,4 +1212,3 @@ int CSettingsDlg::shortCutCount()
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-

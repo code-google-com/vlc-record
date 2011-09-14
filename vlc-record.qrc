@@ -3,7 +3,6 @@
         <file alias="settings">resources/tools.png</file>
         <file alias="record">resources/record.png</file>
         <file alias="play">resources/play.png</file>
-        <file alias="time">resources/clock.png</file>
         <file alias="info">resources/info.png</file>
         <file alias="quit">resources/quit.png</file>
         <file alias="reload">resources/refresh.png</file>
