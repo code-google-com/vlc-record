@@ -95,7 +95,7 @@ public:
    void GetBitRate ();
    void SetHttpBuffer (int iTime);
    void GetEPG (int iChanID, int iOffset = 0);
-   void GetVideos (int iGenreID);
+   void GetVideos (const QString &sPrepared);
    void GetVideoInfo (int iVodID);
    void SetCookie (const QString &cookie);
    bool busy ();

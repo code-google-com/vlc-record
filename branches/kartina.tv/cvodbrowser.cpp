@@ -72,7 +72,9 @@ void CVodBrowser::setSettings(CSettingsDlg *pDlg)
 |  Returns:  --
 \----------------------------------------------------------------- */
 void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
-                                 const QString &sGenre, bool bSaveList)
+                                 const QString &sGenre,
+                                 const cparser::SGenreInfo &gInfo,
+                                 bool bSaveList)
 {
    int i, j, iCount = vList.count();
 
@@ -81,7 +83,7 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
       vVideos = vList;
    }
 
-   QString sTab, sRows, sCol;
+   QString sTab, sRows, sCol, sVidTitle;
    QString sContent = HTML_SITE;
    QFileInfo info;
    sContent.replace(TMPL_TITLE, tr("VOD"));
@@ -114,13 +116,19 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                                          .arg(vList[j].sName).arg(vList[j].sCountry)
                                          .arg(vList[j].sYear));
 
+         // add title below image ...
+         sVidTitle = TMPL_VIDEO_TITLE;
+         sVidTitle.replace(TMPL_TITLE, vList[j].sName);
+
          // insert into row template ...
-         sRows.replace((j == i) ? TMPL_VOD_L : TMPL_VOD_R, sCol);
+         sRows.replace((j == i) ? TMPL_VOD_L   : TMPL_VOD_R,   sCol);
+         sRows.replace((j == i) ? TMPL_TITLE_L : TMPL_TITLE_R, sVidTitle);
       }
 
       if (j == (iCount - 1))
       {
-         sRows.replace(TMPL_VOD_R, "&nbsp;");
+         sRows.replace(TMPL_VOD_R,   "&nbsp;");
+         sRows.replace(TMPL_TITLE_R, "&nbsp;");
       }
    }
 
@@ -201,20 +209,14 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 
       sLinks.replace(TMPL_TITLE, tr("Play Movie ..."));
 
-      if (pSettings)
-      {
-         if (pSettings->regOk())
-         {
-            sLinks += "&nbsp;&nbsp;";
+      sLinks += "&nbsp;&nbsp;";
 
-            // record link ...
-            sLinks += TMPL_IMG_LINK;
-            sLinks.replace(TMPL_IMG, ":png/record");
-            sLinks.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
-                           .arg(sInfo.vVodFiles[i]));
-            sLinks.replace(TMPL_TITLE, tr("Record Movie ..."));
-         }
-      }
+      // record link ...
+      sLinks += TMPL_IMG_LINK;
+      sLinks.replace(TMPL_IMG, ":png/record");
+      sLinks.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
+                     .arg(sInfo.vVodFiles[i]));
+      sLinks.replace(TMPL_TITLE, tr("Record Movie ..."));
    }
 
    sDoc.replace(TMPL_LINK, sLinks);
@@ -235,58 +237,6 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 const QString& CVodBrowser::getName()
 {
    return sName;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: findVideos
-|  Begin: 23.12.2010 / 8:30
-|  Author: Jo2003
-|  Description: find videos matching search criteria
-|
-|  Parameters: search string, search area
-|
-|  Returns:  --
-\----------------------------------------------------------------- */
-void CVodBrowser::findVideos(const QString &str, vodbrowser::eSearchArea eArea)
-{
-   QVector<cparser::SVodVideo>::const_iterator cit;
-   QVector<cparser::SVodVideo> tmpList;
-   QRegExp rx (str.toUpper());
-
-   for (cit = vVideos.constBegin(); cit != vVideos.constEnd(); cit ++)
-   {
-      // search in title ...
-      if ((eArea == vodbrowser::IN_TITLE) || (eArea == vodbrowser::IN_EVERYWHERE))
-      {
-         if (rx.indexIn((*cit).sName.toUpper()) > -1)
-         {
-            tmpList.push_back(*cit);
-            continue;
-         }
-      }
-
-      // search in description ...
-      if ((eArea == vodbrowser::IN_DESCRIPTION) || (eArea == vodbrowser::IN_EVERYWHERE))
-      {
-         if (rx.indexIn((*cit).sDescr.toUpper()) > -1)
-         {
-            tmpList.push_back(*cit);
-            continue;
-         }
-      }
-
-      // search in year ...
-      if ((eArea == vodbrowser::IN_YEAR) || (eArea == vodbrowser::IN_EVERYWHERE))
-      {
-         if ((*cit).sYear.toUInt() == str.toUInt())
-         {
-            tmpList.push_back(*cit);
-            continue;
-         }
-      }
-   }
-
-   displayVodList(tmpList, tr("Search Results"), false);
 }
 
 /* -----------------------------------------------------------------\

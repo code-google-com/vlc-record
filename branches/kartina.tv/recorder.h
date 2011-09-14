@@ -104,6 +104,7 @@ private:
     QTranslator                   *pTranslator;
     QTimer                         Refresh;
     bool                           bLogosReady;
+    bool                           bVODLogosReady;
     CPixLoader                     dwnLogos;
     CPixLoader                     dwnVodPics;
     int                            iEpgOffset;
@@ -132,7 +133,7 @@ private:
 
 protected:
     void fillShortCutTab();
-    void touchSearchAreaCbx ();
+    void touchLastOrBestCbx ();
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
     int StartVlcPlay (const QString &sURL, bool bArchiv = false);
@@ -170,7 +171,8 @@ private slots:
     void on_pushFwd_clicked();
 #endif /* INCLUDE_LIBVLC */
     void on_btnVodSearch_clicked();
-    void on_cbxGenre_currentIndexChanged(int index);
+    void on_cbxGenre_activated(int index);
+    void on_cbxLastOrBest_activated(int index);
     void on_btnFontSmaller_clicked();
     void on_btnFontLarger_clicked();
     void on_pushStop_clicked();

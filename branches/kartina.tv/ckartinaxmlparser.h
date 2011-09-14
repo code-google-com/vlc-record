@@ -90,6 +90,14 @@ namespace cparser
       bool    bHasArchive;
       bool    bHasVOD;
    };
+
+   struct SGenreInfo
+   {
+      QString sType;
+      int     iCount;
+      int     iPage;
+      int     iTotal;
+   };
 }
 
 /********************************************************************\
@@ -116,7 +124,7 @@ public:
    int parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgList);
    int parseSettings(const QString& sResp, QVector<int>& vValues, int& iActVal, QString &sName);
    int parseSServers (const QString& sResp, QVector<cparser::SSrv>& vSrv, QString& sActIp);
-   int parseVodList (const QString& sResp, QVector<cparser::SVodVideo>& vVodList);
+   int parseVodList (const QString& sResp, QVector<cparser::SVodVideo>& vVodList, cparser::SGenreInfo &gInfo);
    int parseUrl (const QString& sResp, QString& sUrl);
    int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
    int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);

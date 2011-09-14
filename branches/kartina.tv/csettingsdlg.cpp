@@ -870,22 +870,6 @@ void CSettingsDlg::SaveCookie(const QString &str)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: SaveOtherSettings
-|  Begin: 18.02.2010 / 11:22:39
-|  Author: Jo2003
-|  Description: write ini file to disk
-|
-|  Parameters: --
-|
-|  Returns:  0 --> ok
-|           -1 --> any error
-\----------------------------------------------------------------- */
-int CSettingsDlg::SaveOtherSettings()
-{
-   return 0; /*IniFile.SaveIni(); */
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotSplashStateChgd
 |  Begin: 08.03.2010 / 13:22:39
 |  Author: Jo2003
@@ -1031,11 +1015,6 @@ bool CSettingsDlg::DisableSplashScreen()
    return (pDb->intValue("NoSplash")) ? true : false;
 }
 
-bool CSettingsDlg::regOk()
-{
-   return true;
-}
-
 int  CSettingsDlg::GetBitRate()
 {
    return m_ui->cbxBitRate->currentText().toInt();
@@ -1059,64 +1038,6 @@ int CSettingsDlg::getTimeShift()
 //===================================================================
 // <== return internal stored values
 //===================================================================
-
-/* -----------------------------------------------------------------\
-|  Method: hsah (hash reversed ;-) )
-|  Begin: 23.12.2010 / 11:45
-|  Author: Jo2003
-|  Description: make a hash code
-|
-|  Parameters: string to hash
-|
-|  Returns:  hash
-\----------------------------------------------------------------- */
-QString CSettingsDlg::hsah (const QString &str)
-{
-   int i = 0;
-   QByteArray arr = QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Md5);
-   QStringList list;
-   QString sTmp(arr.toHex());
-
-   while (i < sTmp.length())
-   {
-      list.push_back(sTmp.mid(i, 8));
-      i += 8;
-   }
-
-   sTmp.clear();
-
-   for (i = 0; i <  list.count(); i++)
-   {
-      sTmp += (i ? QString("-") : QString("")) + reverse(list[i]);
-   }
-
-   return QString(QCryptographicHash::hash(sTmp.toUtf8(), QCryptographicHash::Sha1).toHex());
-}
-
-/* -----------------------------------------------------------------\
-|  Method: reverse
-|  Begin: 23.12.2010 / 11:45
-|  Author: Jo2003
-|  Description: reverse a string
-|
-|  Parameters: ref. to string
-|
-|  Returns:  ref. to string
-\----------------------------------------------------------------- */
-QString& CSettingsDlg::reverse(QString &str)
-{
-   int i, j = 0;
-   QString sTmp = str;
-
-   str.clear();
-
-   for (i = sTmp.count() - 1; i >= 0; i--)
-   {
-      str[j++] = sTmp[i];
-   }
-
-   return str;
-}
 
 /* -----------------------------------------------------------------\
 |  Method: addShortCut

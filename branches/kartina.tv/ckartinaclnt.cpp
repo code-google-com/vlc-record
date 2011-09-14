@@ -522,22 +522,18 @@ void CKartinaClnt::GetVodGenres()
 |
 | Begin:       09.12.2010 / 13:18
 |
-| Description: get vidoes matching genre id (VOD)
+| Description: get vidoes matching to prepared search string
 |
-| Parameters:  genre id
+| Parameters:  prepared search string
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetVideos(int iGenreID)
+void CKartinaClnt::GetVideos(const QString &sPrepared)
 {
-   mInfo(tr("Request Videos for Genres %1...").arg(iGenreID));
+   mInfo(tr("Request Videos ..."));
 
-   QString sReq = QString("%1vod_list?type=first&nums=10000").arg(KARTINA_API_PATH);
-
-   if (iGenreID != -1)
-   {
-      sReq += QString("&genre=%1").arg(iGenreID);
-   }
+   QString sReq = QString("%1vod_list?%2")
+         .arg(KARTINA_API_PATH).arg(sPrepared);
 
    GetRequest(Kartina::REQ_GETVIDEOS, sReq);
 }
