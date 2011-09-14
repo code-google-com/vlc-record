@@ -673,6 +673,16 @@ color: white;
              <item row="0" column="3">
               <widget class="QComboBox" name="cbxLastOrBest"/>
              </item>
+             <item row="2" column="3">
+              <widget class="QComboBox" name="cbxSites"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Site: </string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
