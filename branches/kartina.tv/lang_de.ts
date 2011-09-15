@@ -2020,19 +2020,19 @@ dataDir: %1
     </message>
     <message>
         <location filename="forms/recorder.ui" line="81"/>
-        <location filename="forms/recorder_inc.ui" line="81"/>
+        <location filename="forms/recorder_inc.ui" line="138"/>
         <source> Channels </source>
         <translation> Sender </translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="143"/>
-        <location filename="forms/recorder_inc.ui" line="143"/>
+        <location filename="forms/recorder_inc.ui" line="206"/>
         <source>Channel Group</source>
         <translation>Sendergruppe</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="156"/>
-        <location filename="forms/recorder_inc.ui" line="156"/>
+        <location filename="forms/recorder_inc.ui" line="219"/>
         <source>Channel List</source>
         <translation>Senderliste</translation>
     </message>
@@ -2043,39 +2043,39 @@ dataDir: %1
     </message>
     <message>
         <location filename="forms/recorder.ui" line="195"/>
-        <location filename="forms/recorder_inc.ui" line="1124"/>
+        <location filename="forms/recorder_inc.ui" line="1135"/>
         <source>Short EPG</source>
         <translation>Kurzer EPG</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="214"/>
-        <location filename="forms/recorder_inc.ui" line="1143"/>
+        <location filename="forms/recorder_inc.ui" line="1154"/>
         <source>Time Progress for played programm</source>
         <translation>Zeitschiene für laufendes Proframm</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="229"/>
-        <location filename="forms/recorder_inc.ui" line="192"/>
+        <location filename="forms/recorder_inc.ui" line="255"/>
         <source> EPG - Electronic Program Guide </source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="274"/>
-        <location filename="forms/recorder_inc.ui" line="243"/>
+        <location filename="forms/recorder_inc.ui" line="100"/>
         <source>Program Guide</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="550"/>
         <location filename="forms/recorder.ui" line="634"/>
-        <location filename="forms/recorder_inc.ui" line="537"/>
-        <location filename="forms/recorder_inc.ui" line="624"/>
+        <location filename="forms/recorder_inc.ui" line="546"/>
+        <location filename="forms/recorder_inc.ui" line="715"/>
         <source>Search: </source>
         <translation>Suche: </translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="715"/>
-        <location filename="forms/recorder_inc.ui" line="705"/>
+        <location filename="forms/recorder_inc.ui" line="671"/>
         <source>Site: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2086,31 +2086,31 @@ dataDir: %1
         <location filename="forms/recorder.ui" line="662"/>
         <location filename="forms/recorder.ui" line="702"/>
         <location filename="forms/recorder.ui" line="725"/>
-        <location filename="forms/recorder_inc.ui" line="472"/>
-        <location filename="forms/recorder_inc.ui" line="508"/>
-        <location filename="forms/recorder_inc.ui" line="565"/>
-        <location filename="forms/recorder_inc.ui" line="652"/>
-        <location filename="forms/recorder_inc.ui" line="692"/>
-        <location filename="forms/recorder_inc.ui" line="715"/>
+        <location filename="forms/recorder_inc.ui" line="481"/>
+        <location filename="forms/recorder_inc.ui" line="517"/>
+        <location filename="forms/recorder_inc.ui" line="574"/>
+        <location filename="forms/recorder_inc.ui" line="654"/>
+        <location filename="forms/recorder_inc.ui" line="681"/>
+        <location filename="forms/recorder_inc.ui" line="743"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="514"/>
-        <location filename="forms/recorder_inc.ui" line="498"/>
+        <location filename="forms/recorder_inc.ui" line="507"/>
         <source>Textsize</source>
         <translation>Textgröße</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="604"/>
-        <location filename="forms/recorder_inc.ui" line="594"/>
+        <location filename="forms/recorder_inc.ui" line="607"/>
         <location filename="recorder.cpp" line="2300"/>
         <source>Video On Demand</source>
         <translation>Videothek</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="618"/>
-        <location filename="forms/recorder_inc.ui" line="608"/>
+        <location filename="forms/recorder_inc.ui" line="621"/>
         <source>Genre: </source>
         <translation></translation>
     </message>
@@ -2123,98 +2123,103 @@ dataDir: %1
         <translation type="obsolete">TimeShift-Auswahl</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1004"/>
+        <location filename="forms/recorder_inc.ui" line="631"/>
+        <source>Order: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1015"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1009"/>
+        <location filename="forms/recorder_inc.ui" line="1020"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1014"/>
+        <location filename="forms/recorder_inc.ui" line="1025"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1019"/>
+        <location filename="forms/recorder_inc.ui" line="1030"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1029"/>
+        <location filename="forms/recorder_inc.ui" line="1040"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="830"/>
-        <location filename="forms/recorder_inc.ui" line="856"/>
+        <location filename="forms/recorder_inc.ui" line="867"/>
         <source>Play selected Channel</source>
         <translation>Zeige markierten Sender</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="862"/>
-        <location filename="forms/recorder_inc.ui" line="888"/>
+        <location filename="forms/recorder_inc.ui" line="899"/>
         <source>Record selected Channel</source>
         <translation>Nehme markierten Sender auf</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="903"/>
-        <location filename="forms/recorder_inc.ui" line="929"/>
+        <location filename="forms/recorder_inc.ui" line="940"/>
         <source>Stop VLC ...</source>
         <translation>Schließe den VLC Player ...</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="942"/>
-        <location filename="forms/recorder_inc.ui" line="1082"/>
+        <location filename="forms/recorder_inc.ui" line="1093"/>
         <location filename="recorder.cpp" line="2603"/>
         <source>Timer Record</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="1047"/>
-        <location filename="forms/recorder_inc.ui" line="1260"/>
+        <location filename="forms/recorder_inc.ui" line="1271"/>
         <location filename="recorder.cpp" line="2604"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="1085"/>
-        <location filename="forms/recorder_inc.ui" line="1298"/>
+        <location filename="forms/recorder_inc.ui" line="1309"/>
         <source>About ...</source>
         <translation>Über ...</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="1123"/>
-        <location filename="forms/recorder_inc.ui" line="1336"/>
+        <location filename="forms/recorder_inc.ui" line="1347"/>
         <location filename="recorder.cpp" line="2609"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="756"/>
+        <location filename="forms/recorder_inc.ui" line="767"/>
         <source> Player </source>
         <translation>Player</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="971"/>
+        <location filename="forms/recorder_inc.ui" line="982"/>
         <location filename="recorder.cpp" line="2619"/>
         <source>Jump Backward</source>
         <translation>springe zurück</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1000"/>
+        <location filename="forms/recorder_inc.ui" line="1011"/>
         <source>Time Jump Value in minutes</source>
         <translation>Sprungwert in Minuten</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1024"/>
+        <location filename="forms/recorder_inc.ui" line="1035"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1046"/>
+        <location filename="forms/recorder_inc.ui" line="1057"/>
         <location filename="recorder.cpp" line="2618"/>
         <source>Jump Forward</source>
         <translation>springe vorwärts</translation>
