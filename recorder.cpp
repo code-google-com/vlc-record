@@ -59,7 +59,13 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // init account info ...
    accountInfo.bHasArchive = false;
    accountInfo.bHasVOD     = false;
-   accountInfo.sExpires    = QDateTime::currentDateTime().toString();
+   accountInfo.sExpires    = QDateTime::currentDateTime().toString(DEF_TIME_FORMAT);
+
+   // init genre info ...
+   genreInfo.iCount        = 0;
+   genreInfo.iPage         = 0;
+   genreInfo.iTotal        = 0;
+   genreInfo.sType         = "wtf";
 
    // init favourite buttons ...
    for (int i = 0; i < MAX_NO_FAVOURITES; i++)
@@ -1012,6 +1018,93 @@ void Recorder::on_btnVodSearch_clicked()
    url.addQueryItem("query", ui->lineVodSearch->text());
 
    int iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+   if (iGenre != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGenre));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxSites_activated [slot]
+|  Begin: 15.09.2011 / 8:35
+|  Author: Jo2003
+|  Description: sites cbx activated
+|
+|  Parameters: new index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_cbxSites_activated(int index)
+{
+   // something changed ... ?
+   if ((index + 1) != genreInfo.iPage)
+   {
+      QUrl    url;
+      QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+      int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+      url.addQueryItem("type", sType);
+      url.addQueryItem("page", QString::number(index + 1));
+
+      if (iGenre != -1)
+      {
+         url.addQueryItem("genre", QString::number(iGenre));
+      }
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_btnPrevSite_clicked [slot]
+|  Begin: 15.09.2011 / 9:00
+|  Author: Jo2003
+|  Description: prev. site button pressed
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_btnPrevSite_clicked()
+{
+   QUrl    url;
+   QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+   int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+   int     iPage  = ui->cbxSites->currentIndex() + 1;
+
+   url.addQueryItem("type", sType);
+   url.addQueryItem("page", QString::number(iPage - 1));
+
+   if (iGenre != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGenre));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_btnNextSite_clicked [slot]
+|  Begin: 15.09.2011 / 9:00
+|  Author: Jo2003
+|  Description: next site button pressed
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_btnNextSite_clicked()
+{
+   QUrl    url;
+   QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+   int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+   int     iPage  = ui->cbxSites->currentIndex() + 1;
+
+   url.addQueryItem("type", sType);
+   url.addQueryItem("page", QString::number(iPage + 1));
 
    if (iGenre != -1)
    {
@@ -2124,7 +2217,9 @@ void Recorder::slotGotVideos(QString str)
       }
       else
       {
-         ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText(), gInfo);
+         genreInfo = gInfo;
+         touchVodNavBar(gInfo);
+         ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText());
       }
    }
 }
@@ -2876,6 +2971,55 @@ void Recorder::TouchEpgNavi (bool bCreate)
       iIdx = ui->hLayoutEpgNavi->count() - 1;
       pBtn = (QToolButton *)ui->hLayoutEpgNavi->itemAt(iIdx)->widget();
       pBtn->setToolTip(tr("1 week forward"));
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: touchVodNavBar
+|  Begin: 15.09.2011 / 8:25
+|  Author: Jo2003
+|  Description: update Vod navbar
+|
+|  Parameters: ref. to genre info structure
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::touchVodNavBar(const cparser::SGenreInfo &gInfo)
+{
+   // delete sites ...
+   ui->cbxSites->clear();
+
+   // (de-)activate prev button ...
+   if (gInfo.iPage == 1)
+   {
+      ui->btnPrevSite->setDisabled(true);
+   }
+   else
+   {
+      ui->btnPrevSite->setEnabled(true);
+   }
+
+   int iSites = gInfo.iTotal / VIDEOS_PER_SITE;
+
+   if (gInfo.iTotal % VIDEOS_PER_SITE)
+   {
+      iSites ++;
+   }
+
+   for (int i = 1; i <= iSites; i++)
+   {
+      ui->cbxSites->addItem(QString::number(i));
+   }
+
+   ui->cbxSites->setCurrentIndex(gInfo.iPage - 1);
+
+   if (iSites == gInfo.iPage)
+   {
+      ui->btnNextSite->setDisabled(true);
+   }
+   else
+   {
+      ui->btnNextSite->setEnabled(true);
    }
 }
 

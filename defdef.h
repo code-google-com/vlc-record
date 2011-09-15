@@ -57,8 +57,8 @@
 #define MAX_NO_FAVOURITES 10          // max. number of favourites ...
 #define JUMP_TIME         120         // forward / backward jump in archive play
 #define MIN_CACHE_SIZE    5000000     // < 5 MB ...
-#define MASTER_HASH       "a4196527a30ed189dbbc668c3805ebfa1a67c636"
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
+#define VIDEOS_PER_SITE   20          // number of videos / site
 
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\

@@ -73,7 +73,6 @@ void CVodBrowser::setSettings(CSettingsDlg *pDlg)
 \----------------------------------------------------------------- */
 void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                                  const QString &sGenre,
-                                 const cparser::SGenreInfo &gInfo,
                                  bool bSaveList)
 {
    int i, j, iCount = vList.count();
