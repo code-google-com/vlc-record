@@ -150,10 +150,10 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("HttpCache",    8000);              // 8 sec. cache
 
    // set windows size and position ...
-   pDb->setValue("WndRect",        "88;81;1220;752");
-   pDb->setValue("spVChanEpg",     "264;388;");
-   pDb->setValue("spVChanEpgPlay", "657;536;");
-   pDb->setValue("spHPlay",        "444;191;");
+   pDb->setValue("WndRect",        "74;71;1220;752");
+   pDb->setValue("spVChanEpg",     "270;394;");
+   pDb->setValue("spVChanEpgPlay", "693;500;");
+   pDb->setValue("spHPlay",        "450;185;");
 
 
 #ifdef Q_OS_WIN32
