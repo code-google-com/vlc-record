@@ -45,7 +45,7 @@ public:
     void ReduceFont ();
     void ChangeFontSize (int iSz);
 
-    void displayVodList (const QVector<cparser::SVodVideo> &vList, const QString &sGenre, const cparser::SGenreInfo &gInfo, bool bSaveList = true);
+    void displayVodList (const QVector<cparser::SVodVideo> &vList, const QString &sGenre, bool bSaveList = true);
     void displayVideoDetails (const cparser::SVodVideo &sInfo);
     const QString& getName ();
     void setSettings (CSettingsDlg *pDlg);

@@ -130,6 +130,7 @@ private:
     QChanListDelegate             *pDelegate;
     QVector<Ui::SShortCuts>        vShortCutTab;
     cparser::SAccountInfo          accountInfo;
+    cparser::SGenreInfo            genreInfo;
 
 protected:
     void fillShortCutTab();
@@ -139,6 +140,7 @@ protected:
     int StartVlcPlay (const QString &sURL, bool bArchiv = false);
     void StartStreamDownload (const QString &sURL, const QString &sName, const QString &sFileExt = "ts");
     void TouchPlayCtrlBtns (bool bEnable = true);
+    void touchVodNavBar(const cparser::SGenreInfo &gInfo);
     void SetProgress (const uint &start, const uint &end);
     void TouchEpgNavi (bool bCreate);
     QString CleanShowName (const QString &str);
@@ -187,6 +189,9 @@ private slots:
     void on_pushPlay_clicked();
     void on_pushRecord_clicked();
     void on_pushSettings_clicked();
+    void on_cbxSites_activated (int index);
+    void on_btnPrevSite_clicked();
+    void on_btnNextSite_clicked();
     void slotErr (QString str);
     void slotChanList (QString str);
     void slotEPG(QString str);
