@@ -20,7 +20,7 @@
   OutFile "${PACKAGES}\${APPNAME}-${STR_VERSION}-win-x86-setup.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\${APPNAME}"
+  InstallDir "$LOCALAPPDATA\${APPNAME}"
   
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\${APPNAME}" ""
