@@ -58,6 +58,9 @@
 TMPL_ROWS \
 "</table>\n"
 
+#define TMPL_CODEC \
+"<span style='color: #888'>" TMPL_TITLE "</span>"
+
 #define TMPL_VIDEO_TITLE \
 "<div style='font-weight: bold; color: #800; padding: 10px;'>" TMPL_TITLE "</div>"
 

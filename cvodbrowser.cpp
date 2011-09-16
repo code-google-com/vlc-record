@@ -153,6 +153,8 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    QString   sDoc = HTML_SITE;
    QString   sCss = TMPL_CSS_WRAPPER;
    QString   sLinks;
+   QString   sTitle;
+   QString   sFormat;
    QFileInfo info(sInfo.sImg);
 
    // add css stuff ...
@@ -195,12 +197,21 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    // back link ...
    sDoc.replace(TMPL_END, tr("Back"));
 
+   sLinks = "<table>\n";
+
    // links ...
    for (int i = 0; i < sInfo.vVodFiles.count(); i ++)
    {
-      sLinks += QString("<br>\n<b>%1 %2:</b>&nbsp;&nbsp;").arg(tr("Part")).arg(i + 1);
+      sLinks += "<tr>\n";
+      sTitle  = (sInfo.vVodFiles[i].sTitle == "") ? tr("Part %1").arg(i + 1) : sInfo.vVodFiles[i].sTitle;
+      sFormat = TMPL_CODEC;
+      sFormat.replace(TMPL_TITLE, QString("(%1; %2)").arg(sInfo.vVodFiles[i].sFormat).arg(sInfo.vVodFiles[i].sCodec));
+
+      sLinks += QString("<td style='padding: 3px;'><b>%1</b></td>\n").arg(sTitle);
+      sLinks += QString("<td style='padding: 3px;'>%1</td>\n").arg(sFormat);
 
       // play link ...
+      sLinks += "<td style='padding: 3px;'>\n";
       sLinks += TMPL_IMG_LINK;
       sLinks.replace(TMPL_IMG, ":png/play");
       sLinks.replace(TMPL_LINK, QString("videothek?action=play&vid=%1")
@@ -216,7 +227,11 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       sLinks.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
                      .arg(sInfo.vVodFiles[i].iId));
       sLinks.replace(TMPL_TITLE, tr("Record Movie ..."));
+
+      sLinks += "\n</td>\n</tr>\n";
    }
+
+   sLinks += "</table>\n";
 
    sDoc.replace(TMPL_LINK, sLinks);
 
