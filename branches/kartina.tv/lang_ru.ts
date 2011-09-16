@@ -1573,42 +1573,46 @@ or start time is later than end time!</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="163"/>
+        <location filename="cvodbrowser.cpp" line="165"/>
         <source>Video Details</source>
         <translation>Информации о видео</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="182"/>
+        <location filename="cvodbrowser.cpp" line="184"/>
         <source>min.</source>
         <translation>мин.</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="185"/>
+        <location filename="cvodbrowser.cpp" line="187"/>
         <source>Director: %1</source>
         <translation>Режиссер: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="189"/>
+        <location filename="cvodbrowser.cpp" line="191"/>
         <source>With: %1</source>
         <translation>В ролях: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="196"/>
+        <location filename="cvodbrowser.cpp" line="198"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="201"/>
-        <source>Part</source>
-        <translation>Часть</translation>
+        <location filename="cvodbrowser.cpp" line="206"/>
+        <source>Part %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="209"/>
+        <source>Part</source>
+        <translation type="obsolete">Часть</translation>
+    </message>
+    <message>
+        <location filename="cvodbrowser.cpp" line="220"/>
         <source>Play Movie ...</source>
         <translation>Просмотр фильма ...</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="218"/>
+        <location filename="cvodbrowser.cpp" line="229"/>
         <source>Record Movie ...</source>
         <translation>Запись фильма ...</translation>
     </message>
