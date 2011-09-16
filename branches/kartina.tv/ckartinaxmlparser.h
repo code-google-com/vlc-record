@@ -70,6 +70,19 @@ namespace cparser
       QString sGName;
    };
 
+   struct SVodFileInfo
+   {
+      int     iId;
+      QString sTitle;
+      QString sFormat;
+      QString sUrl;
+      int     iSize;
+      int     iLength;
+      QString sCodec;
+      int     iWidth;
+      int     iHeight;
+   };
+
    struct SVodVideo
    {
       uint uiVidId;
@@ -81,7 +94,7 @@ namespace cparser
       QString sImg;
       QString sDirector;
       uint    uiLength;
-      QVector<uint> vVodFiles;
+      QVector<cparser::SVodFileInfo> vVodFiles;
    };
 
    struct SAccountInfo
@@ -137,7 +150,6 @@ protected:
    int parseGroups (QXmlStreamReader &xml, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseChannels(QXmlStreamReader &xml, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseStreamParams (QXmlStreamReader &xml, QVector<cparser::STimeShift>& vTs);
-   int parseVodParts (QXmlStreamReader &xml, QVector<uint>& vVodParts);
    int oneLevelParser (const QString &sEndElement, const QStringList& slNeeded, QMap<QString, QString>& mResults);
 
 

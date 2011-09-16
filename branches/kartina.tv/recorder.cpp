@@ -44,7 +44,8 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    ui->setupUi(this);
 
    // set (customized) windows title ...
-   setWindowTitle(QString("VLC-Recorder - %1").arg(COMPANY_NAME));
+   // setWindowTitle(QString("VLC-Recorder - %1").arg(COMPANY_NAME));
+   setWindowTitle(COMPANY_NAME);
 
    ePlayState     = IncPlay::PS_WTF;
    bLogosReady    = false;
