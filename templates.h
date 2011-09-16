@@ -59,7 +59,7 @@ TMPL_ROWS \
 "</table>\n"
 
 #define TMPL_VIDEO_TITLE \
-"<span style='font-weight: bold; color: #800;'>" TMPL_TITLE "</span>"
+"<div style='font-weight: bold; color: #800; padding: 10px;'>" TMPL_TITLE "</div>"
 
 #define TMPL_VIDEO_DETAILS \
 "<img class='floatright' src='" TMPL_IMG "'>\n" \
@@ -84,8 +84,8 @@ TMPL_CSS \
 
 #define TR_VOD_LIST \
 "  <tr>\n"\
-"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_L "<br>" TMPL_TITLE_L "</div></td>\n"\
-"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 3px;'><div align='center'>" TMPL_VOD_R "<br>" TMPL_TITLE_R "</div></td>\n"\
+"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 10px;'><div align='center'>" TMPL_VOD_L "<br>" TMPL_TITLE_L "</div></td>\n"\
+"    <td style='color: black; background-color: rgb(255, 254, 212); padding: 10px;'><div align='center'>" TMPL_VOD_R "<br>" TMPL_TITLE_R "</div></td>\n"\
 "  </tr>\n"
 
 #define TMPL_IMG_LINK \

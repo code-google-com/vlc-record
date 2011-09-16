@@ -204,7 +204,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       sLinks += TMPL_IMG_LINK;
       sLinks.replace(TMPL_IMG, ":png/play");
       sLinks.replace(TMPL_LINK, QString("videothek?action=play&vid=%1")
-                     .arg(sInfo.vVodFiles[i]));
+                     .arg(sInfo.vVodFiles[i].iId));
 
       sLinks.replace(TMPL_TITLE, tr("Play Movie ..."));
 
@@ -214,7 +214,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       sLinks += TMPL_IMG_LINK;
       sLinks.replace(TMPL_IMG, ":png/record");
       sLinks.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
-                     .arg(sInfo.vVodFiles[i]));
+                     .arg(sInfo.vVodFiles[i].iId));
       sLinks.replace(TMPL_TITLE, tr("Record Movie ..."));
    }
 
