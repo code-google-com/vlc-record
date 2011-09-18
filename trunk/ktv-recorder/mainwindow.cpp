@@ -28,6 +28,20 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    bOnTop         = false;
    flags          = this->windowFlags();
    bFirstInit     = true;
+   bFirstConnect  = true;
+   bVODLogosReady = false;
+
+   // init account info ...
+   accountInfo.bHasArchive = false;
+   accountInfo.bHasVOD     = false;
+   accountInfo.sExpires    = QDateTime::currentDateTime().toString(DEF_TIME_FORMAT);
+
+   // init genre info ...
+   genreInfo.iCount        = 0;
+   genreInfo.iPage         = 0;
+   genreInfo.iTotal        = 0;
+   genreInfo.sType         = "wtf";
+
    bSetRecentChan = false; //default value: channel was not set to recent channel-list
    bShortCuts     = true;
 
@@ -44,7 +58,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    pChannelDlg->setProgressBar(ui->progressBar);
    pChannelDlg->setTextEpgShort(ui->textEpgShort);
    pChannelDlg->setSettings(&dlgSettings); // set the pointer to dlgSettings by CChannelsEPGdlg
-   pChannelDlg->setCbxTimeShift(ui->cbxTimeShift); // set the pointer to cbxTimeShift by CChannelsEPGdlg
+   pChannelDlg->setGenreInfo(&genreInfo);
 
    //set the pointer to the StatusBar in CKartinaXMLParser, CChannelsEPGdlg, CSettingsDlg,
    //CTimerRec, CVlcCtrl, CVlcRecDB
@@ -55,15 +69,6 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    vlcCtrl.setStatusBar(ui->statusBar);
    pDb->setStatusBar(ui->statusBar);
 
-   // if main settings aren't done, start settings dialog ...
-   if ((dlgSettings.GetPasswd()      == "")
-#ifndef INCLUDE_LIBVLC
-        || (dlgSettings.GetVLCPath() == "")
-#endif // INCLUDE_LIBVLC
-        || (dlgSettings.GetUser()    == ""))
-   {
-      dlgSettings.exec();
-   }
 
    //remove the Exit action from the menu
    ui->menuFile->removeAction(ui->actionExit);
@@ -187,6 +192,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
    connect (&dlgSettings,  SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
    connect (&dlgSettings,  SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
+   connect (&dlgSettings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
    connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &dlgTimeRec, SLOT(slotTimerStreamUrl(QString)));
    connect (&KartinaTv,    SIGNAL(sigSrvForm(QString)), this, SLOT(slotServerForm(QString)));
    connect (&dlgTimeRec,   SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
@@ -276,6 +282,9 @@ void MainWindow::changeEvent(QEvent *e)
          {
              retranslateShortcutTable();
          }
+
+       // translate type cbx ...
+       pChannelDlg->touchLastOrBestCbx();
 
        // translate error strings ...
          XMLParser.fillErrorMap();
@@ -581,7 +590,7 @@ void MainWindow::on_actionClear_Recent_Channel_List_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-    CAboutDialog dlg(this, sExpires);
+    CAboutDialog dlg(this, accountInfo.sExpires);
     dlg.ConnectSettings(&dlgSettings);
     dlg.exec();
 }
@@ -701,17 +710,6 @@ void MainWindow::on_pushPlay_clicked()
 #ifdef INCLUDE_LIBVLC
    }
 #endif // INCLUDE_LIBVLC
-}
-
-void MainWindow::on_cbxTimeShift_currentIndexChanged(QString str)
-{
-   TouchPlayCtrlBtns(false);
-
-   // set timeshift ...
-   pChannelDlg->getEpgBrowser()->SetTimeShift(str.toInt());
-   dlgTimeRec.SetTimeShift(str.toInt());
-
-   Trigger.TriggerRequest(Kartina::REQ_TIMESHIFT, str.toInt());
 }
 
 void MainWindow::on_pushStop_clicked()
@@ -855,7 +853,7 @@ void MainWindow::slotCookie (QString str)
     QString sCookie;
 
     // parse cookie ...
-    if (!XMLParser.parseCookie(str, sCookie, sExpires))
+    if (!XMLParser.parseCookie(str, sCookie, accountInfo))
     {
        KartinaTv.SetCookie(sCookie);
 
@@ -887,26 +885,15 @@ void MainWindow::slotGotTimeShift(QString str)
 
    if (!XMLParser.parseSettings(str, vValues, iShift, sName))
    {
-      QVector<int>::const_iterator cit;
+      dlgSettings.fillTimeShiftCbx(vValues, iShift);
 
       // set timeshift ...
       pChannelDlg->getEpgBrowser()->SetTimeShift(iShift);
       dlgTimeRec.SetTimeShift(iShift);
 
-      // clear timeshift cbx ...
-      ui->cbxTimeShift->clear();
-
-      // fill timeshift cbx ...
-      for (cit = vValues.constBegin(); cit != vValues.constEnd(); cit ++)
-      {
-         ui->cbxTimeShift->addItem(QString::number(*cit));
-      }
-
-      // mark active timeshift ...
-      ui->cbxTimeShift->setCurrentIndex(ui->cbxTimeShift->findText(QString::number(iShift)));
+      // request channel list ...
+      Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
    }
-
-   // changing timeshift box will trigger chan list request ...
 }
 
 void MainWindow::slotGotBitrate(QString str)
@@ -981,7 +968,8 @@ void MainWindow::slotEPG(QString str)
    {
       pChannelDlg->getEpgBrowser()->DisplayEpg(epg, pChannelDlg->getChanMap()->value(cid).sName,
                               cid, epgTime.toTime_t(),
-                              pChannelDlg->getChanMap()->value(cid).bHasArchive);
+                              accountInfo.bHasArchive ?
+                              pChannelDlg->getChanMap()->value(cid).bHasArchive : false);
 
       // fill epg control ...
       icon = qvariant_cast<QIcon>(idx.data(channellist::iconRole));
@@ -1032,9 +1020,12 @@ void MainWindow::slotEPG(QString str)
       {
          //it works only with the real accounts (not 140,...)!
          // update vod stuff only at startup ...
-         if (pChannelDlg->getCbxGenre()->count() == 0)
+         if (accountInfo.bHasVOD)
          {
-             Trigger.TriggerRequest(Kartina::REQ_GETVODGENRES);
+            if (pChannelDlg->getCbxGenre()->count() == 0)
+            {
+               Trigger.TriggerRequest(Kartina::REQ_GETVODGENRES);
+            }
          }
          else
          {
@@ -1181,6 +1172,26 @@ void MainWindow::slotSetBitrate(int iRate)
    Trigger.TriggerRequest(Kartina::REQ_SETBITRATE, iRate);
 }
 
+/* -----------------------------------------------------------------\
+|  Method: slotSetTimeShift
+|  Begin: 14.09.2011 / 10:00
+|  Author: Jo2003
+|  Description: set timeshift
+|
+|  Parameters: timeshift in hours
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void MainWindow::slotSetTimeShift(int iShift)
+{
+   TouchPlayCtrlBtns(false);
+
+   // set timeshift ...
+   pChannelDlg->getEpgBrowser()->SetTimeShift(iShift);
+   dlgTimeRec.SetTimeShift(iShift);
+
+   Trigger.TriggerRequest(Kartina::REQ_TIMESHIFT, iShift);
+}
 void MainWindow::slotTimerRecordDone()
 {
    if (ePlayState == IncPlay::PS_TIMER_RECORD)
@@ -1232,7 +1243,7 @@ void MainWindow::slotShutdown()
 
 void MainWindow::slotSplashScreen()
 {
-    CAboutDialog dlg(this, sExpires);
+    CAboutDialog dlg(this, accountInfo.sExpires);
     dlg.ConnectSettings(&dlgSettings);
     dlg.exec();
 }
@@ -1319,19 +1330,27 @@ void MainWindow::slotGotVodGenres(QString str)
       }
    }
 
-   // changing combo box will trigger all vod request ...
    pChannelDlg->getCbxGenre()->setCurrentIndex(0);
+
+   // trigger video load ...
+   QUrl url;
+   url.addQueryItem("type", "last");
+   url.addQueryItem("nums", "10000");
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 void MainWindow::slotGotVideos(QString str)
 {
    QVector<cparser::SVodVideo> vVodList;
    QVector<cparser::SVodVideo>::const_iterator cit;
+   cparser::SGenreInfo gInfo;
 
-   if (!XMLParser.parseVodList(str, vVodList))
+   if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-      if (!dwnVodPics.IsRunning())
-      {
+       if (!bVODLogosReady)
+       {
+         bVODLogosReady = true;
+
          // download pictures ...
          QStringList lPix;
 
@@ -1341,9 +1360,16 @@ void MainWindow::slotGotVideos(QString str)
          }
 
          dwnVodPics.setPictureList(lPix);
-      }
 
-      pChannelDlg->getVodBrowser()->displayVodList (vVodList, pChannelDlg->getCbxGenre()->currentText());
+         // get normal video view ...
+         pChannelDlg->on_cbxGenre_activated(0);
+      }
+      else
+      {
+         genreInfo = gInfo;
+         pChannelDlg->touchVodNavBar(gInfo);
+         pChannelDlg->getVodBrowser()->displayVodList (vVodList, pChannelDlg->getCbxGenre()->currentText());
+      }
 
       //it works only with real accounts, not with 140, 141, ...
       if (ui->actionOne_Click_Play->isChecked())
@@ -1366,6 +1392,18 @@ void MainWindow::slotVodAnchor(const QUrl &link)
    }
    else if (action == "backtolist")
    {
+      QUrl    url;
+      QString sType = pChannelDlg->getCbxLastOrBest()->itemData(pChannelDlg->getCbxLastOrBest()->currentIndex()).toString();
+      id            = pChannelDlg->getCbxGenre()->itemData(pChannelDlg->getCbxGenre()->currentIndex()).toInt();
+      url.addQueryItem("type", sType);
+
+      if (id != -1)
+      {
+          url.addQueryItem("genre", QString::number(id));
+      }
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+
       id = pChannelDlg->getCbxGenre()->currentIndex();
 
       id = pChannelDlg->getCbxGenre()->itemData(id).toInt();
@@ -2200,7 +2238,6 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
    switch (ePlayState)
    {
    case IncPlay::PS_PLAY:
-      ui->cbxTimeShift->setEnabled(bEnable);
 
       if (showInfo.archive())
       {
@@ -2222,7 +2259,6 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
       break;
 
    case IncPlay::PS_RECORD:
-      ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
@@ -2233,7 +2269,6 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
 
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
-      ui->cbxTimeShift->setEnabled(false);
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
@@ -2243,7 +2278,6 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
       break;
 
    default:
-      ui->cbxTimeShift->setEnabled(bEnable);
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(false);

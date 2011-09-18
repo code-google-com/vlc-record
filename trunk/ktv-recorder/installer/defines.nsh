@@ -1,6 +1,6 @@
 ;------------------------------
 ; define versions ...
-!define VER_MINOR   "45"
+!define VER_MINOR   "46 Beta"
 ;------------------------------
 ; date string for use in 
 ; file name ...

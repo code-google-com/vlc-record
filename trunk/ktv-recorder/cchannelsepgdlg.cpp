@@ -28,7 +28,6 @@ CChannelsEPGdlg::CChannelsEPGdlg(QWidget *parent) :
     ePlayState     = IncPlay::PS_WTF;
     bSaveCng       = false;
     pStatusBar = NULL;
-    pCbxTimeShift = NULL;
 
     // init favourite buttons ...
     for (int i = 0; i < MAX_NO_FAVOURITES; i++)
@@ -110,11 +109,36 @@ void CChannelsEPGdlg::on_cbxChannelGroup_activated(int index)
     ui->channelList->scrollTo(idx, QAbstractItemView::PositionAtTop);
 }
 
-void CChannelsEPGdlg::on_cbxGenre_currentIndexChanged(int index)
+void CChannelsEPGdlg::on_cbxGenre_activated(int index)
 {
-    int iGid = ui->cbxGenre->itemData(index).toInt();
+    int     iGid  = ui->cbxGenre->itemData(index).toInt();
+    QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+    QUrl    url;
 
-    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, iGid);
+    url.addQueryItem("type", sType);
+
+    if (iGid != -1)
+    {
+       url.addQueryItem("genre", QString::number(iGid));
+    }
+
+    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+}
+
+void CChannelsEPGdlg::on_cbxLastOrBest_activated(int index)
+{
+    int     iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+    QString sType = ui->cbxLastOrBest->itemData(index).toString();
+    QUrl    url;
+
+    url.addQueryItem("type", sType);
+
+    if (iGid != -1)
+    {
+       url.addQueryItem("genre", QString::number(iGid));
+    }
+
+    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 void CChannelsEPGdlg::on_btnSearch_clicked()
@@ -166,9 +190,77 @@ void CChannelsEPGdlg::on_btnFontLarger_clicked()
 
 void CChannelsEPGdlg::on_btnVodSearch_clicked()
 {
-    int iIdx = ui->cbxSearchArea->currentIndex();
-    vodbrowser::eSearchArea eArea = (vodbrowser::eSearchArea)ui->cbxSearchArea->itemData(iIdx).toUInt();
-    ui->vodBrowser->findVideos(ui->lineVodSearch->text(), eArea);
+    QUrl url;
+    url.addQueryItem("type", "text");
+    url.addQueryItem("query", ui->lineVodSearch->text());
+
+    int iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+    if (iGenre != -1)
+    {
+       url.addQueryItem("genre", QString::number(iGenre));
+    }
+
+    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+}
+
+void CChannelsEPGdlg::on_cbxSites_activated(int index)
+{
+    // something changed ... ?
+    if ((index + 1) != pGenreInfo->iPage)
+    {
+       QUrl    url;
+       QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+       int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+       url.addQueryItem("type", sType);
+       url.addQueryItem("page", QString::number(index + 1));
+
+       if (iGenre != -1)
+       {
+          url.addQueryItem("genre", QString::number(iGenre));
+       }
+
+       pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+    }
+
+}
+
+void CChannelsEPGdlg::on_btnPrevSite_clicked()
+{
+    QUrl    url;
+    QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+    int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+    int     iPage  = ui->cbxSites->currentIndex() + 1;
+
+    url.addQueryItem("type", sType);
+    url.addQueryItem("page", QString::number(iPage - 1));
+
+    if (iGenre != -1)
+    {
+       url.addQueryItem("genre", QString::number(iGenre));
+    }
+
+    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+
+}
+
+void CChannelsEPGdlg::on_btnNextSite_clicked()
+{
+    QUrl    url;
+    QString sType  = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+    int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+    int     iPage  = ui->cbxSites->currentIndex() + 1;
+
+    url.addQueryItem("type", sType);
+    url.addQueryItem("page", QString::number(iPage + 1));
+
+    if (iGenre != -1)
+    {
+       url.addQueryItem("genre", QString::number(iGenre));
+    }
+
+    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 
 }
 
@@ -404,7 +496,7 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
       }
       else
       {
-         iTs = pCbxTimeShift->currentText().toInt();
+         iTs = pSettings->getTimeShift();
 
          if (ui->textEpg->GetTimeShift() != iTs)
          {
@@ -431,10 +523,60 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
+void CChannelsEPGdlg::touchLastOrBestCbx()
+{
+    // fill search area combo box ...
+    ui->cbxLastOrBest->clear();
+    ui->cbxLastOrBest->addItem(tr("Newest"), "last");
+    ui->cbxLastOrBest->addItem(tr("Best"), "best");
+    ui->cbxLastOrBest->setCurrentIndex(0);
+}
+
+void CChannelsEPGdlg::touchVodNavBar(const cparser::SGenreInfo &gInfo)
+{
+    // delete sites ...
+    ui->cbxSites->clear();
+
+    // (de-)activate prev button ...
+    if (gInfo.iPage == 1)
+    {
+       ui->btnPrevSite->setDisabled(true);
+    }
+    else
+    {
+       ui->btnPrevSite->setEnabled(true);
+    }
+
+    int iSites = gInfo.iTotal / VIDEOS_PER_SITE;
+
+    if (gInfo.iTotal % VIDEOS_PER_SITE)
+    {
+       iSites ++;
+    }
+
+    for (int i = 1; i <= iSites; i++)
+    {
+       ui->cbxSites->addItem(QString::number(i));
+    }
+
+    ui->cbxSites->setCurrentIndex(gInfo.iPage - 1);
+
+    if (iSites == gInfo.iPage)
+    {
+       ui->btnNextSite->setDisabled(true);
+    }
+    else
+    {
+       ui->btnNextSite->setEnabled(true);
+    }
+}
 
 void CChannelsEPGdlg::initDialog (bool bInit)
 {
     bool ok = false;
+
+    // fill type combo box ...
+    touchLastOrBestCbx();
 
     // -------------------------------------------
     // create epg nav bar ...
@@ -775,9 +917,9 @@ QComboBox* CChannelsEPGdlg::getCbxChannelGroup()
     return ui->cbxChannelGroup;
 }
 
-QComboBox* CChannelsEPGdlg::getCbxSearchArea()
+QComboBox* CChannelsEPGdlg::getCbxLastOrBest()
 {
-    return ui->cbxSearchArea;
+    return ui->cbxLastOrBest;
 }
 QLabel* CChannelsEPGdlg::getLabChanIcon()
 {
@@ -854,6 +996,11 @@ QListView* CChannelsEPGdlg::getChannelList()
     return ui->channelList;
 }
 
+void CChannelsEPGdlg::setGenreInfo(cparser::SGenreInfo *pGenrInf)
+{
+    pGenreInfo = pGenrInf;
+}
+
 QString CChannelsEPGdlg::createTooltip (const QString & name, const QString & prog, uint start, uint end)
 {
    // create tool tip with programm info ...
@@ -877,11 +1024,6 @@ int CChannelsEPGdlg::getCurrentCid()
    return cid;
 }
 
-void CChannelsEPGdlg::setCbxTimeShift(QComboBox *pCmxTiSh)
-{
-    pCbxTimeShift = pCmxTiSh;
-}
-
 void CChannelsEPGdlg::updateFavourites()
 {
     // add favourites ...
@@ -895,3 +1037,5 @@ void CChannelsEPGdlg::updateFavourites()
        }
     }
 }
+
+

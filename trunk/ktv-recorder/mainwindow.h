@@ -62,10 +62,11 @@ private:
     IncPlay::ePlayStates           ePlayState;
     QVector<CShortcutEx *>         vShortcutPool;
     int                            iDwnReqId;
-    QString                        sExpires;
     QSystemTrayIcon                trayIcon;
     QRect                          sizePos;
     bool                           bDoInitDlg;
+    bool                           bFirstConnect;
+    bool                           bVODLogosReady;
     bool                           bOnTop;
     Qt::WindowFlags                flags;
     QMenu                         *ChanGroup[MAX_CHANNEL_GROUPS]; // define in defdef.h
@@ -79,6 +80,8 @@ private:
     QActionGroup                  *pCropGroup;
     bool                           bShortCuts;
     QVector<Ui::SShortCuts>        vShortCutTab;
+    cparser::SAccountInfo          accountInfo;
+    cparser::SGenreInfo            genreInfo;
 
 protected:
     int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
@@ -136,7 +139,6 @@ private slots:
     void on_pushFwd_clicked();
 #endif /* INCLUDE_LIBVLC */
     void on_pushStop_clicked();
-    void on_cbxTimeShift_currentIndexChanged(QString str);
     void on_pushPlay_clicked();
     void on_pushRecord_clicked();
     void slotErr (QString str);
@@ -168,6 +170,7 @@ private slots:
     void slotVodURL(QString str);
     void slotGotBitrate (QString str);
     void slotSetBitrate (int iRate);
+    void slotSetTimeShift (int iShift);
     void slotDoubleClick();
     void slotChannelDlgClosed();
     void slotSystrayActivated (QSystemTrayIcon::ActivationReason reason);

@@ -44,7 +44,7 @@ public:
     CEpgBrowser* getEpgBrowser();
     CVodBrowser* getVodBrowser();
     QComboBox* getCbxChannelGroup();
-    QComboBox* getCbxSearchArea();
+    QComboBox* getCbxLastOrBest();
     QTabBar* getNavBar();
     QLabel* getLabChanIcon();
     QLabel* getLabCurrDay();
@@ -55,7 +55,6 @@ public:
     void setTrigger (CWaitTrigger *pTrig);
     void setProgressBar(QProgressBar* pProgBar);
     void setTextEpgShort(CEpgBrowser* pEpgShort);
-    void setCbxTimeShift(QComboBox* pCmxTiSh);
     void CreateFav();
     void HandleFavourites();
     void CleanContextMenu();
@@ -67,6 +66,11 @@ public:
     QListView* getChannelList();
     QMap<int, cparser::SChan>* getChanMap();
     void updateFavourites();
+    void touchLastOrBestCbx();
+    void on_cbxLastOrBest_activated(int index);
+    void on_cbxGenre_activated(int index);
+    void touchVodNavBar(const cparser::SGenreInfo &gInfo);
+    void setGenreInfo(cparser::SGenreInfo *pGenrInf);
 
 private:
     Ui::CChannelsEPGdlg *ui;
@@ -92,24 +96,26 @@ private:
     QStatusBar                    *pStatusBar;
     QStandardItemModel            *pModel;
     QChanListDelegate             *pDelegate;
-    QComboBox                     *pCbxTimeShift;
+    cparser::SGenreInfo           *pGenreInfo;
 
 protected:
     void TouchEpgNavi (bool bCreate);
     void SetProgress (const uint &start, const uint &end);
     void savePositions();
-    void changeEvent(QEvent* e);
     QString createTooltip(const QString & name, const QString & prog, uint start, uint end);
 
+    virtual void changeEvent(QEvent* e);
     virtual void closeEvent (QCloseEvent *event);
 
 private slots:
+    void on_btnNextSite_clicked();
+    void on_btnPrevSite_clicked();
+    void on_cbxSites_activated(int index);
     void on_lineSearch_returnPressed();
     void on_btnVodSearch_clicked();
     void on_btnFontLarger_clicked();
     void on_btnFontSmaller_clicked();
     void on_btnSearch_clicked();
-    void on_cbxGenre_currentIndexChanged(int index);
     void on_cbxChannelGroup_activated(int index);
     void slotDayTabChanged(int iIdx);
     void slotbtnBack_clicked();

@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "cvlcrecdb.h"
 #include "cshowinfo.h"
+#include "qftsettings.h"
 
 #ifdef DINCLUDEPLUGS
 #include <QtPlugin>
@@ -51,6 +52,14 @@ int main(int argc, char *argv[])
 
           if (pDb)
           {
+              // check if needed settings are there ...
+              if ((pDb->stringValue("User") == "")
+                 && (pDb->stringValue("Passwd") == ""))
+              {
+                 QFTSettings ftSet(NULL, &trans);
+                 ftSet.exec();
+              }
+
               MainWindow w(&trans);
               w.show();
 
