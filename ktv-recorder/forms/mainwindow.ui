@@ -32,7 +32,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../vlc-record.qrc">
-    <normaloff>:/app/tv</normaloff>:/app/tv</iconset>
+    <normaloff>:/app/kartina</normaloff>:/app/kartina</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -106,44 +106,6 @@
        <property name="margin">
         <number>0</number>
        </property>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="../vlc-record.qrc">:/app/time</pixmap>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="cbxTimeShift">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Set TimeShift in hours.</string>
-         </property>
-         <property name="whatsThis">
-          <string>TimeShift Selector</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <spacer name="horizontalSpacer_3">
          <property name="orientation">

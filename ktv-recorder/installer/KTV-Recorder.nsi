@@ -64,7 +64,7 @@ Section "KTV-Recorder" SecInst
   SectionIn RO
   SetOutPath "$INSTDIR"
   File "${SRCDIR}\release\KTV-Recorder.exe"
-  File "${SRCDIR}\resources\television.ico"
+  File "${SRCDIR}\resources\kartina_tv.ico"
   File "${SRCDIR}\installer\shortcut.url"
   File "${QTLIBS}\libgcc_s_dw2-1.dll"
   File "${QTLIBS}\mingwm10.dll"
@@ -165,7 +165,7 @@ Section -FinishSection
   ; create uninstall entries in registry ...
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$INSTDIR\television.ico"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayIcon" "$INSTDIR\kartina_tv.ico"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "Publisher" "Jo2003"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLUpdateInfo" "http://code.google.com/p/vlc-record/downloads/list"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "URLInfoAbout" "http://code.google.com/p/vlc-record/"
@@ -246,7 +246,7 @@ Section "un.Program"
   Delete "$INSTDIR\KTV-Recorder.exe"
   Delete "$INSTDIR\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\mingwm10.dll"
-  Delete "$INSTDIR\television.ico"
+  Delete "$INSTDIR\kartina_tv.ico"
   Delete "$INSTDIR\shortcut.url"
 
 SectionEnd

@@ -53,7 +53,9 @@ SOURCES += main.cpp\
     clogfile.cpp \
     cinstruction.cpp \
     cshortcutgrabber.cpp \
-    qchanlistdelegate.cpp
+    qchanlistdelegate.cpp \
+    qftsettings.cpp \
+    qshortcuttable.cpp
 
 HEADERS  += mainwindow.h \
     customization.h \
@@ -89,7 +91,9 @@ HEADERS  += mainwindow.h \
     cvideoframe.h \
     cinstruction.h \
     cshortcutgrabber.h \
-    qchanlistdelegate.h
+    qchanlistdelegate.h \
+    qftsettings.h \
+    qshortcuttable.h
 
 FORMS    += forms/mainwindow.ui \
     forms/ctimerrec.ui \
@@ -97,7 +101,8 @@ FORMS    += forms/mainwindow.ui \
     forms/caboutdialog.ui \
     forms/cplayer.ui \
     forms/cinstruction.ui \
-    forms/cchannelsepgdlg.ui
+    forms/cchannelsepgdlg.ui \
+    forms/qftsettings.ui
 
 win32:INCLUDEPATH += include
 

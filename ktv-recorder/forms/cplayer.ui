@@ -365,7 +365,7 @@
             <enum>Qt::DefaultContextMenu</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">QFrame#fVideo {    background-color: black;    background-image: url(:/app/tv);    background-repeat: no-repeat;    background-position: center middle; }</string>
+            <string notr="true">QFrame#fVideo {    background-color: black;    background-image: url(:/app/kartina);    background-repeat: no-repeat;    background-position: center middle; }</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>

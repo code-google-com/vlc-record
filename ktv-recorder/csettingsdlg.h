@@ -16,7 +16,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDir>
-#include <QCryptographicHash>
 #include <QTableWidget>
 #include <QStatusBar>
 
@@ -74,8 +73,8 @@ public:
     bool AskForRecFile ();
     bool TranslitRecFile ();
     bool DetachPlayer ();
-    bool regOk();
     bool extChanList();
+    int  getTimeShift();
 
     int GetRefrInt ();
     int GetProxyPort ();
@@ -90,21 +89,20 @@ public:
     void  SetIsMaximized (bool bMax);
     int   GetCustFontSize ();
     void  SetCustFontSize (int iSize);
-    int   SaveOtherSettings ();
     void  SaveFavourites (const QList<int> &favList);
     QList<int> GetFavourites (bool *ok = NULL);
     void  SetStreamServerCbx (const QVector<cparser::SSrv>& vSrvList, const QString& sActSrv);
     void  SetBitrateCbx (const QVector<int>& vValues, int iActrate);
     void  SaveCookie (const QString &str);
     bool  DisableSplashScreen ();
-    QString hsah (const QString &str);
-    QString& reverse (QString &str);
     int   GetBitRate ();
     void  addShortCut (const QString& descr, const QString& target, const QString& slot, const QString& keys);
     void  delShortCut (const QString& target, const QString& slot);
     void  updateShortcutDescr(const QString& descr, const QString& target, const QString& slot);
     QString shortCut (const QString& target, const QString& slot) const;
-    int shortCutCount();
+    int  shortCutCount();
+    void readSettings ();
+    void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
     void setStatusBar(QStatusBar *pStBar);
 
 protected:
@@ -113,6 +111,7 @@ protected:
 private:
     Ui::CSettingsDlg *m_ui;
     CShortcutEx *pShortApiServer;
+    QVector<float> vBuffs;
     QStatusBar *pStatusBar;
     QString str;
 
@@ -121,17 +120,21 @@ signals:
     void sigSetServer (QString sIp);
     void sigSetBitRate (int iRate);
     void sigSetBuffer (int iBuffer);
+    void sigSetTimeShift (int iShift);
 
 private slots:
     void on_btnResetShortcuts_clicked();
-    void on_pushDoRegister_clicked();
-    void on_btnSaveStreamServer_clicked();
-    void on_btnSaveBitrate_clicked();
+    void on_checkAdvanced_clicked(bool checked);
     void on_pushDelLogos_clicked();
     void on_pushSave_clicked();
     void on_pushDir_clicked();
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
+    void on_cbxStreamServer_activated(int index);
+    void on_cbxBitRate_activated(int index);
+
+    void on_cbxTimeShift_activated(int index);
+
     void slotKeySequenceChanged(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow);
     void slotEmptyFocusOut(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow);
 
