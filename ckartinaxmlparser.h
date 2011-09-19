@@ -93,6 +93,7 @@ namespace cparser
       QString sDescr;
       QString sImg;
       QString sDirector;
+      QString sGenres;
       uint    uiLength;
       QVector<cparser::SVodFileInfo> vVodFiles;
    };

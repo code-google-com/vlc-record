@@ -191,6 +191,10 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    sDoc.replace(TMPL_ACTORS, tr("With: %1")
                 .arg(sInfo.sActors));
 
+   // insert genres ...
+   sDoc.replace(TMPL_GENRE, tr("Genre: %1")
+                .arg(sInfo.sGenres));
+
    // insert description ...
    sDoc.replace(TMPL_PROG, sInfo.sDescr);
 
