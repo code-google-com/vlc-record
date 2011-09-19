@@ -626,7 +626,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/cplayer.ui" line="74"/>
         <source>Crop: </source>
-        <translation>Подрезать:</translation>
+        <translation>Размер кадра:</translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="223"/>
@@ -1541,7 +1541,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="recorder.cpp" line="1912"/>
         <source>Add to favourites</source>
-        <translation>Добавить к фаворитам</translation>
+        <translation>Добавить в избранное</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1956"/>
