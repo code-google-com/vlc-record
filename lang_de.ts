@@ -1348,7 +1348,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="cvodbrowser.cpp" line="195"/>
         <source>Genre: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="202"/>
