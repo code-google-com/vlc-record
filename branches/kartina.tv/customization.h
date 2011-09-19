@@ -32,7 +32,7 @@
    #define COMPANY_LINK \
             "<a href='http://www.russian-services.com/tvshop'>" COMPANY_NAME "</a>"
 #else
-   #define COMPANY_NAME "Kartina.tv"
+   #define COMPANY_NAME "Kartina.TV"
    #define VERSION_APPENDIX
    #define COMPANY_LINK \
       "<a href='http://www.kartina.tv'>" COMPANY_NAME "</a>"
