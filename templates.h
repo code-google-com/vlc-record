@@ -66,7 +66,7 @@ TMPL_ROWS \
 "<div style='font-weight: bold; color: #800; padding: 10px;'>" TMPL_TITLE "</div>"
 
 #define TMPL_VIDEO_DETAILS \
-"<img class='floatright' src='" TMPL_IMG "'>\n" \
+"<img class='floatright' src='" TMPL_IMG "' title='" TMPL_TITLE "' />\n" \
 "<h3>" TMPL_TITLE  "</h3>\n" \
 "<p style='color: #008800'>"  TMPL_GENRE  "</p>\n" \
 "<p style='color: #888888'>"  TMPL_TIME   "</p>\n" \
@@ -129,7 +129,7 @@ TMPL_CSS \
 "</style>\n"
 
 #define TMPL_CSS_IMG_FLOAT \
-".floatright{float: right; margin: 0 0 10px 10px; border: 1px solid #666; padding: 2px;}\n" \
+".floatright{float: right; margin: 15px; padding: 2px; border: 1px solid #666;}\n" \
 "body {background-color: rgb(255, 254, 212);}\n"
 
 #define TMPL_BACKCOLOR \
