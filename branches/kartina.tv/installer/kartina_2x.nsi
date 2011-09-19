@@ -273,6 +273,9 @@ SectionEnd
 ;-------------------------------------------------------
 ; make final cleaning ...
 Section "un.FinalCleaning"
+  ; delete stored stuff ...
+  RMDir /r /REBOOTOK "$APPDATA\${APPNAME}"
+
 	; delete uninstaller ...
   Delete "$INSTDIR\Uninstall.exe"
 

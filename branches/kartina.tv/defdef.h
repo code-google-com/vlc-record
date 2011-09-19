@@ -15,9 +15,9 @@
 #include <QtGlobal>
 
 #ifdef INCLUDE_LIBVLC
-   #define APP_NAME          "kartina.tv"
+   #define APP_NAME          "Kartina.TV"
 #else
-   #define APP_NAME          "kartina.tv-classic"
+   #define APP_NAME          "Kartina.TV-classic"
 #endif // INCLUDE_LIBVLC
 
 #ifdef Q_OS_WIN32
