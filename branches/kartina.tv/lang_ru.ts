@@ -1348,7 +1348,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="cvodbrowser.cpp" line="195"/>
         <source>Genre: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Жанр: %1</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="202"/>
