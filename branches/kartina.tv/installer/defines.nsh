@@ -15,7 +15,7 @@
 
 ;------------------------------
 ; application name ...
-!define APPNAME "Kartina.tv"
+!define APPNAME "Kartina.TV"
 
 ;------------------------------
 ; directory for the packages
