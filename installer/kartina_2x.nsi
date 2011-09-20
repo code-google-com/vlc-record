@@ -33,13 +33,25 @@
 ;-------------------------------------------------------
 ; Interface Settings
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\nsis.bmp" ; optional
+  !define MUI_HEADERIMAGE_BITMAP "install_logo.bmp"
+  !define MUI_ICON "..\resources\kartina_tv.ico"
   !define MUI_ABORTWARNING
+  
+  ;Show all languages, despite user's codepage
+  !define MUI_LANGDLL_ALLLANGUAGES
+  
+;--------------------------------
+;Language Selection Dialog Settings
+
+  ;Remember the installer language
+  !define MUI_LANGDLL_REGISTRY_ROOT "HKCU" 
+  !define MUI_LANGDLL_REGISTRY_KEY "Software\${APPNAME}" 
+  !define MUI_LANGDLL_REGISTRY_VALUENAME "Installer Language"
 
 ;-------------------------------------------------------
 ; what to run when finished ... ?
   !define MUI_FINISHPAGE_RUN "$INSTDIR\kartina_tv.exe"
-
+  
 ;-------------------------------------------------------
 ; Pages
 ;  !insertmacro MUI_PAGE_WELCOME
@@ -54,10 +66,11 @@
   
 ;-------------------------------------------------------
 ; Languages
- 
+  !insertmacro MUI_LANGUAGE "Russian" ;first language is the default language
+  !insertmacro MUI_LANGUAGE "German"
   !insertmacro MUI_LANGUAGE "English"
   !insertmacro MUI_RESERVEFILE_LANGDLL
-
+  
 ;-------------------------------------------------------
 ; Installer Sections for vlc-record
 Section "VLC-Record" SecInst
@@ -152,6 +165,13 @@ SectionEnd
 Section "Desktop Shortcut" SecDesktop
 	CreateShortCut "$DESKTOP\${APPNAME}.lnk" "$INSTDIR\kartina_tv.exe"
 SectionEnd
+
+;-------------------------------------------------------
+; Installer Functions
+
+Function .onInit
+  !insertmacro MUI_LANGDLL_DISPLAY
+FunctionEnd
 
 ;-------------------------------------------------------
 ; write uninstall stuff ...
@@ -256,7 +276,8 @@ SectionEnd
 ; Remove from registry...
 Section "un.registry"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
-	DeleteRegKey HKLM "SOFTWARE\${APPNAME}"
+	DeleteRegKey HKLM "Software\${APPNAME}"
+  DeleteRegKey HKCU "Software\${APPNAME}"
 SectionEnd
 
 ;-------------------------------------------------------
@@ -282,3 +303,9 @@ Section "un.FinalCleaning"
   ; delete install dir ...
 	RMDir "$INSTDIR"
 SectionEnd
+
+;-------------------------------------------------------
+; Uninstaller Functions
+Function un.onInit
+  !insertmacro MUI_UNGETLANGUAGE
+FunctionEnd

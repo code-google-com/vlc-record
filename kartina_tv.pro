@@ -87,7 +87,7 @@ FORMS += forms/csettingsdlg.ui \
     forms/qftsettings.ui
 RESOURCES += vlc-record.qrc \
     lcd.qrc
-RC_FILE = vlc-record.rc
+RC_FILE = kartina_tv.rc
 TRANSLATIONS = lang_de.ts \
     lang_ru.ts
 
