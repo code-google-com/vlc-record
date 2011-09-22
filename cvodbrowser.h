@@ -48,11 +48,13 @@ public:
     void displayVodList (const QVector<cparser::SVodVideo> &vList, const QString &sGenre, bool bSaveList = true);
     void displayVideoDetails (const cparser::SVodVideo &sInfo);
     const QString& getName ();
+    const QString& getShortContent ();
     void setSettings (CSettingsDlg *pDlg);
 
 private:
     QVector<cparser::SVodVideo> vVideos;
     QString sName;
+    QString sShortContent;
     CSettingsDlg *pSettings;
 };
 

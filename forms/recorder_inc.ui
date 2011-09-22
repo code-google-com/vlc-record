@@ -796,9 +796,9 @@ QSplitter#hSplitterPlayer::handle:pressed {
          </property>
          <widget class="CPlayer" name="player" native="true"/>
          <widget class="QWidget" name="layoutWidget">
-          <layout class="QVBoxLayout" name="vLayoutPlayInfo" stretch="0,20,80,0">
+          <layout class="QVBoxLayout" name="vLayoutPlayInfo" stretch="0,80,0">
            <property name="spacing">
-            <number>0</number>
+            <number>2</number>
            </property>
            <item>
             <widget class="QFrame" name="frameTimerInfo">
@@ -1115,19 +1115,6 @@ border-top: 0px;
               </item>
              </layout>
             </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item>
             <widget class="CEpgBrowser" name="textEpgShort">

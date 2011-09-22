@@ -53,6 +53,8 @@
 #define TMPL_DIREC     "<!--{[%DIREC%]}-->"
 #define TMPL_CSS       "<!--{[%CSS%]}-->"
 #define TMPL_GENRE     "<!--{[%GENRE%]}-->"
+#define TMPL_NAME      "<!--{[%NAME%]}-->"
+#define TMPL_DESCR     "<!--{[%DESCR%]}-->"
 
 #define EPG_TMPL  \
 "<table border='0' cellpadding='0' cellspacing='1' width='100%' style='color: black; background-color: #036; width: 100%;'>\n"\
@@ -73,9 +75,11 @@ TMPL_ROWS \
 "<p style='color: #880000'>"  TMPL_DIREC  "</p>\n" \
 "<p style='color: #000088'>"  TMPL_ACTORS "</p>\n" \
 "<p>"  TMPL_PROG   "</p>\n" \
+TMPL_LINK "\n"
+
+#define TMPL_VIDEO_LINKS \
 "<p>"  TMPL_LINK   "</p>\n" \
 "<div align='center'>[ <a href='videothek?action=backtolist'>" TMPL_END "</a> ]</div>\n"
-
 
 #define HTML_SITE \
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"\
@@ -185,7 +189,9 @@ TMPL_CSS \
 "<b style='color: red;'>%1</b><br />\n"\
 "<b>" TMPL_PROG  "</b> %2<br />\n"\
 "<b>" TMPL_START "</b> %3<br />\n"\
-"<b>" TMPL_END   "</b> %4\n"
+"<b>" TMPL_END   "</b> %4<br />\n"\
+"<b>" TMPL_TIME   "</b> %5<br />\n"
+
 
 #endif /* __011910__TEMPLATES_H */
 /************************* History ***************************\
