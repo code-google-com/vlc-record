@@ -136,8 +136,8 @@ protected:
     void fillShortCutTab();
     void touchLastOrBestCbx ();
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
-    int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
-    int StartVlcPlay (const QString &sURL, bool bArchiv = false);
+    int StartVlcRec (const QString &sURL, const QString &sChannel);
+    int StartVlcPlay (const QString &sURL);
     void StartStreamDownload (const QString &sURL, const QString &sName, const QString &sFileExt = "ts");
     void TouchPlayCtrlBtns (bool bEnable = true);
     void touchVodNavBar(const cparser::SGenreInfo &gInfo);

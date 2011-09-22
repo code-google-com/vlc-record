@@ -153,6 +153,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    QString   sDoc = HTML_SITE;
    QString   sCss = TMPL_CSS_WRAPPER;
    QString   sLinks;
+   QString   sLinkTab;
    QString   sTitle;
    QString   sFormat;
    QFileInfo info(sInfo.sImg);
@@ -198,44 +199,52 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    // insert description ...
    sDoc.replace(TMPL_PROG, sInfo.sDescr);
 
-   // back link ...
-   sDoc.replace(TMPL_END, tr("Back"));
+   // for the short info we can end here ...
+   sShortContent = sDoc;
+   sShortContent.replace(TMPL_LINK, "");
 
-   sLinks = "<table>\n";
+   sLinks = TMPL_VIDEO_LINKS;
+
+   // back link ...
+   sLinks.replace(TMPL_END, tr("Back"));
+
+   sLinkTab = "<table>\n";
 
    // links ...
    for (int i = 0; i < sInfo.vVodFiles.count(); i ++)
    {
-      sLinks += "<tr>\n";
+      sLinkTab += "<tr>\n";
       sTitle  = (sInfo.vVodFiles[i].sTitle == "") ? tr("Part %1").arg(i + 1) : sInfo.vVodFiles[i].sTitle;
       sFormat = TMPL_CODEC;
       sFormat.replace(TMPL_TITLE, QString("(%1; %2)").arg(sInfo.vVodFiles[i].sFormat).arg(sInfo.vVodFiles[i].sCodec));
 
-      sLinks += QString("<td style='padding: 3px;'><b>%1</b></td>\n").arg(sTitle);
-      sLinks += QString("<td style='padding: 3px;'>%1</td>\n").arg(sFormat);
+      sLinkTab += QString("<td style='padding: 3px;'><b>%1</b></td>\n").arg(sTitle);
+      sLinkTab += QString("<td style='padding: 3px;'>%1</td>\n").arg(sFormat);
 
       // play link ...
-      sLinks += "<td style='padding: 3px;'>\n";
-      sLinks += TMPL_IMG_LINK;
-      sLinks.replace(TMPL_IMG, ":png/play");
-      sLinks.replace(TMPL_LINK, QString("videothek?action=play&vid=%1")
-                     .arg(sInfo.vVodFiles[i].iId));
+      sLinkTab += "<td style='padding: 3px;'>\n";
+      sLinkTab += TMPL_IMG_LINK;
+      sLinkTab.replace(TMPL_IMG, ":png/play");
+      sLinkTab.replace(TMPL_LINK, QString("videothek?action=play&vid=%1")
+                        .arg(sInfo.vVodFiles[i].iId));
 
-      sLinks.replace(TMPL_TITLE, tr("Play Movie ..."));
+      sLinkTab.replace(TMPL_TITLE, tr("Play Movie ..."));
 
-      sLinks += "&nbsp;&nbsp;";
+      sLinkTab += "&nbsp;&nbsp;";
 
       // record link ...
-      sLinks += TMPL_IMG_LINK;
-      sLinks.replace(TMPL_IMG, ":png/record");
-      sLinks.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
-                     .arg(sInfo.vVodFiles[i].iId));
-      sLinks.replace(TMPL_TITLE, tr("Record Movie ..."));
+      sLinkTab += TMPL_IMG_LINK;
+      sLinkTab.replace(TMPL_IMG, ":png/record");
+      sLinkTab.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
+                        .arg(sInfo.vVodFiles[i].iId));
+      sLinkTab.replace(TMPL_TITLE, tr("Record Movie ..."));
 
-      sLinks += "\n</td>\n</tr>\n";
+      sLinkTab += "\n</td>\n</tr>\n";
    }
 
-   sLinks += "</table>\n";
+   sLinkTab += "</table>\n";
+
+   sLinks.replace(TMPL_LINK, sLinkTab);
 
    sDoc.replace(TMPL_LINK, sLinks);
 
@@ -306,6 +315,21 @@ void CVodBrowser::ChangeFontSize(int iSz)
    QFont vodFont = font();
    vodFont.setPointSize(vodFont.pointSize() + iSz);
    setFont(vodFont);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: getShortContent
+|  Begin: 22.09.2011
+|  Author: Jo2003
+|  Description: get short content html code
+|
+|  Parameters: --
+|
+|  Returns: html code as string
+\----------------------------------------------------------------- */
+const QString& CVodBrowser::getShortContent()
+{
+   return sShortContent;
 }
 
 /************************* History ***************************\

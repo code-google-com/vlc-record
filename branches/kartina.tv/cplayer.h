@@ -83,6 +83,7 @@ public:
    bool isPositionable();
    void initSlider ();
    uint getSilderPos();
+   const bool& resume();
 
 protected:
    virtual void changeEvent(QEvent *e);
@@ -105,6 +106,8 @@ private:
    CWaitTrigger           *pTrigger;
    bool                    bSpoolPending;
    uint                    uiDuration;
+   Button::eBtnRole        pauseRole;
+   bool                    bResume;
 
 private slots:
    void on_posSlider_valueChanged(int value);
@@ -117,7 +120,7 @@ private slots:
    void slotUpdateSlider ();
 
 public slots:
-   int  playMedia (const QString &sCmdLine, bool bAllowCtrl);
+   int  playMedia (const QString &sCmdLine);
    int  play();
    int  stop();
    int  pause();

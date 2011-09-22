@@ -47,8 +47,10 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pSettings     = NULL;
    pTrigger      = NULL;
    bCtrlStream   = false;
+   bResume       = false;
    bSpoolPending = true;
    uiDuration    = (uint)-1;
+   pauseRole     = Button::Pause;
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -306,8 +308,30 @@ int CPlayer::play()
 
    if (pMediaPlayer)
    {
-      // reset exception stuff ...
-      libvlc_media_player_play (pMediaPlayer);
+      if (bResume)
+      {
+         // resume means: request archive stream
+         // from last position ...
+         uint    gmt = timer.gmtPosition();
+
+         // trigger request for the new stream position ...
+         QString req = QString("cid=%1&gmt=%2")
+                          .arg(showInfo.channelId()).arg(gmt);
+
+         // mark spooling as active ...
+         bSpoolPending = true;
+
+         enableDisablePlayControl (false);
+
+         // save resume time ...
+         showInfo.setLastJumpTime(gmt);
+
+         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
+      }
+      else
+      {
+         libvlc_media_player_play (pMediaPlayer);
+      }
    }
 
    return iRV;
@@ -355,7 +379,16 @@ int CPlayer::pause()
 
    if (pMediaPlayer && bCtrlStream)
    {
-      libvlc_media_player_pause(pMediaPlayer);
+      // stop and save timestamp ...
+      if (pauseRole == Button::Stop_and_Save)
+      {
+         bResume = true;
+         libvlc_media_player_stop(pMediaPlayer);
+      }
+      else
+      {
+         libvlc_media_player_pause(pMediaPlayer);
+      }
    }
 
    return iRV;
@@ -372,15 +405,36 @@ int CPlayer::pause()
 |  Returns: 0 --> ok
 |          -1 --> any error
 \----------------------------------------------------------------- */
-int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
+int CPlayer::playMedia(const QString &sCmdLine)
 {
    int                         iRV  = 0;
    libvlc_media_t             *p_md = NULL;
    QStringList                 lArgs;
    QStringList::const_iterator cit;
 
-   // store control flag ...
-   bCtrlStream = bAllowCtrl;
+   // do we can control the stream ... ?
+   if ((showInfo.playState() == IncPlay::PS_PLAY)
+      && showInfo.canCtrlStream())
+   {
+      bCtrlStream = true;
+   }
+   else
+   {
+      bCtrlStream = false;
+   }
+
+   // how to handle pause ?
+   if ((showInfo.showType() == ShowInfo::Archive) && bCtrlStream)
+   {
+      pauseRole = Button::Stop_and_Save;
+   }
+   else
+   {
+      pauseRole = Button::Pause;
+   }
+
+   // reset resume stuff ...
+   bResume = false;
 
    // reset play timer stuff ...
    timer.reset();
@@ -480,7 +534,6 @@ void CPlayer::slotUpdateSlider()
                                          (int)(pos % 3600) / 60,
                                          pos % 60).toString("hh:mm:ss"));
             }
-
          }
          else
          {
@@ -618,9 +671,19 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 
    // player stopped ...
    case libvlc_MediaPlayerStopped:
-      mInfo("libvlc_MediaPlayerStopped ...");
-      emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
-      pPlayer->stopPlayTimer();
+      // for resume?
+      if (pPlayer->resume())
+      {
+         mInfo("libvlc_MediaPlayerStopped (for resume) ...");
+         emit pPlayer->sigPlayState((int)IncPlay::PS_PAUSE);
+         pPlayer->pausePlayTimer();
+      }
+      else
+      {
+         mInfo("libvlc_MediaPlayerStopped ...");
+         emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
+         pPlayer->stopPlayTimer();
+      }
       break;
 
    // end of media reached ...
@@ -1364,6 +1427,22 @@ void CPlayer::slotMute()
 
       libvlc_audio_set_mute(pMediaPlayer, mute);
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: resume
+|  Begin: 22.09.2011
+|  Author: Jo2003
+|  Description: resume from stop?
+|
+|  Parameters: --
+|
+|  Returns: true --> yes
+|          false --> no
+\----------------------------------------------------------------- */
+const bool& CPlayer::resume()
+{
+   return bResume;
 }
 
 /************************* History ***************************\

@@ -237,7 +237,7 @@ int CVlcCtrl::LoadPlayerModule(const QString &sPath)
 |  Returns: <= 0 --> error starting vlc
 |           else --> process id
 \----------------------------------------------------------------- */
-Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime, bool bDetach, IncPlay::ePlayStates req, bool bArchiv)
+Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime, bool bDetach, IncPlay::ePlayStates req)
 {
    Q_PID vlcPid = 0;
 
@@ -252,20 +252,11 @@ Q_PID CVlcCtrl::start(const QString &sCmdLine, int iRunTime, bool bDetach, IncPl
    // -------------------------------------------------------
    if (bUseLibVlc)
    {
-      // do we allow control shortcuts ... ?
-      bool bAllowCtrl = false;
-
-      // allow control on archiv play only ...
-      if (bArchiv && (req == IncPlay::PS_PLAY))
-      {
-         bAllowCtrl = true;
-      }
-
       // detach isn't possible ...
       bDetach = false;
 
       // play media ...
-      emit sigLibVlcPlayMedia(sCmdLine, bAllowCtrl);
+      emit sigLibVlcPlayMedia(sCmdLine);
 
       // assume that all is well ...
       vlcPid = (Q_PID)99; // anything but 0 ...

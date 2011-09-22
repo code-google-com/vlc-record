@@ -165,7 +165,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // connect vlc control with libvlc player ...
    connect (ui->player, SIGNAL(sigPlayState(int)), &vlcCtrl, SLOT(slotLibVlcStateChange(int)));
-   connect (&vlcCtrl, SIGNAL(sigLibVlcPlayMedia(QString, bool)), ui->player, SLOT(playMedia(QString, bool)));
+   connect (&vlcCtrl, SIGNAL(sigLibVlcPlayMedia(QString)), ui->player, SLOT(playMedia(QString)));
    connect (&vlcCtrl, SIGNAL(sigLibVlcStop()), ui->player, SLOT(stop()));
 
    // aspect ratio, crop and full screen ...
@@ -577,7 +577,8 @@ void Recorder::on_pushRecord_clicked()
 #ifdef INCLUDE_LIBVLC
 
    // is archive play active ...
-   if (showInfo.archive () && (showInfo.playState () == IncPlay::PS_PLAY))
+   if ((showInfo.showType() == ShowInfo::Archive)
+      && (showInfo.playState () == IncPlay::PS_PLAY))
    {
       if (AllowAction(IncPlay::PS_RECORD))
       {
@@ -612,11 +613,14 @@ void Recorder::on_pushRecord_clicked()
 
             showInfo.setChanId(cid);
             showInfo.setChanName(chan.sName);
-            showInfo.setArchive(false);
+            showInfo.setShowType(ShowInfo::Live);
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
             showInfo.setEndTime(chan.uiEnd);
             showInfo.setPlayState(IncPlay::PS_RECORD);
+            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
             TouchPlayCtrlBtns(false);
             Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -643,7 +647,7 @@ void Recorder::on_pushPlay_clicked()
 #ifdef INCLUDE_LIBVLC
    // play or pause functionality ...
    if ((showInfo.playState() == IncPlay::PS_PLAY)
-      && showInfo.archive())
+      && showInfo.canCtrlStream())
    {
       // we're playing ... we want pause ...
       ui->player->pause();
@@ -655,7 +659,7 @@ void Recorder::on_pushPlay_clicked()
       TouchPlayCtrlBtns(true);
    }
    else if ((showInfo.playState() == IncPlay::PS_PAUSE)
-      && showInfo.archive())
+      && showInfo.canCtrlStream())
    {
       // we're pausing ... want to play ...
       ui->player->play();
@@ -679,11 +683,14 @@ void Recorder::on_pushPlay_clicked()
 
             showInfo.setChanId(cid);
             showInfo.setChanName(chan.sName);
-            showInfo.setArchive(false);
+            showInfo.setShowType(ShowInfo::Live);
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
             showInfo.setEndTime(chan.uiEnd);
             showInfo.setPlayState(IncPlay::PS_PLAY);
+            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
             TouchPlayCtrlBtns(false);
             Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -753,11 +760,14 @@ void Recorder::on_channelList_doubleClicked(const QModelIndex & index)
 
          showInfo.setChanId(cid);
          showInfo.setChanName(chan.sName);
-         showInfo.setArchive(false);
+         showInfo.setShowType(ShowInfo::Live);
          showInfo.setShowName(chan.sProgramm);
          showInfo.setStartTime(chan.uiStart);
          showInfo.setEndTime(chan.uiEnd);
          showInfo.setPlayState(IncPlay::PS_PLAY);
+         showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                .arg("rgb(255, 254, 212)")
+                                .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
          TouchPlayCtrlBtns(false);
          Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -1540,9 +1550,15 @@ void Recorder::slotEpgAnchor (const QUrl &link)
       showInfo.setShowName(sepg.sShowName);
       showInfo.setStartTime(gmt.toUInt());
       showInfo.setEndTime(sepg.uiEnd);
-      showInfo.setArchive(true);
+      showInfo.setShowType(ShowInfo::Archive);
       showInfo.setPlayState(ePlayState);
       showInfo.setLastJumpTime(0);
+
+      showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                             .arg("rgb(255, 254, 212)")
+                             .arg(createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
+                                                QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
+                                                sepg.uiStart, sepg.uiEnd))));
 
       // add additional info to LCD ...
       int     iTime = (sepg.uiEnd) ? (int)((sepg.uiEnd - sepg.uiStart) / 60) : 60;
@@ -1667,7 +1683,7 @@ void Recorder::slotArchivURL(QString str)
       {
          if (!vlcCtrl.ownDwnld())
          {
-            StartVlcRec(sUrl, CleanShowName(showInfo.showName()), true);
+            StartVlcRec(sUrl, CleanShowName(showInfo.showName()));
          }
          else
          {
@@ -1678,7 +1694,7 @@ void Recorder::slotArchivURL(QString str)
       }
       else if (ePlayState == IncPlay::PS_PLAY)
       {
-         StartVlcPlay(sUrl, true);
+         StartVlcPlay(sUrl);
 
          showInfo.setPlayState(IncPlay::PS_PLAY);
       }
@@ -2294,9 +2310,10 @@ void Recorder::slotVodAnchor(const QUrl &link)
       showInfo.setShowName(ui->vodBrowser->getName());
       showInfo.setStartTime(0);
       showInfo.setEndTime(0);
-      showInfo.setArchive(true); // enable spooling ...
+      showInfo.setShowType(ShowInfo::VOD);
       showInfo.setPlayState(ePlayState);
       showInfo.setLastJumpTime(0);
+      showInfo.setHtmlDescr(ui->vodBrowser->getShortContent());
 
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());
@@ -2356,7 +2373,7 @@ void Recorder::slotVodURL(QString str)
       }
       else if (ePlayState == IncPlay::PS_PLAY)
       {
-         StartVlcPlay(sUrl, true);
+         StartVlcPlay(sUrl);
 
          showInfo.setPlayState(IncPlay::PS_PLAY);
       }
@@ -2498,9 +2515,13 @@ void Recorder::slotCurrentChannelChanged(const QModelIndex & current)
       cparser::SChan entry = chanMap.value(cid);
       int iTs;
 
-      ui->textEpgShort->setHtml(QString(TMPL_BACKCOLOR)
-                                .arg("rgb(255, 254, 212)")
-                                .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
+      // update short info if we're in live mode
+      if (showInfo.showType() == ShowInfo::Live)
+      {
+         ui->textEpgShort->setHtml(QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
+      }
 
       SetProgress (entry.uiStart, entry.uiEnd);
 
@@ -3239,7 +3260,7 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 |
 |  Returns: 0
 \----------------------------------------------------------------- */
-int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv)
+int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel)
 {
    int         iRV      = -1;
    Q_PID       vlcpid   = 0;
@@ -3291,18 +3312,18 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
 
    if (fileName != "")
    {
-      if (bArchiv)
+      if (showInfo.showType() == ShowInfo::Live)
       {
-         // archiv using RTSP ...
-         sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_REC_ARCH,
+         // normal stream using HTTP ...
+         sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_REC_LIVE,
                                          Settings.GetVLCPath(),
                                          sURL, Settings.GetBufferTime(),
                                          fileName, sExt);
       }
       else
       {
-         // normal stream using HTTP ...
-         sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_REC_LIVE,
+         // archiv using HTTP ...
+         sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_REC_ARCH,
                                          Settings.GetVLCPath(),
                                          sURL, Settings.GetBufferTime(),
                                          fileName, sExt);
@@ -3311,7 +3332,8 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
       // start player if we have a command line ...
       if (sCmdLine != "")
       {
-         vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer(), ePlayState, bArchiv);
+         ui->textEpgShort->setHtml(showInfo.htmlDescr());
+         vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer(), ePlayState);
       }
 
       // successfully started ?
@@ -3342,23 +3364,23 @@ int Recorder::StartVlcRec (const QString &sURL, const QString &sChannel, bool bA
 |
 |  Returns: 0
 \----------------------------------------------------------------- */
-int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
+int Recorder::StartVlcPlay (const QString &sURL)
 {
    int         iRV      = 0;
    Q_PID       vlcpid   = 0;
    QString     sCmdLine;
 
-   if (bArchiv)
+   if (showInfo.showType() == ShowInfo::Live)
    {
-      // archiv using RTSP ...
-      sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_PLAY_ARCH,
+      // normal stream using HTTP ...
+      sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_PLAY_LIVE,
                                       Settings.GetVLCPath(), sURL,
                                       Settings.GetBufferTime());
    }
    else
    {
-      // normal stream using HTTP ...
-      sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_PLAY_LIVE,
+      // archiv using HTTP ...
+      sCmdLine = vlcCtrl.CreateClArgs(vlcctrl::VLC_PLAY_ARCH,
                                       Settings.GetVLCPath(), sURL,
                                       Settings.GetBufferTime());
    }
@@ -3366,7 +3388,8 @@ int Recorder::StartVlcPlay (const QString &sURL, bool bArchiv)
    // start player if we have a command line ...
    if (sCmdLine != "")
    {
-      vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer(), ePlayState, bArchiv);
+      ui->textEpgShort->setHtml(showInfo.htmlDescr());
+      vlcpid = vlcCtrl.start(sCmdLine, -1, Settings.DetachPlayer(), ePlayState);
    }
 
    // successfully started ?
@@ -3429,6 +3452,8 @@ void Recorder::StartStreamDownload (const QString &sURL, const QString &sName, c
 
    if (fileName != "")
    {
+      ui->textEpgShort->setHtml(showInfo.htmlDescr());
+
       streamLoader.downloadStream (sURL, QString("%1.%2").arg(fileName).arg(sExt),
                                    Settings.GetBufferTime ());
    }
@@ -3449,28 +3474,20 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
 #ifdef INCLUDE_LIBVLC
    if (vlcCtrl.withLibVLC())
    {
-      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY)
-         && showInfo.archive())
+      if ((showInfo.playState() == IncPlay::PS_PLAY)
+         && showInfo.canCtrlStream()
+         && bEnable)
       {
          ui->pushBwd->setEnabled(true);
          ui->pushFwd->setEnabled(true);
          ui->cbxTimeJumpVal->setEnabled(true);
+         ui->pushPlay->setIcon(QIcon(":/app/pause"));
       }
       else
       {
          ui->pushBwd->setEnabled(false);
          ui->pushFwd->setEnabled(false);
          ui->cbxTimeJumpVal->setEnabled(false);
-      }
-
-      if (bEnable && (showInfo.playState() == IncPlay::PS_PLAY)
-         && showInfo.archive()
-         && bEnable)
-      {
-         ui->pushPlay->setIcon(QIcon(":/app/pause"));
-      }
-      else
-      {
          ui->pushPlay->setIcon(QIcon(":/app/play"));
       }
    }
@@ -3850,10 +3867,12 @@ QString Recorder::createTooltip (const QString & name, const QString & prog, uin
    sToolTip.replace(TMPL_PROG, tr("Program:"));
    sToolTip.replace(TMPL_START, tr("Start:"));
    sToolTip.replace(TMPL_END, tr("End:"));
+   sToolTip.replace(TMPL_TIME, tr("Length:"));
 
    sToolTip = sToolTip.arg(name).arg(prog)
                .arg(QDateTime::fromTime_t(start).toString(DEF_TIME_FORMAT))
-               .arg(QDateTime::fromTime_t(end).toString(DEF_TIME_FORMAT));
+               .arg(end ? QDateTime::fromTime_t(end).toString(DEF_TIME_FORMAT) : "")
+               .arg(end ? tr("%1 min.").arg((end - start) / 60)                : "");
 
    return sToolTip;
 }
