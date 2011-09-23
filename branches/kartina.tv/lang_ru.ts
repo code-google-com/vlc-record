@@ -1799,7 +1799,7 @@ dataDir: %1
         <location filename="recorder.cpp" line="1244"/>
         <source>%1 Client API reports some errors: %2</source>
         <oldsource>Kartina.tv Client API reports some errors: %1</oldsource>
-        <translation></translation>
+        <translation>АПИ %1 сообщает о некоторых ошибках: %2</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="133"/>
