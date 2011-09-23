@@ -1673,7 +1673,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="1608"/>
         <source>%1 (Archive)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2714"/>
@@ -1776,12 +1776,12 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="3964"/>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge:</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3969"/>
         <source>%1 min.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2227"/>
@@ -1846,7 +1846,7 @@ dataDir: %1
         <location filename="forms/recorder.ui" line="821"/>
         <location filename="forms/recorder_inc.ui" line="854"/>
         <source>Show Live!</source>
-        <translation type="unfinished"></translation>
+        <translation>Live!</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="70"/>
