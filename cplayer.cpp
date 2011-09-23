@@ -311,8 +311,8 @@ int CPlayer::play()
       if (bResume)
       {
          // resume means: request archive stream
-         // from last position ...
-         uint    gmt = timer.gmtPosition();
+         // from last position ... take care of buffer time ...
+         uint    gmt = timer.gmtPosition() - (pSettings->GetBufferTime() / 1000);
 
          // trigger request for the new stream position ...
          QString req = QString("cid=%1&gmt=%2")
@@ -379,16 +379,13 @@ int CPlayer::pause()
 
    if (pMediaPlayer && bCtrlStream)
    {
-      // stop and save timestamp ...
+      // mark stream for resume ...
       if (pauseRole == Button::Stop_and_Save)
       {
          bResume = true;
-         libvlc_media_player_stop(pMediaPlayer);
       }
-      else
-      {
-         libvlc_media_player_pause(pMediaPlayer);
-      }
+
+      libvlc_media_player_pause(pMediaPlayer);
    }
 
    return iRV;
@@ -447,7 +444,6 @@ int CPlayer::playMedia(const QString &sCmdLine)
 
    // enable / disable position slider ...
    ui->posSlider->setValue(0);
-   // ui->posSlider->setEnabled(bCtrlStream);
    ui->labPos->setEnabled(bCtrlStream);
    ui->labPos->setText("00:00:00");
 
@@ -671,19 +667,9 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
 
    // player stopped ...
    case libvlc_MediaPlayerStopped:
-      // for resume?
-      if (pPlayer->resume())
-      {
-         mInfo("libvlc_MediaPlayerStopped (for resume) ...");
-         emit pPlayer->sigPlayState((int)IncPlay::PS_PAUSE);
-         pPlayer->pausePlayTimer();
-      }
-      else
-      {
-         mInfo("libvlc_MediaPlayerStopped ...");
-         emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
-         pPlayer->stopPlayTimer();
-      }
+      mInfo("libvlc_MediaPlayerStopped ...");
+      emit pPlayer->sigPlayState((int)IncPlay::PS_STOP);
+      pPlayer->stopPlayTimer();
       break;
 
    // end of media reached ...

@@ -452,8 +452,8 @@ void Recorder::showEvent(QShowEvent *event)
    {
       bFirstConnect = false;
 
-      // start authenitcate chain ...
-      Trigger.TriggerRequest(Kartina::REQ_COOKIE);
+      // start connection stuff in 0.5 seconds ...
+      QTimer::singleShot(500, this, SLOT(slotStartConnectionChain()));
    }
 
    QWidget::showEvent(event);
@@ -1125,6 +1125,55 @@ void Recorder::on_btnNextSite_clicked()
    Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
+/* -----------------------------------------------------------------\
+|  Method: on_pushLive_clicked [slot]
+|  Begin: 23.09.2011
+|  Author: Jo2003
+|  Description: live button pressed
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_pushLive_clicked()
+{
+   int cid = getCurrentCid();
+   if  (chanMap.contains(cid))
+   {
+      // set EPG offset to 0 ...
+      iEpgOffset = 0;
+      Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+
+      // fake play button press ...
+      if (AllowAction(IncPlay::PS_PLAY))
+      {
+         int cid  = getCurrentCid();
+
+         if (chanMap.contains(cid))
+         {
+            if (AllowAction(IncPlay::PS_PLAY))
+            {
+               cparser::SChan chan = chanMap[cid];
+
+               showInfo.setChanId(cid);
+               showInfo.setChanName(chan.sName);
+               showInfo.setShowType(ShowInfo::Live);
+               showInfo.setShowName(chan.sProgramm);
+               showInfo.setStartTime(chan.uiStart);
+               showInfo.setEndTime(chan.uiEnd);
+               showInfo.setPlayState(IncPlay::PS_PLAY);
+               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                      .arg("rgb(255, 254, 212)")
+                                      .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+            }
+         }
+      }
+   }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                Slots                                       //
 ////////////////////////////////////////////////////////////////////////////////
@@ -1635,8 +1684,15 @@ void Recorder::slotbtnBack_clicked()
    {
       // set actual day in previous week to munday ...
       int iActDay  = pEpgNavbar->currentIndex();
+      int iOffBack = iEpgOffset;
       iEpgOffset  -= 7 + iActDay;
-      Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+
+      correctEpgOffset();
+
+      if (iOffBack != iEpgOffset)
+      {
+         Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+      }
    }
 }
 
@@ -1658,8 +1714,16 @@ void Recorder::slotbtnNext_clicked()
    {
       // set actual day in next week to munday ...
       int iActDay  = pEpgNavbar->currentIndex();
+      int iOffBack = iEpgOffset;
+
       iEpgOffset  += 7 - iActDay;
-      Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+
+      correctEpgOffset();
+
+      if (iOffBack != iEpgOffset)
+      {
+         Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+      }
    }
 }
 
@@ -1719,8 +1783,9 @@ void Recorder::slotDayTabChanged(int iIdx)
 
    if (chanMap.contains(cid))
    {
-      QDateTime epgTime = QDateTime::currentDateTime().addDays(iEpgOffset);
-      int       iDay    = epgTime.date().dayOfWeek() - 1;
+      QDateTime epgTime  = QDateTime::currentDateTime().addDays(iEpgOffset);
+      int       iDay     = epgTime.date().dayOfWeek() - 1;
+      int       iOffBack = iEpgOffset;
 
       // earlier or later ... ?
       if (iIdx < iDay)
@@ -1737,7 +1802,17 @@ void Recorder::slotDayTabChanged(int iIdx)
       // get epg for requested day ...
       if (iIdx != iDay)
       {
-         Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+         correctEpgOffset ();
+
+         if(iOffBack != iEpgOffset)
+         {
+            Trigger.TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+         }
+         else
+         {
+            // no change -> revert nav button ...
+            pEpgNavbar->setCurrentIndex(iDay);
+         }
       }
    }
 }
@@ -2587,6 +2662,21 @@ void Recorder::slotPlayPreviousChannel()
 {
    slotChannelUp();
    on_pushPlay_clicked();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotStartConnectionChain [slot]
+|  Begin: 23.09.2011
+|  Author: Jo2003
+|  Description: start the whole connection stuff
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotStartConnectionChain()
+{
+   Trigger.TriggerRequest(Kartina::REQ_COOKIE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3505,24 +3595,28 @@ void Recorder::TouchPlayCtrlBtns (bool bEnable)
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
+      ui->pushLive->setEnabled(bEnable);
       break;
 
    case IncPlay::PS_RECORD:
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
+      ui->pushLive->setEnabled(false);
       break;
 
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
       ui->pushPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
+      ui->pushLive->setEnabled(false);
       ui->pushStop->setEnabled(bEnable);
       break;
 
    default:
       ui->pushPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
+      ui->pushLive->setEnabled(bEnable);
       ui->pushStop->setEnabled(false);
       break;
    }
@@ -3936,6 +4030,29 @@ void Recorder::retranslateShortcutTable()
    }
 }
 
+/* -----------------------------------------------------------------\
+|  Method: correctEpgOffset
+|  Begin: 23.09.2011
+|  Author: Jo2003
+|  Description: check / correct epg offset
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::correctEpgOffset()
+{
+   if (iEpgOffset > 7)
+   {
+      iEpgOffset = 7;
+   }
+   else if (iEpgOffset < -14)
+   {
+      iEpgOffset = -14;
+   }
+}
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
+
