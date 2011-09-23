@@ -160,6 +160,7 @@ protected:
     QString createTooltip (const QString & name, const QString & prog, uint start, uint end);
     int     getCurrentCid();
     void retranslateShortcutTable();
+    void correctEpgOffset();
 
     virtual void changeEvent(QEvent *e);
     virtual void showEvent (QShowEvent * event);
@@ -234,6 +235,9 @@ private slots:
     void slotCurrentChannelChanged(const QModelIndex & current);
     void slotPlayNextChannel();
     void slotPlayPreviousChannel();
+    void slotStartConnectionChain();
+
+    void on_pushLive_clicked();
 
 signals:
     void sigShow ();
