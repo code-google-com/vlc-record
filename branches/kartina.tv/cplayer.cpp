@@ -311,8 +311,8 @@ int CPlayer::play()
       if (bResume)
       {
          // resume means: request archive stream
-         // from last position ... take care of buffer time ...
-         uint    gmt = timer.gmtPosition() - (pSettings->GetBufferTime() / 1000);
+         // from last position ...
+         uint    gmt = timer.gmtPosition();
 
          // trigger request for the new stream position ...
          QString req = QString("cid=%1&gmt=%2")
