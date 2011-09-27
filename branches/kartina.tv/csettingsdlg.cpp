@@ -1056,6 +1056,26 @@ int CSettingsDlg::getTimeShift()
    return m_ui->cbxTimeShift->itemData(m_ui->cbxTimeShift->currentIndex()).toInt();
 }
 
+void CSettingsDlg::saveChannel(int cid)
+{
+   pDb->setValue("lastChan", cid);
+}
+
+int CSettingsDlg::lastChannel()
+{
+   return pDb->intValue("lastChan");
+}
+
+void CSettingsDlg::saveEpgDay(const QString &dateString)
+{
+   pDb->setValue("epgDay", dateString);
+}
+
+QString CSettingsDlg::lastEpgDay()
+{
+   return pDb->stringValue("epgDay");
+}
+
 //===================================================================
 // <== return internal stored values
 //===================================================================

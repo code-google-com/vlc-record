@@ -76,6 +76,20 @@ namespace Ui
     };
 }
 
+namespace ProgStart
+{
+   enum eFirstStarts
+   {
+      INIT_DIALOG,
+      CON_CHAIN,
+      CHAN_LIST,
+      EPG_DAY,
+      CHAN_LOGO_READY,
+      VOD_LOGO_READY,
+      UNKNOWN
+   };
+}
+
 /********************************************************************\
 |  Class: Recorder
 |  Date:  19.01.2010 / 16:00:28
@@ -95,42 +109,39 @@ public slots:
     virtual void show();
 
 private:
-    Ui::Recorder                  *ui;
-    CSettingsDlg                   Settings;
-    CKartinaClnt                   KartinaTv;
-    CKartinaXMLParser              XMLParser;
-    CWaitTrigger                   Trigger;
-    CStreamLoader                  streamLoader;
-    QTranslator                   *pTranslator;
-    QTimer                         Refresh;
-    bool                           bLogosReady;
-    bool                           bVODLogosReady;
-    CPixLoader                     dwnLogos;
-    CPixLoader                     dwnVodPics;
-    int                            iEpgOffset;
-    QTabBar                       *pEpgNavbar;
-    CTimerRec                      timeRec;
-    QSystemTrayIcon                trayIcon;
-    QRect                          sizePos;
-    CVlcCtrl                       vlcCtrl;
-    CTranslit                      translit;
-    int                            iFontSzChg;
-    QList<int>                     lFavourites;
-    QToolButton                   *pFavBtn[MAX_NO_FAVOURITES];
-    CFavAction                    *pFavAct[MAX_NO_FAVOURITES];
-    QMap<int, cparser::SChan>      chanMap;
-    QMenu                          favContext;
-    CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
-    IncPlay::ePlayStates           ePlayState;
-    QVector<CShortcutEx *>         vShortcutPool;
-    bool                           bDoInitDlg;
-    int                            iDwnReqId;
-    bool                           bFirstConnect;
-    QStandardItemModel            *pModel;
-    QChanListDelegate             *pDelegate;
-    QVector<Ui::SShortCuts>        vShortCutTab;
-    cparser::SAccountInfo          accountInfo;
-    cparser::SGenreInfo            genreInfo;
+    Ui::Recorder                   *ui;
+    CSettingsDlg                    Settings;
+    CKartinaClnt                    KartinaTv;
+    CKartinaXMLParser               XMLParser;
+    CWaitTrigger                    Trigger;
+    CStreamLoader                   streamLoader;
+    QTranslator                    *pTranslator;
+    QTimer                          Refresh;
+    CPixLoader                      dwnLogos;
+    CPixLoader                      dwnVodPics;
+    int                             iEpgOffset;
+    QTabBar                        *pEpgNavbar;
+    CTimerRec                       timeRec;
+    QSystemTrayIcon                 trayIcon;
+    QRect                           sizePos;
+    CVlcCtrl                        vlcCtrl;
+    CTranslit                       translit;
+    int                             iFontSzChg;
+    QList<int>                      lFavourites;
+    QToolButton                    *pFavBtn[MAX_NO_FAVOURITES];
+    CFavAction                     *pFavAct[MAX_NO_FAVOURITES];
+    QMap<int, cparser::SChan>       chanMap;
+    QMenu                           favContext;
+    CFavAction                     *pContextAct[MAX_NO_FAVOURITES];
+    IncPlay::ePlayStates            ePlayState;
+    QVector<CShortcutEx *>          vShortcutPool;
+    int                             iDwnReqId;
+    QStandardItemModel             *pModel;
+    QChanListDelegate              *pDelegate;
+    QVector<Ui::SShortCuts>         vShortCutTab;
+    cparser::SAccountInfo           accountInfo;
+    cparser::SGenreInfo             genreInfo;
+    QFlags<ProgStart::eFirstStarts> fFirstStarts;
 
 protected:
     void fillShortCutTab();
