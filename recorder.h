@@ -204,6 +204,8 @@ private slots:
     void on_cbxSites_activated (int index);
     void on_btnPrevSite_clicked();
     void on_btnNextSite_clicked();
+    void on_pushLive_clicked();
+    void on_channelList_clicked(QModelIndex index);
     void slotErr (QString str);
     void slotChanList (QString str);
     void slotEPG(QString str);
@@ -247,8 +249,6 @@ private slots:
     void slotPlayNextChannel();
     void slotPlayPreviousChannel();
     void slotStartConnectionChain();
-
-    void on_pushLive_clicked();
 
 signals:
     void sigShow ();
