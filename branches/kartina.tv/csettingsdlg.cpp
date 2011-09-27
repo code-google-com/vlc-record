@@ -371,7 +371,7 @@ void CSettingsDlg::on_pushSave_clicked()
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
-   pDb->setValue("HttpCache", m_ui->cbxBufferSeconds->currentText());
+   pDb->setValue("HttpCache", m_ui->cbxBufferSeconds->itemData(m_ui->cbxBufferSeconds->currentIndex()).toInt());
    pDb->setValue("LogLevel", m_ui->cbxLogLevel->currentIndex());
    pDb->setValue("PlayerModule", m_ui->cbxPlayerMod->currentText());
    pDb->setValue("RefIntv", m_ui->cbxInterval->currentText());
