@@ -698,6 +698,27 @@ p, li { white-space: pre-wrap; }
         <translation>Папка для записи</translation>
     </message>
     <message>
+        <location filename="csettingsdlg.cpp" line="508"/>
+        <source>Eco</source>
+        <translation>Эко</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="512"/>
+        <source>Standard</source>
+        <translation>Стандарт</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="516"/>
+        <source>Premium</source>
+        <translation>Премиум</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="520"/>
+        <source>%1 Kbit/s</source>
+        <oldsource>Bitrate: %1Kbit/s</oldsource>
+        <translation>%1 Кбит/с</translation>
+    </message>
+    <message>
         <location filename="forms/csettingsdlg.ui" line="14"/>
         <source>Settings Dialog</source>
         <translation>Настройки</translation>

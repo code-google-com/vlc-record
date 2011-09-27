@@ -698,6 +698,27 @@ p, li { white-space: pre-wrap; }
         <translation>Zielverzeichnis</translation>
     </message>
     <message>
+        <location filename="csettingsdlg.cpp" line="508"/>
+        <source>Eco</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="512"/>
+        <source>Standard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="516"/>
+        <source>Premium</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="520"/>
+        <source>%1 Kbit/s</source>
+        <oldsource>Bitrate: %1Kbit/s</oldsource>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="forms/csettingsdlg.ui" line="14"/>
         <source>Settings Dialog</source>
         <translation>Einstellungen</translation>

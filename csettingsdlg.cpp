@@ -493,6 +493,7 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
    int iActIdx = 0;
    int iCount  = 0;
    QVector<int>::const_iterator cit;
+   QString sName;
 
 
    m_ui->cbxBitRate->clear();
@@ -500,7 +501,27 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
    // add all available bitrates ...
    for (cit = vValues.constBegin(); cit != vValues.constEnd(); cit++)
    {
-      m_ui->cbxBitRate->addItem(QString::number(*cit), QVariant(*cit));
+      // build name ...
+      switch (*cit)
+      {
+      case 900:
+         sName = tr("Eco");
+         break;
+
+      case 1500:
+         sName = tr("Standard");
+         break;
+
+      case 2500:
+         sName = tr("Premium");
+         break;
+
+      default:
+         sName = tr("%1 Kbit/s").arg(*cit);
+         break;
+      }
+
+      m_ui->cbxBitRate->addItem(sName, QVariant(*cit));
 
       if (*cit == iActrate)
       {
