@@ -47,15 +47,11 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // setWindowTitle(QString("VLC-Recorder - %1").arg(COMPANY_NAME));
    setWindowTitle(COMPANY_NAME);
 
-   ePlayState     = IncPlay::PS_WTF;
-   bLogosReady    = false;
-   pTranslator    = trans;
-   iEpgOffset     = 0;
-   iFontSzChg     = 0;
+   ePlayState     =  IncPlay::PS_WTF;
+   pTranslator    =  trans;
+   iEpgOffset     =  0;
+   iFontSzChg     =  0;
    iDwnReqId      = -1;
-   bDoInitDlg     = true;
-   bFirstConnect  = true;
-   bVODLogosReady = false;
 
    // init account info ...
    accountInfo.bHasArchive = false;
@@ -225,6 +221,19 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // -------------------------------------------
    lFavourites = Settings.GetFavourites();
 
+   // last used EPG day ...
+   QString sDate;
+   if ((sDate = Settings.lastEpgDay()) != "")
+   {
+      iEpgOffset = QDate::currentDate().daysTo(QDate::fromString(sDate, "ddMMyyyy"));
+
+      // if offset exceeds our limits: reset!
+      if ((iEpgOffset < -14) || (iEpgOffset > 7))
+      {
+         iEpgOffset = 0;
+      }
+   }
+
    // enable button ...
    TouchPlayCtrlBtns(false);
 
@@ -373,6 +382,10 @@ void Recorder::closeEvent(QCloseEvent *event)
       // Note: putting this function in destructor doesn't work!
       savePositions();
 
+      // save channel and epg position ...
+      Settings.saveChannel(getCurrentCid());
+      Settings.saveEpgDay(QDate::currentDate().addDays(iEpgOffset).toString("ddMMyyyy"));
+
       // clear shortcuts ...
       ClearShortCuts ();
 
@@ -448,9 +461,9 @@ void Recorder::showEvent(QShowEvent *event)
 {
    emit sigShow();
 
-   if (bFirstConnect)
+   if (!(fFirstStarts & ProgStart::CON_CHAIN))
    {
-      bFirstConnect = false;
+      fFirstStarts |= ProgStart::CON_CHAIN;
 
       // start connection stuff in 0.5 seconds ...
       QTimer::singleShot(500, this, SLOT(slotStartConnectionChain()));
@@ -1190,9 +1203,9 @@ void Recorder::on_pushLive_clicked()
 \----------------------------------------------------------------- */
 void Recorder::show()
 {
-   if (bDoInitDlg)
+   if (!(fFirstStarts & ProgStart::INIT_DIALOG))
    {
-      bDoInitDlg = false;
+      fFirstStarts |= ProgStart::INIT_DIALOG;
       initDialog ();
    }
 
@@ -1466,7 +1479,7 @@ void Recorder::slotChanList (QString str)
    }
 
    // only download channel logos, if they aren't there ...
-   if (!dwnLogos.IsRunning() && !bLogosReady)
+   if (!dwnLogos.IsRunning() && !(fFirstStarts & ProgStart::CHAN_LOGO_READY))
    {
       QStringList lLogos;
 
@@ -1632,7 +1645,7 @@ void Recorder::slotEpgAnchor (const QUrl &link)
 void Recorder::slotLogosReady()
 {
    // downloader sayd ... logos are there ...
-   bLogosReady = true;
+   fFirstStarts |= ProgStart::CHAN_LOGO_READY;
 }
 
 /* -----------------------------------------------------------------\
@@ -1647,7 +1660,8 @@ void Recorder::slotLogosReady()
 \----------------------------------------------------------------- */
 void Recorder::slotReloadLogos()
 {
-   bLogosReady = false;
+   // unset CHAN_LOGO_READY flag ...
+   fFirstStarts &= ~QFlags<ProgStart::eFirstStarts>(ProgStart::CHAN_LOGO_READY);
 
    if (!dwnLogos.IsRunning())
    {
@@ -2290,9 +2304,9 @@ void Recorder::slotGotVideos(QString str)
 
    if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-      if (!bVODLogosReady)
+      if (!(fFirstStarts & ProgStart::VOD_LOGO_READY))
       {
-         bVODLogosReady = true;
+         fFirstStarts |= ProgStart::VOD_LOGO_READY;
 
          // download pictures ...
          QStringList lPix;
@@ -3264,7 +3278,8 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
    int      iRow, iRowGroup;
    QPixmap  Pix(16, 16);
    QPixmap  icon;
-   int      iChanCount = 0;
+   int      iChanCount =  0;
+   int      iLastChan  = -1;
 
    iRowGroup = ui->cbxChannelGroup->currentIndex();
    iRow      = ui->channelList->currentIndex().row();
@@ -3273,6 +3288,13 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 
    ui->cbxChannelGroup->clear();
    pModel->clear();
+
+   // any channel stored from former session ... ?
+   if (!(fFirstStarts & ProgStart::CHAN_LIST))
+   {
+      iLastChan     = Settings.lastChannel() ? Settings.lastChannel() : -1;
+      fFirstStarts |= ProgStart::CHAN_LIST;
+   }
 
    for (int i = 0; i < chanlist.size(); i++)
    {
@@ -3313,6 +3335,16 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
             }
          }
 
+         // last used channel ...
+         if (iLastChan != -1)
+         {
+            if (iLastChan == chanlist[i].iId)
+            {
+               // save row with last used channel ...
+               iRow = i;
+            }
+         }
+
          pItem->setData(chanlist[i].iId, channellist::cidRole);
          pItem->setData(sLine, channellist::nameRole);
          pItem->setData(QIcon(icon), channellist::iconRole);
@@ -3333,9 +3365,9 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
       pModel->appendRow(pItem);
    }
 
+   ui->cbxChannelGroup->setCurrentIndex(iRowGroup);
    ui->channelList->setCurrentIndex(pModel->index(iRow, 0));
    ui->channelList->scrollTo(pModel->index(iRow, 0));
-   ui->cbxChannelGroup->setCurrentIndex(iRowGroup);
 
    return 0;
 }

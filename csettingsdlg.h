@@ -102,6 +102,10 @@ public:
     int  shortCutCount();
     void readSettings ();
     void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
+    void saveChannel(int cid);
+    int lastChannel();
+    void saveEpgDay(const QString &dateString);
+    QString lastEpgDay();
 
 protected:
     virtual void changeEvent(QEvent *e);
