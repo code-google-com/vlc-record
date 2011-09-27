@@ -133,6 +133,7 @@ void CSettingsDlg::readSettings()
    m_ui->checkDetach->setCheckState((Qt::CheckState)pDb->intValue("DetachPlayer"));
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
    m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
+   m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay"));
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())
@@ -366,6 +367,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("DetachPlayer", (int)m_ui->checkDetach->checkState());
    pDb->setValue("ExtChanList", (int)m_ui->checkExtChanInfo->checkState());
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
+   pDb->setValue("2ClickPlay", (int)m_ui->check2ClicksToPlay->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1074,6 +1076,11 @@ void CSettingsDlg::saveEpgDay(const QString &dateString)
 QString CSettingsDlg::lastEpgDay()
 {
    return pDb->stringValue("epgDay");
+}
+
+bool CSettingsDlg::doubleClickToPlay()
+{
+   return m_ui->check2ClicksToPlay->isChecked();
 }
 
 //===================================================================

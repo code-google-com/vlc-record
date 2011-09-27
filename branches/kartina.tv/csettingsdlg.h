@@ -74,6 +74,7 @@ public:
     bool DetachPlayer ();
     bool extChanList();
     int  getTimeShift();
+    bool doubleClickToPlay();
 
     int GetRefrInt ();
     int GetProxyPort ();

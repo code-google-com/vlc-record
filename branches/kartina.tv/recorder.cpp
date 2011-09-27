@@ -763,27 +763,30 @@ void Recorder::on_pushAbout_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_channelList_doubleClicked(const QModelIndex & index)
 {
-   int cid = qvariant_cast<int>(index.data(channellist::cidRole));
-
-   if (chanMap.contains(cid))
+   if (Settings.doubleClickToPlay())
    {
-      if (AllowAction(IncPlay::PS_PLAY))
+      int cid = qvariant_cast<int>(index.data(channellist::cidRole));
+
+      if (chanMap.contains(cid))
       {
-         cparser::SChan chan = chanMap[cid];
+         if (AllowAction(IncPlay::PS_PLAY))
+         {
+            cparser::SChan chan = chanMap[cid];
 
-         showInfo.setChanId(cid);
-         showInfo.setChanName(chan.sName);
-         showInfo.setShowType(ShowInfo::Live);
-         showInfo.setShowName(chan.sProgramm);
-         showInfo.setStartTime(chan.uiStart);
-         showInfo.setEndTime(chan.uiEnd);
-         showInfo.setPlayState(IncPlay::PS_PLAY);
-         showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                .arg("rgb(255, 254, 212)")
-                                .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+            showInfo.setChanId(cid);
+            showInfo.setChanName(chan.sName);
+            showInfo.setShowType(ShowInfo::Live);
+            showInfo.setShowName(chan.sProgramm);
+            showInfo.setStartTime(chan.uiStart);
+            showInfo.setEndTime(chan.uiEnd);
+            showInfo.setPlayState(IncPlay::PS_PLAY);
+            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-         TouchPlayCtrlBtns(false);
-         Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+            TouchPlayCtrlBtns(false);
+            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+         }
       }
    }
 }
@@ -1182,6 +1185,46 @@ void Recorder::on_pushLive_clicked()
                TouchPlayCtrlBtns(false);
                Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
             }
+         }
+      }
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_channelList_clicked [slot]
+|  Begin: 23.09.2011
+|  Author: Jo2003
+|  Description: on channel list was clicked once
+|
+|  Parameters: clicked model index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::on_channelList_clicked(QModelIndex index)
+{
+   if (!Settings.doubleClickToPlay())
+   {
+      int cid = qvariant_cast<int>(index.data(channellist::cidRole));
+
+      if (chanMap.contains(cid))
+      {
+         if (AllowAction(IncPlay::PS_PLAY))
+         {
+            cparser::SChan chan = chanMap[cid];
+
+            showInfo.setChanId(cid);
+            showInfo.setChanName(chan.sName);
+            showInfo.setShowType(ShowInfo::Live);
+            showInfo.setShowName(chan.sProgramm);
+            showInfo.setStartTime(chan.uiStart);
+            showInfo.setEndTime(chan.uiEnd);
+            showInfo.setPlayState(IncPlay::PS_PLAY);
+            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+
+            TouchPlayCtrlBtns(false);
+            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
          }
       }
    }
@@ -2605,7 +2648,8 @@ void Recorder::slotCurrentChannelChanged(const QModelIndex & current)
       int iTs;
 
       // update short info if we're in live mode
-      if (showInfo.showType() == ShowInfo::Live)
+      if ((showInfo.showType() == ShowInfo::Live)
+         && (showInfo.playState() == IncPlay::PS_WTF))
       {
          ui->textEpgShort->setHtml(QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
