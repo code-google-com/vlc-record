@@ -28,9 +28,6 @@ CWaitTrigger::CWaitTrigger(QObject * parent) : QThread(parent)
 {
    pClient  = NULL;
    iGo      = 1;
-   eCurrReq = Kartina::REQ_UNKNOWN;
-   sOptArg1 = "";
-   sOptArg2 = "";
 }
 
 /* -----------------------------------------------------------------\
@@ -91,15 +88,18 @@ void CWaitTrigger::stop()
 \----------------------------------------------------------------- */
 void CWaitTrigger::run()
 {
+   QVector<CommandQueue::SCmd>::iterator it;
    while (iGo)
    {
-      if (eCurrReq != Kartina::REQ_UNKNOWN)
+      if (!commandQueue.isEmpty ())
       {
-         // cookie request ans record stop are send without busy check ...
-         if (eCurrReq != Kartina::REQ_COOKIE)
+         it = commandQueue.begin();
+
+         // we don't block cookie requests!
+         if ((*it).eReq != Kartina::REQ_COOKIE)
          {
-            // wait until api is available ...
-            while (pClient->busy() && iGo)
+            // wait until api becomes available ...
+            while (pClient->busy () && iGo)
             {
                msleep(10);
             }
@@ -107,7 +107,7 @@ void CWaitTrigger::run()
 
          if (iGo)
          {
-            switch (eCurrReq)
+            switch ((*it).eReq)
             {
             case Kartina::REQ_CHANNELLIST:
                pClient->GetChannelList();
@@ -116,25 +116,25 @@ void CWaitTrigger::run()
                pClient->GetCookie();
                break;
             case Kartina::REQ_EPG:
-               pClient->GetEPG(iOptArg1, iOptArg2);
+               pClient->GetEPG((*it).iOptArg1, (*it).iOptArg2);
                break;
             case Kartina::REQ_SERVER:
-               pClient->SetServer(sOptArg1);
+               pClient->SetServer((*it).sOptArg1);
                break;
             case Kartina::REQ_HTTPBUFF:
-               pClient->SetHttpBuffer(iOptArg1);
+               pClient->SetHttpBuffer((*it).iOptArg1);
                break;
             case Kartina::REQ_STREAM:
-               pClient->GetStreamURL(iOptArg1);
+               pClient->GetStreamURL((*it).iOptArg1);
                break;
             case Kartina::REQ_TIMERREC:
-               pClient->GetStreamURL(iOptArg1, true);
+               pClient->GetStreamURL((*it).iOptArg1, true);
                break;
             case Kartina::REQ_ARCHIV:
-               pClient->GetArchivURL(sOptArg1);
+               pClient->GetArchivURL((*it).sOptArg1);
                break;
             case Kartina::REQ_TIMESHIFT:
-               pClient->SetTimeShift(iOptArg1);
+               pClient->SetTimeShift((*it).iOptArg1);
                break;
             case Kartina::REQ_GETTIMESHIFT:
                pClient->GetTimeShift();
@@ -149,29 +149,32 @@ void CWaitTrigger::run()
                pClient->GetVodGenres();
                break;
             case Kartina::REQ_GETVIDEOS:
-               pClient->GetVideos(sOptArg1);
+               pClient->GetVideos((*it).sOptArg1);
                break;
             case Kartina::REQ_GETVIDEOINFO:
-               pClient->GetVideoInfo(iOptArg1);
+               pClient->GetVideoInfo((*it).iOptArg1);
                break;
             case Kartina::REQ_GETVODURL:
-               pClient->GetVodUrl(iOptArg1);
+               pClient->GetVodUrl((*it).iOptArg1);
                break;
             case Kartina::REQ_GETBITRATE:
                pClient->GetBitRate();
                break;
             case Kartina::REQ_SETBITRATE:
-               pClient->SetBitRate(iOptArg1);
+               pClient->SetBitRate((*it).iOptArg1);
                break;
             default:
                break;
             }
          }
 
-         eCurrReq = Kartina::REQ_UNKNOWN;
+         commandQueue.erase (it);
       }
-
-      msleep(5);
+      else
+      {
+         // queue empty - wait a little ...
+         msleep(5);
+      }
    }
 }
 
@@ -187,11 +190,14 @@ void CWaitTrigger::run()
 \----------------------------------------------------------------- */
 void CWaitTrigger::TriggerRequest(Kartina::EReq req, int iArg1, int iArg2)
 {
-   iOptArg1 = iArg1;
-   iOptArg2 = iArg2;
-   sOptArg1 = "";
-   sOptArg2 = "";
-   eCurrReq = req;
+   CommandQueue::SCmd cmd;
+
+   cmd.eReq     = req;
+   cmd.iOptArg1 = iArg1;
+   cmd.iOptArg2 = iArg2;
+   cmd.sOptArg1 = "";
+   cmd.sOptArg2 = "";
+   queueIn(cmd);
 }
 
 /* -----------------------------------------------------------------\
@@ -206,11 +212,14 @@ void CWaitTrigger::TriggerRequest(Kartina::EReq req, int iArg1, int iArg2)
 \----------------------------------------------------------------- */
 void CWaitTrigger::TriggerRequest (Kartina::EReq req, const QString &sReq1, const QString &sReq2)
 {
-   iOptArg1 = -1;
-   iOptArg2 = -1;
-   sOptArg1 = sReq1;
-   sOptArg2 = sReq2;
-   eCurrReq = req;
+   CommandQueue::SCmd cmd;
+
+   cmd.eReq     = req;
+   cmd.iOptArg1 = -1;
+   cmd.iOptArg2 = -1;
+   cmd.sOptArg1 = sReq1;
+   cmd.sOptArg2 = sReq2;
+   queueIn(cmd);
 }
 
 /* -----------------------------------------------------------------\
@@ -225,11 +234,53 @@ void CWaitTrigger::TriggerRequest (Kartina::EReq req, const QString &sReq1, cons
 \----------------------------------------------------------------- */
 void CWaitTrigger::slotReqChanList()
 {
-   iOptArg1 = -1;
-   iOptArg2 = -1;
-   sOptArg1 = "";
-   sOptArg2 = "";
-   eCurrReq = Kartina::REQ_CHANNELLIST;
+   CommandQueue::SCmd cmd;
+
+   cmd.eReq     = Kartina::REQ_CHANNELLIST;
+   cmd.iOptArg1 = -1;
+   cmd.iOptArg2 = -1;
+   cmd.sOptArg1 = "";
+   cmd.sOptArg2 = "";
+   queueIn(cmd);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: queueIn
+|  Begin: 28.09.2011
+|  Author: Jo2003
+|  Description: queue in new command, check for cookie and abort
+|
+|  Parameters: ref. to command
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CWaitTrigger::queueIn (const CommandQueue::SCmd &cmd)
+{
+   // abort means delete all pending requests ...
+   if (cmd.eReq == Kartina::REQ_ABORT)
+   {
+      commandQueue.clear ();
+
+      if (pClient->busy ())
+      {
+         pClient->abort ();
+      }
+   }
+   else if (cmd.eReq == Kartina::REQ_COOKIE)
+   {
+      commandQueue.clear ();
+
+      if (pClient->busy ())
+      {
+         pClient->abort ();
+      }
+
+      commandQueue.append (cmd);
+   }
+   else
+   {
+      commandQueue.append (cmd);
+   }
 }
 
 /************************* History ***************************\
