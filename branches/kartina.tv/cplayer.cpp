@@ -85,6 +85,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 
    poller.start(1000);
    sliderTimer.start(1000);
+
+   // hide slider ...
+   ui->posSlider->hide();
 }
 
 /* -----------------------------------------------------------------\
@@ -1266,7 +1269,17 @@ void CPlayer::enableDisablePlayControl (bool bEnable)
 {
    ui->btnFwd->setEnabled (bEnable && bCtrlStream);
    ui->btnBwd->setEnabled (bEnable && bCtrlStream);
-   ui->posSlider->setEnabled (bEnable && bCtrlStream);
+
+   if (bEnable && bCtrlStream)
+   {
+      ui->posSlider->show();
+      ui->posSlider->setEnabled (true);
+   }
+   else
+   {
+      ui->posSlider->setEnabled (false);
+      ui->posSlider->hide();
+   }
 }
 
 /* -----------------------------------------------------------------\

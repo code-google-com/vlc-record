@@ -317,7 +317,10 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,0,0">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QSlider" name="posSlider">
        <property name="enabled">
@@ -379,6 +382,19 @@ QSlider::handle:horizontal:disabled {
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="labPos">
