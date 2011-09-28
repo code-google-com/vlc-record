@@ -3005,7 +3005,7 @@ void Recorder::CleanContextMenu()
 void Recorder::CreateSystray()
 {
    trayIcon.setIcon(QIcon(":/app/tv"));
-   trayIcon.setToolTip(tr("vlc-record - Click to activate!"));
+   trayIcon.setToolTip(tr("%1 - Click to activate!").arg(APP_NAME));
 }
 
 /* -----------------------------------------------------------------\
