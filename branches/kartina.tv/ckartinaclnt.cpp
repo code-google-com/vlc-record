@@ -190,7 +190,7 @@ void CKartinaClnt::PostRequest (Kartina::EReq req,
    // post request ...
    iReq = request(header, content.toAscii(), &bufReq);
 
-   mInfo(tr("Request #%1 sent ...").arg(iReq));
+   mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (eReq));
 }
 
 /*-----------------------------------------------------------------------------\
@@ -228,7 +228,7 @@ void CKartinaClnt::GetRequest (Kartina::EReq req,
    // post request ...
    iReq = request(header, QByteArray(), &bufReq);
 
-   mInfo(tr("Request #%1 sent ...").arg(iReq));
+   mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (eReq));
 }
 
 /*-----------------------------------------------------------------------------\
@@ -612,7 +612,7 @@ void CKartinaClnt::handleEndRequest(int id, bool err)
 
       if (!err)
       {
-         mInfo(tr("Request #%1 done!").arg(id));
+         mInfo(tr("Request #%1 (%2) done!").arg(id).arg(eReq));
 
          // send signals dependet on ended request ...
          switch (eReq)
@@ -702,8 +702,28 @@ void CKartinaClnt::handleEndRequest(int id, bool err)
 \----------------------------------------------------------------- */
 bool CKartinaClnt::busy ()
 {
-   return ((eReq != Kartina::REQ_UNKNOWN) || (sCookie == "")) ? true : false;
+   bool bRV;
+
+   switch (state())
+   {
+   case QHttp::Unconnected:
+   case QHttp::Connected:
+      bRV = false;
+      break;
+
+   case QHttp::HostLookup:
+   case QHttp::Connecting:
+   case QHttp::Sending:
+   case QHttp::Reading:
+   case QHttp::Closing:
+   default:
+      bRV = true;
+      break;
+   }
+
+   return (!bRV && (eReq == Kartina::REQ_UNKNOWN)) ? false : true;
 }
+
 
 /* -----------------------------------------------------------------\
 |  Method: cookieSet
