@@ -247,6 +247,7 @@ private slots:
     void slotPlayNextChannel();
     void slotPlayPreviousChannel();
     void slotStartConnectionChain();
+    void slotUpdateProgress (int iMin, int iMax, int iAct);
 
 signals:
     void sigShow ();

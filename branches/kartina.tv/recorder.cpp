@@ -173,6 +173,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // get state if libVLC player to change player state display ...
    connect (ui->player, SIGNAL(sigPlayState(int)), this, SLOT(slotIncPlayState(int)));
 
+   // progress bar update ...
+   connect (ui->player, SIGNAL(sigSliderPos(int,int,int)), this, SLOT(slotUpdateProgress(int,int,int)));
+
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...Поиск в телегиде
@@ -631,6 +634,7 @@ void Recorder::on_pushRecord_clicked()
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
             showInfo.setEndTime(chan.uiEnd);
+            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
             showInfo.setPlayState(IncPlay::PS_RECORD);
             showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
@@ -701,6 +705,7 @@ void Recorder::on_pushPlay_clicked()
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
             showInfo.setEndTime(chan.uiEnd);
+            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
             showInfo.setPlayState(IncPlay::PS_PLAY);
             showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
@@ -780,6 +785,7 @@ void Recorder::on_channelList_doubleClicked(const QModelIndex & index)
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
             showInfo.setEndTime(chan.uiEnd);
+            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
             showInfo.setPlayState(IncPlay::PS_PLAY);
             showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
@@ -1177,6 +1183,7 @@ void Recorder::on_pushLive_clicked()
                showInfo.setShowType(ShowInfo::Live);
                showInfo.setShowName(chan.sProgramm);
                showInfo.setStartTime(chan.uiStart);
+               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
                showInfo.setEndTime(chan.uiEnd);
                showInfo.setPlayState(IncPlay::PS_PLAY);
                showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
@@ -1218,6 +1225,7 @@ void Recorder::on_channelList_clicked(QModelIndex index)
             showInfo.setShowType(ShowInfo::Live);
             showInfo.setShowName(chan.sProgramm);
             showInfo.setStartTime(chan.uiStart);
+            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
             showInfo.setEndTime(chan.uiEnd);
             showInfo.setPlayState(IncPlay::PS_PLAY);
             showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
@@ -2655,9 +2663,9 @@ void Recorder::slotCurrentChannelChanged(const QModelIndex & current)
          ui->textEpgShort->setHtml(QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
                                    .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
-      }
 
-      SetProgress (entry.uiStart, entry.uiEnd);
+         SetProgress (entry.uiStart, entry.uiEnd);
+      }
 
       // quick'n'dirty timeshift hack ...
       if (entry.vTs.count() <= 2) // no timeshift available ...
@@ -2736,6 +2744,23 @@ void Recorder::slotPlayPreviousChannel()
 void Recorder::slotStartConnectionChain()
 {
    Trigger.TriggerRequest(Kartina::REQ_COOKIE);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotUpdateProgress [slot]
+|  Begin: 28.09.2011
+|  Author: Jo2003
+|  Description: update progress bar
+|
+|  Parameters: min, max and actual value
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotUpdateProgress (int iMin, int iMax, int iAct)
+{
+   ui->progressBar->setMinimum(iMin);
+   ui->progressBar->setMaximum(iMax);
+   ui->progressBar->setValue(iAct);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3728,6 +3753,8 @@ void Recorder::SetProgress (const uint &start, const uint &end)
       }
    }
 
+   ui->progressBar->setMinimum(0);
+   ui->progressBar->setMaximum(100);
    ui->progressBar->setValue(iPercent);
 }
 
