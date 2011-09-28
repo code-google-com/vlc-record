@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
         <location filename="caboutdialog.cpp" line="118"/>
         <source>This is a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</source>
         <oldsource>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</oldsource>
-        <translation type="unfinished">&lt;b&gt;vlc-record&lt;/b&gt; - программа для &lt;b&gt;просмотра и записи видео потока&lt;/b&gt; с %1%2</translation>
+        <translation>Эта программа для &lt;b&gt;просмотра и записи видео потока&lt;/b&gt; с %1%2</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="120"/>
@@ -1467,135 +1467,135 @@ or start time is later than end time!</source>
         <location filename="recorder.cpp" line="3105"/>
         <location filename="recorder.cpp" line="3126"/>
         <source>Mon</source>
-        <translation type="unfinished">Пон.</translation>
+        <translation>Пон</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3106"/>
         <location filename="recorder.cpp" line="3127"/>
         <source>Tue</source>
-        <translation type="unfinished">Вт.</translation>
+        <translation>Вт</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3107"/>
         <location filename="recorder.cpp" line="3128"/>
         <source>Wed</source>
-        <translation type="unfinished">Ср.</translation>
+        <translation>Ср</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3108"/>
         <location filename="recorder.cpp" line="3129"/>
         <source>Thu</source>
-        <translation type="unfinished">Чт.</translation>
+        <translation>Чт</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3109"/>
         <location filename="recorder.cpp" line="3130"/>
         <source>Fri</source>
-        <translation type="unfinished">Пят.</translation>
+        <translation>Пят</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3110"/>
         <location filename="recorder.cpp" line="3131"/>
         <source>Sat</source>
-        <translation type="unfinished">Суб.</translation>
+        <translation>Суб</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3119"/>
         <location filename="recorder.cpp" line="3132"/>
         <source>Sun</source>
-        <translation type="unfinished">Воск.</translation>
+        <translation>Воск</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2772"/>
         <source>Stop</source>
-        <translation type="unfinished">Стоп</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2786"/>
         <source>Volume +</source>
-        <translation type="unfinished">Громче</translation>
+        <translation>Громче</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2787"/>
         <source>Volume -</source>
-        <translation type="unfinished">Тише</translation>
+        <translation>Тише</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3266"/>
         <source>VLC is still running.&lt;br /&gt;&lt;b&gt;Closing VLC record will also close the started VLC-Player.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Do you really want to close VLC Record now?</source>
-        <translation type="unfinished">VLC Mediaplayer ещё в работае.&lt;br /&gt;&lt;b&gt;Если вы остановите работу VLC-Record, то и VLC-Player закроется.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Уверены ли Вы?</translation>
+        <translation>VLC Mediaplayer ещё в работае.&lt;br /&gt;&lt;b&gt;Если вы остановите работу VLC-Record, то и VLC-Player закроется.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Уверены ли Вы?</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3271"/>
         <location filename="recorder.cpp" line="3803"/>
         <source>Question</source>
-        <translation type="unfinished">Вопрос</translation>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4038"/>
         <source>Program:</source>
-        <translation type="unfinished">Передача:</translation>
+        <translation>Передача:</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4039"/>
         <source>Start:</source>
-        <translation type="unfinished">Начало:</translation>
+        <translation>Начало:</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4040"/>
         <source>End:</source>
-        <translation type="unfinished">Окончание:</translation>
+        <translation>Окончание:</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1671"/>
         <source>Length: %1 min.</source>
-        <translation type="unfinished">Длин. %1 мин.</translation>
+        <translation>Длин. %1 мин.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1672"/>
         <source> (Ar.)</source>
         <oldsource>(Ar.)</oldsource>
-        <translation type="unfinished"> (Ар.)</translation>
+        <translation> (Ар.)</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3799"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <oldsource>VLC is still running.&lt;br /&gt; &lt;br /&gt;Do you really want to close the VLC Player now?</oldsource>
-        <translation type="unfinished">VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
+        <translation>VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2054"/>
         <location filename="recorder.cpp" line="2183"/>
         <source>Remove from favourites</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2061"/>
         <source>Add to favourites</source>
-        <translation type="unfinished">Добавить в избранное</translation>
+        <translation>Добавить в избранное</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2105"/>
         <source>Note</source>
-        <translation type="unfinished">Кстати</translation>
+        <translation>Кстати</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2106"/>
         <source>Max. number of favourites (%1) reached.</source>
-        <translation type="unfinished">Максимальное число фаворитов (%1) достигло.</translation>
+        <translation>Максимальное число фаворитов (%1) достигло.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2285"/>
         <location filename="recorder.cpp" line="3510"/>
         <location filename="recorder.cpp" line="3566"/>
         <source>Can&apos;t start VLC-Media Player!</source>
-        <translation type="unfinished">Невозможно заупстить VLC-Media Player!</translation>
+        <translation>Невозможно заупстить VLC-Media Player!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3064"/>
         <location filename="recorder.cpp" line="3139"/>
         <source>1 week backward</source>
-        <translation type="unfinished">1 неделя назад</translation>
+        <translation>1 неделя назад</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="103"/>
@@ -1635,196 +1635,197 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="2316"/>
         <source>All</source>
-        <translation type="unfinished">Все</translation>
+        <translation>Все</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3008"/>
-        <source>vlc-record - Click to activate!</source>
-        <translation type="unfinished">vlc-record нажмите для запуска!</translation>
+        <source>%1 - Click to activate!</source>
+        <oldsource>vlc-record - Click to activate!</oldsource>
+        <translation>%1 - нажмите для запуска!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3096"/>
         <location filename="recorder.cpp" line="3144"/>
         <source>1 week forward</source>
-        <translation type="unfinished">1 неделя вперед</translation>
+        <translation>1 неделя вперед</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2771"/>
         <source>Play / Pause</source>
-        <translation type="unfinished">Воспроизведение / Пауза</translation>
+        <translation>Воспроизведение / Пауза</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1321"/>
         <source>logout done ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1421"/>
         <source>Active stream server is %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1476"/>
         <source>Using Bitrate %1 kbit/s ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1665"/>
         <source>%1 (Archive)</source>
-        <translation type="unfinished">%1 (Архив)</translation>
+        <translation>%1 (Архив)</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1943"/>
         <source>timeRec reports: record done!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1961"/>
         <source>timeRec reports: record active!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1985"/>
         <source>vlcCtrl reports: vlc player ended!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2003"/>
         <source>vlcCtrl reports: vlc player active!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2291"/>
         <location filename="recorder.cpp" line="3517"/>
         <location filename="recorder.cpp" line="3572"/>
         <source>Started VLC with pid #%1!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2773"/>
         <source>Record</source>
-        <translation type="unfinished">Запись</translation>
+        <translation>Запись</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2776"/>
         <source>About</source>
-        <translation type="unfinished">Информация о программе</translation>
+        <translation>Информация о программе</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2777"/>
         <source>Search EPG</source>
-        <translation type="unfinished">Поиск в телегиде</translation>
+        <translation>Поиск в телегиде</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2778"/>
         <source>Text Size +</source>
-        <translation type="unfinished">Увеличить размер шрифта</translation>
+        <translation>Увеличить размер шрифта</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2779"/>
         <source>Text Size -</source>
-        <translation type="unfinished">Уменьшить размер шрифта</translation>
+        <translation>Уменьшить размер шрифта</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2783"/>
         <source>Toggle Aspect Ratio</source>
-        <translation type="unfinished">Формат изображения</translation>
+        <translation>Формат изображения</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2784"/>
         <source>Toggle Crop Geometry</source>
-        <translation type="unfinished">Подрезать видеоформат</translation>
+        <translation>Подрезать видеоформат</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2785"/>
         <source>Toggle Fullscreen</source>
-        <translation type="unfinished">Полноэкранный режим</translation>
+        <translation>Полноэкранный режим</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2788"/>
         <source>Toggle Mute</source>
-        <translation type="unfinished">Включить / Выключить Звук</translation>
+        <translation>Включить / Выключить Звук</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2793"/>
         <source>Next Channel</source>
-        <translation type="unfinished">Следующий канал</translation>
+        <translation>Следующий канал</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2794"/>
         <source>Previous Channel</source>
-        <translation type="unfinished">Предыдущий канал</translation>
+        <translation>Предыдущий канал</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2795"/>
         <source>Play Next Channel</source>
-        <translation type="unfinished">Просмотр след. канала</translation>
+        <translation>Просмотр след. канала</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2796"/>
         <source>Play Prev. Channel</source>
-        <translation type="unfinished">Просмотр пред. канала</translation>
+        <translation>Просмотр пред. канала</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2797"/>
         <source>Show EPG / VOD</source>
-        <translation type="unfinished">Телегид / Видеотека</translation>
+        <translation>Телегид / Видеотека</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3025"/>
         <source>Newest</source>
-        <translation type="unfinished">Последние</translation>
+        <translation>Последние</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3026"/>
         <source>Best</source>
-        <translation type="unfinished">Лучшие</translation>
+        <translation>Лучшие</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3379"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3446"/>
         <location filename="recorder.cpp" line="3600"/>
         <source>Save Stream as</source>
-        <translation type="unfinished">Сохранить поток как</translation>
+        <translation>Сохранить поток как</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3868"/>
         <location filename="recorder.cpp" line="4102"/>
         <source>Favourite %1</source>
         <oldsource>Favoorite %1</oldsource>
-        <translation type="unfinished">Фаворит %1</translation>
+        <translation>Фаворит %1</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4041"/>
         <source>Length:</source>
-        <translation type="unfinished">Длин.:</translation>
+        <translation>Длин.:</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4046"/>
         <source>%1 min.</source>
-        <translation type="unfinished">%1 мин.</translation>
+        <translation>%1 мин.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2285"/>
         <location filename="recorder.cpp" line="3510"/>
         <location filename="recorder.cpp" line="3566"/>
         <source>Error!</source>
-        <translation type="unfinished">Ошибка!</translation>
+        <translation>Ошибка!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1300"/>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1301"/>
         <source>%1 Client API reports some errors: %2</source>
         <oldsource>Kartina.tv Client API reports some errors: %1</oldsource>
-        <translation type="unfinished">АПИ %1 сообщает о некоторых ошибках: %2</translation>
+        <translation>АПИ %1 сообщает о некоторых ошибках: %2</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="133"/>
@@ -1847,7 +1848,7 @@ dataDir: %1
     <message>
         <location filename="forms/recorder.ui" line="241"/>
         <source> Now Playing </source>
-        <translation>В эфире:</translation>
+        <translation> В эфире </translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="247"/>
