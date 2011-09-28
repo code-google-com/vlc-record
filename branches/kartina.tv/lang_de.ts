@@ -59,9 +59,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="118"/>
-        <source>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</source>
-        <oldsource>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1.</oldsource>
-        <translation>&lt;b&gt;vlc-record&lt;/b&gt; - ein Tool zum &lt;b&gt;ansehen und mitschneiden&lt;/b&gt; von Programm-Streams von %1%2</translation>
+        <source>This is a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</source>
+        <oldsource>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</oldsource>
+        <translation type="unfinished">&lt;b&gt;vlc-record&lt;/b&gt; - ein Tool zum &lt;b&gt;ansehen und mitschneiden&lt;/b&gt; von Programm-Streams von %1%2</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="120"/>

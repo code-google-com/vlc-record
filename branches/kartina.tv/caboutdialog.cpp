@@ -115,7 +115,7 @@ void CAboutDialog::FillInfo(QString sExpires)
          << QString("<tr><td><b>%1</b></td><td style='padding-left: 15px;'>%2</td></tr>").arg(tr("Account expires:")).arg(sExpires) << endl
          << "<tr><td><b>Most icons:</b></td><td style='padding-left: 15px;'>by <a href='http://dryicons.com'>dryicons.com</a></td></tr>" << endl
          << "</table><br /> <br />" << endl
-         << tr("<b>vlc-record</b> - a tool to <b>view / record program streams</b> from %1%2").arg(COMPANY_LINK)
+         << tr("This is a tool to <b>view / record program streams</b> from %1%2").arg(COMPANY_LINK)
 #ifdef _IS_OEM
               .arg(tr(" (click to buy a subscription).")) << endl
 #else
