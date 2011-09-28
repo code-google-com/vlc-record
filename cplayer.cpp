@@ -515,7 +515,7 @@ void CPlayer::slotUpdateSlider()
 {
    if (pMediaPlayer)
    {
-      if (libvlc_media_player_is_playing(pMediaPlayer) && bCtrlStream)
+      if (libvlc_media_player_is_playing(pMediaPlayer))
       {
          uint pos;
          if (isPositionable())
@@ -526,9 +526,7 @@ void CPlayer::slotUpdateSlider()
             {
                ui->posSlider->setValue(pos);
                pos = pos / 1000; // ms ...
-               ui->labPos->setText(QTime((int)pos / 3600,
-                                         (int)(pos % 3600) / 60,
-                                         pos % 60).toString("hh:mm:ss"));
+               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
             }
          }
          else
@@ -546,11 +544,12 @@ void CPlayer::slotUpdateSlider()
 
                pos -= showInfo.starts();
 
-               ui->labPos->setText(QTime((int)pos / 3600,
-                                         (int)(pos % 3600) / 60,
-                                         pos % 60).toString("hh:mm:ss"));
+               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
             }
          }
+
+         // send slider position ...
+         emit sigSliderPos(ui->posSlider->minimum(), ui->posSlider->maximum(), ui->posSlider->value());
       }
    }
 }
@@ -1248,9 +1247,7 @@ void CPlayer::on_posSlider_valueChanged(int value)
             value -= showInfo.starts();
          }
 
-         ui->labPos->setText(QTime((int)value / 3600,
-                                   (int)(value % 3600) / 60,
-                                   value % 60).toString("hh:mm:ss"));
+         ui->labPos->setText(QTime(0, 0).addSecs(value).toString("hh:mm:ss"));
       }
    }
 }
@@ -1289,20 +1286,26 @@ void CPlayer::initSlider()
    uiDuration = libvlc_media_player_get_length(pMediaPlayer);
    mInfo(tr("Film length: %1ms.").arg(uiDuration));
 
-   if (bCtrlStream)
+   if (isPositionable())
    {
-      if (isPositionable())
-      {
-         // VOD stuff ...
-         ui->posSlider->setRange(0, uiDuration);
+      // VOD stuff ...
+      ui->posSlider->setRange(0, uiDuration);
 
-         ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
+      ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
+   }
+   else
+   {
+      // set slider range to seconds ...
+      ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
+
+      if (showInfo.lastJump())
+      {
+         ui->posSlider->setValue(mFromGmt(showInfo.lastJump()));
+
+         ui->labPos->setText(QTime(0, 0).addSecs(showInfo.lastJump() - showInfo.starts()).toString("hh:mm:ss"));
       }
       else
       {
-         // set slider range to seconds ...
-         ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
-
          ui->posSlider->setValue(mFromGmt(showInfo.starts()));
 
          ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
