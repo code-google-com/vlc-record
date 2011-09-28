@@ -52,6 +52,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    iEpgOffset     =  0;
    iFontSzChg     =  0;
    iDwnReqId      = -1;
+   ulStartFlags   =  0;
 
    // init account info ...
    accountInfo.bHasArchive = false;
@@ -384,7 +385,7 @@ void Recorder::closeEvent(QCloseEvent *event)
 
       // save channel and epg position ...
       Settings.saveChannel(getCurrentCid());
-      Settings.saveEpgDay(QDate::currentDate().addDays(iEpgOffset).toString("ddMMyyyy"));
+      Settings.saveEpgDay(iEpgOffset ? QDate::currentDate().addDays(iEpgOffset).toString("ddMMyyyy") : "");
 
       // clear shortcuts ...
       ClearShortCuts ();
@@ -461,9 +462,9 @@ void Recorder::showEvent(QShowEvent *event)
 {
    emit sigShow();
 
-   if (!(fFirstStarts & ProgStart::CON_CHAIN))
+   if (!(ulStartFlags & FLAG_CONN_CHAIN))
    {
-      fFirstStarts |= ProgStart::CON_CHAIN;
+      ulStartFlags |= FLAG_CONN_CHAIN;
 
       // start connection stuff in 0.5 seconds ...
       QTimer::singleShot(500, this, SLOT(slotStartConnectionChain()));
@@ -1246,9 +1247,9 @@ void Recorder::on_channelList_clicked(QModelIndex index)
 \----------------------------------------------------------------- */
 void Recorder::show()
 {
-   if (!(fFirstStarts & ProgStart::INIT_DIALOG))
+   if (!(ulStartFlags & FLAG_INITDIALOG))
    {
-      fFirstStarts |= ProgStart::INIT_DIALOG;
+      ulStartFlags |= FLAG_INITDIALOG;
       initDialog ();
    }
 
@@ -1522,7 +1523,7 @@ void Recorder::slotChanList (QString str)
    }
 
    // only download channel logos, if they aren't there ...
-   if (!dwnLogos.IsRunning() && !(fFirstStarts & ProgStart::CHAN_LOGO_READY))
+   if (!dwnLogos.IsRunning() && !(ulStartFlags & FLAG_CLOGOS_READY))
    {
       QStringList lLogos;
 
@@ -1688,7 +1689,7 @@ void Recorder::slotEpgAnchor (const QUrl &link)
 void Recorder::slotLogosReady()
 {
    // downloader sayd ... logos are there ...
-   fFirstStarts |= ProgStart::CHAN_LOGO_READY;
+   ulStartFlags |= FLAG_CLOGOS_READY;
 }
 
 /* -----------------------------------------------------------------\
@@ -1703,8 +1704,8 @@ void Recorder::slotLogosReady()
 \----------------------------------------------------------------- */
 void Recorder::slotReloadLogos()
 {
-   // unset CHAN_LOGO_READY flag ...
-   fFirstStarts &= ~QFlags<ProgStart::eFirstStarts>(ProgStart::CHAN_LOGO_READY);
+   // unset FLAG_CLOGOS_READY  ...
+   ulStartFlags &= ~FLAG_CLOGOS_READY;
 
    if (!dwnLogos.IsRunning())
    {
@@ -2347,9 +2348,9 @@ void Recorder::slotGotVideos(QString str)
 
    if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-      if (!(fFirstStarts & ProgStart::VOD_LOGO_READY))
+      if (!(ulStartFlags & FLAG_VLOGOS_READY))
       {
-         fFirstStarts |= ProgStart::VOD_LOGO_READY;
+         ulStartFlags |= FLAG_VLOGOS_READY;
 
          // download pictures ...
          QStringList lPix;
@@ -2649,7 +2650,7 @@ void Recorder::slotCurrentChannelChanged(const QModelIndex & current)
 
       // update short info if we're in live mode
       if ((showInfo.showType() == ShowInfo::Live)
-         && (showInfo.playState() == IncPlay::PS_WTF))
+         && (showInfo.playState() == IncPlay::PS_STOP))
       {
          ui->textEpgShort->setHtml(QString(TMPL_BACKCOLOR)
                                    .arg("rgb(255, 254, 212)")
@@ -3334,10 +3335,10 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
    pModel->clear();
 
    // any channel stored from former session ... ?
-   if (!(fFirstStarts & ProgStart::CHAN_LIST))
+   if (!(ulStartFlags & FLAG_CHAN_LIST))
    {
       iLastChan     = Settings.lastChannel() ? Settings.lastChannel() : -1;
-      fFirstStarts |= ProgStart::CHAN_LIST;
+      ulStartFlags |= FLAG_CHAN_LIST;
    }
 
    for (int i = 0; i < chanlist.size(); i++)

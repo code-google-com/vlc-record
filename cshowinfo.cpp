@@ -25,7 +25,7 @@
 CShowInfo::CShowInfo()
 {
    iChannelId = -1;
-   ePlayState = IncPlay::PS_WTF;
+   ePlayState = IncPlay::PS_STOP;
    eShowType  = ShowInfo::Live;
    uiStart    = 0;
    uiEnd      = 0;
