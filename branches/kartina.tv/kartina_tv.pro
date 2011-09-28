@@ -103,7 +103,7 @@ static {
 # where the target should be stored ...
 win32:TARGET = kartina_tv
 else {
-    CONFIG(debug, debug|release):TARGET = debug/bin/kartina_tv
+    CONFIG(debug, debug|release):TARGET = debug/kartina_tv
     else:TARGET = release/kartina_tv
 }
 
