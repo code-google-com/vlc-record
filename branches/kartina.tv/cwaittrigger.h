@@ -14,6 +14,7 @@
 
 #include <QThread>
 #include <QVector>
+#include <QMutex>
 #include "ckartinaclnt.h"
 
 #include "clogfile.h"
@@ -59,6 +60,7 @@ public slots:
 private:
    CKartinaClnt *pClient;
    int           iGo;
+   QMutex        mutex;
    QVector<CommandQueue::SCmd> commandQueue;
 };
 

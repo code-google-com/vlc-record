@@ -31,11 +31,31 @@
 #endif
 
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".49B1" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR ".49B2" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last beta ---
+|
+| 2011-09-29: Version x.49B2
+| - add first time settings dialog
+| - store pre-defined values into config to make
+|   a good first start
+| - rework on VOD to have max. 20 entries on one site
+| - add filter "newest" and "best"
+| - VOD search request goes now out to kartina.tv
+| - reworked settings dialog
+| - EPG access only 2 weeks back / 1 week ahead
+| - in short info window show only what's playing now
+| - rework for progress bar to show progress of playing show
+| - memory function for last seen channel / day
+| - rework on wait trigger to add command queue
+| - major GUI rework to make VOD easier accessable
+| - many updated translations
+| - updated installation
+|
+| ------ branch to make an official Kartina.TV app ------
+|
 | - add app bundle support when getting VLCs file name
 | - own translation of error codes sent by kartina.tv
 | - more common error message box
