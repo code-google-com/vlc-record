@@ -290,15 +290,15 @@ p, li { white-space: pre-wrap; }
         <translation>Жанр: </translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="362"/>
-        <location filename="cchannelsepgdlg.cpp" line="465"/>
+        <location filename="cchannelsepgdlg.cpp" line="388"/>
+        <location filename="cchannelsepgdlg.cpp" line="491"/>
         <source>Remove from favourites</source>
-        <translation>Удалить из фаворитов</translation>
+        <translation>Удалить из избранного</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="370"/>
+        <location filename="cchannelsepgdlg.cpp" line="396"/>
         <source>Add to favourites</source>
-        <translation>Добавить к фаворитам</translation>
+        <translation>Добавить в избранное</translation>
     </message>
     <message>
         <source>Note</source>
@@ -309,92 +309,92 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Максимальное число фаворитов (%1) достигнуто</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="408"/>
+        <location filename="cchannelsepgdlg.cpp" line="434"/>
         <source>Note: Max. number of favourites (%1) reached.</source>
         <translation>Замечание: Максимальное число фаворитов (%1) достигнуто</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="530"/>
+        <location filename="cchannelsepgdlg.cpp" line="561"/>
         <source>Newest</source>
         <translation>Последние</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="531"/>
+        <location filename="cchannelsepgdlg.cpp" line="562"/>
         <source>Best</source>
         <translation>Лучшие</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="651"/>
-        <location filename="cchannelsepgdlg.cpp" line="726"/>
+        <location filename="cchannelsepgdlg.cpp" line="682"/>
+        <location filename="cchannelsepgdlg.cpp" line="757"/>
         <source>1 week backward</source>
         <translation>1 неделя назад</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="683"/>
-        <location filename="cchannelsepgdlg.cpp" line="731"/>
+        <location filename="cchannelsepgdlg.cpp" line="714"/>
+        <location filename="cchannelsepgdlg.cpp" line="762"/>
         <source>1 week forward</source>
         <translation>1 неделя вперед</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="692"/>
-        <location filename="cchannelsepgdlg.cpp" line="713"/>
+        <location filename="cchannelsepgdlg.cpp" line="723"/>
+        <location filename="cchannelsepgdlg.cpp" line="744"/>
         <source>Mon</source>
         <translation>Пон.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="693"/>
-        <location filename="cchannelsepgdlg.cpp" line="714"/>
+        <location filename="cchannelsepgdlg.cpp" line="724"/>
+        <location filename="cchannelsepgdlg.cpp" line="745"/>
         <source>Tue</source>
         <translation>Вт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="694"/>
-        <location filename="cchannelsepgdlg.cpp" line="715"/>
+        <location filename="cchannelsepgdlg.cpp" line="725"/>
+        <location filename="cchannelsepgdlg.cpp" line="746"/>
         <source>Wed</source>
         <translation>Ср.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="695"/>
-        <location filename="cchannelsepgdlg.cpp" line="716"/>
+        <location filename="cchannelsepgdlg.cpp" line="726"/>
+        <location filename="cchannelsepgdlg.cpp" line="747"/>
         <source>Thu</source>
         <translation>Чт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="696"/>
-        <location filename="cchannelsepgdlg.cpp" line="717"/>
+        <location filename="cchannelsepgdlg.cpp" line="727"/>
+        <location filename="cchannelsepgdlg.cpp" line="748"/>
         <source>Fri</source>
         <translation>Пят.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="697"/>
-        <location filename="cchannelsepgdlg.cpp" line="718"/>
+        <location filename="cchannelsepgdlg.cpp" line="728"/>
+        <location filename="cchannelsepgdlg.cpp" line="749"/>
         <source>Sat</source>
         <translation>Суб.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="706"/>
-        <location filename="cchannelsepgdlg.cpp" line="719"/>
+        <location filename="cchannelsepgdlg.cpp" line="737"/>
+        <location filename="cchannelsepgdlg.cpp" line="750"/>
         <source>Sun</source>
         <translation>Воск.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="788"/>
-        <location filename="cchannelsepgdlg.cpp" line="1034"/>
+        <location filename="cchannelsepgdlg.cpp" line="819"/>
+        <location filename="cchannelsepgdlg.cpp" line="1084"/>
         <source>Favourite %1</source>
         <translation>Фаворит %1</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1008"/>
+        <location filename="cchannelsepgdlg.cpp" line="1058"/>
         <source>Program:</source>
         <translation>Передача:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1009"/>
+        <location filename="cchannelsepgdlg.cpp" line="1059"/>
         <source>Start:</source>
         <translation>Начало:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1010"/>
+        <location filename="cchannelsepgdlg.cpp" line="1060"/>
         <source>End:</source>
         <translation>Окончание:</translation>
     </message>
@@ -471,9 +471,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaclnt.cpp" line="193"/>
         <location filename="ckartinaclnt.cpp" line="231"/>
-        <source>Request #%1 sent ...</source>
-        <oldsource>Post-Request #%1 sent:
-  --&gt; %2</oldsource>
+        <source>Request #%1 (%2) sent ...</source>
+        <oldsource>Request #%1 sent ...</oldsource>
         <translation></translation>
     </message>
     <message>
@@ -563,8 +562,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="615"/>
-        <source>Request #%1 done!</source>
-        <oldsource>Request done!</oldsource>
+        <source>Request #%1 (%2) done!</source>
+        <oldsource>Request #%1 done!</oldsource>
         <translation></translation>
     </message>
     <message>
@@ -586,9 +585,9 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="689"/>
         <location filename="ckartinaxmlparser.cpp" line="763"/>
         <location filename="ckartinaxmlparser.cpp" line="863"/>
-        <location filename="ckartinaxmlparser.cpp" line="983"/>
-        <location filename="ckartinaxmlparser.cpp" line="1075"/>
-        <location filename="ckartinaxmlparser.cpp" line="1163"/>
+        <location filename="ckartinaxmlparser.cpp" line="984"/>
+        <location filename="ckartinaxmlparser.cpp" line="1076"/>
+        <location filename="ckartinaxmlparser.cpp" line="1164"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
@@ -598,9 +597,9 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="690"/>
         <location filename="ckartinaxmlparser.cpp" line="764"/>
         <location filename="ckartinaxmlparser.cpp" line="864"/>
-        <location filename="ckartinaxmlparser.cpp" line="984"/>
-        <location filename="ckartinaxmlparser.cpp" line="1076"/>
-        <location filename="ckartinaxmlparser.cpp" line="1164"/>
+        <location filename="ckartinaxmlparser.cpp" line="985"/>
+        <location filename="ckartinaxmlparser.cpp" line="1077"/>
+        <location filename="ckartinaxmlparser.cpp" line="1165"/>
         <source>XML Error String: %1</source>
         <translation>Информация о XML ошибке %1</translation>
     </message>
@@ -608,7 +607,7 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="253"/>
         <location filename="ckartinaxmlparser.cpp" line="381"/>
         <location filename="ckartinaxmlparser.cpp" line="457"/>
-        <location filename="ckartinaxmlparser.cpp" line="1336"/>
+        <location filename="ckartinaxmlparser.cpp" line="1337"/>
         <source>Found unused element %1 ...</source>
         <translation>Найден неиспользуемый элемент %1 ...</translation>
     </message>
@@ -624,167 +623,167 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1243"/>
+        <location filename="ckartinaxmlparser.cpp" line="1244"/>
         <source>Error #%1: %2!</source>
         <translation>Ошибка #%1: %2!</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1247"/>
+        <location filename="ckartinaxmlparser.cpp" line="1248"/>
         <source>Error #%1 in %2():%3: %4!</source>
         <translation>Ошибка #%1 в %2():%3: %4!</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1380"/>
+        <location filename="ckartinaxmlparser.cpp" line="1381"/>
         <source>Unknown error</source>
         <translation>Неизвестная Ошибка</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1381"/>
+        <location filename="ckartinaxmlparser.cpp" line="1382"/>
         <source>Incorrect request</source>
         <translation>Неправальный Запрос</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1382"/>
+        <location filename="ckartinaxmlparser.cpp" line="1383"/>
         <source>Wrong login or password</source>
         <translation>Неправильный логин или пароль</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1383"/>
+        <location filename="ckartinaxmlparser.cpp" line="1384"/>
         <source>Access denied</source>
         <translation>Доступ запрещен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1384"/>
+        <location filename="ckartinaxmlparser.cpp" line="1385"/>
         <source>Login incorrect</source>
         <translation>Неправильный логин</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1385"/>
+        <location filename="ckartinaxmlparser.cpp" line="1386"/>
         <source>Your contract is inactive</source>
         <translation>Ваш договор бездействует</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1386"/>
+        <location filename="ckartinaxmlparser.cpp" line="1387"/>
         <source>Your contract is paused</source>
         <translation>Ваш договор приостановлен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1387"/>
+        <location filename="ckartinaxmlparser.cpp" line="1388"/>
         <source>Channel not found or not allowed</source>
         <translation>Канал не найден или не разрешен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1388"/>
+        <location filename="ckartinaxmlparser.cpp" line="1389"/>
         <source>Error in request: Bad parameters</source>
         <translation>Ошибка в запросе: неправильные параметры</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1389"/>
+        <location filename="ckartinaxmlparser.cpp" line="1390"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
         <translation>Отсутствие параметра (day) в форме &lt;DDMMYY&gt;</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1390"/>
+        <location filename="ckartinaxmlparser.cpp" line="1391"/>
         <source>Missing parameter (cid)</source>
         <translation>Отсутствие параметра (cid)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1391"/>
+        <location filename="ckartinaxmlparser.cpp" line="1392"/>
         <source>Another client with your data logged in</source>
         <translation>Другой клиент с вашими данными вошел в систему</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1392"/>
+        <location filename="ckartinaxmlparser.cpp" line="1393"/>
         <source>Authentication error</source>
         <translation>Ошибка аутентификации</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1393"/>
+        <location filename="ckartinaxmlparser.cpp" line="1394"/>
         <source>Your package expired</source>
         <translation>Срок вашего пакета  истек</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1394"/>
+        <location filename="ckartinaxmlparser.cpp" line="1395"/>
         <source>Unknown API function</source>
         <translation>Неизвестная  API функция</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1395"/>
+        <location filename="ckartinaxmlparser.cpp" line="1396"/>
         <source>Archive not available</source>
         <translation>Архив не доступен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1396"/>
+        <location filename="ckartinaxmlparser.cpp" line="1397"/>
         <source>Missing parameter (place)</source>
         <translation>Отсутствие параметра (place)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1397"/>
+        <location filename="ckartinaxmlparser.cpp" line="1398"/>
         <source>Missing parameter (name)</source>
         <translation>Отсутствие параметра (name)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1398"/>
+        <location filename="ckartinaxmlparser.cpp" line="1399"/>
         <source>Incorrect confirmation code</source>
         <translation>Неверный код подтверждения</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1399"/>
+        <location filename="ckartinaxmlparser.cpp" line="1400"/>
         <source>Current code is wrong</source>
         <translation>Текущий код неправильный</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1400"/>
+        <location filename="ckartinaxmlparser.cpp" line="1401"/>
         <source>New code is wrong</source>
         <translation>Новый код неправильный</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1401"/>
+        <location filename="ckartinaxmlparser.cpp" line="1402"/>
         <source>Missing parameter (val)</source>
         <translation>Отсутствие параметра (val)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1402"/>
+        <location filename="ckartinaxmlparser.cpp" line="1403"/>
         <source>Value not allowed</source>
         <translation>Недопустимое Значение</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1403"/>
+        <location filename="ckartinaxmlparser.cpp" line="1404"/>
         <source>Missing parameter</source>
         <translation>Отсутствие параметра</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1404"/>
+        <location filename="ckartinaxmlparser.cpp" line="1405"/>
         <source>Missing parameter (id)</source>
         <translation>Отсутствие параметра (id)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1405"/>
+        <location filename="ckartinaxmlparser.cpp" line="1406"/>
         <source>Missing parameter (fileid)</source>
         <translation>Отсутствие параметра (fileid)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1406"/>
+        <location filename="ckartinaxmlparser.cpp" line="1407"/>
         <source>Missing parameter (type)</source>
         <translation>Отсутствие параметра (type)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1407"/>
+        <location filename="ckartinaxmlparser.cpp" line="1408"/>
         <source>Missing parameter (query)</source>
         <translation>Отсутствие параметра (query)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1408"/>
+        <location filename="ckartinaxmlparser.cpp" line="1409"/>
         <source>Bitrate not available</source>
         <translation>Битрейт не доступен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1409"/>
+        <location filename="ckartinaxmlparser.cpp" line="1410"/>
         <source>Service not available</source>
         <translation>Услуга не предоставляется</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1410"/>
+        <location filename="ckartinaxmlparser.cpp" line="1411"/>
         <source>Query limit exceeded</source>
         <translation>Превышен лимит запросов</translation>
     </message>
@@ -820,7 +819,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="421"/>
+        <location filename="cplayer.cpp" line="474"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -828,37 +827,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="429"/>
+        <location filename="cplayer.cpp" line="482"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1212"/>
+        <location filename="cplayer.cpp" line="1300"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="441"/>
+        <location filename="cplayer.cpp" line="494"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="634"/>
+        <location filename="cplayer.cpp" line="685"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="805"/>
+        <location filename="cplayer.cpp" line="779"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="831"/>
+        <location filename="cplayer.cpp" line="812"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1052"/>
+        <location filename="cplayer.cpp" line="1132"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <oldsource>
@@ -866,17 +865,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1061"/>
+        <location filename="cplayer.cpp" line="1141"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1090"/>
+        <location filename="cplayer.cpp" line="1170"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1123"/>
+        <location filename="cplayer.cpp" line="1203"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
@@ -919,7 +918,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">ОШИБКА</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="679"/>
+        <location filename="cplayer.cpp" line="730"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -994,7 +993,7 @@ p, li { white-space: pre-wrap; }
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="441"/>
+        <location filename="forms/cplayer.ui" line="454"/>
         <source>0:00:00</source>
         <translation></translation>
     </message>
@@ -1120,12 +1119,32 @@ p, li { white-space: pre-wrap; }
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1234"/>
+        <location filename="csettingsdlg.cpp" line="509"/>
+        <source>Eco (900)</source>
+        <translation>Эко *900(</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="513"/>
+        <source>Standard (1500)</source>
+        <translation>Стандарт (1500)</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="517"/>
+        <source>Premium (2500)</source>
+        <translation>Премиум (2500)</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="521"/>
+        <source>%1 Kbit/s</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="1254"/>
         <source>The same ShortCut!</source>
         <translation>Одинаковая комбинация клавиш!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1235"/>
+        <location filename="csettingsdlg.cpp" line="1255"/>
         <source>The same ShortCut %1 is already in row %2.
 Please enter another ShortCut.</source>
         <translation>Такая же комбинация клавиш %1 уже имеется в строке %2.
@@ -1784,7 +1803,7 @@ or start time is later than end time!</source>
         <translation>Внимание! Извините! Невозможно разобрать модуль плееера!</translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="297"/>
+        <location filename="cvlcctrl.cpp" line="288"/>
         <source>Warning!</source>
         <translation>Внимание!</translation>
     </message>
@@ -1798,28 +1817,28 @@ or start time is later than end time!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="283"/>
+        <location filename="cvlcctrl.cpp" line="274"/>
         <source>Start player detached using folling command line:
   --&gt; %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="298"/>
+        <location filename="cvlcctrl.cpp" line="289"/>
         <source>Player is already running! Do you want to proceed?</source>
         <translation>Плеер уже в работе! Вы хотите продолжиться?</translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="571"/>
+        <location filename="cvlcctrl.cpp" line="562"/>
         <source>Player has ended ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="575"/>
+        <location filename="cvlcctrl.cpp" line="566"/>
         <source>Player was started ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="633"/>
+        <location filename="cvlcctrl.cpp" line="624"/>
         <source>libVLC reports new state %1</source>
         <translation></translation>
     </message>
@@ -1828,18 +1847,18 @@ or start time is later than end time!</source>
         <translation type="obsolete">Player уже в работе!</translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="318"/>
+        <location filename="cvlcctrl.cpp" line="309"/>
         <source>Start player using folling command line:
   --&gt; %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="466"/>
+        <location filename="cvlcctrl.cpp" line="457"/>
         <source>Muxing forced to &apos;%1&apos;!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="484"/>
+        <location filename="cvlcctrl.cpp" line="475"/>
         <source>Remove double slash in target path ...</source>
         <translation></translation>
     </message>
@@ -1868,32 +1887,37 @@ or start time is later than end time!</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="165"/>
+        <location filename="cvodbrowser.cpp" line="166"/>
         <source>Video Details</source>
         <translation>Информации о видео</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="184"/>
+        <location filename="cvodbrowser.cpp" line="185"/>
         <source>min.</source>
         <translation>мин.</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="187"/>
+        <location filename="cvodbrowser.cpp" line="188"/>
         <source>Director: %1</source>
         <translation>Режиссер: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="191"/>
+        <location filename="cvodbrowser.cpp" line="192"/>
         <source>With: %1</source>
         <translation>В ролях: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="198"/>
+        <location filename="cvodbrowser.cpp" line="196"/>
+        <source>Genre: %1</source>
+        <translation>Жанр: %1</translation>
+    </message>
+    <message>
+        <location filename="cvodbrowser.cpp" line="209"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="206"/>
+        <location filename="cvodbrowser.cpp" line="217"/>
         <source>Part %1</source>
         <translation></translation>
     </message>
@@ -1902,12 +1926,12 @@ or start time is later than end time!</source>
         <translation type="obsolete">Часть</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="220"/>
+        <location filename="cvodbrowser.cpp" line="231"/>
         <source>Play Movie ...</source>
         <translation>Просмотр фильма ...</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="229"/>
+        <location filename="cvodbrowser.cpp" line="240"/>
         <source>Record Movie ...</source>
         <translation>Запись фильма ...</translation>
     </message>
@@ -1932,195 +1956,199 @@ or start time is later than end time!</source>
         <translation type="obsolete">Выбор сдвига по времени</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="140"/>
-        <location filename="forms/mainwindow.ui" line="595"/>
-        <location filename="mainwindow.cpp" line="2223"/>
-        <location filename="mainwindow.cpp" line="2225"/>
+        <location filename="forms/mainwindow.ui" line="166"/>
+        <location filename="forms/mainwindow.ui" line="622"/>
+        <location filename="mainwindow.cpp" line="2331"/>
         <source>Play selected Channel</source>
         <translation>Просмотр выбранной передачи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2216"/>
-        <location filename="mainwindow.cpp" line="2218"/>
+        <location filename="mainwindow.cpp" line="2319"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="178"/>
-        <location filename="forms/mainwindow.ui" line="604"/>
+        <location filename="forms/mainwindow.ui" line="131"/>
+        <location filename="forms/mainwindow.ui" line="744"/>
+        <source>Show Live!</source>
+        <translation>Прямой эфир!</translation>
+    </message>
+    <message>
+        <location filename="forms/mainwindow.ui" line="204"/>
+        <location filename="forms/mainwindow.ui" line="631"/>
         <source>Record selected Channel</source>
         <translation>Запись выбранной передачи</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="219"/>
-        <location filename="forms/mainwindow.ui" line="613"/>
-        <location filename="mainwindow.cpp" line="2564"/>
+        <location filename="forms/mainwindow.ui" line="245"/>
+        <location filename="forms/mainwindow.ui" line="640"/>
+        <location filename="mainwindow.cpp" line="2669"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="276"/>
-        <location filename="forms/mainwindow.ui" line="622"/>
-        <location filename="mainwindow.cpp" line="2581"/>
+        <location filename="forms/mainwindow.ui" line="302"/>
+        <location filename="forms/mainwindow.ui" line="649"/>
+        <location filename="mainwindow.cpp" line="2686"/>
         <source>Jump Backward</source>
         <translation>Шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="305"/>
+        <location filename="forms/mainwindow.ui" line="331"/>
         <source>Time Jump Value in minutes</source>
         <translation>Размер временного шага</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="309"/>
+        <location filename="forms/mainwindow.ui" line="335"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="314"/>
+        <location filename="forms/mainwindow.ui" line="340"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="319"/>
+        <location filename="forms/mainwindow.ui" line="345"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="324"/>
+        <location filename="forms/mainwindow.ui" line="350"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="329"/>
+        <location filename="forms/mainwindow.ui" line="355"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="334"/>
+        <location filename="forms/mainwindow.ui" line="360"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="357"/>
-        <location filename="forms/mainwindow.ui" line="631"/>
-        <location filename="mainwindow.cpp" line="2580"/>
+        <location filename="forms/mainwindow.ui" line="383"/>
+        <location filename="forms/mainwindow.ui" line="658"/>
+        <location filename="mainwindow.cpp" line="2685"/>
         <source>Jump Forward</source>
         <translation>Шаг вперед</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="442"/>
+        <location filename="forms/mainwindow.ui" line="468"/>
         <source>Time Progress for played programm</source>
         <translation>Процент прошедшего времени воспроизводимой передачи</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="467"/>
+        <location filename="forms/mainwindow.ui" line="493"/>
         <source>Short EPG</source>
         <translation>Краткая информация о передаче</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="484"/>
+        <location filename="forms/mainwindow.ui" line="510"/>
         <source>Media</source>
         <translation>Медиа</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="488"/>
+        <location filename="forms/mainwindow.ui" line="514"/>
         <source>Channels</source>
         <translation>Список каналов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="498"/>
+        <location filename="forms/mainwindow.ui" line="524"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="505"/>
+        <location filename="forms/mainwindow.ui" line="531"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="513"/>
+        <location filename="forms/mainwindow.ui" line="539"/>
         <source>Player</source>
         <translation>Плеер</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="517"/>
+        <location filename="forms/mainwindow.ui" line="543"/>
         <source>Aspect</source>
         <translation>Соотношение сторон</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="522"/>
+        <location filename="forms/mainwindow.ui" line="548"/>
         <source>Crop</source>
-        <translation>Подрезать</translation>
+        <translation>Размер кадра</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="538"/>
+        <location filename="forms/mainwindow.ui" line="565"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="559"/>
-        <location filename="mainwindow.cpp" line="2567"/>
+        <location filename="forms/mainwindow.ui" line="586"/>
+        <location filename="mainwindow.cpp" line="2672"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="564"/>
+        <location filename="forms/mainwindow.ui" line="591"/>
         <source>Channels, EPG and VOD</source>
         <translation>Каналы, Телегид и Видеотека</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="569"/>
+        <location filename="forms/mainwindow.ui" line="596"/>
         <source>Guide</source>
         <translation>Инструкция</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="578"/>
-        <location filename="mainwindow.cpp" line="2568"/>
+        <location filename="forms/mainwindow.ui" line="605"/>
+        <location filename="mainwindow.cpp" line="2673"/>
         <source>About</source>
         <translation>О программе...</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="583"/>
+        <location filename="forms/mainwindow.ui" line="610"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="640"/>
+        <location filename="forms/mainwindow.ui" line="667"/>
         <source>Time Record</source>
         <translation>Планировщик</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="651"/>
+        <location filename="forms/mainwindow.ui" line="678"/>
         <source>Show Upper Tools-Panel</source>
         <translation>Показать верхнюю панель инструментов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="662"/>
+        <location filename="forms/mainwindow.ui" line="689"/>
         <source>Show Channel Information</source>
         <translation>Показать информацию о передаче</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="673"/>
+        <location filename="forms/mainwindow.ui" line="700"/>
         <source>Show Lower Tools-Panel</source>
         <translation>Показать нижнюю панель инструментов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="681"/>
+        <location filename="forms/mainwindow.ui" line="708"/>
         <source>Always On Top</source>
         <translation>Не перекрывается другими окнами</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="692"/>
+        <location filename="forms/mainwindow.ui" line="719"/>
         <source>One Click Play</source>
         <translation>Немедленное воспроизведение</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="697"/>
+        <location filename="forms/mainwindow.ui" line="724"/>
         <source>Clear Recent Channel List</source>
         <translation>Очистка списка последних каналов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="708"/>
+        <location filename="forms/mainwindow.ui" line="735"/>
         <source>Show Status Bar</source>
         <translation>Показать Статусбар</translation>
     </message>
@@ -2163,47 +2191,47 @@ dataDir: %1
         <translation type="obsolete">%1 Клиент API сообщает об ошибке: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="804"/>
+        <location filename="mainwindow.cpp" line="886"/>
         <source>logout done ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="873"/>
+        <location filename="mainwindow.cpp" line="964"/>
         <source>Active stream server is %1</source>
         <translation>Активный сервер потока %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="908"/>
+        <location filename="mainwindow.cpp" line="999"/>
         <source>Using Bitrate %1 kbit/s ...</source>
         <translation>Используя битрейт %1 kbit/s ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1099"/>
+        <location filename="mainwindow.cpp" line="1195"/>
         <source>Length: %1 min.</source>
         <translation>Длин. %1 мин.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1100"/>
+        <location filename="mainwindow.cpp" line="1196"/>
         <source> (Ar.)</source>
         <translation> (Ар.)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1199"/>
+        <location filename="mainwindow.cpp" line="1295"/>
         <source>timeRec reports: record done!</source>
         <translation>Планировщик сообщает: запись сделана!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1207"/>
+        <location filename="mainwindow.cpp" line="1303"/>
         <source>timeRec reports: record active!</source>
         <translation>Планировщик сообщает: запись активна!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1221"/>
+        <location filename="mainwindow.cpp" line="1317"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation>vlcCtrl сообщает: vlc player закончил!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1229"/>
+        <location filename="mainwindow.cpp" line="1325"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation>vlcCtrl сообщает: vlc player активный!</translation>
     </message>
@@ -2216,163 +2244,178 @@ dataDir: %1
         <translation type="obsolete">Невозможно заупстить VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="795"/>
+        <location filename="mainwindow.cpp" line="877"/>
         <source>Error: %1 Client API reports some errors: %2</source>
         <translation>Ошибка: %1 Клиент API сообщает об ошибках: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1304"/>
-        <location filename="mainwindow.cpp" line="2091"/>
-        <location filename="mainwindow.cpp" line="2137"/>
+        <location filename="mainwindow.cpp" line="1189"/>
+        <source>%1 (Archive)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1400"/>
+        <location filename="mainwindow.cpp" line="2205"/>
+        <location filename="mainwindow.cpp" line="2252"/>
         <source>Error! Can&apos;t start VLC-Media Player!</source>
         <translation>Ошибка! Невозможно запустить VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1310"/>
-        <location filename="mainwindow.cpp" line="2098"/>
-        <location filename="mainwindow.cpp" line="2143"/>
+        <location filename="mainwindow.cpp" line="1406"/>
+        <location filename="mainwindow.cpp" line="2212"/>
+        <location filename="mainwindow.cpp" line="2258"/>
         <source>Started VLC with pid #%1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1325"/>
+        <location filename="mainwindow.cpp" line="1421"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1450"/>
+        <location filename="mainwindow.cpp" line="1548"/>
         <source>Video On Demand</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2563"/>
+        <location filename="mainwindow.cpp" line="2620"/>
+        <source>Length:</source>
+        <translation>Длительность:</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2625"/>
+        <source>%1 min.</source>
+        <translation>%1 мин.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="2668"/>
         <source>Play / Pause</source>
         <translation>Воспроизведение / Пауза</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2565"/>
+        <location filename="mainwindow.cpp" line="2670"/>
         <source>Record</source>
         <translation>Запись</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2566"/>
+        <location filename="mainwindow.cpp" line="2671"/>
         <source>Timer Record</source>
         <translation>Планировщик записи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2569"/>
+        <location filename="mainwindow.cpp" line="2674"/>
         <source>Channels, EPG/VOD</source>
         <translation>Каналы, Телегид/Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2570"/>
+        <location filename="mainwindow.cpp" line="2675"/>
         <source>Search EPG</source>
         <translation>Поиск в Телегиде</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2571"/>
+        <location filename="mainwindow.cpp" line="2676"/>
         <source>Text Size +</source>
         <translation>Увеличить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2572"/>
+        <location filename="mainwindow.cpp" line="2677"/>
         <source>Text Size -</source>
         <translation>Уменьшить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2573"/>
+        <location filename="mainwindow.cpp" line="2678"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2574"/>
+        <location filename="mainwindow.cpp" line="2679"/>
         <source>Toggle Aspect Ratio</source>
         <translation>Изменение Соотношения Сторон</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2575"/>
+        <location filename="mainwindow.cpp" line="2680"/>
         <source>Toggle Crop Geometry</source>
         <translation>Изменение Подрезки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2576"/>
+        <location filename="mainwindow.cpp" line="2681"/>
         <source>Toggle Fullscreen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2577"/>
+        <location filename="mainwindow.cpp" line="2682"/>
         <source>Volume +</source>
         <translation>Громче +</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2578"/>
+        <location filename="mainwindow.cpp" line="2683"/>
         <source>Volume -</source>
         <translation>Тише -</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2579"/>
+        <location filename="mainwindow.cpp" line="2684"/>
         <source>Toggle Mute</source>
         <translation>Без/Со Звуком</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2582"/>
+        <location filename="mainwindow.cpp" line="2687"/>
         <source>Next Channel</source>
         <translation>Следующий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2583"/>
+        <location filename="mainwindow.cpp" line="2688"/>
         <source>Previous Channel</source>
         <translation>Предыдущий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2584"/>
+        <location filename="mainwindow.cpp" line="2689"/>
         <source>Show EPG / VOD</source>
         <translation>Телегид / Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1816"/>
+        <location filename="mainwindow.cpp" line="1930"/>
         <source>VLC is still running.&lt;br /&gt;&lt;b&gt;Closing VLC record will also close the started VLC-Player.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Do you really want to close VLC Record now?</source>
         <translation>VLC Mediaplayer ещё в работае.&lt;br /&gt;&lt;b&gt;Если вы остановите работу VLC-Record, то и VLC-Player закроется.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Уверены ли Вы?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1821"/>
-        <location filename="mainwindow.cpp" line="2341"/>
+        <location filename="mainwindow.cpp" line="1935"/>
+        <location filename="mainwindow.cpp" line="2444"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1939"/>
+        <location filename="mainwindow.cpp" line="2053"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
         <translation>Невозможно загрузить значок канала</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2514"/>
+        <location filename="mainwindow.cpp" line="2617"/>
         <source>Program:</source>
         <translation>Передача:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2515"/>
+        <location filename="mainwindow.cpp" line="2618"/>
         <source>Start:</source>
         <translation>Начало:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2516"/>
+        <location filename="mainwindow.cpp" line="2619"/>
         <source>End:</source>
         <translation>Окончание:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2026"/>
-        <location filename="mainwindow.cpp" line="2161"/>
+        <location filename="mainwindow.cpp" line="2140"/>
+        <location filename="mainwindow.cpp" line="2276"/>
         <source>Save Stream as</source>
         <translation>Сохранить поток как...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2337"/>
+        <location filename="mainwindow.cpp" line="2440"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <translation>VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2440"/>
+        <location filename="mainwindow.cpp" line="2543"/>
         <source>KTV-Recorder - Click to activate!</source>
         <translation></translation>
     </message>
@@ -2681,6 +2724,18 @@ Please enter another ShortCut.</source>
         <translation type="obsolete">Плеер</translation>
     </message>
     <message>
+        <source>Order: </source>
+        <translation type="obsolete">Сортировка</translation>
+    </message>
+    <message>
+        <source>Site: </source>
+        <translation type="obsolete">Сайт</translation>
+    </message>
+    <message>
+        <source>Show Live!</source>
+        <translation type="obsolete">Прямой эфир!</translation>
+    </message>
+    <message>
         <source>Jump Backward</source>
         <translation type="obsolete">шаг назад</translation>
     </message>
@@ -2691,6 +2746,14 @@ Please enter another ShortCut.</source>
     <message>
         <source>Jump Forward</source>
         <translation type="obsolete">шаг вперед</translation>
+    </message>
+    <message>
+        <source>Short EPG</source>
+        <translation type="obsolete">Краткая информация о передаче</translation>
+    </message>
+    <message>
+        <source>Time Progress for played programm</source>
+        <translation type="obsolete">Процент прошедшего времени воспроизводимой передачи</translation>
     </message>
 </context>
 </TS>

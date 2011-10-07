@@ -84,8 +84,8 @@ private:
     cparser::SGenreInfo            genreInfo;
 
 protected:
-    int StartVlcRec (const QString &sURL, const QString &sChannel, bool bArchiv = false);
-    int StartVlcPlay (const QString &sURL, bool bArchiv = false);
+    int StartVlcRec (const QString &sURL, const QString &sChannel);
+    int StartVlcPlay (const QString &sURL);
     void StartStreamDownload (const QString &sURL, const QString &sName, const QString &sFileExt = "ts");
     void TouchPlayCtrlBtns (bool bEnable = true);
     QString CleanShowName (const QString &str);
@@ -116,6 +116,9 @@ protected:
     virtual void closeEvent(QCloseEvent *event);
 
 private slots:
+    void on_actionOne_Click_Play_triggered();
+    void on_actionShow_Live_triggered();
+    void on_pushLive_clicked();
     void on_actionGuid_triggered();
     void on_actionShow_Status_Bar_triggered();
     void on_actionClear_Recent_Channel_List_triggered();
@@ -182,6 +185,8 @@ private slots:
     void slotCrop();
     void slotAspectToggle(int idx);
     void slotCropToggle(int idx);
+//    void slotStartConnectionChain();
+    void slotUpdateProgress (int iMin, int iMax, int iAct);
 
 signals:
     void sigToggleFullscreen ();

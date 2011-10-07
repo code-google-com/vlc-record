@@ -921,7 +921,7 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
 
                 slNeeded << "name" << "lenght" << "description" << "actors"
                          << "country" << "director" << "poster" << "year"
-                         << "id";
+                         << "id" << "genre_str";
 
                 oneLevelParser("vis", slNeeded, mResults);
 
@@ -932,6 +932,7 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
                 vidInfo.sImg      = mResults.value("poster");
                 vidInfo.sName     = mResults.value("name");
                 vidInfo.sYear     = mResults.value("year");
+		vidInfo.sGenres   = mResults.value("genre_str");
                 vidInfo.uiLength  = mResults.value("lenght").toUInt();
                 vidInfo.uiVidId   = mResults.value("id").toUInt();
 

@@ -47,8 +47,10 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pSettings     = NULL;
    pTrigger      = NULL;
    bCtrlStream   = false;
+   bResume       = false;
    bSpoolPending = true;
    uiDuration    = (uint)-1;
+   pauseRole     = Button::Pause;
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -83,6 +85,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 
    poller.start(1000);
    sliderTimer.start(1000);
+
+   // hide slider ...
+   ui->posSlider->hide();
 }
 
 /* -----------------------------------------------------------------\
@@ -306,8 +311,30 @@ int CPlayer::play()
 
    if (pMediaPlayer)
    {
-      // reset exception stuff ...
-      libvlc_media_player_play (pMediaPlayer);
+      if (bResume)
+      {
+         // resume means: request archive stream
+         // from last position ...
+         uint    gmt = timer.gmtPosition();
+
+         // trigger request for the new stream position ...
+         QString req = QString("cid=%1&gmt=%2")
+                          .arg(showInfo.channelId()).arg(gmt);
+
+         // mark spooling as active ...
+         bSpoolPending = true;
+
+         enableDisablePlayControl (false);
+
+         // save resume time ...
+         showInfo.setLastJumpTime(gmt);
+
+         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
+      }
+      else
+      {
+         libvlc_media_player_play (pMediaPlayer);
+      }
    }
 
    return iRV;
@@ -355,6 +382,12 @@ int CPlayer::pause()
 
    if (pMediaPlayer && bCtrlStream)
    {
+      // mark stream for resume ...
+      if (pauseRole == Button::Stop_and_Save)
+      {
+         bResume = true;
+      }
+
       libvlc_media_player_pause(pMediaPlayer);
    }
 
@@ -372,15 +405,36 @@ int CPlayer::pause()
 |  Returns: 0 --> ok
 |          -1 --> any error
 \----------------------------------------------------------------- */
-int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
+int CPlayer::playMedia(const QString &sCmdLine)
 {
    int                         iRV  = 0;
    libvlc_media_t             *p_md = NULL;
    QStringList                 lArgs;
    QStringList::const_iterator cit;
 
-   // store control flag ...
-   bCtrlStream = bAllowCtrl;
+   // do we can control the stream ... ?
+   if ((showInfo.playState() == IncPlay::PS_PLAY)
+      && showInfo.canCtrlStream())
+   {
+      bCtrlStream = true;
+   }
+   else
+   {
+      bCtrlStream = false;
+   }
+
+   // how to handle pause ?
+   if ((showInfo.showType() == ShowInfo::Archive) && bCtrlStream)
+   {
+      pauseRole = Button::Stop_and_Save;
+   }
+   else
+   {
+      pauseRole = Button::Pause;
+   }
+
+   // reset resume stuff ...
+   bResume = false;
 
    // reset play timer stuff ...
    timer.reset();
@@ -393,7 +447,6 @@ int CPlayer::playMedia(const QString &sCmdLine, bool bAllowCtrl)
 
    // enable / disable position slider ...
    ui->posSlider->setValue(0);
-   // ui->posSlider->setEnabled(bCtrlStream);
    ui->labPos->setEnabled(bCtrlStream);
    ui->labPos->setText("00:00:00");
 
@@ -465,7 +518,7 @@ void CPlayer::slotUpdateSlider()
 {
    if (pMediaPlayer)
    {
-      if (libvlc_media_player_is_playing(pMediaPlayer) && bCtrlStream)
+      if (libvlc_media_player_is_playing(pMediaPlayer))
       {
          uint pos;
          if (isPositionable())
@@ -476,11 +529,8 @@ void CPlayer::slotUpdateSlider()
             {
                ui->posSlider->setValue(pos);
                pos = pos / 1000; // ms ...
-               ui->labPos->setText(QTime((int)pos / 3600,
-                                         (int)(pos % 3600) / 60,
-                                         pos % 60).toString("hh:mm:ss"));
+               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
             }
-
          }
          else
          {
@@ -497,11 +547,12 @@ void CPlayer::slotUpdateSlider()
 
                pos -= showInfo.starts();
 
-               ui->labPos->setText(QTime((int)pos / 3600,
-                                         (int)(pos % 3600) / 60,
-                                         pos % 60).toString("hh:mm:ss"));
+               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
             }
          }
+
+         // send slider position ...
+         emit sigSliderPos(ui->posSlider->minimum(), ui->posSlider->maximum(), ui->posSlider->value());
       }
    }
 }
@@ -698,6 +749,72 @@ void CPlayer::slotLibVLCLog()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: on_cbxAspect_currentIndexChanged
+|  Begin: 08.03.2010 / 09:55:10
+|  Author: Jo2003
+|  Description: set new aspect ration ...
+|
+|  Parameters: new aspect ratio as string ...
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
+{
+   if (pMediaPlayer)
+   {
+      QString sAspect, sCrop;
+
+      // set new aspect ratio ...
+      libvlc_video_set_aspect_ratio(pMediaPlayer, str.toAscii().data());
+
+      // save aspect if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sAspect != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), str, ui->cbxCrop->currentText());
+      }
+
+      mInfo(tr("Aspect ratio: %1")
+            .arg(libvlc_video_get_aspect_ratio(pMediaPlayer)));
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxCrop_currentIndexChanged
+|  Begin: 23.03.2010 / 09:55:10
+|  Author: Jo2003
+|  Description: set new crop geometry ...
+|
+|  Parameters: new crop geometry as string ...
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
+{
+   if (pMediaPlayer)
+   {
+      QString sAspect, sCrop;
+
+      // set new aspect ratio ...
+      libvlc_video_set_crop_geometry(pMediaPlayer, str.toAscii().data());
+
+      // save crop if changed ...
+      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
+
+      if (sCrop != str)
+      {
+         // save to database ...
+         pDb->addAspect(showInfo.channelId(), ui->cbxAspect->currentText(), str);
+      }
+
+      mInfo(tr("Crop ratio: %1")
+            .arg(libvlc_video_get_crop_geometry(pMediaPlayer)));
+   }
+}
+
+/* -----------------------------------------------------------------\
 |  Method: slotToggleFullScreen
 |  Begin: 08.03.2010 / 09:55:10
 |  Author: Jo2003
@@ -711,6 +828,74 @@ void CPlayer::slotLibVLCLog()
 int CPlayer::slotToggleFullScreen()
 {
    return myToggleFullscreen();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotToggleAspectRatio
+|  Begin: 08.03.2010 / 15:10:10
+|  Author: Jo2003
+|  Description: switch aspect ratio to next one ...
+|
+|  Parameters: --
+|
+|  Returns: 0 --> ok
+|          -1 --> any error
+\----------------------------------------------------------------- */
+int CPlayer::slotToggleAspectRatio()
+{
+   int iRV = -1;
+   if (pMediaPlayer)
+   {
+      int idx = ui->cbxAspect->currentIndex();
+      idx ++;
+
+      // if end reached, start with index 0 ...
+      if (idx >= ui->cbxAspect->count())
+      {
+         idx = 0;
+      }
+
+      // set new aspect ratio ...
+      ui->cbxAspect->setCurrentIndex(idx);
+
+      iRV = 0;
+   }
+
+   return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotToggleCropGeometry
+|  Begin: 08.03.2010 / 15:10:10
+|  Author: Jo2003
+|  Description: switch aspect ratio to next one ...
+|
+|  Parameters: --
+|
+|  Returns: 0 --> ok
+|          -1 --> any error
+\----------------------------------------------------------------- */
+int CPlayer::slotToggleCropGeometry()
+{
+   int iRV = -1;
+   if (pMediaPlayer)
+   {
+      int idx = ui->cbxCrop->currentIndex();
+      idx ++;
+
+      // if end reached, start with index 0 ...
+      if (idx >= ui->cbxCrop->count())
+      {
+         idx = 0;
+      }
+
+      // set new aspect ratio ...
+      ui->cbxCrop->setCurrentIndex(idx);
+
+      iRV = 0;
+   }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -778,111 +963,6 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
    }
 
    return 0;
-}
-
-void CPlayer::on_cbxAspect_currentIndexChanged(QString str)
-{
-   if (pMediaPlayer)
-   {
-      QString sAspect, sCrop;
-
-      // set new aspect ratio ...
-      libvlc_video_set_aspect_ratio(pMediaPlayer, str.toAscii().data());
-
-      // save aspect if changed ...
-      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
-
-      if (sAspect != str)
-      {
-         // save to database ...
-         pDb->addAspect(showInfo.channelId(), str, ui->cbxCrop->currentText());
-      }
-
-      // now must aspect ratio in menu of MainWindow be changed
-      emit sigAspectToggle(ui->cbxAspect->currentIndex());
-
-
-      mInfo(tr("Aspect ratio: %1")
-            .arg(libvlc_video_get_aspect_ratio(pMediaPlayer)));
-   }
-}
-
-void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
-{
-   if (pMediaPlayer)
-   {
-      QString sAspect, sCrop;
-
-      // set new aspect ratio ...
-      libvlc_video_set_crop_geometry(pMediaPlayer, str.toAscii().data());
-
-      // save crop if changed ...
-      pDb->aspect(showInfo.channelId(), sAspect, sCrop);
-
-      if (sCrop != str)
-      {
-         // save to database ...
-         pDb->addAspect(showInfo.channelId(), ui->cbxAspect->currentText(), str);
-      }
-
-      // now must aspect ratio in menu of MainWindow be changed
-      emit sigCropToggle(ui->cbxCrop->currentIndex());
-
-      mInfo(tr("Crop ratio: %1")
-            .arg(libvlc_video_get_crop_geometry(pMediaPlayer)));
-   }
-}
-
-int CPlayer::slotToggleAspectRatio()
-{
-   int iRV = -1;
-   if (pMediaPlayer)
-   {
-      int idx = ui->cbxAspect->currentIndex();
-      idx ++;
-
-      // if end reached, start with index 0 ...
-      if (idx >= ui->cbxAspect->count())
-      {
-         idx = 0;
-      }
-
-      // set new aspect ratio ...
-      ui->cbxAspect->setCurrentIndex(idx);
-
-      // now must aspect ratio in menu of MainWindow be changed
-      emit sigAspectToggle(idx);
-
-      iRV = 0;
-   }
-
-   return iRV;
-}
-
-int CPlayer::slotToggleCropGeometry()
-{
-   int iRV = -1;
-   if (pMediaPlayer)
-   {
-      int idx = ui->cbxCrop->currentIndex();
-      idx ++;
-
-      // if end reached, start with index 0 ...
-      if (idx >= ui->cbxCrop->count())
-      {
-         idx = 0;
-      }
-
-      // set new crop ratio ...
-      ui->cbxCrop->setCurrentIndex(idx);
-
-      // now must crop ratio in menu of MainWindow be changed
-      emit sigCropToggle(idx);
-
-      iRV = 0;
-   }
-
-   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -1170,9 +1250,7 @@ void CPlayer::on_posSlider_valueChanged(int value)
             value -= showInfo.starts();
          }
 
-         ui->labPos->setText(QTime((int)value / 3600,
-                                   (int)(value % 3600) / 60,
-                                   value % 60).toString("hh:mm:ss"));
+         ui->labPos->setText(QTime(0, 0).addSecs(value).toString("hh:mm:ss"));
       }
    }
 }
@@ -1191,7 +1269,17 @@ void CPlayer::enableDisablePlayControl (bool bEnable)
 {
    ui->btnFwd->setEnabled (bEnable && bCtrlStream);
    ui->btnBwd->setEnabled (bEnable && bCtrlStream);
-   ui->posSlider->setEnabled (bEnable && bCtrlStream);
+
+   if (bEnable && bCtrlStream)
+   {
+       ui->posSlider->show();
+       ui->posSlider->setEnabled (true);
+   }
+   else
+   {
+       ui->posSlider->setEnabled (false);
+       ui->posSlider->hide();
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -1211,20 +1299,26 @@ void CPlayer::initSlider()
    uiDuration = libvlc_media_player_get_length(pMediaPlayer);
    mInfo(tr("Film length: %1ms.").arg(uiDuration));
 
-   if (bCtrlStream)
+   if (isPositionable())
    {
-      if (isPositionable())
-      {
-         // VOD stuff ...
-         ui->posSlider->setRange(0, uiDuration);
+      // VOD stuff ...
+      ui->posSlider->setRange(0, uiDuration);
 
-         ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
+      ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
+   }
+   else
+   {
+      // set slider range to seconds ...
+      ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
+
+      if (showInfo.lastJump())
+      {
+         ui->posSlider->setValue(mFromGmt(showInfo.lastJump()));
+
+         ui->labPos->setText(QTime(0, 0).addSecs(showInfo.lastJump() - showInfo.starts()).toString("hh:mm:ss"));
       }
       else
       {
-         // set slider range to seconds ...
-         ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
-
          ui->posSlider->setValue(mFromGmt(showInfo.starts()));
 
          ui->labPos->setText(QTime(0, 0).toString("hh:mm:ss"));
@@ -1335,6 +1429,22 @@ void CPlayer::slotMute()
 
       libvlc_audio_set_mute(pMediaPlayer, mute);
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: resume
+|  Begin: 22.09.2011
+|  Author: Jo2003
+|  Description: resume from stop?
+|
+|  Parameters: --
+|
+|  Returns: true --> yes
+|          false --> no
+\----------------------------------------------------------------- */
+const bool& CPlayer::resume()
+{
+   return bResume;
 }
 
 QFrame* CPlayer::getFrameTimerInfo()
