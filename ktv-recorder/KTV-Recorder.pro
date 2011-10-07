@@ -102,8 +102,7 @@ FORMS    += forms/mainwindow.ui \
     forms/cplayer.ui \
     forms/cinstruction.ui \
     forms/cchannelsepgdlg.ui \
-    forms/qftsettings.ui \
-    forms/cplayer_org.ui
+    forms/qftsettings.ui
 
 
 win32:INCLUDEPATH += include
