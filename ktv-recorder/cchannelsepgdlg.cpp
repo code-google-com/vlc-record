@@ -294,8 +294,9 @@ int cid = getCurrentCid();
 
 if (chanMap.contains(cid))
 {
-         QDateTime epgTime = QDateTime::currentDateTime().addDays(iEpgOffset);
-         int       iDay    = epgTime.date().dayOfWeek() - 1;
+         QDateTime epgTime  = QDateTime::currentDateTime().addDays(iEpgOffset);
+         int       iDay     = epgTime.date().dayOfWeek() - 1;
+         int       iOffBack = iEpgOffset;
 
          // earlier or later ... ?
          if (iIdx < iDay)
@@ -312,7 +313,17 @@ if (chanMap.contains(cid))
          // get epg for requested day ...
          if (iIdx != iDay)
          {
-            pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+            correctEpgOffset ();
+
+            if(iOffBack != iEpgOffset)
+            {
+                pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+            }
+            else
+            {
+                // no change -> revert nav button ...
+                pEpgNavbar->setCurrentIndex(iDay);
+            }
          }
    }
 }
@@ -325,8 +336,16 @@ void CChannelsEPGdlg::slotbtnBack_clicked()
       {
          // set actual day in previous week to munday ...
          int iActDay  = pEpgNavbar->currentIndex();
+         int iOffBack = iEpgOffset;
          iEpgOffset  -= 7 + iActDay;
-         pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+
+         correctEpgOffset();
+
+         if (iOffBack != iEpgOffset)
+         {
+             pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+         }
+
       }
 }
 
@@ -338,8 +357,15 @@ void CChannelsEPGdlg::slotbtnNext_clicked()
       {
          // set actual day in next week to munday ...
          int iActDay  = pEpgNavbar->currentIndex();
+         int iOffBack = iEpgOffset;
          iEpgOffset  += 7 - iActDay;
-         pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+
+         correctEpgOffset();
+
+         if (iOffBack != iEpgOffset)
+         {
+             pTrigger->TriggerRequest(Kartina::REQ_EPG, cid, iEpgOffset);
+         }
       }
 }
 
@@ -483,11 +509,15 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
       cparser::SChan entry = chanMap.value(cid);
       int iTs;
 
-      pTextEpgShort->setHtml(QString(TMPL_BACKCOLOR)
-                                .arg("rgb(255, 254, 212)")
-                                .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
+      // update short info if we're in live mode
+      if (showInfo.showType() == ShowInfo::Live)
+      {
+        pTextEpgShort->setHtml(QString(TMPL_BACKCOLOR)
+                                  .arg("rgb(255, 254, 212)")
+                                  .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
+        SetProgress (entry.uiStart, entry.uiEnd);
+      }
 
-      SetProgress (entry.uiStart, entry.uiEnd);
 
       // quick'n'dirty timeshift hack ...
       if (entry.vTs.count() <= 2) // no timeshift available ...
@@ -520,6 +550,7 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
       }
    }
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -890,7 +921,21 @@ void CChannelsEPGdlg::SetProgress (const uint &start, const uint &end)
       }
    }
 
+   pProgressBar->setMinimum(0);
+   pProgressBar->setMaximum(100);
    pProgressBar->setValue(iPercent);
+}
+
+void CChannelsEPGdlg::correctEpgOffset()
+{
+    if (iEpgOffset > 7)
+    {
+        iEpgOffset = 7;
+    }
+    else if (iEpgOffset < -14)
+    {
+        iEpgOffset = -14;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1001,6 +1046,11 @@ void CChannelsEPGdlg::setGenreInfo(cparser::SGenreInfo *pGenrInf)
     pGenreInfo = pGenrInf;
 }
 
+void CChannelsEPGdlg::setEpgOffset(int iEpgOffs)
+{
+    iEpgOffset = iEpgOffs;
+}
+
 QString CChannelsEPGdlg::createTooltip (const QString & name, const QString & prog, uint start, uint end)
 {
    // create tool tip with programm info ...
@@ -1037,5 +1087,6 @@ void CChannelsEPGdlg::updateFavourites()
        }
     }
 }
+
 
 

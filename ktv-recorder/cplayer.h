@@ -84,6 +84,7 @@ public:
    bool isPositionable();
    void initSlider ();
    uint getSilderPos();
+   const bool& resume();
    QFrame* getFrameTimerInfo();
    QComboBox* getCbxAspect();
    QComboBox* getCbxCrop();
@@ -109,6 +110,8 @@ private:
    CWaitTrigger           *pTrigger;
    bool                    bSpoolPending;
    uint                    uiDuration;
+   Button::eBtnRole        pauseRole;
+   bool                    bResume;
 
 private slots:
    void on_posSlider_valueChanged(int value);
@@ -121,7 +124,7 @@ private slots:
    void slotUpdateSlider ();
 
 public slots:
-   int  playMedia (const QString &sCmdLine, bool bAllowCtrl);
+   int  playMedia (const QString &sCmdLine);
    int  play();
    int  stop();
    int  pause();
@@ -137,6 +140,7 @@ public slots:
 signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
+   void sigSliderPos (int iMin, int iMax, int iAct);
    void sigAspectToggle(int idx);
    void sigCropToggle(int idx);
 };

@@ -52,6 +52,7 @@ public:
     QComboBox* getCbxGenre();
     QList<int>* getListFav();
     int getEpgOffset();
+    void setEpgOffset(int iEpgOffs);
     void setTrigger (CWaitTrigger *pTrig);
     void setProgressBar(QProgressBar* pProgBar);
     void setTextEpgShort(CEpgBrowser* pEpgShort);
@@ -103,6 +104,7 @@ protected:
     void SetProgress (const uint &start, const uint &end);
     void savePositions();
     QString createTooltip(const QString & name, const QString & prog, uint start, uint end);
+    void correctEpgOffset();
 
     virtual void changeEvent(QEvent* e);
     virtual void closeEvent (QCloseEvent *event);

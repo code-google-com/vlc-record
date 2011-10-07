@@ -371,7 +371,7 @@ void CSettingsDlg::on_pushSave_clicked()
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
-   pDb->setValue("HttpCache", m_ui->cbxBufferSeconds->currentText());
+   pDb->setValue("HttpCache", m_ui->cbxBufferSeconds->itemData(m_ui->cbxBufferSeconds->currentIndex()).toInt());
    pDb->setValue("LogLevel", m_ui->cbxLogLevel->currentIndex());
    pDb->setValue("PlayerModule", m_ui->cbxPlayerMod->currentText());
    pDb->setValue("RefIntv", m_ui->cbxInterval->currentText());
@@ -495,14 +495,34 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
    int iActIdx = 0;
    int iCount  = 0;
    QVector<int>::const_iterator cit;
-
+   QString sName;
 
    m_ui->cbxBitRate->clear();
 
    // add all available bitrates ...
    for (cit = vValues.constBegin(); cit != vValues.constEnd(); cit++)
    {
-      m_ui->cbxBitRate->addItem(QString::number(*cit), QVariant(*cit));
+      // build name ...
+      switch (*cit)
+      {
+          case 900:
+            sName = tr("Eco (900)");
+            break;
+
+          case 1500:
+             sName = tr("Standard (1500)");
+             break;
+
+          case 2500:
+             sName = tr("Premium (2500)");
+             break;
+
+          default:
+             sName = tr("%1 Kbit/s").arg(*cit);
+             break;
+      }
+
+      m_ui->cbxBitRate->addItem(sName, QVariant(*cit));
 
       if (*cit == iActrate)
       {

@@ -100,9 +100,6 @@
        <number>2</number>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>5</number>
-       </property>
        <property name="margin">
         <number>0</number>
        </property>
@@ -121,6 +118,35 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushLive">
+         <property name="maximumSize">
+          <size>
+           <width>34</width>
+           <height>34</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Show Live!</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../vlc-record.qrc">
+           <normaloff>:/app/live</normaloff>:/app/live</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushPlay">
@@ -522,6 +548,7 @@
       <string>Crop</string>
      </property>
     </widget>
+    <addaction name="actionShow_Live"/>
     <addaction name="actionPlay"/>
     <addaction name="actionRecord"/>
     <addaction name="actionStop"/>
@@ -706,6 +733,15 @@
    </property>
    <property name="text">
     <string>Show Status Bar</string>
+   </property>
+  </action>
+  <action name="actionShow_Live">
+   <property name="icon">
+    <iconset resource="../vlc-record.qrc">
+     <normaloff>:/app/live</normaloff>:/app/live</iconset>
+   </property>
+   <property name="text">
+    <string>Show Live!</string>
    </property>
   </action>
  </widget>
