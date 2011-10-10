@@ -93,8 +93,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="129"/>
-        <source>&lt;b&gt;vlc-record is free software!&lt;/b&gt;</source>
-        <translation>&lt;b&gt;vlc-record бесплатно!&lt;/b&gt;</translation>
+        <source>&lt;b&gt;This program is free software!&lt;/b&gt;</source>
+        <oldsource>&lt;b&gt;vlc-record is free software!&lt;/b&gt;</oldsource>
+        <translation>&lt;b&gt;Эта программа бесплатной!&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="130"/>
@@ -1548,7 +1549,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="recorder.cpp" line="1679"/>
         <source>Length: %1 min.</source>
-        <translation>Длин. %1 мин.</translation>
+        <translation>Длит. %1 мин.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1680"/>
