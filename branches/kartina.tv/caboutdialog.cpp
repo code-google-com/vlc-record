@@ -126,7 +126,7 @@ void CAboutDialog::FillInfo(QString sExpires)
          << QString("%1<br />").arg(tr("It supports <b>EPG and TimeShift</b>.")) << endl
          << tr("For News and Updates please visit my site at %1.").arg("<a href='http://vlc-record.coujo.de'>http://vlc-record.coujo.de</a>") << endl
 #ifndef _IS_OEM
-         << "<br /> <br />" << tr("<b>vlc-record is free software!</b>") << endl
+         << "<br /> <br />" << tr("<b>This program is free software!</b>") << endl
          << tr("Nevertheless ... if you like this software, please support me: ") << endl
          << "<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=11286909'>"
          << tr("Donate some $ and / or &euro; at Paypal for my work.") << "</a><br /> <br />" << endl
