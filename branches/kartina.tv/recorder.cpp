@@ -3275,36 +3275,6 @@ void Recorder::ClearShortCuts()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: WantToClose
-|  Begin: 01.02.2010 / 15:05:00
-|  Author: Jo2003
-|  Description: ask if we want to clse vlc-record
-|
-|  Parameters: --
-|
-|  Returns: true --> close
-|          false --> don't close
-\----------------------------------------------------------------- */
-bool Recorder::WantToClose()
-{
-   QString sText = HTML_SITE;
-   sText.replace(TMPL_CONT, tr("VLC is still running.<br />"
-                               "<b>Closing VLC record will also close the started VLC-Player.</b>"
-                               "<br /> <br />"
-                               "Do you really want to close VLC Record now?"));
-
-   if (QMessageBox::question(this, tr("Question"), sText,
-                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-   {
-      return true;
-   }
-   else
-   {
-      return false;
-   }
-}
-
-/* -----------------------------------------------------------------\
 |  Method: FillChanMap
 |  Begin: 26.02.2010 / 09:20:24
 |  Author: Jo2003

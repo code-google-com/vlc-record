@@ -155,7 +155,6 @@ protected:
     QString CleanShowName (const QString &str);
     void CreateSystray ();
     bool WantToStopRec ();
-    bool WantToClose ();
     void HandleFavourites ();
     void FillChanMap (const QVector<cparser::SChan> &chanlist);
     void CleanContextMenu ();
