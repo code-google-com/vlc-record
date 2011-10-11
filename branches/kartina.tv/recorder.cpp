@@ -82,6 +82,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    ui->channelList->setItemDelegate(pDelegate);
    ui->channelList->setModel(pModel);
 
+   // update checker ...
+   pUpdateChecker = new QNetworkAccessManager(this);
+
    // set this dialog as parent for settings and timerRec ...
    Settings.setParent(this, Qt::Dialog);
    timeRec.setParent(this, Qt::Dialog);
@@ -114,17 +117,15 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // set proxy stuff ...
    if (Settings.UseProxy())
    {
-      KartinaTv.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                         Settings.GetProxyUser(), Settings.GetProxyPasswd());
-
-      dwnLogos.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                        Settings.GetProxyUser(), Settings.GetProxyPasswd());
-
-      dwnVodPics.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
+      QNetworkProxy proxy(QNetworkProxy::HttpCachingProxy,
+                          Settings.GetProxyHost(), Settings.GetProxyPort(),
                           Settings.GetProxyUser(), Settings.GetProxyPasswd());
 
-      streamLoader.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                            Settings.GetProxyUser(), Settings.GetProxyPasswd());
+      KartinaTv.setProxy(proxy);
+      dwnLogos.setProxy(proxy);
+      dwnVodPics.setProxy(proxy);
+      streamLoader.setProxy(proxy);
+      pUpdateChecker->setProxy(proxy);
    }
 
    // configure trigger and start it ...
@@ -215,7 +216,8 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (&KartinaTv,    SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
    connect (&KartinaTv,    SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
-   connect(ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
+   connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
+   connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
 
    // trigger read of saved timer records ...
    timeRec.ReadRecordList();
@@ -273,6 +275,11 @@ Recorder::~Recorder()
    if (pDelegate)
    {
       delete pDelegate;
+   }
+
+   if (pUpdateChecker)
+   {
+      delete pUpdateChecker;
    }
 }
 
@@ -523,17 +530,15 @@ void Recorder::on_pushSettings_clicked()
       // set proxy ...
       if (Settings.UseProxy())
       {
-         KartinaTv.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                            Settings.GetProxyUser(), Settings.GetProxyPasswd());
-
-         dwnLogos.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                           Settings.GetProxyUser(), Settings.GetProxyPasswd());
-
-         dwnVodPics.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
+         QNetworkProxy proxy(QNetworkProxy::HttpCachingProxy,
+                             Settings.GetProxyHost(), Settings.GetProxyPort(),
                              Settings.GetProxyUser(), Settings.GetProxyPasswd());
 
-         streamLoader.setProxy(Settings.GetProxyHost(), Settings.GetProxyPort(),
-                               Settings.GetProxyUser(), Settings.GetProxyPasswd());
+         KartinaTv.setProxy(proxy);
+         dwnLogos.setProxy(proxy);
+         dwnVodPics.setProxy(proxy);
+         streamLoader.setProxy(proxy);
+         pUpdateChecker->setProxy(proxy);
       }
 
       // set language as read ...
@@ -2763,6 +2768,53 @@ void Recorder::slotUpdateProgress (int iMin, int iMax, int iAct)
    ui->progressBar->setValue(iAct);
 }
 
+/* -----------------------------------------------------------------\
+|  Method: slotUpdateAnswer [slot]
+|  Begin: 12.10.2011
+|  Author: Jo2003
+|  Description: got update answer
+|
+|  Parameters: pointer to reply
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotUpdateAnswer (QNetworkReply* pRes)
+{
+   if (pRes->error() == QNetworkReply::NoError)
+   {
+      // got update info ...
+      QByteArray        ba = pRes->readAll();
+      cparser::SUpdInfo updInfo;
+
+      if (!XMLParser.parseUpdInfo(QString(ba), updInfo))
+      {
+         // compare version ...
+         if ((updInfo.iMinor > atoi(VERSION_MINOR))
+            && (updInfo.iMajor == atoi(VERSION_MAJOR))
+            && (updInfo.sUrl != ""))
+         {
+            QString s       = HTML_SITE;
+            QString content = tr("There is the new version %1 of %2 available.<br />Click %3 to download!")
+                  .arg(updInfo.sVersion)
+                  .arg(APP_NAME)
+                  .arg(QString("<a href='%1'>%2</a>").arg(updInfo.sUrl).arg(tr("here")));
+
+            s.replace(TMPL_CONT, content);
+
+            QMessageBox::information(this, tr("Update available"), s);
+         }
+      }
+   }
+   else
+   {
+      // only tell in log about the error ...
+      mInfo(pRes->errorString());
+   }
+
+   // schedule deletion ...
+   pRes->deleteLater();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -2954,6 +3006,12 @@ void Recorder::initDialog ()
    // init short cuts ...
    fillShortCutTab();
    InitShortCuts ();
+
+   // check for program updates ...
+   if (Settings.checkForUpdate())
+   {
+      pUpdateChecker->get(QNetworkRequest(QUrl(UPD_CHECK_URL)));
+   }
 }
 
 /* -----------------------------------------------------------------\

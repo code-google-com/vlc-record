@@ -984,11 +984,17 @@ border-top: 0px;
                </widget>
               </item>
               <item>
-               <widget class="Line" name="line_3">
+               <spacer name="horizontalSpacer_4">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Horizontal</enum>
                 </property>
-               </widget>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
               <item>
                <widget class="QPushButton" name="pushBwd">

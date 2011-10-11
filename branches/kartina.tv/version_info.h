@@ -30,12 +30,19 @@
    #define VERSION_MAJOR "1"
 #endif
 
+#define VERSION_MINOR "49"
+#define BETA_EXT      "B3"
+
 #define __MY__VERSION__ \
-   VERSION_MAJOR ".49B2" VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
+   VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last beta ---
+|
+| 2011-10-12: Version x.49B3
+| - updated translation
+| - add update check at startup
 |
 | 2011-09-29: Version x.49B2
 | - add first time settings dialog

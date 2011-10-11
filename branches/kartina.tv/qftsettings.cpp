@@ -148,6 +148,8 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("ExtChanList",  (int)Qt::Checked);  // show extended channel list
    pDb->setValue("PlayerModule", "5_libvlc.mod");    // default player module
    pDb->setValue("HttpCache",    8000);              // 8 sec. cache
+   pDb->setValue("UpdateCheck",  (int)Qt::Checked);  // check for updates
+   pDb->setValue("2ClickPlay",   (int)Qt::Checked);  // double click on channel list starts player
 
    // set windows size and position ...
    pDb->setValue("WndRect",        "74;71;1220;752");
