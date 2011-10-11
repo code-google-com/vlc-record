@@ -36,6 +36,7 @@
 #include <QWindowStateChangeEvent>
 #include <QMap>
 #include <QStandardItemModel>
+#include <QNetworkAccessManager>
 
 #include "csettingsdlg.h"
 #include "ckartinaclnt.h"
@@ -140,6 +141,7 @@ private:
     cparser::SAccountInfo           accountInfo;
     cparser::SGenreInfo             genreInfo;
     ulong                           ulStartFlags;
+    QNetworkAccessManager          *pUpdateChecker;
 
 protected:
     void fillShortCutTab();
@@ -247,6 +249,7 @@ private slots:
     void slotPlayPreviousChannel();
     void slotStartConnectionChain();
     void slotUpdateProgress (int iMin, int iMax, int iAct);
+    void slotUpdateAnswer (QNetworkReply* pRes);
 
 signals:
     void sigShow ();

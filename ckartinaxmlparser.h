@@ -20,6 +20,7 @@
 #include <QDateTime>
 #include <QString>
 #include <QMap>
+#include <QMutex>
 
 #include "clogfile.h"
 #include "defdef.h"
@@ -112,6 +113,14 @@ namespace cparser
       int     iPage;
       int     iTotal;
    };
+
+   struct SUpdInfo
+   {
+      QString                sVersion;
+      int                    iMajor;
+      int                    iMinor;
+      QString                sUrl;
+   };
 }
 
 /********************************************************************\
@@ -143,6 +152,7 @@ public:
    int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
    int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);
    int fillErrorMap();
+   int parseUpdInfo(const QString& sResp, cparser::SUpdInfo &updInfo);
 
 protected:
    void checkTimeOffSet (const uint &uiSrvTime);
@@ -157,8 +167,9 @@ protected:
 private:
    int iOffset;
    QString sErr, sCleanResp;
-   QXmlStreamReader xmlSr;
+   QXmlStreamReader   xmlSr;
    QMap<int, QString> mapError;
+   QMutex             mutex;
 };
 
 #endif /* __201005075459_CKARTINAXMLPARSER_H */

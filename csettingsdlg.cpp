@@ -134,6 +134,7 @@ void CSettingsDlg::readSettings()
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
    m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
    m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay"));
+   m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck"));
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())
@@ -368,6 +369,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("ExtChanList", (int)m_ui->checkExtChanInfo->checkState());
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
    pDb->setValue("2ClickPlay", (int)m_ui->check2ClicksToPlay->checkState());
+   pDb->setValue("UpdateCheck", (int)m_ui->checkUpdate->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1051,6 +1053,11 @@ QString CSettingsDlg::GetAPIServer()
 bool CSettingsDlg::extChanList()
 {
    return m_ui->checkExtChanInfo->isChecked();
+}
+
+bool CSettingsDlg::checkForUpdate()
+{
+   return m_ui->checkUpdate->isChecked();
 }
 
 int CSettingsDlg::getTimeShift()

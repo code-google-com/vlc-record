@@ -59,6 +59,11 @@
 #define MIN_CACHE_SIZE    5000000     // < 5 MB ...
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
 #define VIDEOS_PER_SITE   20          // number of videos / site
+#ifdef INCLUDE_LIBVLC
+   #define UPD_CHECK_URL     "http://rt.coujo.de/kartina_tv_ver.xml"
+#else
+   #define UPD_CHECK_URL     "http://rt.coujo.de/kartina_tv_ver_classic.xml"
+#endif // INCLUDE_LIBVLC
 
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\
