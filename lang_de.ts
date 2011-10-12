@@ -67,7 +67,7 @@ p, li { white-space: pre-wrap; }
         <location filename="caboutdialog.cpp" line="120"/>
         <source> (click to buy a subscription).</source>
         <oldsource> (Click to buy a subscription).</oldsource>
-        <translation>.</translation>
+        <translation>(klicken, um Abo zu kaufen).</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="124"/>
