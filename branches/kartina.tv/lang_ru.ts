@@ -83,7 +83,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="caboutdialog.cpp" line="126"/>
         <source>It supports &lt;b&gt;EPG and TimeShift&lt;/b&gt;.</source>
-        <translation>В &lt;b&gt;vlc-record&lt;/b&gt; отображается вся необходимая информация об эфире(Программа передач) и функция задержки вещания.</translation>
+        <translation>В программе отображается вся необходимая информация об эфире(Программа передач) и функция задержки вещания.</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="127"/>
