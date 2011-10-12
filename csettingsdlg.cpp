@@ -90,6 +90,7 @@ CSettingsDlg::~CSettingsDlg()
 void CSettingsDlg::readSettings()
 {
    QString s;
+   int     iErr;
 
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
@@ -133,8 +134,24 @@ void CSettingsDlg::readSettings()
    m_ui->checkDetach->setCheckState((Qt::CheckState)pDb->intValue("DetachPlayer"));
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
    m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
-   m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay"));
-   m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck"));
+   m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+      // enable by default ...
+      m_ui->check2ClicksToPlay->setCheckState(Qt::Checked);
+   }
+
+   m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+      // enable by default ...
+      m_ui->checkUpdate->setCheckState(Qt::Checked);
+   }
+
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())

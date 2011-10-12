@@ -203,8 +203,11 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (&timeRec,      SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
    connect (&timeRec,      SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
    connect (&trayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
-   connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
-   connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+   if (Settings.HideToSystray())
+   {
+      connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
+      connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+   }
    connect (&vlcCtrl,      SIGNAL(sigVlcStarts(int)), this, SLOT(slotVlcStarts(int)));
    connect (&vlcCtrl,      SIGNAL(sigVlcEnds(int)), this, SLOT(slotVlcEnds(int)));
    connect (&timeRec,      SIGNAL(sigShutdown()), this, SLOT(slotShutdown()));
@@ -581,6 +584,17 @@ void Recorder::on_pushSettings_clicked()
             Refresh.stop();
          }
       }
+   }
+
+   if (Settings.HideToSystray())
+   {
+      connect (this, SIGNAL(sigHide()), &trayIcon, SLOT(show()));
+      connect (this, SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+   }
+   else
+   {
+      disconnect(this, SIGNAL(sigHide()));
+      disconnect(this, SIGNAL(sigShow()));
    }
 }
 
@@ -1052,15 +1066,37 @@ void Recorder::on_cbxLastOrBest_activated(int index)
 \----------------------------------------------------------------- */
 void Recorder::on_btnVodSearch_clicked()
 {
-   QUrl url;
-   url.addQueryItem("type", "text");
-   url.addQueryItem("query", ui->lineVodSearch->text());
+   int     iGid;
+   QString sType;
+   QUrl    url;
 
-   int iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
-
-   if (iGenre != -1)
+   if (ui->lineVodSearch->text() != "")
    {
-      url.addQueryItem("genre", QString::number(iGenre));
+      url.addQueryItem("type", "text");
+
+      // when searching show up to 100 results ...
+      url.addQueryItem("nums", QString::number(100));
+      url.addQueryItem("query", ui->lineVodSearch->text());
+
+      iGid = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+      if (iGid != -1)
+      {
+         url.addQueryItem("genre", QString::number(iGid));
+      }
+   }
+   else
+   {
+      // no text means normal list ...
+      iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+      sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+
+      url.addQueryItem("type", sType);
+
+      if (iGid != -1)
+      {
+         url.addQueryItem("genre", QString::number(iGid));
+      }
    }
 
    Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
@@ -3087,7 +3123,7 @@ void Recorder::CleanContextMenu()
 \----------------------------------------------------------------- */
 void Recorder::CreateSystray()
 {
-   trayIcon.setIcon(QIcon(":/app/tv"));
+   trayIcon.setIcon(QIcon(":/app/kartina"));
    trayIcon.setToolTip(tr("%1 - Click to activate!").arg(APP_NAME));
 }
 
@@ -4183,6 +4219,7 @@ void Recorder::correctEpgOffset()
       iEpgOffset = -14;
    }
 }
+
 
 /************************* History ***************************\
 | $Log$
