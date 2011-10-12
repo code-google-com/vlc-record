@@ -43,6 +43,9 @@
 | 2011-10-12: Version x.49B3
 | - updated translation
 | - add update check at startup
+| - don't show systray icon when not minimizing to systray
+| - when searching without searchstring, show videos normal
+| - searching shows up too 100 results
 |
 | 2011-09-29: Version x.49B2
 | - add first time settings dialog
