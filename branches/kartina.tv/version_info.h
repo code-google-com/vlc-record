@@ -31,7 +31,7 @@
 #endif
 
 #define VERSION_MINOR "49"
-#define BETA_EXT      "B3"
+#define BETA_EXT      "B4"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
@@ -39,6 +39,8 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last beta ---
+| - buffer last seen VOD page content to restore
+|   on "back from video info"
 |
 | 2011-10-12: Version x.49B3
 | - updated translation

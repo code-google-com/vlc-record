@@ -65,6 +65,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    genreInfo.iTotal        = 0;
    genreInfo.sType         = "wtf";
 
+   // init VOD site backup ...
+   lastVodSite.iScrollBarVal = 0;
+
    // init favourite buttons ...
    for (int i = 0; i < MAX_NO_FAVOURITES; i++)
    {
@@ -2026,7 +2029,7 @@ void Recorder::slotTimerRecActive (int iState)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotVlcEnds(int iState)
+void Recorder::slotVlcEnds(int iState __UNUSED)
 {
    iState = 0; // suppress warnings ...
    if (ePlayState != IncPlay::PS_STOP)
@@ -2441,23 +2444,18 @@ void Recorder::slotVodAnchor(const QUrl &link)
 
    if (action == "vod_info")
    {
+      // buffer last used site (whole code) ...
+      lastVodSite.sContent      = ui->vodBrowser->toHtml();
+      lastVodSite.iScrollBarVal = ui->vodBrowser->verticalScrollBar()->value();
+
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
       Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
    }
    else if (action == "backtolist")
    {
-      QUrl    url;
-      QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
-      id            = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
-
-      url.addQueryItem("type", sType);
-
-      if (id != -1)
-      {
-         url.addQueryItem("genre", QString::number(id));
-      }
-
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+      // restore last used site ...
+      ui->vodBrowser->setHtml(lastVodSite.sContent);
+      ui->vodBrowser->verticalScrollBar()->setValue(lastVodSite.iScrollBarVal);
    }
    else if (action == "play")
    {

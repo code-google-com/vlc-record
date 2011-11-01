@@ -667,7 +667,7 @@ color: white;
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Site: </string>
+            <string>Page: </string>
            </property>
           </widget>
          </item>

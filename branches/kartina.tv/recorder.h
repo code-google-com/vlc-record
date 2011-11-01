@@ -37,6 +37,7 @@
 #include <QMap>
 #include <QStandardItemModel>
 #include <QNetworkAccessManager>
+#include <QScrollBar>
 
 #include "csettingsdlg.h"
 #include "ckartinaclnt.h"
@@ -55,17 +56,17 @@
 #include "cstreamloader.h"
 #include "qchanlistdelegate.h"
 
-/// @{
 //------------------------------------------------------------------
-/// definition of start flags
+/// \name definition of start flags
 //------------------------------------------------------------------
+// @{
 #define FLAG_INITDIALOG     (ulong)(1<<0) ///< should we run initDialog()
 #define FLAG_CONN_CHAIN     (ulong)(1<<1) ///< should we start connection chain
 #define FLAG_CHAN_LIST      (ulong)(1<<2) ///< should we set channel from former session
 #define FLAG_EPG_DAY        (ulong)(1<<3) ///< should we set epg day from former session
 #define FLAG_CLOGOS_READY   (ulong)(1<<4) ///< are the channel logos ready
 #define FLAG_VLOGOS_READY   (ulong)(1<<5) ///< are the VOD logos ready
-/// }@
+// @}
 
 //===================================================================
 // namespace
@@ -86,6 +87,12 @@ namespace Ui
        QObject    *pObj;
        const char *pSlot;
        QString     sShortCut;
+    };
+
+    struct SVodSite
+    {
+       QString sContent;
+       int     iScrollBarVal;
     };
 }
 
@@ -142,6 +149,7 @@ private:
     cparser::SGenreInfo             genreInfo;
     ulong                           ulStartFlags;
     QNetworkAccessManager          *pUpdateChecker;
+    Ui::SVodSite                    lastVodSite;
 
 protected:
     void fillShortCutTab();
