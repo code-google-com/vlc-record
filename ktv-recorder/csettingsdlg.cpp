@@ -92,6 +92,7 @@ CSettingsDlg::~CSettingsDlg()
 void CSettingsDlg::readSettings()
 {
    QString s;
+   int     iErr;
 
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
@@ -135,6 +136,20 @@ void CSettingsDlg::readSettings()
    m_ui->checkDetach->setCheckState((Qt::CheckState)pDb->intValue("DetachPlayer"));
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
    m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
+
+
+//   m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck"));
+
+   m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+       // enable by default ...
+       m_ui->checkUpdate->setCheckState(Qt::Checked);
+   }
+
+
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())
@@ -368,6 +383,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("DetachPlayer", (int)m_ui->checkDetach->checkState());
    pDb->setValue("ExtChanList", (int)m_ui->checkExtChanInfo->checkState());
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
+   pDb->setValue("UpdateCheck", (int)m_ui->checkUpdate->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1005,6 +1021,11 @@ bool CSettingsDlg::TranslitRecFile()
 bool CSettingsDlg::DetachPlayer()
 {
    return m_ui->checkDetach->isChecked();
+}
+
+bool CSettingsDlg::checkForUpdate()
+{
+    return m_ui->checkUpdate->isChecked();
 }
 
 int CSettingsDlg::GetProxyPort ()

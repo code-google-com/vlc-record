@@ -68,10 +68,9 @@ public:
     QMap<int, cparser::SChan>* getChanMap();
     void updateFavourites();
     void touchLastOrBestCbx();
-    void on_cbxLastOrBest_activated(int index);
-    void on_cbxGenre_activated(int index);
     void touchVodNavBar(const cparser::SGenreInfo &gInfo);
     void setGenreInfo(cparser::SGenreInfo *pGenrInf);
+    void activateVOD();
 
 private:
     Ui::CChannelsEPGdlg *ui;
@@ -110,6 +109,8 @@ protected:
     virtual void closeEvent (QCloseEvent *event);
 
 private slots:
+    void on_cbxGenre_activated(int index);
+    void on_cbxLastOrBest_activated(int index);
     void on_btnNextSite_clicked();
     void on_btnPrevSite_clicked();
     void on_cbxSites_activated(int index);

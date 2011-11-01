@@ -30,10 +30,14 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    bFirstInit     = true;
    bFirstConnect  = true;
    bVODLogosReady = false;
+   bGotVOD        = false; // update vod stuff only at startup ...
+
+   // init VOD site backup ...
+   lastVodSite.iScrollBarVal = 0;
 
    // init account info ...
    accountInfo.bHasArchive = false;
-   accountInfo.bHasVOD     = false;
+   accountInfo.bHasVOD     = false; // update vod stuff only at startup ...
    accountInfo.sExpires    = QDateTime::currentDateTime().toString(DEF_TIME_FORMAT);
 
    // init genre info ...
@@ -124,6 +128,9 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 
    VlcLog.SetLogFile(pFolders->getDataDir(), APP_LOG_FILE);
 
+   // update checker ...
+   pUpdateChecker = new QNetworkAccessManager(this);
+
    // set logo dir and host for chan logo downloader ...
    dwnLogos.setHostAndFolder(dlgSettings.GetAPIServer(), pFolders->getLogoDir());
    dwnVodPics.setHostAndFolder(dlgSettings.GetAPIServer(), pFolders->getVodPixDir());
@@ -209,9 +216,14 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (pChannelDlg->getVodBrowser(), SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (&KartinaTv,    SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
    connect (&KartinaTv,    SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
+   connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
    connect (&trayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
-   connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
-   connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+
+   if (dlgSettings.HideToSystray())
+   {
+       connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
+       connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+   }
 
    connect (pChannelDlg,   SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
    connect (pChannelDlg,   SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
@@ -231,6 +243,11 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 MainWindow::~MainWindow()
 {
    delete ui;
+
+   if (pUpdateChecker)
+   {
+       delete pUpdateChecker;
+   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1109,9 +1126,11 @@ void MainWindow::slotEPG(QString str)
       }
       else
       {
+
          //it works only with the real accounts (not 140,...)!
          // update vod stuff only at startup ...
-         if (accountInfo.bHasVOD)
+//         if (accountInfo.bHasVOD)
+         if (!bGotVOD)
          {
             if (pChannelDlg->getCbxGenre()->count() == 0)
             {
@@ -1309,7 +1328,7 @@ void MainWindow::slotTimerRecActive (int iState)
    ui->labState->setFooter("");
 }
 
-void MainWindow::slotVlcEnds(int iState)
+void MainWindow::slotVlcEnds(int iState __UNUSED)
 {
    iState = 0; // suppress warnings ...
    if (ePlayState != IncPlay::PS_STOP)
@@ -1428,6 +1447,8 @@ void MainWindow::slotGotVodGenres(QString str)
 
    pChannelDlg->getCbxGenre()->setCurrentIndex(0);
 
+   bGotVOD = true; // update vod stuff only at startup ...
+
    // trigger video load ...
    QUrl url;
    url.addQueryItem("type", "last");
@@ -1458,7 +1479,7 @@ void MainWindow::slotGotVideos(QString str)
          dwnVodPics.setPictureList(lPix);
 
          // get normal video view ...
-         pChannelDlg->on_cbxGenre_activated(0);
+         pChannelDlg->activateVOD();
       }
       else
       {
@@ -1483,28 +1504,18 @@ void MainWindow::slotVodAnchor(const QUrl &link)
 
    if (action == "vod_info")
    {
+      // buffer last used page (whole code) ...
+      lastVodSite.sContent      = pChannelDlg->getVodBrowser()->toHtml();
+      lastVodSite.iScrollBarVal = pChannelDlg->getVodBrowser()->verticalScrollBar()->value();
+
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
       Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
    }
    else if (action == "backtolist")
    {
-      QUrl    url;
-      QString sType = pChannelDlg->getCbxLastOrBest()->itemData(pChannelDlg->getCbxLastOrBest()->currentIndex()).toString();
-      id            = pChannelDlg->getCbxGenre()->itemData(pChannelDlg->getCbxGenre()->currentIndex()).toInt();
-      url.addQueryItem("type", sType);
-
-      if (id != -1)
-      {
-          url.addQueryItem("genre", QString::number(id));
-      }
-
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
-
-      id = pChannelDlg->getCbxGenre()->currentIndex();
-
-      id = pChannelDlg->getCbxGenre()->itemData(id).toInt();
-
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, id);
+      // restore last used page ...
+      pChannelDlg->getVodBrowser()->setHtml(lastVodSite.sContent);
+      pChannelDlg->getVodBrowser()->verticalScrollBar()->setValue(lastVodSite.iScrollBarVal);
    }
    else if (action == "play")
    {
@@ -1802,6 +1813,43 @@ void MainWindow::slotToggleEpgVod()
    pChannelDlg->getTabEpgVOD()->setCurrentIndex(iIdx);
 }
 
+void MainWindow::slotUpdateAnswer (QNetworkReply* pRes)
+{
+   if (pRes->error() == QNetworkReply::NoError)
+   {
+      // got update info ...
+      QByteArray        ba = pRes->readAll();
+      cparser::SUpdInfo updInfo;
+
+      if (!XMLParser.parseUpdInfo(QString(ba), updInfo))
+      {
+         // compare version ...
+         if ((updInfo.iMinor > atoi(VERSION_MINOR))
+            && (updInfo.iMajor == atoi(VERSION_MAJOR))
+            && (updInfo.sUrl != ""))
+         {
+            QString s       = HTML_SITE;
+            QString content = tr("There is the new version %1 of %2 available.<br />Click %3 to download!")
+                  .arg(updInfo.sVersion)
+                  .arg(APP_NAME)
+                  .arg(QString("<a href='%1'>%2</a>").arg(updInfo.sUrl).arg(tr("here")));
+
+            s.replace(TMPL_CONT, content);
+
+            QMessageBox::information(this, tr("Update available"), s);
+         }
+      }
+   }
+   else
+   {
+      // only tell in log about the error ...
+      mInfo(pRes->errorString());
+   }
+
+   // schedule deletion ...
+   pRes->deleteLater();
+}
+
 // void MainWindow::slotStartConnectionChain()
 // {
 //    Trigger.TriggerRequest(Kartina::REQ_COOKIE);
@@ -1853,6 +1901,12 @@ void MainWindow::initDialog()
     {
        setWindowState(Qt::WindowMaximized);
     }
+
+    // check for program updates ...
+    if (dlgSettings.checkForUpdate())
+    {
+        pUpdateChecker->get(QNetworkRequest(QUrl(UPD_CHECK_URL)));
+    }
 }
 
 void MainWindow::ConnectionInit()
@@ -1862,25 +1916,23 @@ void MainWindow::ConnectionInit()
     pChannelDlg->getModel()->clear();
     KartinaTv.abort();
 
-    // update connection data ...
+    // set connection data ...
     KartinaTv.SetData(dlgSettings.GetAPIServer(), dlgSettings.GetUser(), dlgSettings.GetPasswd(),
                          dlgSettings.GetErosPasswd(), dlgSettings.AllowEros());
 
-    // set proxy ...
+    // set proxy stuff ...
     if (dlgSettings.UseProxy())
     {
-       KartinaTv.setProxy(dlgSettings.GetProxyHost(), dlgSettings.GetProxyPort(),
-                          dlgSettings.GetProxyUser(), dlgSettings.GetProxyPasswd());
-
-       dwnLogos.setProxy(dlgSettings.GetProxyHost(), dlgSettings.GetProxyPort(),
-                         dlgSettings.GetProxyUser(), dlgSettings.GetProxyPasswd());
-
-       dwnVodPics.setProxy(dlgSettings.GetProxyHost(), dlgSettings.GetProxyPort(),
+       QNetworkProxy proxy(QNetworkProxy::HttpCachingProxy,
+                           dlgSettings.GetProxyHost(), dlgSettings.GetProxyPort(),
                            dlgSettings.GetProxyUser(), dlgSettings.GetProxyPasswd());
 
-       streamLoader.setProxy(dlgSettings.GetProxyHost(), dlgSettings.GetProxyPort(),
-                             dlgSettings.GetProxyUser(), dlgSettings.GetProxyPasswd());
-    }
+       KartinaTv.setProxy(proxy);
+       dwnLogos.setProxy(proxy);
+       dwnVodPics.setProxy(proxy);
+       streamLoader.setProxy(proxy);
+       pUpdateChecker->setProxy(proxy);
+   }
 
     // set language as read ...
     pTranslator->load(QString("lang_%1").arg(dlgSettings.GetLanguage ()),
@@ -1922,25 +1974,17 @@ void MainWindow::ConnectionInit()
           Refresh.stop();
        }
     }
-}
 
-bool MainWindow::WantToClose()
-{
-   QString sText = HTML_SITE;
-   sText.replace(TMPL_CONT, tr("VLC is still running.<br />"
-                               "<b>Closing VLC record will also close the started VLC-Player.</b>"
-                               "<br /> <br />"
-                               "Do you really want to close VLC Record now?"));
-
-   if (QMessageBox::question(this, tr("Question"), sText,
-                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-   {
-      return true;
-   }
-   else
-   {
-      return false;
-   }
+    if (dlgSettings.HideToSystray())
+    {
+        connect (this, SIGNAL(sigHide()), &trayIcon, SLOT(show()));
+        connect (this, SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
+    }
+    else
+    {
+        disconnect(this, SIGNAL(sigHide()));
+        disconnect(this, SIGNAL(sigShow()));
+    }
 }
 
 void MainWindow::FillChanMap(const QVector<cparser::SChan> &chanlist)

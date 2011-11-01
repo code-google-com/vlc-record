@@ -74,6 +74,7 @@ public:
     bool TranslitRecFile ();
     bool DetachPlayer ();
     bool extChanList();
+    bool checkForUpdate();
     int  getTimeShift();
 
     int GetRefrInt ();

@@ -20,6 +20,7 @@
 #include <QDateTime>
 #include <QString>
 #include <QMap>
+#include <QMutex>
 #include <QStatusBar>
 
 #include "clogfile.h"
@@ -113,6 +114,14 @@ namespace cparser
       int     iPage;
       int     iTotal;
    };
+
+   struct SUpdInfo
+   {
+     QString                sVersion;
+     int                    iMajor;
+     int                    iMinor;
+     QString                sUrl;
+   };
 }
 
 /********************************************************************\
@@ -144,6 +153,7 @@ public:
    int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
    int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);
    int fillErrorMap();
+   int parseUpdInfo(const QString& sResp, cparser::SUpdInfo &updInfo);
    void setStatusBar(QStatusBar *pStBar);
 
 protected:
@@ -159,8 +169,9 @@ protected:
 private:
    int iOffset;
    QString sErr, sCleanResp;
-   QXmlStreamReader xmlSr;
+   QXmlStreamReader   xmlSr;
    QMap<int, QString> mapError;
+   QMutex             mutex;
    QStatusBar *pStatusBar;
    QString str;
 };
