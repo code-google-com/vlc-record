@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QNetworkAccessManager>
+#include <QScrollBar>
 #include "caboutdialog.h"
 #include "csettingsdlg.h"
 #include "cchannelsepgdlg.h"
@@ -17,6 +19,19 @@
 #include "ctranslit.h"
 #include "cshowinfo.h"
 #include "cinstruction.h"
+
+//------------------------------------------------------------------
+/// \name definition of start flags
+//------------------------------------------------------------------
+// @{
+#define FLAG_INITDIALOG     (ulong)(1<<0) ///< should we run initDialog()
+#define FLAG_CONN_CHAIN     (ulong)(1<<1) ///< should we start connection chain
+#define FLAG_CHAN_LIST      (ulong)(1<<2) ///< should we set channel from former session
+#define FLAG_EPG_DAY        (ulong)(1<<3) ///< should we set epg day from former session
+#define FLAG_CLOGOS_READY   (ulong)(1<<4) ///< are the channel logos ready
+#define FLAG_VLOGOS_READY   (ulong)(1<<5) ///< are the VOD logos ready
+// @}
+
 namespace Ui
 {
     class MainWindow;
@@ -28,6 +43,12 @@ namespace Ui
 //       QString     sObj;
        const char *pSlot;
        QString     sShortCut;
+    };
+
+    struct SVodSite
+    {
+       QString sContent;
+       int     iScrollBarVal;
     };
 }
 
@@ -53,7 +74,6 @@ private:
     CStreamLoader                  streamLoader;
     QTranslator                   *pTranslator;
     QTimer                         Refresh;
-    bool                           bLogosReady;
     CPixLoader                     dwnLogos;
     CPixLoader                     dwnVodPics;
     CTimerRec                      dlgTimeRec;
@@ -64,24 +84,28 @@ private:
     int                            iDwnReqId;
     QSystemTrayIcon                trayIcon;
     QRect                          sizePos;
+    bool                           bLogosReady;
     bool                           bDoInitDlg;
     bool                           bFirstConnect;
     bool                           bVODLogosReady;
     bool                           bOnTop;
+    bool                           bFirstInit;
+    bool                           bSetRecentChan;
+    bool                           bShortCuts;
+    bool                           bGotVOD; // update vod stuff only at startup ...
     Qt::WindowFlags                flags;
     QMenu                         *ChanGroup[MAX_CHANNEL_GROUPS]; // define in defdef.h
     QAction                       *ChannelActs[MAX_CHANNEL_ACTS]; // define in defdef.h
     QAction                       *RecentChansActs[MAX_RECENT_CHANNELS]; // define in defdef.h
     QAction                       *Aspect[MAX_ASPECTS]; // define in defdef.h
     QAction                       *Crop[MAX_CROPS]; // define in defdef.h
-    bool                           bFirstInit;
-    bool                           bSetRecentChan;
     QActionGroup                  *pAspectGroup;
     QActionGroup                  *pCropGroup;
-    bool                           bShortCuts;
     QVector<Ui::SShortCuts>        vShortCutTab;
     cparser::SAccountInfo          accountInfo;
     cparser::SGenreInfo            genreInfo;
+    QNetworkAccessManager          *pUpdateChecker;
+    Ui::SVodSite                    lastVodSite;
 
 protected:
     int StartVlcRec (const QString &sURL, const QString &sChannel);
@@ -90,7 +114,6 @@ protected:
     void TouchPlayCtrlBtns (bool bEnable = true);
     QString CleanShowName (const QString &str);
     bool WantToStopRec ();
-    bool WantToClose ();
     void FillChanMap (const QVector<cparser::SChan> &chanlist);
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int  CheckCookie (const QString &cookie);
@@ -187,6 +210,7 @@ private slots:
     void slotCropToggle(int idx);
 //    void slotStartConnectionChain();
     void slotUpdateProgress (int iMin, int iMax, int iAct);
+    void slotUpdateAnswer (QNetworkReply* pRes);
 
 signals:
     void sigToggleFullscreen ();

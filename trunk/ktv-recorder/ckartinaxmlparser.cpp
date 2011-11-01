@@ -142,6 +142,9 @@ int CKartinaXMLParser::parseChannelList (const QString &sResp,
 {
    int           iRV;
 
+   // lock parser ...
+   mutex.lock();
+
    // clear channel list ...
    chanList.clear();
 
@@ -184,6 +187,9 @@ int CKartinaXMLParser::parseChannelList (const QString &sResp,
          iRV = -1;
       }
    }
+
+   // unlock parser ...
+   mutex.unlock();
 
    return iRV;
 }
@@ -501,6 +507,9 @@ int CKartinaXMLParser::parseSServers(const QString &sResp, QVector<cparser::SSrv
    // clear epg list ...
    vSrv.clear();
 
+   // lock parser ...
+   mutex.lock();
+
    // check for errors ...
    iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
 
@@ -578,6 +587,9 @@ int CKartinaXMLParser::parseSServers(const QString &sResp, QVector<cparser::SSrv
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -598,6 +610,9 @@ int CKartinaXMLParser::parseCookie (const QString &sResp, QString &sCookie, cpar
    QStringList            slNeeded;
    QMap<QString, QString> mResults;
    sCookie = "";
+
+   // lock parser ...
+   mutex.lock();
 
    // check for errors ...
    int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -693,6 +708,9 @@ int CKartinaXMLParser::parseCookie (const QString &sResp, QString &sCookie, cpar
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -712,6 +730,9 @@ int CKartinaXMLParser::parseGenres (const QString& sResp, QVector<cparser::SGenr
 {
    cparser::SGenre sGenre;
    vGenres.clear ();
+
+   // lock parser ...
+   mutex.lock();
 
    // check for errors ...
    int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -767,6 +788,9 @@ int CKartinaXMLParser::parseGenres (const QString& sResp, QVector<cparser::SGenr
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -790,6 +814,9 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
 
    // clear vod list ...
    vVodList.clear();
+
+   // lock parser ...
+   mutex.lock();
 
    // check for errors ...
    int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -867,6 +894,9 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -887,6 +917,9 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
     QMap<QString, QString> mResults;
     cparser::SVodFileInfo  fInfo;
     bool                   bEnd = false;
+
+    // lock parser ...
+    mutex.lock();
 
     // check for errors ...
     int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -988,6 +1021,9 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -1012,6 +1048,9 @@ int CKartinaXMLParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &e
 
    // clear epg list ...
    epgList.clear();
+
+   // lock parser ...
+   mutex.lock();
 
    // check for errors ...
    iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -1080,6 +1119,9 @@ int CKartinaXMLParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &e
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -1102,6 +1144,9 @@ int CKartinaXMLParser::parseSettings (const QString &sResp, QVector<int> &vValue
 
    // clear epg list ...
    vValues.clear();
+
+   // lock parser ...
+   mutex.lock();
 
    // check for errors ...
    iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
@@ -1168,6 +1213,9 @@ int CKartinaXMLParser::parseSettings (const QString &sResp, QVector<int> &vValue
       }
    }
 
+   // unlock parser ...
+   mutex.unlock();
+
    return iRV;
 }
 
@@ -1190,6 +1238,9 @@ int CKartinaXMLParser::parseUrl(const QString &sResp, QString &sUrl)
 
    sUrl = "";
 
+   // lock parser ...
+   mutex.lock();
+
    // error check ...
    iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
 
@@ -1201,6 +1252,9 @@ int CKartinaXMLParser::parseUrl(const QString &sResp, QString &sUrl)
          sUrl = rx.cap(1);
       }
    }
+
+   // unlock parser ...
+   mutex.unlock();
 
    return iRV;
 }
@@ -1252,9 +1306,12 @@ int CKartinaXMLParser::checkResponse (const QString &sResp, const QString __UNUS
                 .arg((mapError.contains(iRV)) ? mapError[iRV] : rx.cap(1));
 #endif // QT_NO_DEBUG
 
-//         QMessageBox::critical(NULL, tr("Error"), sErr);
-         pStatusBar->showMessage(sErr);
-         mErr(QString("\n --> %1").arg(sErr));
+         if ( iRV != 26 )
+         {
+//          QMessageBox::critical(NULL, tr("Error"), sErr);
+             pStatusBar->showMessage(sErr);
+             mErr(QString("\n --> %1").arg(sErr));
+         }
       }
    }
 
@@ -1413,6 +1470,86 @@ int CKartinaXMLParser::fillErrorMap()
    return 0;
 }
 
+/* -----------------------------------------------------------------\
+|  Method: parseUpdInfo
+|  Begin: 12.10.2011
+|  Author: Jo2003
+|  Description: parse update info xml
+|
+|  Parameters: response string, buffer for info
+|
+|  Returns: 0 --> ok
+|          -1 --> any error
+\----------------------------------------------------------------- */
+int CKartinaXMLParser::parseUpdInfo(const QString &sResp, cparser::SUpdInfo &updInfo)
+{
+   int                    iRV = 0;
+   QStringList            slNeeded;
+   QMap<QString, QString> mResults;
+
+   QString sSys = "n.a.";
+
+#if defined Q_OS_WIN32
+   sSys = "win";
+#elif defined Q_OS_LINUX
+   sSys = "nix";
+#elif defined Q_OS_MAC
+   sSys = "osx";
+#endif
+
+   // clear updInfo struct ...
+   updInfo.iMajor   = 0;
+   updInfo.iMinor   = 0;
+   updInfo.sVersion = "";
+   updInfo.sUrl     = "";
+
+   // lock parser ...
+   mutex.lock();
+
+   xmlSr.clear();
+   xmlSr.addData(sResp);
+
+   while(!xmlSr.atEnd() && !xmlSr.hasError())
+   {
+      switch (xmlSr.readNext())
+      {
+      // any xml element starts ...
+      case QXmlStreamReader::StartElement:
+         if (xmlSr.name() == sSys)
+         {
+            mResults.clear();
+            slNeeded.clear();
+
+            slNeeded << "string_version" << "major" << "minor" << "link";
+
+            oneLevelParser(sSys, slNeeded, mResults);
+
+            updInfo.iMajor   = mResults.value("major").toInt();
+            updInfo.iMinor   = mResults.value("minor").toInt();
+            updInfo.sVersion = mResults.value("string_version");
+            updInfo.sUrl     = mResults.value("link");
+         }
+         break;
+
+      default:
+         break;
+      }
+   }
+
+   // check for xml errors ...
+   if(xmlSr.hasError())
+   {
+      QMessageBox::critical(NULL, tr("Error in %1").arg(__FUNCTION__),
+                            tr("XML Error String: %1").arg(xmlSr.errorString()));
+
+      iRV = -1;
+   }
+
+   // unlock parser ...
+   mutex.unlock();
+
+   return iRV;
+}
 
 void CKartinaXMLParser::setStatusBar(QStatusBar *pStBar)
 {

@@ -115,6 +115,7 @@ void CChannelsEPGdlg::on_cbxGenre_activated(int index)
     QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
     QUrl    url;
 
+
     url.addQueryItem("type", sType);
 
     if (iGid != -1)
@@ -190,15 +191,37 @@ void CChannelsEPGdlg::on_btnFontLarger_clicked()
 
 void CChannelsEPGdlg::on_btnVodSearch_clicked()
 {
-    QUrl url;
-    url.addQueryItem("type", "text");
-    url.addQueryItem("query", ui->lineVodSearch->text());
+    int     iGid;
+    QString sType;
+    QUrl    url;
 
-    int iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
-
-    if (iGenre != -1)
+    if (ui->lineVodSearch->text() != "")
     {
-       url.addQueryItem("genre", QString::number(iGenre));
+       url.addQueryItem("type", "text");
+
+       // when searching show up to 100 results ...
+       url.addQueryItem("nums", QString::number(100));
+       url.addQueryItem("query", ui->lineVodSearch->text());
+
+       iGid = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+
+       if (iGid != -1)
+       {
+          url.addQueryItem("genre", QString::number(iGid));
+       }
+    }
+    else
+    {
+       // no text means normal list ...
+       iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+       sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+
+       url.addQueryItem("type", sType);
+
+       if (iGid != -1)
+       {
+          url.addQueryItem("genre", QString::number(iGid));
+       }
     }
 
     pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
@@ -1051,6 +1074,11 @@ void CChannelsEPGdlg::setEpgOffset(int iEpgOffs)
     iEpgOffset = iEpgOffs;
 }
 
+void CChannelsEPGdlg::activateVOD()
+{
+    on_cbxGenre_activated(0);
+}
+
 QString CChannelsEPGdlg::createTooltip (const QString & name, const QString & prog, uint start, uint end)
 {
    // create tool tip with programm info ...
@@ -1087,6 +1115,3 @@ void CChannelsEPGdlg::updateFavourites()
        }
     }
 }
-
-
-

@@ -55,7 +55,9 @@
 #define JUMP_TIME         120         // forward / backward jump in archive play
 #define MIN_CACHE_SIZE    5000000     // < 5 MB ...
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
-#define VIDEOS_PER_SITE   20          // number of videos / site#define MAX_CHANNEL_ACTS  200         // max number of channel actions
+#define VIDEOS_PER_SITE   20          // number of videos / site
+#define MAX_CHANNEL_ACTS  200         // max number of channel actions
+#define UPD_CHECK_URL     "http://code.google.com/p/vlc-record/downloads/list"
 #define MAX_CHANNEL_ACTS  200         // max number of channel actions
 #define MAX_CHANNEL_GROUPS 20         // max number of channel groups
 #define MAX_RECENT_CHANNELS 10        // max number of recent channels
