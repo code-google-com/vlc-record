@@ -55,6 +55,7 @@
 #include "cshowinfo.h"
 #include "cstreamloader.h"
 #include "qchanlistdelegate.h"
+#include "cepgbrowser.h"
 
 //------------------------------------------------------------------
 /// \name definition of start flags
@@ -150,6 +151,7 @@ private:
     ulong                           ulStartFlags;
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
+    QMap<uint, epg::SShow>          archProgMap;
 
 protected:
     void fillShortCutTab();
@@ -258,6 +260,7 @@ private slots:
     void slotStartConnectionChain();
     void slotUpdateProgress (int iMin, int iMax, int iAct);
     void slotUpdateAnswer (QNetworkReply* pRes);
+    void slotCheckArchProg(ulong ulArcGmt);
 
 signals:
     void sigShow ();
@@ -268,6 +271,7 @@ signals:
     void sigLCDStateChange (int iState);
     void sigJmpFwd ();
     void sigJmpBwd ();
+    void sigShowInfoUpdated();
 };
 
 #endif /* __011910__RECORDER_H */

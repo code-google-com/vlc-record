@@ -108,6 +108,7 @@ private:
    uint                    uiDuration;
    Button::eBtnRole        pauseRole;
    bool                    bResume;
+   int                     iCycleCount;
 
 private slots:
    void on_posSlider_valueChanged(int value);
@@ -132,11 +133,13 @@ public slots:
    void slotMoreLoudly();
    void slotMoreQuietly();
    void slotMute();
+   void slotShowInfoUpdated();
 
 signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
    void sigSliderPos (int iMin, int iMax, int iAct);
+   void sigCheckArchProg(ulong ulArchGmt);
 };
 
 #endif /* __022410__CPLAYER_H */

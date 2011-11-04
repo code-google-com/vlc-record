@@ -51,6 +51,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    bSpoolPending = true;
    uiDuration    = (uint)-1;
    pauseRole     = Button::Pause;
+   iCycleCount   = 0;
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -534,10 +535,17 @@ void CPlayer::slotUpdateSlider()
          }
          else
          {
+            pos = timer.gmtPosition();
+
+            // check archive program ...
+            if (!(++iCycleCount % 60))
+            {
+               iCycleCount = 0;
+               emit sigCheckArchProg(pos);
+            }
+
             if (!ui->posSlider->isSliderDown())
             {
-               pos = timer.gmtPosition();
-
                if (pos > mToGmt(ui->posSlider->maximum()))
                {
                   ui->posSlider->setMaximum(mFromGmt(pos + 300));
@@ -1445,6 +1453,30 @@ void CPlayer::slotMute()
 const bool& CPlayer::resume()
 {
    return bResume;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotShowInfoUpdated
+|  Begin: 04.11.2011
+|  Author: Jo2003
+|  Description: showinfo struct was updated ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::slotShowInfoUpdated()
+{
+   // we have to do the following:
+   // - Reset Timer
+   // - Reset Slider
+   ulong gmt = timer.gmtPosition();
+   timer.reset();
+   timer.setStartGmt(gmt);
+   timer.start();
+
+   // set slider range to seconds ...
+   ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
 }
 
 /************************* History ***************************\
