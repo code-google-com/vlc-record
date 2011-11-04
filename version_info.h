@@ -41,6 +41,8 @@
 | --- new since last beta ---
 | - buffer last seen VOD page content to restore
 |   on "back from video info"
+| - update shortinfo / slider / progress on archive play
+|   on show change
 |
 | 2011-10-12: Version x.49B3
 | - updated translation

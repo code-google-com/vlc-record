@@ -180,6 +180,11 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // progress bar update ...
    connect (ui->player, SIGNAL(sigSliderPos(int,int,int)), this, SLOT(slotUpdateProgress(int,int,int)));
 
+   // short info update on archive play ...
+   connect (ui->player, SIGNAL(sigCheckArchProg(ulong)), this, SLOT(slotCheckArchProg(ulong)));
+   connect (this, SIGNAL(sigShowInfoUpdated()), ui->player, SLOT(slotShowInfoUpdated()));
+
+
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...Поиск в телегиде
@@ -1690,6 +1695,9 @@ void Recorder::slotEpgAnchor (const QUrl &link)
    {
       TouchPlayCtrlBtns(false);
 
+      // get program map ...
+      archProgMap = ui->textEpg->exportProgMap();
+
       // new own downloader ...
       if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
       {
@@ -2847,6 +2855,62 @@ void Recorder::slotUpdateAnswer (QNetworkReply* pRes)
 
    // schedule deletion ...
    pRes->deleteLater();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotCheckArchProg [slot]
+|  Begin: 03.11.2011
+|  Author: Jo2003
+|  Description: check if short info below play is actual...
+|
+|  Parameters: archive timestamp
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotCheckArchProg(ulong ulArcGmt)
+{
+   // is actual showinfo still actual ?
+   if ((ulArcGmt >= showInfo.starts()) && (ulArcGmt <= showInfo.ends()))
+   {
+      // all is well ... no update needed ...
+   }
+   else
+   {
+      // search in archiv program map for matching entry ...
+      QMap<uint, epg::SShow>::const_iterator cit;
+
+      for (cit = archProgMap.constBegin(); cit != archProgMap.constEnd(); cit++)
+      {
+         if ((ulArcGmt >= (*cit).uiStart) && (ulArcGmt <= (*cit).uiEnd))
+         {
+            // found new entry ...
+
+            // update show info ...
+            showInfo.setShowName((*cit).sShowName);
+            showInfo.setStartTime((*cit).uiStart);
+            showInfo.setEndTime((*cit).uiEnd);
+            showInfo.setLastJumpTime(0);
+            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                   .arg("rgb(255, 254, 212)")
+                                   .arg(createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
+                                                      QString("%1 %2").arg((*cit).sShowName).arg((*cit).sShowDescr),
+                                                      (*cit).uiStart, (*cit).uiEnd))));
+
+            // add additional info to LCD ...
+            int     iTime = ((*cit).uiEnd) ? (int)(((*cit).uiEnd - (*cit).uiStart) / 60) : 60;
+            QString sTime = tr("Length: %1 min.").arg(iTime);
+            ui->labState->setFooter(sTime);
+            ui->labState->updateState(showInfo.playState());
+
+            // set short epg info ...
+            ui->textEpgShort->setHtml(showInfo.htmlDescr());
+
+            // done ...
+            emit sigShowInfoUpdated();
+            break;
+         }
+      }
+   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
