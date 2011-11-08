@@ -2502,6 +2502,7 @@ void Recorder::slotVodAnchor(const QUrl &link)
       showInfo.setPlayState(ePlayState);
       showInfo.setLastJumpTime(0);
       showInfo.setHtmlDescr(ui->vodBrowser->getShortContent());
+      showInfo.setVodId(id);
 
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());

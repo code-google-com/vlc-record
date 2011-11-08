@@ -53,6 +53,7 @@ public:
    void setPlayState (IncPlay::ePlayStates state);
    void setLastJumpTime (uint start);
    void setHtmlDescr (const QString &descr);
+   void setVodId (int id);
 
    // get values ...
    const QString &showName();
@@ -65,6 +66,7 @@ public:
    const IncPlay::ePlayStates &playState();
    const ShowInfo::eProgType &showType();
    bool  canCtrlStream();
+   const int& vodId();
 
 private:
    QString              sShowName;
@@ -76,6 +78,7 @@ private:
    IncPlay::ePlayStates ePlayState;
    ShowInfo::eProgType  eShowType;
    QString              sDescr;
+   int                  iVodId;
 };
 
 #endif // __150610_CSHOWINFO_H
