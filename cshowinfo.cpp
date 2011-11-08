@@ -25,6 +25,7 @@
 CShowInfo::CShowInfo()
 {
    iChannelId = -1;
+   iVodId     = -1;
    ePlayState = IncPlay::PS_STOP;
    eShowType  = ShowInfo::Live;
    uiStart    = 0;
@@ -150,6 +151,21 @@ void CShowInfo::setPlayState (IncPlay::ePlayStates state)
 void CShowInfo::setShowType(ShowInfo::eProgType type)
 {
    eShowType = type;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setVodId
+|  Begin: 04.11.2011
+|  Author: Jo2003
+|  Description: stores the VOD id
+|
+|  Parameters: VOD id
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CShowInfo::setVodId(int id)
+{
+   iVodId = id;
 }
 
 /* -----------------------------------------------------------------\
@@ -285,6 +301,21 @@ const IncPlay::ePlayStates &CShowInfo::playState()
 const ShowInfo::eProgType &CShowInfo::showType()
 {
    return eShowType;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: vodId
+|  Begin: 04.11.2011
+|  Author: Jo2003
+|  Description: get the VOD id
+|
+|  Parameters: --
+|
+|  Returns: ref. to value
+\----------------------------------------------------------------- */
+const int &CShowInfo::vodId()
+{
+   return iVodId;
 }
 
 /* -----------------------------------------------------------------\

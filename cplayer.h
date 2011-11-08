@@ -84,6 +84,7 @@ public:
    void initSlider ();
    uint getSilderPos();
    const bool& resume();
+   void setTime();
 
 protected:
    virtual void changeEvent(QEvent *e);
