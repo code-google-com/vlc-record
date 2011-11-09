@@ -41,6 +41,7 @@
 | --- new since last beta ---
 | - update shortinfo / slider / progress on archive play
 |   on show change
+| - use older libvlc 1.1.7 which still can remux mp4 to ts
 | - use timeshift module of libVLC to buffer stream on
 |   pause (if it works, it makes life much easier)
 |
