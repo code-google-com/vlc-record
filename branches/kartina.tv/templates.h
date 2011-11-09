@@ -20,6 +20,7 @@
 #define TMPL_MUX         "{[%MUX%]}"
 #define TMPL_DST         "{[%DST%]}"
 #define TMPL_CACHE       "{[%CACHE%]}"
+#define TMPL_TEMP        "{[%TMP%]}"
 
 #define CMD_PLAY_LIVE    "LIVE_PLAY"
 #define CMD_PLAY_ARCH    "ARCH_PLAY"
