@@ -83,8 +83,6 @@ public:
    bool isPositionable();
    void initSlider ();
    uint getSilderPos();
-   const bool& resume();
-   void setTime();
 
 protected:
    virtual void changeEvent(QEvent *e);
@@ -107,8 +105,6 @@ private:
    CWaitTrigger           *pTrigger;
    bool                    bSpoolPending;
    uint                    uiDuration;
-   Button::eBtnRole        pauseRole;
-   bool                    bResume;
    int                     iCycleCount;
 
 private slots:

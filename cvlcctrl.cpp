@@ -491,6 +491,7 @@ QString CVlcCtrl::CreateClArgs (vlcctrl::eVlcAct eAct, const QString &sPlayer,
       sCmdLine.replace(TMPL_PLAYER, sPlayer);
       sCmdLine.replace(TMPL_URL, url);
       sCmdLine.replace(TMPL_CACHE, QString::number(iCacheTime));
+      sCmdLine.replace(TMPL_TEMP, QDir::tempPath());
       break;
    // play stream using rtsp protocol ...
    case vlcctrl::VLC_PLAY_ARCH:
@@ -498,6 +499,7 @@ QString CVlcCtrl::CreateClArgs (vlcctrl::eVlcAct eAct, const QString &sPlayer,
       sCmdLine.replace(TMPL_PLAYER, sPlayer);
       sCmdLine.replace(TMPL_URL, url);
       sCmdLine.replace(TMPL_CACHE, QString::number(iCacheTime));
+      sCmdLine.replace(TMPL_TEMP, QDir::tempPath());
       break;
    // record stream using http protocol ...
    case vlcctrl::VLC_REC_LIVE:

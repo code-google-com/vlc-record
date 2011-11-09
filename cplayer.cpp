@@ -47,10 +47,8 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pSettings     = NULL;
    pTrigger      = NULL;
    bCtrlStream   = false;
-   bResume       = false;
    bSpoolPending = true;
    uiDuration    = (uint)-1;
-   pauseRole     = Button::Pause;
    iCycleCount   = 0;
 
    // set log poller to single shot ...
@@ -309,51 +307,10 @@ void CPlayer::slotChangeVolume(int newVolume)
 int CPlayer::play()
 {
    int  iRV    = 0;
-   uint uiTime = 0;
 
    if (pMediaPlayer)
    {
-      if (bResume)
-      {
-         if (showInfo.showType() == ShowInfo::Archive)
-         {
-            // resume means: request archive stream
-            // from last position ...
-            uiTime = timer.gmtPosition();
-
-            // trigger request for the new stream position ...
-            QString req = QString("cid=%1&gmt=%2")
-                             .arg(showInfo.channelId()).arg(uiTime);
-
-            // mark spooling as active ...
-            bSpoolPending = true;
-
-            enableDisablePlayControl (false);
-
-            // save resume time ...
-            showInfo.setLastJumpTime(uiTime);
-
-            pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
-         }
-         else if(showInfo.showType() == ShowInfo::VOD)
-         {
-            uiTime = libvlc_media_player_get_time(pMediaPlayer);
-
-            // mark spooling as active ...
-            bSpoolPending = true;
-
-            enableDisablePlayControl (false);
-
-            // save resume time ...
-            showInfo.setLastJumpTime(uiTime);
-
-            pTrigger->TriggerRequest(Kartina::REQ_GETVODURL, showInfo.vodId());
-         }
-      }
-      else
-      {
-         libvlc_media_player_play (pMediaPlayer);
-      }
+      libvlc_media_player_play (pMediaPlayer);
    }
 
    return iRV;
@@ -401,12 +358,6 @@ int CPlayer::pause()
 
    if (pMediaPlayer && bCtrlStream)
    {
-      // mark stream for resume ...
-      if (pauseRole == Button::Stop_and_Save)
-      {
-         bResume = true;
-      }
-
       libvlc_media_player_pause(pMediaPlayer);
    }
 
@@ -441,23 +392,6 @@ int CPlayer::playMedia(const QString &sCmdLine)
    {
       bCtrlStream = false;
    }
-
-   // how to handle pause ?
-   if ((showInfo.showType() == ShowInfo::Archive) && bCtrlStream)
-   {
-      pauseRole = Button::Stop_and_Save;
-   }
-   else if ((showInfo.showType() == ShowInfo::VOD) && bCtrlStream)
-   {
-      pauseRole = Button::Stop_and_Save;
-   }
-   else
-   {
-      pauseRole = Button::Pause;
-   }
-
-   // reset resume stuff ...
-   bResume = false;
 
    // reset play timer stuff ...
    timer.reset();
@@ -688,7 +622,6 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
       emit pPlayer->sigTriggerAspectChg ();
       pPlayer->startPlayTimer();
       pPlayer->initSlider();
-      pPlayer->setTime();
       break;
 
    // player paused ...
@@ -1463,22 +1396,6 @@ void CPlayer::slotMute()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: resume
-|  Begin: 22.09.2011
-|  Author: Jo2003
-|  Description: resume from stop?
-|
-|  Parameters: --
-|
-|  Returns: true --> yes
-|          false --> no
-\----------------------------------------------------------------- */
-const bool& CPlayer::resume()
-{
-   return bResume;
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotShowInfoUpdated
 |  Begin: 04.11.2011
 |  Author: Jo2003
@@ -1500,30 +1417,6 @@ void CPlayer::slotShowInfoUpdated()
 
    // set slider range to seconds ...
    ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
-}
-
-/* -----------------------------------------------------------------\
-|  Method: setTime
-|  Begin: 08.11.2011
-|  Author: Jo2003
-|  Description: if needed set time on VOD (after pause)
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CPlayer::setTime()
-{
-   if ((showInfo.showType() == ShowInfo::VOD)   // VOD
-       && (showInfo.lastJump() != 0)            // a last jump time was set
-       && bCtrlStream)                          // we can control the stream
-   {
-      // set new time (position) ...
-      libvlc_media_player_set_time(pMediaPlayer, showInfo.lastJump());
-
-      // unset last jump time ...
-      showInfo.setLastJumpTime(0);
-   }
 }
 
 /************************* History ***************************\

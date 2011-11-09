@@ -504,7 +504,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="497"/>
+        <location filename="cplayer.cpp" line="431"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -512,37 +512,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="505"/>
+        <location filename="cplayer.cpp" line="439"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1331"/>
+        <location filename="cplayer.cpp" line="1264"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="517"/>
+        <location filename="cplayer.cpp" line="451"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="716"/>
+        <location filename="cplayer.cpp" line="649"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="810"/>
+        <location filename="cplayer.cpp" line="743"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="843"/>
+        <location filename="cplayer.cpp" line="776"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1163"/>
+        <location filename="cplayer.cpp" line="1096"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <oldsource>
@@ -550,22 +550,22 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1172"/>
+        <location filename="cplayer.cpp" line="1105"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1201"/>
+        <location filename="cplayer.cpp" line="1134"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1234"/>
+        <location filename="cplayer.cpp" line="1167"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="761"/>
+        <location filename="cplayer.cpp" line="694"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -1307,17 +1307,17 @@ or start time is later than end time!</source>
         <translation>Плеер уже работает! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="560"/>
+        <location filename="cvlcctrl.cpp" line="562"/>
         <source>Player has ended ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="564"/>
+        <location filename="cvlcctrl.cpp" line="566"/>
         <source>Player was started ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvlcctrl.cpp" line="622"/>
+        <location filename="cvlcctrl.cpp" line="624"/>
         <source>libVLC reports new state %1</source>
         <translation></translation>
     </message>
