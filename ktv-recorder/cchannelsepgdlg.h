@@ -51,6 +51,7 @@ public:
     QLabel* getLabChanName();
     QComboBox* getCbxGenre();
     QList<int>* getListFav();
+    CEpgBrowser* getTextEpg();
     int getEpgOffset();
     void setEpgOffset(int iEpgOffs);
     void setTrigger (CWaitTrigger *pTrig);

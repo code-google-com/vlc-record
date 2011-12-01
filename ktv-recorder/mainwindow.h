@@ -106,6 +106,7 @@ private:
     cparser::SGenreInfo            genreInfo;
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
+    QMap<uint, epg::SShow>          archProgMap;
 
 protected:
     int StartVlcRec (const QString &sURL, const QString &sChannel);
@@ -211,6 +212,7 @@ private slots:
 //    void slotStartConnectionChain();
     void slotUpdateProgress (int iMin, int iMax, int iAct);
     void slotUpdateAnswer (QNetworkReply* pRes);
+    void slotCheckArchProg(ulong ulArcGmt);
 
 signals:
     void sigToggleFullscreen ();
@@ -219,6 +221,7 @@ signals:
     void sigLCDStateChange (int iState);
     void sigJmpFwd ();
     void sigJmpBwd ();
+    void sigShowInfoUpdated();
     void sigShow ();
     void sigHide ();
 };
