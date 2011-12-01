@@ -525,6 +525,10 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
       // build name ...
       switch (*cit)
       {
+      case 320:
+         sName = tr("Mobile");
+         break;
+
       case 900:
          sName = tr("Eco");
          break;

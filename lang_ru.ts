@@ -701,21 +701,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="529"/>
+        <source>Mobile</source>
+        <translation>Мобильный</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="533"/>
         <source>Eco</source>
         <translation>Эко</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="533"/>
+        <location filename="csettingsdlg.cpp" line="537"/>
         <source>Standard</source>
         <translation>Стандарт</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="537"/>
+        <location filename="csettingsdlg.cpp" line="541"/>
         <source>Premium</source>
         <translation>Премиум</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="541"/>
+        <location filename="csettingsdlg.cpp" line="545"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation>%1 Кбит/с</translation>
@@ -832,7 +837,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="182"/>
         <source>Buffer (sec.):</source>
-        <translation>Буфер (в сек.):</translation>
+        <translation>Буферизация (в сек.):</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="192"/>
