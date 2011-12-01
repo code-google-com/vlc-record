@@ -38,6 +38,9 @@
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
+| --- new since last version ---
+| - add hardware acceleration switch in settings
+|
 | 2011-12-01: Version 2.50
 | - add new bitrate "mobile"
 | - update shortinfo / slider / progress on archive play
