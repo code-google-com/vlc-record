@@ -513,63 +513,60 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="cplayer.cpp" line="439"/>
+        <location filename="cplayer.cpp" line="446"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1264"/>
-        <source>Film length: %1ms.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="451"/>
+        <location filename="cplayer.cpp" line="458"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="649"/>
+        <location filename="cplayer.cpp" line="656"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="743"/>
+        <location filename="cplayer.cpp" line="701"/>
+        <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
+  --&gt; %4</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="750"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="776"/>
+        <location filename="cplayer.cpp" line="783"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1096"/>
+        <location filename="cplayer.cpp" line="1103"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
-        <oldsource>
-  --&gt; Player Widget is located at %2 screen (Screen No. %1, %3 x %4px) ...</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1105"/>
+        <location filename="cplayer.cpp" line="1112"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1134"/>
+        <location filename="cplayer.cpp" line="1141"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1167"/>
+        <location filename="cplayer.cpp" line="1174"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="694"/>
-        <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
-  --&gt; %4</source>
-        <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
- --&gt; %4</oldsource>
+        <location filename="cplayer.cpp" line="1271"/>
+        <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
@@ -680,47 +677,47 @@ p, li { white-space: pre-wrap; }
         <translation>Logge alles</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="305"/>
+        <location filename="csettingsdlg.cpp" line="315"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="300"/>
+        <location filename="csettingsdlg.cpp" line="310"/>
         <source>Executables (*.exe)</source>
         <translation>ausführbar (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="302"/>
+        <location filename="csettingsdlg.cpp" line="312"/>
         <source>Executables (*)</source>
         <translation>ausführbar (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="345"/>
+        <location filename="csettingsdlg.cpp" line="355"/>
         <source>Target Folder</source>
         <translation>Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="529"/>
+        <location filename="csettingsdlg.cpp" line="540"/>
         <source>Mobile</source>
         <translation>Handy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="533"/>
+        <location filename="csettingsdlg.cpp" line="544"/>
         <source>Eco</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="537"/>
+        <location filename="csettingsdlg.cpp" line="548"/>
         <source>Standard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="541"/>
+        <location filename="csettingsdlg.cpp" line="552"/>
         <source>Premium</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="545"/>
+        <location filename="csettingsdlg.cpp" line="556"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation></translation>
@@ -993,12 +990,17 @@ p, li { white-space: pre-wrap; }
         <translation>Auf Updates prüfen</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="701"/>
+        <location filename="forms/csettingsdlg.ui" line="679"/>
+        <source>Use GPU for video decoding</source>
+        <translation>Benutze GPU-Beschleunigung</translation>
+    </message>
+    <message>
+        <location filename="forms/csettingsdlg.ui" line="708"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="721"/>
+        <location filename="forms/csettingsdlg.ui" line="728"/>
         <source>&amp;Cancel</source>
         <translation>A&amp;bbrechen</translation>
     </message>

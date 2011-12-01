@@ -152,6 +152,16 @@ void CSettingsDlg::readSettings()
       m_ui->checkUpdate->setCheckState(Qt::Checked);
    }
 
+   // GPU video decoding ...
+   m_ui->checkGPUAcc->setCheckState((Qt::CheckState)pDb->intValue("GPUAcc", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+      // enable by default ...
+      m_ui->checkGPUAcc->setCheckState(Qt::Checked);
+   }
+
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())
@@ -387,6 +397,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
    pDb->setValue("2ClickPlay", (int)m_ui->check2ClicksToPlay->checkState());
    pDb->setValue("UpdateCheck", (int)m_ui->checkUpdate->checkState());
+   pDb->setValue("GPUAcc", (int)m_ui->checkGPUAcc->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1109,6 +1120,11 @@ QString CSettingsDlg::lastEpgDay()
 bool CSettingsDlg::doubleClickToPlay()
 {
    return m_ui->check2ClicksToPlay->isChecked();
+}
+
+bool CSettingsDlg::useGpuAcc()
+{
+   return m_ui->checkGPUAcc->isChecked();
 }
 
 //===================================================================
