@@ -76,6 +76,7 @@ public:
     bool checkForUpdate();
     int  getTimeShift();
     bool doubleClickToPlay();
+    bool useGpuAcc();
 
     int GetRefrInt ();
     int GetProxyPort ();

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>516</height>
+    <width>452</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -670,6 +670,13 @@ color: red;
            <widget class="QCheckBox" name="checkUpdate">
             <property name="text">
              <string>Check for updates</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QCheckBox" name="checkGPUAcc">
+            <property name="text">
+             <string>Use GPU for video decoding</string>
             </property>
            </widget>
           </item>
