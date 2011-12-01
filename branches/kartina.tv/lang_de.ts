@@ -701,21 +701,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="529"/>
+        <source>Mobile</source>
+        <translation>Handy</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="533"/>
         <source>Eco</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="533"/>
+        <location filename="csettingsdlg.cpp" line="537"/>
         <source>Standard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="537"/>
+        <location filename="csettingsdlg.cpp" line="541"/>
         <source>Premium</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="541"/>
+        <location filename="csettingsdlg.cpp" line="545"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation></translation>
