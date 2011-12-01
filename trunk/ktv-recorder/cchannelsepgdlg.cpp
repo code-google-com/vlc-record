@@ -1079,6 +1079,11 @@ void CChannelsEPGdlg::activateVOD()
     on_cbxGenre_activated(0);
 }
 
+CEpgBrowser* CChannelsEPGdlg::getTextEpg()
+{
+    return ui->textEpg;
+}
+
 QString CChannelsEPGdlg::createTooltip (const QString & name, const QString & prog, uint start, uint end)
 {
    // create tool tip with programm info ...

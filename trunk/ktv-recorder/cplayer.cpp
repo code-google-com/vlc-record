@@ -47,10 +47,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pSettings     = NULL;
    pTrigger      = NULL;
    bCtrlStream   = false;
-   bResume       = false;
    bSpoolPending = true;
    uiDuration    = (uint)-1;
-   pauseRole     = Button::Pause;
+   iCycleCount   = 0;
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -307,37 +306,14 @@ void CPlayer::slotChangeVolume(int newVolume)
 \----------------------------------------------------------------- */
 int CPlayer::play()
 {
-   int iRV = 0;
+    int  iRV    = 0;
 
-   if (pMediaPlayer)
-   {
-      if (bResume)
-      {
-         // resume means: request archive stream
-         // from last position ...
-         uint    gmt = timer.gmtPosition();
+    if (pMediaPlayer)
+    {
+        libvlc_media_player_play (pMediaPlayer);
+    }
 
-         // trigger request for the new stream position ...
-         QString req = QString("cid=%1&gmt=%2")
-                          .arg(showInfo.channelId()).arg(gmt);
-
-         // mark spooling as active ...
-         bSpoolPending = true;
-
-         enableDisablePlayControl (false);
-
-         // save resume time ...
-         showInfo.setLastJumpTime(gmt);
-
-         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
-      }
-      else
-      {
-         libvlc_media_player_play (pMediaPlayer);
-      }
-   }
-
-   return iRV;
+    return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -382,12 +358,6 @@ int CPlayer::pause()
 
    if (pMediaPlayer && bCtrlStream)
    {
-      // mark stream for resume ...
-      if (pauseRole == Button::Stop_and_Save)
-      {
-         bResume = true;
-      }
-
       libvlc_media_player_pause(pMediaPlayer);
    }
 
@@ -407,101 +377,88 @@ int CPlayer::pause()
 \----------------------------------------------------------------- */
 int CPlayer::playMedia(const QString &sCmdLine)
 {
-   int                         iRV  = 0;
-   libvlc_media_t             *p_md = NULL;
-   QStringList                 lArgs;
-   QStringList::const_iterator cit;
+    int                         iRV  = 0;
+    libvlc_media_t             *p_md = NULL;
+    QStringList                 lArgs;
+    QStringList::const_iterator cit;
 
-   // do we can control the stream ... ?
-   if ((showInfo.playState() == IncPlay::PS_PLAY)
-      && showInfo.canCtrlStream())
-   {
-      bCtrlStream = true;
-   }
-   else
-   {
-      bCtrlStream = false;
-   }
+    // do we can control the stream ... ?
+    if ((showInfo.playState() == IncPlay::PS_PLAY)
+       && showInfo.canCtrlStream())
+    {
+       bCtrlStream = true;
+    }
+    else
+    {
+       bCtrlStream = false;
+    }
 
-   // how to handle pause ?
-   if ((showInfo.showType() == ShowInfo::Archive) && bCtrlStream)
-   {
-      pauseRole = Button::Stop_and_Save;
-   }
-   else
-   {
-      pauseRole = Button::Pause;
-   }
+    // reset play timer stuff ...
+    timer.reset();
+    timer.setStartGmt(showInfo.lastJump() ? showInfo.lastJump() : showInfo.starts());
+    uiDuration = (uint)-1;
 
-   // reset resume stuff ...
-   bResume = false;
+    // while not showing video, disable spooling ...
+    bSpoolPending = true;
+    enableDisablePlayControl (false);
 
-   // reset play timer stuff ...
-   timer.reset();
-   timer.setStartGmt(showInfo.lastJump() ? showInfo.lastJump() : showInfo.starts());
-   uiDuration = (uint)-1;
+    // enable / disable position slider ...
+    ui->posSlider->setValue(0);
+    ui->labPos->setEnabled(bCtrlStream);
+    ui->labPos->setText("00:00:00");
 
-   // while not showing video, disable spooling ...
-   bSpoolPending = true;
-   enableDisablePlayControl (false);
+    // get MRL ...
+    QString     sMrl  = sCmdLine.section(";;", 0, 0);
+    // QString     sMrl  = "d:/bbb.avi";
+    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
+    // QString     sMrl  = "d:/BR-test.ts";
 
-   // enable / disable position slider ...
-   ui->posSlider->setValue(0);
-   ui->labPos->setEnabled(bCtrlStream);
-   ui->labPos->setText("00:00:00");
+    // are there mrl options ... ?
+    if (sCmdLine.contains(";;"))
+    {
+       // get player arguments ...
+       lArgs = sCmdLine.mid(sCmdLine.indexOf(";;", 0))
+                           .split(";;", QString::SkipEmptyParts);
+    }
 
-   // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   // QString     sMrl  = "d:/bbb.avi";
-   // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
-   // QString     sMrl  = "d:/BR-test.ts";
+    if (!pVlcInstance)
+    {
+       iRV = initPlayer();
+    }
 
-   // are there mrl options ... ?
-   if (sCmdLine.contains(";;"))
-   {
-      // get player arguments ...
-      lArgs = sCmdLine.mid(sCmdLine.indexOf(";;", 0))
-                          .split(";;", QString::SkipEmptyParts);
-   }
+    if (!iRV)
+    {
+       mInfo(tr("Use following URL:\n  --> %1").arg(sMrl));
+       p_md = libvlc_media_new_location(pVlcInstance, sMrl.toUtf8().constData());
 
-   if (!pVlcInstance)
-   {
-      iRV = initPlayer();
-   }
+       if (p_md)
+       {
+          // add mrl options ...
+          for (cit = lArgs.constBegin(); cit != lArgs.constEnd(); cit ++)
+          {
+             mInfo(tr("Add MRL Option: %1").arg(*cit));
+             libvlc_media_add_option(p_md, (*cit).toUtf8().constData());
+          }
 
-   if (!iRV)
-   {
-      mInfo(tr("Use following URL:\n  --> %1").arg(sMrl));
-      p_md = libvlc_media_new_location(pVlcInstance, sMrl.toUtf8().constData());
+          // set media in player ...
+          libvlc_media_player_set_media (pMediaPlayer, p_md);
 
-      if (p_md)
-      {
-         // add mrl options ...
-         for (cit = lArgs.constBegin(); cit != lArgs.constEnd(); cit ++)
-         {
-            mInfo(tr("Add MRL Option: %1").arg(*cit));
-            libvlc_media_add_option(p_md, (*cit).toUtf8().constData());
-         }
+          // now it's safe to release media ...
+          libvlc_media_release (p_md);
+       }
+       else
+       {
+          mInfo(tr("Can't create media description ..."));
+          iRV = -1;
+       }
+    }
 
-         // set media in player ...
-         libvlc_media_player_set_media (pMediaPlayer, p_md);
+    if (!iRV)
+    {
+       iRV = play();
+    }
 
-         // now it's safe to release media ...
-         libvlc_media_release (p_md);
-      }
-      else
-      {
-         mInfo(tr("Can't create media description ..."));
-         iRV = -1;
-      }
-   }
-
-   if (!iRV)
-   {
-      iRV = play();
-   }
-
-   return iRV;
+    return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -516,45 +473,52 @@ int CPlayer::playMedia(const QString &sCmdLine)
 \----------------------------------------------------------------- */
 void CPlayer::slotUpdateSlider()
 {
-   if (pMediaPlayer)
-   {
-      if (libvlc_media_player_is_playing(pMediaPlayer))
-      {
-         uint pos;
-         if (isPositionable())
-         {
-            pos = libvlc_media_player_get_time (pMediaPlayer);
+    if (pMediaPlayer)
+    {
+       if (libvlc_media_player_is_playing(pMediaPlayer))
+       {
+          uint pos;
+          if (isPositionable())
+          {
+             pos = libvlc_media_player_get_time (pMediaPlayer);
 
-            if (!ui->posSlider->isSliderDown())
-            {
-               ui->posSlider->setValue(pos);
-               pos = pos / 1000; // ms ...
-               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
-            }
-         }
-         else
-         {
-            if (!ui->posSlider->isSliderDown())
-            {
-               pos = timer.gmtPosition();
+             if (!ui->posSlider->isSliderDown())
+             {
+                ui->posSlider->setValue(pos);
+                pos = pos / 1000; // ms ...
+                ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
+             }
+          }
+          else
+          {
+             pos = timer.gmtPosition();
 
-               if (pos > mToGmt(ui->posSlider->maximum()))
-               {
-                  ui->posSlider->setMaximum(mFromGmt(pos + 300));
-               }
+             // check archive program ...
+             if (!(++iCycleCount % 60))
+             {
+                iCycleCount = 0;
+                emit sigCheckArchProg(pos);
+             }
 
-               ui->posSlider->setValue(mFromGmt(pos));
+             if (!ui->posSlider->isSliderDown())
+             {
+                if (pos > mToGmt(ui->posSlider->maximum()))
+                {
+                   ui->posSlider->setMaximum(mFromGmt(pos + 300));
+                }
 
-               pos -= showInfo.starts();
+                ui->posSlider->setValue(mFromGmt(pos));
 
-               ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
-            }
-         }
+                pos -= showInfo.starts();
 
-         // send slider position ...
-         emit sigSliderPos(ui->posSlider->minimum(), ui->posSlider->maximum(), ui->posSlider->value());
-      }
-   }
+                ui->labPos->setText(QTime(0, 0).addSecs(pos).toString("hh:mm:ss"));
+             }
+          }
+
+          // send slider position ...
+          emit sigSliderPos(ui->posSlider->minimum(), ui->posSlider->maximum(), ui->posSlider->value());
+       }
+    }
 }
 
 /* -----------------------------------------------------------------\
@@ -1432,19 +1396,27 @@ void CPlayer::slotMute()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: resume
-|  Begin: 22.09.2011
+|  Method: slotShowInfoUpdated
+|  Begin: 04.11.2011
 |  Author: Jo2003
-|  Description: resume from stop?
+|  Description: showinfo struct was updated ...
 |
 |  Parameters: --
 |
-|  Returns: true --> yes
-|          false --> no
+|  Returns: --
 \----------------------------------------------------------------- */
-const bool& CPlayer::resume()
+void CPlayer::slotShowInfoUpdated()
 {
-   return bResume;
+   // we have to do the following:
+   // - Reset Timer
+   // - Reset Slider
+   ulong gmt = timer.gmtPosition();
+   timer.reset();
+   timer.setStartGmt(gmt);
+   timer.start();
+
+   // set slider range to seconds ...
+   ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
 }
 
 QFrame* CPlayer::getFrameTimerInfo()
