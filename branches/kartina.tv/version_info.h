@@ -30,15 +30,16 @@
    #define VERSION_MAJOR "1"
 #endif
 
-#define VERSION_MINOR "49"
-#define BETA_EXT      "B5"
+#define VERSION_MINOR "50"
+#define BETA_EXT      ""
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
 
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
-| --- new since last beta ---
+| 2011-12-01: Version 2.50
+| - add new bitrate "mobile"
 | - update shortinfo / slider / progress on archive play
 |   on show change
 | - use older libvlc 1.1.7 which still can remux mp4 to ts
