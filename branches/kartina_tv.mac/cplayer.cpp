@@ -9,12 +9,11 @@
 |
 | $Id$
 \*************************************************************/
+
+#define __NEED_VLCKIT
+
 #include "cplayer.h"
 #include "ui_cplayer.h"
-
-#ifdef Q_OS_MAC
-   #import <VLCKit/VLCKit.h>
-#endif
 
 // log file functions ...
 extern CLogFile VlcLog;
@@ -54,6 +53,11 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    bSpoolPending = true;
    uiDuration    = (uint)-1;
    iCycleCount   = 0;
+
+#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
+   videoView     = NULL;
+   pool          = [[NSAutoreleasePool alloc] init];
+#endif
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -128,6 +132,9 @@ CPlayer::~CPlayer()
       pLibVlcLog = NULL;
    }
 
+#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
+   [pool release];
+#endif
    delete ui;
 }
 
@@ -426,11 +433,11 @@ int CPlayer::playMedia(const QString &sCmdLine)
    ui->labPos->setText("00:00:00");
 
    // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
    // QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
-   // QString   sMrl = "/Users/joergn/Movies/test.ts";
+   QString     sMrl = "/Users/joergn/Movies/test.avi";
 
    // are there mrl options ... ?
    if (sCmdLine.contains(";;"))
@@ -1464,20 +1471,23 @@ void CPlayer::attachLibVLCToWnd ()
       // M$ Windows ...
       libvlc_media_player_set_hwnd (pMediaPlayer, ui->fVideo->winId());
 
-#elif defined Q_OS_MAC
+#elif defined Q_OS_MACX
 
       // Mac OSX ...
+      NSRect rect = NSMakeRect(ui->fVideo->pos().x(),
+                               ui->fVideo->pos().y(),
+                               ui->fVideo->width(),
+                               ui->fVideo->height());
 
-      // some objective C snippets here ...
-      NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+      videoView   = [[VLCVideoView alloc] initWithFrame:rect];
 
-      VLCVideoView *videoView = [[VLCVideoView alloc] init];
-      // [videoView setAutoresizingMask: NSViewHeightSizable|NSViewWidthSizable];
+      // videoView = [[VLCVideoView alloc] init];
+      [videoView setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
+      videoView.fillScreen = YES;
       ui->fVideo->setCocoaView(videoView);
 
       libvlc_media_player_set_nsobject(pMediaPlayer, videoView);
-      [videoView release];
-      [pool release];
+      [videoView display];
 
       // ui->fVideo->hide();
 #else
