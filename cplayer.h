@@ -20,8 +20,11 @@
 #include <QEvent>
 #include <QTime>
 #include <QDesktopWidget>
-
 #include <vlc/vlc.h>
+
+#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
+   #import <VLCKit/VLCKit.h>
+#endif // Q_OS_MACX
 
 #include "cvlcrecdb.h"
 #include "clogfile.h"
@@ -96,6 +99,10 @@ private:
    bool                    bSpoolPending;
    uint                    uiDuration;
    int                     iCycleCount;
+#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
+   VLCVideoView           *videoView;
+   NSAutoreleasePool      *pool;
+#endif // Q_OS_MACX
 
 private slots:
    void on_posSlider_valueChanged(int value);
