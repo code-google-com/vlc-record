@@ -14,6 +14,12 @@
 // log file functions ...
 extern CLogFile VlcLog;
 
+// inport vlckit ...
+#ifdef Q_OS_MACX
+   #import <VLCKit/VLCKit.h>
+#endif // Q_OS_MACX
+
+
 /* -----------------------------------------------------------------\
 |  Method: CVideoFrame / constructor
 |  Begin: 20.06.2010 / 19:05:00
@@ -24,11 +30,11 @@ extern CLogFile VlcLog;
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-CVideoFrame::CVideoFrame(QWidget * parent, Qt::WindowFlags f)
-#ifdef Q_OS_MAC
-   : CVideoWidget(NULL, parent)
+CVideoFrame::CVideoFrame(QWidget * parent)
+#ifdef Q_OS_MACX
+   : QVLCVideoWidget(NULL, parent)
 #else
-   : CVideoWidget(parent, f)
+   : QVLCVideoWidget(parent)
 #endif
 {
    pvShortcuts = NULL;
@@ -42,11 +48,15 @@ CVideoFrame::CVideoFrame(QWidget * parent, Qt::WindowFlags f)
    // hide mouse when timer has timeout ...
    connect (&tMouseHide, SIGNAL(timeout()), this, SLOT(slotHideMouse()));
 
-#ifndef Q_OS_MAC
-   setFrameShape(QFrame::NoFrame);
-   setFrameShadow(QFrame::Plain);
+#ifndef Q_OS_MACX
+   setFrameShape(QVLCVideoWidget::NoFrame);
+   setFrameShadow(QVLCVideoWidget::Plain);
    setLineWidth(0);
-#endif // Q_OS_MAC
+#else
+   m_pPool  = [[NSAutoreleasePool alloc] init];
+   m_pView  = [[VLCVideoView alloc] init];
+   setCocoaView(m_pView);
+#endif // Q_OS_MACX
 }
 
 /* -----------------------------------------------------------------\
@@ -61,7 +71,10 @@ CVideoFrame::CVideoFrame(QWidget * parent, Qt::WindowFlags f)
 \----------------------------------------------------------------- */
 CVideoFrame::~CVideoFrame()
 {
-
+#ifdef Q_OS_MACX
+   [m_pView release];
+   [m_pPool release];
+#endif
 }
 
 /* -----------------------------------------------------------------\
@@ -268,6 +281,26 @@ int CVideoFrame::keyEventToKeySequence(QKeyEvent *pEvent, QKeySequence &seq)
    seq = QKeySequence(iKey);
 
    return 0;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: widgetId
+|  Begin: 03.01.2012
+|  Author: Jo2003
+|  Description: return widget id to embedd vlc player widget
+|
+|  Parameters: key event, ref. to key sequence
+|
+|  Returns: 0 --> key sequence filled
+|          -1 --> not a key sequence
+\----------------------------------------------------------------- */
+VLCWidgetId CVideoFrame::widgetId() const
+{
+#ifdef Q_OS_MACX
+   return cocoaView();
+#else
+   return winId();
+#endif // Q_OS_MACX
 }
 
 /************************* History ***************************\
