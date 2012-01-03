@@ -48,14 +48,15 @@ CVideoFrame::CVideoFrame(QWidget * parent)
    // hide mouse when timer has timeout ...
    connect (&tMouseHide, SIGNAL(timeout()), this, SLOT(slotHideMouse()));
 
-#ifndef Q_OS_MACX
-   setFrameShape(QVLCVideoWidget::NoFrame);
-   setFrameShadow(QVLCVideoWidget::Plain);
-   setLineWidth(0);
-#else
+#ifdef Q_OS_MACX
    m_pPool  = [[NSAutoreleasePool alloc] init];
    m_pView  = [[VLCVideoView alloc] init];
    setCocoaView(m_pView);
+   mInfo(tr("CVideoFrame created ... (Mac Port)"));
+#else
+   setFrameShape(QVLCVideoWidget::NoFrame);
+   setFrameShadow(QVLCVideoWidget::Plain);
+   setLineWidth(0);
 #endif // Q_OS_MACX
 }
 

@@ -119,7 +119,7 @@ contains(DEFINES,INCLUDE_LIBVLC) {
         cvideoframe.h
    FORMS += forms/cplayer.ui \
         forms/recorder_inc.ui
-   SOURCES += cvideoframe.cpp
+   SOURCES += cplayer.cpp
    win32:LIBS += -Llib
 
    mac {
@@ -128,17 +128,17 @@ contains(DEFINES,INCLUDE_LIBVLC) {
 
       # for mac we have to use objective c mixed up with c++
       # therefore we need file extension ".mm" here ...
-      cplayer.mm.depends   = cplayer.cpp
-      cplayer.mm.commands  = ln -s $< $@
-      QMAKE_EXTRA_TARGETS += cplayer.mm
-      OBJECTIVE_SOURCES += cplayer.mm
+      cvideoframe.mm.depends   = cvideoframe.cpp
+      cvideoframe.mm.commands  = ln -s $< $@
+      QMAKE_EXTRA_TARGETS += cvideoframe.mm
+      OBJECTIVE_SOURCES += cvideoframe.mm
 
       CONFIG(debug,debug|release):appclean.commands = cd debug && rm -rf kartina_tv.app && rm -f *.dmg
       CONFIG(release,debug|release):appclean.commands = cd release && rm -rf kartina_tv.app && rm -f *.dmg
       QMAKE_EXTRA_TARGETS += appclean
 
       # Hook our appclean target in between qmake's Makefile update and the actual project target.
-      appcleanhook.depends = appclean
+      # appcleanhook.depends = appclean
       CONFIG(debug,debug|release):appcleanhook.target = Makefile.Debug
       CONFIG(release,debug|release):appcleanhook.target = Makefile.Release
       QMAKE_EXTRA_TARGETS += appcleanhook
@@ -147,7 +147,7 @@ contains(DEFINES,INCLUDE_LIBVLC) {
       QMAKE_POST_LINK = ./create_mac_bundle.sh
    }
    else {
-      SOURCES += cplayer.cpp
+      SOURCES += cvideoframe.cpp
    }
 
    LIBS += -lvlc
