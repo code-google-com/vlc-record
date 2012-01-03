@@ -66,6 +66,17 @@
    #define UPD_CHECK_URL     "http://rt.coujo.de/kartina_tv_ver_classic.xml"
 #endif // INCLUDE_LIBVLC
 
+// When using objective-C compiler on mac we need some Cocoa defines
+// which would break the build in normal c++ compiler.
+// Make typedef so both compilers are happy.
+#ifdef __OBJC__
+   #define ADD_COCOA_NATIVE_REF(CocoaClass) \
+      @class CocoaClass; \
+      typedef CocoaClass* Native##CocoaClass##Ref
+#else // __OBJC__
+   #define ADD_COCOA_NATIVE_REF(CocoaClass) typedef void* Native##CocoaClass##Ref
+#endif // __OBJC__
+
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\
 | $Log$
