@@ -52,7 +52,6 @@ CVideoFrame::CVideoFrame(QWidget * parent)
    m_pPool  = [[NSAutoreleasePool alloc] init];
    m_pView  = [[VLCVideoView alloc] init];
    setCocoaView(m_pView);
-   mInfo(tr("CVideoFrame created ... (Mac Port)"));
 #else
    setFrameShape(QVLCVideoWidget::NoFrame);
    setFrameShadow(QVLCVideoWidget::Plain);
