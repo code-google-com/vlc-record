@@ -19,6 +19,7 @@
 
 #include "clogfile.h"
 #include "cshortcutex.h"
+#include "defdef.h"
 
 #ifdef Q_OS_MACX
    #include <QMacCocoaViewContainer>
