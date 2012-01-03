@@ -138,7 +138,7 @@ contains(DEFINES,INCLUDE_LIBVLC) {
       QMAKE_EXTRA_TARGETS += appclean
 
       # Hook our appclean target in between qmake's Makefile update and the actual project target.
-      # appcleanhook.depends = appclean
+      appcleanhook.depends = appclean
       CONFIG(debug,debug|release):appcleanhook.target = Makefile.Debug
       CONFIG(release,debug|release):appcleanhook.target = Makefile.Release
       QMAKE_EXTRA_TARGETS += appcleanhook
