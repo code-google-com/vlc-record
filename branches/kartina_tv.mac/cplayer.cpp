@@ -9,9 +9,6 @@
 |
 | $Id$
 \*************************************************************/
-
-#define __NEED_VLCKIT
-
 #include "cplayer.h"
 #include "ui_cplayer.h"
 
@@ -53,11 +50,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    bSpoolPending = true;
    uiDuration    = (uint)-1;
    iCycleCount   = 0;
-
-#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
-   videoView     = NULL;
-   pool          = [[NSAutoreleasePool alloc] init];
-#endif
 
    // set log poller to single shot ...
    poller.setSingleShot(true);
@@ -132,9 +124,6 @@ CPlayer::~CPlayer()
       pLibVlcLog = NULL;
    }
 
-#if defined (__NEED_VLCKIT) && defined (Q_OS_MACX)
-   [pool release];
-#endif
    delete ui;
 }
 
@@ -226,7 +215,8 @@ int CPlayer::initPlayer()
    #warning Check if this is really needed!
    const char *vlc_args[] = {
       "--vout=minimal_macosx",
-      "--opengl-provider=minimal_macosx"
+      "--opengl-provider=minimal_macosx",
+      "-v"
    };
 
    argc = sizeof(vlc_args) / sizeof(vlc_args[0]);
@@ -335,7 +325,6 @@ int CPlayer::play()
    if (pMediaPlayer)
    {
       libvlc_media_player_play (pMediaPlayer);
-      // ui->fVideo->show();
    }
 
    return iRV;
@@ -433,11 +422,11 @@ int CPlayer::playMedia(const QString &sCmdLine)
    ui->labPos->setText("00:00:00");
 
    // get MRL ...
-   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   QString     sMrl  = sCmdLine.section(";;", 0, 0);
    // QString     sMrl  = "d:/bbb.avi";
    // QString     sMrl  = "/home/joergn/Videos/bbb.avi";
    // QString     sMrl  = "d:/BR-test.ts";
-   QString     sMrl = "/Users/joergn/Movies/test.avi";
+   // QString     sMrl = "/Users/joergn/Movies/test.avi";
 
    // are there mrl options ... ?
    if (sCmdLine.contains(";;"))
@@ -1469,30 +1458,17 @@ void CPlayer::attachLibVLCToWnd ()
 #ifdef Q_OS_WIN
 
       // M$ Windows ...
-      libvlc_media_player_set_hwnd (pMediaPlayer, ui->fVideo->winId());
+      libvlc_media_player_set_hwnd (pMediaPlayer, ui->fVideo->widgetId());
 
 #elif defined Q_OS_MACX
 
       // Mac OSX ...
-      NSRect rect = NSMakeRect(ui->fVideo->pos().x(),
-                               ui->fVideo->pos().y(),
-                               ui->fVideo->width(),
-                               ui->fVideo->height());
-
-      videoView   = [[VLCVideoView alloc] initWithFrame:rect];
-
-      // videoView = [[VLCVideoView alloc] init];
-      [videoView setAutoresizingMask: NSViewHeightSizable | NSViewWidthSizable];
-      videoView.fillScreen = YES;
-      ui->fVideo->setCocoaView(videoView);
-
-      libvlc_media_player_set_nsobject(pMediaPlayer, videoView);
-      [videoView display];
-
-      // ui->fVideo->hide();
+      libvlc_media_player_set_nsobject(pMediaPlayer, ui->fVideo->widgetId());
+      ui->fVideo->show();
 #else
+
       // linux ...
-      libvlc_media_player_set_xwindow (pMediaPlayer, ui->fVideo->winId());
+      libvlc_media_player_set_xwindow (pMediaPlayer, ui->fVideo->widgetId());
 
 #endif
    }

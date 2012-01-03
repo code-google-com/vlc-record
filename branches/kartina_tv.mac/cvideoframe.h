@@ -20,14 +20,17 @@
 #include "clogfile.h"
 #include "cshortcutex.h"
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACX
    #include <QMacCocoaViewContainer>
-   typedef QMacCocoaViewContainer CVideoWidget;
+   typedef QMacCocoaViewContainer QVLCVideoWidget;
+   typedef void*                  VLCWidgetId;
+   ADD_COCOA_NATIVE_REF(VLCVideoView);
+   ADD_COCOA_NATIVE_REF(NSAutoreleasePool);
 #else
    #include <QFrame>
-   typedef QFrame                 CVideoWidget;
-#endif // Q_OS_MAC
-
+   typedef QFrame                 QVLCVideoWidget;
+   typedef WId                    VLCWidgetId;
+#endif // Q_OS_MACX
 
 /********************************************************************\
 |  Class: CVideoFrame
@@ -36,14 +39,15 @@
 |  Description: extend QFrame for video functions
 |
 \********************************************************************/
-class CVideoFrame : public CVideoWidget
+class CVideoFrame : public QVLCVideoWidget
 {
    Q_OBJECT
 
 public:
-   CVideoFrame(QWidget * parent = NULL, Qt::WindowFlags f = 0);
+   CVideoFrame(QWidget * parent = NULL);
    virtual ~CVideoFrame();
    void setShortCuts (QVector<CShortcutEx *> *pvSc);
+   VLCWidgetId widgetId() const;
 
 protected:
    int  fakeShortCut (const QKeySequence &seq);
@@ -56,6 +60,11 @@ private:
    QVector<CShortcutEx *> *pvShortcuts;
    QTimer                  tMouseHide;
    int keyEventToKeySequence (QKeyEvent *pEvent, QKeySequence & seq);
+
+#ifdef Q_OS_MACX
+   NativeVLCVideoViewRef      m_pView;
+   NativeNSAutoreleasePoolRef m_pPool;
+#endif // Q_OS_MACX
 
 signals:
    void sigToggleFullscreen ();
