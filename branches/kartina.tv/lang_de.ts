@@ -669,47 +669,47 @@ p, li { white-space: pre-wrap; }
         <translation>Logge alles</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="315"/>
+        <location filename="csettingsdlg.cpp" line="305"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="310"/>
+        <location filename="csettingsdlg.cpp" line="300"/>
         <source>Executables (*.exe)</source>
         <translation>ausführbar (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="312"/>
+        <location filename="csettingsdlg.cpp" line="302"/>
         <source>Executables (*)</source>
         <translation>ausführbar (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="355"/>
+        <location filename="csettingsdlg.cpp" line="345"/>
         <source>Target Folder</source>
         <translation>Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="540"/>
+        <location filename="csettingsdlg.cpp" line="530"/>
         <source>Mobile</source>
         <translation>Handy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="544"/>
+        <location filename="csettingsdlg.cpp" line="534"/>
         <source>Eco</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="548"/>
+        <location filename="csettingsdlg.cpp" line="538"/>
         <source>Standard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="552"/>
+        <location filename="csettingsdlg.cpp" line="542"/>
         <source>Premium</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="556"/>
+        <location filename="csettingsdlg.cpp" line="546"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation></translation>

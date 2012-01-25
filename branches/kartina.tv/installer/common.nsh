@@ -80,8 +80,7 @@ Section "VLC-Record" SecInst
   File "${QTLIBS}\mingwm10.dll"
 
   SetOutPath "$INSTDIR\language"
-  File "${SRCDIR}\lang_de.qm"
-  File "${SRCDIR}\lang_ru.qm"
+  File /r "${SRCDIR}\*.qm"
 
   SetOutPath "$INSTDIR\modules"
   File "${SRCDIR}\modules\1_vlc-player.mod"
@@ -240,8 +239,7 @@ SectionEnd
 ; Uninstaller Section vlc-record ...
 Section "un.Program"
   ; delete installed language files ...
-  Delete "$INSTDIR\language\lang_de.qm"
-  Delete "$INSTDIR\language\lang_ru.qm"
+  Delete "$INSTDIR\language\*.qm"
 
   ; delete installed module files ...
   Delete "$INSTDIR\modules\1_vlc-player.mod"
