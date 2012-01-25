@@ -49,6 +49,23 @@ QFTSettings::QFTSettings(QWidget *parent, QTranslator *pTrans) :
     ui->lineUsr->setText("144");
     ui->linePass->setText("441");
 
+    // fill language box ...
+    QDir        folder(pFolders->getLangDir());
+    QStringList sl = folder.entryList(QStringList("*.qm"), QDir::Files, QDir::Name);
+
+    // make sure english is part of list ...
+    sl.push_front("lang_en.qm");
+
+    QRegExp rx("^lang_([a-zA-Z]+).qm$");
+    for (int i = 0; i < sl.size(); i++)
+    {
+       // get out language from file name ...
+       if (sl.at(i).indexOf(rx) > -1)
+       {
+          ui->cbxLanguage->addItem(QIcon(QString(":/flags/%1").arg(rx.cap(1))), rx.cap(1));
+       }
+    }
+
     resize(sizeHint());
 }
 

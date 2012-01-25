@@ -632,13 +632,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="39"/>
-        <location filename="forms/csettingsdlg.ui" line="492"/>
+        <location filename="forms/csettingsdlg.ui" line="464"/>
         <source>User: </source>
         <translation>Użytkownik:</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="49"/>
-        <location filename="forms/csettingsdlg.ui" line="506"/>
+        <location filename="forms/csettingsdlg.ui" line="478"/>
         <source>Password: </source>
         <translation>Hasło:</translation>
     </message>
@@ -709,252 +709,249 @@ p, li { white-space: pre-wrap; }
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="243"/>
         <source>en</source>
-        <translation>ang</translation>
+        <translation type="obsolete">ang</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="252"/>
         <source>de</source>
-        <translation>niem</translation>
+        <translation type="obsolete">niem</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="261"/>
         <source>ru</source>
-        <translation>ros</translation>
+        <translation type="obsolete">ros</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="273"/>
+        <location filename="forms/csettingsdlg.ui" line="245"/>
         <source>Reload Logos:</source>
         <translation>Załaduj ponownie logo:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="286"/>
+        <location filename="forms/csettingsdlg.ui" line="258"/>
         <source>&amp;reload Logos</source>
         <translation>&amp;załaduj ponownie logo</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="308"/>
+        <location filename="forms/csettingsdlg.ui" line="280"/>
         <source>Try to fix time offset</source>
         <translation>Spróbuj naprawić przesunięcie czasu</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="315"/>
+        <location filename="forms/csettingsdlg.ui" line="287"/>
         <source>Extended Channel List</source>
         <translation>Rozszerzona lista kanałów</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="322"/>
+        <location filename="forms/csettingsdlg.ui" line="294"/>
         <source>Enable Advanced Settings</source>
         <translation>Włącz zaawansowane ustawienia</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="335"/>
+        <location filename="forms/csettingsdlg.ui" line="307"/>
         <source>Shortcuts</source>
         <translation>Skróty</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="354"/>
+        <location filename="forms/csettingsdlg.ui" line="326"/>
         <source>Function</source>
         <translation>Funkcja</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="359"/>
+        <location filename="forms/csettingsdlg.ui" line="331"/>
         <source>ShortCut</source>
         <translation>Skrót</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="377"/>
+        <location filename="forms/csettingsdlg.ui" line="349"/>
         <source>Changes in shortcuts take effect only after restarting the program.</source>
         <translation>Zmiany w skrótach są aktywne dopiero po ponownym uruchomieniu programu.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="414"/>
+        <location filename="forms/csettingsdlg.ui" line="386"/>
         <source>Reset Shortcuts to default</source>
         <translation>Przywróć skróty domyślne</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="427"/>
+        <location filename="forms/csettingsdlg.ui" line="399"/>
         <source>Advanced</source>
         <translation>Zaawansowany</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="433"/>
+        <location filename="forms/csettingsdlg.ui" line="405"/>
         <source> Proxy Server </source>
         <translation>Serwer proxy</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="439"/>
+        <location filename="forms/csettingsdlg.ui" line="411"/>
         <source>Enable Proxy</source>
         <translation>Włącz proxy</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="452"/>
+        <location filename="forms/csettingsdlg.ui" line="424"/>
         <source>Address: </source>
         <translation>Adres:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="466"/>
+        <location filename="forms/csettingsdlg.ui" line="438"/>
         <source>Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="526"/>
+        <location filename="forms/csettingsdlg.ui" line="498"/>
         <source>Advanced Settings</source>
         <translation>Zaawansowane ustawienia</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="532"/>
+        <location filename="forms/csettingsdlg.ui" line="504"/>
         <source>API Server: </source>
         <translation>Serwer API:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="546"/>
+        <location filename="forms/csettingsdlg.ui" line="518"/>
         <source>Player Module:</source>
         <translation>Moduł odtwarzacza:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="556"/>
+        <location filename="forms/csettingsdlg.ui" line="528"/>
         <source>Log Level:</source>
         <translation>Poziom logowania:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="564"/>
+        <location filename="forms/csettingsdlg.ui" line="536"/>
         <source>Log disabled</source>
         <translation>Logowanie wyłączone</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="569"/>
+        <location filename="forms/csettingsdlg.ui" line="541"/>
         <source>Log Errors only</source>
         <translation>Tylko błędy logowania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="574"/>
+        <location filename="forms/csettingsdlg.ui" line="546"/>
         <source>Log Errors and Warnings</source>
         <translation>Błędy logowania i ostrzeżenia</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="579"/>
+        <location filename="forms/csettingsdlg.ui" line="551"/>
         <source>Log everything</source>
         <translation>Zaloguj wszystko</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="587"/>
+        <location filename="forms/csettingsdlg.ui" line="559"/>
         <source>Shutdown Command:</source>
         <translation>Polecenie wyłączenia:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="597"/>
+        <location filename="forms/csettingsdlg.ui" line="569"/>
         <source>Refresh EPG every:</source>
         <translation>Odśwież Przewodnik TV co:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="610"/>
+        <location filename="forms/csettingsdlg.ui" line="582"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="615"/>
+        <location filename="forms/csettingsdlg.ui" line="587"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="620"/>
+        <location filename="forms/csettingsdlg.ui" line="592"/>
         <source>15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="628"/>
+        <location filename="forms/csettingsdlg.ui" line="600"/>
         <source>Minute(s)</source>
         <translation>minut</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="637"/>
+        <location filename="forms/csettingsdlg.ui" line="609"/>
         <source>Ask for Record Filename</source>
         <translation>Zapytaj o nazwę pliku nagrania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="644"/>
+        <location filename="forms/csettingsdlg.ui" line="616"/>
         <source>Minimize to Systray</source>
         <translation>Minimalizuj do Systray</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="651"/>
+        <location filename="forms/csettingsdlg.ui" line="623"/>
         <source>Detach Player at startup</source>
         <translation>Odłącz odtwarzacz podczas uruchamiania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="658"/>
+        <location filename="forms/csettingsdlg.ui" line="630"/>
         <source>Translit Record Filename</source>
         <translation>Transliteracja nazwy pliku nagrania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="665"/>
+        <location filename="forms/csettingsdlg.ui" line="637"/>
         <source>Doubleclick on channel list starts play</source>
         <translation>Kliknij dwukrotnie na początek odtwarzania listy kanałów</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="672"/>
+        <location filename="forms/csettingsdlg.ui" line="644"/>
         <source>Check for updates</source>
         <translation>Sprawdź aktualizacje</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="679"/>
+        <location filename="forms/csettingsdlg.ui" line="651"/>
         <source>Use GPU for video decoding</source>
         <translation>Użyj GPU do dekodowania wideo</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="708"/>
+        <location filename="forms/csettingsdlg.ui" line="680"/>
         <source>&amp;Save</source>
         <translation>&amp;Zapisz</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="728"/>
+        <location filename="forms/csettingsdlg.ui" line="700"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Anuluj</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="310"/>
+        <location filename="csettingsdlg.cpp" line="319"/>
         <source>Executables (*.exe)</source>
         <translation>Pliki wykonywalne (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="312"/>
+        <location filename="csettingsdlg.cpp" line="321"/>
         <source>Executables (*)</source>
         <translation>Pliki wykonywalne (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="315"/>
+        <location filename="csettingsdlg.cpp" line="324"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="355"/>
+        <location filename="csettingsdlg.cpp" line="364"/>
         <source>Target Folder</source>
         <translation>Folder docelowy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="540"/>
+        <location filename="csettingsdlg.cpp" line="549"/>
         <source>Mobile</source>
         <translation>Przenośny</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="544"/>
+        <location filename="csettingsdlg.cpp" line="553"/>
         <source>Eco</source>
         <translation>Eko</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="548"/>
+        <location filename="csettingsdlg.cpp" line="557"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="552"/>
+        <location filename="csettingsdlg.cpp" line="561"/>
         <source>Premium</source>
         <translation>Wysokiej jakości</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="556"/>
+        <location filename="csettingsdlg.cpp" line="565"/>
         <source>%1 Kbit/s</source>
         <translation>%1 Kbit/s</translation>
     </message>
@@ -1381,53 +1378,50 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="42"/>
         <source>en</source>
-        <translation>ang</translation>
+        <translation type="obsolete">ang</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="51"/>
         <source>de</source>
-        <translation>niem</translation>
+        <translation type="obsolete">niem</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="60"/>
         <source>ru</source>
-        <translation>ros</translation>
+        <translation type="obsolete">ros</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="74"/>
+        <location filename="forms/qftsettings.ui" line="47"/>
         <source> Subscription details provided by %1 </source>
         <translation>Informacje o subskrypcji dostarczone przez %1</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="80"/>
+        <location filename="forms/qftsettings.ui" line="53"/>
         <source>User: </source>
         <translation>Użytkownik:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="90"/>
-        <location filename="forms/qftsettings.ui" line="111"/>
+        <location filename="forms/qftsettings.ui" line="63"/>
+        <location filename="forms/qftsettings.ui" line="84"/>
         <source>Password: </source>
         <translation>Hasło:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="104"/>
+        <location filename="forms/qftsettings.ui" line="77"/>
         <source>Allow Adult Channels</source>
         <translation>Zezwól na kanały dla dorosłych</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="136"/>
+        <location filename="forms/qftsettings.ui" line="109"/>
         <source>&amp;Reset</source>
         <translation>&amp;Przywróć</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="159"/>
+        <location filename="forms/qftsettings.ui" line="132"/>
         <source>&amp;Save</source>
         <translation>&amp;Zapisz</translation>
     </message>
     <message>
-        <location filename="qftsettings.cpp" line="150"/>
+        <location filename="qftsettings.cpp" line="167"/>
         <source>%1/Videos</source>
         <translation>%1/Wideo</translation>
     </message>

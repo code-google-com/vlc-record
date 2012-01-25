@@ -89,8 +89,10 @@ CSettingsDlg::~CSettingsDlg()
 \----------------------------------------------------------------- */
 void CSettingsDlg::readSettings()
 {
-   QString s;
-   int     iErr;
+   QString     s;
+   int         iErr;
+   QDir        folder;
+   QStringList sl;
 
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
@@ -166,8 +168,25 @@ void CSettingsDlg::readSettings()
    }
 
    // fill player module box with available modules ...
-   QDir modDir(pFolders->getModDir());
-   m_ui->cbxPlayerMod->addItems(modDir.entryList(QStringList("*.mod"), QDir::Files, QDir::Name));
+   folder.setPath(pFolders->getModDir());
+   m_ui->cbxPlayerMod->addItems(folder.entryList(QStringList("*.mod"), QDir::Files, QDir::Name));
+
+   // fill language box ...
+   folder.setPath(pFolders->getLangDir());
+   sl = folder.entryList(QStringList("*.qm"), QDir::Files, QDir::Name);
+
+   // make sure english is part of list ...
+   sl.push_front("lang_en.qm");
+
+   QRegExp rx("^lang_([a-zA-Z]+).qm$");
+   for (int i = 0; i < sl.size(); i++)
+   {
+      // get out language from file name ...
+      if (sl.at(i).indexOf(rx) > -1)
+      {
+         m_ui->cbxLanguage->addItem(QIcon(QString(":/flags/%1").arg(rx.cap(1))), rx.cap(1));
+      }
+   }
 
    // combo boxes ...
    int iIdx;
