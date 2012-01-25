@@ -37,33 +37,6 @@
          <height>0</height>
         </size>
        </property>
-       <item>
-        <property name="text">
-         <string>en</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../vlc-record.qrc">
-          <normaloff>:/flags/en</normaloff>:/flags/en</iconset>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>de</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../vlc-record.qrc">
-          <normaloff>:/flags/de</normaloff>:/flags/de</iconset>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ru</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../vlc-record.qrc">
-          <normaloff>:/flags/ru</normaloff>:/flags/ru</iconset>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -170,9 +143,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../vlc-record.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>checkAdult</sender>
