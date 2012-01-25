@@ -1,8 +1,8 @@
 ;-------------------------------------------------------
 ; Include Modern UI
-
   !include "MUI2.nsh"
   !include "FileFunc.nsh"
+
 ;-------------------------------------------------------
 ; General
 
@@ -64,6 +64,8 @@
   !insertmacro MUI_LANGUAGE "Russian" ;first language is the default language
   !insertmacro MUI_LANGUAGE "German"
   !insertmacro MUI_LANGUAGE "English"
+  !insertmacro MUI_LANGUAGE "French"
+  !insertmacro MUI_LANGUAGE "Polish"
   !insertmacro MUI_RESERVEFILE_LANGDLL
   
 ;-------------------------------------------------------

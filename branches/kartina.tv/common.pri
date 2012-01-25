@@ -88,11 +88,6 @@ RESOURCES += vlc-record.qrc \
     lcd.qrc
 INCLUDEPATH += tastes
 
-TRANSLATIONS = lang_de.ts \
-    lang_ru.ts \
-    lang_pl.ts \
-    lang_frz.ts
-
 # for static build ...
 static {
     DEFINES += DSTATIC
