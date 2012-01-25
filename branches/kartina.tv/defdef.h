@@ -14,11 +14,14 @@
 
 #include <QtGlobal>
 
-#ifdef INCLUDE_LIBVLC
-   #define APP_NAME          "Kartina.TV"
-#else
-   #define APP_NAME          "Kartina.TV-classic"
-#endif // INCLUDE_LIBVLC
+#ifdef _TASTE_KARTINA_TV
+   #include <defines_kartina_tv.h>
+#elif defined _TASTE_POLSKY_TV
+   #include <defines_polsky_tv.h>
+#elif defined _TASTE_AFROBOX
+   #include <defines_afrobox.h>
+#endif // _TASTE_XXX
+
 
 #ifdef Q_OS_WIN32
    #define DATA_DIR_ENV   "APPDATA"
@@ -34,14 +37,13 @@
    #define __UNUSED
 #endif
 
-#define APP_LOG_FILE      "kartina_tv.log"
+#define APP_LOG_FILE      BIN_NAME ".log"
 #define PLAYER_LOG_FILE   "player.log"
 #define TIMER_LIST_FILE   "reclist.xml"
 #define MOD_DIR           "modules"
 #define LANG_DIR          "language"
 #define LOGO_DIR          "logos"
 #define VOD_DIR           "vod"
-#define KARTINA_HOST      "iptv.kartina.tv"
 #define KARTINA_API_PATH  "/api/xml/"
 #define LOGO_URL          "/img/ico/24"
 #define DEF_TIME_FORMAT   "MMM dd, yyyy hh:mm:ss"
@@ -60,11 +62,6 @@
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
 #define VIDEOS_PER_SITE   20              // number of videos / site
 #define GPU_ACC_TOKEN     ":ffmpeg-hw"    // mrl option to use GPU acceleration
-#ifdef INCLUDE_LIBVLC
-   #define UPD_CHECK_URL     "http://rt.coujo.de/kartina_tv_ver.xml"
-#else
-   #define UPD_CHECK_URL     "http://rt.coujo.de/kartina_tv_ver_classic.xml"
-#endif // INCLUDE_LIBVLC
 
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\

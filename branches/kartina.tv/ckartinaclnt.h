@@ -26,7 +26,6 @@
 
 #include "clogfile.h"
 #include "defdef.h"
-#include "customization.h"
 #include "version_info.h"
 
 

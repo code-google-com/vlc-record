@@ -1,4 +1,4 @@
-/*------------------------------ Information ---------------------------*//**
+/*------------------------------ Infor mation ---------------------------*//**
  *
  *  $HeadURL$
  *
@@ -41,6 +41,9 @@ QFTSettings::QFTSettings(QWidget *parent, QTranslator *pTrans) :
     // set company name ...
     QString s = ui->groupAccount->title();
     ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
+
+    s = windowTitle();
+    setWindowTitle(s.arg(COMPANY_NAME));
 
     // set default user and password ...
     ui->lineUsr->setText("144");
@@ -95,6 +98,9 @@ void QFTSettings::changeEvent(QEvent *e)
          // set company name ...
          QString s = ui->groupAccount->title();
          ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
+
+         s = windowTitle();
+         setWindowTitle(s.arg(COMPANY_NAME));
       }
       break;
 
@@ -150,7 +156,6 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("HttpCache",    8000);              // 8 sec. cache
    pDb->setValue("UpdateCheck",  (int)Qt::Checked);  // check for updates
    pDb->setValue("2ClickPlay",   (int)Qt::Checked);  // double click on channel list starts player
-   pDb->setValue("GPUAcc",       (int)Qt::Checked);  // use GPU video decoding (if possible)
 
    // set windows size and position ...
    pDb->setValue("WndRect",        "74;71;1220;752");

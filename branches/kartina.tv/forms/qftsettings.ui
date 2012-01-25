@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>413</width>
-    <height>158</height>
+    <height>184</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Kartina.tv First Time Settings</string>
+   <string>%1 First Time Settings</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

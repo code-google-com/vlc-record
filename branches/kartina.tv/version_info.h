@@ -12,7 +12,6 @@
 #ifndef __011910__VERSION_INFO_H
    #define __011910__VERSION_INFO_H
 #include <QtGlobal>
-#include "customization.h"
 
 #if defined Q_OS_WIN32
    #define MY_BUILD_SYS "Windows"
