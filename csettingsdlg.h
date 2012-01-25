@@ -21,7 +21,6 @@
 #include "cvlcrecdb.h"
 #include "clogfile.h"
 #include "defdef.h"
-#include "customization.h"
 #include "cdirstuff.h"
 #include "ckartinaxmlparser.h"
 #include "cshortcutex.h"

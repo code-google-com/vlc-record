@@ -14,9 +14,5 @@
 !define QTLIBS "..\..\qtlibs"
 
 ;------------------------------
-; application name ...
-!define APPNAME "Kartina.TV"
-
-;------------------------------
 ; directory for the packages
 !define PACKAGES "..\packages"

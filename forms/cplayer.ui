@@ -115,44 +115,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="btnBwd">
-       <property name="enabled">
-        <bool>false</bool>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="toolTip">
-        <string>Jump Backward</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
        </property>
-       <property name="text">
-        <string>...</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/player/bwd</normaloff>:/player/bwd</iconset>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="btnFwd">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Jump Forward</string>
-       </property>
-       <property name="text">
-        <string>...</string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/player/fwd</normaloff>:/player/fwd</iconset>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
+      </spacer>
      </item>
      <item>
       <widget class="QLabel" name="labSound">
@@ -287,26 +260,14 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="CVideoFrame" name="fVideo">
-           <property name="mouseTracking">
-            <bool>true</bool>
-           </property>
+          <widget class="CVideoFrame" name="fVideo" native="true">
            <property name="styleSheet">
-            <string notr="true">QFrame#fVideo {
+            <string notr="true">QWidget#fVideo {
    background-color: black;
    background-image: url(:/app/kartina);
    background-repeat: no-repeat;
    background-position: center middle;
 }</string>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
-            <number>0</number>
            </property>
           </widget>
          </item>
@@ -424,7 +385,7 @@ color: white;
  <customwidgets>
   <customwidget>
    <class>CVideoFrame</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header>cvideoframe.h</header>
    <container>1</container>
   </customwidget>

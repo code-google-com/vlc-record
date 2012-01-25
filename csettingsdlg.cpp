@@ -152,16 +152,6 @@ void CSettingsDlg::readSettings()
       m_ui->checkUpdate->setCheckState(Qt::Checked);
    }
 
-   // GPU video decoding ...
-   m_ui->checkGPUAcc->setCheckState((Qt::CheckState)pDb->intValue("GPUAcc", &iErr));
-
-   // value doesn't exist in database ...
-   if (iErr)
-   {
-      // enable by default ...
-      m_ui->checkGPUAcc->setCheckState(Qt::Checked);
-   }
-
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
    if (m_ui->checkAdvanced->isChecked())

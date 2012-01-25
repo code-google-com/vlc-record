@@ -565,7 +565,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1271"/>
+        <location filename="cplayer.cpp" line="1268"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
@@ -628,30 +628,22 @@ p, li { white-space: pre-wrap; }
         <translation>Размер кадра:</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="223"/>
+        <location filename="forms/cplayer.ui" line="196"/>
         <source>Switch to Fullscreen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="416"/>
+        <location filename="forms/cplayer.ui" line="377"/>
         <source>0:00:00</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="123"/>
         <source>Jump Backward</source>
-        <translation>шаг назад</translation>
+        <translation type="obsolete">шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="126"/>
-        <location filename="forms/cplayer.ui" line="146"/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="143"/>
         <source>Jump Forward</source>
-        <translation>шаг вперед</translation>
+        <translation type="obsolete">шаг вперед</translation>
     </message>
 </context>
 <context>
@@ -1415,8 +1407,9 @@ or start time is later than end time!</source>
     <name>QFTSettings</name>
     <message>
         <location filename="forms/qftsettings.ui" line="17"/>
-        <source>Kartina.tv First Time Settings</source>
-        <translation>Начальная настройка</translation>
+        <source>%1 First Time Settings</source>
+        <oldsource>Kartina.tv First Time Settings</oldsource>
+        <translation type="unfinished">Начальная настройка</translation>
     </message>
     <message>
         <location filename="forms/qftsettings.ui" line="28"/>
@@ -1470,7 +1463,7 @@ or start time is later than end time!</source>
         <translation>С&amp;охранить</translation>
     </message>
     <message>
-        <location filename="qftsettings.cpp" line="144"/>
+        <location filename="qftsettings.cpp" line="150"/>
         <source>%1/Videos</source>
         <translation></translation>
     </message>
@@ -1857,207 +1850,207 @@ dataDir: %1
         <translation>%1 API сообщает о некоторых ошибках: %2</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="133"/>
-        <location filename="forms/recorder_inc.ui" line="138"/>
+        <location filename="forms/recorder.ui" line="137"/>
+        <location filename="forms/recorder_inc.ui" line="142"/>
         <source> Channels </source>
         <translation>Список каналов</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="195"/>
-        <location filename="forms/recorder_inc.ui" line="206"/>
+        <location filename="forms/recorder.ui" line="199"/>
+        <location filename="forms/recorder_inc.ui" line="210"/>
         <source>Channel Group</source>
         <translation>Группа каналов</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="208"/>
-        <location filename="forms/recorder_inc.ui" line="219"/>
+        <location filename="forms/recorder.ui" line="212"/>
+        <location filename="forms/recorder_inc.ui" line="223"/>
         <source>Channel List</source>
         <translation>Список каналов</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="241"/>
+        <location filename="forms/recorder.ui" line="245"/>
         <source> Now Playing </source>
         <translation> В эфире </translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="247"/>
-        <location filename="forms/recorder_inc.ui" line="1151"/>
+        <location filename="forms/recorder.ui" line="251"/>
+        <location filename="forms/recorder_inc.ui" line="1155"/>
         <source>Short EPG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="266"/>
-        <location filename="forms/recorder_inc.ui" line="1170"/>
+        <location filename="forms/recorder.ui" line="270"/>
+        <location filename="forms/recorder_inc.ui" line="1174"/>
         <source>Time Progress for played programm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="281"/>
-        <location filename="forms/recorder_inc.ui" line="255"/>
+        <location filename="forms/recorder.ui" line="285"/>
+        <location filename="forms/recorder_inc.ui" line="259"/>
         <source> EPG - Electronic Program Guide </source>
         <translation>Программа передач</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="821"/>
-        <location filename="forms/recorder_inc.ui" line="854"/>
+        <location filename="forms/recorder.ui" line="825"/>
+        <location filename="forms/recorder_inc.ui" line="858"/>
         <source>Show Live!</source>
         <translation>Прямой эфир!</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="70"/>
-        <location filename="forms/recorder_inc.ui" line="100"/>
+        <location filename="forms/recorder.ui" line="74"/>
+        <location filename="forms/recorder_inc.ui" line="104"/>
         <source>Program Guide</source>
         <translation>Программа</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="551"/>
-        <location filename="forms/recorder.ui" line="714"/>
-        <location filename="forms/recorder_inc.ui" line="546"/>
-        <location filename="forms/recorder_inc.ui" line="715"/>
+        <location filename="forms/recorder.ui" line="555"/>
+        <location filename="forms/recorder.ui" line="718"/>
+        <location filename="forms/recorder_inc.ui" line="550"/>
+        <location filename="forms/recorder_inc.ui" line="719"/>
         <source>Search: </source>
         <translation>Поиск:</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="670"/>
-        <location filename="forms/recorder_inc.ui" line="671"/>
+        <location filename="forms/recorder.ui" line="674"/>
+        <location filename="forms/recorder_inc.ui" line="675"/>
         <source>Page: </source>
         <oldsource>Site: </oldsource>
         <translation>Страница: </translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="489"/>
-        <location filename="forms/recorder.ui" line="522"/>
-        <location filename="forms/recorder.ui" line="579"/>
-        <location filename="forms/recorder.ui" line="653"/>
-        <location filename="forms/recorder.ui" line="680"/>
-        <location filename="forms/recorder.ui" line="742"/>
-        <location filename="forms/recorder_inc.ui" line="481"/>
-        <location filename="forms/recorder_inc.ui" line="517"/>
-        <location filename="forms/recorder_inc.ui" line="574"/>
-        <location filename="forms/recorder_inc.ui" line="654"/>
-        <location filename="forms/recorder_inc.ui" line="681"/>
-        <location filename="forms/recorder_inc.ui" line="743"/>
+        <location filename="forms/recorder.ui" line="493"/>
+        <location filename="forms/recorder.ui" line="526"/>
+        <location filename="forms/recorder.ui" line="583"/>
+        <location filename="forms/recorder.ui" line="657"/>
+        <location filename="forms/recorder.ui" line="684"/>
+        <location filename="forms/recorder.ui" line="746"/>
+        <location filename="forms/recorder_inc.ui" line="485"/>
+        <location filename="forms/recorder_inc.ui" line="521"/>
+        <location filename="forms/recorder_inc.ui" line="578"/>
+        <location filename="forms/recorder_inc.ui" line="658"/>
+        <location filename="forms/recorder_inc.ui" line="685"/>
+        <location filename="forms/recorder_inc.ui" line="747"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="515"/>
-        <location filename="forms/recorder_inc.ui" line="507"/>
+        <location filename="forms/recorder.ui" line="519"/>
+        <location filename="forms/recorder_inc.ui" line="511"/>
         <source>Textsize</source>
         <translation>Шрифт</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="609"/>
-        <location filename="forms/recorder_inc.ui" line="607"/>
+        <location filename="forms/recorder.ui" line="613"/>
+        <location filename="forms/recorder_inc.ui" line="611"/>
         <location filename="recorder.cpp" line="2507"/>
         <source>Video On Demand</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="620"/>
-        <location filename="forms/recorder_inc.ui" line="621"/>
+        <location filename="forms/recorder.ui" line="624"/>
+        <location filename="forms/recorder_inc.ui" line="625"/>
         <source>Genre: </source>
         <translation>Жанр: </translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="630"/>
-        <location filename="forms/recorder_inc.ui" line="631"/>
+        <location filename="forms/recorder.ui" line="634"/>
+        <location filename="forms/recorder_inc.ui" line="635"/>
         <source>Order: </source>
         <translation>Сортировка: </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1044"/>
+        <location filename="forms/recorder_inc.ui" line="1048"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1049"/>
+        <location filename="forms/recorder_inc.ui" line="1053"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1054"/>
+        <location filename="forms/recorder_inc.ui" line="1058"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1059"/>
+        <location filename="forms/recorder_inc.ui" line="1063"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1069"/>
+        <location filename="forms/recorder_inc.ui" line="1073"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="857"/>
-        <location filename="forms/recorder_inc.ui" line="890"/>
+        <location filename="forms/recorder.ui" line="861"/>
+        <location filename="forms/recorder_inc.ui" line="894"/>
         <source>Play selected Channel</source>
         <translation>Просмотр передачи</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="889"/>
-        <location filename="forms/recorder_inc.ui" line="922"/>
+        <location filename="forms/recorder.ui" line="893"/>
+        <location filename="forms/recorder_inc.ui" line="926"/>
         <source>Record selected Channel</source>
         <translation>Запись выбранной передачи</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="930"/>
-        <location filename="forms/recorder_inc.ui" line="963"/>
+        <location filename="forms/recorder.ui" line="934"/>
+        <location filename="forms/recorder_inc.ui" line="967"/>
         <source>Stop VLC ...</source>
         <translation>Остановить VLC Player ...</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="969"/>
-        <location filename="forms/recorder_inc.ui" line="1122"/>
+        <location filename="forms/recorder.ui" line="973"/>
+        <location filename="forms/recorder_inc.ui" line="1126"/>
         <location filename="recorder.cpp" line="2950"/>
         <source>Timer Record</source>
         <translation>Планировщик записи</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="1074"/>
-        <location filename="forms/recorder_inc.ui" line="1287"/>
+        <location filename="forms/recorder.ui" line="1078"/>
+        <location filename="forms/recorder_inc.ui" line="1291"/>
         <location filename="recorder.cpp" line="2951"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="1112"/>
-        <location filename="forms/recorder_inc.ui" line="1325"/>
+        <location filename="forms/recorder.ui" line="1116"/>
+        <location filename="forms/recorder_inc.ui" line="1329"/>
         <source>About ...</source>
         <translation>О программе...</translation>
     </message>
     <message>
-        <location filename="forms/recorder.ui" line="1150"/>
-        <location filename="forms/recorder_inc.ui" line="1363"/>
+        <location filename="forms/recorder.ui" line="1154"/>
+        <location filename="forms/recorder_inc.ui" line="1367"/>
         <location filename="recorder.cpp" line="2956"/>
         <source>Quit</source>
         <translation>Выключить</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="767"/>
+        <location filename="forms/recorder_inc.ui" line="771"/>
         <source> Player </source>
         <translation>Плеер</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1011"/>
+        <location filename="forms/recorder_inc.ui" line="1015"/>
         <location filename="recorder.cpp" line="2966"/>
         <source>Jump Backward</source>
         <translation>Шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1040"/>
+        <location filename="forms/recorder_inc.ui" line="1044"/>
         <source>Time Jump Value in minutes</source>
         <translation>Размер временного шага</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1064"/>
+        <location filename="forms/recorder_inc.ui" line="1068"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1086"/>
+        <location filename="forms/recorder_inc.ui" line="1090"/>
         <location filename="recorder.cpp" line="2965"/>
         <source>Jump Forward</source>
         <translation>Шаг вперед</translation>

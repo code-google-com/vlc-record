@@ -19,7 +19,6 @@
 
 #include "cvlcrecdb.h"
 #include "defdef.h"
-#include "customization.h"
 #include "cdirstuff.h"
 
 namespace Ui {
