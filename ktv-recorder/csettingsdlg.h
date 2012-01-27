@@ -76,6 +76,7 @@ public:
     bool extChanList();
     bool checkForUpdate();
     int  getTimeShift();
+    bool useGpuAcc();
 
     int GetRefrInt ();
     int GetProxyPort ();

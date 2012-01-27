@@ -433,6 +433,12 @@ int CPlayer::playMedia(const QString &sCmdLine)
 
        if (p_md)
        {
+          // do we use GPU acceleration ... ?
+          if (pSettings->useGpuAcc())
+          {
+              mInfo(tr("Add MRL Option: %1").arg(GPU_ACC_TOKEN));
+              libvlc_media_add_option(p_md, GPU_ACC_TOKEN);
+          }
           // add mrl options ...
           for (cit = lArgs.constBegin(); cit != lArgs.constEnd(); cit ++)
           {
