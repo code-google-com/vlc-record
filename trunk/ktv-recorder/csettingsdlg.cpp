@@ -149,6 +149,15 @@ void CSettingsDlg::readSettings()
        m_ui->checkUpdate->setCheckState(Qt::Checked);
    }
 
+   // GPU video decoding ...
+   m_ui->checkGPUAcc->setCheckState((Qt::CheckState)pDb->intValue("GPUAcc", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+       // enable by default ...
+       m_ui->checkGPUAcc->setCheckState(Qt::Checked);
+   }
 
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
 
@@ -384,6 +393,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("ExtChanList", (int)m_ui->checkExtChanInfo->checkState());
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
    pDb->setValue("UpdateCheck", (int)m_ui->checkUpdate->checkState());
+   pDb->setValue("GPUAcc", (int)m_ui->checkGPUAcc->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1080,6 +1090,11 @@ bool CSettingsDlg::extChanList()
 int CSettingsDlg::getTimeShift()
 {
    return m_ui->cbxTimeShift->itemData(m_ui->cbxTimeShift->currentIndex()).toInt();
+}
+
+bool CSettingsDlg::useGpuAcc()
+{
+    return m_ui->checkGPUAcc->isChecked();
 }
 
 //===================================================================
