@@ -118,20 +118,27 @@ contains(DEFINES,INCLUDE_LIBVLC) {
         cvideoframe.h
    FORMS += forms/cplayer.ui \
         forms/recorder_inc.ui
-   SOURCES += cvideoframe.cpp
+   SOURCES += cvideoframe.cpp \
+              cplayer.cpp
    LIBS += -lvlc
    win32:LIBS += -Llib
 
    mac {
-      # for mac we have to use objective c mixed up with c++
-      # therefore we need file extension ".mm" here ...
-      cplayer.mm.depends   = cplayer.cpp
-      cplayer.mm.commands  = ln -s $< $@
-      QMAKE_EXTRA_TARGETS += cplayer.mm
-      SOURCES += cplayer.mm
-   }
-   else {
-      SOURCES += cplayer.cpp
+      OTHER_FILES += create_mac_bundle.sh
+      INCLUDEPATH += mac/include
+
+      CONFIG(debug,debug|release):appclean.commands = cd debug && rm -rf *.app && rm -f *.dmg
+      CONFIG(release,debug|release):appclean.commands = cd release && rm -rf *.app && rm -f *.dmg
+      QMAKE_EXTRA_TARGETS += appclean
+
+      # Hook our appclean target in between qmake's Makefile update and the actual project target.
+      appcleanhook.depends = appclean
+      CONFIG(debug,debug|release):appcleanhook.target = Makefile.Debug
+      CONFIG(release,debug|release):appcleanhook.target = Makefile.Release
+      QMAKE_EXTRA_TARGETS += appcleanhook
+
+      LIBS += -L./mac/lib
+      QMAKE_POST_LINK = ./create_mac_bundle.sh
    }
 
 #    unix:LIBS += -L/opt/vlc-1.1.1/lib \

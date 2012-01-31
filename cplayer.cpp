@@ -201,7 +201,9 @@ void CPlayer::setTrigger(CWaitTrigger *pTrig)
 \----------------------------------------------------------------- */
 int CPlayer::initPlayer()
 {
-   int iRV = -1;
+   int          iRV  = -1;
+   int          argc = 0;
+   const char **argv = NULL;
 
    // reset crop and aspect cbx ... because it should show the state
    // as used ...
@@ -209,7 +211,20 @@ int CPlayer::initPlayer()
    ui->cbxCrop->setCurrentIndex(0);
 
    //create a new libvlc instance
-   pVlcInstance = libvlc_new(0, NULL);
+#ifdef Q_WS_MAC
+   #warning Check if this is really needed!
+   // vout as well as opengl-provider MIGHT be "minimal_macosx" ...
+   const char *vlc_args[] = {
+      "--vout=macosx",
+      "--opengl-provider=macosx",
+      "-v"
+   };
+
+   argc = sizeof(vlc_args) / sizeof(vlc_args[0]);
+   argv = vlc_args;
+#endif
+
+   pVlcInstance = libvlc_new(argc, argv);
 
    if (pVlcInstance)
    {
@@ -224,7 +239,7 @@ int CPlayer::initPlayer()
    if (pLibVlcLog && pMediaPlayer)
    {
       // add player to window ...
-      connect_to_wnd(pMediaPlayer, ui->fVideo->winId());
+      connectToVideoWidget();
 
       // get volume ...
       ui->volSlider->setSliderPosition(libvlc_audio_get_volume (pMediaPlayer));
@@ -1421,6 +1436,27 @@ void CPlayer::slotShowInfoUpdated()
 
    // set slider range to seconds ...
    ui->posSlider->setRange(mFromGmt(showInfo.starts() - 300), mFromGmt(showInfo.ends() + 300));
+}
+
+/* -----------------------------------------------------------------\
+|  Method: connectToVideoWidget
+|  Begin: 31.01.2012
+|  Author: Jo2003
+|  Description: connect media player to video widget
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::connectToVideoWidget()
+{
+#ifdef Q_OS_WIN
+   libvlc_media_player_set_hwnd (pMediaPlayer, (void *)ui->fVideo->winId());
+#elif defined Q_OS_MAC
+   libvlc_media_player_set_nsobject (pMediaPlayer, (void *)ui->fVideo->winId());
+#else
+   libvlc_media_player_set_xwindow(pMediaPlayer, ui->fVideo->winId());
+#endif
 }
 
 /************************* History ***************************\
