@@ -164,7 +164,11 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("Language",     ui->cbxLanguage->currentText());
 
    // set commonly used settings ...
+#ifdef Q_OS_MAC
+   pDb->setValue("TargetDir",    tr("%1/Movies").arg(QDir::homePath()));
+#else
    pDb->setValue("TargetDir",    tr("%1/Videos").arg(QDir::homePath()));
+#endif
    pDb->setValue("FixTime",      (int)Qt::Checked);  // fix time
    pDb->setValue("Refresh",      (int)Qt::Checked);  // refresh channel list
    pDb->setValue("RefIntv",      5);                 // refresh interval

@@ -112,16 +112,20 @@ CPlayer::~CPlayer()
       libvlc_media_player_release (pMediaPlayer);
    }
 
-   if (pVlcInstance)
-   {
-      libvlc_release(pVlcInstance);
-   }
-
    // close log if opened ...
    if (pLibVlcLog)
    {
       libvlc_log_close (pLibVlcLog);
       pLibVlcLog = NULL;
+   }
+
+   if (pVlcInstance)
+   {
+#ifdef Q_OS_MACX
+      libvlc_retain(pVlcInstance);
+#else
+      libvlc_release(pVlcInstance);
+#endif
    }
 
    delete ui;
