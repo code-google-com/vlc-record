@@ -249,6 +249,14 @@
       </property>
       <item>
        <widget class="QFrame" name="fParent">
+        <property name="styleSheet">
+         <string notr="true">QFrame#fParent {
+   background-color: black;
+   background-image: url(:/app/kartina);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
