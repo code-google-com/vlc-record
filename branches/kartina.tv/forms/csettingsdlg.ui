@@ -497,7 +497,7 @@ color: red;
          <property name="title">
           <string>Advanced Settings</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
+         <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="lanApiServer">
             <property name="text">
@@ -505,7 +505,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="0" column="3">
            <widget class="QLineEdit" name="lineApiServer">
             <property name="enabled">
              <bool>false</bool>
@@ -519,7 +519,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="1" column="3">
            <widget class="QComboBox" name="cbxPlayerMod"/>
           </item>
           <item row="2" column="0">
@@ -529,7 +529,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="2" column="3">
            <widget class="QComboBox" name="cbxLogLevel">
             <item>
              <property name="text">
@@ -560,17 +560,17 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="3" column="3">
            <widget class="QLineEdit" name="lineShutdown"/>
           </item>
-          <item row="4" column="0">
+          <item row="4" column="0" colspan="3">
            <widget class="QCheckBox" name="checkRefresh">
             <property name="text">
              <string>Refresh EPG every:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="4" column="3">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QComboBox" name="cbxInterval">
@@ -603,52 +603,52 @@ color: red;
             </item>
            </layout>
           </item>
-          <item row="5" column="0">
+          <item row="5" column="0" colspan="2">
            <widget class="QCheckBox" name="checkAskForName">
             <property name="text">
              <string>Ask for Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="5" column="2" colspan="2">
            <widget class="QCheckBox" name="checkHideToSystray">
             <property name="text">
              <string>Minimize to Systray</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
+          <item row="6" column="0" colspan="2">
            <widget class="QCheckBox" name="checkDetach">
             <property name="text">
              <string>Detach Player at startup</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="6" column="2" colspan="2">
            <widget class="QCheckBox" name="checkTranslit">
             <property name="text">
              <string>Translit Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="check2ClicksToPlay">
-            <property name="text">
-             <string>Doubleclick on channel list starts play</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
+          <item row="8" column="0" colspan="2">
            <widget class="QCheckBox" name="checkUpdate">
             <property name="text">
              <string>Check for updates</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="8" column="2" colspan="2">
            <widget class="QCheckBox" name="checkGPUAcc">
             <property name="text">
              <string>Use GPU for video decoding</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="check2ClicksToPlay">
+            <property name="text">
+             <string>Doubleclick on channel list starts play</string>
             </property>
            </widget>
           </item>

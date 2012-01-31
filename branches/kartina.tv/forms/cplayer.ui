@@ -185,7 +185,13 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="btnFullScreen">
+      <widget class="QPushButton" name="btnFullScreen">
+       <property name="minimumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>24</width>
@@ -208,7 +214,7 @@
          <height>18</height>
         </size>
        </property>
-       <property name="autoRaise">
+       <property name="flat">
         <bool>true</bool>
        </property>
       </widget>
