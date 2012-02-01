@@ -504,7 +504,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="450"/>
+        <location filename="cplayer.cpp" line="453"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -512,60 +512,60 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="458"/>
-        <location filename="cplayer.cpp" line="465"/>
+        <location filename="cplayer.cpp" line="461"/>
+        <location filename="cplayer.cpp" line="468"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="477"/>
+        <location filename="cplayer.cpp" line="480"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="675"/>
+        <location filename="cplayer.cpp" line="678"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="720"/>
+        <location filename="cplayer.cpp" line="723"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="769"/>
+        <location filename="cplayer.cpp" line="772"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="802"/>
+        <location filename="cplayer.cpp" line="805"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1122"/>
+        <location filename="cplayer.cpp" line="1125"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1131"/>
+        <location filename="cplayer.cpp" line="1134"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1160"/>
+        <location filename="cplayer.cpp" line="1163"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1193"/>
+        <location filename="cplayer.cpp" line="1196"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1287"/>
+        <location filename="cplayer.cpp" line="1290"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
@@ -669,47 +669,47 @@ p, li { white-space: pre-wrap; }
         <translation>Все протоколы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="324"/>
+        <location filename="csettingsdlg.cpp" line="330"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="319"/>
+        <location filename="csettingsdlg.cpp" line="325"/>
         <source>Executables (*.exe)</source>
         <translation>Программфайл (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="321"/>
+        <location filename="csettingsdlg.cpp" line="327"/>
         <source>Executables (*)</source>
         <translation>Программфайл (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="364"/>
+        <location filename="csettingsdlg.cpp" line="370"/>
         <source>Target Folder</source>
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="549"/>
+        <location filename="csettingsdlg.cpp" line="555"/>
         <source>Mobile</source>
         <translation>Мобильный</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="553"/>
+        <location filename="csettingsdlg.cpp" line="559"/>
         <source>Eco</source>
         <translation>Эко</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="557"/>
+        <location filename="csettingsdlg.cpp" line="563"/>
         <source>Standard</source>
         <translation>Стандарт</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="561"/>
+        <location filename="csettingsdlg.cpp" line="567"/>
         <source>Premium</source>
         <translation>Премиум</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="565"/>
+        <location filename="csettingsdlg.cpp" line="571"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation>%1 Кбит/с</translation>
