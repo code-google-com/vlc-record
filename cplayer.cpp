@@ -122,6 +122,9 @@ CPlayer::~CPlayer()
    if (pVlcInstance)
    {
 #ifdef Q_OS_MACX
+      // releasing it on Mac leads to crash if you end the
+      // player with running video ... no problem at all 'cause
+      // we want releease at program close!
       libvlc_retain(pVlcInstance);
 #else
       libvlc_release(pVlcInstance);
