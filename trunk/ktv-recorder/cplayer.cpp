@@ -1260,9 +1260,6 @@ void CPlayer::on_posSlider_valueChanged(int value)
 \----------------------------------------------------------------- */
 void CPlayer::enableDisablePlayControl (bool bEnable)
 {
-//   ui->btnFwd->setEnabled (bEnable && bCtrlStream);
-//   ui->btnBwd->setEnabled (bEnable && bCtrlStream);
-
    if (bEnable && bCtrlStream)
    {
        ui->posSlider->show();

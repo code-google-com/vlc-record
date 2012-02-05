@@ -47,19 +47,6 @@ namespace Ui
    } vlcArgs;
 }
 
-/*
-//===================================================================
-// macro to connect player to hardware ...
-//===================================================================
-#ifdef Q_OS_WIN        // on windows ...
-   #define connect_to_wnd(a, b) libvlc_media_player_set_hwnd (a, b)
-#elif defined Q_OS_MAC // on MAC OS
-   #define connect_to_wnd(a, b) libvlc_media_player_set_agl (a, b)
-#else                  // on Linux
-   #define connect_to_wnd(a, b) libvlc_media_player_set_xwindow (a, b)
-#endif
-*/
-
 /********************************************************************\
 |  Class: CPlayer
 |  Date:  14.02.2010 / 11:42:24
