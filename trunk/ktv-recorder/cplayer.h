@@ -47,6 +47,7 @@ namespace Ui
    } vlcArgs;
 }
 
+/*
 //===================================================================
 // macro to connect player to hardware ...
 //===================================================================
@@ -57,6 +58,7 @@ namespace Ui
 #else                  // on Linux
    #define connect_to_wnd(a, b) libvlc_media_player_set_xwindow (a, b)
 #endif
+*/
 
 /********************************************************************\
 |  Class: CPlayer
@@ -92,6 +94,7 @@ protected:
    virtual void changeEvent(QEvent *e);
    int  myToggleFullscreen ();
    void enableDisablePlayControl (bool bEnable);
+   void connectToVideoWidget ();
 
 private:
    Ui::CPlayer            *ui;
