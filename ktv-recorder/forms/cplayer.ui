@@ -171,62 +171,6 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="btnBwd">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>34</width>
-          <height>34</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Jump Backward</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnFwd">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>34</width>
-          <height>34</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Jump Forward</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="labSound">
         <property name="text">
          <string/>
@@ -271,7 +215,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="btnFullScreen">
+       <widget class="QPushButton" name="btnFullScreen">
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>24</width>
@@ -294,7 +244,7 @@
           <height>18</height>
          </size>
         </property>
-        <property name="autoRaise">
+        <property name="flat">
          <bool>true</bool>
         </property>
        </widget>
@@ -314,7 +264,12 @@
       <enum>Qt::DefaultContextMenu</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">QFrame#fMaster {    background-color: black;    background-image: url(:/app/tv);    background-repeat: no-repeat;    background-position: center middle; }</string>
+      <string notr="true">QFrame#fMaster {
+   background-color: black;
+   background-image: url(:/app/tv);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Panel</enum>
@@ -338,7 +293,12 @@
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 0);</string>
+         <string notr="true">QFrame#fParent {
+   background-color: black;
+   background-image: url(:/app/kartina);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -357,7 +317,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="CVideoFrame" name="fVideo">
+          <widget class="CVideoFrame" name="fVideo" native="true">
            <property name="mouseTracking">
             <bool>true</bool>
            </property>
@@ -365,15 +325,14 @@
             <enum>Qt::DefaultContextMenu</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">QFrame#fVideo {    background-color: black;    background-image: url(:/app/kartina);    background-repeat: no-repeat;    background-position: center middle; }</string>
+            <string notr="true">QWidget#fVideo {
+   background-color: black;
+   background-image: url(:/app/kartina);
+   background-repeat: no-repeat;
+   background-position: center middle;
+}</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="lineWidth">
+           <property name="lineWidth" stdset="0">
             <number>0</number>
            </property>
           </widget>
@@ -465,7 +424,7 @@
  <customwidgets>
   <customwidget>
    <class>CVideoFrame</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header>cvideoframe.h</header>
    <container>1</container>
   </customwidget>

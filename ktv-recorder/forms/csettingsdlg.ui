@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabStdSettings">
       <attribute name="title">
@@ -237,35 +237,7 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QComboBox" name="cbxLanguage">
-                <item>
-                 <property name="text">
-                  <string>en</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../vlc-record.qrc">
-                   <normaloff>:/flags/en</normaloff>:/flags/en</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>de</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../vlc-record.qrc">
-                   <normaloff>:/flags/de</normaloff>:/flags/de</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>ru</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../vlc-record.qrc">
-                   <normaloff>:/flags/ru</normaloff>:/flags/ru</iconset>
-                 </property>
-                </item>
-               </widget>
+               <widget class="QComboBox" name="cbxLanguage"/>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_12">
@@ -525,10 +497,7 @@ color: red;
          <property name="title">
           <string>Advanced Settings</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="lanApiServer">
             <property name="text">
@@ -536,7 +505,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="0" column="3">
            <widget class="QLineEdit" name="lineApiServer">
             <property name="enabled">
              <bool>false</bool>
@@ -550,7 +519,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="1" column="3">
            <widget class="QComboBox" name="cbxPlayerMod"/>
           </item>
           <item row="2" column="0">
@@ -560,7 +529,7 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="2" column="3">
            <widget class="QComboBox" name="cbxLogLevel">
             <item>
              <property name="text">
@@ -591,17 +560,17 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="3" column="3">
            <widget class="QLineEdit" name="lineShutdown"/>
           </item>
-          <item row="4" column="0">
+          <item row="4" column="0" colspan="3">
            <widget class="QCheckBox" name="checkRefresh">
             <property name="text">
              <string>Refresh EPG every:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="4" column="3">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QComboBox" name="cbxInterval">
@@ -634,42 +603,42 @@ color: red;
             </item>
            </layout>
           </item>
-          <item row="5" column="0">
+          <item row="5" column="0" colspan="2">
            <widget class="QCheckBox" name="checkAskForName">
             <property name="text">
              <string>Ask for Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="5" column="2" colspan="2">
            <widget class="QCheckBox" name="checkHideToSystray">
             <property name="text">
              <string>Minimize to Systray</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
+          <item row="6" column="0" colspan="2">
            <widget class="QCheckBox" name="checkDetach">
             <property name="text">
              <string>Detach Player at startup</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="6" column="2" colspan="2">
            <widget class="QCheckBox" name="checkTranslit">
             <property name="text">
              <string>Translit Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="8" column="0" colspan="2">
            <widget class="QCheckBox" name="checkUpdate">
             <property name="text">
              <string>Check for updates</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="8" column="2" colspan="2">
            <widget class="QCheckBox" name="checkGPUAcc">
             <property name="text">
              <string>Use GPU for video decoding</string>

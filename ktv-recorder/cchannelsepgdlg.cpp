@@ -680,7 +680,7 @@ void CChannelsEPGdlg::initDialog (bool bInit)
 
 void CChannelsEPGdlg::TouchEpgNavi (bool bCreate)
 {
-   QToolButton *pBtn;
+   QPushButton *pBtn;
 
    if (bCreate)
    {
@@ -698,10 +698,12 @@ void CChannelsEPGdlg::TouchEpgNavi (bool bCreate)
       */
 
       // create back button and set style ...
-      pBtn = new QToolButton;
+      pBtn = new QPushButton;
       pBtn->setIcon(QIcon(":png/back"));
-      pBtn->setAutoRaise(true);
+      pBtn->setFlat(true);
+      pBtn->setAutoDefault(false);
       pBtn->setMaximumHeight(EPG_NAVBAR_HEIGHT);
+      pBtn->setMaximumWidth(EPG_NAVBAR_HEIGHT);
       pBtn->setToolTip(tr("1 week backward"));
 
       // connect signal with slot ...
@@ -730,10 +732,12 @@ void CChannelsEPGdlg::TouchEpgNavi (bool bCreate)
       ui->hLayoutEpgNavi->addStretch();
 
       // create next button and set style ...
-      pBtn = new QToolButton;
+      pBtn = new QPushButton;
       pBtn->setIcon(QIcon(":png/next"));
-      pBtn->setAutoRaise(true);
+      pBtn->setFlat(true);
+      pBtn->setAutoDefault(false);
       pBtn->setMaximumHeight(EPG_NAVBAR_HEIGHT);
+      pBtn->setMaximumWidth(EPG_NAVBAR_HEIGHT);
       pBtn->setToolTip(tr("1 week forward"));
 
       // connect signal with slot ...
@@ -776,12 +780,12 @@ void CChannelsEPGdlg::TouchEpgNavi (bool bCreate)
       int iIdx;
       // back button ...
       iIdx = 0;
-      pBtn = (QToolButton *)ui->hLayoutEpgNavi->itemAt(iIdx)->widget();
+      pBtn = (QPushButton *)ui->hLayoutEpgNavi->itemAt(iIdx)->widget();
       pBtn->setToolTip(tr("1 week backward"));
 
       // next button ...
       iIdx = ui->hLayoutEpgNavi->count() - 1;
-      pBtn = (QToolButton *)ui->hLayoutEpgNavi->itemAt(iIdx)->widget();
+      pBtn = (QPushButton *)ui->hLayoutEpgNavi->itemAt(iIdx)->widget();
       pBtn->setToolTip(tr("1 week forward"));
    }
 }
