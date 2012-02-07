@@ -274,7 +274,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="CVideoFrame" name="fVideo" native="true">
+          <widget class="CVideoFrame" name="fVideo">
            <property name="styleSheet">
             <string notr="true">QWidget#fVideo {
    background-color: black;
@@ -399,7 +399,7 @@ color: white;
  <customwidgets>
   <customwidget>
    <class>CVideoFrame</class>
-   <extends>QWidget</extends>
+   <extends>QFrame</extends>
    <header>cvideoframe.h</header>
    <container>1</container>
   </customwidget>

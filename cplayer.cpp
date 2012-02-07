@@ -1102,9 +1102,8 @@ int CPlayer::myToggleFullscreen()
          // end fullscreen ...
          ui->fParent->showNormal();
 
-         // put parent frame back into the layout where it belongs to ...
-         // this also sets parent and resizes as needed ...
-         ui->vlMasterFrame->addWidget (ui->fParent);
+         // reparent layout ...
+         ui->fMaster->setLayout(ui->vlMasterFrame);
 
          // show normal ...
          ui->fParent->show();
@@ -1132,6 +1131,7 @@ int CPlayer::myToggleFullscreen()
          if (!pActScreen)
          {
             mInfo(tr("Can't get active screen QWidget!"));
+            return -1;
          }
 
          // frameless window which stays on top ...
@@ -1145,8 +1145,7 @@ int CPlayer::myToggleFullscreen()
          ui->fParent->hide ();
 
          // reparent to active screen ...
-         ui->fParent->setParent(pActScreen, f);
-         ui->fParent->setGeometry (sizeDesktop);
+         pActScreen->setLayout(ui->vlMasterFrame);
          ui->fParent->showFullScreen ();
 
          // to grab keyboard input we need the focus ...
