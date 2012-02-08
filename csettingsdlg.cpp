@@ -38,11 +38,18 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    m_ui->setupUi(this);
 
    pShortApiServer = new CShortcutEx(QKeySequence("CTRL+ALT+A"), this);
+   pShortVerbLevel = new CShortcutEx(QKeySequence("CTRL+ALT+V"), this);
 
    if (pShortApiServer)
    {
       connect(pShortApiServer, SIGNAL(activated()), this, SLOT(slotEnableApiServer()));
    }
+
+   if (pShortVerbLevel)
+   {
+      connect(pShortVerbLevel, SIGNAL(activated()), this, SLOT(slotEnableVlcVerbLine()));
+   }
+
 
    // set company name for login data ...
    QString s = m_ui->groupAccount->title();
@@ -102,6 +109,13 @@ void CSettingsDlg::readSettings()
    m_ui->lineErosPass->setText(pDb->stringValue("ErosPasswd"));
    m_ui->lineShutdown->setText(pDb->stringValue("ShutdwnCmd"));
    m_ui->lineApiServer->setText(pDb->stringValue ("APIServer"));
+   m_ui->lineVlcVerbose->setText(pDb->stringValue ("libVlcLogLevel", &iErr));
+
+   if (iErr)
+   {
+      // default log level ...
+      m_ui->lineVlcVerbose->setText("1");
+   }
 
 #ifdef Q_OS_WIN32
    if (m_ui->lineShutdown->text() == "")
@@ -311,6 +325,28 @@ void CSettingsDlg::slotEnableApiServer()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: slotEnableVlcVerbLine [slot]
+|  Begin: 08.02.2012
+|  Author: Jo2003
+|  Description: enable / disable libVLC verbose level server line
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::slotEnableVlcVerbLine()
+{
+   if (m_ui->lineVlcVerbose->isEnabled())
+   {
+      m_ui->lineVlcVerbose->setEnabled(false);
+   }
+   else
+   {
+      m_ui->lineVlcVerbose->setEnabled(true);
+   }
+}
+
+/* -----------------------------------------------------------------\
 |  Method: on_pushVLC_clicked
 |  Begin: 19.01.2010 / 15:46:47
 |  Author: Jo2003
@@ -399,6 +435,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("ProxyPasswd", m_ui->lineProxyPassword->text());
    pDb->setValue("ShutdwnCmd", m_ui->lineShutdown->text());
    pDb->setValue("APIServer", m_ui->lineApiServer->text());
+   pDb->setValue("libVlcLogLevel", m_ui->lineVlcVerbose->text());
 
    // check boxes ...
    pDb->setValue("UseProxy", (int)m_ui->useProxy->checkState());
@@ -1141,6 +1178,11 @@ bool CSettingsDlg::doubleClickToPlay()
 bool CSettingsDlg::useGpuAcc()
 {
    return m_ui->checkGPUAcc->isChecked();
+}
+
+uint CSettingsDlg::libVlcVerboseLevel()
+{
+   return m_ui->lineVlcVerbose->text().toUInt();
 }
 
 //===================================================================

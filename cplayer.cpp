@@ -58,12 +58,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    tAspectShot.setSingleShot (true);
    tAspectShot.setInterval (800);
 
-#ifdef QT_NO_DEBUG
-   uiVerboseLevel = 1;
-#else
-   uiVerboseLevel = 3;
-#endif /* QT_NO_DEBUG */
-
    // connect volume slider with volume change function ...
    connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
 
@@ -124,7 +118,7 @@ CPlayer::~CPlayer()
 #ifdef Q_OS_MACX
       // releasing it on Mac leads to crash if you end the
       // player with running video ... no problem at all 'cause
-      // we want releease at program close!
+      // we want release at program close!
       libvlc_retain(pVlcInstance);
 #else
       libvlc_release(pVlcInstance);
@@ -219,12 +213,11 @@ int CPlayer::initPlayer()
 
    //create a new libvlc instance
 #ifdef Q_WS_MAC
-   #warning Check if this is really needed!
    // vout as well as opengl-provider MIGHT be "minimal_macosx" ...
    const char *vlc_args[] = {
-      "--vout=macosx",
-      "--opengl-provider=macosx",
-      "-v"
+      "--vout=opengl",
+      // "--opengl-provider=macosx",
+      // "-v"
    };
 
    argc = sizeof(vlc_args) / sizeof(vlc_args[0]);
@@ -236,7 +229,7 @@ int CPlayer::initPlayer()
    if (pVlcInstance)
    {
       // set verbose mode ...
-      libvlc_set_log_verbosity (pVlcInstance, uiVerboseLevel);
+      libvlc_set_log_verbosity (pVlcInstance, pSettings->libVlcVerboseLevel());
 
       // get logger and mediaplayer ...
       pLibVlcLog   = libvlc_log_open(pVlcInstance);
@@ -1113,8 +1106,6 @@ int CPlayer::myToggleFullscreen()
       }
       else
       {
-         Qt::WindowFlags f;
-
          // get active desktop widget ...
          QDesktopWidget *pDesktop    = QApplication::desktop ();
          int             iScreen     = pDesktop->screenNumber (this);
@@ -1134,18 +1125,13 @@ int CPlayer::myToggleFullscreen()
             return -1;
          }
 
-         // frameless window which stays on top ...
-         f  = Qt::Window | Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint;
-
-#ifdef Q_WS_X11
-         f |= Qt::X11BypassWindowManagerHint;
-#endif // Q_WS_X11
-
          // hide screen ...
          ui->fParent->hide ();
 
-         // reparent to active screen ...
+         // reparent to desktop widget ...
          pActScreen->setLayout(ui->vlMasterFrame);
+
+         // set to fullscreen ...
          ui->fParent->showFullScreen ();
 
          // to grab keyboard input we need the focus ...

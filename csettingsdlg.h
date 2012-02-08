@@ -108,6 +108,7 @@ public:
     int lastChannel();
     void saveEpgDay(const QString &dateString);
     QString lastEpgDay();
+    uint libVlcVerboseLevel();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -115,6 +116,7 @@ protected:
 private:
     Ui::CSettingsDlg *m_ui;
     CShortcutEx *pShortApiServer;
+    CShortcutEx *pShortVerbLevel;
     QVector<float> vBuffs;
 
 signals:
@@ -132,6 +134,7 @@ private slots:
     void on_pushDir_clicked();
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
+    void slotEnableVlcVerbLine ();
     void on_cbxStreamServer_activated(int index);
     void on_cbxBitRate_activated(int index);
 
