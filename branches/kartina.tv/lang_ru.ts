@@ -504,7 +504,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="453"/>
+        <location filename="cplayer.cpp" line="446"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -512,60 +512,60 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
+        <location filename="cplayer.cpp" line="454"/>
         <location filename="cplayer.cpp" line="461"/>
-        <location filename="cplayer.cpp" line="468"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="480"/>
+        <location filename="cplayer.cpp" line="473"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="678"/>
+        <location filename="cplayer.cpp" line="671"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="723"/>
+        <location filename="cplayer.cpp" line="716"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="772"/>
+        <location filename="cplayer.cpp" line="765"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="805"/>
+        <location filename="cplayer.cpp" line="798"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1125"/>
+        <location filename="cplayer.cpp" line="1117"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1134"/>
+        <location filename="cplayer.cpp" line="1126"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1163"/>
+        <location filename="cplayer.cpp" line="1157"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1196"/>
+        <location filename="cplayer.cpp" line="1190"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1290"/>
+        <location filename="cplayer.cpp" line="1284"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
@@ -649,67 +649,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CSettingsDlg</name>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="536"/>
+        <location filename="forms/csettingsdlg.ui" line="637"/>
         <source>Log disabled</source>
         <translation>Протокол выкл.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="541"/>
+        <location filename="forms/csettingsdlg.ui" line="642"/>
         <source>Log Errors only</source>
         <translation>Только протокол ошибок</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="546"/>
+        <location filename="forms/csettingsdlg.ui" line="647"/>
         <source>Log Errors and Warnings</source>
         <translation>Протокол ошибок и предупреждений</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="551"/>
+        <location filename="forms/csettingsdlg.ui" line="652"/>
         <source>Log everything</source>
         <translation>Все протоколы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="331"/>
+        <location filename="csettingsdlg.cpp" line="367"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="326"/>
+        <location filename="csettingsdlg.cpp" line="362"/>
         <source>Executables (*.exe)</source>
         <translation>Программфайл (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="328"/>
+        <location filename="csettingsdlg.cpp" line="364"/>
         <source>Executables (*)</source>
         <translation>Программфайл (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="371"/>
+        <location filename="csettingsdlg.cpp" line="407"/>
         <source>Target Folder</source>
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="556"/>
+        <location filename="csettingsdlg.cpp" line="593"/>
         <source>Mobile</source>
         <translation>Мобильный</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="560"/>
+        <location filename="csettingsdlg.cpp" line="597"/>
         <source>Eco</source>
         <translation>Эко</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="564"/>
+        <location filename="csettingsdlg.cpp" line="601"/>
         <source>Standard</source>
         <translation>Стандарт</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="568"/>
+        <location filename="csettingsdlg.cpp" line="605"/>
         <source>Premium</source>
         <translation>Премиум</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="572"/>
+        <location filename="csettingsdlg.cpp" line="609"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation>%1 Кбит/с</translation>
@@ -845,27 +845,27 @@ p, li { white-space: pre-wrap; }
         <translation>Уровень Протокола: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="569"/>
+        <location filename="forms/csettingsdlg.ui" line="545"/>
         <source>Refresh EPG every:</source>
         <translation>Обновлять EPG каждые:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="582"/>
+        <location filename="forms/csettingsdlg.ui" line="558"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="587"/>
+        <location filename="forms/csettingsdlg.ui" line="563"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="592"/>
+        <location filename="forms/csettingsdlg.ui" line="568"/>
         <source>15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="616"/>
+        <location filename="forms/csettingsdlg.ui" line="592"/>
         <source>Minimize to Systray</source>
         <translation>Сворачивать в трей</translation>
     </message>
@@ -890,7 +890,7 @@ p, li { white-space: pre-wrap; }
         <translation>Синхронизировать время</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="600"/>
+        <location filename="forms/csettingsdlg.ui" line="576"/>
         <source>Minute(s)</source>
         <translation>минут(ы)</translation>
     </message>
@@ -900,22 +900,22 @@ p, li { white-space: pre-wrap; }
         <translation>Парент код: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="609"/>
+        <location filename="forms/csettingsdlg.ui" line="585"/>
         <source>Ask for Record Filename</source>
         <translation>Запрос исходного файла</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="559"/>
+        <location filename="forms/csettingsdlg.ui" line="535"/>
         <source>Shutdown Command:</source>
         <translation>Команда отключения системы: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="630"/>
+        <location filename="forms/csettingsdlg.ui" line="606"/>
         <source>Translit Record Filename</source>
         <translation>Транслит исходного файла</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="623"/>
+        <location filename="forms/csettingsdlg.ui" line="599"/>
         <source>Detach Player at startup</source>
         <oldsource>Detach Player on startup</oldsource>
         <translation>Отдели проигр. при запуске</translation>
@@ -957,27 +957,27 @@ p, li { white-space: pre-wrap; }
         <translation>Дополнительные настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="651"/>
+        <location filename="forms/csettingsdlg.ui" line="627"/>
         <source>Doubleclick on channel list starts play</source>
         <translation>Двойной щелчок на список каналов стартует плеер</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="637"/>
+        <location filename="forms/csettingsdlg.ui" line="613"/>
         <source>Check for updates</source>
         <translation>Проверка обновлений программы</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="644"/>
+        <location filename="forms/csettingsdlg.ui" line="620"/>
         <source>Use GPU for video decoding</source>
         <translation>GPU декодирует видео</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="680"/>
+        <location filename="forms/csettingsdlg.ui" line="691"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="700"/>
+        <location filename="forms/csettingsdlg.ui" line="711"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>
