@@ -513,59 +513,65 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="cplayer.cpp" line="454"/>
-        <location filename="cplayer.cpp" line="461"/>
+        <location filename="cplayer.cpp" line="471"/>
+        <location filename="cplayer.cpp" line="488"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="473"/>
+        <location filename="cplayer.cpp" line="477"/>
+        <source>Add MRL Option: :http_proxy_pwd=******</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="500"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="671"/>
+        <location filename="cplayer.cpp" line="698"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="716"/>
+        <location filename="cplayer.cpp" line="743"/>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
   --&gt; %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="765"/>
+        <location filename="cplayer.cpp" line="792"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="798"/>
+        <location filename="cplayer.cpp" line="825"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1117"/>
+        <location filename="cplayer.cpp" line="1143"/>
         <source>
   --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1126"/>
+        <location filename="cplayer.cpp" line="1152"/>
         <source>Can&apos;t get active screen QWidget!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1157"/>
+        <location filename="cplayer.cpp" line="1188"/>
         <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1190"/>
+        <location filename="cplayer.cpp" line="1221"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1284"/>
+        <location filename="cplayer.cpp" line="1315"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
@@ -972,12 +978,12 @@ p, li { white-space: pre-wrap; }
         <translation>GPU декодирует видео</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="691"/>
+        <location filename="forms/csettingsdlg.ui" line="697"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="711"/>
+        <location filename="forms/csettingsdlg.ui" line="717"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>

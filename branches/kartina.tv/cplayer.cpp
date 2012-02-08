@@ -454,6 +454,33 @@ int CPlayer::playMedia(const QString &sCmdLine)
             mInfo(tr("Add MRL Option: %1").arg(GPU_ACC_TOKEN));
             libvlc_media_add_option(p_md, GPU_ACC_TOKEN);
          }
+         
+         ///////////////////////////////////////////////////////////////////////////
+         // set proxy server ...
+         ///////////////////////////////////////////////////////////////////////////
+         if (pSettings->UseProxy())
+         {
+            sMrl = ":http_proxy=http://";
+
+            if (pSettings->GetProxyUser() != "")
+            {
+               sMrl += QString("%1@").arg(pSettings->GetProxyUser());
+            }
+
+            sMrl += QString("%1:%2/").arg(pSettings->GetProxyHost()).arg(pSettings->GetProxyPort());
+            mInfo(tr("Add MRL Option: %1").arg(sMrl));
+            libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+
+            if ((pSettings->GetProxyPasswd() != "") && (pSettings->GetProxyUser() != ""))
+            {
+               sMrl = QString(":http_proxy_pwd=%1").arg(pSettings->GetProxyPasswd());
+               mInfo(tr("Add MRL Option: :http_proxy_pwd=******"));
+               libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+            }
+         }
+         ///////////////////////////////////////////////////////////////////////////
+         // end proxy server ...
+         ///////////////////////////////////////////////////////////////////////////
 
          // add mrl options ...
          for (cit = lArgs.constBegin(); cit != lArgs.constEnd(); cit ++)
