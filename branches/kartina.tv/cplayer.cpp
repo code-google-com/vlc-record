@@ -1095,8 +1095,9 @@ int CPlayer::myToggleFullscreen()
          // end fullscreen ...
          ui->fParent->showNormal();
 
-         // reparent layout ...
-         ui->fMaster->setLayout(ui->vlMasterFrame);
+         // put parent frame back into the layout where it belongs to ...
+         // this also sets parent and resizes as needed ...
+         ui->vlMasterFrame->addWidget (ui->fParent);
 
          // show normal ...
          ui->fParent->show();
@@ -1122,24 +1123,36 @@ int CPlayer::myToggleFullscreen()
          if (!pActScreen)
          {
             mInfo(tr("Can't get active screen QWidget!"));
-            return -1;
          }
+         else
+         {
+            // frameless window which stays on top ...
+            Qt::WindowFlags f = Qt::Window
+                              | Qt::FramelessWindowHint
+#ifdef Q_WS_X11
+                              | Qt::X11BypassWindowManagerHint
+#endif // Q_WS_X11
+                              | Qt::CustomizeWindowHint
+                              | Qt::WindowStaysOnTopHint;
 
-         // hide screen ...
-         ui->fParent->hide ();
+            // hide screen ...
+            ui->fParent->hide ();
 
-         // reparent to desktop widget ...
-         pActScreen->setLayout(ui->vlMasterFrame);
+            // remove widget from layout ...
+            ui->vlMasterFrame->removeWidget(ui->fParent);
 
-         // set to fullscreen ...
-         ui->fParent->showFullScreen ();
+            // reparent to active screen ...
+            ui->fParent->setParent(pActScreen, f);
+            ui->fParent->setGeometry (sizeDesktop);
+            ui->fParent->showFullScreen ();
 
-         // to grab keyboard input we need the focus ...
-         // set policy so we can get focus ...
-         ui->fVideo->setFocusPolicy(Qt::StrongFocus);
+            // to grab keyboard input we need the focus ...
+            // set policy so we can get focus ...
+            ui->fVideo->setFocusPolicy(Qt::StrongFocus);
 
-         // get the focus ...
-         ui->fVideo->setFocus(Qt::OtherFocusReason);
+            // get the focus ...
+            ui->fVideo->setFocus(Qt::OtherFocusReason);
+         }
       }
    }
    else
