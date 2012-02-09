@@ -13,12 +13,15 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="5,90,0">
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,100,1">
    <property name="spacing">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="margin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <layout class="QHBoxLayout" name="hlTop">
@@ -133,7 +136,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../vlc-record.qrc">:/player/sound_on</pixmap>
+        <pixmap resource="../common.qrc">:/player/sound_on</pixmap>
        </property>
       </widget>
      </item>
@@ -205,7 +208,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../vlc-record.qrc">
+        <iconset resource="../common.qrc">
          <normaloff>:/player/fullscreen</normaloff>:/player/fullscreen</iconset>
        </property>
        <property name="iconSize">
@@ -222,74 +225,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QFrame" name="fMaster">
-     <property name="styleSheet">
-      <string notr="true">QFrame#fMaster {
-   background-color: black;
-   background-image: url(:/app/tv);
-   background-repeat: no-repeat;
-   background-position: center middle;
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-     <layout class="QVBoxLayout" name="vlMasterFrame">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QFrame" name="fParent">
-        <property name="styleSheet">
-         <string notr="true">QFrame#fParent {
-   background-color: black;
-   background-image: url(:/app/kartina);
-   background-repeat: no-repeat;
-   background-position: center middle;
-}</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="lineWidth">
-         <number>0</number>
-        </property>
-        <layout class="QVBoxLayout" name="vlParent">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="CVideoFrame" name="fVideo">
-           <property name="styleSheet">
-            <string notr="true">QWidget#fVideo {
-   background-color: black;
-   background-image: url(:/app/kartina);
-   background-repeat: no-repeat;
-   background-position: center middle;
-}</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <widget class="QVlcVideoWidget" name="videoWidget" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,0,0">
@@ -398,14 +334,14 @@ color: white;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CVideoFrame</class>
-   <extends>QFrame</extends>
-   <header>cvideoframe.h</header>
+   <class>QVlcVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>qvlcvideowidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../vlc-record.qrc"/>
+  <include location="../common.qrc"/>
  </resources>
  <connections/>
 </ui>

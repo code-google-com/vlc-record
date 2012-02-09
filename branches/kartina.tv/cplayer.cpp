@@ -62,7 +62,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
 
    // connect double click signal from videoframe with fullscreen toggle ...
-   connect(ui->fVideo, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToggleFullScreen()));
+   connect(ui->videoWidget, SIGNAL(fullScreen()), ui->videoWidget, SLOT(toggleFullScreen()));
 
    // connect slider timer with slider position slot ...
    connect(&sliderTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSlider()));
@@ -156,7 +156,7 @@ bool CPlayer::isPositionable()
 \----------------------------------------------------------------- */
 void CPlayer::setShortCuts(QVector<CShortcutEx *> *pvSc)
 {
-   ui->fVideo->setShortCuts(pvSc);
+   ui->videoWidget->setShortCuts(pvSc);
 }
 
 /* -----------------------------------------------------------------\
@@ -215,7 +215,7 @@ int CPlayer::initPlayer()
 #ifdef Q_WS_MAC
    // vout as well as opengl-provider MIGHT be "minimal_macosx" ...
    const char *vlc_args[] = {
-      "--vout=opengl",
+      "--vout=macosx",
       // "--opengl-provider=macosx",
       // "-v"
    };
@@ -828,22 +828,6 @@ void CPlayer::on_cbxCrop_currentIndexChanged(QString str)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: slotToggleFullScreen
-|  Begin: 08.03.2010 / 09:55:10
-|  Author: Jo2003
-|  Description: toggle fullscreen mode ...
-|
-|  Parameters: --
-|
-|  Returns: 0 --> ok
-|          -1 --> any error
-\----------------------------------------------------------------- */
-int CPlayer::slotToggleFullScreen()
-{
-   return myToggleFullscreen();
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotToggleAspectRatio
 |  Begin: 08.03.2010 / 15:10:10
 |  Author: Jo2003
@@ -1035,7 +1019,7 @@ void CPlayer::stopPlayTimer()
 \----------------------------------------------------------------- */
 void CPlayer::on_btnFullScreen_clicked()
 {
-   slotToggleFullScreen();
+   ui->videoWidget->toggleFullScreen();
 }
 
 /* -----------------------------------------------------------------\
@@ -1094,101 +1078,6 @@ void CPlayer::slotStoredAspectCrop ()
          libvlc_video_set_crop_geometry(pMediaPlayer, sCrop.toAscii().data());
       }
    }
-}
-
-/* -----------------------------------------------------------------\
-|  Method: myToggleFullscreen
-|  Begin: 20.06.2010 / 14:10:10
-|  Author: Jo2003
-|  Description: toggle fullscreen (only supported with libVLC1.10)
-|
-|  Parameters: --
-|
-|  Returns: 0 ==> ok
-|          -1 ==> any error
-\----------------------------------------------------------------- */
-int CPlayer::myToggleFullscreen()
-{
-   int iRV = 0;
-
-   if (pMediaPlayer)
-   {
-      // check if fullscreen is enabled ...
-      if (ui->fParent->isFullScreen ())
-      {
-         // hide screen ...
-         ui->fParent->hide ();
-
-         // end fullscreen ...
-         ui->fParent->showNormal();
-
-         // put parent frame back into the layout where it belongs to ...
-         // this also sets parent and resizes as needed ...
-         ui->vlMasterFrame->addWidget (ui->fParent);
-
-         // show normal ...
-         ui->fParent->show();
-
-         // video frame doesn't need any focus when in windowed mode ...
-         ui->fVideo->setFocusPolicy(Qt::NoFocus);
-      }
-      else
-      {
-         // get active desktop widget ...
-         QDesktopWidget *pDesktop    = QApplication::desktop ();
-         int             iScreen     = pDesktop->screenNumber (this);
-         QWidget        *pActScreen  = pDesktop->screen (iScreen);
-         QRect           sizeDesktop = pDesktop->screenGeometry (this);
-
-         mInfo(tr("\n  --> Player Widget is located at %2 screen "
-                  "(Screen No. %1, Resolution %3px x %4px) ...")
-                  .arg(iScreen)
-                  .arg((iScreen == pDesktop->primaryScreen ()) ? "primary" : "secondary")
-                  .arg(sizeDesktop.width ())
-                  .arg(sizeDesktop.height ()));
-
-         if (!pActScreen)
-         {
-            mInfo(tr("Can't get active screen QWidget!"));
-         }
-         else
-         {
-            // frameless window which stays on top ...
-            Qt::WindowFlags f = Qt::Window
-                              | Qt::FramelessWindowHint
-#ifdef Q_WS_X11
-                              | Qt::X11BypassWindowManagerHint
-#endif // Q_WS_X11
-                              | Qt::CustomizeWindowHint
-                              | Qt::WindowStaysOnTopHint;
-
-            // hide screen ...
-            ui->fParent->hide ();
-
-            // remove widget from layout ...
-            ui->vlMasterFrame->removeWidget(ui->fParent);
-
-            // reparent to active screen ...
-            ui->fParent->setParent(pActScreen, f);
-            ui->fParent->setGeometry (sizeDesktop);
-            ui->fParent->showFullScreen ();
-
-            // to grab keyboard input we need the focus ...
-            // set policy so we can get focus ...
-            ui->fVideo->setFocusPolicy(Qt::StrongFocus);
-
-            // get the focus ...
-            ui->fVideo->setFocus(Qt::OtherFocusReason);
-         }
-      }
-   }
-   else
-   {
-      iRV = -1;
-      mInfo(tr("Can't switch to fullscreen if there is no media to play!"));
-   }
-
-   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -1483,11 +1372,11 @@ void CPlayer::slotShowInfoUpdated()
 void CPlayer::connectToVideoWidget()
 {
 #ifdef Q_OS_WIN
-   libvlc_media_player_set_hwnd (pMediaPlayer, (void *)ui->fVideo->winId());
+   libvlc_media_player_set_hwnd (pMediaPlayer, (void *)ui->videoWidget->widgetId());
 #elif defined Q_OS_MAC
-   libvlc_media_player_set_nsobject (pMediaPlayer, (void *)ui->fVideo->winId());
+   libvlc_media_player_set_nsobject (pMediaPlayer, (void *)ui->videoWidget->widgetId());
 #else
-   libvlc_media_player_set_xwindow(pMediaPlayer, ui->fVideo->winId());
+   libvlc_media_player_set_xwindow(pMediaPlayer, ui->videoWidget->widgetId());
 #endif
 }
 
