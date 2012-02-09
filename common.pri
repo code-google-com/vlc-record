@@ -84,7 +84,7 @@ FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/ctimerrec.ui \
     forms/qftsettings.ui
-RESOURCES += vlc-record.qrc \
+RESOURCES += common.qrc \
     lcd.qrc
 INCLUDEPATH += tastes
 
@@ -115,10 +115,10 @@ contains(DEFINES,INCLUDE_LIBVLC) {
    win32:INCLUDEPATH += include
 
    HEADERS += cplayer.h \
-        cvideoframe.h
+        qvlcvideowidget.h
    FORMS += forms/cplayer.ui \
         forms/recorder_inc.ui
-   SOURCES += cvideoframe.cpp \
+   SOURCES += qvlcvideowidget.cpp \
               cplayer.cpp
    LIBS += -lvlc
    win32:LIBS += -Llib
@@ -138,7 +138,7 @@ contains(DEFINES,INCLUDE_LIBVLC) {
       QMAKE_EXTRA_TARGETS += appcleanhook
 
       LIBS += -L./mac/lib
-      QMAKE_POST_LINK = ./create_mac_bundle.sh
+      QMAKE_POST_LINK = ./create_mac_bundle.sh $$basename(TARGET)
    }
 
 #    unix:LIBS += -L/opt/vlc-1.1.1/lib \

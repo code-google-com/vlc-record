@@ -31,7 +31,7 @@
 #include "cshowinfo.h"
 #include "csettingsdlg.h"
 #include "cwaittrigger.h"
-#include "cvideoframe.h"
+#include "qvlcvideowidget.h"
 
 //===================================================================
 // namespace
@@ -75,7 +75,6 @@ public:
 
 protected:
    virtual void changeEvent(QEvent *e);
-   int  myToggleFullscreen ();
    void enableDisablePlayControl (bool bEnable);
    void connectToVideoWidget ();
 
@@ -111,7 +110,6 @@ public slots:
    int  play();
    int  stop();
    int  pause();
-   int  slotToggleFullScreen ();
    int  slotToggleAspectRatio ();
    int  slotToggleCropGeometry ();
    int  slotTimeJumpRelative (int iSeconds);

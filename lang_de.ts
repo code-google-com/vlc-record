@@ -550,28 +550,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1143"/>
-        <source>
-  --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1152"/>
-        <source>Can&apos;t get active screen QWidget!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1188"/>
-        <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1221"/>
+        <location filename="cplayer.cpp" line="1110"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1315"/>
+        <location filename="cplayer.cpp" line="1204"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
@@ -581,65 +565,65 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="28"/>
+        <location filename="forms/cplayer.ui" line="31"/>
         <source>Aspect:</source>
         <translation>Seitenverhältnis: </translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="36"/>
-        <location filename="forms/cplayer.ui" line="82"/>
+        <location filename="forms/cplayer.ui" line="39"/>
+        <location filename="forms/cplayer.ui" line="85"/>
         <source>std.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="41"/>
-        <location filename="forms/cplayer.ui" line="87"/>
+        <location filename="forms/cplayer.ui" line="44"/>
+        <location filename="forms/cplayer.ui" line="90"/>
         <source>4:3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="46"/>
-        <location filename="forms/cplayer.ui" line="92"/>
+        <location filename="forms/cplayer.ui" line="49"/>
+        <location filename="forms/cplayer.ui" line="95"/>
         <source>16:9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="51"/>
-        <location filename="forms/cplayer.ui" line="97"/>
+        <location filename="forms/cplayer.ui" line="54"/>
+        <location filename="forms/cplayer.ui" line="100"/>
         <source>16:10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="56"/>
-        <location filename="forms/cplayer.ui" line="102"/>
+        <location filename="forms/cplayer.ui" line="59"/>
+        <location filename="forms/cplayer.ui" line="105"/>
         <source>1:1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="61"/>
-        <location filename="forms/cplayer.ui" line="107"/>
+        <location filename="forms/cplayer.ui" line="64"/>
+        <location filename="forms/cplayer.ui" line="110"/>
         <source>5:4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="66"/>
-        <location filename="forms/cplayer.ui" line="112"/>
+        <location filename="forms/cplayer.ui" line="69"/>
+        <location filename="forms/cplayer.ui" line="115"/>
         <source>2.35</source>
         <oldsource>2.3</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="74"/>
+        <location filename="forms/cplayer.ui" line="77"/>
         <source>Crop: </source>
         <translation>Zuschneiden: </translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="202"/>
+        <location filename="forms/cplayer.ui" line="205"/>
         <source>Switch to Fullscreen</source>
         <translation>Fullscreen</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="391"/>
+        <location filename="forms/cplayer.ui" line="327"/>
         <source>0:00:00</source>
         <translation></translation>
     </message>
@@ -655,22 +639,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CSettingsDlg</name>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="637"/>
+        <location filename="forms/csettingsdlg.ui" line="640"/>
         <source>Log disabled</source>
         <translation>kein Logging</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="642"/>
+        <location filename="forms/csettingsdlg.ui" line="645"/>
         <source>Log Errors only</source>
         <translation>logge nur Fehler</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="647"/>
+        <location filename="forms/csettingsdlg.ui" line="650"/>
         <source>Log Errors and Warnings</source>
         <translation>Logge Fehler und Warnungen</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="652"/>
+        <location filename="forms/csettingsdlg.ui" line="655"/>
         <source>Log everything</source>
         <translation>Logge alles</translation>
     </message>
@@ -978,12 +962,12 @@ p, li { white-space: pre-wrap; }
         <translation>Benutze GPU-Beschleunigung</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="697"/>
+        <location filename="forms/csettingsdlg.ui" line="694"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="717"/>
+        <location filename="forms/csettingsdlg.ui" line="714"/>
         <source>&amp;Cancel</source>
         <translation>A&amp;bbrechen</translation>
     </message>
@@ -1249,14 +1233,6 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
 </context>
 <context>
-    <name>CVideoFrame</name>
-    <message>
-        <location filename="cvideoframe.cpp" line="197"/>
-        <source>Activate shortcut: %1</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>CVlcCtrl</name>
     <message>
         <location filename="cvlcctrl.cpp" line="213"/>
@@ -1441,6 +1417,14 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <location filename="qftsettings.cpp" line="170"/>
         <source>%1/Videos</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>QVlcVideoWidget</name>
+    <message>
+        <location filename="qvlcvideowidget.cpp" line="316"/>
+        <source>Activate shortcut: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

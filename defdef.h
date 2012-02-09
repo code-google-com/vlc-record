@@ -20,6 +20,8 @@
    #include <defines_polsky_tv.h>
 #elif defined _TASTE_AFROBOX
    #include <defines_afrobox.h>
+#else
+   #include <defines_vlc_record.h>
 #endif // _TASTE_XXX
 
 
