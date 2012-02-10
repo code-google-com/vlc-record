@@ -105,6 +105,7 @@ public:
     int  shortCutCount();
     void readSettings ();
     void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
+    uint libVlcVerboseLevel();
     void setStatusBar(QStatusBar *pStBar);
 
 protected:
@@ -114,6 +115,7 @@ private:
     Ui::CSettingsDlg *m_ui;
     CShortcutEx *pShortApiServer;
     QVector<float> vBuffs;
+    CShortcutEx *pShortVerbLevel;
     QStatusBar *pStatusBar;
     QString str;
 
@@ -132,6 +134,7 @@ private slots:
     void on_pushDir_clicked();
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
+    void slotEnableVlcVerbLine ();
     void on_cbxStreamServer_activated(int index);
     void on_cbxBitRate_activated(int index);
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
+    <width>482</width>
     <height>544</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabStdSettings">
       <attribute name="title">
@@ -529,48 +529,24 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QComboBox" name="cbxLogLevel">
-            <item>
-             <property name="text">
-              <string>Log disabled</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log Errors only</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log Errors and Warnings</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log everything</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="label_13">
             <property name="text">
              <string>Shutdown Command:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
+          <item row="6" column="3">
            <widget class="QLineEdit" name="lineShutdown"/>
           </item>
-          <item row="4" column="0" colspan="3">
+          <item row="7" column="0" colspan="3">
            <widget class="QCheckBox" name="checkRefresh">
             <property name="text">
              <string>Refresh EPG every:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="3">
+          <item row="7" column="3">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QComboBox" name="cbxInterval">
@@ -603,47 +579,88 @@ color: red;
             </item>
            </layout>
           </item>
-          <item row="5" column="0" colspan="2">
+          <item row="8" column="0" colspan="2">
            <widget class="QCheckBox" name="checkAskForName">
             <property name="text">
              <string>Ask for Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="2" colspan="2">
+          <item row="8" column="2" colspan="2">
            <widget class="QCheckBox" name="checkHideToSystray">
             <property name="text">
              <string>Minimize to Systray</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0" colspan="2">
+          <item row="9" column="0" colspan="2">
            <widget class="QCheckBox" name="checkDetach">
             <property name="text">
              <string>Detach Player at startup</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="2" colspan="2">
+          <item row="9" column="2" colspan="2">
            <widget class="QCheckBox" name="checkTranslit">
             <property name="text">
              <string>Translit Record Filename</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
+          <item row="11" column="0" colspan="2">
            <widget class="QCheckBox" name="checkUpdate">
             <property name="text">
              <string>Check for updates</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="2" colspan="2">
+          <item row="11" column="2" colspan="2">
            <widget class="QCheckBox" name="checkGPUAcc">
             <property name="text">
              <string>Use GPU for video decoding</string>
             </property>
            </widget>
+          </item>
+          <item row="2" column="3">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QComboBox" name="cbxLogLevel">
+              <item>
+               <property name="text">
+                <string>Log disabled</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log Errors only</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log Errors and Warnings</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log everything</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineVlcVerbose">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
