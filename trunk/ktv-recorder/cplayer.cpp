@@ -58,12 +58,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    tAspectShot.setSingleShot (true);
    tAspectShot.setInterval (800);
 
-#ifdef QT_NO_DEBUG
-   uiVerboseLevel = 1;
-#else
-   uiVerboseLevel = 3;
-#endif /* QT_NO_DEBUG */
-
    // connect volume slider with volume change function ...
    connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
 
@@ -124,7 +118,7 @@ CPlayer::~CPlayer()
 #ifdef Q_OS_MACX
        // releasing it on Mac leads to crash if you end the
        // player with running video ... no problem at all 'cause
-       // we want releease at program close!
+       // we want release at program close!
        libvlc_retain(pVlcInstance);
 #else
        libvlc_release(pVlcInstance);
@@ -219,12 +213,12 @@ int CPlayer::initPlayer()
 
    //create a new libvlc instance
 #ifdef Q_WS_MAC
-   #warning Check if this is really needed!
+//   #warning Check if this is really needed!
    // vout as well as opengl-provider MIGHT be "minimal_macosx" ...
    const char *vlc_args[] = {
-      "--vout=macosx",
-      "--opengl-provider=macosx",
-      "-v"
+      "--vout=opengl",
+      // "--opengl-provider=macosx",
+      // "-v"
    };
 
    argc = sizeof(vlc_args) / sizeof(vlc_args[0]);
@@ -236,7 +230,7 @@ int CPlayer::initPlayer()
    if (pVlcInstance)
    {
       // set verbose mode ...
-      libvlc_set_log_verbosity (pVlcInstance, uiVerboseLevel);
+      libvlc_set_log_verbosity (pVlcInstance, pSettings->libVlcVerboseLevel());
 
       // get logger and mediaplayer ...
       pLibVlcLog   = libvlc_log_open(pVlcInstance);
@@ -246,7 +240,6 @@ int CPlayer::initPlayer()
    if (pLibVlcLog && pMediaPlayer)
    {
       // add player to window ...
- //     connect_to_wnd(pMediaPlayer, ui->fVideo->winId());
       connectToVideoWidget();
 
       // get volume ...
@@ -462,6 +455,34 @@ int CPlayer::playMedia(const QString &sCmdLine)
               mInfo(tr("Add MRL Option: %1").arg(GPU_ACC_TOKEN));
               libvlc_media_add_option(p_md, GPU_ACC_TOKEN);
           }
+
+          ///////////////////////////////////////////////////////////////////////////
+          // set proxy server ...
+          ///////////////////////////////////////////////////////////////////////////
+          if (pSettings->UseProxy())
+          {
+             sMrl = ":http_proxy=http://";
+
+             if (pSettings->GetProxyUser() != "")
+             {
+                sMrl += QString("%1@").arg(pSettings->GetProxyUser());
+             }
+
+             sMrl += QString("%1:%2/").arg(pSettings->GetProxyHost()).arg(pSettings->GetProxyPort());
+             mInfo(tr("Add MRL Option: %1").arg(sMrl));
+             libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+
+             if ((pSettings->GetProxyPasswd() != "") && (pSettings->GetProxyUser() != ""))
+             {
+                sMrl = QString(":http_proxy_pwd=%1").arg(pSettings->GetProxyPasswd());
+                mInfo(tr("Add MRL Option: :http_proxy_pwd=******"));
+                libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+             }
+          }
+          ///////////////////////////////////////////////////////////////////////////
+          // end proxy server ...
+          ///////////////////////////////////////////////////////////////////////////
+
           // add mrl options ...
           for (cit = lArgs.constBegin(); cit != lArgs.constEnd(); cit ++)
           {
@@ -1114,8 +1135,6 @@ int CPlayer::myToggleFullscreen()
       }
       else
       {
-         Qt::WindowFlags f;
-
          // get active desktop widget ...
          QDesktopWidget *pDesktop    = QApplication::desktop ();
          int             iScreen     = pDesktop->screenNumber (this);
@@ -1133,28 +1152,35 @@ int CPlayer::myToggleFullscreen()
          {
             mInfo(tr("Can't get active screen QWidget!"));
          }
-
-         // frameless window which stays on top ...
-         f  = Qt::Window | Qt::FramelessWindowHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint;
-
+         else
+         {
+            // frameless window which stays on top ...
+            Qt::WindowFlags f = Qt::Window
+                              | Qt::FramelessWindowHint
 #ifdef Q_WS_X11
-         f |= Qt::X11BypassWindowManagerHint;
+                              | Qt::X11BypassWindowManagerHint
 #endif // Q_WS_X11
+                              | Qt::CustomizeWindowHint
+                              | Qt::WindowStaysOnTopHint;
 
-         // hide screen ...
-         ui->fParent->hide ();
+            // hide screen ...
+            ui->fParent->hide ();
 
-         // reparent to active screen ...
-         ui->fParent->setParent(pActScreen, f);
-         ui->fParent->setGeometry (sizeDesktop);
-         ui->fParent->showFullScreen ();
+            // remove widget from layout ...
+            ui->vlMasterFrame->removeWidget(ui->fParent);
 
-         // to grab keyboard input we need the focus ...
-         // set policy so we can get focus ...
-         ui->fVideo->setFocusPolicy(Qt::StrongFocus);
+            // reparent to active screen ...
+            ui->fParent->setParent(pActScreen, f);
+            ui->fParent->setGeometry (sizeDesktop);
+            ui->fParent->showFullScreen ();
 
-         // get the focus ...
-         ui->fVideo->setFocus(Qt::OtherFocusReason);
+            // to grab keyboard input we need the focus ...
+            // set policy so we can get focus ...
+            ui->fVideo->setFocusPolicy(Qt::StrongFocus);
+
+            // get the focus ...
+            ui->fVideo->setFocus(Qt::OtherFocusReason);
+         }
       }
    }
    else

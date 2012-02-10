@@ -93,7 +93,6 @@ private:
    libvlc_media_player_t  *pMediaPlayer;
    libvlc_event_manager_t *pEMPlay;
    libvlc_log_t           *pLibVlcLog;
-   uint                    uiVerboseLevel;
    bool                    bCtrlStream;
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
