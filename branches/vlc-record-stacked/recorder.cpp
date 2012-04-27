@@ -18,6 +18,10 @@
    #include "ui_recorder_inc.h"
 #endif
 
+#ifdef Q_OS_MAC
+   #import <cocoa/cocoa.h>
+#endif
+
 // for logging ...
 extern CLogFile VlcLog;
 
@@ -2953,7 +2957,13 @@ void Recorder::slotToogleFullscreen()
       stackedLayout->setCurrentWidget(pVideoWidget);
 
       // make dialog fullscreen ...
+#ifndef Q_OS_MAC
       showFullScreen();
+#else
+      NSView   *nsview   = (NSView *)winId();
+      NSWindow *nswindow = [nsview window];
+      [nswindow toggleFullScreen:nil];
+#endif
 
       // a possible bug fix -> make sure all is visible ...
       pVideoWidget->show();
@@ -2979,7 +2989,14 @@ void Recorder::slotToogleFullscreen()
 
       // show normal ...
       show();
+
+#ifndef Q_OS_MAC
       showNormal();
+#else
+      NSView   *nsview   = (NSView *)winId();
+      NSWindow *nswindow = [nsview window];
+      [nswindow toggleFullScreen:nil];
+#endif
    }
 }
 #endif // INCLUDE_LIBVLC
