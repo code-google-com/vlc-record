@@ -15,13 +15,6 @@ INCLUDEPATH += .
 # CONFIG += static
 CONFIG += shared
 
-mac {
-   OBJECTIVE_SOURCES += recorder.mm
-}
-else {
-   SOURCES += recorder.cpp
-}
-
 # -------------------------------------
 # customization ...
 # - make a define here and put needed
@@ -35,6 +28,7 @@ else {
 # -------------------------------------
 DEFINES += INCLUDE_LIBVLC
 SOURCES += main.cpp \
+    recorder.cpp \
     csettingsdlg.cpp \
     ckartinaclnt.cpp \
     ckartinaxmlparser.cpp \
@@ -142,8 +136,8 @@ contains(DEFINES,INCLUDE_LIBVLC) {
                      release/create_dmg.sh
       INCLUDEPATH += mac/include
 
-      CONFIG(debug,debug|release):appclean.commands = cp recorder.cpp recorder.mm && cd debug && rm -rf *.app && rm -f *.dmg
-      CONFIG(release,debug|release):appclean.commands = cp recorder.cpp recorder.mm && cd release && rm -rf *.app && rm -f *.dmg
+      CONFIG(debug,debug|release):appclean.commands = cd debug && rm -rf *.app && rm -f *.dmg
+      CONFIG(release,debug|release):appclean.commands = cd release && rm -rf *.app && rm -f *.dmg
       QMAKE_EXTRA_TARGETS += appclean
 
       # Hook our appclean target in between qmake's Makefile update and the actual project target.
@@ -152,7 +146,7 @@ contains(DEFINES,INCLUDE_LIBVLC) {
       CONFIG(release,debug|release):appcleanhook.target = Makefile.Release
       QMAKE_EXTRA_TARGETS += appcleanhook
 
-      LIBS += -L./mac/lib -framework cocoa
+      LIBS += -L./mac/lib
       QMAKE_POST_LINK = ./create_mac_bundle.sh $$basename(TARGET)
    }
 
