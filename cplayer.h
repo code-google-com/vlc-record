@@ -73,6 +73,8 @@ public:
    bool isPositionable();
    void initSlider ();
    uint getSilderPos();
+   QVlcVideoWidget* getAndRemoveVideoWidget();
+   void addAndEmbedVideoWidget();
 
 protected:
    virtual void changeEvent(QEvent *e);
@@ -125,6 +127,7 @@ signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
    void sigCheckArchProg(ulong ulArchGmt);
+   void sigToggleFullscreen();
 };
 
 #endif /* __022410__CPLAYER_H */

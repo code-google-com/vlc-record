@@ -39,6 +39,7 @@ public:
    virtual ~QVlcVideoWidget();
    void setShortCuts (QVector<CShortcutEx *> *pvSc);
    WId widgetId();
+   void raiseRender();
 
 protected:
    virtual void mouseDoubleClickEvent(QMouseEvent *event);

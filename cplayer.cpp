@@ -498,8 +498,8 @@ int CPlayer::playMedia(const QString &sCmdLine)
    enableDisablePlayControl (false);
 
    // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   // QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
+   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
 
    // are there mrl options ... ?
    if (sCmdLine.contains(";;"))
@@ -1026,7 +1026,7 @@ void CPlayer::stopPlayTimer()
 \----------------------------------------------------------------- */
 void CPlayer::on_btnFullScreen_clicked()
 {
-   slotToggleFullscreen();
+   emit sigToggleFullscreen();
 }
 
 /* -----------------------------------------------------------------\
@@ -1403,7 +1403,7 @@ void CPlayer::slotToggleFullscreen()
    }
 #endif
 
-   ui->videoWidget->toggleFullScreen();
+   emit sigToggleFullscreen();
 
 #ifdef Q_OS_MACX
    if (bFixMacFsBug && pMediaPlayer)
@@ -1411,6 +1411,41 @@ void CPlayer::slotToggleFullscreen()
       // here would be the place to make a fix ...
    }
 #endif
+}
+
+/* -----------------------------------------------------------------\
+|  Method: getAndRemoveVideoWidget
+|  Begin: 27.04.2012
+|  Author: Jo2003
+|  Description: remove video widget from player layout and
+|               return it
+|
+|  Parameters: --
+|
+|  Returns: pointer to video widget
+\----------------------------------------------------------------- */
+QVlcVideoWidget* CPlayer::getAndRemoveVideoWidget()
+{
+   ui->vPlayerLayout->removeWidget(ui->videoWidget);
+   return ui->videoWidget;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: addAndEmbedVideoWidget
+|  Begin: 27.04.2012
+|  Author: Jo2003
+|  Description: embed videoWidget again
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::addAndEmbedVideoWidget()
+{
+   ui->vPlayerLayout->insertWidget(1, ui->videoWidget, 100);
+   ui->videoWidget->show();
+   ui->videoWidget->raise();
+   ui->videoWidget->raiseRender();
 }
 
 /************************* History ***************************\

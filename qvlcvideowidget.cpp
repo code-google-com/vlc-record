@@ -372,3 +372,20 @@ int QVlcVideoWidget::keyEventToKeySequence(QKeyEvent *event, QKeySequence &seq)
 
    return 0;
 }
+
+//---------------------------------------------------------------------------
+//
+//! \brief   raise render view
+//
+//! \author  Jo2003
+//! \date    27.04.2012
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QVlcVideoWidget::raiseRender()
+{
+   if (_render)
+   {
+      _render->raise();
+   }
+}

@@ -44,6 +44,16 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 {
    ui->setupUi(this);
 
+#ifdef INCLUDE_LIBVLC
+   // build layout stack ...
+   pVideoWidget  =  NULL;
+   stackedLayout = new QStackedLayout();
+   stackedLayout->setMargin(0);
+   ui->vMainLayout->removeWidget(ui->masterFrame);
+   stackedLayout->addWidget(ui->masterFrame);
+   ui->vMainLayout->addLayout(stackedLayout);
+#endif
+
    // set (customized) windows title ...
    // setWindowTitle(QString("VLC-Recorder - %1").arg(COMPANY_NAME));
    setWindowTitle(APP_NAME);
@@ -189,6 +199,8 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (ui->player, SIGNAL(sigCheckArchProg(ulong)), this, SLOT(slotCheckArchProg(ulong)));
    connect (this, SIGNAL(sigShowInfoUpdated()), ui->player, SLOT(slotShowInfoUpdated()));
 
+   connect (ui->player, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToogleFullscreen()));
+
 
 #endif /* INCLUDE_LIBVLC */
 
@@ -286,17 +298,27 @@ Recorder::~Recorder()
    if (pModel)
    {
       delete pModel;
+      pModel = NULL;
    }
 
    if (pDelegate)
    {
       delete pDelegate;
+      pDelegate = NULL;
    }
 
    if (pUpdateChecker)
    {
       delete pUpdateChecker;
+      pUpdateChecker = NULL;
    }
+#ifdef INCLUDE_LIBVLC
+   if (stackedLayout)
+   {
+      delete stackedLayout;
+      stackedLayout = NULL;
+   }
+#endif // INCLUDE_LIBVLC
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -329,8 +351,8 @@ void Recorder::changeEvent(QEvent *e)
          {
             QWindowStateChangeEvent *pEvent = (QWindowStateChangeEvent *)e;
 
-            // store last position only, if it wasn't maximized ...
-            if (pEvent->oldState() != Qt::WindowMaximized)
+            // store last position only, if it wasn't maximized or fullscreen ...
+            if (!(pEvent->oldState() & (Qt::WindowMaximized | Qt::WindowFullScreen)))
             {
                sizePos = geometry();
             }
@@ -2902,6 +2924,66 @@ void Recorder::slotCheckArchProg(ulong ulArcGmt)
    }
 }
 
+#ifdef INCLUDE_LIBVLC
+/* -----------------------------------------------------------------\
+|  Method: slotToogleFullscreen [slot]
+|  Begin: 27.04.2012
+|  Author: Jo2003
+|  Description: toggle fullscreen
+|               (hopefully also Mac Snow Leopard likes this)
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotToogleFullscreen()
+{
+   if (!pVideoWidget)
+   {
+      // hide while reparenting ...
+      hide();
+
+      // get videoWidget ...
+      pVideoWidget = ui->player->getAndRemoveVideoWidget();
+
+      // add videoWidget to stacked layout ...
+      stackedLayout->addWidget(pVideoWidget);
+
+      // make sure videoWidget is the one we see ...
+      stackedLayout->setCurrentWidget(pVideoWidget);
+
+      // make dialog fullscreen ...
+      showFullScreen();
+
+      // a possible bug fix -> make sure all is visible ...
+      pVideoWidget->show();
+      pVideoWidget->raise();
+      pVideoWidget->raiseRender();
+   }
+   else
+   {
+      // hide while reparenting ...
+      hide();
+
+      // remove videoWidget from stacked layout ...
+      stackedLayout->removeWidget(pVideoWidget);
+
+      // make sure main dialog is visible ...
+      stackedLayout->setCurrentWidget(ui->masterFrame);
+
+      // put videoWidget back into player widget ...
+      ui->player->addAndEmbedVideoWidget();
+
+      // reset videoWidgets local pointer ...
+      pVideoWidget = NULL;
+
+      // show normal ...
+      show();
+      showNormal();
+   }
+}
+#endif // INCLUDE_LIBVLC
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -4217,8 +4299,6 @@ void Recorder::correctEpgOffset()
    }
 }
 
-
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-
