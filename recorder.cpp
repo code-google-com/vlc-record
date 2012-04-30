@@ -200,6 +200,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (this, SIGNAL(sigShowInfoUpdated()), ui->player, SLOT(slotShowInfoUpdated()));
 
    connect (ui->player, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToogleFullscreen()));
+   connect (this, SIGNAL(sigFullScreenToggled(int)), ui->player, SLOT(slotFsToggled(int)));
 
 
 #endif /* INCLUDE_LIBVLC */
@@ -2959,6 +2960,7 @@ void Recorder::slotToogleFullscreen()
       pVideoWidget->show();
       pVideoWidget->raise();
       pVideoWidget->raiseRender();
+      emit sigFullScreenToggled(1);
    }
    else
    {
@@ -2980,6 +2982,7 @@ void Recorder::slotToogleFullscreen()
       // show normal ...
       show();
       showNormal();
+      emit sigFullScreenToggled(0);
    }
 }
 #endif // INCLUDE_LIBVLC
