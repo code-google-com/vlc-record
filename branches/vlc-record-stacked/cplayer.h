@@ -122,6 +122,7 @@ public slots:
    void slotMoreQuietly();
    void slotMute();
    void slotShowInfoUpdated();
+   void slotFsToggled (int on);
 
 signals:
    void sigPlayState (int ps);

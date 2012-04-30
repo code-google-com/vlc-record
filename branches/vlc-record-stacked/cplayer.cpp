@@ -1448,6 +1448,21 @@ void CPlayer::addAndEmbedVideoWidget()
    ui->videoWidget->raiseRender();
 }
 
+/* -----------------------------------------------------------------\
+|  Method: slotFsToggled
+|  Begin: 30.04.2012
+|  Author: Jo2003
+|  Description: fullscreen was toggled
+|
+|  Parameters: enabled or disabled
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CPlayer::slotFsToggled(int on)
+{
+   ui->videoWidget->fullScreenToggled(on);
+}
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
