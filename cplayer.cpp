@@ -498,8 +498,8 @@ int CPlayer::playMedia(const QString &sCmdLine)
    enableDisablePlayControl (false);
 
    // get MRL ...
-   // QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
+   QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   // QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
 
    // are there mrl options ... ?
    if (sCmdLine.contains(";;"))
