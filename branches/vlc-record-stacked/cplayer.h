@@ -96,7 +96,6 @@ private:
    uint                    uiDuration;
    QMap<QString, QString>  mAspect;
    QMap<QString, QString>  mCrop;
-   bool                    bFixMacFsBug;
 
 private slots:
    void on_posSlider_valueChanged(int value);

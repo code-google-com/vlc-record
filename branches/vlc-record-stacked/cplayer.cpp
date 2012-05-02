@@ -11,7 +11,6 @@
 \*************************************************************/
 #include "cplayer.h"
 #include "ui_cplayer.h"
-#include <QSysInfo>
 
 // log file functions ...
 extern CLogFile VlcLog;
@@ -47,17 +46,9 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pTrigger      = NULL;
    bCtrlStream   = false;
    bSpoolPending = true;
-   bFixMacFsBug  = false;
    uiDuration    = (uint)-1;
    mAspect.clear();
    mCrop.clear();
-
-#ifdef Q_OS_MACX
-   if (QSysInfo::MacintoshVersion == QSysInfo::MV_SNOWLEOPARD)
-   {
-      bFixMacFsBug = true;
-   }
-#endif
 
    QStringList slKey, slVal;
    int i;
@@ -527,7 +518,7 @@ int CPlayer::playMedia(const QString &sCmdLine)
             mInfo(tr("Add MRL Option: %1").arg(GPU_ACC_TOKEN));
             libvlc_media_add_option(p_md, GPU_ACC_TOKEN);
          }
-         
+
          ///////////////////////////////////////////////////////////////////////////
          // set proxy server ...
          ///////////////////////////////////////////////////////////////////////////
@@ -1396,21 +1387,7 @@ void CPlayer::connectToVideoWidget()
 \----------------------------------------------------------------- */
 void CPlayer::slotToggleFullscreen()
 {
-#ifdef Q_OS_MACX
-   if (bFixMacFsBug && pMediaPlayer)
-   {
-      // here would be the place to make a fix ...
-   }
-#endif
-
    emit sigToggleFullscreen();
-
-#ifdef Q_OS_MACX
-   if (bFixMacFsBug && pMediaPlayer)
-   {
-      // here would be the place to make a fix ...
-   }
-#endif
 }
 
 /* -----------------------------------------------------------------\
