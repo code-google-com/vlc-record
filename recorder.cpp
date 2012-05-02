@@ -2941,9 +2941,6 @@ void Recorder::slotToogleFullscreen()
 {
    if (!pVideoWidget)
    {
-      // hide while reparenting ...
-      // hide();
-
       // get videoWidget ...
       pVideoWidget = ui->player->getAndRemoveVideoWidget();
 
@@ -2964,9 +2961,6 @@ void Recorder::slotToogleFullscreen()
    }
    else
    {
-      // hide while reparenting ...
-      // hide();
-
       // remove videoWidget from stacked layout ...
       stackedLayout->removeWidget(pVideoWidget);
 
