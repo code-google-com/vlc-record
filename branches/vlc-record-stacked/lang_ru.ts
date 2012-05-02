@@ -25,7 +25,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/caboutdialog.ui" line="51"/>
         <source>Don&apos;t show on startup</source>
-        <translation>Не показывай на запуске</translation>
+        <translation>Не показывать при запуске</translation>
     </message>
     <message>
         <location filename="forms/caboutdialog.ui" line="73"/>
@@ -55,25 +55,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="caboutdialog.cpp" line="115"/>
         <source>Account expires:</source>
-        <translation>Пакет кончается:</translation>
+        <translation>Пакет истикает:</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="118"/>
         <source>This is a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</source>
         <oldsource>&lt;b&gt;vlc-record&lt;/b&gt; - a tool to &lt;b&gt;view / record program streams&lt;/b&gt; from %1%2</oldsource>
-        <translation>Эта программа для &lt;b&gt;просмотра и записи видео потока&lt;/b&gt; с %1%2</translation>
+        <translation>Эта программа для &lt;b&gt;просмотра и записи видеопотока&lt;/b&gt; с %1%2</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="120"/>
         <source> (click to buy a subscription).</source>
         <oldsource> (Click to buy a subscription).</oldsource>
-        <translation>(нажимай ссылку, чтобы купить подписку).</translation>
+        <translation>(нажимите на ссылку, чтобы купить подписку).</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="124"/>
         <source>To do this you will need to authorise using username and password provided by %1.</source>
         <oldsource>To do this it will authenticate you with username and password at %1.</oldsource>
-        <translation>Программа подключается к %1 при помощи Вашей информации абонента (Логин/Пароль).</translation>
+        <translation>Программа подключается к %1 при помощи Вашей абонемента (Логин/Пароль).</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="125"/>
@@ -89,13 +89,13 @@ p, li { white-space: pre-wrap; }
         <location filename="caboutdialog.cpp" line="127"/>
         <source>For News and Updates please visit my site at %1.</source>
         <oldsource>For News and Updates please visit my site at %1</oldsource>
-        <translation>Для чтения новостей и обновлений, посетите мою Интернет-страницу %1.</translation>
+        <translation>Следите за обновлениями и новостями на моей интернет-странице %1.</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="129"/>
         <source>&lt;b&gt;This program is free software!&lt;/b&gt;</source>
         <oldsource>&lt;b&gt;vlc-record is free software!&lt;/b&gt;</oldsource>
-        <translation>&lt;b&gt;Эта программа бесплатной!&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Эта программа является бесплатной!&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="caboutdialog.cpp" line="130"/>
@@ -128,17 +128,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cepgbrowser.cpp" line="169"/>
         <source>Ar.</source>
-        <translation>Ар.</translation>
+        <translation>R.</translation>
     </message>
     <message>
         <location filename="cepgbrowser.cpp" line="176"/>
         <source>play from archive ...</source>
-        <translation>Просмотр от архива ...</translation>
+        <translation>Просмотр архива ...</translation>
     </message>
     <message>
         <location filename="cepgbrowser.cpp" line="183"/>
         <source>record from archive ...</source>
-        <translation>Запись от архива ...</translation>
+        <translation>Запись архива ...</translation>
     </message>
     <message>
         <location filename="cepgbrowser.cpp" line="200"/>
@@ -259,7 +259,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaclnt.cpp" line="681"/>
         <source>Error in Request: %1!</source>
-        <translation>Ошибка запроса: %1!</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -567,7 +567,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/cplayer.ui" line="14"/>
         <source>Form</source>
-        <translation></translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="forms/cplayer.ui" line="31"/>
@@ -1180,7 +1180,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/ctimerrec.ui" line="230"/>
         <source>Add / Update Job</source>
-        <translation>Добавить/Обновить задание в список</translation>
+        <translation>Добавить/Обновить задание</translation>
     </message>
     <message>
         <location filename="forms/ctimerrec.ui" line="268"/>
@@ -1190,7 +1190,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/ctimerrec.ui" line="211"/>
         <source>Shutdown when all is done</source>
-        <translation>Выключить компютер</translation>
+        <translation>Выключить компьютер по окончанию</translation>
     </message>
     <message>
         <location filename="forms/ctimerrec.ui" line="326"/>
@@ -1210,12 +1210,12 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/ctimerrec.ui" line="346"/>
         <source>TS.</source>
-        <translation></translation>
+        <translation>З.В.</translation>
     </message>
     <message>
         <location filename="forms/ctimerrec.ui" line="377"/>
         <source>&amp;Back</source>
-        <translation>За&amp;крыть</translation>
+        <translation>&amp;Закрыть</translation>
     </message>
     <message>
         <location filename="forms/ctimerrec.ui" line="331"/>
@@ -1304,7 +1304,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="cvlcrecdb.cpp" line="34"/>
         <source>Can&apos;t create / open SQLite database ...</source>
-        <translation>Не удается создать / открыть SQLite базы данных...</translation>
+        <translation>Не удается создать / открыть SQLite базу данных...</translation>
     </message>
 </context>
 <context>
@@ -1392,7 +1392,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/qftsettings.ui" line="77"/>
         <source>Allow Adult Channels</source>
-        <translation>Разрешить эротические каналы</translation>
+        <translation>Активировать каналы для взрослых</translation>
     </message>
     <message>
         <location filename="forms/qftsettings.ui" line="112"/>
@@ -1507,7 +1507,7 @@ or start time is later than end time!</source>
         <location filename="recorder.cpp" line="1784"/>
         <location filename="recorder.cpp" line="2915"/>
         <source>Length: %1 min.</source>
-        <translation>Длит. %1 мин.</translation>
+        <translation>Длительность: %1 мин.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1785"/>
@@ -1540,7 +1540,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="recorder.cpp" line="2219"/>
         <source>Max. number of favourites (%1) reached.</source>
-        <translation>Макс. число фаворитов (%1) достигли.</translation>
+        <translation>Макс. число фаворитов (%1) достигнуто.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2398"/>
@@ -1553,7 +1553,7 @@ or start time is later than end time!</source>
         <location filename="recorder.cpp" line="3317"/>
         <location filename="recorder.cpp" line="3394"/>
         <source>1 week backward</source>
-        <translation>1 неделя назад</translation>
+        <translation>1 неделю назад</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="120"/>
@@ -1605,7 +1605,7 @@ dataDir: %1
         <location filename="recorder.cpp" line="3351"/>
         <location filename="recorder.cpp" line="3399"/>
         <source>1 week forward</source>
-        <translation>1 неделя вперед</translation>
+        <translation>1 неделю вперед</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3014"/>
@@ -1707,7 +1707,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="3027"/>
         <source>Toggle Crop Geometry</source>
-        <translation>Подрезать видеоформат</translation>
+        <translation>Размер кадра</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3028"/>
@@ -1802,7 +1802,7 @@ dataDir: %1
         <location filename="forms/recorder.ui" line="137"/>
         <location filename="forms/recorder_inc.ui" line="154"/>
         <source> Channels </source>
-        <translation>Список каналов</translation>
+        <translation>Каналы</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="199"/>
@@ -1969,7 +1969,7 @@ dataDir: %1
     <message>
         <location filename="forms/recorder_inc.ui" line="1137"/>
         <source>Time Jump Value in minutes</source>
-        <translation>Размер временного шага</translation>
+        <translation>Длинна временного шага</translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="1161"/>
