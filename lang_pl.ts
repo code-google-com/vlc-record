@@ -141,108 +141,108 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaclnt.cpp" line="134"/>
         <source>We&apos;ve got following Cookie: %1</source>
-        <translation>Mamy następujące Cookie: %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="152"/>
         <source>Logout ...</source>
-        <translation>Wylogowanie…</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="193"/>
         <location filename="ckartinaclnt.cpp" line="231"/>
         <source>Request #%1 (%2) sent ...</source>
-        <translation>Żądanie #%1 (%2) wysłane ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="249"/>
         <source>Request Authentication ...</source>
-        <translation>Weryfikowanie żądania…</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="270"/>
         <source>Request Channel List ...</source>
-        <translation>Żądanie listy kanałów ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="290"/>
         <source>Request Stream Server List ...</source>
-        <translation>Żądanie listy serwerów nadawania ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="310"/>
         <source>Request Time Shift ...</source>
-        <translation>Żądanie Time Shift …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="330"/>
         <source>Set TimeShift to %1 hour(s) ...</source>
-        <translation>Ustaw Time Shift o %1 godzin …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="351"/>
         <source>Request Bit Rate ...</source>
-        <translation>Żądaj bitrate …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="371"/>
         <source>Set BitRate to %1 kbit/s ...</source>
-        <translation>Ustaw bitrate na %1 kbit/s …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="392"/>
         <source>Request URL for channel %1 ...</source>
-        <translation>Żądaj URL dla kanału %1 …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="420"/>
         <source>Set Streaming Server to %1 ...</source>
-        <translation>Ustaw serwer nadawania na %1 …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="441"/>
         <source>Set Http Buffer to %1 msec. ...</source>
-        <translation>Ustaw bufor http na %1 msec …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="462"/>
         <source>Request EPG for Channel %1 ...</source>
-        <translation>Żądaj przewodnika TV dla kanału %1 …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="486"/>
         <source>Request Archiv URL ...</source>
-        <translation>Żądaj archiwum URL …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="513"/>
         <source>Request VOD Genres ...</source>
-        <translation>Żądaj gatunków VOD …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="533"/>
         <source>Request Videos ...</source>
-        <translation>Żądaj wideo …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="556"/>
         <source>Request Video info for video %1...</source>
-        <translation>Żądaj informacji dla wideo %1 …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="578"/>
         <source>Request Video Url for video %1...</source>
-        <translation>Żądaj url dla wideo %1 …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="615"/>
         <source>Request #%1 (%2) done!</source>
-        <translation>Żądanie #%1 (%2) zrealizowane!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="681"/>
         <source>Error in Request: %1!</source>
-        <translation>Błąd realizacji Żądania: %1!</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -250,7 +250,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaxmlparser.cpp" line="71"/>
         <source>Set time offset to %1 seconds!</source>
-        <translation>Ustaw opóźnienie na %1 sekund!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="181"/>
@@ -284,18 +284,18 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaxmlparser.cpp" line="464"/>
         <location filename="ckartinaxmlparser.cpp" line="1378"/>
         <source>Found unused element %1 ...</source>
-        <translation>Znaleziono nieużywany element %1 ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="262"/>
         <location filename="ckartinaxmlparser.cpp" line="390"/>
         <source>Found unused child %1: %2 ...</source>
-        <translation>Znaleziono nieużywany element potomny %1: %2 ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="846"/>
         <source>Got Type: %1, Count: %2, Page: %3, Total: %4</source>
-        <translation>Masz Typ: %1, Liczba: %2, Strona: %3, Suma: %4</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="1286"/>
@@ -521,8 +521,7 @@ p, li { white-space: pre-wrap; }
         <location filename="cplayer.cpp" line="510"/>
         <source>Use following URL:
   --&gt; %1</source>
-        <translation>Użyj następującego URL:
-  --&gt; %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="518"/>
@@ -531,7 +530,7 @@ p, li { white-space: pre-wrap; }
         <location filename="cplayer.cpp" line="554"/>
         <location filename="cplayer.cpp" line="562"/>
         <source>Add MRL Option: %1</source>
-        <translation>Dodaj opcję MRL: %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="541"/>
@@ -541,12 +540,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="574"/>
         <source>Can&apos;t create media description ...</source>
-        <translation>Nie można utworzyć opisu pliku multimedialnego …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="757"/>
         <source>Unknown Event No. %1 received ...</source>
-        <translation>Otrzymano nieznane wydarzenie nr %1  ...</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
@@ -557,12 +556,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="790"/>
         <source>Aspect ratio: %1</source>
-        <translation>Współczynnik kształtu obrazu: %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="823"/>
         <source>Crop ratio: %1</source>
-        <translation>Współczynnik proporcji kadru: %1</translation>
+        <translation></translation>
     </message>
     <message>
         <source>
@@ -581,12 +580,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="1111"/>
         <source>Ignore slightly slider position change...</source>
-        <translation>Zignoruj lekko zmienioną pozycję suwaka…</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="1199"/>
         <source>Film length: %1ms.</source>
-        <translation>Długość filmu: %1ms.</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -929,7 +928,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="csettingsdlg.cpp" line="609"/>
         <source>%1 Kbit/s</source>
-        <translation>%1 Kbit/s</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -979,28 +978,27 @@ p, li { white-space: pre-wrap; }
         <location filename="cstreamloader.cpp" line="81"/>
         <source>Archive URL:
  --&gt; %1</source>
-        <translation>Archiwum URL:
- --&gt; %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cstreamloader.cpp" line="88"/>
         <source>Download Stream from http://%1:%2</source>
-        <translation>Pobierz strumień z http://%1:%2</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cstreamloader.cpp" line="104"/>
         <source>Request #%1 sent ...</source>
-        <translation>Żądanie #%1 wysłane ...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cstreamloader.cpp" line="187"/>
         <source>Request #%1 done!</source>
-        <translation>Żądanie #%1 zrealizowane!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cstreamloader.cpp" line="196"/>
         <source>Error in Request: %1!</source>
-        <translation>Błąd realizacji Żądania: %1!</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1136,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/ctimerrec.ui" line="377"/>
         <source>&amp;Back</source>
-        <translation>&amp; do tyłu</translation>
+        <translation>&amp;Do tyłu</translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="340"/>
@@ -1173,32 +1171,32 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="ctimerrec.cpp" line="586"/>
         <source>Add Job #%1 (%2) to Joblist!</source>
-        <translation>Dodaj Zadanie #%1 (%2) do listy zadań!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="640"/>
         <source>Don&apos;t check ID %1 (it will be updated).</source>
-        <translation>Nie sprawdzaj ID %1 (będzie później zaktualizowane).</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="844"/>
         <source>Delete old entry #%1 (%2) from Joblist.</source>
-        <translation>Usuń stary zapis #%1 (%2) z listy zadań.</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="852"/>
         <source>Stopping timer record #%1 (%2). End time reached!</source>
-        <translation>Zapis zatrzymania czasu #%1 (%2). Czas końcowy osiągnięty!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="894"/>
         <source>Record #%1 (%2) starts soon. Set timer to standby!</source>
-        <translation>Nagrywanie #%1 (%2) zaraz się rozpocznie. Ustaw zegar na tryb czuwania!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="902"/>
         <source>Start record #%1 (%2)!</source>
-        <translation>Rozpocznij nagrywanie #%1 (%2)!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="973"/>
@@ -1216,14 +1214,13 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <location filename="ctimerrec.cpp" line="977"/>
         <location filename="ctimerrec.cpp" line="1045"/>
         <source>Started player with pid #%1!</source>
-        <translation>Odtwarzacz uruchomiony z pid #%1!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ctimerrec.cpp" line="995"/>
         <source>All records done. Shutdown system using command line:
   --&gt; %1</source>
-        <translation>Wszystkie nagrania są zakończone. Zamknij system przy pomocy linii poleceń:
-  --&gt; %1</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1238,7 +1235,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="cvlcctrl.cpp" line="213"/>
         <source>Player module &apos;%1&apos; successfully parsed ...</source>
-        <translation>Moduł odtwarzacza &apos;%1&apos; sparsowany pomyślnie …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="222"/>
@@ -1254,14 +1251,13 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="cvlcctrl.cpp" line="223"/>
         <source>Can&apos;t parse player module!</source>
-        <translation>Nie można sparsować modułu odtwarzacza!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="272"/>
         <source>Start player detached using folling command line:
   --&gt; %1</source>
-        <translation>Uruchom odtwarzacz niezależnie przy pomocy następującej lini poleceń:
-  --&gt; %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="287"/>
@@ -1272,32 +1268,32 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <location filename="cvlcctrl.cpp" line="307"/>
         <source>Start player using folling command line:
   --&gt; %1</source>
-        <translation>Uruchom odtwarzacz przy pomocy następującej linijki poleceń: --&gt; %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="455"/>
         <source>Muxing forced to &apos;%1&apos;!</source>
-        <translation>Multipleksowanie wymuszone do &apos;%1&apos;!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="473"/>
         <source>Remove double slash in target path ...</source>
-        <translation>Usuń podwójny ukośnik w ścieżce docelowej …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="562"/>
         <source>Player has ended ...</source>
-        <translation>Odtwarzanie zakończone …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="566"/>
         <source>Player was started ...</source>
-        <translation>Odtwarzanie rozpoczęte …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvlcctrl.cpp" line="624"/>
         <source>libVLC reports new state %1</source>
-        <translation>nowy stan raportów libVLC %1</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1430,7 +1426,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="qftsettings.cpp" line="167"/>
         <source>%1/Videos</source>
-        <translation>%1/Wideo</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1434,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="qvlcvideowidget.cpp" line="309"/>
         <source>Activate shortcut: %1</source>
-        <translation>Aktywuj skrót: %1</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1678,17 +1674,17 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="1406"/>
         <source>logout done ...</source>
-        <translation>wylogowanie zakończone …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1531"/>
         <source>Active stream server is %1</source>
-        <translation>Aktywny serwer strumieniowy jest %1</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1586"/>
         <source>Using Bitrate %1 kbit/s ...</source>
-        <translation>Używając bitrate %1 kbit/s …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1778"/>
@@ -1709,22 +1705,22 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="2056"/>
         <source>timeRec reports: record done!</source>
-        <translation>timeRec raport: nagrywanie zakończone!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2074"/>
         <source>timeRec reports: record active!</source>
-        <translation>timeRec raport: nagrywanie aktywne!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2098"/>
         <source>vlcCtrl reports: vlc player ended!</source>
-        <translation>vlcCtrl raport: vlc player zakończył!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2116"/>
         <source>vlcCtrl reports: vlc player active!</source>
-        <translation>vlcCtrl raport: vlc player aktywny!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2167"/>
@@ -1766,7 +1762,7 @@ dataDir: %1
         <location filename="recorder.cpp" line="3742"/>
         <location filename="recorder.cpp" line="3797"/>
         <source>Started VLC with pid #%1!</source>
-        <translation>Uruchomiony VLC z pid #%1!</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2429"/>
@@ -1950,7 +1946,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="3604"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
-        <translation>Nie można załadować widoku kanału &quot;%1.gif&quot; …</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3671"/>
