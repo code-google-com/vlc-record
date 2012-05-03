@@ -7,10 +7,10 @@
 Since Linux is such a wide field it's impossible to provide you with all possible packages so that you find the version that you need. So what we can do? Of course - make it on your own ;-)
 
 = What do we need? =
-At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, make and in addition checkinstall. To get these things on Ubuntu we run:
+At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, the libvlc-dev package, make and in addition checkinstall. To get these things on Ubuntu we run:
 
 {{{
-sudo apt-get install make g++ libqt4-dev checkinstall subversion
+sudo apt-get install make g++ libqt4-dev libvlc-dev vlc gtk2-engines-pixbuf checkinstall subversion
 }}}
 
 This also will install some additional packages our packages depend on. 
@@ -18,7 +18,7 @@ This also will install some additional packages our packages depend on.
 = Prepare =
 Create a directory where we'll put the sources of vlc-record. We could make it that way:
 {{{
-mkdir -p ~/src/vlc-record
+mkdir -p ~/src
 }}}
 
 Now we go into the created _src_ folder and check out the vlc-record sources.
@@ -27,67 +27,6 @@ Now we go into the created _src_ folder and check out the vlc-record sources.
 cd ~/src
 svn checkout http://vlc-record.googlecode.com/svn/trunk/vlc-record vlc-record
 }}}
-
-== Use the packaged vlc player ==
-In case you want to use the vlc player (libVLC) which was included into your distro, you have to make sure that there are all symbolic links to libvlc as needed. First find the library itself.
-
-{{{
-find /usr -name "libvlc*" 2>/dev/null
-}}}
-
-If there are some files - fine. Look for _libvlc2.so_. If there is this file you can go on to [#Build build] vlc-record.
-
-If there is no file _libvlc2.so_, but a file _libvlc2.so.x_ (where 'x' is a number) you have to create a symbolic link to this file. First go into the directory where these files are located.
-
-{{{
-cd /usr/lib
-sudo ln -s libvlc2.so.x libvlc2.so
-}}}
-
-Make sure that the 'x' matches the number in the filename we found above. You now can go on to the [#Build build] section.
-
-You haven't found any libvlc file at all? Look below!
-
-== Use your own (or my) vlc player ==
-
-Please have a look to this [BuildVlcPlayer wiki] to find out howto build vlc player at your own from the source code. 
-
-Now it's time to have a look at vlc-records project file. If we have made our own build of the vlc player to get a working libVLC we *must* also change the project file of vlc-record because we'd like to link against the new created libVLC and we want to use only that library. Keep cool, if you know how you can write an e-Mail, you'll get this project stuff done. You need to know where you have installed the vlc player. So in case you installed it into _/opt/vlc-1.0.5_ you have to remember that path. If you used my compiled version of the vlc player it's also that path.<br />
-Open the project file (vlc-record.pro) with the editor you like. Find following lines:
-
-{{{
-    FORMS += forms/cplayer.ui \
-        forms/recorder_inc.ui
-    SOURCES += cplayer.cpp
-    LIBS += -lvlc
-    win32:LIBS += -Llib
-}}}
-
-You now have to insert the path to vlc player so the linker will find the library we want to use. So change these lines in that way:
-
-{{{
-    FORMS += forms/cplayer.ui \
-        forms/recorder_inc.ui
-    SOURCES += cplayer.cpp
-    LIBS += -lvlc
-    win32:LIBS += -Llib
-    unix:LIBS += -L/path/to/vlc/lib \
-        -Wl,-rpath /path/to/vlc/lib
-}}}
-
-So if - as in our case - the player is installed into _/opt/vlc-1.0.5_ these lines should look like:
-
-{{{
-    FORMS += forms/cplayer.ui \
-        forms/recorder_inc.ui
-    SOURCES += cplayer.cpp
-    LIBS += -lvlc
-    win32:LIBS += -Llib
-    unix:LIBS += -L/opt/vlc-1.0.5/lib \
-        -Wl,-rpath /opt/vlc-1.0.5/lib
-}}}
-
-Save and close the project file.
 
 = Build =
 Go into the source directory and create the make files using the qmake command:
@@ -103,31 +42,15 @@ Cause we have the make files, let's start to build vlc-records binary.
 make release
 }}}
 
-Hopefully all went well?! If there is an error, telling you that the linker can't find the -lvlc ... you made a mistake editing the project file. 
+Hopefully all went well!
 
 = Install = 
-I have prepared some simple install scripts. These scripts will install vlc-record into _/opt/vlc-record_ (using checkinstall). To use these scripts, type following command:
+I have prepared some simple install scripts. These scripts will install vlc-record for you. To use these scripts, type following command:
 
 {{{
-make -f install.mak
+sudo make -f install.mak
 }}}
 
-After that vlc-record should be installed. If you don't like the place for vlc-record, copy the needed files where you like. You need following directory structure:
-
-{{{
-vlc-record (dir)
-\__  modules (dir)
-      \__ 1_vlc-player.mod (all from 'vlc-record/modules')
-      \__ 2_MPlayer.mod
-      \__ 3_vlc-mp4.mod
-      \__ 4_vlc-player-avi.mod
-      \__ 5_libvlc.mod
-\__ language (dir)
-      \__ lang_de.qm (all from 'vlc-record' source folder)
-      \__ lang_ru.qm
-\__ vlc-record (binary from 'vlc-record/release')
-}}}
-
-If all was well, you now can use vlc-record ... and you can ...
+After that vlc-record should be installed. In Ubuntu you can search for vlc-record in DASH. An application shortcut is also created, but you have to add it to the menu at your own.
 
 [https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=11286909 https://www.paypal.com/de_DE/DE/i/btn/btn_donateCC_LG.gif]
