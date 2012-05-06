@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
+    <width>651</width>
     <height>544</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabStdSettings">
       <attribute name="title">
@@ -622,7 +622,10 @@ color: red;
            </widget>
           </item>
           <item row="2" column="3">
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="7,3">
+            <property name="spacing">
+             <number>2</number>
+            </property>
             <item>
              <widget class="QComboBox" name="cbxLogLevel">
               <item>
@@ -651,12 +654,6 @@ color: red;
              <widget class="QLineEdit" name="lineVlcVerbose">
               <property name="enabled">
                <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
               </property>
              </widget>
             </item>

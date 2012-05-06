@@ -115,7 +115,7 @@ void CSettingsDlg::readSettings()
    if (iErr)
    {
        // default log level ...
-       m_ui->lineVlcVerbose->setText("1");
+       m_ui->lineVlcVerbose->setText("0");
    }
 
 #ifdef Q_OS_WIN32
@@ -180,7 +180,7 @@ void CSettingsDlg::readSettings()
 
    // fill language box ...
    folder.setPath(pFolders->getLangDir());
-   sl = folder.entryList(QStringList("*.qm"), QDir::Files, QDir::Name);
+   sl = folder.entryList(QStringList("lang_*.qm"), QDir::Files, QDir::Name);
 
    // make sure english is part of list ...
    sl.push_front("lang_en.qm");

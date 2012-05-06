@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "qchanlistdelegate.h"
+#include "small_helpers.h"
 
 // for logging ...
 extern CLogFile VlcLog;
@@ -19,6 +20,16 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
    ui->setupUi(this);
+
+#ifdef INCLUDE_LIBVLC
+   // build layout stack ...
+   pVideoWidget  =  NULL;
+   stackedLayout = new QStackedLayout();
+   stackedLayout->setMargin(0);
+   ui->vMainLayout->removeWidget(ui->masterFrame);
+   stackedLayout->addWidget(ui->masterFrame);
+   ui->vMainLayout->addLayout(stackedLayout);
+#endif
 
    ePlayState     = IncPlay::PS_WTF;
    bLogosReady    = false;
@@ -59,7 +70,6 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    pChannelDlg = new CChannelsEPGdlg(this);
    pChannelDlg->initDialog(true);
    pChannelDlg->setTrigger(&Trigger); // set the pointer to Trigger by CChannelsEPGdlg
-   pChannelDlg->setProgressBar(ui->progressBar);
    pChannelDlg->setTextEpgShort(ui->textEpgShort);
    pChannelDlg->setSettings(&dlgSettings); // set the pointer to dlgSettings by CChannelsEPGdlg
    pChannelDlg->setGenreInfo(&genreInfo);
@@ -91,8 +101,8 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    ui->menuFile->addSeparator();
    ui->menuFile->addAction(ui->actionExit);
 
-   QString sAspect[] = {"std.","4:3","16:9","16:10","1:1","5:4","2.35"};
-   QString sCrop[] = {"std.","4:3","16:9","16:10","1:1","5:4","2.35"};
+   QString sAspect[] = {"std.","1:1","4:3","16:9","16:10","2.21:1","5:4"};
+   QString sCrop[] = {"std.","1:1","4:3","16:9","16:10","1.85:1","2.21:1","2.35:1","2.39:1","5:4"};
 
    pAspectGroup = new QActionGroup(this);
    pCropGroup   = new QActionGroup(this);
@@ -121,10 +131,6 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 
    Aspect[0]->setChecked(true);
    Crop[0]->setChecked(true);
-
-   // hide upper toolbar  and shortEPG window
-   ui->player->getFrameTimerInfo()->hide();
-   ui->textEpgShort->hide();
 
    VlcLog.SetLogFile(pFolders->getDataDir(), APP_LOG_FILE);
 
@@ -159,6 +165,13 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    dlgTimeRec.SetVlcCtrl(&vlcCtrl);
    dlgTimeRec.SetStreamLoader(&streamLoader);
 
+   // hide / remove VOD tab widget ...
+   vodTabWidget.iPos    = 1; // index of VOD tab
+   vodTabWidget.icon = pChannelDlg->getTabEpgVOD()->tabIcon(vodTabWidget.iPos);
+   vodTabWidget.sText   = pChannelDlg->getTabEpgVOD()->tabText(vodTabWidget.iPos);
+   vodTabWidget.pWidget = pChannelDlg->getTabEpgVOD()->widget(vodTabWidget.iPos);
+   pChannelDlg->getTabEpgVOD()->removeTab(vodTabWidget.iPos);
+
 #ifdef INCLUDE_LIBVLC
    // give player the list of shortcuts ...
    ui->player->setShortCuts (&vShortcutPool);
@@ -172,15 +185,14 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (&vlcCtrl, SIGNAL(sigLibVlcPlayMedia(QString)), ui->player, SLOT(playMedia(QString)));
    connect (&vlcCtrl, SIGNAL(sigLibVlcStop()), ui->player, SLOT(stop()));
 
-   // progress bar update ...
-   connect (ui->player, SIGNAL(sigSliderPos(int,int,int)), this, SLOT(slotUpdateProgress(int,int,int)));
-
    // short info update on archive play ...
    connect (ui->player, SIGNAL(sigCheckArchProg(ulong)), this, SLOT(slotCheckArchProg(ulong)));
    connect (this, SIGNAL(sigShowInfoUpdated()), ui->player, SLOT(slotShowInfoUpdated()));
+   connect (ui->player, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToogleFullscreen()));
+   connect (this, SIGNAL(sigFullScreenToggled(int)), ui->player, SLOT(slotFsToggled(int)));
 
    // aspect ratio, crop and full screen ...
-   connect (this, SIGNAL(sigToggleFullscreen()), ui->player, SLOT(slotToggleFullScreen()));
+   connect (this, SIGNAL(sigToggleFullscreen()), ui->player, SLOT(on_btnFullScreen_clicked()));
    connect (this, SIGNAL(sigToggleAspectRatio()), ui->player, SLOT(slotToggleAspectRatio()));
    connect (this, SIGNAL(sigToggleCropGeometry()), ui->player, SLOT(slotToggleCropGeometry()));
 
@@ -240,6 +252,10 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    // enable button ...
    TouchPlayCtrlBtns(false);
 
+   // hide upper toolbar  and shortEPG window
+   ui->player->getFrameTimerInfo()->hide();
+   ui->textEpgShort->hide();
+
    // request authorisation ...
    ConnectionInit();
 }
@@ -251,7 +267,17 @@ MainWindow::~MainWindow()
    if (pUpdateChecker)
    {
        delete pUpdateChecker;
+       pUpdateChecker = NULL;
    }
+
+#ifdef INCLUDE_LIBVLC
+   if (stackedLayout)
+   {
+      delete stackedLayout;
+      stackedLayout = NULL;
+   }
+#endif // INCLUDE_LIBVLC
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -275,7 +301,7 @@ void MainWindow::changeEvent(QEvent *e)
             QWindowStateChangeEvent *pEvent = (QWindowStateChangeEvent *)e;
 
             // store last position only, if it wasn't maximized ...
-            if (pEvent->oldState() != Qt::WindowMaximized)
+            if (!(pEvent->oldState() & (Qt::WindowMaximized | Qt::WindowFullScreen)))
             {
                sizePos = geometry();
             }
@@ -610,7 +636,6 @@ void MainWindow::on_actionTime_Record_triggered()
     uint now   = QDateTime::currentDateTime().toTime_t();
     int  cid = pChannelDlg->getCurrentCid();
 
-    // timeRec.SetRecInfo(now, now, -1);
     dlgTimeRec.SetRecInfo(now, now, cid);
     dlgTimeRec.exec();
 }
@@ -702,7 +727,7 @@ void MainWindow::on_pushRecord_clicked()
                showInfo.setPlayState(IncPlay::PS_RECORD);
                showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                      .arg("rgb(255, 254, 212)")
-                                     .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                                     .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
                TouchPlayCtrlBtns(false);
                Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -745,7 +770,7 @@ void MainWindow::on_pushLive_clicked()
                 showInfo.setPlayState(IncPlay::PS_PLAY);
                 showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                        .arg("rgb(255, 254, 212)")
-                                       .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                                       .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
                 TouchPlayCtrlBtns(false);
                 Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -804,7 +829,7 @@ void MainWindow::on_pushPlay_clicked()
                 showInfo.setPlayState(IncPlay::PS_PLAY);
                 showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                                      .arg("rgb(255, 254, 212)")
-                                     .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                                     .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
                TouchPlayCtrlBtns(false);
                Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -969,6 +994,31 @@ void MainWindow::slotCookie (QString str)
     {
        KartinaTv.SetCookie(sCookie);
 
+       // decide if we should enable / disable VOD stuff ...
+       if (accountInfo.bHasVOD)
+       {
+          if (!pChannelDlg->getTabEpgVOD()->widget(vodTabWidget.iPos))
+          {
+             // make sure tab text is translated as needed
+             QString title = (pTranslator + Translators::TRANS_OWN)->translate(objectName().toUtf8().constData(),
+                                                    vodTabWidget.sText.toUtf8().constData());
+
+             // add tab ...
+             pChannelDlg->getTabEpgVOD()->addTab(vodTabWidget.pWidget, (title != "") ? title : vodTabWidget.sText);
+             pChannelDlg->getTabEpgVOD()->adjustSize();
+          }
+       }
+       else
+       {
+          if (pChannelDlg->getTabEpgVOD()->widget(vodTabWidget.iPos))
+          {
+             // make sure the widget we want to remove
+             // is not the active one ...
+             pChannelDlg->getTabEpgVOD()->setCurrentIndex(0);
+             pChannelDlg->getTabEpgVOD()->removeTab(vodTabWidget.iPos);
+          }
+       }
+
        // request streamserver ...
        Trigger.TriggerRequest(Kartina::REQ_GET_SERVER);
     }
@@ -1036,7 +1086,7 @@ void MainWindow::slotChanList (QString str)
    QVector<cparser::SChan> chanList;
    QVector<cparser::SChan>::const_iterator cit;
 
-   if (!XMLParser.parseChannelList(str, chanList, dlgSettings.FixTime()))
+   if(!XMLParser.parseChannelList(str, chanList, dlgSettings.FixTime(), dlgSettings.AllowEros()))
    {
       FillChanMap(chanList);
       FillChannelList(chanList);
@@ -1133,7 +1183,6 @@ void MainWindow::slotEPG(QString str)
 
          //it works only with the real accounts (not 140,...)!
          // update vod stuff only at startup ...
-//         if (accountInfo.bHasVOD)
          if (!bGotVOD)
          {
             if (pChannelDlg->getCbxGenre()->count() == 0)
@@ -1187,7 +1236,7 @@ void MainWindow::slotEpgAnchor (const QUrl &link)
       TouchPlayCtrlBtns(false);
 
       // get program map ...
-      archProgMap = pChannelDlg->getTextEpg()->exportProgMap();
+      showInfo.setEpgMap(pChannelDlg->getTextEpg()->exportProgMap());
 
       // new own downloader ...
       if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
@@ -1212,7 +1261,7 @@ void MainWindow::slotEpgAnchor (const QUrl &link)
       showInfo.setLastJumpTime(0);
       showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                             .arg("rgb(255, 254, 212)")
-                            .arg(createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
+                            .arg(CShowInfo::createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
                             QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
                             sepg.uiStart, sepg.uiEnd))));
 
@@ -1294,16 +1343,6 @@ void MainWindow::slotSetBitrate(int iRate)
    Trigger.TriggerRequest(Kartina::REQ_SETBITRATE, iRate);
 }
 
-/* -----------------------------------------------------------------\
-|  Method: slotSetTimeShift
-|  Begin: 14.09.2011 / 10:00
-|  Author: Jo2003
-|  Description: set timeshift
-|
-|  Parameters: timeshift in hours
-|
-|  Returns: --
-\----------------------------------------------------------------- */
 void MainWindow::slotSetTimeShift(int iShift)
 {
    TouchPlayCtrlBtns(false);
@@ -1630,7 +1669,7 @@ void MainWindow::slotDoubleClick()
           showInfo.setPlayState(IncPlay::PS_PLAY);
           showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
                             .arg("rgb(255, 254, 212)")
-                            .arg(createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                            .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
           TouchPlayCtrlBtns(false);
           Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
@@ -1862,58 +1901,74 @@ void MainWindow::slotUpdateAnswer (QNetworkReply* pRes)
 //    Trigger.TriggerRequest(Kartina::REQ_COOKIE);
 // }
 
-void MainWindow::slotUpdateProgress(int iMin, int iMax, int iAct)
-{
-    ui->progressBar->setMinimum(iMin);
-    ui->progressBar->setMaximum(iMax);
-    ui->progressBar->setValue(iAct);
-}
-
 void MainWindow::slotCheckArchProg(ulong ulArcGmt)
 {
    // is actual showinfo still actual ?
-   if ((ulArcGmt >= showInfo.starts()) && (ulArcGmt <= showInfo.ends()))
+    if (!inBetween(showInfo.starts(), showInfo.ends(), (uint)ulArcGmt))
+    {
+       // search in archiv program map for matching entry ...
+       if (!showInfo.autoUpdate(ulArcGmt))
+       {
+          // add additional info to LCD ...
+          int     iTime = showInfo.ends() ? (int)((showInfo.ends() - showInfo.starts()) / 60) : 60;
+          QString sTime = tr("Length: %1 min.").arg(iTime);
+          ui->labState->setFooter(sTime);
+          ui->labState->updateState(showInfo.playState());
+
+          // set short epg info ...
+          ui->textEpgShort->setHtml(showInfo.htmlDescr());
+
+          // done ...
+          emit sigShowInfoUpdated();
+       }
+    }
+}
+
+#ifdef INCLUDE_LIBVLC
+void MainWindow::slotToogleFullscreen()
+{
+   if (!pVideoWidget)
    {
-      // all is well ... no update needed ...
+      // get videoWidget ...
+      pVideoWidget = ui->player->getAndRemoveVideoWidget();
+
+      // add videoWidget to stacked layout ...
+      stackedLayout->addWidget(pVideoWidget);
+
+      // make sure videoWidget is the one we see ...
+      stackedLayout->setCurrentWidget(pVideoWidget);
+
+      // make dialog fullscreen ...
+      showFullScreen();
+
+      // a possible bug fix -> make sure all is visible ...
+      pVideoWidget->show();
+      pVideoWidget->raise();
+      pVideoWidget->raiseRender();
+      emit sigFullScreenToggled(1);
    }
    else
    {
-      // search in archiv program map for matching entry ...
-      QMap<uint, epg::SShow>::const_iterator cit;
+      // remove videoWidget from stacked layout ...
+      stackedLayout->removeWidget(pVideoWidget);
 
-      for (cit = archProgMap.constBegin(); cit != archProgMap.constEnd(); cit++)
-      {
-         if ((ulArcGmt >= (*cit).uiStart) && (ulArcGmt <= (*cit).uiEnd))
-         {
-            // found new entry ...
+      // make sure main dialog is visible ...
+      stackedLayout->setCurrentWidget(ui->masterFrame);
 
-            // update show info ...
-            showInfo.setShowName((*cit).sShowName);
-            showInfo.setStartTime((*cit).uiStart);
-            showInfo.setEndTime((*cit).uiEnd);
-            showInfo.setLastJumpTime(0);
-            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                   .arg("rgb(255, 254, 212)")
-                                   .arg(createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
-                                                      QString("%1 %2").arg((*cit).sShowName).arg((*cit).sShowDescr),
-                                                      (*cit).uiStart, (*cit).uiEnd))));
+      // put videoWidget back into player widget ...
+      ui->player->addAndEmbedVideoWidget();
 
-            // add additional info to LCD ...
-            int     iTime = ((*cit).uiEnd) ? (int)(((*cit).uiEnd - (*cit).uiStart) / 60) : 60;
-            QString sTime = tr("Length: %1 min.").arg(iTime);
-            ui->labState->setFooter(sTime);
-            ui->labState->updateState(showInfo.playState());
+      // reset videoWidgets local pointer ...
+      pVideoWidget = NULL;
 
-            // set short epg info ...
-            ui->textEpgShort->setHtml(showInfo.htmlDescr());
-
-            // done ...
-            emit sigShowInfoUpdated();
-            break;
-         }
-      }
+      // show normal ...
+      // show();
+      showNormal();
+      emit sigFullScreenToggled(0);
    }
 }
+#endif // INCLUDE_LIBVLC
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
@@ -1927,8 +1982,10 @@ void MainWindow::initDialog()
     vlcCtrl.LoadPlayerModule(dlgSettings.GetPlayerModule());
 
     // set language as read ...
-    pTranslator->load(QString("lang_%1").arg(dlgSettings.GetLanguage ()),
+    (pTranslator + Translators::TRANS_OWN)->load(QString("lang_%1").arg(dlgSettings.GetLanguage ()),
                       pFolders->getLangDir());
+    (pTranslator + Translators::TRANS_QT)->load(QString("qt_%1").arg(dlgSettings.GetLanguage ()),
+                      pFolders->getQtLangDir());
 
     // -------------------------------------------
     // set last windows size / position ...
@@ -1987,8 +2044,10 @@ void MainWindow::ConnectionInit()
    }
 
     // set language as read ...
-    pTranslator->load(QString("lang_%1").arg(dlgSettings.GetLanguage ()),
-                      pFolders->getLangDir());
+    (pTranslator + Translators::TRANS_OWN)->load(QString("lang_%1").arg(dlgSettings.GetLanguage ()),
+                                                 pFolders->getLangDir());
+    (pTranslator + Translators::TRANS_QT)->load(QString("qt_%1").arg(dlgSettings.GetLanguage ()),
+                                                pFolders->getQtLangDir());
 
 #ifdef INCLUDE_LIBVLC
     // do we use libVLC ?
@@ -2163,7 +2222,7 @@ int MainWindow::FillChannelList (const QVector<cparser::SChan> &chanlist)
          }
          else
          {
-            pItem->setToolTip(createTooltip(chanlist[i].sName, chanlist[i].sProgramm,
+             pItem->setToolTip(CShowInfo::createTooltip(chanlist[i].sName, chanlist[i].sProgramm,
                                             chanlist[i].uiStart, chanlist[i].uiEnd));
          }
 
@@ -2706,23 +2765,6 @@ void MainWindow::setRecentChannel(const QString &ChanName)
      return iId;
  }
 
- QString MainWindow::createTooltip (const QString & name, const QString & prog, uint start, uint end)
- {
-     // create tool tip with programm info ...
-     QString sToolTip = PROG_INFO_TOOL_TIP;
-     sToolTip.replace(TMPL_PROG, tr("Program:"));
-     sToolTip.replace(TMPL_START, tr("Start:"));
-     sToolTip.replace(TMPL_END, tr("End:"));
-     sToolTip.replace(TMPL_TIME, tr("Length:"));
-
-     sToolTip = sToolTip.arg(name).arg(prog)
-                 .arg(QDateTime::fromTime_t(start).toString(DEF_TIME_FORMAT))
-                 .arg(end ? QDateTime::fromTime_t(end).toString(DEF_TIME_FORMAT) : "")
-                 .arg(end ? tr("%1 min.").arg((end - start) / 60)                : "");
-
-     return sToolTip;
- }
-
  void MainWindow::InitShortCuts()
  {
      CShortcutEx *pShortCut;
@@ -2774,7 +2816,7 @@ void MainWindow::setRecentChannel(const QString &ChanName)
          {tr("Quit"),                 this,         SLOT(on_actionExit_triggered()),        "ALT+Q"},
          {tr("Toggle Aspect Ratio"),  ui->player,   SLOT(slotToggleAspectRatio()),          "ALT+A"},
          {tr("Toggle Crop Geometry"), ui->player,   SLOT(slotToggleCropGeometry()),         "ALT+C"},
-         {tr("Toggle Fullscreen"),    ui->player,   SLOT(slotToggleFullScreen()),           "ALT+F"},
+         {tr("Toggle Fullscreen"),    ui->player,   SLOT(on_btnFullScreen_clicked()),       "ALT+F"},
          {tr("Volume +"),             ui->player,   SLOT(slotMoreLoudly()),                 "+"},
          {tr("Volume -"),             ui->player,   SLOT(slotMoreQuietly()),                "-"},
          {tr("Toggle Mute"),          ui->player,   SLOT(slotMute()),                       "M"},

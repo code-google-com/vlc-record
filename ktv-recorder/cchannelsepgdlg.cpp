@@ -56,11 +56,13 @@ CChannelsEPGdlg::~CChannelsEPGdlg()
     if (pModel)
     {
         delete pModel;
+        pModel = NULL;
     }
 
     if (pDelegate)
     {
         delete pDelegate;
+        pDelegate = NULL;
     }
 }
 
@@ -537,8 +539,7 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
       {
         pTextEpgShort->setHtml(QString(TMPL_BACKCOLOR)
                                   .arg("rgb(255, 254, 212)")
-                                  .arg(createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
-        SetProgress (entry.uiStart, entry.uiEnd);
+                                  .arg(CShowInfo::createTooltip(entry.sName, entry.sProgramm, entry.uiStart, entry.uiEnd)));
       }
 
 
@@ -930,29 +931,6 @@ void CChannelsEPGdlg::CleanContextMenu()
    }
 }
 
-void CChannelsEPGdlg::SetProgress (const uint &start, const uint &end)
-{
-   int iPercent = 0;
-   int iNow;
-
-   if (start && end)
-   {
-      int iLength  = (int)(end - start);
-      iNow     = (int)(QDateTime::currentDateTime().toTime_t() - start);
-
-      // error check (div / 0 PC doesn't like ;-) ) ...
-      if ((iNow > 0) && (iLength > 0))
-      {
-         // get percent ...
-         iPercent  = (int)((iNow * 100) / iLength);
-      }
-   }
-
-   pProgressBar->setMinimum(0);
-   pProgressBar->setMaximum(100);
-   pProgressBar->setValue(iPercent);
-}
-
 void CChannelsEPGdlg::correctEpgOffset()
 {
     if (iEpgOffset > 7)
@@ -1086,21 +1064,6 @@ void CChannelsEPGdlg::activateVOD()
 CEpgBrowser* CChannelsEPGdlg::getTextEpg()
 {
     return ui->textEpg;
-}
-
-QString CChannelsEPGdlg::createTooltip (const QString & name, const QString & prog, uint start, uint end)
-{
-   // create tool tip with programm info ...
-   QString sToolTip = PROG_INFO_TOOL_TIP;
-   sToolTip.replace(TMPL_PROG, tr("Program:"));
-   sToolTip.replace(TMPL_START, tr("Start:"));
-   sToolTip.replace(TMPL_END, tr("End:"));
-
-   sToolTip = sToolTip.arg(name).arg(prog)
-               .arg(QDateTime::fromTime_t(start).toString(DEF_TIME_FORMAT))
-               .arg(QDateTime::fromTime_t(end).toString(DEF_TIME_FORMAT));
-
-   return sToolTip;
 }
 
 int CChannelsEPGdlg::getCurrentCid()

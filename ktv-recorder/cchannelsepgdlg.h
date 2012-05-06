@@ -3,18 +3,15 @@
 
 #include <QDialog>
 #include <QToolButton>
+#include <QPushButton>
 #include <QTabBar>
 #include <QListWidget>
 #include <QtGui/QComboBox>
-#include <QMenu>
 #include <QDateTime>
 #include <QProgressBar>
-#include <QWindowStateChangeEvent>
-#include <QStatusBar>
 #include <QStandardItemModel>
 #include "cepgbrowser.h"
 #include "cvodbrowser.h"
-#include "csettingsdlg.h"
 #include "cvlcctrl.h"
 #include "cfavaction.h"
 #include "cpixloader.h"
@@ -101,9 +98,7 @@ private:
 
 protected:
     void TouchEpgNavi (bool bCreate);
-    void SetProgress (const uint &start, const uint &end);
     void savePositions();
-    QString createTooltip(const QString & name, const QString & prog, uint start, uint end);
     void correctEpgOffset();
 
     virtual void changeEvent(QEvent* e);

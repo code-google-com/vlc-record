@@ -35,7 +35,6 @@ SOURCES += main.cpp\
     cchannelsepgdlg.cpp \
     cvlcrecdb.cpp \
     cplaystate.cpp \
-    cshowinfo.cpp \
     cwaittrigger.cpp \
     cchanlogo.cpp \
     clcddisplay.cpp \
@@ -55,7 +54,9 @@ SOURCES += main.cpp\
     cshortcutgrabber.cpp \
     qchanlistdelegate.cpp \
     qftsettings.cpp \
-    qshortcuttable.cpp
+    qshortcuttable.cpp \
+    qvlcvideowidget.cpp \
+    cshowinfo.cpp
 
 HEADERS  += mainwindow.h \
     customization.h \
@@ -70,7 +71,6 @@ HEADERS  += mainwindow.h \
     cplaystate.h \
     cshortcutex.h \
     ctimerex.h \
-    cshowinfo.h \
     playstates.h \
     cwaittrigger.h \
     cchanlogo.h \
@@ -93,7 +93,12 @@ HEADERS  += mainwindow.h \
     cshortcutgrabber.h \
     qchanlistdelegate.h \
     qftsettings.h \
-    qshortcuttable.h
+    qshortcuttable.h \
+    qvlcvideowidget.h \
+    qclickandgoslider.h \
+    qtimelabel.h \
+    small_helpers.h \
+    cshowinfo.h
 
 FORMS    += forms/mainwindow.ui \
     forms/ctimerrec.ui \
