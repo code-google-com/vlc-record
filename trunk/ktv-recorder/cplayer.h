@@ -21,6 +21,7 @@
 #include <QTime>
 #include <QDesktopWidget>
 #include <QComboBox>
+#include <QMap>
 
 #include <vlc/vlc.h>
 
@@ -32,7 +33,8 @@
 #include "cshowinfo.h"
 #include "csettingsdlg.h"
 #include "cwaittrigger.h"
-#include "cvideoframe.h"
+// #include "cvideoframe.h"
+#include "qvlcvideowidget.h"
 
 //===================================================================
 // namespace
@@ -76,46 +78,46 @@ public:
    QFrame* getFrameTimerInfo();
    QComboBox* getCbxAspect();
    QComboBox* getCbxCrop();
+   QVlcVideoWidget* getAndRemoveVideoWidget();
+   void addAndEmbedVideoWidget();
 
 protected:
    virtual void changeEvent(QEvent *e);
-   int  myToggleFullscreen ();
    void enableDisablePlayControl (bool bEnable);
    void connectToVideoWidget ();
 
 private:
    Ui::CPlayer            *ui;
-   QTimer                  poller;
    QTimer                  sliderTimer;
    QTimer                  tAspectShot;
    CTimerEx                timer;
    libvlc_instance_t      *pVlcInstance;
    libvlc_media_player_t  *pMediaPlayer;
    libvlc_event_manager_t *pEMPlay;
-   libvlc_log_t           *pLibVlcLog;
    bool                    bCtrlStream;
    CSettingsDlg           *pSettings;
    CWaitTrigger           *pTrigger;
    bool                    bSpoolPending;
    uint                    uiDuration;
-   int                     iCycleCount;
+   QMap<QString, QString>  mAspect;
+   QMap<QString, QString>  mCrop;
 
 private slots:
    void on_posSlider_valueChanged(int value);
-   void on_posSlider_sliderReleased();
    void on_btnFullScreen_clicked();
    void on_cbxAspect_currentIndexChanged(QString str);
    void on_cbxCrop_currentIndexChanged(QString str);
    void slotChangeVolume(int newVolume);
-   void slotLibVLCLog ();
    void slotUpdateSlider ();
+   void slotChangeVolumeDelta (const bool up);
+   void slotSliderPosChanged();
+   void slotToggleFullscreen();
 
 public slots:
    int  playMedia (const QString &sCmdLine);
    int  play();
    int  stop();
    int  pause();
-   int  slotToggleFullScreen ();
    int  slotToggleAspectRatio ();
    int  slotToggleCropGeometry ();
    int  slotTimeJumpRelative (int iSeconds);
@@ -124,12 +126,13 @@ public slots:
    void slotMoreQuietly();
    void slotMute();
    void slotShowInfoUpdated();
+   void slotFsToggled (int on);
 
 signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
-   void sigSliderPos (int iMin, int iMax, int iAct);
    void sigCheckArchProg(ulong ulArchGmt);
+   void sigToggleFullscreen();
    void sigAspectToggle(int idx);
    void sigCropToggle(int idx);
 };

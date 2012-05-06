@@ -5,20 +5,22 @@
 #include <QSystemTrayIcon>
 #include <QNetworkAccessManager>
 #include <QScrollBar>
+#include <QStatusBar>
+#include <QWindowStateChangeEvent>
+#include <QMenu>
 #include "caboutdialog.h"
 #include "csettingsdlg.h"
 #include "cchannelsepgdlg.h"
 #include "ctimerrec.h"
-#include "cepgbrowser.h"
-#include "cvodbrowser.h"
 #include "ckartinaclnt.h"
 #include "ckartinaxmlparser.h"
-#include "cwaittrigger.h"
-#include "cplayer.h"
-#include "cvlcctrl.h"
 #include "ctranslit.h"
-#include "cshowinfo.h"
 #include "cinstruction.h"
+
+#ifdef INCLUDE_LIBVLC
+    #include <QStackedLayout>
+    #include "qvlcvideowidget.h"
+#endif
 
 //------------------------------------------------------------------
 /// \name definition of start flags
@@ -50,6 +52,14 @@ namespace Ui
        QString sContent;
        int     iScrollBarVal;
     };
+
+    struct STabWidget
+    {
+        QString  sText;
+        QIcon    icon;
+        int      iPos;
+        QWidget *pWidget;
+    };
 }
 
 
@@ -58,7 +68,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QTranslator *trans, QWidget *parent = 0);
+    explicit MainWindow(QTranslator *trans = 0, QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
@@ -106,7 +116,12 @@ private:
     cparser::SGenreInfo            genreInfo;
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
-    QMap<uint, epg::SShow>          archProgMap;
+    Ui::STabWidget                  vodTabWidget;
+
+    #ifdef INCLUDE_LIBVLC
+        QStackedLayout                 *stackedLayout;
+        QVlcVideoWidget                *pVideoWidget;
+    #endif //INCLUDE_LIBVLC
 
 protected:
     int StartVlcRec (const QString &sURL, const QString &sChannel);
@@ -129,7 +144,6 @@ protected:
     void updateRecentChanActions();
     int getChanId(const QString &chanName);
     void contextMenuEvent(QContextMenuEvent *event);
-    QString createTooltip (const QString & name, const QString & prog, uint start, uint end);
     void retranslateShortcutTable();
     void fillShortCutTab();
 
@@ -164,6 +178,7 @@ private slots:
 #ifdef INCLUDE_LIBVLC
     void on_pushBwd_clicked();
     void on_pushFwd_clicked();
+    void slotToogleFullscreen();
 #endif /* INCLUDE_LIBVLC */
     void on_pushStop_clicked();
     void on_pushPlay_clicked();
@@ -210,7 +225,6 @@ private slots:
     void slotAspectToggle(int idx);
     void slotCropToggle(int idx);
 //    void slotStartConnectionChain();
-    void slotUpdateProgress (int iMin, int iMax, int iAct);
     void slotUpdateAnswer (QNetworkReply* pRes);
     void slotCheckArchProg(ulong ulArcGmt);
 
@@ -224,6 +238,7 @@ signals:
     void sigShowInfoUpdated();
     void sigShow ();
     void sigHide ();
+    void sigFullScreenToggled (int on);
 };
 
 #endif // MAINWINDOW_H

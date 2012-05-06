@@ -147,6 +147,9 @@ Section "qt Framework" SecQt
 
    SetOutPath "$INSTDIR\sqldrivers"
    File /r "${QTLIBS}\sqldrivers\*.dll"
+   
+   SetOutPath "$INSTDIR\translations"
+   File /r "${QTLIBS}\translations\*.qm"
 SectionEnd
 
 ;-------------------------------------------------------
@@ -229,6 +232,7 @@ Section "un.Qt"
   ; delete Qt framework ...
   Delete "$INSTDIR\imageformats\*.*"
   Delete "$INSTDIR\sqldrivers\*.*"
+  Delete "$INSTDIR\translations\*.*"
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\QtSql4.dll"
   Delete "$INSTDIR\QtGui4.dll"
@@ -236,6 +240,7 @@ Section "un.Qt"
   Delete "$INSTDIR\QtXml4.dll"
   RMDir  "$INSTDIR\imageformats"
   RMDir  "$INSTDIR\sqldrivers"
+  RMDir  "$INSTDIR\translations"
 SectionEnd
 
 ;-------------------------------------------------------

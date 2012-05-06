@@ -24,6 +24,9 @@
    #define DATA_DIR       "." APP_NAME
 #endif
 
+#define COMPANY_NAME "Kartina.TV"
+#define COMPANY_LINK "<a href='http://www.kartina.tv'>" COMPANY_NAME "</a>"
+
 #ifdef __GNUC__
    #define __UNUSED        __attribute__ ((unused))
 #else
@@ -33,9 +36,9 @@
 #define APP_INI_FILE      "ktv-rcd.ini"
 #define APP_LOG_FILE      "ktv-recorder.log"
 #define PLAYER_LOG_FILE   "player.log"
-#define TIMER_LIST_FILE   "reclist.xml"
 #define MOD_DIR           "modules"
 #define LANG_DIR          "language"
+#define LANG_DIR_QT       "translations"
 #define LOGO_DIR          "logos"
 #define VOD_DIR           "vod"
 #define KARTINA_HOST      "iptv.kartina.tv"
@@ -52,7 +55,6 @@
 #define ARCHIV_OFFSET     900             // 15 minutes after show start, archiv should be available
 #define MAX_ARCHIV_AGE    1209000         // < 2 weeks in seconds
 #define MAX_NO_FAVOURITES 10              // max. number of favourites ...
-#define JUMP_TIME         120             // forward / backward jump in archive play
 #define MIN_CACHE_SIZE    5000000         // < 5 MB ...
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
 #define VIDEOS_PER_SITE   20              // number of videos / site
@@ -63,7 +65,18 @@
 #define MAX_CHANNEL_GROUPS 20             // max number of channel groups
 #define MAX_RECENT_CHANNELS 10            // max number of recent channels
 #define MAX_ASPECTS         7             // max number of aspect ratios
-#define MAX_CROPS           7             // max number of crop ratios
+#define MAX_CROPS           10            // max number of crop ratios
+
+// a namespace for translators ...
+namespace Translators
+{
+    enum ETranslators
+    {
+        TRANS_QT,
+        TRANS_OWN,
+        TRANS_MAX
+    };
+}
 
 #endif /* __011810__DEFDEF_H */
 /************************* History ***************************\

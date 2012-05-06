@@ -244,12 +244,12 @@ p, li { white-space: pre-wrap; }
         <translation>Программа передач</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="623"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="668"/>
         <source>Order: </source>
         <translation>Сортировка:</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="663"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="720"/>
         <source>Page: </source>
         <oldsource>Site: </oldsource>
         <translation>Страница:</translation>
@@ -260,44 +260,34 @@ p, li { white-space: pre-wrap; }
         <translation>Телегид</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="473"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="509"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="566"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="646"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="673"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="735"/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="499"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="514"/>
         <source>Textsize</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="538"/>
-        <location filename="forms/cchannelsepgdlg.ui" line="707"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="568"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="776"/>
         <source>Search: </source>
         <translation>Поиск:</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="599"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="644"/>
         <source>Video On Demand</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="forms/cchannelsepgdlg.ui" line="613"/>
+        <location filename="forms/cchannelsepgdlg.ui" line="658"/>
         <source>Genre: </source>
         <translation>Жанр: </translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="411"/>
-        <location filename="cchannelsepgdlg.cpp" line="514"/>
+        <location filename="cchannelsepgdlg.cpp" line="413"/>
+        <location filename="cchannelsepgdlg.cpp" line="516"/>
         <source>Remove from favourites</source>
         <translation>Удалить из избранного</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="419"/>
+        <location filename="cchannelsepgdlg.cpp" line="421"/>
         <source>Add to favourites</source>
         <translation>Добавить в избранное</translation>
     </message>
@@ -310,94 +300,91 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Максимальное число фаворитов (%1) достигнуто</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="457"/>
+        <location filename="cchannelsepgdlg.cpp" line="459"/>
         <source>Note: Max. number of favourites (%1) reached.</source>
         <translation>Замечание: Максимальное число фаворитов (%1) достигнуто</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="584"/>
+        <location filename="cchannelsepgdlg.cpp" line="585"/>
         <source>Newest</source>
         <translation>Последние</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="585"/>
+        <location filename="cchannelsepgdlg.cpp" line="586"/>
         <source>Best</source>
         <translation>Лучшие</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="705"/>
-        <location filename="cchannelsepgdlg.cpp" line="780"/>
+        <location filename="cchannelsepgdlg.cpp" line="708"/>
+        <location filename="cchannelsepgdlg.cpp" line="785"/>
         <source>1 week backward</source>
         <translation>1 неделя назад</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="737"/>
-        <location filename="cchannelsepgdlg.cpp" line="785"/>
+        <location filename="cchannelsepgdlg.cpp" line="742"/>
+        <location filename="cchannelsepgdlg.cpp" line="790"/>
         <source>1 week forward</source>
         <translation>1 неделя вперед</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="746"/>
-        <location filename="cchannelsepgdlg.cpp" line="767"/>
+        <location filename="cchannelsepgdlg.cpp" line="751"/>
+        <location filename="cchannelsepgdlg.cpp" line="772"/>
         <source>Mon</source>
         <translation>Пон.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="747"/>
-        <location filename="cchannelsepgdlg.cpp" line="768"/>
+        <location filename="cchannelsepgdlg.cpp" line="752"/>
+        <location filename="cchannelsepgdlg.cpp" line="773"/>
         <source>Tue</source>
         <translation>Вт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="748"/>
-        <location filename="cchannelsepgdlg.cpp" line="769"/>
+        <location filename="cchannelsepgdlg.cpp" line="753"/>
+        <location filename="cchannelsepgdlg.cpp" line="774"/>
         <source>Wed</source>
         <translation>Ср.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="749"/>
-        <location filename="cchannelsepgdlg.cpp" line="770"/>
+        <location filename="cchannelsepgdlg.cpp" line="754"/>
+        <location filename="cchannelsepgdlg.cpp" line="775"/>
         <source>Thu</source>
         <translation>Чт.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="750"/>
-        <location filename="cchannelsepgdlg.cpp" line="771"/>
+        <location filename="cchannelsepgdlg.cpp" line="755"/>
+        <location filename="cchannelsepgdlg.cpp" line="776"/>
         <source>Fri</source>
         <translation>Пят.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="751"/>
-        <location filename="cchannelsepgdlg.cpp" line="772"/>
+        <location filename="cchannelsepgdlg.cpp" line="756"/>
+        <location filename="cchannelsepgdlg.cpp" line="777"/>
         <source>Sat</source>
         <translation>Суб.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="760"/>
-        <location filename="cchannelsepgdlg.cpp" line="773"/>
+        <location filename="cchannelsepgdlg.cpp" line="765"/>
+        <location filename="cchannelsepgdlg.cpp" line="778"/>
         <source>Sun</source>
         <translation>Воск.</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="842"/>
-        <location filename="cchannelsepgdlg.cpp" line="1117"/>
+        <location filename="cchannelsepgdlg.cpp" line="847"/>
+        <location filename="cchannelsepgdlg.cpp" line="1084"/>
         <source>Favourite %1</source>
         <translation>Фаворит %1</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1091"/>
         <source>Program:</source>
-        <translation>Передача:</translation>
+        <translation type="obsolete">Передача:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1092"/>
         <source>Start:</source>
-        <translation>Начало:</translation>
+        <translation type="obsolete">Начало:</translation>
     </message>
     <message>
-        <location filename="cchannelsepgdlg.cpp" line="1093"/>
         <source>End:</source>
-        <translation>Окончание:</translation>
+        <translation type="obsolete">Окончание:</translation>
     </message>
     <message>
         <source>Title</source>
@@ -454,7 +441,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cinstruction.cpp" line="13"/>
         <source>Instruction.</source>
-        <translation>При первом запуске программа (так же как и vlc-record) создает в C\Documents and Settings\&lt;username&gt;\Application Data (здесь C - раздел жесткого диска, где установлена операционная система. Может быть и другая буква - D, E и т.д.) папку KTV-Recorder и в этой папке папки logos - для хранения значков каналов и vod - для хранения картинок фильмов из видеотеки, а также файл базы данных vlcrec.db.sqlite для хранения таблиц aspect, settings, timerrec и shortcuts, а также файлов с ошибками и предупреждениями (*.log). Затем появляется диалоговое окно Настройки - надо ввести данные аккаунта, в дополнительных настройках выбрать модуль плеера (желательно из трех работающих: 1_vlc-player.mod - для использования внешнего vlc-player, хотя для данной версии это уже не актуально), 5_libvlc.mod или 9_libvlc_odl.mod - для использования внутреннего плейера , язык, ну и остальные установки, если нужно. Для того, чтобы были доступны дополнительные настройки, нужно отметить “Вкл.допол.настройки“. В этом случае можно установить значение Буфера (в сек) от 0.5 сек. Сохранить. Нормальные значки у каналов появляются либо после повторного старта программы, либо после  повторного сохранения настроек (так же как и в vlc-record).  После старта программа автоматически начинает воспроизводить передачу первого по списку или первого из недавних каналов канала. Так же без дополнительных кликов начинают  воспроизводиться передачи при выборе канала из любого списка или из фаворитов (для выбора фаворитов должно быть открыто окно с каналами и Телегидом/Видеотекой). Эту опцию можно отключить в меню Плееер – «Немедленное воспроизведение», что полезно для просмотра Телегида и/или Видеотеки во время просмотра передачи. Окно со списком каналов и Телегидом/Видеотекой  вызывается из меню Медиа. Это окно не модальное, т.е. после его открытия имеется  доступ к главному окну программы - доступны все кнопки плейера и все пункты меню,  но второе окно со списком каналов открыть нельзя. Это окно можно свернуть или закрыть - крестик в правом верхнем углу. В меню Вид можно убирать верхнюю, нижнюю панели инструментов (с кнопками), Statusbar и информационное окошко о передаче,  после чего основное окно можно уменьшать практически до любых размеров. Кроме того, есть опция Не перекрывается другими окнами. В меню Инструменты находится Планировщик и Настройки, а также возможность очистить список недавних каналов. Список недавних каналов формируется автоматически при каждом выборе канала, неважно откуда, при этом выбранный канал будет на первом месте и сохранит свое место после закрытия программы. Максимальное число таких каналов в настоящиее время 10. Список недавних каналов хранится в системном реестре в ключе HKEY_CURRENT_USER\\Software\\Joerg\\KTV-Recorder в значении recentChanList. Закрывать программу лучше через пункт меню Выход, а не нажатием на крестик в верхнем правом углу окна. Имеются также Statusbar - для выдачи критических сообщений об ошибках, которые в vlc-record выдаются в отдельном окне сообщений MessageBox, и всплывающее меню с основными кнопками плеера и выбором Aspect - соотношение сторон и Crop – обрезка черныз полос (этот выбор имеется также в меню Плеер и в выпадающих списках плеера в верхней панели инструментов). Для каждого канала можно выбрать свое соотношение сторон и свою обрезку черных полос - эти соотношения сохраняются программой. Выбор этих параметров в меню, в всплывающем меню, с помощью комбинации клавиш (ShortCut) или в выпадающих списках плеера в верхней панели инструментов синхронизован. Всплывающее меню вызывается нажатием на правую кнопку мыши. Всплывающее меню в данный момент недоступно в режиме Full-Screen (полноэкранный режим). Комбинации клавиш формируются и функционируют также как и в последней версии vlc-record. В диалоговом окне Настройки на закладке Сокращения можно изменить изначальные комбинаци клавиш. Имеется всплывающее меню, которое вызывается нажатием правой кнопки мыши на комбинации клавиш в таблице. С помощью меню можно стереть имеющуюся комбинацию клавиш, восстановить предыдущую или стандартную комбинацию клавиш. Если после удаления комбинации клавиш прейти к другой, ничего не введя, то будет восстановлена стертая комбинация клавиш. При попытке ввести уже имеющуюся комбинацию клавиш будет выдано предупреждение и комбинация клавиш будет восстановлена на ту, которая была до изменения. После изменения комбинаций клавиш надо нажать на кнопку Сохранить. Изменения вступают в силу после перезапуска программы. На той же закладке имеется кнопка для восстановления изначальных комбинаций клавиш. После восстановления изначальных комбинаций клавиш надо нажать на кнопку Сохранить и перезапустить программу. Перебор каналов вперед осуществляется клавишами Ctrl+N, назад - Ctrl+P. Перебор осуществляется циклически. т.е. когда при последнем в списке каналов нажать Ctrl+N, то будет выбран первый по списку канал, и наоборот, когда при первом в списке каналов нажать Ctrl+P, то будет выбран последний по списку канал. При переборе каналов названия групп каналов пропускаются. Все комбинации клавиш, кроме вызова фаворитов, работают при активном главном окне программы. Для вызова канала из списка фаворитов с помощью комбинаций клавиш необходимо, чтобы было открыто окно со списком каналов и Телегидом/Видеотекой и это окно было бы активным (окно становится активным, если щелкнуть мышью на верхней синей полосе окна). При добавлении или удалении фаворита список фаворитов сохраняется или при закрытии окна со списком каналов и Телегидом/Видеотекой, или при выходе из программы (неважно каким способом). Программа использует библиотеки vlc-player libvlc.dll, libvlccore.dll и plugins. Эти библиотеки находятся в установочной директории программы C:\Program Files\KTV-Recorder, библиотеки plugins находятся в директории C:\Program Files\KTV-Recorder\plugins. Эти библиотеки всегда можно заменить на набор библиотек другой версии - следует менять две указанные библиотеки и библиотеки plugins. Набор библиотек соответствующей версии можно найти в установочной директории  после установки соответствующей версии vlc-record или KTV/Recorder. Установочный модуль программы с набором библиотек той или иной версии можно найти на сайте автора vlc-record. В данной версии программы возможна запись передачи текущего канала, передачи из архива, а также любого фильма из Видеотеки. При записи из Видеотеки следует использовать модуль 9_libvlc_odl.mod. При этом будет создаваться файл с расширением m4v, назависимо от выбора типа файла. Для правильной работы программы при записи фильмов из Видеотеки следует пользоваться библиотекой libVLC 1.1.5 или libVLC 1.1.7.</translation>
+        <translation>При первом запуске программа создает в C\Documents and Settings\&lt;username&gt;\Application Data (здесь C - раздел жесткого диска, где установлена операционная система. Может быть и другая буква - D, E и т.д.) папку KTV-Recorder и в этой папке папки logos - для хранения значков каналов и vod - для хранения картинок фильмов из видеотеки, а также файл базы данных vlcrec.db.sqlite для хранения таблиц aspect, settings, timerrec и shortcuts, а также файлов с ошибками и предупреждениями (*.log). Затем появляется диалоговое окно Настройки - надо ввести данные аккаунта, в дополнительных настройках выбрать модуль плеера (желательно из трех работающих: 1_vlc-player.mod - для использования внешнего vlc-player, хотя для данной версии это уже не актуально), 5_libvlc.mod или 9_libvlc_odl.mod - для использования внутреннего плейера , язык, ну и остальные установки, если нужно. Для того, чтобы были доступны дополнительные настройки, нужно отметить “Вкл.допол.настройки“. В этом случае можно установить значение Буфера (в сек) от 0.5 сек. Сохранить. Нормальные значки у каналов появляются либо после повторного старта программы, либо после  повторного сохранения настроек. После старта программа автоматически начинает воспроизводить передачу первого по списку или первого из недавних каналов канала. Так же без дополнительных кликов начинают  воспроизводиться передачи при выборе канала из любого списка или из фаворитов (для выбора фаворитов должно быть открыто окно с каналами и Телегидом/Видеотекой). Эту опцию можно отключить в меню Плееер – «Немедленное воспроизведение», что полезно для просмотра Телегида и/или Видеотеки во время просмотра передачи. Окно со списком каналов и Телегидом/Видеотекой  вызывается из меню Медиа. Это окно не модальное, т.е. после его открытия имеется  доступ к главному окну программы - доступны все кнопки плейера и все пункты меню,  но второе окно со списком каналов открыть нельзя. Это окно можно свернуть или закрыть - крестик в правом верхнем углу. В меню Вид можно убирать верхнюю, нижнюю панели инструментов (с кнопками), Statusbar и информационное окошко о передаче,  после чего основное окно можно уменьшать практически до любых размеров. Кроме того, есть опция Не перекрывается другими окнами. В меню Инструменты находится Планировщик и Настройки, а также возможность очистить список недавних каналов. Список недавних каналов формируется автоматически при каждом выборе канала, неважно откуда, при этом выбранный канал будет на первом месте и сохранит свое место после закрытия программы. Максимальное число таких каналов в настоящиее время 10. Список недавних каналов хранится в системном реестре в ключе HKEY_CURRENT_USER\\Software\\Joerg\\KTV-Recorder в значении recentChanList. Закрывать программу лучше через пункт меню Выход, а не нажатием на крестик в верхнем правом углу окна. Имеются также Statusbar - для выдачи критических сообщений об ошибках, которые в vlc-record выдаются в отдельном окне сообщений MessageBox, и всплывающее меню с основными кнопками плеера и выбором Aspect - соотношение сторон и Crop – обрезка черныз полос (этот выбор имеется также в меню Плеер и в выпадающих списках плеера в верхней панели инструментов). Для каждого канала можно выбрать свое соотношение сторон и свою обрезку черных полос - эти соотношения сохраняются программой. Выбор этих параметров в меню, в всплывающем меню, с помощью комбинации клавиш (ShortCut) или в выпадающих списках плеера в верхней панели инструментов синхронизован. Всплывающее меню вызывается нажатием на правую кнопку мыши. Всплывающее меню в данный момент недоступно в режиме Full-Screen (полноэкранный режим). Комбинации клавиш формируются и функционируют также как и в последней версии vlc-record. В диалоговом окне Настройки на закладке Сокращения можно изменить изначальные комбинаци клавиш. Имеется всплывающее меню, которое вызывается нажатием правой кнопки мыши на комбинации клавиш в таблице. С помощью меню можно стереть имеющуюся комбинацию клавиш, восстановить предыдущую или стандартную комбинацию клавиш. Если после удаления комбинации клавиш прейти к другой, ничего не введя, то будет восстановлена стертая комбинация клавиш. При попытке ввести уже имеющуюся комбинацию клавиш будет выдано предупреждение и комбинация клавиш будет восстановлена на ту, которая была до изменения. После изменения комбинаций клавиш надо нажать на кнопку Сохранить. Изменения вступают в силу после перезапуска программы. На той же закладке имеется кнопка для восстановления изначальных комбинаций клавиш. После восстановления изначальных комбинаций клавиш надо нажать на кнопку Сохранить и перезапустить программу. Перебор каналов вперед осуществляется клавишами Ctrl+N, назад - Ctrl+P. Перебор осуществляется циклически. т.е. когда при последнем в списке каналов нажать Ctrl+N, то будет выбран первый по списку канал, и наоборот, когда при первом в списке каналов нажать Ctrl+P, то будет выбран последний по списку канал. При переборе каналов названия групп каналов пропускаются. Все комбинации клавиш, кроме вызова фаворитов, работают при активном главном окне программы. Для вызова канала из списка фаворитов с помощью комбинаций клавиш необходимо, чтобы было открыто окно со списком каналов и Телегидом/Видеотекой и это окно было бы активным (окно становится активным, если щелкнуть мышью на верхней синей полосе окна). При добавлении или удалении фаворита список фаворитов сохраняется или при закрытии окна со списком каналов и Телегидом/Видеотекой, или при выходе из программы (неважно каким способом). Программа использует библиотеки vlc-player libvlc.dll, libvlccore.dll и plugins. Эти библиотеки находятся в установочной директории программы C:\Program Files\KTV-Recorder, библиотеки plugins находятся в директории C:\Program Files\KTV-Recorder\plugins. Эти библиотеки всегда можно заменить на набор библиотек другой версии - следует менять две указанные библиотеки и библиотеки plugins. Набор библиотек соответствующей версии можно найти в установочной директории  после установки соответствующей версии vlc-record или KTV/Recorder. Установочный модуль программы с набором библиотек той или иной версии можно найти на сайте автора vlc-record. В данной версии программы возможна запись передачи текущего канала, передачи из архива, а также любого фильма из Видеотеки. При записи из Видеотеки следует использовать модуль 9_libvlc_odl.mod. При этом будет создаваться файл с расширением m4v, назависимо от выбора типа файла. Для правильной работы программы при записи фильмов из Видеотеки следует пользоваться библиотекой libVLC 1.1.5 или libVLC 1.1.7.</translation>
     </message>
 </context>
 <context>
@@ -582,35 +569,35 @@ p, li { white-space: pre-wrap; }
     <name>CKartinaXMLParser</name>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="184"/>
-        <location filename="ckartinaxmlparser.cpp" line="583"/>
-        <location filename="ckartinaxmlparser.cpp" line="704"/>
-        <location filename="ckartinaxmlparser.cpp" line="784"/>
-        <location filename="ckartinaxmlparser.cpp" line="890"/>
-        <location filename="ckartinaxmlparser.cpp" line="1017"/>
-        <location filename="ckartinaxmlparser.cpp" line="1115"/>
-        <location filename="ckartinaxmlparser.cpp" line="1209"/>
-        <location filename="ckartinaxmlparser.cpp" line="1542"/>
+        <location filename="ckartinaxmlparser.cpp" line="587"/>
+        <location filename="ckartinaxmlparser.cpp" line="708"/>
+        <location filename="ckartinaxmlparser.cpp" line="788"/>
+        <location filename="ckartinaxmlparser.cpp" line="894"/>
+        <location filename="ckartinaxmlparser.cpp" line="1021"/>
+        <location filename="ckartinaxmlparser.cpp" line="1119"/>
+        <location filename="ckartinaxmlparser.cpp" line="1213"/>
+        <location filename="ckartinaxmlparser.cpp" line="1546"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="185"/>
-        <location filename="ckartinaxmlparser.cpp" line="584"/>
-        <location filename="ckartinaxmlparser.cpp" line="705"/>
-        <location filename="ckartinaxmlparser.cpp" line="785"/>
-        <location filename="ckartinaxmlparser.cpp" line="891"/>
-        <location filename="ckartinaxmlparser.cpp" line="1018"/>
-        <location filename="ckartinaxmlparser.cpp" line="1116"/>
-        <location filename="ckartinaxmlparser.cpp" line="1210"/>
-        <location filename="ckartinaxmlparser.cpp" line="1543"/>
+        <location filename="ckartinaxmlparser.cpp" line="588"/>
+        <location filename="ckartinaxmlparser.cpp" line="709"/>
+        <location filename="ckartinaxmlparser.cpp" line="789"/>
+        <location filename="ckartinaxmlparser.cpp" line="895"/>
+        <location filename="ckartinaxmlparser.cpp" line="1022"/>
+        <location filename="ckartinaxmlparser.cpp" line="1120"/>
+        <location filename="ckartinaxmlparser.cpp" line="1214"/>
+        <location filename="ckartinaxmlparser.cpp" line="1547"/>
         <source>XML Error String: %1</source>
         <translation>Информация о XML ошибке %1</translation>
     </message>
     <message>
         <location filename="ckartinaxmlparser.cpp" line="259"/>
         <location filename="ckartinaxmlparser.cpp" line="387"/>
-        <location filename="ckartinaxmlparser.cpp" line="463"/>
-        <location filename="ckartinaxmlparser.cpp" line="1394"/>
+        <location filename="ckartinaxmlparser.cpp" line="467"/>
+        <location filename="ckartinaxmlparser.cpp" line="1398"/>
         <source>Found unused element %1 ...</source>
         <translation>Найден неиспользуемый элемент %1 ...</translation>
     </message>
@@ -621,172 +608,172 @@ p, li { white-space: pre-wrap; }
         <translation>Найден неиспользуемый потомок %1:%2 ...</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="850"/>
+        <location filename="ckartinaxmlparser.cpp" line="854"/>
         <source>Got Type: %1, Count: %2, Page: %3, Total: %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1298"/>
+        <location filename="ckartinaxmlparser.cpp" line="1302"/>
         <source>Error #%1: %2!</source>
         <translation>Ошибка #%1: %2!</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1302"/>
+        <location filename="ckartinaxmlparser.cpp" line="1306"/>
         <source>Error #%1 in %2():%3: %4!</source>
         <translation>Ошибка #%1 в %2():%3: %4!</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1438"/>
+        <location filename="ckartinaxmlparser.cpp" line="1442"/>
         <source>Unknown error</source>
         <translation>Неизвестная Ошибка</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1439"/>
+        <location filename="ckartinaxmlparser.cpp" line="1443"/>
         <source>Incorrect request</source>
         <translation>Неправальный Запрос</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1440"/>
+        <location filename="ckartinaxmlparser.cpp" line="1444"/>
         <source>Wrong login or password</source>
         <translation>Неправильный логин или пароль</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1441"/>
+        <location filename="ckartinaxmlparser.cpp" line="1445"/>
         <source>Access denied</source>
         <translation>Доступ запрещен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1442"/>
+        <location filename="ckartinaxmlparser.cpp" line="1446"/>
         <source>Login incorrect</source>
         <translation>Неправильный логин</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1443"/>
+        <location filename="ckartinaxmlparser.cpp" line="1447"/>
         <source>Your contract is inactive</source>
         <translation>Ваш договор бездействует</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1444"/>
+        <location filename="ckartinaxmlparser.cpp" line="1448"/>
         <source>Your contract is paused</source>
         <translation>Ваш договор приостановлен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1445"/>
+        <location filename="ckartinaxmlparser.cpp" line="1449"/>
         <source>Channel not found or not allowed</source>
         <translation>Канал не найден или не разрешен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1446"/>
+        <location filename="ckartinaxmlparser.cpp" line="1450"/>
         <source>Error in request: Bad parameters</source>
         <translation>Ошибка в запросе: неправильные параметры</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1447"/>
+        <location filename="ckartinaxmlparser.cpp" line="1451"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
         <translation>Отсутствие параметра (day) в форме &lt;DDMMYY&gt;</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1448"/>
+        <location filename="ckartinaxmlparser.cpp" line="1452"/>
         <source>Missing parameter (cid)</source>
         <translation>Отсутствие параметра (cid)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1449"/>
+        <location filename="ckartinaxmlparser.cpp" line="1453"/>
         <source>Another client with your data logged in</source>
         <translation>Другой клиент с вашими данными вошел в систему</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1450"/>
+        <location filename="ckartinaxmlparser.cpp" line="1454"/>
         <source>Authentication error</source>
         <translation>Ошибка аутентификации</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1451"/>
+        <location filename="ckartinaxmlparser.cpp" line="1455"/>
         <source>Your package expired</source>
         <translation>Срок вашего пакета  истек</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1452"/>
+        <location filename="ckartinaxmlparser.cpp" line="1456"/>
         <source>Unknown API function</source>
         <translation>Неизвестная  API функция</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1453"/>
+        <location filename="ckartinaxmlparser.cpp" line="1457"/>
         <source>Archive not available</source>
         <translation>Архив не доступен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1454"/>
+        <location filename="ckartinaxmlparser.cpp" line="1458"/>
         <source>Missing parameter (place)</source>
         <translation>Отсутствие параметра (place)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1455"/>
+        <location filename="ckartinaxmlparser.cpp" line="1459"/>
         <source>Missing parameter (name)</source>
         <translation>Отсутствие параметра (name)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1456"/>
+        <location filename="ckartinaxmlparser.cpp" line="1460"/>
         <source>Incorrect confirmation code</source>
         <translation>Неверный код подтверждения</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1457"/>
+        <location filename="ckartinaxmlparser.cpp" line="1461"/>
         <source>Current code is wrong</source>
         <translation>Текущий код неправильный</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1458"/>
+        <location filename="ckartinaxmlparser.cpp" line="1462"/>
         <source>New code is wrong</source>
         <translation>Новый код неправильный</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1459"/>
+        <location filename="ckartinaxmlparser.cpp" line="1463"/>
         <source>Missing parameter (val)</source>
         <translation>Отсутствие параметра (val)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1460"/>
+        <location filename="ckartinaxmlparser.cpp" line="1464"/>
         <source>Value not allowed</source>
         <translation>Недопустимое Значение</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1461"/>
+        <location filename="ckartinaxmlparser.cpp" line="1465"/>
         <source>Missing parameter</source>
         <translation>Отсутствие параметра</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1462"/>
+        <location filename="ckartinaxmlparser.cpp" line="1466"/>
         <source>Missing parameter (id)</source>
         <translation>Отсутствие параметра (id)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1463"/>
+        <location filename="ckartinaxmlparser.cpp" line="1467"/>
         <source>Missing parameter (fileid)</source>
         <translation>Отсутствие параметра (fileid)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1464"/>
+        <location filename="ckartinaxmlparser.cpp" line="1468"/>
         <source>Missing parameter (type)</source>
         <translation>Отсутствие параметра (type)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1465"/>
+        <location filename="ckartinaxmlparser.cpp" line="1469"/>
         <source>Missing parameter (query)</source>
         <translation>Отсутствие параметра (query)</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1466"/>
+        <location filename="ckartinaxmlparser.cpp" line="1470"/>
         <source>Bitrate not available</source>
         <translation>Битрейт не доступен</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1467"/>
+        <location filename="ckartinaxmlparser.cpp" line="1471"/>
         <source>Service not available</source>
         <translation>Услуга не предоставляется</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="1468"/>
+        <location filename="ckartinaxmlparser.cpp" line="1472"/>
         <source>Query limit exceeded</source>
         <translation>Превышен лимит запросов</translation>
     </message>
@@ -822,7 +809,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="431"/>
+        <location filename="cplayer.cpp" line="513"/>
         <source>Use following URL:
   --&gt; %1</source>
         <oldsource>Use following MRL:
@@ -830,55 +817,52 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="439"/>
+        <location filename="cplayer.cpp" line="521"/>
+        <location filename="cplayer.cpp" line="538"/>
+        <location filename="cplayer.cpp" line="553"/>
+        <location filename="cplayer.cpp" line="557"/>
+        <location filename="cplayer.cpp" line="565"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1264"/>
+        <location filename="cplayer.cpp" line="1211"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="451"/>
+        <location filename="cplayer.cpp" line="577"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="649"/>
+        <location filename="cplayer.cpp" line="273"/>
+        <source>Create libVLC with following global options:
+ %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="544"/>
+        <source>Add MRL Option: :http_proxy_pwd=******</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cplayer.cpp" line="765"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="743"/>
+        <location filename="cplayer.cpp" line="798"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="776"/>
+        <location filename="cplayer.cpp" line="833"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1096"/>
-        <source>
-  --&gt; Player Widget is located at %2 screen (Screen No. %1, Resolution %3px x %4px) ...</source>
-        <oldsource>
-  --&gt; Player Widget is located at %2 screen (Screen No. %1, %3 x %4px) ...</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1105"/>
-        <source>Can&apos;t get active screen QWidget!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1134"/>
-        <source>Can&apos;t switch to fullscreen if there is no media to play!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1167"/>
+        <location filename="cplayer.cpp" line="1123"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
@@ -921,15 +905,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">ОШИБКА</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="694"/>
-        <source>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
-  --&gt; %4</source>
-        <oldsource>Name: &quot;%1&quot;, Type: &quot;%2&quot;, Severity: %3
- --&gt; %4</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="23"/>
+        <location filename="forms/cplayer.ui" line="14"/>
         <source>Form</source>
         <translation></translation>
     </message>
@@ -938,77 +914,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Формат изображения: </translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="71"/>
+        <location filename="forms/cplayer.ui" line="72"/>
         <source>Aspect:</source>
         <translation>Формат изображения: </translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="79"/>
-        <location filename="forms/cplayer.ui" line="125"/>
-        <source>std.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="84"/>
-        <location filename="forms/cplayer.ui" line="130"/>
-        <source>4:3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="89"/>
-        <location filename="forms/cplayer.ui" line="135"/>
-        <source>16:9</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="94"/>
-        <location filename="forms/cplayer.ui" line="140"/>
-        <source>16:10</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="99"/>
-        <location filename="forms/cplayer.ui" line="145"/>
-        <source>1:1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="104"/>
-        <location filename="forms/cplayer.ui" line="150"/>
-        <source>5:4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="109"/>
-        <location filename="forms/cplayer.ui" line="155"/>
-        <source>2.35</source>
-        <oldsource>2.3</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/cplayer.ui" line="117"/>
+        <location filename="forms/cplayer.ui" line="95"/>
         <source>Crop: </source>
         <translation>Подрезать:</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="282"/>
+        <location filename="forms/cplayer.ui" line="207"/>
         <source>Switch to Fullscreen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="454"/>
-        <source>0:00:00</source>
+        <location filename="forms/cplayer.ui" line="364"/>
+        <source> 0:00:00</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="185"/>
         <source>Jump Backward</source>
-        <translation>шаг назад</translation>
+        <translation type="obsolete">шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/cplayer.ui" line="213"/>
         <source>Jump Forward</source>
-        <translation>шаг вперед</translation>
+        <translation type="obsolete">шаг вперед</translation>
     </message>
     <message>
         <source>Volume: </source>
@@ -1022,32 +953,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CSettingsDlg</name>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="567"/>
+        <location filename="forms/csettingsdlg.ui" line="633"/>
         <source>Log disabled</source>
         <translation>Протокол выкл.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="572"/>
+        <location filename="forms/csettingsdlg.ui" line="638"/>
         <source>Log Errors only</source>
         <translation>Только протокол ошибок</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="577"/>
+        <location filename="forms/csettingsdlg.ui" line="643"/>
         <source>Log Errors and Warnings</source>
         <translation>Протокол ошибок и предупреждений</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="582"/>
+        <location filename="forms/csettingsdlg.ui" line="648"/>
         <source>Log everything</source>
         <translation>Все протоколы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="303"/>
+        <location filename="csettingsdlg.cpp" line="359"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="298"/>
+        <location filename="csettingsdlg.cpp" line="354"/>
         <source>Executables (*.exe)</source>
         <translation>Программфайл (*.exe)</translation>
     </message>
@@ -1112,47 +1043,47 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Шаг Назад</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="300"/>
+        <location filename="csettingsdlg.cpp" line="356"/>
         <source>Executables (*)</source>
         <translation>Программфайл (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="343"/>
+        <location filename="csettingsdlg.cpp" line="399"/>
         <source>Target Folder</source>
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="525"/>
+        <location filename="csettingsdlg.cpp" line="583"/>
         <source>Mobile (320)</source>
         <translation>Мобильный (320)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="529"/>
+        <location filename="csettingsdlg.cpp" line="587"/>
         <source>Eco (900)</source>
         <translation>Эко (900)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="533"/>
+        <location filename="csettingsdlg.cpp" line="591"/>
         <source>Standard (1500)</source>
         <translation>Стандарт (1500)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="537"/>
+        <location filename="csettingsdlg.cpp" line="595"/>
         <source>Premium (2500)</source>
         <translation>Премиум (2500)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="541"/>
+        <location filename="csettingsdlg.cpp" line="599"/>
         <source>%1 Kbit/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1279"/>
+        <location filename="csettingsdlg.cpp" line="1346"/>
         <source>The same ShortCut!</source>
         <translation>Одинаковая комбинация клавиш!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1280"/>
+        <location filename="csettingsdlg.cpp" line="1347"/>
         <source>The same ShortCut %1 is already in row %2.
 Please enter another ShortCut.</source>
         <translation>Такая же комбинация клавиш %1 уже имеется в строке %2.
@@ -1178,33 +1109,18 @@ Enter please another ShortCut.</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="252"/>
-        <source>de</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/csettingsdlg.ui" line="261"/>
-        <source>ru</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/csettingsdlg.ui" line="243"/>
-        <source>en</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/csettingsdlg.ui" line="273"/>
+        <location filename="forms/csettingsdlg.ui" line="245"/>
         <source>Reload Logos:</source>
         <translation>Обновить логотипы:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="286"/>
+        <location filename="forms/csettingsdlg.ui" line="258"/>
         <source>&amp;reload Logos</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="39"/>
-        <location filename="forms/csettingsdlg.ui" line="492"/>
+        <location filename="forms/csettingsdlg.ui" line="464"/>
         <source>User: </source>
         <translation>Логин:</translation>
     </message>
@@ -1219,7 +1135,7 @@ Enter please another ShortCut.</source>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="49"/>
-        <location filename="forms/csettingsdlg.ui" line="506"/>
+        <location filename="forms/csettingsdlg.ui" line="478"/>
         <source>Password: </source>
         <translation>Пароль:</translation>
     </message>
@@ -1229,7 +1145,7 @@ Enter please another ShortCut.</source>
         <translation>Разрешить эротические каналы</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="433"/>
+        <location filename="forms/csettingsdlg.ui" line="405"/>
         <source> Proxy Server </source>
         <translation>Прокси сервер</translation>
     </message>
@@ -1292,7 +1208,7 @@ Enter please another ShortCut.</source>
         <translation type="obsolete">Время (в м-сек.):</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="549"/>
+        <location filename="forms/csettingsdlg.ui" line="518"/>
         <source>Player Module:</source>
         <translation>Модуль проигрывателя:</translation>
     </message>
@@ -1332,133 +1248,138 @@ Enter please another ShortCut.</source>
         <translation>Язык: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="322"/>
+        <location filename="forms/csettingsdlg.ui" line="294"/>
         <source>Enable Advanced Settings</source>
         <translation>Вкл. допол. настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="427"/>
+        <location filename="forms/csettingsdlg.ui" line="399"/>
         <source>Advanced</source>
         <translation>Допол.  настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="526"/>
+        <location filename="forms/csettingsdlg.ui" line="498"/>
         <source>Advanced Settings</source>
         <translation>Дополнительные  настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="535"/>
+        <location filename="forms/csettingsdlg.ui" line="504"/>
         <source>API Server: </source>
         <translation>Сервер API</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="559"/>
+        <location filename="forms/csettingsdlg.ui" line="528"/>
         <source>Log Level:</source>
         <translation>Уровень Протокола: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="600"/>
+        <location filename="forms/csettingsdlg.ui" line="545"/>
         <source>Refresh EPG every:</source>
         <translation>Обновлять EPG каждые:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="613"/>
+        <location filename="forms/csettingsdlg.ui" line="558"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="618"/>
+        <location filename="forms/csettingsdlg.ui" line="563"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="623"/>
+        <location filename="forms/csettingsdlg.ui" line="568"/>
         <source>15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="647"/>
+        <location filename="forms/csettingsdlg.ui" line="592"/>
         <source>Minimize to Systray</source>
         <translation>Сворачивать в трей</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="668"/>
+        <location filename="forms/csettingsdlg.ui" line="613"/>
         <source>Check for updates</source>
         <translation>Проверка обновлений программы</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="439"/>
+        <location filename="forms/csettingsdlg.ui" line="620"/>
+        <source>Use GPU for video decoding</source>
+        <translation>GPU-ускорение видео</translation>
+    </message>
+    <message>
+        <location filename="forms/csettingsdlg.ui" line="411"/>
         <source>Enable Proxy</source>
         <translation>Вкл. Прокси</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="452"/>
+        <location filename="forms/csettingsdlg.ui" line="424"/>
         <source>Address: </source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="466"/>
+        <location filename="forms/csettingsdlg.ui" line="438"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="308"/>
+        <location filename="forms/csettingsdlg.ui" line="280"/>
         <source>Try to fix time offset</source>
         <translation>Синхронизировать время</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="631"/>
+        <location filename="forms/csettingsdlg.ui" line="576"/>
         <source>Minute(s)</source>
         <translation>минут(ы)</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="640"/>
+        <location filename="forms/csettingsdlg.ui" line="585"/>
         <source>Ask for Record Filename</source>
         <translation>Запрос исходного файла</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="590"/>
+        <location filename="forms/csettingsdlg.ui" line="535"/>
         <source>Shutdown Command:</source>
         <translation>Команда отключения системы: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="661"/>
+        <location filename="forms/csettingsdlg.ui" line="606"/>
         <source>Translit Record Filename</source>
         <translation>Транслит исходного файла</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="654"/>
+        <location filename="forms/csettingsdlg.ui" line="599"/>
         <source>Detach Player at startup</source>
         <oldsource>Detach Player on startup</oldsource>
         <translation>Отдели проигр. при запуске</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="315"/>
+        <location filename="forms/csettingsdlg.ui" line="287"/>
         <source>Extended Channel List</source>
         <translation>Доп. инфо в списке каналов</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="335"/>
+        <location filename="forms/csettingsdlg.ui" line="307"/>
         <source>Shortcuts</source>
         <translation>Сокращения</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="354"/>
+        <location filename="forms/csettingsdlg.ui" line="326"/>
         <source>Function</source>
         <translation>Функция</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="359"/>
+        <location filename="forms/csettingsdlg.ui" line="331"/>
         <source>ShortCut</source>
         <translation>Сокращения</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="377"/>
+        <location filename="forms/csettingsdlg.ui" line="349"/>
         <source>Changes in shortcuts take effect only after restarting the program.</source>
         <translation>Изменения в сокращениях вступят в силу только после перезагрузки программы.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="414"/>
+        <location filename="forms/csettingsdlg.ui" line="386"/>
         <source>Reset Shortcuts to default</source>
         <translation>Восстановить начальные комбинации клавиш</translation>
     </message>
@@ -1479,12 +1400,12 @@ Enter please another ShortCut.</source>
         <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="697"/>
+        <location filename="forms/csettingsdlg.ui" line="687"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="717"/>
+        <location filename="forms/csettingsdlg.ui" line="707"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>
@@ -1505,6 +1426,39 @@ Enter please another ShortCut.</source>
         <location filename="cshortcutgrabber.cpp" line="86"/>
         <source>Reset ShortCut</source>
         <translation>Восстановить стандартный ShortCut</translation>
+    </message>
+</context>
+<context>
+    <name>CShowInfo</name>
+    <message>
+        <location filename="cshowinfo.cpp" line="404"/>
+        <source>%1 (Archive)</source>
+        <translation>%1 (Архив)</translation>
+    </message>
+    <message>
+        <location filename="cshowinfo.cpp" line="430"/>
+        <source>Program:</source>
+        <translation>Передача:</translation>
+    </message>
+    <message>
+        <location filename="cshowinfo.cpp" line="431"/>
+        <source>Start:</source>
+        <translation>Начало:</translation>
+    </message>
+    <message>
+        <location filename="cshowinfo.cpp" line="432"/>
+        <source>End:</source>
+        <translation>Окончание:</translation>
+    </message>
+    <message>
+        <location filename="cshowinfo.cpp" line="433"/>
+        <source>Length:</source>
+        <translation>Длительность:</translation>
+    </message>
+    <message>
+        <location filename="cshowinfo.cpp" line="438"/>
+        <source>%1 min.</source>
+        <translation>%1 мин.</translation>
     </message>
 </context>
 <context>
@@ -1554,32 +1508,32 @@ or start time is later than end time!</source>
 Пожалуйста выберете другое время!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="344"/>
-        <location filename="ctimerrec.cpp" line="468"/>
+        <location filename="ctimerrec.cpp" line="343"/>
+        <location filename="ctimerrec.cpp" line="467"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="345"/>
-        <location filename="ctimerrec.cpp" line="469"/>
+        <location filename="ctimerrec.cpp" line="344"/>
+        <location filename="ctimerrec.cpp" line="468"/>
         <source>SQL Error String: %1</source>
         <translation>Информация о SQL ошибке: %1</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="417"/>
+        <location filename="ctimerrec.cpp" line="416"/>
         <source>Please Correct! Please insert a name!</source>
         <translation>Пожалуйста корректируйте! Пожалуйста введите имя!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="425"/>
+        <location filename="ctimerrec.cpp" line="424"/>
         <source>Please Correct! The entry you want to add overlapps with an existing entry
 or start time is later than end time!</source>
         <translation>Пожалуйста корректируйте! На заданное время уже запись запланированна!
 Пожалуйста выберете другое время!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="973"/>
-        <location filename="ctimerrec.cpp" line="1042"/>
+        <location filename="ctimerrec.cpp" line="972"/>
+        <location filename="ctimerrec.cpp" line="1041"/>
         <source>Error! Can&apos;t start Player!</source>
         <translation>Ошибка! Невозможно заупстить плеер!</translation>
     </message>
@@ -1588,12 +1542,12 @@ or start time is later than end time!</source>
         <translation type="obsolete">Информация о XML ошибке %1</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="585"/>
+        <location filename="ctimerrec.cpp" line="584"/>
         <source>Add Job #%1 (%2) to Joblist!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="639"/>
+        <location filename="ctimerrec.cpp" line="638"/>
         <source>Don&apos;t check ID %1 (it will be updated).</source>
         <translation></translation>
     </message>
@@ -1602,12 +1556,12 @@ or start time is later than end time!</source>
         <translation type="obsolete">Планировщик записи</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="843"/>
+        <location filename="ctimerrec.cpp" line="842"/>
         <source>Delete old entry #%1 (%2) from Joblist.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="851"/>
+        <location filename="ctimerrec.cpp" line="850"/>
         <source>Stopping timer record #%1 (%2). End time reached!</source>
         <translation></translation>
     </message>
@@ -1616,12 +1570,12 @@ or start time is later than end time!</source>
         <translation type="obsolete">Подготовка к записи</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="893"/>
+        <location filename="ctimerrec.cpp" line="892"/>
         <source>Record #%1 (%2) starts soon. Set timer to standby!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="901"/>
+        <location filename="ctimerrec.cpp" line="900"/>
         <source>Start record #%1 (%2)!</source>
         <translation></translation>
     </message>
@@ -1634,8 +1588,8 @@ or start time is later than end time!</source>
         <translation type="obsolete">Невозможно заупстить плеер!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="977"/>
-        <location filename="ctimerrec.cpp" line="1046"/>
+        <location filename="ctimerrec.cpp" line="976"/>
+        <location filename="ctimerrec.cpp" line="1045"/>
         <source>Started player with pid #%1!</source>
         <translation></translation>
     </message>
@@ -1648,149 +1602,143 @@ or start time is later than end time!</source>
         <translation type="obsolete">Невозможно заупстить VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="ctimerrec.cpp" line="995"/>
+        <location filename="ctimerrec.cpp" line="994"/>
         <source>All records done. Shutdown system using command line:
   --&gt; %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="14"/>
+        <location filename="forms/ctimerrec.ui" line="17"/>
         <source>Timer Record</source>
         <translation>Планировщик записи</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="43"/>
+        <location filename="forms/ctimerrec.ui" line="46"/>
         <source>Start: </source>
         <translation>Начало:</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="59"/>
+        <location filename="forms/ctimerrec.ui" line="62"/>
         <source>End: </source>
         <translation>Окончание:</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="81"/>
+        <location filename="forms/ctimerrec.ui" line="84"/>
         <source>Name: </source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="100"/>
+        <location filename="forms/ctimerrec.ui" line="103"/>
         <source>Channel: </source>
         <translation>Канал:</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="285"/>
+        <location filename="forms/ctimerrec.ui" line="306"/>
         <source>Time Shift:</source>
         <translation>Задержка вещания:</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="124"/>
+        <location filename="forms/ctimerrec.ui" line="127"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="25"/>
+        <location filename="forms/ctimerrec.ui" line="28"/>
         <source> Job Control </source>
         <translation>Список таймера</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="129"/>
+        <location filename="forms/ctimerrec.ui" line="132"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="134"/>
+        <location filename="forms/ctimerrec.ui" line="137"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="139"/>
+        <location filename="forms/ctimerrec.ui" line="142"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="144"/>
+        <location filename="forms/ctimerrec.ui" line="147"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="149"/>
+        <location filename="forms/ctimerrec.ui" line="152"/>
         <source>8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="154"/>
+        <location filename="forms/ctimerrec.ui" line="157"/>
         <source>9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="159"/>
+        <location filename="forms/ctimerrec.ui" line="162"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="164"/>
+        <location filename="forms/ctimerrec.ui" line="167"/>
         <source>11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="198"/>
+        <location filename="forms/ctimerrec.ui" line="201"/>
         <source>Silent Record</source>
         <translation>Запись без просмотра</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="211"/>
+        <location filename="forms/ctimerrec.ui" line="233"/>
         <source>Add / Update Job</source>
         <translation>Добавить/Обновить задание в список</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="214"/>
-        <location filename="forms/ctimerrec.ui" line="243"/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/ctimerrec.ui" line="240"/>
+        <location filename="forms/ctimerrec.ui" line="271"/>
         <source>Delete Job from Joblist</source>
         <translation>Удалить запись из списка</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="269"/>
+        <location filename="forms/ctimerrec.ui" line="214"/>
         <source>Shutdown when all is done</source>
         <translation>Выключить компютер</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="317"/>
+        <location filename="forms/ctimerrec.ui" line="329"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="327"/>
+        <location filename="forms/ctimerrec.ui" line="339"/>
         <source>End</source>
         <translation>Окончание</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="332"/>
+        <location filename="forms/ctimerrec.ui" line="344"/>
         <source>Ch.</source>
         <translation>Кл.</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="337"/>
+        <location filename="forms/ctimerrec.ui" line="349"/>
         <source>TS.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="368"/>
+        <location filename="forms/ctimerrec.ui" line="380"/>
         <source>&amp;Back</source>
         <translation>За&amp;крыть</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="322"/>
+        <location filename="forms/ctimerrec.ui" line="334"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="forms/ctimerrec.ui" line="342"/>
+        <location filename="forms/ctimerrec.ui" line="354"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
@@ -1969,229 +1917,228 @@ or start time is later than end time!</source>
         <translation type="obsolete">Выбор сдвига по времени</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="166"/>
-        <location filename="forms/mainwindow.ui" line="622"/>
-        <location filename="mainwindow.cpp" line="2427"/>
+        <location filename="forms/mainwindow.ui" line="199"/>
+        <location filename="forms/mainwindow.ui" line="633"/>
+        <location filename="mainwindow.cpp" line="2486"/>
         <source>Play selected Channel</source>
         <translation>Просмотр выбранной передачи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2415"/>
+        <location filename="mainwindow.cpp" line="2474"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="131"/>
-        <location filename="forms/mainwindow.ui" line="744"/>
+        <location filename="forms/mainwindow.ui" line="164"/>
+        <location filename="forms/mainwindow.ui" line="755"/>
         <source>Show Live!</source>
         <translation>Прямой эфир!</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="204"/>
-        <location filename="forms/mainwindow.ui" line="631"/>
+        <location filename="forms/mainwindow.ui" line="237"/>
+        <location filename="forms/mainwindow.ui" line="642"/>
         <source>Record selected Channel</source>
         <translation>Запись выбранной передачи</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="245"/>
-        <location filename="forms/mainwindow.ui" line="640"/>
-        <location filename="mainwindow.cpp" line="2765"/>
+        <location filename="forms/mainwindow.ui" line="278"/>
+        <location filename="forms/mainwindow.ui" line="651"/>
+        <location filename="mainwindow.cpp" line="2807"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="302"/>
-        <location filename="forms/mainwindow.ui" line="649"/>
-        <location filename="mainwindow.cpp" line="2782"/>
+        <location filename="forms/mainwindow.ui" line="335"/>
+        <location filename="forms/mainwindow.ui" line="660"/>
+        <location filename="mainwindow.cpp" line="2824"/>
         <source>Jump Backward</source>
         <translation>Шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="331"/>
+        <location filename="forms/mainwindow.ui" line="364"/>
         <source>Time Jump Value in minutes</source>
         <translation>Размер временного шага</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="335"/>
+        <location filename="forms/mainwindow.ui" line="368"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="340"/>
+        <location filename="forms/mainwindow.ui" line="373"/>
         <source>2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="345"/>
+        <location filename="forms/mainwindow.ui" line="378"/>
         <source>3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="350"/>
+        <location filename="forms/mainwindow.ui" line="383"/>
         <source>4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="355"/>
+        <location filename="forms/mainwindow.ui" line="388"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="360"/>
+        <location filename="forms/mainwindow.ui" line="393"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="383"/>
-        <location filename="forms/mainwindow.ui" line="658"/>
-        <location filename="mainwindow.cpp" line="2781"/>
+        <location filename="forms/mainwindow.ui" line="416"/>
+        <location filename="forms/mainwindow.ui" line="669"/>
+        <location filename="mainwindow.cpp" line="2823"/>
         <source>Jump Forward</source>
         <translation>Шаг вперед</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="468"/>
         <source>Time Progress for played programm</source>
-        <translation>Процент прошедшего времени воспроизводимой передачи</translation>
+        <translation type="obsolete">Процент прошедшего времени воспроизводимой передачи</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="493"/>
+        <location filename="forms/mainwindow.ui" line="501"/>
         <source>Short EPG</source>
         <translation>Краткая информация о передаче</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="510"/>
+        <location filename="forms/mainwindow.ui" line="521"/>
         <source>Media</source>
         <translation>Медиа</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="514"/>
+        <location filename="forms/mainwindow.ui" line="525"/>
         <source>Channels</source>
         <translation>Список каналов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="524"/>
+        <location filename="forms/mainwindow.ui" line="535"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="531"/>
+        <location filename="forms/mainwindow.ui" line="542"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="539"/>
+        <location filename="forms/mainwindow.ui" line="550"/>
         <source>Player</source>
         <translation>Плеер</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="543"/>
+        <location filename="forms/mainwindow.ui" line="554"/>
         <source>Aspect</source>
         <translation>Соотношение сторон</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="548"/>
+        <location filename="forms/mainwindow.ui" line="559"/>
         <source>Crop</source>
         <translation>Размер кадра</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="565"/>
+        <location filename="forms/mainwindow.ui" line="576"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="586"/>
-        <location filename="mainwindow.cpp" line="2768"/>
+        <location filename="forms/mainwindow.ui" line="597"/>
+        <location filename="mainwindow.cpp" line="2810"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="591"/>
+        <location filename="forms/mainwindow.ui" line="602"/>
         <source>Channels, EPG and VOD</source>
         <translation>Каналы, Телегид и Видеотека</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="596"/>
+        <location filename="forms/mainwindow.ui" line="607"/>
         <source>Guide</source>
         <translation>Инструкция</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="605"/>
-        <location filename="mainwindow.cpp" line="2769"/>
+        <location filename="forms/mainwindow.ui" line="616"/>
+        <location filename="mainwindow.cpp" line="2811"/>
         <source>About</source>
         <translation>О программе...</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="610"/>
+        <location filename="forms/mainwindow.ui" line="621"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="667"/>
+        <location filename="forms/mainwindow.ui" line="678"/>
         <source>Time Record</source>
         <translation>Планировщик</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="678"/>
+        <location filename="forms/mainwindow.ui" line="689"/>
         <source>Show Upper Tools-Panel</source>
         <translation>Показать верхнюю панель инструментов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="689"/>
+        <location filename="forms/mainwindow.ui" line="700"/>
         <source>Show Channel Information</source>
         <translation>Показать информацию о передаче</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="700"/>
+        <location filename="forms/mainwindow.ui" line="711"/>
         <source>Show Lower Tools-Panel</source>
         <translation>Показать нижнюю панель инструментов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="708"/>
+        <location filename="forms/mainwindow.ui" line="719"/>
         <source>Always On Top</source>
         <translation>Не перекрывается другими окнами</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="719"/>
+        <location filename="forms/mainwindow.ui" line="730"/>
         <source>One Click Play</source>
         <translation>Немедленное воспроизведение</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="724"/>
+        <location filename="forms/mainwindow.ui" line="735"/>
         <source>Clear Recent Channel List</source>
         <translation>Очистка списка последних каналов</translation>
     </message>
     <message>
-        <location filename="forms/mainwindow.ui" line="735"/>
+        <location filename="forms/mainwindow.ui" line="746"/>
         <source>Show Status Bar</source>
         <translation>Показать Статусбар</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="145"/>
+        <location filename="mainwindow.cpp" line="151"/>
         <source>
 dataDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="146"/>
+        <location filename="mainwindow.cpp" line="152"/>
         <source>logoDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="153"/>
         <source>langDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="148"/>
+        <location filename="mainwindow.cpp" line="154"/>
         <source>modDir:  %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="149"/>
+        <location filename="mainwindow.cpp" line="155"/>
         <source>appDir:  %1</source>
         <translation></translation>
     </message>
@@ -2204,48 +2151,48 @@ dataDir: %1
         <translation type="obsolete">%1 Клиент API сообщает об ошибке: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="907"/>
+        <location filename="mainwindow.cpp" line="932"/>
         <source>logout done ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="985"/>
+        <location filename="mainwindow.cpp" line="1035"/>
         <source>Active stream server is %1</source>
         <translation>Активный сервер потока %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1020"/>
+        <location filename="mainwindow.cpp" line="1070"/>
         <source>Using Bitrate %1 kbit/s ...</source>
         <translation>Используя битрейт %1 kbit/s ...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1221"/>
-        <location filename="mainwindow.cpp" line="1903"/>
+        <location filename="mainwindow.cpp" line="1270"/>
+        <location filename="mainwindow.cpp" line="1914"/>
         <source>Length: %1 min.</source>
         <translation>Длин. %1 мин.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1222"/>
+        <location filename="mainwindow.cpp" line="1271"/>
         <source> (Ar.)</source>
         <translation> (Ар.)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1321"/>
+        <location filename="mainwindow.cpp" line="1360"/>
         <source>timeRec reports: record done!</source>
         <translation>Планировщик сообщает: запись сделана!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1329"/>
+        <location filename="mainwindow.cpp" line="1368"/>
         <source>timeRec reports: record active!</source>
         <translation>Планировщик сообщает: запись активна!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1343"/>
+        <location filename="mainwindow.cpp" line="1382"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation>vlcCtrl сообщает: vlc player закончил!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1351"/>
+        <location filename="mainwindow.cpp" line="1390"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation>vlcCtrl сообщает: vlc player активный!</translation>
     </message>
@@ -2258,147 +2205,144 @@ dataDir: %1
         <translation type="obsolete">Невозможно заупстить VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="898"/>
+        <location filename="mainwindow.cpp" line="923"/>
         <source>Error: %1 Client API reports some errors: %2</source>
         <translation>Ошибка: %1 Клиент API сообщает об ошибках: %2</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1215"/>
-        <location filename="mainwindow.cpp" line="1897"/>
+        <location filename="mainwindow.cpp" line="1264"/>
         <source>%1 (Archive)</source>
-        <translation></translation>
+        <translation>%1 (Архив)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1426"/>
-        <location filename="mainwindow.cpp" line="2301"/>
-        <location filename="mainwindow.cpp" line="2348"/>
+        <location filename="mainwindow.cpp" line="1465"/>
+        <location filename="mainwindow.cpp" line="2360"/>
+        <location filename="mainwindow.cpp" line="2407"/>
         <source>Error! Can&apos;t start VLC-Media Player!</source>
         <translation>Ошибка! Невозможно запустить VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1432"/>
-        <location filename="mainwindow.cpp" line="2308"/>
-        <location filename="mainwindow.cpp" line="2354"/>
+        <location filename="mainwindow.cpp" line="1471"/>
+        <location filename="mainwindow.cpp" line="2367"/>
+        <location filename="mainwindow.cpp" line="2413"/>
         <source>Started VLC with pid #%1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1447"/>
+        <location filename="mainwindow.cpp" line="1486"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1566"/>
+        <location filename="mainwindow.cpp" line="1605"/>
         <source>Video On Demand</source>
         <translation>Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1839"/>
+        <location filename="mainwindow.cpp" line="1878"/>
         <source>There is the new version %1 of %2 available.&lt;br /&gt;Click %3 to download!</source>
         <translation>Имеется новая версия %1 программы %2.&lt;br /&gt; Для загрузки нажать %3 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1842"/>
+        <location filename="mainwindow.cpp" line="1881"/>
         <source>here</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1846"/>
+        <location filename="mainwindow.cpp" line="1885"/>
         <source>Update available</source>
         <translation>Имеется новая версия программы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2716"/>
         <source>Length:</source>
-        <translation>Длительность:</translation>
+        <translation type="obsolete">Длительность:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2721"/>
         <source>%1 min.</source>
-        <translation>%1 мин.</translation>
+        <translation type="obsolete">%1 мин.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2764"/>
+        <location filename="mainwindow.cpp" line="2806"/>
         <source>Play / Pause</source>
         <translation>Воспроизведение / Пауза</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2766"/>
+        <location filename="mainwindow.cpp" line="2808"/>
         <source>Record</source>
         <translation>Запись</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2767"/>
+        <location filename="mainwindow.cpp" line="2809"/>
         <source>Timer Record</source>
         <translation>Планировщик записи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2770"/>
+        <location filename="mainwindow.cpp" line="2812"/>
         <source>Channels, EPG/VOD</source>
         <translation>Каналы, Телегид/Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2771"/>
+        <location filename="mainwindow.cpp" line="2813"/>
         <source>Search EPG</source>
         <translation>Поиск в Телегиде</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2772"/>
+        <location filename="mainwindow.cpp" line="2814"/>
         <source>Text Size +</source>
         <translation>Увеличить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2773"/>
+        <location filename="mainwindow.cpp" line="2815"/>
         <source>Text Size -</source>
         <translation>Уменьшить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2774"/>
+        <location filename="mainwindow.cpp" line="2816"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2775"/>
+        <location filename="mainwindow.cpp" line="2817"/>
         <source>Toggle Aspect Ratio</source>
         <translation>Изменение Соотношения Сторон</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2776"/>
+        <location filename="mainwindow.cpp" line="2818"/>
         <source>Toggle Crop Geometry</source>
         <translation>Изменение Подрезки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2777"/>
+        <location filename="mainwindow.cpp" line="2819"/>
         <source>Toggle Fullscreen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2778"/>
+        <location filename="mainwindow.cpp" line="2820"/>
         <source>Volume +</source>
         <translation>Громче +</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2779"/>
+        <location filename="mainwindow.cpp" line="2821"/>
         <source>Volume -</source>
         <translation>Тише -</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2780"/>
+        <location filename="mainwindow.cpp" line="2822"/>
         <source>Toggle Mute</source>
         <translation>Без/Со Звуком</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2783"/>
+        <location filename="mainwindow.cpp" line="2825"/>
         <source>Next Channel</source>
         <translation>Следующий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2784"/>
+        <location filename="mainwindow.cpp" line="2826"/>
         <source>Previous Channel</source>
         <translation>Предыдущий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2785"/>
+        <location filename="mainwindow.cpp" line="2827"/>
         <source>Show EPG / VOD</source>
         <translation>Телегид / Видеотека</translation>
     </message>
@@ -2407,43 +2351,40 @@ dataDir: %1
         <translation type="obsolete">VLC Mediaplayer ещё в работае.&lt;br /&gt;&lt;b&gt;Если вы остановите работу VLC-Record, то и VLC-Player закроется.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Уверены ли Вы?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2540"/>
+        <location filename="mainwindow.cpp" line="2599"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2149"/>
+        <location filename="mainwindow.cpp" line="2208"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
         <translation>Невозможно загрузить значок канала</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2713"/>
         <source>Program:</source>
-        <translation>Передача:</translation>
+        <translation type="obsolete">Передача:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2714"/>
         <source>Start:</source>
-        <translation>Начало:</translation>
+        <translation type="obsolete">Начало:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2715"/>
         <source>End:</source>
-        <translation>Окончание:</translation>
+        <translation type="obsolete">Окончание:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2236"/>
-        <location filename="mainwindow.cpp" line="2372"/>
+        <location filename="mainwindow.cpp" line="2295"/>
+        <location filename="mainwindow.cpp" line="2431"/>
         <source>Save Stream as</source>
         <translation>Сохранить поток как...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2536"/>
+        <location filename="mainwindow.cpp" line="2595"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <translation>VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2639"/>
+        <location filename="mainwindow.cpp" line="2698"/>
         <source>KTV-Recorder - Click to activate!</source>
         <translation></translation>
     </message>
@@ -2452,7 +2393,8 @@ dataDir: %1
     <name>QFTSettings</name>
     <message>
         <location filename="forms/qftsettings.ui" line="17"/>
-        <source>Kartina.tv First Time Settings</source>
+        <source>%1 First Time Settings</source>
+        <oldsource>Kartina.tv First Time Settings</oldsource>
         <translation>Начальная настройка</translation>
     </message>
     <message>
@@ -2461,53 +2403,43 @@ dataDir: %1
         <translation>Язык: </translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="42"/>
-        <source>en</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qftsettings.ui" line="51"/>
-        <source>de</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qftsettings.ui" line="60"/>
-        <source>ru</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qftsettings.ui" line="74"/>
+        <location filename="forms/qftsettings.ui" line="47"/>
         <source> Subscription details provided by %1 </source>
         <translation> Ваш номер абонемента и Ваш пароль от %1 </translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="80"/>
+        <location filename="forms/qftsettings.ui" line="53"/>
         <source>User: </source>
         <translation>Логин</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="90"/>
-        <location filename="forms/qftsettings.ui" line="111"/>
+        <location filename="forms/qftsettings.ui" line="63"/>
+        <location filename="forms/qftsettings.ui" line="87"/>
         <source>Password: </source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="104"/>
+        <location filename="forms/qftsettings.ui" line="77"/>
         <source>Allow Adult Channels</source>
         <translation>Разрешить эротические каналы</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="136"/>
+        <location filename="forms/qftsettings.ui" line="112"/>
         <source>&amp;Reset</source>
         <translation>Сброс</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="159"/>
+        <location filename="forms/qftsettings.ui" line="135"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="qftsettings.cpp" line="144"/>
+        <location filename="qftsettings.cpp" line="165"/>
+        <source>%1/Movies</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="qftsettings.cpp" line="167"/>
         <source>%1/Videos</source>
         <translation></translation>
     </message>
@@ -2525,6 +2457,14 @@ dataDir: %1
 Please enter another ShortCut.</source>
         <translation>Такая же комбинация клавиш %1 уже имеется в строке %2.
 Пожалуйста введите другую комбинацию клавиш.</translation>
+    </message>
+</context>
+<context>
+    <name>QVlcVideoWidget</name>
+    <message>
+        <location filename="qvlcvideowidget.cpp" line="309"/>
+        <source>Activate shortcut: %1</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2664,44 +2604,54 @@ Please enter another ShortCut.</source>
         <translation type="obsolete">Ошибка</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="154"/>
         <source> Channels </source>
-        <translation type="obsolete">Список каналов</translation>
+        <translation>Список каналов</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="222"/>
         <source>Channel Group</source>
-        <translation type="obsolete">Группа каналов</translation>
+        <translation>Группа каналов</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="235"/>
         <source>Channel List</source>
-        <translation type="obsolete">Список каналов</translation>
+        <translation>Список каналов</translation>
     </message>
     <message>
         <source> Now Playing </source>
         <translation type="obsolete">В эфире:</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="271"/>
         <source> EPG - Electronic Program Guide </source>
-        <translation type="obsolete">Программа передач</translation>
+        <translation>Программа передач</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="119"/>
         <source>Program Guide</source>
-        <translation type="obsolete">Телегид</translation>
+        <translation>Телегид</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="592"/>
+        <location filename="forms/recorder_inc.ui" line="797"/>
         <source>Search: </source>
-        <translation type="obsolete">Поиск:</translation>
+        <translation>Поиск:</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="538"/>
         <source>Textsize</source>
-        <translation type="obsolete">Размер шрифта</translation>
+        <translation>Размер шрифта</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="668"/>
         <source>Video On Demand</source>
-        <translation type="obsolete">Видеотека</translation>
+        <translation>Видеотека</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="679"/>
         <source>Genre: </source>
-        <translation type="obsolete">Жанр: </translation>
+        <translation>Жанр: </translation>
     </message>
     <message>
         <source>Set TimeShift in hours.</source>
@@ -2716,68 +2666,117 @@ Please enter another ShortCut.</source>
         <translation type="obsolete">Видеотека</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="987"/>
         <source>Play selected Channel</source>
-        <translation type="obsolete">Просмотр передачи</translation>
+        <translation>Просмотр передачи</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1019"/>
         <source>Record selected Channel</source>
-        <translation type="obsolete">Запись выбранной передачи</translation>
+        <translation>Запись выбранной передачи</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1060"/>
         <source>Stop VLC ...</source>
-        <translation type="obsolete">Остановить VLC Player ...</translation>
+        <translation>Остановить VLC Player ...</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1219"/>
         <source>Timer Record</source>
-        <translation type="obsolete">Планировщик записи</translation>
+        <translation>Планировщик записи</translation>
     </message>
     <message>
         <source>Timer Ready</source>
         <translation type="obsolete">Планировщик записи</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1359"/>
         <source>Settings</source>
-        <translation type="obsolete">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1397"/>
         <source>About ...</source>
-        <translation type="obsolete">О программе...</translation>
+        <translation>О программе...</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1435"/>
         <source>Quit</source>
-        <translation type="obsolete">Выключить</translation>
+        <translation>Выключить</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="864"/>
         <source> Player </source>
-        <translation type="obsolete">Плеер</translation>
+        <translation>Плеер</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="689"/>
         <source>Order: </source>
-        <translation type="obsolete">Сортировка</translation>
+        <translation>Сортировка</translation>
     </message>
     <message>
         <source>Site: </source>
         <translation type="obsolete">Сайт</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="741"/>
+        <source>Page: </source>
+        <translation>Страница:</translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="951"/>
         <source>Show Live!</source>
-        <translation type="obsolete">Прямой эфир!</translation>
+        <translation>Прямой эфир!</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1108"/>
         <source>Jump Backward</source>
-        <translation type="obsolete">шаг назад</translation>
+        <translation>шаг назад</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1137"/>
         <source>Time Jump Value in minutes</source>
-        <translation type="obsolete">Размер временного шага</translation>
+        <translation>Размер временного шага в минутах</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1141"/>
+        <source>1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1146"/>
+        <source>2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1151"/>
+        <source>3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1156"/>
+        <source>4</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1161"/>
+        <source>5</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1166"/>
+        <source>10</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1183"/>
         <source>Jump Forward</source>
-        <translation type="obsolete">шаг вперед</translation>
+        <translation>шаг вперед</translation>
     </message>
     <message>
+        <location filename="forms/recorder_inc.ui" line="1248"/>
         <source>Short EPG</source>
-        <translation type="obsolete">Краткая информация о передаче</translation>
+        <translation>Краткая информация о передаче</translation>
     </message>
     <message>
         <source>Time Progress for played programm</source>
