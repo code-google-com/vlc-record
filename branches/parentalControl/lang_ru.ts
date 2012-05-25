@@ -257,29 +257,29 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="634"/>
+        <location filename="ckartinaclnt.cpp" line="632"/>
         <source>Show channel(s) %1 in channel list ...</source>
         <oldsource>Show channel %1 in channel list ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="659"/>
+        <location filename="ckartinaclnt.cpp" line="655"/>
         <source>Request VOD manager data ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="682"/>
+        <location filename="ckartinaclnt.cpp" line="678"/>
         <source>Set VOD manager data (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="722"/>
+        <location filename="ckartinaclnt.cpp" line="716"/>
         <source>Request #%1 (%2) done!</source>
         <oldsource>Request #%1 done!</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="803"/>
+        <location filename="ckartinaclnt.cpp" line="797"/>
         <source>Error in Request: %1!</source>
         <translation></translation>
     </message>
