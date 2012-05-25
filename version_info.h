@@ -29,8 +29,8 @@
    #define VERSION_MAJOR "1"
 #endif
 
-#define VERSION_MINOR "54"
-#define BETA_EXT      ""
+#define VERSION_MINOR "55"
+#define BETA_EXT      "B1"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
@@ -38,6 +38,11 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2012-05-03: Version 2.55B1
+| - add VOD Manager
+| - add Channel Manager
+| - first steps to add fovourites
+|
 | 2012-05-03: Version 2.54
 | - fullscreen problem on Mac Snowleo fixed:
 |   + use QStackedLayout to place the videoWidget inside
