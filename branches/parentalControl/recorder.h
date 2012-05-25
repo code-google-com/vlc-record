@@ -285,6 +285,7 @@ signals:
     void sigJmpBwd ();
     void sigShowInfoUpdated();
     void sigFullScreenToggled (int on);
+    void sigLockParentalManager();
 };
 
 #endif /* __011910__RECORDER_H */

@@ -1430,36 +1430,6 @@ void CSettingsDlg::slotBuildVodManager(const QString &str)
 
    if (!pParser->parseVodManager(str, vodRatesVector))
    {
-      ////////////////////////////////////////////////////////////////////////
-      // REMOVE ME, I'M A FAKE!!! --->
-      if (vodRatesVector.isEmpty())
-      {
-         //////// fake /////////
-         cparser::SVodRate rate;
-
-         rate.iRateID = 1;
-         rate.sGenre  = "blood";
-         rate.sAccess = "show";
-         vodRatesVector.append(rate);
-
-         rate.iRateID = 2;
-         rate.sGenre  = "violence";
-         rate.sAccess = "show";
-         vodRatesVector.append(rate);
-
-         rate.iRateID = 3;
-         rate.sGenre  = "obsence";
-         rate.sAccess = "show";
-         vodRatesVector.append(rate);
-
-         rate.iRateID = 4;
-         rate.sGenre  = "porn";
-         rate.sAccess = "hide";
-         vodRatesVector.append(rate);
-      }
-      // REMOVE ME, I'M A FAKE!!! <--
-      ////////////////////////////////////////////////////////////////////////
-
       pVMainLayout = new QVBoxLayout();
 
       // make forms for every rate ...
@@ -1585,7 +1555,7 @@ void CSettingsDlg::on_btnSaveExitManager_clicked()
       {
          ids << QString::number(toHide[i]);
       }
-      pCmdQueue->TriggerRequest(Kartina::REQ_SETCHAN_HIDE, ids.join(","));
+      pCmdQueue->TriggerRequest(Kartina::REQ_SETCHAN_HIDE, ids.join(","), sTempPasswd);
    }
 
    ids.clear();
@@ -1595,7 +1565,7 @@ void CSettingsDlg::on_btnSaveExitManager_clicked()
       {
          ids << QString::number(toShow[i]);
       }
-      pCmdQueue->TriggerRequest(Kartina::REQ_SETCHAN_SHOW, ids.join(","));
+      pCmdQueue->TriggerRequest(Kartina::REQ_SETCHAN_SHOW, ids.join(","), sTempPasswd);
    }
 
    if (toHide.count() || toShow.count())
@@ -1657,10 +1627,10 @@ void CSettingsDlg::on_btnSaveExitManager_clicked()
    if (sRules != "")
    {
       mInfo(tr("Changed VOD Rate: %1").arg(sRules));
-      // pCmdQueue->TriggerRequest(Kartina::REQ_SET_VOD_MANAGER, sRules, sTempPasswd);
+      pCmdQueue->TriggerRequest(Kartina::REQ_SET_VOD_MANAGER, sRules, sTempPasswd);
    }
 
-   slotLockParentalManager();
+   QTimer::singleShot(1000, this, SLOT(slotLockParentalManager()));
 }
 
 /* -----------------------------------------------------------------\

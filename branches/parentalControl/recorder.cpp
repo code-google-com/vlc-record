@@ -233,23 +233,24 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
       connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
       connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
    }
-   connect (&vlcCtrl,      SIGNAL(sigVlcStarts(int)), this, SLOT(slotVlcStarts(int)));
-   connect (&vlcCtrl,      SIGNAL(sigVlcEnds(int)), this, SLOT(slotVlcEnds(int)));
-   connect (&timeRec,      SIGNAL(sigShutdown()), this, SLOT(slotShutdown()));
+   connect (&vlcCtrl,       SIGNAL(sigVlcStarts(int)), this, SLOT(slotVlcStarts(int)));
+   connect (&vlcCtrl,       SIGNAL(sigVlcEnds(int)), this, SLOT(slotVlcEnds(int)));
+   connect (&timeRec,       SIGNAL(sigShutdown()), this, SLOT(slotShutdown()));
    connect (ui->channelList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotChanListContext(QPoint)));
-   connect (&favContext,   SIGNAL(triggered(QAction*)), this, SLOT(slotChgFavourites(QAction*)));
-   connect (this,          SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
-   connect (&KartinaTv,    SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
+   connect (&favContext,    SIGNAL(triggered(QAction*)), this, SLOT(slotChgFavourites(QAction*)));
+   connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
+   connect (&KartinaTv,     SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
+   connect (&KartinaTv,     SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
-   connect (&KartinaTv,    SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
+   connect (&KartinaTv,     SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
+   connect (&KartinaTv,     SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
    connect (&KartinaTv,     SIGNAL(sigGotChanListAll(QString)), &Settings, SLOT(slotBuildChanManager(QString)));
    connect (&KartinaTv,     SIGNAL(sigGotVodManager(QString)), &Settings, SLOT(slotBuildVodManager(QString)));
+   connect (this,           SIGNAL(sigLockParentalManager()), &Settings, SLOT(slotLockParentalManager()));
 
-#if 1
+#if 0
    connect (&KartinaTv,    SIGNAL(sigChanHidden(QString)), this, SLOT(slotDumpInfoLog(QString)));
    connect (&KartinaTv,    SIGNAL(sigChanShown(QString)), this, SLOT(slotDumpInfoLog(QString)));
 #endif
@@ -633,6 +634,9 @@ void Recorder::on_pushSettings_clicked()
          }
       }
    }
+
+   // lock parental manager ...
+   emit sigLockParentalManager();
 
    if (Settings.HideToSystray())
    {
@@ -2398,6 +2402,7 @@ void Recorder::slotGotVodGenres(QString str)
 {
    QVector<cparser::SGenre> vGenres;
    QVector<cparser::SGenre>::const_iterator cit;
+   QString sName;
 
    // delete content ...
    ui->cbxGenre->clear();
@@ -2409,7 +2414,10 @@ void Recorder::slotGotVodGenres(QString str)
 
       for (cit = vGenres.constBegin(); cit != vGenres.constEnd(); cit ++)
       {
-         ui->cbxGenre->addItem((*cit).sGName, QVariant((int)(*cit).uiGid));
+         // make first genre character upper case ...
+         sName    = (*cit).sGName;
+         sName[0] = sName[0].toUpper();
+         ui->cbxGenre->addItem(sName, QVariant((int)(*cit).uiGid));
       }
    }
 
