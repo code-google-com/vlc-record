@@ -39,11 +39,6 @@
       "key_sequence VARCHAR(25) NULL DEFAULT NULL,"\
       "PRIMARY KEY (target, slot))"
 
-#define TAB_VOD_FAV \
-"CREATE TABLE vodFav ("\
-      "vodid integer PRIMARY KEY NOT NULL UNIQUE,"\
-      "descr tiny text NOT NULL)"
-
 #endif // __130610_TABLES_H
 /************************* History ***************************\
 | $Log$
