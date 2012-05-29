@@ -50,12 +50,14 @@ public:
     const QString& getName ();
     const QString& getShortContent ();
     void setSettings (CSettingsDlg *pDlg);
+    void setFavVector (QVector<uint> *pFav);
 
 private:
     QVector<cparser::SVodVideo> vVideos;
     QString sName;
     QString sShortContent;
-    CSettingsDlg *pSettings;
+    CSettingsDlg  *pSettings;
+    QVector<uint> *pFavourites;
 };
 
 #endif // __21122010_CVODBROWSER_H
