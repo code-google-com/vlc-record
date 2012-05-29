@@ -194,6 +194,15 @@ void CWaitTrigger::run()
             case Kartina::REQ_SET_VOD_MANAGER:
                pClient->setVodManager(cmd.sOptArg1, cmd.sOptArg2);
                break;
+            case Kartina::REQ_ADD_VOD_FAV:
+               pClient->addVodFav(cmd.iOptArg1);
+               break;
+            case Kartina::REQ_REM_VOD_FAV:
+               pClient->remVodFav(cmd.iOptArg1);
+               break;
+            case Kartina::REQ_GET_VOD_FAV:
+               pClient->getVodFav();
+               break;
             default:
                break;
             }
