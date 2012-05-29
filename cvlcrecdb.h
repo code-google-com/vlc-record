@@ -71,10 +71,6 @@ public:
    int     ask(QSqlQuery &query);
    QString getShortCut (const QString &sTarget, const QString &sSlot);
    int     setShortCut (const QString &sTarget, const QString &sSlot, const QString &sShortCut);
-   int     addVodFav (int id, const QString& descr);
-   int     delVodFav (int id);
-   bool    isVodFav (int id);
-   QString vodFavDercr (int id);
 
 protected:
    int checkDb();

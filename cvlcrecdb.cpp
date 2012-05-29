@@ -93,9 +93,9 @@ int CVlcRecDB::checkDb()
       iRV |= query.exec(TAB_TIMERREC) ? 0 : -1;
    }
 
-   if (!lAllTabs.contains("vodFav"))
+   if (!lAllTabs.contains("shortcuts"))
    {
-      iRV |= query.exec(TAB_VOD_FAV) ? 0 : -1;
+      iRV |= query.exec(TAB_SHORTCUTS) ? 0 : -1;
    }
 
    return iRV;
@@ -386,99 +386,6 @@ QString CVlcRecDB::getShortCut(const QString &sTarget, const QString &sSlot)
    query.prepare("SELECT key_sequence FROM shortcuts WHERE target=? AND slot=?");
    query.addBindValue(sTarget);
    query.addBindValue(sSlot);
-   query.exec();
-
-   if (query.first())
-   {
-      rv = query.value(0).toString();
-   }
-
-   return rv;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: addVodFav
-|  Begin: 21.05.2012
-|  Author: Jo2003
-|  Description: add a VOD favourite
-|
-|  Parameters: video id, description
-|
-|  Returns: 0 --> ok
-|        else --> any error
-\----------------------------------------------------------------- */
-int CVlcRecDB::addVodFav (int id, const QString& descr)
-{
-   QSqlQuery query;
-   query.prepare("INSERT OR REPLACE INTO vodFav VALUES (?, ?)");
-   query.addBindValue(id);
-   query.addBindValue(descr);
-   return query.exec() ? 0 : -1;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: delVodFav
-|  Begin: 21.05.2012
-|  Author: Jo2003
-|  Description: delete a VOD favourite
-|
-|  Parameters: video id
-|
-|  Returns: 0 --> ok
-|        else --> any error
-\----------------------------------------------------------------- */
-int CVlcRecDB::delVodFav (int id)
-{
-   QSqlQuery query;
-   query.prepare("DELETE FROM vodFav WHERE vodid='?'");
-   query.addBindValue(id);
-   return query.exec() ? 0 : -1;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: isVodFav
-|  Begin: 21.05.2012
-|  Author: Jo2003
-|  Description: check if a video is a favourite
-|
-|  Parameters: video id
-|
-|  Returns: false --> not a favourite
-|            true --> favourite
-\----------------------------------------------------------------- */
-bool CVlcRecDB::isVodFav (int id)
-{
-   QSqlQuery query;
-   bool bRV = false;
-   query.prepare("SELECT count(*) FROM vodFav WHERE vodid='?'");
-   query.addBindValue(id);
-   query.exec();
-
-   if (query.first())
-   {
-      bRV = !!query.value(0).toInt();
-   }
-
-   return bRV;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: vodFavDercr
-|  Begin: 21.05.2012
-|  Author: Jo2003
-|  Description: get video description
-|
-|  Parameters: video id
-|
-|  Returns: "" --> not a favourite
-|         else --> description
-\----------------------------------------------------------------- */
-QString CVlcRecDB::vodFavDercr (int id)
-{
-   QString   rv;
-   QSqlQuery query;
-   query.prepare("SELECT descr FROM vodFav WHERE vodid='?'");
-   query.addBindValue(id);
    query.exec();
 
    if (query.first())
