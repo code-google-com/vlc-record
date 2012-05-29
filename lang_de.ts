@@ -254,38 +254,38 @@ p, li { white-space: pre-wrap; }
         <location filename="ckartinaclnt.cpp" line="609"/>
         <source>Hide channel(s) %1 from channel list ...</source>
         <oldsource>Hide channel %1 from channel list ...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="632"/>
         <source>Show channel(s) %1 in channel list ...</source>
         <oldsource>Show channel %1 in channel list ...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="655"/>
         <source>Request VOD manager data ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="678"/>
         <source>Set VOD manager data (%1) ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="701"/>
         <source>Add VOD favourite (%1) ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="721"/>
         <source>Remove VOD favourite (%1) ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="741"/>
         <source>Get VOD favourites (%1) ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="776"/>
@@ -589,12 +589,12 @@ p, li { white-space: pre-wrap; }
   --&gt; %1</source>
         <oldsource>Show Ad:
  -&gt; %1</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="601"/>
         <source>Can&apos;t create media list ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="610"/>
@@ -732,22 +732,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="csettingsdlg.cpp" line="1446"/>
         <source>hide</source>
-        <translation type="unfinished"></translation>
+        <translation>verstecken</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="1447"/>
         <source>show</source>
-        <translation type="unfinished"></translation>
+        <translation>zeigen</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="1448"/>
         <source>password protected</source>
-        <translation type="unfinished"></translation>
+        <translation>passwortgeschützt</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="1628"/>
         <source>Changed VOD Rate: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="14"/>
@@ -887,7 +887,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="617"/>
         <source>Show Ads</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Reklame</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="670"/>
@@ -907,17 +907,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="792"/>
         <source>Select Channels to hide:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Verbergen Kanal markieren:</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="818"/>
         <source>VOD Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Video Manager</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="879"/>
         <source>Save and &amp;Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern und V&amp;erlassen</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="572"/>
@@ -1029,22 +1029,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="705"/>
         <source>Parental Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Elternmanager</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="724"/>
         <source>Please enter security code:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte Sicherheitskod eingeben:</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="740"/>
         <source>Enter Site</source>
-        <translation type="unfinished"></translation>
+        <translation>Zugang</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="774"/>
         <source>Channel Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanalmanager</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="924"/>
@@ -1439,12 +1439,12 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="cvodbrowser.cpp" line="225"/>
         <source>Remove from favourites.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus den Favoriten entfernen.</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="232"/>
         <source>Add to favourites.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu Favoriten hinzufügen.</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="183"/>
@@ -1639,7 +1639,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="recorder.cpp" line="3763"/>
         <source>Exclude &apos;%1&apos; from channel list (hidden: %2, protected: %3).</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4194"/>
@@ -1758,12 +1758,12 @@ dataDir: %1
         <source>
   --&gt; HTTP Response &apos;%1&apos;, calling &apos;%2&apos;</source>
         <oldsource>Incoming HTTP Response &apos;%1&apos;, calling &apos;%2&apos; ...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1698"/>
         <source>Using following timeshift: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1911"/>
@@ -1805,7 +1805,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="2564"/>
         <source>My Favourites</source>
-        <translation type="unfinished"></translation>
+        <translation>Meine Favoriten</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3063"/>
