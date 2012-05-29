@@ -114,6 +114,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // set settings for vod browser ...
    ui->vodBrowser->setSettings(&Settings);
 
+   // set favourites vector ...
+   ui->vodBrowser->setFavVector(&vodFavVector);
+
    // set log level ...
    VlcLog.SetLogLevel(Settings.GetLogLevel());
 
@@ -1071,18 +1074,26 @@ void Recorder::on_pushFwd_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_cbxGenre_activated(int index)
 {
-   int     iGid  = ui->cbxGenre->itemData(index).toInt();
-   QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
-   QUrl    url;
+   int iGid  = ui->cbxGenre->itemData(index).toInt();
 
-   url.addQueryItem("type", sType);
-
-   if (iGid != -1)
+   if (iGid == -2) // VOD favourites ...
    {
-      url.addQueryItem("genre", QString::number(iGid));
+      Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV);
    }
+   else
+   {
+      QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+      QUrl    url;
 
-   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+      url.addQueryItem("type", sType);
+
+      if (iGid != -1)
+      {
+         url.addQueryItem("genre", QString::number(iGid));
+      }
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -1097,18 +1108,23 @@ void Recorder::on_cbxGenre_activated(int index)
 \----------------------------------------------------------------- */
 void Recorder::on_cbxLastOrBest_activated(int index)
 {
-   int     iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
-   QString sType = ui->cbxLastOrBest->itemData(index).toString();
-   QUrl    url;
+   int iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
 
-   url.addQueryItem("type", sType);
-
-   if (iGid != -1)
+   // vod favourites have no type (last / best) ...
+   if (iGid != -2)
    {
-      url.addQueryItem("genre", QString::number(iGid));
-   }
+      QString sType = ui->cbxLastOrBest->itemData(index).toString();
+      QUrl    url;
 
-   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+      url.addQueryItem("type", sType);
+
+      if (iGid != -1)
+      {
+         url.addQueryItem("genre", QString::number(iGid));
+      }
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -1458,8 +1474,20 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    mkCase(Kartina::REQ_GET_VOD_MANAGER, Settings.slotBuildVodManager(resp));
 
    ///////////////////////////////////////////////
+   // got requested VOD favourites
+   // fill vodFavVector, request first VOD page
+   mkCase(Kartina::REQ_GET_VOD_FAV_IDS, slotGotVodFavIDs(resp));
+
+   ///////////////////////////////////////////////
+   // handle vod favourites like vod genre to display
+   // all videos in favourites
+   mkCase(Kartina::REQ_GET_VOD_FAV, slotGotVideos(resp));
+
+   ///////////////////////////////////////////////
    // Make sure the unused responses are listed
    // This makes it easier to understand the log.
+   mkCase(Kartina::REQ_ADD_VOD_FAV, slotUnused(resp));
+   mkCase(Kartina::REQ_REM_VOD_FAV, slotUnused(resp));
    mkCase(Kartina::REQ_SET_VOD_MANAGER, slotUnused(resp));
    mkCase(Kartina::REQ_SETCHAN_SHOW, slotUnused(resp));
    mkCase(Kartina::REQ_SETCHAN_HIDE, slotUnused(resp));
@@ -1487,11 +1515,7 @@ void Recorder::slotKartinaResponse(QString resp, int req)
 \----------------------------------------------------------------- */
 void Recorder::slotUnused(const QString &str)
 {
-#ifdef QT_NO_DEBUG
-   Q_UNUSED(str)
-#else
-   mInfo(tr("Unused HTTP Response:\n  --> %1\n").arg(str));
-#endif
+   XMLParser.checkResponse(str, __FUNCTION__, __LINE__);
 }
 
 /* -----------------------------------------------------------------\
@@ -2537,6 +2561,7 @@ void Recorder::slotGotVodGenres(const QString &str)
    {
       // fill genres combo box ...
       ui->cbxGenre->addItem(tr("All"), QVariant((int)-1));
+      ui->cbxGenre->addItem(tr("My Favourites"), QVariant((int)-2));
 
       for (cit = vGenres.constBegin(); cit != vGenres.constEnd(); cit ++)
       {
@@ -2588,8 +2613,8 @@ void Recorder::slotGotVideos(const QString &str)
 
          dwnVodPics.setPictureList(lPix);
 
-         // get normal video view ...
-         on_cbxGenre_activated(0);
+         // get favourite video ids ...
+         Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV_IDS);
       }
       else
       {
@@ -2598,6 +2623,35 @@ void Recorder::slotGotVideos(const QString &str)
          ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText());
       }
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotGotVodFavIDs [slot]
+|  Begin: 29.05.2012
+|  Author: Jo2003
+|  Description: find out which are our favourite videos
+|
+|  Parameters: response string (XML)
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotGotVodFavIDs(const QString &str)
+{
+   QVector<cparser::SVodVideo> vVodList;
+   cparser::SGenreInfo gInfo;
+
+   if (!XMLParser.parseVodList(str, vVodList, gInfo))
+   {
+      vodFavVector.clear();
+
+      for (int i = 0; i < vVodList.count(); i++)
+      {
+         vodFavVector.append(vVodList[i].uiVidId);
+      }
+   }
+
+   // get normal video view ...
+   on_cbxGenre_activated(0);
 }
 
 /* -----------------------------------------------------------------\
@@ -2644,6 +2698,27 @@ void Recorder::slotVodAnchor(const QUrl &link)
       {
          ok = true;
       }
+   }
+   else if (action == "add_fav")
+   {
+      id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
+      vodFavVector.append((uint)id);
+      Trigger.TriggerRequest(Kartina::REQ_ADD_VOD_FAV, id);
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
+   }
+   else if (action == "del_fav")
+   {
+      id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
+      for (int i = 0; i < vodFavVector.count(); i++)
+      {
+         if (vodFavVector[i] == (uint)id)
+         {
+            vodFavVector.remove(i);
+            break;
+         }
+      }
+      Trigger.TriggerRequest(Kartina::REQ_REM_VOD_FAV, id);
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
    }
 
    if (ok)

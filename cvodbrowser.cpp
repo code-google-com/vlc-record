@@ -17,9 +17,6 @@ extern CLogFile VlcLog;
 // for folders ...
 extern CDirStuff *pFolders;
 
-// settings db ...
-extern CVlcRecDB *pDb;
-
 /* -----------------------------------------------------------------\
 |  Method: CVodBrowser / constructor
 |  Begin: 21.12.2010 / 10:11
@@ -32,7 +29,8 @@ extern CVlcRecDB *pDb;
 \----------------------------------------------------------------- */
 CVodBrowser::CVodBrowser(QWidget *parent) : QTextBrowser(parent)
 {
-   pSettings = NULL;
+   pSettings   = NULL;
+   pFavourites = NULL;
 }
 
 /* -----------------------------------------------------------------\
@@ -65,6 +63,21 @@ void CVodBrowser::setSettings(CSettingsDlg *pDlg)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: setFavVector
+|  Begin: 29.05.2012
+|  Author: Jo2003
+|  Description: set favourites vector
+|
+|  Parameters: pointer to fav vector from Recorder class
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CVodBrowser::setFavVector(QVector<uint> *pFav)
+{
+   pFavourites = pFav;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: displayVodList
 |  Begin: 21.12.2010 / 10:11
 |  Author: Jo2003
@@ -85,7 +98,7 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
       vVideos = vList;
    }
 
-   QString sTab, sRows, sCol, sVidTitle, sFav;
+   QString sTab, sRows, sCol, sVidTitle;
    QString sContent = HTML_SITE;
    QFileInfo info;
    sContent.replace(TMPL_TITLE, tr("VOD"));
@@ -118,27 +131,9 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                                          .arg(vList[j].sName).arg(vList[j].sCountry)
                                          .arg(vList[j].sYear));
 
-         // add favourite stuff ...
-         sFav = TEMPL_VOD_FAV;
-         if (pDb->isVodFav(vList[j].uiVidId))
-         {
-            // is favourite ...
-            sFav.replace(TMPL_IMG, ":/vod/is_fav");
-            sFav.replace(TMPL_TITLE, tr("Remove from favourites."));
-            sFav.replace(TMPL_LINK, QString("videothek?action=del_fav&vodid=%1").arg(vList[j].uiVidId));
-         }
-         else
-         {
-            // not a favourite ...
-            sFav.replace(TMPL_IMG, ":/vod/not_fav");
-            sFav.replace(TMPL_TITLE, tr("Add to favourites."));
-            sFav.replace(TMPL_LINK, QString("videothek?action=add_fav&vodid=%1").arg(vList[j].uiVidId));
-         }
-
-
          // add title below image ...
          sVidTitle = TMPL_VIDEO_TITLE;
-         sVidTitle.replace(TMPL_TITLE, QString("%1 %2").arg(sFav).arg(vList[j].sName));
+         sVidTitle.replace(TMPL_TITLE, vList[j].sName);
 
          // insert into row template ...
          sRows.replace((j == i) ? TMPL_VOD_L   : TMPL_VOD_R,   sCol);
@@ -177,6 +172,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    QString   sLinkTab;
    QString   sTitle;
    QString   sFormat;
+   QString   sFav;
    QFileInfo info(sInfo.sImg);
 
    // add css stuff ...
@@ -219,6 +215,24 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 
    // insert description ...
    sDoc.replace(TMPL_PROG, sInfo.sDescr);
+
+   // add favourite stuff ...
+   sFav = TEMPL_VOD_FAV;
+   if (pFavourites->contains(sInfo.uiVidId))
+   {
+      // is favourite ...
+      sFav.replace(TMPL_IMG, ":/vod/is_fav");
+      sFav.replace(TMPL_TITLE, tr("Remove from favourites."));
+      sFav.replace(TMPL_LINK, QString("videothek?action=del_fav&vodid=%1").arg(sInfo.uiVidId));
+   }
+   else
+   {
+      // not a favourite ...
+      sFav.replace(TMPL_IMG, ":/vod/not_fav");
+      sFav.replace(TMPL_TITLE, tr("Add to favourites."));
+      sFav.replace(TMPL_LINK, QString("videothek?action=add_fav&vodid=%1").arg(sInfo.uiVidId));
+   }
+   sDoc.replace(TMPL_FAVO, sFav);
 
    // for the short info we can end here ...
    sShortContent = sDoc;

@@ -164,7 +164,7 @@ private:
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
     Ui::STabWidget                  vodTabWidget;
-    QVector<int>                    vodFavVector;
+    QVector<uint>                   vodFavVector;
 #ifdef INCLUDE_LIBVLC
     QStackedLayout                 *stackedLayout;
     QVlcVideoWidget                *pVideoWidget;
@@ -276,6 +276,7 @@ private slots:
 
     void slotKartinaResponse(QString resp, int req);
     void slotUnused(const QString &str);
+    void slotGotVodFavIDs (const QString &str);
 
 signals:
     void sigShow ();

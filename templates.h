@@ -56,6 +56,7 @@
 #define TMPL_GENRE     "<!--{[%GENRE%]}-->"
 #define TMPL_NAME      "<!--{[%NAME%]}-->"
 #define TMPL_DESCR     "<!--{[%DESCR%]}-->"
+#define TMPL_FAVO      "<!--{[%FAVO%]}-->"
 
 #define EPG_TMPL  \
 "<table border='0' cellpadding='0' cellspacing='1' width='100%' style='color: black; background-color: #036; width: 100%;'>\n"\
@@ -73,7 +74,7 @@ TMPL_ROWS \
 
 #define TMPL_VIDEO_DETAILS \
 "<img class='floatright' src='" TMPL_IMG "' title='" TMPL_TITLE "' />\n" \
-"<h3>" TMPL_TITLE  "</h3>\n" \
+"<h3>" TMPL_TITLE  "</h3>&nbsp;&nbsp;<span>" TMPL_FAVO "</span>\n" \
 "<p style='color: #008800'>"  TMPL_GENRE  "</p>\n" \
 "<p style='color: #888888'>"  TMPL_TIME   "</p>\n" \
 "<p style='color: #880000'>"  TMPL_DIREC  "</p>\n" \
