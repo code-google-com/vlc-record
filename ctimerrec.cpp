@@ -933,7 +933,7 @@ void CTimerRec::slotRecTimer()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CTimerRec::slotTimerStreamUrl(QString str)
+void CTimerRec::slotTimerStreamUrl(const QString &str)
 {
    QString sCmdLine;
    Q_PID   vlcpid = 0;

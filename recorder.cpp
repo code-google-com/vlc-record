@@ -207,24 +207,25 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
 #endif /* INCLUDE_LIBVLC */
 
-   // connect signals and slots ...Поиск в телегиде
-   connect (&KartinaTv,    SIGNAL(sigLogout(QString)), this, SLOT(slotLogout(QString)));
+   // connect signals and slots ...
+   connect (&KartinaTv,    SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
+   // connect (&KartinaTv,    SIGNAL(sigLogout(QString)), this, SLOT(slotLogout(QString)));
    connect (&KartinaTv,    SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotEPG(QString)), this, SLOT(slotEPG(QString)));
-   connect (&KartinaTv,    SIGNAL(sigTimeShiftSet(QString)), this, SLOT(slotTimeShift(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotEPG(QString)), this, SLOT(slotEPG(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigTimeShiftSet(QString)), this, SLOT(slotTimeShift(QString)));
    connect (&streamLoader, SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
    connect (&Refresh,      SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
    connect (ui->textEpg,   SIGNAL(anchorClicked(QUrl)), this, SLOT(slotEpgAnchor(QUrl)));
    connect (&dwnLogos,     SIGNAL(sigPixReady()), this, SLOT(slotLogosReady()));
    connect (&Settings,     SIGNAL(sigReloadLogos()), this, SLOT(slotReloadLogos()));
-   connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
    connect (&Settings,     SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
    connect (&Settings,     SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
    connect (&Settings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
-   connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &timeRec, SLOT(slotTimerStreamUrl(QString)));
+   // connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &timeRec, SLOT(slotTimerStreamUrl(QString)));
    connect (&timeRec,      SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
    connect (&timeRec,      SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
    connect (&trayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
@@ -239,21 +240,16 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (ui->channelList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotChanListContext(QPoint)));
    connect (&favContext,    SIGNAL(triggered(QAction*)), this, SLOT(slotChgFavourites(QAction*)));
    connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
-   connect (&KartinaTv,     SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
-   connect (&KartinaTv,     SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
-   connect (&KartinaTv,     SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
-   connect (&KartinaTv,     SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
-   connect (&KartinaTv,     SIGNAL(sigGotChanListAll(QString)), &Settings, SLOT(slotBuildChanManager(QString)));
-   connect (&KartinaTv,     SIGNAL(sigGotVodManager(QString)), &Settings, SLOT(slotBuildVodManager(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotChanListAll(QString)), &Settings, SLOT(slotBuildChanManager(QString)));
+   // connect (&KartinaTv,     SIGNAL(sigGotVodManager(QString)), &Settings, SLOT(slotBuildVodManager(QString)));
    connect (this,           SIGNAL(sigLockParentalManager()), &Settings, SLOT(slotLockParentalManager()));
-
-#if 0
-   connect (&KartinaTv,    SIGNAL(sigChanHidden(QString)), this, SLOT(slotDumpInfoLog(QString)));
-   connect (&KartinaTv,    SIGNAL(sigChanShown(QString)), this, SLOT(slotDumpInfoLog(QString)));
-#endif
 
    // trigger read of saved timer records ...
    timeRec.ReadRecordList();
@@ -1369,6 +1365,136 @@ void Recorder::show()
 }
 
 /* -----------------------------------------------------------------\
+|  Method: slotKartinaResponse [slot]
+|  Begin: 29.05.2012
+|  Author: Jo2003
+|  Description: A central point to catch all http responses
+|               from kartina client.
+|               Please note: There is no real need for this
+|               function because signals / slots can be connected
+|               directly. The main goal of this function is to have
+|               a central point to find out which function is called
+|               when a certain response comes in.
+|
+|  Parameters: resp: response string
+|              req: request type as defined in Kartina workspace
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotKartinaResponse(QString resp, int req)
+{
+   // helper macro to have a nice info printout ...
+#define mkCase(__x__, __y__) \
+      case __x__: \
+         mInfo(tr("\n  --> HTTP Response '%1', calling '%2'").arg(#__x__).arg(#__y__)); \
+         __y__; \
+         break
+
+   switch ((Kartina::EReq)req)
+   {
+   ///////////////////////////////////////////////
+   // This function also grabs all settings
+   // from response. After that channel list
+   // will be requested.
+   mkCase(Kartina::REQ_COOKIE, slotCookie(resp));
+
+   ///////////////////////////////////////////////
+   // Fills channel list as well as channel map.
+   // Due to changing actual channel entry
+   // slotCurrentChannelChanged() will be called
+   // which requests the EPG ...
+   mkCase(Kartina::REQ_CHANNELLIST, slotChanList(resp));
+
+   ///////////////////////////////////////////////
+   // Fills EPG browser and triggers the load
+   // of VOD genres (if there in account info).
+   mkCase(Kartina::REQ_EPG, slotEPG(resp));
+
+   ///////////////////////////////////////////////
+   // Indicates that a new timeshift value was set.
+   // Triggers reload of channel list.
+   mkCase(Kartina::REQ_TIMESHIFT, slotTimeShift(resp));
+
+   ///////////////////////////////////////////////
+   // Got Stream URL, start play or record
+   mkCase(Kartina::REQ_STREAM, slotStreamURL(resp));
+
+   ///////////////////////////////////////////////
+   // Got requested stream url for timer record
+   mkCase(Kartina::REQ_TIMERREC, timeRec.slotTimerStreamUrl(resp));
+
+   ///////////////////////////////////////////////
+   // got requested archiv url
+   mkCase(Kartina::REQ_ARCHIV, slotArchivURL(resp));
+
+   ///////////////////////////////////////////////
+   // logout done
+   mkCase(Kartina::REQ_LOGOUT, slotLogout(resp));
+
+   ///////////////////////////////////////////////
+   // got requested VOD genres
+   mkCase(Kartina::REQ_GETVODGENRES, slotGotVodGenres(resp));
+
+   ///////////////////////////////////////////////
+   // got requested videos
+   mkCase(Kartina::REQ_GETVIDEOS, slotGotVideos(resp));
+
+   ///////////////////////////////////////////////
+   // got requested video details
+   mkCase(Kartina::REQ_GETVIDEOINFO, slotGotVideoInfo(resp));
+
+   ///////////////////////////////////////////////
+   // got requested vod url
+   mkCase(Kartina::REQ_GETVODURL, slotVodURL(resp));
+
+   ///////////////////////////////////////////////
+   // got complete channel list
+   // (used in settings dialog)
+   mkCase(Kartina::REQ_CHANLIST_ALL, Settings.slotBuildChanManager(resp));
+
+   ///////////////////////////////////////////////
+   // got requested VOD management data
+   // (used in settings dialog)
+   mkCase(Kartina::REQ_GET_VOD_MANAGER, Settings.slotBuildVodManager(resp));
+
+   ///////////////////////////////////////////////
+   // Make sure the unused responses are listed
+   // This makes it easier to understand the log.
+   mkCase(Kartina::REQ_SET_VOD_MANAGER, slotUnused(resp));
+   mkCase(Kartina::REQ_SETCHAN_SHOW, slotUnused(resp));
+   mkCase(Kartina::REQ_SETCHAN_HIDE, slotUnused(resp));
+   mkCase(Kartina::REQ_SETBITRATE, slotUnused(resp));
+   mkCase(Kartina::REQ_GETBITRATE, slotUnused(resp));
+   mkCase(Kartina::REQ_GETTIMESHIFT, slotUnused(resp));
+   mkCase(Kartina::REQ_GET_SERVER, slotUnused(resp));
+   mkCase(Kartina::REQ_SERVER, slotUnused(resp));
+   mkCase(Kartina::REQ_HTTPBUFF, slotUnused(resp));
+   default:
+      break;
+   }
+#undef mkCase
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotUnused
+|  Begin: 29.05.2012
+|  Author: Jo2003
+|  Description: an unused response was received
+|
+|  Parameters: unused response
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotUnused(const QString &str)
+{
+#ifdef QT_NO_DEBUG
+   Q_UNUSED(str)
+#else
+   mInfo(tr("Unused HTTP Response:\n  --> %1\n").arg(str));
+#endif
+}
+
+/* -----------------------------------------------------------------\
 |  Method: slotSystrayActivated
 |  Begin: 26.01.2010 / 16:05:00
 |  Author: Jo2003
@@ -1425,7 +1551,7 @@ void Recorder::slotErr(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotLogout(QString str)
+void Recorder::slotLogout(const QString &str)
 {
 
    XMLParser.checkResponse(str, __FUNCTION__, __LINE__);
@@ -1445,7 +1571,7 @@ void Recorder::slotLogout(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotStreamURL(QString str)
+void Recorder::slotStreamURL(const QString &str)
 {
    QString sChan, sShow, sUrl, sTime;
 
@@ -1497,7 +1623,7 @@ void Recorder::slotStreamURL(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotCookie (QString str)
+void Recorder::slotCookie (const QString &str)
 {
    QString sCookie;
 
@@ -1581,7 +1707,7 @@ void Recorder::slotCookie (QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotTimeShift (QString str)
+void Recorder::slotTimeShift (const QString &str)
 {
    if(!XMLParser.checkResponse(str, __FUNCTION__, __LINE__))
    {
@@ -1599,7 +1725,7 @@ void Recorder::slotTimeShift (QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotChanList (QString str)
+void Recorder::slotChanList (const QString &str)
 {
    QVector<cparser::SChan> chanList;
    QVector<cparser::SChan>::const_iterator cit;
@@ -1649,7 +1775,7 @@ void Recorder::slotChanList (QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotEPG(QString str)
+void Recorder::slotEPG(const QString &str)
 {
    QVector<cparser::SEpg> epg;
 
@@ -1891,7 +2017,7 @@ void Recorder::slotbtnNext_clicked()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotArchivURL(QString str)
+void Recorder::slotArchivURL(const QString &str)
 {
    QString sUrl;
 
@@ -2398,7 +2524,7 @@ void Recorder::slotDownloadStarted(int id, QString sFileName)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotGotVodGenres(QString str)
+void Recorder::slotGotVodGenres(const QString &str)
 {
    QVector<cparser::SGenre> vGenres;
    QVector<cparser::SGenre>::const_iterator cit;
@@ -2440,7 +2566,7 @@ void Recorder::slotGotVodGenres(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotGotVideos(QString str)
+void Recorder::slotGotVideos(const QString &str)
 {
    QVector<cparser::SVodVideo> vVodList;
    QVector<cparser::SVodVideo>::const_iterator cit;
@@ -2557,7 +2683,7 @@ void Recorder::slotVodAnchor(const QUrl &link)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotGotVideoInfo(QString str)
+void Recorder::slotGotVideoInfo(const QString &str)
 {
    cparser::SVodVideo vodInfo;
    if (!XMLParser.parseVideoInfo(str, vodInfo))
@@ -2576,7 +2702,7 @@ void Recorder::slotGotVideoInfo(QString str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotVodURL(QString str)
+void Recorder::slotVodURL(const QString &str)
 {
    QStringList sUrls;
 
@@ -2968,21 +3094,6 @@ void Recorder::slotToogleFullscreen()
    }
 }
 #endif // INCLUDE_LIBVLC
-
-/* -----------------------------------------------------------------\
-|  Method: slotDumpInfoLog [slot]
-|  Begin: 14.05.2012
-|  Author: Jo2003
-|  Description: dumb logger
-|
-|  Parameters: string to log
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void Recorder::slotDumpInfoLog (QString str)
-{
-   mInfo(tr("Dumb log:\n  --> %1").arg(str));
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //

@@ -164,6 +164,7 @@ private:
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
     Ui::STabWidget                  vodTabWidget;
+    QVector<int>                    vodFavVector;
 #ifdef INCLUDE_LIBVLC
     QStackedLayout                 *stackedLayout;
     QVlcVideoWidget                *pVideoWidget;
@@ -231,12 +232,12 @@ private slots:
     void on_pushLive_clicked();
     void on_channelList_clicked(QModelIndex index);
     void slotErr (QString str);
-    void slotChanList (QString str);
-    void slotEPG(QString str);
-    void slotStreamURL (QString str);
-    void slotArchivURL (QString str);
-    void slotCookie (QString str);
-    void slotTimeShift (QString str);
+    void slotChanList (const QString &str);
+    void slotEPG(const QString &str);
+    void slotStreamURL (const QString &str);
+    void slotArchivURL (const QString &str);
+    void slotCookie (const QString &str);
+    void slotTimeShift (const QString &str);
     void slotEpgAnchor (const QUrl & link);
     void slotLogosReady ();
     void slotReloadLogos ();
@@ -254,13 +255,13 @@ private slots:
     void slotFavBtnContext (const QPoint &pt);
     void slotSplashScreen ();
     void slotIncPlayState (int);
-    void slotLogout (QString str);
+    void slotLogout (const QString &str);
     void slotDownloadStarted (int id, QString sFileName);
-    void slotGotVodGenres (QString str);
-    void slotGotVideos (QString str);
+    void slotGotVodGenres (const QString &str);
+    void slotGotVideos (const QString &str);
     void slotVodAnchor (const QUrl &link);
-    void slotGotVideoInfo (QString str);
-    void slotVodURL(QString str);
+    void slotGotVideoInfo (const QString &str);
+    void slotVodURL(const QString &str);
     void slotSetBitrate (int iRate);
     void slotSetTimeShift (int iShift);
     void slotChannelDown();
@@ -272,7 +273,9 @@ private slots:
     void slotStartConnectionChain();
     void slotUpdateAnswer (QNetworkReply* pRes);
     void slotCheckArchProg(ulong ulArcGmt);
-    void slotDumpInfoLog (QString str);
+
+    void slotKartinaResponse(QString resp, int req);
+    void slotUnused(const QString &str);
 
 signals:
     void sigShow ();

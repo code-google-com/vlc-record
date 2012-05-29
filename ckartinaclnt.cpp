@@ -684,6 +684,65 @@ void CKartinaClnt::setVodManager(const QString &rules, const QString &secCode)
 }
 
 /*-----------------------------------------------------------------------------\
+| Function:    addVodFav
+|
+| Author:      Jo2003
+|
+| Begin:       29.05.2012
+|
+| Description: add one video to favourites
+|
+| Parameters:  video id
+|
+| Returns:     --
+\-----------------------------------------------------------------------------*/
+void CKartinaClnt::addVodFav(int iVidID)
+{
+   mInfo(tr("Add VOD favourite (%1) ...").arg(iVidID));
+   PostRequest(Kartina::REQ_ADD_VOD_FAV, KARTINA_API_PATH "vod_favadd",
+               QString("id=%1").arg(iVidID));
+}
+
+/*-----------------------------------------------------------------------------\
+| Function:    remVodFav
+|
+| Author:      Jo2003
+|
+| Begin:       29.05.2012
+|
+| Description: remove one video from favourites
+|
+| Parameters:  video id
+|
+| Returns:     --
+\-----------------------------------------------------------------------------*/
+void CKartinaClnt::remVodFav(int iVidID)
+{
+   mInfo(tr("Remove VOD favourite (%1) ...").arg(iVidID));
+   PostRequest(Kartina::REQ_REM_VOD_FAV, KARTINA_API_PATH "vod_favsub",
+               QString("id=%1").arg(iVidID));
+}
+
+/*-----------------------------------------------------------------------------\
+| Function:    getVodFav
+|
+| Author:      Jo2003
+|
+| Begin:       29.05.2012
+|
+| Description: request vod favourites
+|
+| Parameters:  --
+|
+| Returns:     --
+\-----------------------------------------------------------------------------*/
+void CKartinaClnt::getVodFav()
+{
+   mInfo(tr("Get VOD favourites (%1) ..."));
+   GetRequest(Kartina::REQ_GET_VOD_FAV, KARTINA_API_PATH "vod_favlist");
+}
+
+/*-----------------------------------------------------------------------------\
 | Function:    handleEndRequest (slot)
 |
 | Author:      Jo2003
@@ -715,82 +774,14 @@ void CKartinaClnt::handleEndRequest(int id, bool err)
       {
          mInfo(tr("Request #%1 (%2) done!").arg(id).arg(eReq));
 
-         // send signals dependet on ended request ...
-         switch (eReq)
+         // unset cookie on logout ...
+         if (eReq == Kartina::REQ_LOGOUT)
          {
-         case Kartina::REQ_COOKIE:
-            emit sigGotCookie(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_CHANNELLIST:
-            emit sigGotChannelList(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_TIMESHIFT:
-            emit sigTimeShiftSet(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_EPG:
-            emit sigGotEPG(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_SERVER:
-            emit sigServerChanged(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_HTTPBUFF:
-            emit sigBufferSet(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_STREAM:
-            emit sigGotStreamURL(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_TIMERREC:
-            emit sigGotTimerStreamURL (QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_ARCHIV:
-            emit sigGotArchivURL(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GET_SERVER:
-            emit sigSrvForm (QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_LOGOUT:
-            sCookie = "";
-            emit sigLogout (QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETTIMESHIFT:
-            emit sigGotTimeShift(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETVODGENRES:
-            emit sigGotVodGenres(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETVIDEOS:
-            emit sigGotVideos(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETVIDEOINFO:
-            emit sigGotVideoInfo(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETVODURL:
-            emit sigGotVodUrl(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GETBITRATE:
-            emit sigGotBitRate(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_SETBITRATE:
-            emit sigBitrateChanged(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_SETCHAN_HIDE:
-            emit sigChanHidden(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_SETCHAN_SHOW:
-            emit sigChanShown(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_CHANLIST_ALL:
-            emit sigGotChanListAll(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_GET_VOD_MANAGER:
-            emit sigGotVodManager(QString::fromUtf8(baPageContent.constData()));
-            break;
-         case Kartina::REQ_SET_VOD_MANAGER:
-            emit sigSetVodManager(QString::fromUtf8(baPageContent.constData()));
-            break;
-         default:
-            break;
+             sCookie = "";
          }
+
+         // send response ...
+         emit sigHttpResponse(QString::fromUtf8(baPageContent.constData()), (int)eReq);
       }
       else
       {

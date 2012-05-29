@@ -1405,7 +1405,6 @@ void CSettingsDlg::slotBuildChanManager(const QString &str)
 \----------------------------------------------------------------- */
 void CSettingsDlg::slotBuildVodManager(const QString &str)
 {
-   mInfo(tr("VodManager:\n  --> %1\n").arg(str));
    vodRatesVector.clear();
 
    QLayout      *pLayout = m_ui->scrollAreaContents->layout();

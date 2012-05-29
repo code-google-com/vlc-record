@@ -56,6 +56,9 @@ namespace Kartina {
       REQ_SETCHAN_SHOW,
       REQ_GET_VOD_MANAGER,
       REQ_SET_VOD_MANAGER,
+      REQ_ADD_VOD_FAV,
+      REQ_REM_VOD_FAV,
+      REQ_GET_VOD_FAV,
       REQ_UNKNOWN = 255
    };
 }
@@ -108,6 +111,9 @@ public:
    void setChanShow (const QString &cids, const QString &secCode);
    void getVodManager (const QString &secCode);
    void setVodManager (const QString &rules, const QString &secCode);
+   void addVodFav (int iVidID);
+   void remVodFav (int iVidID);
+   void getVodFav ();
 
 protected:
    void PostRequest (Kartina::EReq req, const QString &path, const QString &content,
@@ -131,30 +137,8 @@ private slots:
    void handleEndRequest (int id, bool err);
 
 signals:
-   void sigGotCookie (QString str);
-   void sigGotTimeShift (QString str);
-   void sigGotBitRate (QString str);
-   void sigTimeShiftSet (QString str);
-   void sigGotChannelList (QString str);
-   void sigGotChanListAll (QString str);
-   void sigGotEPG (QString str);
-   void sigGotVodGenres (QString str);
-   void sigGotStreamURL (QString str);
-   void sigGotTimerStreamURL (QString str);
-   void sigGotArchivURL (QString str);
-   void sigServerChanged (QString str);
-   void sigBitrateChanged (QString str);
-   void sigBufferSet (QString str);
-   void sigSrvForm (QString str);
    void sigError (QString str);
-   void sigLogout (QString str);
-   void sigGotVideos (QString str);
-   void sigGotVideoInfo (QString str);
-   void sigGotVodUrl (QString str);
-   void sigChanHidden (QString str);
-   void sigChanShown (QString str);
-   void sigGotVodManager(QString str);
-   void sigSetVodManager(QString str);
+   void sigHttpResponse(QString str, int iReq);
 };
 
 #endif /* __201004161114_CKARTINACLNT_H */
