@@ -523,6 +523,12 @@ int CPlayer::playMedia(const QString &sCmdLine)
       iRV = initPlayer();
    }
 
+   // make sure we stop the player - needed since playlist support ...
+   if (isPlaying())
+   {
+       stop();
+   }
+
    if (!iRV)
    {
       mInfo(tr("Use following URL:\n  --> %1").arg(sMrl));
