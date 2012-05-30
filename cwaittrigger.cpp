@@ -168,10 +168,10 @@ void CWaitTrigger::run()
                pClient->GetVideos(cmd.sOptArg1);
                break;
             case Kartina::REQ_GETVIDEOINFO:
-               pClient->GetVideoInfo(cmd.iOptArg1);
+               pClient->GetVideoInfo(cmd.iOptArg1, cmd.sOptArg1);
                break;
             case Kartina::REQ_GETVODURL:
-               pClient->GetVodUrl(cmd.iOptArg1);
+               pClient->GetVodUrl(cmd.iOptArg1, cmd.sOptArg1);
                break;
             case Kartina::REQ_GETBITRATE:
                pClient->GetBitRate();
@@ -195,10 +195,10 @@ void CWaitTrigger::run()
                pClient->setVodManager(cmd.sOptArg1, cmd.sOptArg2);
                break;
             case Kartina::REQ_ADD_VOD_FAV:
-               pClient->addVodFav(cmd.iOptArg1);
+               pClient->addVodFav(cmd.iOptArg1, cmd.sOptArg1);
                break;
             case Kartina::REQ_REM_VOD_FAV:
-               pClient->remVodFav(cmd.iOptArg1);
+               pClient->remVodFav(cmd.iOptArg1, cmd.sOptArg1);
                break;
             case Kartina::REQ_GET_VOD_FAV:
                pClient->getVodFav();
@@ -260,6 +260,28 @@ void CWaitTrigger::TriggerRequest (Kartina::EReq req, const QString &sReq1, cons
    cmd.iOptArg2 = -1;
    cmd.sOptArg1 = sReq1;
    cmd.sOptArg2 = sReq2;
+   queueIn(cmd);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: TriggerRequest
+|  Begin: 30.05.2012
+|  Author: Jo2003
+|  Description: request kartina action
+|
+|  Parameters: action, action params
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CWaitTrigger::TriggerRequest (Kartina::EReq req, int iArg1, const QString &sArg1)
+{
+   CommandQueue::SCmd cmd;
+
+   cmd.eReq     = req;
+   cmd.iOptArg1 = iArg1;
+   cmd.iOptArg2 = -1;
+   cmd.sOptArg1 = sArg1;
+   cmd.sOptArg2 = "";
    queueIn(cmd);
 }
 

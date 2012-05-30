@@ -95,7 +95,7 @@ public:
    void GetTimeShift ();
    void GetStreamURL (int iChanID, bool bTimerRec = false);
    void GetArchivURL (const QString &prepared);
-   void GetVodUrl (int iVidId);
+   void GetVodUrl (int iVidId, const QString &secCode);
    void GetVodGenres ();
    void SetServer (const QString& sIp);
    void GetServer ();
@@ -104,7 +104,7 @@ public:
    void SetHttpBuffer (int iTime);
    void GetEPG (int iChanID, int iOffset = 0);
    void GetVideos (const QString &sPrepared);
-   void GetVideoInfo (int iVodID);
+   void GetVideoInfo (int iVodID, const QString &secCode = QString());
    void SetCookie (const QString &cookie);
    bool busy ();
    bool cookieSet();
@@ -112,8 +112,8 @@ public:
    void setChanShow (const QString &cids, const QString &secCode);
    void getVodManager (const QString &secCode);
    void setVodManager (const QString &rules, const QString &secCode);
-   void addVodFav (int iVidID);
-   void remVodFav (int iVidID);
+   void addVodFav (int iVidID, const QString &secCode);
+   void remVodFav (int iVidID, const QString &secCode);
    void getVodFav (bool bIDs = false);
 
 protected:

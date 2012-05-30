@@ -330,7 +330,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
        }
        break;
     default:
-        break;
+       break;
     }
 }
 
