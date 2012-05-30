@@ -175,6 +175,7 @@ private:
 protected:
     void fillShortCutTab();
     void touchLastOrBestCbx ();
+    void touchGenreCbx();
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int StartVlcRec (const QString &sURL, const QString &sChannel);
     int StartVlcPlay (const QString &sURL);
