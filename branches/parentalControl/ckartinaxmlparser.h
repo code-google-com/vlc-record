@@ -96,6 +96,7 @@ namespace cparser
       QString sDirector;
       QString sGenres;
       uint    uiLength;
+      bool    bProtected;
       QVector<cparser::SVodFileInfo> vVodFiles;
    };
 
@@ -176,6 +177,7 @@ protected:
    int parseChannels(QXmlStreamReader &xml, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseStreamParams (QXmlStreamReader &xml, QVector<cparser::STimeShift>& vTs);
    int oneLevelParser (const QString &sEndElement, const QStringList& slNeeded, QMap<QString, QString>& mResults);
+   int ignoreUntil(const QString &sEndElement);
 
 
 private:

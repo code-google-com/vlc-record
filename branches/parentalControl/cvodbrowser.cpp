@@ -98,7 +98,7 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
       vVideos = vList;
    }
 
-   QString sTab, sRows, sCol, sVidTitle;
+   QString sTab, sRows, sCol, sVidTitle, sLock;
    QString sContent = HTML_SITE;
    QFileInfo info;
    sContent.replace(TMPL_TITLE, tr("VOD"));
@@ -117,8 +117,9 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
          sCol = TMPL_IMG_LINK;
 
          // add link ...
-         sCol.replace(TMPL_LINK,  QString("videothek?action=vod_info&vodid=%1")
-                                         .arg(vList[j].uiVidId));
+         sCol.replace(TMPL_LINK,  QString("videothek?action=vod_info&vodid=%1&pass_protect=%2")
+                      .arg(vList[j].uiVidId)
+                      .arg(vList[j].bProtected ? 1 : 0));
 
          // add image ...
          info.setFile(vList[j].sImg);
@@ -131,9 +132,18 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                                          .arg(vList[j].sName).arg(vList[j].sCountry)
                                          .arg(vList[j].sYear));
 
+         sLock = "";
+         // show if video is protected ...
+         if (vList[j].bProtected)
+         {
+            sLock = TMPL_HTML_ICON;
+            sLock.replace(TMPL_IMG, ":/access/locked");
+            sLock.replace(TMPL_TITLE, tr("password protected"));
+         }
+
          // add title below image ...
          sVidTitle = TMPL_VIDEO_TITLE;
-         sVidTitle.replace(TMPL_TITLE, vList[j].sName);
+         sVidTitle.replace(TMPL_TITLE, QString("%1%2").arg(sLock).arg(vList[j].sName));
 
          // insert into row template ...
          sRows.replace((j == i) ? TMPL_VOD_L   : TMPL_VOD_R,   sCol);
@@ -216,6 +226,11 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    // insert description ...
    sDoc.replace(TMPL_PROG, sInfo.sDescr);
 
+   // for the short info we can end here ...
+   sShortContent = sDoc;
+   sShortContent.replace(TMPL_LINK, "");
+   sShortContent.replace(TMPL_FAVO, "");
+
    // add favourite stuff ...
    sFav = TEMPL_VOD_FAV;
    if (pFavourites->contains(sInfo.uiVidId))
@@ -223,20 +238,20 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       // is favourite ...
       sFav.replace(TMPL_IMG, ":/vod/is_fav");
       sFav.replace(TMPL_TITLE, tr("Remove from favourites."));
-      sFav.replace(TMPL_LINK, QString("videothek?action=del_fav&vodid=%1").arg(sInfo.uiVidId));
+      sFav.replace(TMPL_LINK, QString("videothek?action=del_fav&vodid=%1&pass_protect=%2")
+                   .arg(sInfo.uiVidId)
+                   .arg(sInfo.bProtected ? 1 : 0));
    }
    else
    {
       // not a favourite ...
       sFav.replace(TMPL_IMG, ":/vod/not_fav");
       sFav.replace(TMPL_TITLE, tr("Add to favourites."));
-      sFav.replace(TMPL_LINK, QString("videothek?action=add_fav&vodid=%1").arg(sInfo.uiVidId));
+      sFav.replace(TMPL_LINK, QString("videothek?action=add_fav&vodid=%1&pass_protect=%2")
+                   .arg(sInfo.uiVidId)
+                   .arg(sInfo.bProtected ? 1 : 0));
    }
    sDoc.replace(TMPL_FAVO, sFav);
-
-   // for the short info we can end here ...
-   sShortContent = sDoc;
-   sShortContent.replace(TMPL_LINK, "");
 
    sLinks = TMPL_VIDEO_LINKS;
 
@@ -260,8 +275,9 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       sLinkTab += "<td style='padding: 3px;'>\n";
       sLinkTab += TMPL_IMG_LINK;
       sLinkTab.replace(TMPL_IMG, ":png/play");
-      sLinkTab.replace(TMPL_LINK, QString("videothek?action=play&vid=%1")
-                        .arg(sInfo.vVodFiles[i].iId));
+      sLinkTab.replace(TMPL_LINK, QString("videothek?action=play&vid=%1&pass_protect=%2")
+                       .arg(sInfo.vVodFiles[i].iId)
+                       .arg(sInfo.bProtected ? 1 : 0));
 
       sLinkTab.replace(TMPL_TITLE, tr("Play Movie ..."));
 
@@ -270,8 +286,9 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       // record link ...
       sLinkTab += TMPL_IMG_LINK;
       sLinkTab.replace(TMPL_IMG, ":png/record");
-      sLinkTab.replace(TMPL_LINK, QString("videothek?action=record&vid=%1")
-                        .arg(sInfo.vVodFiles[i].iId));
+      sLinkTab.replace(TMPL_LINK, QString("videothek?action=record&vid=%1&pass_protect=%2")
+                       .arg(sInfo.vVodFiles[i].iId)
+                       .arg(sInfo.bProtected ? 1 : 0));
       sLinkTab.replace(TMPL_TITLE, tr("Record Movie ..."));
 
       sLinkTab += "\n</td>\n</tr>\n";

@@ -1075,16 +1075,17 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
                slNeeded.clear();
 
                // we need following data ...
-               slNeeded << "id" << "name" << "description" << "year" << "country" << "poster";
+               slNeeded << "id" << "name" << "description" << "year" << "country" << "poster" << "pass_protect";
 
                oneLevelParser("item", slNeeded, mResults);
 
-               vod.uiVidId  = mResults.value("id").toUInt();
-               vod.sName    = mResults.value("name");
-               vod.sDescr   = mResults.value("description");
-               vod.sYear    = mResults.value("year");
-               vod.sCountry = mResults.value("country");
-               vod.sImg     = mResults.value("poster");
+               vod.uiVidId    =   mResults.value("id").toUInt();
+               vod.sName      =   mResults.value("name");
+               vod.sDescr     =   mResults.value("description");
+               vod.sYear      =   mResults.value("year");
+               vod.sCountry   =   mResults.value("country");
+               vod.sImg       =   mResults.value("poster");
+               vod.bProtected = !!mResults.value("pass_protect").toInt();
 
                // store element ...
                vVodList.push_back(vod);
@@ -1139,15 +1140,16 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
    int iRV = checkResponse(sResp, __FUNCTION__, __LINE__);
 
    // init struct ...
-   vidInfo.sActors   = "";
-   vidInfo.sCountry  = "";
-   vidInfo.sDescr    = "";
-   vidInfo.sDirector = "";
-   vidInfo.sImg      = "";
-   vidInfo.sName     = "";
-   vidInfo.sYear     = "";
-   vidInfo.uiLength  = 0;
-   vidInfo.uiVidId   = 0;
+   vidInfo.sActors    = "";
+   vidInfo.sCountry   = "";
+   vidInfo.sDescr     = "";
+   vidInfo.sDirector  = "";
+   vidInfo.sImg       = "";
+   vidInfo.sName      = "";
+   vidInfo.sYear      = "";
+   vidInfo.uiLength   = 0;
+   vidInfo.uiVidId    = 0;
+   vidInfo.bProtected = false;
    vidInfo.vVodFiles.clear();
 
    if (!iRV)
@@ -1182,7 +1184,6 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
                vidInfo.sGenres   = mResults.value("genre_str");
                vidInfo.uiLength  = mResults.value("lenght").toUInt();
                vidInfo.uiVidId   = mResults.value("id").toUInt();
-
             }
             else if (xmlSr.name() == "item")
             {
@@ -1208,11 +1209,23 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
 
                vidInfo.vVodFiles.push_back(fInfo);
             }
+            else if (xmlSr.name() == "genres")
+            {
+               // there is nothing we need from genres ...
+               ignoreUntil("genres");
+            }
+            else if (xmlSr.name() == "pass_protect")
+            {
+               if (xmlSr.readNext() == QXmlStreamReader::Characters)
+               {
+                  vidInfo.bProtected = !!xmlSr.text().toString().toInt();
+               }
+            }
             break;
 
          case QXmlStreamReader::EndElement:
             // end of videos means end of needed info ...
-            if (xmlSr.name() == "videos")
+            if (xmlSr.name() == "film")
             {
                bEnd = true;
             }
@@ -1756,9 +1769,9 @@ QString CKartinaXMLParser::xmlElementToValue(const QString &sElement, const QStr
 \----------------------------------------------------------------- */
 int CKartinaXMLParser::oneLevelParser(const QString &sEndElement, const QStringList &slNeeded, QMap<QString, QString> &mResults)
 {
-   QString sUnknown, sKey;
+   QString sUnknown, sKey, sVal;
    mResults.clear();
-   bool bEndMain = false, bEndSub;
+   bool bEndMain = false;
 
    while(!xmlSr.atEnd() && !xmlSr.hasError() && !bEndMain)
    {
@@ -1771,12 +1784,17 @@ int CKartinaXMLParser::oneLevelParser(const QString &sEndElement, const QStringL
          if (slNeeded.contains(xmlSr.name().toString()))
          {
             // store key / value in map ...
+            // make sure we add an empty string if there is no text
+            // inside this element.
             sKey = xmlSr.name().toString();
+            sVal = "";
 
             if (xmlSr.readNext() == QXmlStreamReader::Characters)
             {
-               mResults.insert(sKey, xmlSr.text().toString());
+               sVal = xmlSr.text().toString();
             }
+
+            mResults.insert(sKey, sVal);
          }
          else if (xmlSr.name().toString() == sEndElement)
          {
@@ -1787,7 +1805,6 @@ int CKartinaXMLParser::oneLevelParser(const QString &sEndElement, const QStringL
          else
          {
             // starttag unknown element ...
-            bEndSub  = false;
             sUnknown = xmlSr.name().toString();
 
 #ifndef QT_NO_DEBUG
@@ -1795,15 +1812,7 @@ int CKartinaXMLParser::oneLevelParser(const QString &sEndElement, const QStringL
 #endif
 
             // search for endtag of unknown element ...
-            while(!xmlSr.atEnd() && !xmlSr.hasError() && !bEndSub)
-            {
-               if ((xmlSr.readNext() == QXmlStreamReader::EndElement)
-                  && (xmlSr.name().toString() == sUnknown))
-               {
-                  // found end tag of unknown element ...
-                  bEndSub = true;
-               }
-            }
+            ignoreUntil(sUnknown);
          }
          break;
 
@@ -1820,6 +1829,32 @@ int CKartinaXMLParser::oneLevelParser(const QString &sEndElement, const QStringL
    }
 
    return 0;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: ignoreUntil
+|  Begin: 30.05.2012
+|  Author: Jo2003
+|  Description: ignore XML tree 'til we found end element (or error)
+|
+|  Parameters: end element
+|
+|  Returns: 0 --> ok (ignored 'til end element)
+|          -1 --> end element not found or error
+\----------------------------------------------------------------- */
+int CKartinaXMLParser::ignoreUntil(const QString &sEndElement)
+{
+   while(!xmlSr.atEnd() && !xmlSr.hasError())
+   {
+      if ((xmlSr.readNext() == QXmlStreamReader::EndElement)
+         && (xmlSr.name().toString() == sEndElement))
+      {
+         // found end tag of searched element ...
+         break;
+      }
+   }
+
+   return (xmlSr.atEnd() || xmlSr.hasError()) ? -1 : 0;
 }
 
 /* -----------------------------------------------------------------\

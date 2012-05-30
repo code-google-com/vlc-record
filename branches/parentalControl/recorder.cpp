@@ -100,6 +100,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // set this dialog as parent for settings and timerRec ...
    Settings.setParent(this, Qt::Dialog);
+   secCodeDlg.setParent(this, Qt::Dialog);
    Settings.setXmlParser(&XMLParser);
    Settings.setWaitTrigger(&Trigger);
    timeRec.setParent(this, Qt::Dialog);
@@ -2670,6 +2671,20 @@ void Recorder::slotVodAnchor(const QUrl &link)
    bool ok        = false;
    int  id        = 0;
 
+   // check password ...
+   if (link.encodedQueryItemValue(QByteArray("pass_protect")).toInt())
+   {
+      // need password ... ?
+      if (secCodeDlg.passWd().isEmpty())
+      {
+         // request password ...
+         secCodeDlg.exec();
+      }
+
+      // no further error check here, API will tell
+      // about a missing password ...
+   }
+
    if (action == "vod_info")
    {
       // buffer last used site (whole code) ...
@@ -2677,7 +2692,8 @@ void Recorder::slotVodAnchor(const QUrl &link)
       lastVodSite.iScrollBarVal = ui->vodBrowser->verticalScrollBar()->value();
 
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
+
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
    else if (action == "backtolist")
    {
@@ -2703,8 +2719,8 @@ void Recorder::slotVodAnchor(const QUrl &link)
    {
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
       vodFavVector.append((uint)id);
-      Trigger.TriggerRequest(Kartina::REQ_ADD_VOD_FAV, id);
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
+      Trigger.TriggerRequest(Kartina::REQ_ADD_VOD_FAV, id, secCodeDlg.passWd());
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
    else if (action == "del_fav")
    {
@@ -2717,8 +2733,8 @@ void Recorder::slotVodAnchor(const QUrl &link)
             break;
          }
       }
-      Trigger.TriggerRequest(Kartina::REQ_REM_VOD_FAV, id);
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
+      Trigger.TriggerRequest(Kartina::REQ_REM_VOD_FAV, id, secCodeDlg.passWd());
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
 
    if (ok)
@@ -2744,7 +2760,7 @@ void Recorder::slotVodAnchor(const QUrl &link)
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());
 
-      Trigger.TriggerRequest(Kartina::REQ_GETVODURL, id);
+      Trigger.TriggerRequest(Kartina::REQ_GETVODURL, id, secCodeDlg.passWd());
    }
 }
 

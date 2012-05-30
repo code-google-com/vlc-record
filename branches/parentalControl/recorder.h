@@ -56,6 +56,7 @@
 #include "cstreamloader.h"
 #include "qchanlistdelegate.h"
 #include "cepgbrowser.h"
+#include "qseccodedlg.h"
 #ifdef INCLUDE_LIBVLC
    #include <QStackedLayout>
    #include "qvlcvideowidget.h"
@@ -130,6 +131,7 @@ public slots:
 private:
     Ui::Recorder                   *ui;
     CSettingsDlg                    Settings;
+    QSecCodeDlg                     secCodeDlg;
     CKartinaClnt                    KartinaTv;
     CKartinaXMLParser               XMLParser;
     CWaitTrigger                    Trigger;

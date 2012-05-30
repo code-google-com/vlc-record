@@ -70,7 +70,7 @@ TMPL_ROWS \
 "<div style='font-weight: bold; color: #800; padding: 10px;'>" TMPL_TITLE "</div>"
 
 #define TEMPL_VOD_FAV \
-"<a href='" TMPL_LINK "'><img src='" TMPL_IMG "' width='16' height='16' title='" TMPL_TITLE "' /></a>\n"
+"<a href='" TMPL_LINK "'><img src='" TMPL_IMG "' width='20' height='20' title='" TMPL_TITLE "' /></a>\n"
 
 #define TMPL_VIDEO_DETAILS \
 "<img class='floatright' src='" TMPL_IMG "' title='" TMPL_TITLE "' />\n" \
@@ -107,6 +107,9 @@ TMPL_CSS \
 
 #define TMPL_SIMPLE_LINK \
 "<a href='" TMPL_LINK "'>" TMPL_TITLE "</a>\n"
+
+#define TMPL_HTML_ICON \
+"<img style='border: 0px;' src='" TMPL_IMG "' height='20' width='20' title='" TMPL_TITLE "' />"
 
 
 #define TR_TMPL_A \

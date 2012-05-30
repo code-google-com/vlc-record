@@ -560,13 +560,18 @@ void CKartinaClnt::GetVideos(const QString &sPrepared)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetVideoInfo(int iVodID)
+void CKartinaClnt::GetVideoInfo(int iVodID, const QString &secCode)
 {
    mInfo(tr("Request Video info for video %1...").arg(iVodID));
 
-   GetRequest(Kartina::REQ_GETVIDEOINFO, QString("%1vod_info?id=%2")
-                                            .arg(KARTINA_API_PATH)
-                                            .arg(iVodID));
+   QString req = QString("%1vod_info?id=%2").arg(KARTINA_API_PATH).arg(iVodID);
+
+   if (secCode != "")
+   {
+      req += QString("&protect_code=%1").arg(secCode);
+   }
+
+   GetRequest(Kartina::REQ_GETVIDEOINFO, req);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -582,13 +587,20 @@ void CKartinaClnt::GetVideoInfo(int iVodID)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetVodUrl(int iVidId)
+void CKartinaClnt::GetVodUrl(int iVidId, const QString &secCode)
 {
    mInfo(tr("Request Video Url for video %1...").arg(iVidId));
 
-   GetRequest(Kartina::REQ_GETVODURL, QString("%1vod_geturl?fileid=%2&ad=1")
-                                            .arg(KARTINA_API_PATH)
-                                            .arg(iVidId));
+   QString req = QString("%1vod_geturl?fileid=%2&ad=1")
+         .arg(KARTINA_API_PATH)
+         .arg(iVidId);
+
+   if (secCode != "")
+   {
+      req += QString("&protect_code=%1").arg(secCode);
+   }
+
+   GetRequest(Kartina::REQ_GETVODURL, req);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -696,11 +708,18 @@ void CKartinaClnt::setVodManager(const QString &rules, const QString &secCode)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::addVodFav(int iVidID)
+void CKartinaClnt::addVodFav(int iVidID, const QString &secCode)
 {
    mInfo(tr("Add VOD favourite (%1) ...").arg(iVidID));
-   PostRequest(Kartina::REQ_ADD_VOD_FAV, KARTINA_API_PATH "vod_favadd",
-               QString("id=%1").arg(iVidID));
+
+   QString req = QString("id=%1").arg(iVidID);
+
+   if (secCode != "")
+   {
+      req += QString("&protect_code=%1").arg(secCode);
+   }
+
+   PostRequest(Kartina::REQ_ADD_VOD_FAV, KARTINA_API_PATH "vod_favadd", req);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -716,11 +735,18 @@ void CKartinaClnt::addVodFav(int iVidID)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::remVodFav(int iVidID)
+void CKartinaClnt::remVodFav(int iVidID, const QString &secCode)
 {
    mInfo(tr("Remove VOD favourite (%1) ...").arg(iVidID));
-   PostRequest(Kartina::REQ_REM_VOD_FAV, KARTINA_API_PATH "vod_favsub",
-               QString("id=%1").arg(iVidID));
+
+   QString req = QString("id=%1").arg(iVidID);
+
+   if (secCode != "")
+   {
+      req += QString("&protect_code=%1").arg(secCode);
+   }
+
+   PostRequest(Kartina::REQ_REM_VOD_FAV, KARTINA_API_PATH "vod_favsub", req);
 }
 
 /*-----------------------------------------------------------------------------\
