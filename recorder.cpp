@@ -387,6 +387,9 @@ void Recorder::changeEvent(QEvent *e)
       // translate type cbx ...
       touchLastOrBestCbx();
 
+      // translate genre cbx ...
+      touchGenreCbx();
+
       // translate shortcut table ...
       retranslateShortcutTable();
 
@@ -3481,6 +3484,34 @@ void Recorder::touchLastOrBestCbx ()
    ui->cbxLastOrBest->addItem(tr("Newest"), "last");
    ui->cbxLastOrBest->addItem(tr("Best"), "best");
    ui->cbxLastOrBest->setCurrentIndex(0);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: touchGenreCbx
+|  Begin: 30.05.2012
+|  Author: Jo2003
+|  Description: update genre cbx
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::touchGenreCbx()
+{
+   if (ui->cbxGenre->count())
+   {
+      int idx;
+
+      if ((idx = ui->cbxGenre->findData((int)-1)) > -1)
+      {
+         ui->cbxGenre->setItemText(idx, tr("All"));
+      }
+
+      if ((idx = ui->cbxGenre->findData((int)-2)) > -1)
+      {
+         ui->cbxGenre->setItemText(idx, tr("My Favourites"));
+      }
+   }
 }
 
 /* -----------------------------------------------------------------\

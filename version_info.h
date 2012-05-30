@@ -30,7 +30,7 @@
 #endif
 
 #define VERSION_MINOR "55"
-#define BETA_EXT      "B1"
+#define BETA_EXT      "B5"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
@@ -38,7 +38,13 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
-| 2012-05-03: Version 2.55B1
+| 2012-05-30: Version 2.55B5
+| - add password dialog
+| - ask for password on password protected videos
+| - show per icon that a video is protected
+| - add favourite handling
+|
+| 2012-05-25: Version 2.55B1
 | - add VOD Manager
 | - add Channel Manager
 | - first steps to add fovourites
