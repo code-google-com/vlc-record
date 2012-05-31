@@ -70,8 +70,6 @@
 #define FLAG_CONN_CHAIN     (ulong)(1<<1) ///< should we start connection chain
 #define FLAG_CHAN_LIST      (ulong)(1<<2) ///< should we set channel from former session
 #define FLAG_EPG_DAY        (ulong)(1<<3) ///< should we set epg day from former session
-#define FLAG_CLOGOS_READY   (ulong)(1<<4) ///< are the channel logos ready
-#define FLAG_VLOGOS_READY   (ulong)(1<<5) ///< are the VOD logos ready
 // @}
 
 //===================================================================
@@ -138,8 +136,7 @@ private:
     CStreamLoader                   streamLoader;
     QTranslator                    *pTranslator;
     QTimer                          Refresh;
-    CPixLoader                      dwnLogos;
-    CPixLoader                      dwnVodPics;
+    CPixLoader                      pixCache;
     int                             iEpgOffset;
     QTabBar                        *pEpgNavbar;
     CTimerRec                       timeRec;
@@ -166,7 +163,6 @@ private:
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
     Ui::STabWidget                  vodTabWidget;
-    QVector<uint>                   vodFavVector;
 #ifdef INCLUDE_LIBVLC
     QStackedLayout                 *stackedLayout;
     QVlcVideoWidget                *pVideoWidget;
@@ -242,7 +238,6 @@ private slots:
     void slotCookie (const QString &str);
     void slotTimeShift (const QString &str);
     void slotEpgAnchor (const QUrl & link);
-    void slotLogosReady ();
     void slotReloadLogos ();
     void slotDayTabChanged (int iIdx);
     void slotSetSServer (QString sIp);
@@ -261,7 +256,7 @@ private slots:
     void slotLogout (const QString &str);
     void slotDownloadStarted (int id, QString sFileName);
     void slotGotVodGenres (const QString &str);
-    void slotGotVideos (const QString &str);
+    void slotGotVideos (const QString &str, bool bVodFavs = false);
     void slotVodAnchor (const QUrl &link);
     void slotGotVideoInfo (const QString &str);
     void slotVodURL(const QString &str);
@@ -279,7 +274,6 @@ private slots:
 
     void slotKartinaResponse(QString resp, int req);
     void slotUnused(const QString &str);
-    void slotGotVodFavIDs (const QString &str);
 
 signals:
     void sigShow ();

@@ -97,6 +97,7 @@ namespace cparser
       QString sGenres;
       uint    uiLength;
       bool    bProtected;
+      bool    bFavourit;
       QVector<cparser::SVodFileInfo> vVodFiles;
    };
 
