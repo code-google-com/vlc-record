@@ -210,6 +210,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
+   connect (&pixCache,     SIGNAL(allDone()), this, SLOT(slotRefreshChanLogos()));
    connect (&KartinaTv,    SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
    connect (&KartinaTv,    SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
    connect (&streamLoader, SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
@@ -1095,10 +1096,16 @@ void Recorder::on_cbxLastOrBest_activated(int index)
 
    if (sType == "vodfav")
    {
+      ui->cbxGenre->setDisabled(true);
       Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV);
    }
    else
    {
+      if (!ui->cbxGenre->isEnabled())
+      {
+         ui->cbxGenre->setEnabled(true);
+      }
+
       int  iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
       QUrl url;
 
@@ -3009,6 +3016,50 @@ void Recorder::slotCheckArchProg(ulong ulArcGmt)
    }
 }
 
+/* -----------------------------------------------------------------\
+|  Method: slotRefreshChanLogos [slot]
+|  Begin: 31.05.2012
+|  Author: Jo2003
+|  Description: update channel logos in channel list ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotRefreshChanLogos()
+{
+   if (!(ulStartFlags & FLAG_CLOGO_COMPL))
+   {
+      QStandardItem      *pItem;
+      QPixmap             icon;
+      int                 cid, curCid, i;
+      QString             fLogo;
+
+      // get current selection ...
+      curCid = pModel->itemFromIndex(ui->channelList->currentIndex())->data(channellist::cidRole).toInt();
+
+      for (i = 0; i < pModel->rowCount(); i++)
+      {
+         pItem = pModel->item(i);
+         cid   = pItem->data(channellist::cidRole).toInt();
+         fLogo = QString("%1/%2.gif").arg(pFolders->getLogoDir()).arg(cid);
+
+         if (icon.load(fLogo, "image/gif"))
+         {
+            pItem->setData(QIcon(icon), channellist::iconRole);
+
+            // update channel icon on EPG browser ...
+            if (cid == curCid)
+            {
+               ui->labChanIcon->setPixmap(QIcon(icon).pixmap(24, 24));
+            }
+         }
+      }
+
+      ulStartFlags |= FLAG_CLOGO_COMPL;
+   }
+}
+
 #ifdef INCLUDE_LIBVLC
 /* -----------------------------------------------------------------\
 |  Method: slotToogleFullscreen [slot]
@@ -3674,6 +3725,7 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
    QString  sLine;
    QString  sLogoFile;
    QStandardItem *pItem;
+   bool      bMissingIcon = false;
    int       iRow, iRowGroup;
    QFileInfo fInfo;
    QPixmap   Pix(16, 16);
@@ -3737,6 +3789,9 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 
                // enqueue pic to cache ...
                pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
+
+               // mark for reload ...
+               bMissingIcon = true;
             }
             else
             {
@@ -3753,6 +3808,9 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 
                   // enqueue pic to cache ...
                   pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
+
+                  // mark for reload ...
+                  bMissingIcon = true;
                }
             }
 
@@ -3785,6 +3843,11 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
 
          pModel->appendRow(pItem);
       } // not hidden ...
+   }
+
+   if (!bMissingIcon)
+   {
+      ulStartFlags |= FLAG_CLOGO_COMPL;
    }
 
    ui->cbxChannelGroup->setCurrentIndex(iRowGroup);
