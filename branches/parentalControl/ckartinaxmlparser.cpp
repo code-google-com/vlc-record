@@ -1075,7 +1075,7 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
                slNeeded.clear();
 
                // we need following data ...
-               slNeeded << "id" << "name" << "description" << "year" << "country" << "poster" << "pass_protect";
+               slNeeded << "id" << "name" << "description" << "year" << "country" << "poster" << "pass_protect" << "favorite";
 
                oneLevelParser("item", slNeeded, mResults);
 
@@ -1086,6 +1086,7 @@ int CKartinaXMLParser::parseVodList(const QString &sResp, QVector<cparser::SVodV
                vod.sCountry   =   mResults.value("country");
                vod.sImg       =   mResults.value("poster");
                vod.bProtected = !!mResults.value("pass_protect").toInt();
+               vod.bFavourit  = !!mResults.value("favorite").toInt();
 
                // store element ...
                vVodList.push_back(vod);
@@ -1150,6 +1151,7 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
    vidInfo.uiLength   = 0;
    vidInfo.uiVidId    = 0;
    vidInfo.bProtected = false;
+   vidInfo.bFavourit  = false;
    vidInfo.vVodFiles.clear();
 
    if (!iRV)
@@ -1219,6 +1221,13 @@ int CKartinaXMLParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &
                if (xmlSr.readNext() == QXmlStreamReader::Characters)
                {
                   vidInfo.bProtected = !!xmlSr.text().toString().toInt();
+               }
+            }
+            else if (xmlSr.name() == "favorite")
+            {
+               if (xmlSr.readNext() == QXmlStreamReader::Characters)
+               {
+                  vidInfo.bFavourit = !!xmlSr.text().toString().toInt();
                }
             }
             break;

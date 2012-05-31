@@ -30,7 +30,7 @@ extern CDirStuff *pFolders;
 CVodBrowser::CVodBrowser(QWidget *parent) : QTextBrowser(parent)
 {
    pSettings   = NULL;
-   pFavourites = NULL;
+   pPixCache   = NULL;
 }
 
 /* -----------------------------------------------------------------\
@@ -63,18 +63,21 @@ void CVodBrowser::setSettings(CSettingsDlg *pDlg)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: setFavVector
-|  Begin: 29.05.2012
+|  Method: setPixCache
+|  Begin: 31.05.2012
 |  Author: Jo2003
-|  Description: set favourites vector
+|  Description: set pix loader
 |
-|  Parameters: pointer to fav vector from Recorder class
+|  Parameters: pointer to pix loader
 |
 |  Returns:  --
 \----------------------------------------------------------------- */
-void CVodBrowser::setFavVector(QVector<uint> *pFav)
+void CVodBrowser::setPixCache(CPixLoader *pCache)
 {
-   pFavourites = pFav;
+   pPixCache = pCache;
+
+   // we need to know when we can display the VOD site ...
+   connect(pPixCache, SIGNAL(allDone()), this, SLOT(slotSetBufferedHtml()));
 }
 
 /* -----------------------------------------------------------------\
@@ -91,14 +94,14 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                                  const QString &sGenre,
                                  bool bSaveList)
 {
-   int i, j, iCount = vList.count();
+   int i, j, iCount = vList.count(), iPixToLoad = 0;
 
    if (bSaveList)
    {
       vVideos = vList;
    }
 
-   QString sTab, sRows, sCol, sVidTitle, sLock;
+   QString sTab, sRows, sCol, sVidTitle, sLock, sImage;
    QString sContent = HTML_SITE;
    QFileInfo info;
    sContent.replace(TMPL_TITLE, tr("VOD"));
@@ -121,11 +124,19 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
                       .arg(vList[j].uiVidId)
                       .arg(vList[j].bProtected ? 1 : 0));
 
-         // add image ...
+         // handle image ...
          info.setFile(vList[j].sImg);
-         sCol.replace(TMPL_IMG,   QUrl::toPercentEncoding(QString("%1/%2")
-                                         .arg(pFolders->getVodPixDir())
-                                         .arg(info.fileName())));
+         sImage = QString("%1/%2").arg(pFolders->getVodPixDir()).arg(info.fileName());
+
+         // enqueue pic if not already there in cache ...
+         if (!QFile::exists(sImage))
+         {
+            iPixToLoad ++;
+            pPixCache->enqueuePic(vList[j].sImg, pFolders->getVodPixDir());
+         }
+
+         // add image ...
+         sCol.replace(TMPL_IMG,   QUrl::toPercentEncoding(sImage));
 
          // add title ...
          sCol.replace(TMPL_TITLE, QString("%1 (%2 %3)")
@@ -161,7 +172,34 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
    sTab.replace(TMPL_ROWS, sRows);
    sContent.replace(TMPL_CONT, sTab);
 
-   setHtml(sContent);
+   if (iPixToLoad && pPixCache->buisy())
+   {
+      // postbone display (when all pictures are ready) ...
+      sContentBuffer = sContent;
+   }
+   else
+   {
+      setHtml(sContent);
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotSetBufferedHtml
+|  Begin: 31.05.2012
+|  Author: Jo2003
+|  Description: display buffered content
+|
+|  Parameters: --
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CVodBrowser::slotSetBufferedHtml()
+{
+   if (sContentBuffer != "")
+   {
+      setHtml(sContentBuffer);
+      sContentBuffer = "";
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -233,7 +271,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 
    // add favourite stuff ...
    sFav = TEMPL_VOD_FAV;
-   if (pFavourites->contains(sInfo.uiVidId))
+   if (sInfo.bFavourit)
    {
       // is favourite ...
       sFav.replace(TMPL_IMG, ":/vod/is_fav");

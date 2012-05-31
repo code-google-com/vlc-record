@@ -108,15 +108,14 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    vlcCtrl.setParent(this);
    favContext.setParent(this, Qt::Popup);
 
-   // set logo dir and host for chan logo downloader ...
-   dwnLogos.setHostAndFolder(Settings.GetAPIServer(), pFolders->getLogoDir());
-   dwnVodPics.setHostAndFolder(Settings.GetAPIServer(), pFolders->getVodPixDir());
+   // set host for pix cache ...
+   pixCache.setHost(Settings.GetAPIServer());
 
    // set settings for vod browser ...
    ui->vodBrowser->setSettings(&Settings);
 
-   // set favourites vector ...
-   ui->vodBrowser->setFavVector(&vodFavVector);
+   // set pix cache ...
+   ui->vodBrowser->setPixCache(&pixCache);
 
    // set log level ...
    VlcLog.SetLogLevel(Settings.GetLogLevel());
@@ -141,8 +140,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
                           Settings.GetProxyUser(), Settings.GetProxyPasswd());
 
       KartinaTv.setProxy(proxy);
-      dwnLogos.setProxy(proxy);
-      dwnVodPics.setProxy(proxy);
+      pixCache.setProxy(proxy);
       streamLoader.setProxy(proxy);
       pUpdateChecker->setProxy(proxy);
    }
@@ -213,23 +211,14 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
 
    // connect signals and slots ...
    connect (&KartinaTv,    SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
-   // connect (&KartinaTv,    SIGNAL(sigLogout(QString)), this, SLOT(slotLogout(QString)));
    connect (&KartinaTv,    SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
-   // connect (&KartinaTv,    SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
-   // connect (&KartinaTv,    SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
-   // connect (&KartinaTv,    SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
-   // connect (&KartinaTv,    SIGNAL(sigGotEPG(QString)), this, SLOT(slotEPG(QString)));
-   // connect (&KartinaTv,    SIGNAL(sigTimeShiftSet(QString)), this, SLOT(slotTimeShift(QString)));
    connect (&streamLoader, SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
    connect (&Refresh,      SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
    connect (ui->textEpg,   SIGNAL(anchorClicked(QUrl)), this, SLOT(slotEpgAnchor(QUrl)));
-   connect (&dwnLogos,     SIGNAL(sigPixReady()), this, SLOT(slotLogosReady()));
    connect (&Settings,     SIGNAL(sigReloadLogos()), this, SLOT(slotReloadLogos()));
-   // connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
    connect (&Settings,     SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
    connect (&Settings,     SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
    connect (&Settings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
-   // connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &timeRec, SLOT(slotTimerStreamUrl(QString)));
    connect (&timeRec,      SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
    connect (&timeRec,      SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
    connect (&trayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
@@ -244,15 +233,9 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    connect (ui->channelList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotChanListContext(QPoint)));
    connect (&favContext,    SIGNAL(triggered(QAction*)), this, SLOT(slotChgFavourites(QAction*)));
    connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
-   // connect (&KartinaTv,     SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
-   // connect (&KartinaTv,     SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
-   // connect (&KartinaTv,     SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
-   // connect (&KartinaTv,     SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
-   // connect (&KartinaTv,     SIGNAL(sigGotChanListAll(QString)), &Settings, SLOT(slotBuildChanManager(QString)));
-   // connect (&KartinaTv,     SIGNAL(sigGotVodManager(QString)), &Settings, SLOT(slotBuildVodManager(QString)));
    connect (this,           SIGNAL(sigLockParentalManager()), &Settings, SLOT(slotLockParentalManager()));
 
    // trigger read of saved timer records ...
@@ -590,8 +573,7 @@ void Recorder::on_pushSettings_clicked()
                              Settings.GetProxyUser(), Settings.GetProxyPasswd());
 
          KartinaTv.setProxy(proxy);
-         dwnLogos.setProxy(proxy);
-         dwnVodPics.setProxy(proxy);
+         pixCache.setProxy(proxy);
          streamLoader.setProxy(proxy);
          pUpdateChecker->setProxy(proxy);
       }
@@ -1078,16 +1060,13 @@ void Recorder::on_pushFwd_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_cbxGenre_activated(int index)
 {
-   int iGid  = ui->cbxGenre->itemData(index).toInt();
+   // only act if we aren't in vod favorites ...
+   QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
 
-   if (iGid == -2) // VOD favourites ...
+   if (sType != "vodfav")
    {
-      Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV);
-   }
-   else
-   {
-      QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
-      QUrl    url;
+      int  iGid  = ui->cbxGenre->itemData(index).toInt();
+      QUrl url;
 
       url.addQueryItem("type", sType);
 
@@ -1112,13 +1091,16 @@ void Recorder::on_cbxGenre_activated(int index)
 \----------------------------------------------------------------- */
 void Recorder::on_cbxLastOrBest_activated(int index)
 {
-   int iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+   QString sType = ui->cbxLastOrBest->itemData(index).toString();
 
-   // vod favourites have no type (last / best) ...
-   if (iGid != -2)
+   if (sType == "vodfav")
    {
-      QString sType = ui->cbxLastOrBest->itemData(index).toString();
-      QUrl    url;
+      Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV);
+   }
+   else
+   {
+      int  iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+      QUrl url;
 
       url.addQueryItem("type", sType);
 
@@ -1478,14 +1460,9 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    mkCase(Kartina::REQ_GET_VOD_MANAGER, Settings.slotBuildVodManager(resp));
 
    ///////////////////////////////////////////////
-   // got requested VOD favourites
-   // fill vodFavVector, request first VOD page
-   mkCase(Kartina::REQ_GET_VOD_FAV_IDS, slotGotVodFavIDs(resp));
-
-   ///////////////////////////////////////////////
    // handle vod favourites like vod genre to display
    // all videos in favourites
-   mkCase(Kartina::REQ_GET_VOD_FAV, slotGotVideos(resp));
+   mkCase(Kartina::REQ_GET_VOD_FAV, slotGotVideos(resp, true));
 
    ///////////////////////////////////////////////
    // Make sure the unused responses are listed
@@ -1756,7 +1733,6 @@ void Recorder::slotTimeShift (const QString &str)
 void Recorder::slotChanList (const QString &str)
 {
    QVector<cparser::SChan> chanList;
-   QVector<cparser::SChan>::const_iterator cit;
 
    if (!XMLParser.parseChannelList(str, chanList, Settings.FixTime()))
    {
@@ -1766,22 +1742,6 @@ void Recorder::slotChanList (const QString &str)
       // set channel list in timeRec class ...
       timeRec.SetChanList(chanList);
       timeRec.StartTimer();
-   }
-
-   // only download channel logos, if they aren't there ...
-   if (!dwnLogos.IsRunning() && !(ulStartFlags & FLAG_CLOGOS_READY))
-   {
-      QStringList lLogos;
-
-      for (cit = chanList.constBegin(); cit != chanList.constEnd(); cit ++)
-      {
-         if(!(*cit).bIsGroup)
-         {
-            lLogos.push_back((*cit).sIcon);
-         }
-      }
-
-      dwnLogos.setPictureList(lLogos);
    }
 
    // create favourite buttons if needed ...
@@ -1927,22 +1887,6 @@ void Recorder::slotEpgAnchor (const QUrl &link)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: slotLogosReady
-|  Begin: 19.01.2010 / 16:17:23
-|  Author: Jo2003
-|  Description: logo downloader told us that logos are ready ...
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void Recorder::slotLogosReady()
-{
-   // downloader sayd ... logos are there ...
-   ulStartFlags |= FLAG_CLOGOS_READY;
-}
-
-/* -----------------------------------------------------------------\
 |  Method: slotReloadLogos
 |  Begin: 19.01.2010 / 16:17:54
 |  Author: Jo2003
@@ -1954,24 +1898,15 @@ void Recorder::slotLogosReady()
 \----------------------------------------------------------------- */
 void Recorder::slotReloadLogos()
 {
-   // unset FLAG_CLOGOS_READY  ...
-   ulStartFlags &= ~FLAG_CLOGOS_READY;
+   QChanMap::const_iterator cit;
 
-   if (!dwnLogos.IsRunning())
+   // create tmp channel list with channels from channelList ...
+   for (cit = chanMap.constBegin(); cit != chanMap.constEnd(); cit++)
    {
-      QStringList lLogos;
-      QChanMap::const_iterator cit;
-
-      // create tmp channel list with channels from channelList ...
-      for (cit = chanMap.constBegin(); cit != chanMap.constEnd(); cit++)
+      if (!(*cit).bIsGroup)
       {
-         if (!(*cit).bIsGroup)
-         {
-            lLogos.push_back((*cit).sIcon);
-         }
+         pixCache.enqueuePic((*cit).sIcon, pFolders->getLogoDir());
       }
-
-      dwnLogos.setPictureList(lLogos);
    }
 }
 
@@ -2565,7 +2500,6 @@ void Recorder::slotGotVodGenres(const QString &str)
    {
       // fill genres combo box ...
       ui->cbxGenre->addItem(tr("All"), QVariant((int)-1));
-      ui->cbxGenre->addItem(tr("My Favourites"), QVariant((int)-2));
 
       for (cit = vGenres.constBegin(); cit != vGenres.constEnd(); cit ++)
       {
@@ -2580,8 +2514,8 @@ void Recorder::slotGotVodGenres(const QString &str)
 
    // trigger video load ...
    QUrl url;
-   url.addQueryItem("type", "last");
-   url.addQueryItem("nums", "10000");
+   url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
+   url.addQueryItem("nums", "20");
    Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
@@ -2595,67 +2529,18 @@ void Recorder::slotGotVodGenres(const QString &str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotGotVideos(const QString &str)
-{
-   QVector<cparser::SVodVideo> vVodList;
-   QVector<cparser::SVodVideo>::const_iterator cit;
-   cparser::SGenreInfo gInfo;
-
-   if (!XMLParser.parseVodList(str, vVodList, gInfo))
-   {
-      if (!(ulStartFlags & FLAG_VLOGOS_READY))
-      {
-         ulStartFlags |= FLAG_VLOGOS_READY;
-
-         // download pictures ...
-         QStringList lPix;
-
-         for (cit = vVodList.constBegin(); cit != vVodList.constEnd(); cit ++)
-         {
-            lPix.push_back((*cit).sImg);
-         }
-
-         dwnVodPics.setPictureList(lPix);
-
-         // get favourite video ids ...
-         Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV_IDS);
-      }
-      else
-      {
-         genreInfo = gInfo;
-         touchVodNavBar(gInfo);
-         ui->vodBrowser->displayVodList (vVodList, ui->cbxGenre->currentText());
-      }
-   }
-}
-
-/* -----------------------------------------------------------------\
-|  Method: slotGotVodFavIDs [slot]
-|  Begin: 29.05.2012
-|  Author: Jo2003
-|  Description: find out which are our favourite videos
-|
-|  Parameters: response string (XML)
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void Recorder::slotGotVodFavIDs(const QString &str)
+void Recorder::slotGotVideos(const QString &str, bool bVodFavs)
 {
    QVector<cparser::SVodVideo> vVodList;
    cparser::SGenreInfo gInfo;
 
    if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-      vodFavVector.clear();
-
-      for (int i = 0; i < vVodList.count(); i++)
-      {
-         vodFavVector.append(vVodList[i].uiVidId);
-      }
+      QString sGenre = bVodFavs ? ui->cbxLastOrBest->currentText() : ui->cbxGenre->currentText();
+      genreInfo      = gInfo;
+      touchVodNavBar(gInfo);
+      ui->vodBrowser->displayVodList (vVodList, sGenre);
    }
-
-   // get normal video view ...
-   on_cbxGenre_activated(0);
 }
 
 /* -----------------------------------------------------------------\
@@ -2721,21 +2606,12 @@ void Recorder::slotVodAnchor(const QUrl &link)
    else if (action == "add_fav")
    {
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
-      vodFavVector.append((uint)id);
       Trigger.TriggerRequest(Kartina::REQ_ADD_VOD_FAV, id, secCodeDlg.passWd());
       Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
    else if (action == "del_fav")
    {
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
-      for (int i = 0; i < vodFavVector.count(); i++)
-      {
-         if (vodFavVector[i] == (uint)id)
-         {
-            vodFavVector.remove(i);
-            break;
-         }
-      }
       Trigger.TriggerRequest(Kartina::REQ_REM_VOD_FAV, id, secCodeDlg.passWd());
       Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
@@ -3479,11 +3355,33 @@ void Recorder::CreateSystray()
 \----------------------------------------------------------------- */
 void Recorder::touchLastOrBestCbx ()
 {
-   // fill search area combo box ...
-   ui->cbxLastOrBest->clear();
-   ui->cbxLastOrBest->addItem(tr("Newest"), "last");
-   ui->cbxLastOrBest->addItem(tr("Best"), "best");
-   ui->cbxLastOrBest->setCurrentIndex(0);
+   // fill / update search area combo box ...
+   if (!ui->cbxLastOrBest->count())
+   {
+      ui->cbxLastOrBest->addItem(tr("Newest"), "last");
+      ui->cbxLastOrBest->addItem(tr("Best"), "best");
+      ui->cbxLastOrBest->addItem(tr("My Favourites"), "vodfav");
+      ui->cbxLastOrBest->setCurrentIndex(0);
+   }
+   else
+   {
+      int idx;
+
+      if ((idx = ui->cbxLastOrBest->findData("last")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("Newest"));
+      }
+
+      if ((idx = ui->cbxLastOrBest->findData("best")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("Best"));
+      }
+
+      if ((idx = ui->cbxLastOrBest->findData("vodfav")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("My Favourites"));
+      }
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -3505,11 +3403,6 @@ void Recorder::touchGenreCbx()
       if ((idx = ui->cbxGenre->findData((int)-1)) > -1)
       {
          ui->cbxGenre->setItemText(idx, tr("All"));
-      }
-
-      if ((idx = ui->cbxGenre->findData((int)-2)) > -1)
-      {
-         ui->cbxGenre->setItemText(idx, tr("My Favourites"));
       }
    }
 }
@@ -3781,11 +3674,12 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
    QString  sLine;
    QString  sLogoFile;
    QStandardItem *pItem;
-   int      iRow, iRowGroup;
-   QPixmap  Pix(16, 16);
-   QPixmap  icon;
-   int      iChanCount =  0;
-   int      iLastChan  = -1;
+   int       iRow, iRowGroup;
+   QFileInfo fInfo;
+   QPixmap   Pix(16, 16);
+   QPixmap   icon;
+   int       iChanCount =  0;
+   int       iLastChan  = -1;
 
    iRowGroup = ui->cbxChannelGroup->currentIndex();
    iRow      = ui->channelList->currentIndex().row();
@@ -3831,7 +3725,8 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
          }
          else
          {
-            sLogoFile = QString("%1/%2.gif").arg(pFolders->getLogoDir()).arg(chanlist[i].iId);
+            fInfo.setFile(chanlist[i].sIcon);
+            sLogoFile = QString("%1/%2").arg(pFolders->getLogoDir()).arg(fInfo.fileName());
             sLine     = QString("%1. %2").arg(++ iChanCount).arg(chanlist[i].sName);
 
             // check if file exists ...
@@ -3839,6 +3734,9 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
             {
                // no --> load default image ...
                icon.load(":png/no_logo");
+
+               // enqueue pic to cache ...
+               pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
             }
             else
             {
@@ -3847,7 +3745,14 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
                {
                   // can't load --> load default image ...
                   icon.load(":png/no_logo");
+
                   mInfo(tr("Can't load channel image \"%1.gif\" ...").arg(chanlist[i].iId));
+
+                  // delete logo file ...
+                  QFile::remove(sLogoFile);
+
+                  // enqueue pic to cache ...
+                  pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
                }
             }
 

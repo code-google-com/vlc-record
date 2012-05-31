@@ -203,9 +203,6 @@ void CWaitTrigger::run()
             case Kartina::REQ_GET_VOD_FAV:
                pClient->getVodFav();
                break;
-            case Kartina::REQ_GET_VOD_FAV_IDS:
-               pClient->getVodFav(true);
-               break;
             default:
                break;
             }

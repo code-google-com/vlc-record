@@ -762,11 +762,10 @@ void CKartinaClnt::remVodFav(int iVidID, const QString &secCode)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::getVodFav(bool bIDs)
+void CKartinaClnt::getVodFav()
 {
    mInfo(tr("Get VOD favourites (%1) ..."));
-   GetRequest(bIDs ? Kartina::REQ_GET_VOD_FAV_IDS : Kartina::REQ_GET_VOD_FAV,
-              KARTINA_API_PATH "vod_favlist");
+   GetRequest(Kartina::REQ_GET_VOD_FAV, KARTINA_API_PATH "vod_favlist");
 }
 
 /*-----------------------------------------------------------------------------\
