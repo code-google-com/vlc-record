@@ -70,6 +70,7 @@
 #define FLAG_CONN_CHAIN     (ulong)(1<<1) ///< should we start connection chain
 #define FLAG_CHAN_LIST      (ulong)(1<<2) ///< should we set channel from former session
 #define FLAG_EPG_DAY        (ulong)(1<<3) ///< should we set epg day from former session
+#define FLAG_CLOGO_COMPL    (ulong)(1<<4) ///< channel logos completely loaded
 // @}
 
 //===================================================================
@@ -274,6 +275,7 @@ private slots:
 
     void slotKartinaResponse(QString resp, int req);
     void slotUnused(const QString &str);
+    void slotRefreshChanLogos ();
 
 signals:
     void sigShow ();
