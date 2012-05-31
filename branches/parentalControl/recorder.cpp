@@ -1565,11 +1565,10 @@ void Recorder::slotErr(QString str)
 \----------------------------------------------------------------- */
 void Recorder::slotLogout(const QString &str)
 {
-
-   XMLParser.checkResponse(str, __FUNCTION__, __LINE__);
+   // no need to look for errors in response ...
+   Q_UNUSED(str);
 
    mInfo(tr("logout done ..."));
-
    QDialog::accept ();
 }
 
@@ -3056,6 +3055,7 @@ void Recorder::slotRefreshChanLogos()
          }
       }
 
+      // mark logo stuff as completed ...
       ulStartFlags |= FLAG_CLOGO_COMPL;
    }
 }
