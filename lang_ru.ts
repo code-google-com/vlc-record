@@ -288,13 +288,18 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="801"/>
+        <location filename="ckartinaclnt.cpp" line="786"/>
+        <source>Change parent code ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ckartinaclnt.cpp" line="824"/>
         <source>Request #%1 (%2) done!</source>
         <oldsource>Request #%1 done!</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="814"/>
+        <location filename="ckartinaclnt.cpp" line="837"/>
         <source>Error in Request: %1!</source>
         <translation></translation>
     </message>
@@ -1769,17 +1774,17 @@ dataDir: %1
         <translation>Воспроизведение / Пауза</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1571"/>
+        <location filename="recorder.cpp" line="1572"/>
         <source>logout done ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1703"/>
+        <location filename="recorder.cpp" line="1704"/>
         <source>Active stream server is %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1694"/>
+        <location filename="recorder.cpp" line="1695"/>
         <source>Using Bitrate %1 kbit/s ...</source>
         <translation></translation>
     </message>
@@ -1791,7 +1796,7 @@ dataDir: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1685"/>
+        <location filename="recorder.cpp" line="1686"/>
         <source>Using following timeshift: %1</source>
         <translation></translation>
     </message>
@@ -1964,12 +1969,12 @@ dataDir: %1
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1550"/>
+        <location filename="recorder.cpp" line="1551"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1551"/>
+        <location filename="recorder.cpp" line="1552"/>
         <source>%1 Client API reports some errors: %2</source>
         <oldsource>Kartina.tv Client API reports some errors: %1</oldsource>
         <translation>%1 API сообщает о некоторых ошибках: %2</translation>

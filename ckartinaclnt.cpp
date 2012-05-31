@@ -769,6 +769,29 @@ void CKartinaClnt::getVodFav()
 }
 
 /*-----------------------------------------------------------------------------\
+| Function:    setParentCode
+|
+| Author:      Jo2003
+|
+| Begin:       31.05.2012
+|
+| Description: set new parent code
+|
+| Parameters:  old code, new code
+|
+| Returns:     --
+\-----------------------------------------------------------------------------*/
+void CKartinaClnt::setParentCode(const QString &oldCode, const QString &newCode)
+{
+   mInfo(tr("Change parent code ..."));
+
+   QString req = QString("var=pcode&old_code=%1&new_code=%2&confirm_code=%2")
+         .arg(oldCode).arg(newCode);
+
+   PostRequest(Kartina::REQ_SET_PCODE, KARTINA_API_PATH "settings_set", req);
+}
+
+/*-----------------------------------------------------------------------------\
 | Function:    handleEndRequest (slot)
 |
 | Author:      Jo2003

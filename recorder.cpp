@@ -1474,6 +1474,7 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    ///////////////////////////////////////////////
    // Make sure the unused responses are listed
    // This makes it easier to understand the log.
+   mkCase(Kartina::REQ_SET_PCODE, slotUnused(resp));
    mkCase(Kartina::REQ_ADD_VOD_FAV, slotUnused(resp));
    mkCase(Kartina::REQ_REM_VOD_FAV, slotUnused(resp));
    mkCase(Kartina::REQ_SET_VOD_MANAGER, slotUnused(resp));

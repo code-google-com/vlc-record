@@ -59,6 +59,7 @@ namespace Kartina {
       REQ_ADD_VOD_FAV,
       REQ_REM_VOD_FAV,
       REQ_GET_VOD_FAV,
+      REQ_SET_PCODE,
       REQ_UNKNOWN = 255
    };
 }
@@ -114,6 +115,7 @@ public:
    void addVodFav (int iVidID, const QString &secCode);
    void remVodFav (int iVidID, const QString &secCode);
    void getVodFav ();
+   void setParentCode (const QString& oldCode, const QString& newCode);
 
 protected:
    void PostRequest (Kartina::EReq req, const QString &path, const QString &content,
