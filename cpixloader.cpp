@@ -158,7 +158,7 @@ void CPixLoader::enqueuePic(const QString &sRemote, const QString &sLocal)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: buisy
+|  Method: busy
 |  Begin: 31.05.2012
 |  Author: Jo2003
 |  Description: is any download in progress
@@ -168,7 +168,7 @@ void CPixLoader::enqueuePic(const QString &sRemote, const QString &sLocal)
 |  Returns: true --> yes
 |          false --> no
 \----------------------------------------------------------------- */
-bool CPixLoader::buisy()
+bool CPixLoader::busy()
 {
    return bRun;
 }

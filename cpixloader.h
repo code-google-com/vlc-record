@@ -45,7 +45,7 @@ public:
    CPixLoader();
    virtual ~CPixLoader();
    void enqueuePic (const QString& sRemote, const QString &sLocal);
-   bool buisy();
+   bool busy();
 
 protected:
    void startDownLoad ();

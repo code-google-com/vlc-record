@@ -172,7 +172,7 @@ void CVodBrowser::displayVodList(const QVector<cparser::SVodVideo> &vList,
    sTab.replace(TMPL_ROWS, sRows);
    sContent.replace(TMPL_CONT, sTab);
 
-   if (iPixToLoad && pPixCache->buisy())
+   if (iPixToLoad && pPixCache->busy())
    {
       // postbone display (when all pictures are ready) ...
       sContentBuffer = sContent;
