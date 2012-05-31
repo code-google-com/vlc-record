@@ -440,7 +440,7 @@ void Recorder::closeEvent(QCloseEvent *event)
       CleanContextMenu();
 
       // cancel any running kartina request ...
-      KartinaTv.abort();
+      Trigger.TriggerRequest (Kartina::REQ_ABORT);
 
       // are we authenticated ... ?
       if (KartinaTv.cookieSet())
