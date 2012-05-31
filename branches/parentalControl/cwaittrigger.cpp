@@ -203,6 +203,9 @@ void CWaitTrigger::run()
             case Kartina::REQ_GET_VOD_FAV:
                pClient->getVodFav();
                break;
+            case Kartina::REQ_SET_PCODE:
+               pClient->setParentCode(cmd.sOptArg1, cmd.sOptArg2);
+               break;
             default:
                break;
             }
