@@ -141,3 +141,22 @@ void QSecCodeDlg::slotClearPasswd()
 {
    sPasswd = "";
 }
+
+//---------------------------------------------------------------------------
+//
+//! \brief   store an external set password
+//
+//! \author  Jo2003
+//! \date    30.05.2012
+//
+//! \param   pass password to store
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QSecCodeDlg::setPasswd(const QString &pass)
+{
+   sPasswd = pass;
+
+   // internally store password for 60 seconds ...
+   QTimer::singleShot(60000, this, SLOT(slotClearPasswd()));
+}

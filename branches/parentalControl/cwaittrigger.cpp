@@ -141,13 +141,13 @@ void CWaitTrigger::run()
                pClient->SetHttpBuffer(cmd.iOptArg1);
                break;
             case Kartina::REQ_STREAM:
-               pClient->GetStreamURL(cmd.iOptArg1);
+               pClient->GetStreamURL(cmd.iOptArg1, cmd.sOptArg1);
                break;
             case Kartina::REQ_TIMERREC:
-               pClient->GetStreamURL(cmd.iOptArg1, true);
+               pClient->GetStreamURL(cmd.iOptArg1, cmd.sOptArg1, true);
                break;
             case Kartina::REQ_ARCHIV:
-               pClient->GetArchivURL(cmd.sOptArg1);
+               pClient->GetArchivURL(cmd.sOptArg1, cmd.sOptArg2);
                break;
             case Kartina::REQ_TIMESHIFT:
                pClient->SetTimeShift(cmd.iOptArg1);

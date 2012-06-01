@@ -196,6 +196,7 @@ protected:
     int  getCurrentCid();
     void retranslateShortcutTable();
     void correctEpgOffset();
+    int  grantAdultAccess (bool bProtected);
 
     virtual void changeEvent(QEvent *e);
     virtual void showEvent (QShowEvent * event);

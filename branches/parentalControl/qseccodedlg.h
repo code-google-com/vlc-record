@@ -38,6 +38,7 @@ public:
    explicit QSecCodeDlg(QWidget *parent = 0);
    ~QSecCodeDlg();
    const QString &passWd();
+   void setPasswd (const QString &pass);
 
 protected:
    virtual void changeEvent(QEvent *e);
