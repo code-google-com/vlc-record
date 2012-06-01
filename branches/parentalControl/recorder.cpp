@@ -1061,23 +1061,26 @@ void Recorder::on_pushFwd_clicked()
 \----------------------------------------------------------------- */
 void Recorder::on_cbxGenre_activated(int index)
 {
-   // only act if we aren't in vod favorites ...
+   // check for vod favourites ...
    QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+   int     iGid  = ui->cbxGenre->itemData(index).toInt();
+   QUrl    url;
 
-   if (sType != "vodfav")
+   if (sType == "vodfav")
    {
-      int  iGid  = ui->cbxGenre->itemData(index).toInt();
-      QUrl url;
-
-      url.addQueryItem("type", sType);
-
-      if (iGid != -1)
-      {
-         url.addQueryItem("genre", QString::number(iGid));
-      }
-
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+      // set filter cbx to "last"  ...
+      ui->cbxLastOrBest->setCurrentIndex(0);
+      sType = "last";
    }
+
+   url.addQueryItem("type", sType);
+
+   if (iGid != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGid));
+   }
+
+   Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 /* -----------------------------------------------------------------\
@@ -1096,16 +1099,10 @@ void Recorder::on_cbxLastOrBest_activated(int index)
 
    if (sType == "vodfav")
    {
-      ui->cbxGenre->setDisabled(true);
       Trigger.TriggerRequest(Kartina::REQ_GET_VOD_FAV);
    }
    else
    {
-      if (!ui->cbxGenre->isEnabled())
-      {
-         ui->cbxGenre->setEnabled(true);
-      }
-
       int  iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
       QUrl url;
 
@@ -1156,6 +1153,13 @@ void Recorder::on_btnVodSearch_clicked()
       // no text means normal list ...
       iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
       sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+
+      // make sure type is supported ...
+      if (sType == "vodfav")
+      {
+         sType = "last";
+         ui->cbxLastOrBest->setCurrentIndex(0);
+      }
 
       url.addQueryItem("type", sType);
 
