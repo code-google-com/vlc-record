@@ -24,18 +24,15 @@ extern CLogFile VlcLog;
 |
 | Description: constructs a CKartinaClnt object to communicate with
 |              kartina.tv
-| Parameters:  host, username, password, erotic allowed (true / false)
+| Parameters:  host, username, password
 |
 \-----------------------------------------------------------------------------*/
 CKartinaClnt::CKartinaClnt(const QString &host, const QString &usr,
-                           const QString &pw, const QString &sEPw,
-                           bool bAllowErotic) :QHttp(host)
+                           const QString &pw) :QHttp(host)
 {
    sUsr           = usr;
    sPw            = pw;
-   sErosPw        = sEPw;
    iReq           = -1;
-   bEros          = bAllowErotic;
    sCookie        = "";
    sHost          = host;
    eReq           = Kartina::REQ_UNKNOWN;
@@ -61,9 +58,7 @@ CKartinaClnt::CKartinaClnt() :QHttp()
 {
    sUsr           = "";
    sPw            = "";
-   sErosPw        = "";
    iReq           = -1;
-   bEros          = false;
    sCookie        = "";
    sHost          = "";
    eReq           = Kartina::REQ_UNKNOWN;
@@ -99,17 +94,14 @@ CKartinaClnt::~CKartinaClnt()
 |
 | Description: set communication parameter to communicate with
 |              kartina.tv
-| Parameters:  host, username, password, erotic allowed (true / false)
+| Parameters:  host, username, password
 |
 \-----------------------------------------------------------------------------*/
 void CKartinaClnt::SetData(const QString &host, const QString &usr,
-                           const QString &pw, const QString &sEPw,
-                           bool bAllowErotic)
+                           const QString &pw)
 {
    sUsr           = usr;
    sPw            = pw;
-   sErosPw        = sEPw;
-   bEros          = bAllowErotic;
    sHost          = host;
    sCookie        = "";
    eReq           = Kartina::REQ_UNKNOWN;
@@ -392,19 +384,19 @@ void CKartinaClnt::SetBitRate(int iRate)
 |
 | Description: request stream URL for given channel id
 |
-| Parameters:  channel index
+| Parameters:  channel id, security code, [flag for timer record]
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetStreamURL(int iChanID, bool bTimerRec)
+void CKartinaClnt::GetStreamURL(int iChanID, const QString &secCode, bool bTimerRec)
 {
    mInfo(tr("Request URL for channel %1 ...").arg(iChanID));
 
    QString req = QString("cid=%1").arg(iChanID);
 
-   if (bEros)
+   if (secCode != "")
    {
-      req += QString("&protect_code=%1").arg(sErosPw);
+      req += QString("&protect_code=%1").arg(secCode);
    }
 
    PostRequest((bTimerRec) ? Kartina::REQ_TIMERREC : Kartina::REQ_STREAM,
@@ -490,15 +482,15 @@ void CKartinaClnt::GetEPG(int iChanID, int iOffset)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetArchivURL (const QString &prepared)
+void CKartinaClnt::GetArchivURL (const QString &prepared, const QString &secCode)
 {
    mInfo(tr("Request Archiv URL ..."));
 
    QString req = prepared;
 
-   if (bEros)
+   if (secCode != "")
    {
-      req += QString("&protect_code=%1").arg(sErosPw);
+      req += QString("&protect_code=%1").arg(secCode);
    }
 
    PostRequest(Kartina::REQ_ARCHIV, KARTINA_API_PATH "get_url", req);

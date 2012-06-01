@@ -45,6 +45,7 @@ void CShowInfo::cleanShowInfo()
    sChanName  = "";
    sDescr     = "";
    sAdUrl     = "";
+   sPCode     = "";
    iChannelId = -1;
    iVodId     = -1;
    ePlayState = IncPlay::PS_STOP;
@@ -218,6 +219,21 @@ void CShowInfo::setHtmlDescr(const QString &descr)
 void CShowInfo::setAdUrl(const QString &adUrl)
 {
    sAdUrl = adUrl;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setPCode
+|  Begin: 01.06.2012
+|  Author: Jo2003
+|  Description: stores the pcode of protected channel
+|
+|  Parameters: url string
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CShowInfo::setPCode(const QString &code)
+{
+   sPCode = code;
 }
 
 /* -----------------------------------------------------------------\
@@ -422,6 +438,21 @@ const QString& CShowInfo::htmlDescr()
 const QString& CShowInfo::adUrl()
 {
    return sAdUrl;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: pCode
+|  Begin: 01.06.2012
+|  Author: Jo2003
+|  Description: get the pcode
+|
+|  Parameters: --
+|
+|  Returns: ref. to value
+\----------------------------------------------------------------- */
+const QString& CShowInfo::pCode()
+{
+   return sPCode;
 }
 
 /* -----------------------------------------------------------------\

@@ -139,150 +139,150 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CKartinaClnt</name>
     <message>
-        <location filename="ckartinaclnt.cpp" line="134"/>
+        <location filename="ckartinaclnt.cpp" line="126"/>
         <source>We&apos;ve got following Cookie: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="152"/>
+        <location filename="ckartinaclnt.cpp" line="144"/>
         <source>Logout ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="193"/>
-        <location filename="ckartinaclnt.cpp" line="231"/>
+        <location filename="ckartinaclnt.cpp" line="185"/>
+        <location filename="ckartinaclnt.cpp" line="223"/>
         <source>Request #%1 (%2) sent ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="249"/>
+        <location filename="ckartinaclnt.cpp" line="241"/>
         <source>Request Authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="270"/>
+        <location filename="ckartinaclnt.cpp" line="262"/>
         <source>Request Channel List ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="299"/>
+        <location filename="ckartinaclnt.cpp" line="291"/>
         <source>Request Stream Server List ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="319"/>
+        <location filename="ckartinaclnt.cpp" line="311"/>
         <source>Request Time Shift ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="339"/>
+        <location filename="ckartinaclnt.cpp" line="331"/>
         <source>Set TimeShift to %1 hour(s) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="360"/>
+        <location filename="ckartinaclnt.cpp" line="352"/>
         <source>Request Bit Rate ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="380"/>
+        <location filename="ckartinaclnt.cpp" line="372"/>
         <source>Set BitRate to %1 kbit/s ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="401"/>
+        <location filename="ckartinaclnt.cpp" line="393"/>
         <source>Request URL for channel %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="429"/>
+        <location filename="ckartinaclnt.cpp" line="421"/>
         <source>Set Streaming Server to %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="450"/>
+        <location filename="ckartinaclnt.cpp" line="442"/>
         <source>Set Http Buffer to %1 msec. ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="471"/>
+        <location filename="ckartinaclnt.cpp" line="463"/>
         <source>Request EPG for Channel %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="495"/>
+        <location filename="ckartinaclnt.cpp" line="487"/>
         <source>Request Archiv URL ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="522"/>
+        <location filename="ckartinaclnt.cpp" line="514"/>
         <source>Request VOD Genres ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="542"/>
+        <location filename="ckartinaclnt.cpp" line="534"/>
         <source>Request Videos ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="565"/>
+        <location filename="ckartinaclnt.cpp" line="557"/>
         <source>Request Video info for video %1...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="592"/>
+        <location filename="ckartinaclnt.cpp" line="584"/>
         <source>Request Video Url for video %1...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="621"/>
+        <location filename="ckartinaclnt.cpp" line="613"/>
         <source>Hide channel(s) %1 from channel list ...</source>
         <oldsource>Hide channel %1 from channel list ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="644"/>
+        <location filename="ckartinaclnt.cpp" line="636"/>
         <source>Show channel(s) %1 in channel list ...</source>
         <oldsource>Show channel %1 in channel list ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="667"/>
+        <location filename="ckartinaclnt.cpp" line="659"/>
         <source>Request VOD manager data ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="690"/>
+        <location filename="ckartinaclnt.cpp" line="682"/>
         <source>Set VOD manager data (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="713"/>
+        <location filename="ckartinaclnt.cpp" line="705"/>
         <source>Add VOD favourite (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="740"/>
+        <location filename="ckartinaclnt.cpp" line="732"/>
         <source>Remove VOD favourite (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="767"/>
+        <location filename="ckartinaclnt.cpp" line="759"/>
         <source>Get VOD favourites (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="786"/>
+        <location filename="ckartinaclnt.cpp" line="778"/>
         <source>Change parent code ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="824"/>
+        <location filename="ckartinaclnt.cpp" line="816"/>
         <source>Request #%1 (%2) done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaclnt.cpp" line="837"/>
+        <location filename="ckartinaclnt.cpp" line="829"/>
         <source>Error in Request: %1!</source>
         <translation></translation>
     </message>
@@ -685,12 +685,12 @@ p, li { white-space: pre-wrap; }
         <translation>Hasło:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="954"/>
+        <location filename="forms/csettingsdlg.ui" line="948"/>
         <source>Allow Adult Channels</source>
         <translation>Zezwól na kanały dla dorosłych</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="992"/>
+        <location filename="forms/csettingsdlg.ui" line="986"/>
         <source>Parent Code: </source>
         <translation>Kod kontroli rodzicielskiej:</translation>
     </message>
@@ -843,295 +843,283 @@ p, li { white-space: pre-wrap; }
         <translation>Zaawansowane ustawienia</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="486"/>
+        <location filename="forms/csettingsdlg.ui" line="480"/>
         <source>API Server: </source>
         <translation>Serwer API:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="493"/>
+        <location filename="forms/csettingsdlg.ui" line="494"/>
         <source>Player Module:</source>
         <translation>Moduł odtwarzacza:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="500"/>
+        <location filename="forms/csettingsdlg.ui" line="504"/>
         <source>Log Level:</source>
         <translation>Poziom logowania:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="593"/>
+        <location filename="forms/csettingsdlg.ui" line="657"/>
         <source>Show Ads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="614"/>
+        <location filename="forms/csettingsdlg.ui" line="517"/>
         <source>Log disabled</source>
         <translation>Logowanie wyłączone</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="619"/>
+        <location filename="forms/csettingsdlg.ui" line="522"/>
         <source>Log Errors only</source>
         <translation>Tylko błędy logowania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="624"/>
+        <location filename="forms/csettingsdlg.ui" line="527"/>
         <source>Log Errors and Warnings</source>
         <translation>Błędy logowania i ostrzeżenia</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="629"/>
+        <location filename="forms/csettingsdlg.ui" line="532"/>
         <source>Log everything</source>
         <translation>Zaloguj wszystko</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="771"/>
+        <location filename="forms/csettingsdlg.ui" line="765"/>
         <source>Select Channels to hide:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="797"/>
+        <location filename="forms/csettingsdlg.ui" line="791"/>
         <source> VOD Manager </source>
         <oldsource>VOD Manager</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1034"/>
+        <location filename="forms/csettingsdlg.ui" line="1028"/>
         <source>Save and &amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="527"/>
+        <location filename="forms/csettingsdlg.ui" line="555"/>
         <source>Shutdown Command:</source>
         <translation>Polecenie wyłączenia:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="534"/>
+        <location filename="forms/csettingsdlg.ui" line="565"/>
         <source>Refresh EPG every:</source>
         <translation>Odśwież Przewodnik TV co:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="646"/>
+        <location filename="forms/csettingsdlg.ui" line="578"/>
         <source>5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="651"/>
+        <location filename="forms/csettingsdlg.ui" line="583"/>
         <source>10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="656"/>
+        <location filename="forms/csettingsdlg.ui" line="588"/>
         <source>15</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="664"/>
+        <location filename="forms/csettingsdlg.ui" line="596"/>
         <source>Minute(s)</source>
         <translation>minut</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="541"/>
+        <location filename="forms/csettingsdlg.ui" line="605"/>
         <source>Ask for Record Filename</source>
         <translation>Zapytaj o nazwę pliku nagrania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="548"/>
+        <location filename="forms/csettingsdlg.ui" line="612"/>
         <source>Minimize to Systray</source>
         <translation>Minimalizuj do Systray</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="555"/>
+        <location filename="forms/csettingsdlg.ui" line="619"/>
         <source>Detach Player at startup</source>
         <translation>Odłącz odtwarzacz podczas uruchamiania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="562"/>
+        <location filename="forms/csettingsdlg.ui" line="626"/>
         <source>Translit Record Filename</source>
         <translation>Transliteracja nazwy pliku nagrania</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="583"/>
+        <location filename="forms/csettingsdlg.ui" line="647"/>
         <source>Doubleclick on channel list starts play</source>
         <translation>Kliknij dwukrotnie na początek odtwarzania listy kanałów</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="569"/>
+        <location filename="forms/csettingsdlg.ui" line="633"/>
         <source>Check for updates</source>
         <translation>Sprawdź aktualizacje</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="576"/>
+        <location filename="forms/csettingsdlg.ui" line="640"/>
         <source>Use GPU for video decoding</source>
         <translation>Użyj GPU do dekodowania wideo</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="681"/>
+        <location filename="forms/csettingsdlg.ui" line="675"/>
         <source>Parental Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="700"/>
+        <location filename="forms/csettingsdlg.ui" line="694"/>
         <source>Please enter security code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="716"/>
+        <location filename="forms/csettingsdlg.ui" line="710"/>
         <source>Enter Site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="753"/>
+        <location filename="forms/csettingsdlg.ui" line="747"/>
         <source> Channel Manager </source>
         <oldsource>Channel Manager</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="842"/>
+        <location filename="forms/csettingsdlg.ui" line="836"/>
         <source>Parental Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="851"/>
+        <location filename="forms/csettingsdlg.ui" line="845"/>
         <source>Old Code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="865"/>
+        <location filename="forms/csettingsdlg.ui" line="859"/>
         <source>New Code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="879"/>
+        <location filename="forms/csettingsdlg.ui" line="873"/>
         <source>Confirm Code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="908"/>
+        <location filename="forms/csettingsdlg.ui" line="902"/>
         <source>&amp;Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="933"/>
+        <location filename="forms/csettingsdlg.ui" line="927"/>
         <source>Adult Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="976"/>
+        <location filename="forms/csettingsdlg.ui" line="970"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1079"/>
+        <location filename="forms/csettingsdlg.ui" line="1073"/>
         <source>&amp;Save</source>
         <translation>&amp;Zapisz</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1099"/>
+        <location filename="forms/csettingsdlg.ui" line="1093"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Anuluj</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="407"/>
+        <location filename="csettingsdlg.cpp" line="401"/>
         <source>Executables (*.exe)</source>
         <translation>Pliki wykonywalne (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="409"/>
+        <location filename="csettingsdlg.cpp" line="403"/>
         <source>Executables (*)</source>
         <translation>Pliki wykonywalne (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="412"/>
+        <location filename="csettingsdlg.cpp" line="406"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="452"/>
+        <location filename="csettingsdlg.cpp" line="446"/>
         <source>Target Folder</source>
         <translation>Folder docelowy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="639"/>
+        <location filename="csettingsdlg.cpp" line="631"/>
         <source>Mobile</source>
         <translation>Przenośny</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="643"/>
+        <location filename="csettingsdlg.cpp" line="635"/>
         <source>Eco</source>
         <translation>Eko</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="647"/>
+        <location filename="csettingsdlg.cpp" line="639"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="651"/>
+        <location filename="csettingsdlg.cpp" line="643"/>
         <source>Premium</source>
         <translation>Wysokiej jakości</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="655"/>
+        <location filename="csettingsdlg.cpp" line="647"/>
         <source>%1 Kbit/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1446"/>
+        <location filename="csettingsdlg.cpp" line="1438"/>
         <source>hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1447"/>
+        <location filename="csettingsdlg.cpp" line="1439"/>
         <source>show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1448"/>
+        <location filename="csettingsdlg.cpp" line="1440"/>
         <source>password protected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1628"/>
+        <location filename="csettingsdlg.cpp" line="1627"/>
         <source>Changed VOD Rate: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1698"/>
+        <location filename="csettingsdlg.cpp" line="1697"/>
         <source>Error!</source>
         <translation type="unfinished">Błąd!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1700"/>
-        <source>Please check the data entered.</source>
+        <location filename="csettingsdlg.cpp" line="1698"/>
+        <source>&lt;b&gt;Please check the data entered.&lt;/b&gt;
+&lt;br /&gt; &lt;br /&gt;
+To change the parent code make sure:
+&lt;ul&gt;
+&lt;li&gt;The old parent code is correct.&lt;/li&gt;
+&lt;li&gt;The new code and the confirm code are equal.&lt;/li&gt;
+&lt;li&gt;The new code isn&apos;t empty.&lt;/li&gt;
+&lt;/ul&gt;
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1701"/>
-        <source>To change the parent code make sure:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csettingsdlg.cpp" line="1702"/>
-        <source>The old parent code is correct.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csettingsdlg.cpp" line="1703"/>
-        <source>The new code and the confirm code are equal.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csettingsdlg.cpp" line="1704"/>
-        <source>The new code isn&apos;t empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="csettingsdlg.cpp" line="1749"/>
+        <location filename="csettingsdlg.cpp" line="1750"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1749"/>
         <location filename="csettingsdlg.cpp" line="1750"/>
+        <location filename="csettingsdlg.cpp" line="1751"/>
         <source>Parent Code successfully changed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1147,32 +1135,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CShowInfo</name>
     <message>
-        <location filename="cshowinfo.cpp" line="453"/>
+        <location filename="cshowinfo.cpp" line="484"/>
         <source>%1 (Archive)</source>
         <translation>%1 (Archiwum)</translation>
     </message>
     <message>
-        <location filename="cshowinfo.cpp" line="479"/>
+        <location filename="cshowinfo.cpp" line="510"/>
         <source>Program:</source>
         <translation>Program:</translation>
     </message>
     <message>
-        <location filename="cshowinfo.cpp" line="480"/>
+        <location filename="cshowinfo.cpp" line="511"/>
         <source>Start:</source>
         <translation>Początek:</translation>
     </message>
     <message>
-        <location filename="cshowinfo.cpp" line="481"/>
+        <location filename="cshowinfo.cpp" line="512"/>
         <source>End:</source>
         <translation>Koniec:</translation>
     </message>
     <message>
-        <location filename="cshowinfo.cpp" line="482"/>
+        <location filename="cshowinfo.cpp" line="513"/>
         <source>Length:</source>
         <translation>Długość:</translation>
     </message>
     <message>
-        <location filename="cshowinfo.cpp" line="487"/>
+        <location filename="cshowinfo.cpp" line="518"/>
         <source>%1 min.</source>
         <translation></translation>
     </message>
@@ -1613,28 +1601,42 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Informacje o subskrypcji dostarczone przez %1</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="53"/>
+        <location filename="forms/qftsettings.ui" line="75"/>
         <source>User: </source>
         <translation>Użytkownik:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="63"/>
-        <location filename="forms/qftsettings.ui" line="87"/>
+        <location filename="forms/qftsettings.ui" line="68"/>
         <source>Password: </source>
         <translation>Hasło:</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="77"/>
+        <location filename="forms/qftsettings.ui" line="138"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/qftsettings.ui" line="116"/>
         <source>Allow Adult Channels</source>
         <translation>Zezwól na kanały dla dorosłych</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="112"/>
+        <location filename="forms/qftsettings.ui" line="95"/>
+        <source> Adult Channels </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/qftsettings.ui" line="154"/>
+        <source>Parent Code: </source>
+        <translation type="unfinished">Kod kontroli rodzicielskiej:</translation>
+    </message>
+    <message>
+        <location filename="forms/qftsettings.ui" line="181"/>
         <source>&amp;Reset</source>
         <translation>&amp;Przywróć</translation>
     </message>
     <message>
-        <location filename="forms/qftsettings.ui" line="135"/>
+        <location filename="forms/qftsettings.ui" line="204"/>
         <source>&amp;Save</source>
         <translation>&amp;Zapisz</translation>
     </message>
@@ -1734,7 +1736,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="forms/recorder.ui" line="633"/>
         <location filename="forms/recorder_inc.ui" line="668"/>
-        <location filename="recorder.cpp" line="2653"/>
+        <location filename="recorder.cpp" line="2676"/>
         <source>Video On Demand</source>
         <translation>Wideo na żądanie</translation>
     </message>
@@ -1783,14 +1785,14 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="forms/recorder.ui" line="1032"/>
         <location filename="forms/recorder_inc.ui" line="1226"/>
-        <location filename="recorder.cpp" line="3175"/>
+        <location filename="recorder.cpp" line="3198"/>
         <source>Timer Record</source>
         <translation>Programator nagrywania</translation>
     </message>
     <message>
         <location filename="forms/recorder.ui" line="1137"/>
         <location filename="forms/recorder_inc.ui" line="1366"/>
-        <location filename="recorder.cpp" line="3176"/>
+        <location filename="recorder.cpp" line="3199"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
@@ -1803,7 +1805,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="forms/recorder.ui" line="1213"/>
         <location filename="forms/recorder_inc.ui" line="1442"/>
-        <location filename="recorder.cpp" line="3181"/>
+        <location filename="recorder.cpp" line="3204"/>
         <source>Quit</source>
         <translation>Wyjdź</translation>
     </message>
@@ -1814,7 +1816,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="1115"/>
-        <location filename="recorder.cpp" line="3191"/>
+        <location filename="recorder.cpp" line="3214"/>
         <source>Jump Backward</source>
         <translation>Do tyłu</translation>
     </message>
@@ -1855,7 +1857,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="1190"/>
-        <location filename="recorder.cpp" line="3190"/>
+        <location filename="recorder.cpp" line="3213"/>
         <source>Jump Forward</source>
         <translation>Do przodu</translation>
     </message>
@@ -1895,337 +1897,337 @@ dataDir: %1
         <translation>appDir: %1</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1558"/>
+        <location filename="recorder.cpp" line="1576"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1559"/>
+        <location filename="recorder.cpp" line="1577"/>
         <source>%1 Client API reports some errors: %2</source>
         <translation>%1 Klient API zgłasza problemy: %2</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1579"/>
+        <location filename="recorder.cpp" line="1597"/>
         <source>logout done ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1711"/>
+        <location filename="recorder.cpp" line="1729"/>
         <source>Active stream server is %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1702"/>
+        <location filename="recorder.cpp" line="1720"/>
         <source>Using Bitrate %1 kbit/s ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1402"/>
+        <location filename="recorder.cpp" line="1420"/>
         <source>
   --&gt; HTTP Response &apos;%1&apos;, calling &apos;%2&apos;</source>
         <oldsource>Incoming HTTP Response &apos;%1&apos;, calling &apos;%2&apos; ...</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1693"/>
+        <location filename="recorder.cpp" line="1711"/>
         <source>Using following timeshift: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1889"/>
+        <location filename="recorder.cpp" line="1911"/>
         <source>%1 (Archive)</source>
         <translation>%1 (Archiwum)</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1895"/>
-        <location filename="recorder.cpp" line="3013"/>
+        <location filename="recorder.cpp" line="1917"/>
+        <location filename="recorder.cpp" line="3036"/>
         <source>Length: %1 min.</source>
         <translation>Długość: %1 min.</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="1896"/>
+        <location filename="recorder.cpp" line="1918"/>
         <source> (Ar.)</source>
         <translation> (Ar.)</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2142"/>
+        <location filename="recorder.cpp" line="2165"/>
         <source>timeRec reports: record done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2160"/>
+        <location filename="recorder.cpp" line="2183"/>
         <source>timeRec reports: record active!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2184"/>
+        <location filename="recorder.cpp" line="2207"/>
         <source>vlcCtrl reports: vlc player ended!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2202"/>
+        <location filename="recorder.cpp" line="2225"/>
         <source>vlcCtrl reports: vlc player active!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2253"/>
-        <location filename="recorder.cpp" line="2382"/>
+        <location filename="recorder.cpp" line="2276"/>
+        <location filename="recorder.cpp" line="2405"/>
         <source>Remove from favourites</source>
         <translation>Usuń z ulubionych</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2260"/>
+        <location filename="recorder.cpp" line="2283"/>
         <source>Add to favourites</source>
         <translation>Dodaj do ulubionych</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2304"/>
+        <location filename="recorder.cpp" line="2327"/>
         <source>Note</source>
         <translation>Uwaga</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2305"/>
+        <location filename="recorder.cpp" line="2328"/>
         <source>Max. number of favourites (%1) reached.</source>
         <translation>Osiągnięto max. liczbę ulubionych (%1).</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2484"/>
-        <location filename="recorder.cpp" line="3973"/>
-        <location filename="recorder.cpp" line="4029"/>
+        <location filename="recorder.cpp" line="2507"/>
+        <location filename="recorder.cpp" line="3996"/>
+        <location filename="recorder.cpp" line="4052"/>
         <source>Error!</source>
         <translation>Błąd!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2484"/>
-        <location filename="recorder.cpp" line="3973"/>
-        <location filename="recorder.cpp" line="4029"/>
+        <location filename="recorder.cpp" line="2507"/>
+        <location filename="recorder.cpp" line="3996"/>
+        <location filename="recorder.cpp" line="4052"/>
         <source>Can&apos;t start VLC-Media Player!</source>
         <translation>Nie można uruchomić VLC-Media Player!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2490"/>
-        <location filename="recorder.cpp" line="3980"/>
-        <location filename="recorder.cpp" line="4035"/>
+        <location filename="recorder.cpp" line="2513"/>
+        <location filename="recorder.cpp" line="4003"/>
+        <location filename="recorder.cpp" line="4058"/>
         <source>Started VLC with pid #%1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2516"/>
-        <location filename="recorder.cpp" line="3479"/>
+        <location filename="recorder.cpp" line="2539"/>
+        <location filename="recorder.cpp" line="3502"/>
         <source>All</source>
         <translation>Wszystko</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3437"/>
-        <location filename="recorder.cpp" line="3456"/>
+        <location filename="recorder.cpp" line="3460"/>
+        <location filename="recorder.cpp" line="3479"/>
         <source>My Favourites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2972"/>
+        <location filename="recorder.cpp" line="2995"/>
         <source>There is the new version %1 of %2 available.&lt;br /&gt;Click %3 to download!</source>
         <translation>Tutaj dostępna jest %1 of %2 nowa wersja.&lt;br /&gt;Kliknij %3, aby pobrać!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2975"/>
+        <location filename="recorder.cpp" line="2998"/>
         <source>here</source>
         <translation>tutaj</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2979"/>
+        <location filename="recorder.cpp" line="3002"/>
         <source>Update available</source>
         <translation>Aktualizacja dostępna</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3172"/>
+        <location filename="recorder.cpp" line="3195"/>
         <source>Play / Pause</source>
         <translation>Odtwarzaj / Pauza</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3173"/>
+        <location filename="recorder.cpp" line="3196"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3174"/>
+        <location filename="recorder.cpp" line="3197"/>
         <source>Record</source>
         <translation>Nagrywaj</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3177"/>
+        <location filename="recorder.cpp" line="3200"/>
         <source>About</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3178"/>
+        <location filename="recorder.cpp" line="3201"/>
         <source>Search EPG</source>
         <translation>Wyszukaj EPG</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3179"/>
+        <location filename="recorder.cpp" line="3202"/>
         <source>Text Size +</source>
         <translation>Rozmiar tekstu +</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3180"/>
+        <location filename="recorder.cpp" line="3203"/>
         <source>Text Size -</source>
         <translation>Rozmiar tekstu -</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3184"/>
+        <location filename="recorder.cpp" line="3207"/>
         <source>Toggle Aspect Ratio</source>
         <translation>Przełącz współczynnik kształtu obrazu</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3185"/>
+        <location filename="recorder.cpp" line="3208"/>
         <source>Toggle Crop Geometry</source>
         <translation>Przełącz geometrię kadru</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3186"/>
+        <location filename="recorder.cpp" line="3209"/>
         <source>Toggle Fullscreen</source>
         <translation>Przełącz na tryb pełnoekranowy</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3187"/>
+        <location filename="recorder.cpp" line="3210"/>
         <source>Volume +</source>
         <translation>Głośność +</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3188"/>
+        <location filename="recorder.cpp" line="3211"/>
         <source>Volume -</source>
         <translation>Głośność -</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3189"/>
+        <location filename="recorder.cpp" line="3212"/>
         <source>Toggle Mute</source>
         <translation>Przełącz na brak dźwięku</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3194"/>
+        <location filename="recorder.cpp" line="3217"/>
         <source>Next Channel</source>
         <translation>Następny kanał</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3195"/>
+        <location filename="recorder.cpp" line="3218"/>
         <source>Previous Channel</source>
         <translation>Poprzedni kanał</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3196"/>
+        <location filename="recorder.cpp" line="3219"/>
         <source>Play Next Channel</source>
         <translation>Odtwarzaj następny kanał</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3197"/>
+        <location filename="recorder.cpp" line="3220"/>
         <source>Play Prev. Channel</source>
         <translation>Odtwarzaj poprzedni kanał</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3198"/>
+        <location filename="recorder.cpp" line="3221"/>
         <source>Show EPG / VOD</source>
         <translation>Pokaż EPG / VOD</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3417"/>
+        <location filename="recorder.cpp" line="3440"/>
         <source>%1 - Click to activate!</source>
         <translation>%1 - Kliknij, aby aktywować!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3435"/>
-        <location filename="recorder.cpp" line="3446"/>
+        <location filename="recorder.cpp" line="3458"/>
+        <location filename="recorder.cpp" line="3469"/>
         <source>Newest</source>
         <translation>Nowości</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3436"/>
-        <location filename="recorder.cpp" line="3451"/>
+        <location filename="recorder.cpp" line="3459"/>
+        <location filename="recorder.cpp" line="3474"/>
         <source>Best</source>
         <translation>Najlepsze</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3520"/>
-        <location filename="recorder.cpp" line="3597"/>
+        <location filename="recorder.cpp" line="3543"/>
+        <location filename="recorder.cpp" line="3620"/>
         <source>1 week backward</source>
         <translation>tydzień wstecz</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3554"/>
-        <location filename="recorder.cpp" line="3602"/>
+        <location filename="recorder.cpp" line="3577"/>
+        <location filename="recorder.cpp" line="3625"/>
         <source>1 week forward</source>
         <translation>tydzień do przodu</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3563"/>
-        <location filename="recorder.cpp" line="3584"/>
+        <location filename="recorder.cpp" line="3586"/>
+        <location filename="recorder.cpp" line="3607"/>
         <source>Mon</source>
         <translation>Pon</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3564"/>
-        <location filename="recorder.cpp" line="3585"/>
+        <location filename="recorder.cpp" line="3587"/>
+        <location filename="recorder.cpp" line="3608"/>
         <source>Tue</source>
         <translation>Wt</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3565"/>
-        <location filename="recorder.cpp" line="3586"/>
+        <location filename="recorder.cpp" line="3588"/>
+        <location filename="recorder.cpp" line="3609"/>
         <source>Wed</source>
         <translation>Śr</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3566"/>
-        <location filename="recorder.cpp" line="3587"/>
+        <location filename="recorder.cpp" line="3589"/>
+        <location filename="recorder.cpp" line="3610"/>
         <source>Thu</source>
         <translation>Czw</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3567"/>
-        <location filename="recorder.cpp" line="3588"/>
+        <location filename="recorder.cpp" line="3590"/>
+        <location filename="recorder.cpp" line="3611"/>
         <source>Fri</source>
         <translation>Pt</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3568"/>
-        <location filename="recorder.cpp" line="3589"/>
+        <location filename="recorder.cpp" line="3591"/>
+        <location filename="recorder.cpp" line="3612"/>
         <source>Sat</source>
         <translation>Sob</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3577"/>
-        <location filename="recorder.cpp" line="3590"/>
+        <location filename="recorder.cpp" line="3600"/>
+        <location filename="recorder.cpp" line="3613"/>
         <source>Sun</source>
         <translation>Niedz</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3779"/>
+        <location filename="recorder.cpp" line="3802"/>
         <source>Exclude &apos;%1&apos; from channel list (hidden: %2, protected: %3).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3827"/>
+        <location filename="recorder.cpp" line="3850"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="3909"/>
-        <location filename="recorder.cpp" line="4063"/>
+        <location filename="recorder.cpp" line="3932"/>
+        <location filename="recorder.cpp" line="4086"/>
         <source>Save Stream as</source>
         <translation>Zachowaj strumień jako</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="4232"/>
+        <location filename="recorder.cpp" line="4255"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <translation>Nagrywanie trwa!&lt;br /&gt; &lt;br /&gt;Czy na pewno chcesz teraz zatrzymać nagrywanie?</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="4236"/>
+        <location filename="recorder.cpp" line="4259"/>
         <source>Question</source>
         <translation>Pytanie</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="4301"/>
-        <location filename="recorder.cpp" line="4507"/>
+        <location filename="recorder.cpp" line="4324"/>
+        <location filename="recorder.cpp" line="4530"/>
         <source>Favourite %1</source>
         <translation>Ulubione %1</translation>
     </message>

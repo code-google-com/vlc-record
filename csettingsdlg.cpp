@@ -221,12 +221,6 @@ void CSettingsDlg::readSettings()
       vBuffs.prepend(0.5);
    }
 
-   // on update the password for adult channels may not be given ...
-   if (m_ui->checkAdult->isChecked() && (m_ui->lineErosPass->text() == ""))
-   {
-      m_ui->lineErosPass->setText(m_ui->linePass->text());
-   }
-
    // fill player module box with available modules ...
    folder.setPath(pFolders->getModDir());
    m_ui->cbxPlayerMod->addItems(folder.entryList(QStringList("*.mod"), QDir::Files, QDir::Name));
@@ -472,7 +466,6 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("User", m_ui->lineUsr->text());
    pDb->setValue("TargetDir", m_ui->lineDir->text());
    pDb->setValue("Passwd", m_ui->linePass->text());
-   pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
 
    pDb->setValue("ProxyHost", m_ui->lineProxyHost->text());
    pDb->setValue("ProxyPort", m_ui->lineProxyPort->text());
@@ -484,7 +477,6 @@ void CSettingsDlg::on_pushSave_clicked()
 
    // check boxes ...
    pDb->setValue("UseProxy", (int)m_ui->useProxy->checkState());
-   pDb->setValue("AllowAdult", (int)m_ui->checkAdult->checkState());
    pDb->setValue("FixTime", (int)m_ui->checkFixTime->checkState());
    pDb->setValue("Refresh", (int)m_ui->checkRefresh->checkState());
    pDb->setValue("TrayHide", (int)m_ui->checkHideToSystray->checkState());
@@ -1502,6 +1494,13 @@ void CSettingsDlg::slotBuildVodManager(const QString &str)
 void CSettingsDlg::on_btnSaveExitManager_clicked()
 {
    //////////////////////////////////////////////////
+   // Adult Channels (Live) ...
+   //////////////////////////////////////////////////
+   pDb->setValue("AllowAdult", (int)m_ui->checkAdult->checkState());
+   pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
+
+
+   //////////////////////////////////////////////////
    // Channel Manager ...
    //////////////////////////////////////////////////
 
@@ -1696,12 +1695,14 @@ void CSettingsDlg::on_btnChgPCode_clicked()
    else
    {
       QMessageBox::critical(this, tr("Error!"),
-                            QString("<b>%1</b><br /> <br />%2<ul><li>%3</li><li>%4</li><li>%5</li></ul>")
-                            .arg(tr("Please check the data entered."))
-                            .arg(tr("To change the parent code make sure:"))
-                            .arg(tr("The old parent code is correct."))
-                            .arg(tr("The new code and the confirm code are equal."))
-                            .arg(tr("The new code isn't empty.")));
+                            tr("<b>Please check the data entered.</b>\n"
+                               "<br /> <br />\n"
+                               "To change the parent code make sure:\n"
+                               "<ul>\n"
+                               "<li>The old parent code is correct.</li>\n"
+                               "<li>The new code and the confirm code are equal.</li>\n"
+                               "<li>The new code isn't empty.</li>\n"
+                               "</ul>\n"));
    }
 }
 

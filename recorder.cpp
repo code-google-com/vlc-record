@@ -128,8 +128,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
           + tr("appDir:  %1").arg(pFolders->getAppDir()));
 
    // set connection data ...
-   KartinaTv.SetData(Settings.GetAPIServer(), Settings.GetUser(), Settings.GetPasswd(),
-                     Settings.GetErosPasswd(), Settings.AllowEros());
+   KartinaTv.SetData(Settings.GetAPIServer(), Settings.GetUser(), Settings.GetPasswd());
 
 
    // set proxy stuff ...
@@ -563,8 +562,7 @@ void Recorder::on_pushSettings_clicked()
       KartinaTv.abort();
 
       // update connection data ...
-      KartinaTv.SetData(Settings.GetAPIServer(), Settings.GetUser(), Settings.GetPasswd(),
-                        Settings.GetErosPasswd(), Settings.AllowEros());
+      KartinaTv.SetData(Settings.GetAPIServer(), Settings.GetUser(), Settings.GetPasswd());
 
       // set proxy ...
       if (Settings.UseProxy())
@@ -669,7 +667,7 @@ void Recorder::on_pushRecord_clicked()
          showInfo.setPlayState(IncPlay::PS_RECORD);
 
          TouchPlayCtrlBtns(false);
-         Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
+         Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req, showInfo.pCode());
       }
    }
    else
@@ -684,28 +682,32 @@ void Recorder::on_pushRecord_clicked()
          {
             cparser::SChan chan = chanMap[cid];
 
-            // new own downloader ...
-            if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+            if (grantAdultAccess(chan.bIsProtected))
             {
-               streamLoader.stopDownload (iDwnReqId);
-               iDwnReqId = -1;
+               // new own downloader ...
+               if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+               {
+                  streamLoader.stopDownload (iDwnReqId);
+                  iDwnReqId = -1;
+               }
+
+               showInfo.cleanShowInfo();
+               showInfo.setChanId(cid);
+               showInfo.setChanName(chan.sName);
+               showInfo.setShowType(ShowInfo::Live);
+               showInfo.setShowName(chan.sProgramm);
+               showInfo.setStartTime(chan.uiStart);
+               showInfo.setEndTime(chan.uiEnd);
+               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+               showInfo.setPCode(secCodeDlg.passWd());
+               showInfo.setPlayState(IncPlay::PS_RECORD);
+               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                      .arg("rgb(255, 254, 212)")
+                                      .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
             }
-
-            showInfo.cleanShowInfo();
-            showInfo.setChanId(cid);
-            showInfo.setChanName(chan.sName);
-            showInfo.setShowType(ShowInfo::Live);
-            showInfo.setShowName(chan.sProgramm);
-            showInfo.setStartTime(chan.uiStart);
-            showInfo.setEndTime(chan.uiEnd);
-            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-            showInfo.setPlayState(IncPlay::PS_RECORD);
-            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                   .arg("rgb(255, 254, 212)")
-                                   .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
-
-            TouchPlayCtrlBtns(false);
-            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
          }
       }
 
@@ -763,21 +765,25 @@ void Recorder::on_pushPlay_clicked()
          {
             cparser::SChan chan = chanMap[cid];
 
-            showInfo.cleanShowInfo();
-            showInfo.setChanId(cid);
-            showInfo.setChanName(chan.sName);
-            showInfo.setShowType(ShowInfo::Live);
-            showInfo.setShowName(chan.sProgramm);
-            showInfo.setStartTime(chan.uiStart);
-            showInfo.setEndTime(chan.uiEnd);
-            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-            showInfo.setPlayState(IncPlay::PS_PLAY);
-            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                   .arg("rgb(255, 254, 212)")
-                                   .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+            if (grantAdultAccess(chan.bIsProtected))
+            {
+               showInfo.cleanShowInfo();
+               showInfo.setChanId(cid);
+               showInfo.setChanName(chan.sName);
+               showInfo.setShowType(ShowInfo::Live);
+               showInfo.setShowName(chan.sProgramm);
+               showInfo.setStartTime(chan.uiStart);
+               showInfo.setEndTime(chan.uiEnd);
+               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+               showInfo.setPlayState(IncPlay::PS_PLAY);
+               showInfo.setPCode(secCodeDlg.passWd());
+               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                      .arg("rgb(255, 254, 212)")
+                                      .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-            TouchPlayCtrlBtns(false);
-            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+            }
          }
       }
 
@@ -844,21 +850,25 @@ void Recorder::on_channelList_doubleClicked(const QModelIndex & index)
          {
             cparser::SChan chan = chanMap[cid];
 
-            showInfo.cleanShowInfo();
-            showInfo.setChanId(cid);
-            showInfo.setChanName(chan.sName);
-            showInfo.setShowType(ShowInfo::Live);
-            showInfo.setShowName(chan.sProgramm);
-            showInfo.setStartTime(chan.uiStart);
-            showInfo.setEndTime(chan.uiEnd);
-            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-            showInfo.setPlayState(IncPlay::PS_PLAY);
-            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                   .arg("rgb(255, 254, 212)")
-                                   .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+            if (grantAdultAccess(chan.bIsProtected))
+            {
+               showInfo.cleanShowInfo();
+               showInfo.setChanId(cid);
+               showInfo.setChanName(chan.sName);
+               showInfo.setShowType(ShowInfo::Live);
+               showInfo.setShowName(chan.sProgramm);
+               showInfo.setStartTime(chan.uiStart);
+               showInfo.setEndTime(chan.uiEnd);
+               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+               showInfo.setPlayState(IncPlay::PS_PLAY);
+               showInfo.setPCode(secCodeDlg.passWd());
+               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                      .arg("rgb(255, 254, 212)")
+                                      .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-            TouchPlayCtrlBtns(false);
-            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+            }
          }
       }
    }
@@ -1289,21 +1299,25 @@ void Recorder::on_pushLive_clicked()
             {
                cparser::SChan chan = chanMap[cid];
 
-               showInfo.cleanShowInfo();
-               showInfo.setChanId(cid);
-               showInfo.setChanName(chan.sName);
-               showInfo.setShowType(ShowInfo::Live);
-               showInfo.setShowName(chan.sProgramm);
-               showInfo.setStartTime(chan.uiStart);
-               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-               showInfo.setEndTime(chan.uiEnd);
-               showInfo.setPlayState(IncPlay::PS_PLAY);
-               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                      .arg("rgb(255, 254, 212)")
-                                      .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+               if (grantAdultAccess(chan.bIsProtected))
+               {
+                  showInfo.cleanShowInfo();
+                  showInfo.setChanId(cid);
+                  showInfo.setChanName(chan.sName);
+                  showInfo.setShowType(ShowInfo::Live);
+                  showInfo.setShowName(chan.sProgramm);
+                  showInfo.setStartTime(chan.uiStart);
+                  showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+                  showInfo.setEndTime(chan.uiEnd);
+                  showInfo.setPCode(secCodeDlg.passWd());
+                  showInfo.setPlayState(IncPlay::PS_PLAY);
+                  showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                         .arg("rgb(255, 254, 212)")
+                                         .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-               TouchPlayCtrlBtns(false);
-               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+                  TouchPlayCtrlBtns(false);
+                  Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+               }
             }
          }
       }
@@ -1332,21 +1346,25 @@ void Recorder::on_channelList_clicked(QModelIndex index)
          {
             cparser::SChan chan = chanMap[cid];
 
-            showInfo.cleanShowInfo();
-            showInfo.setChanId(cid);
-            showInfo.setChanName(chan.sName);
-            showInfo.setShowType(ShowInfo::Live);
-            showInfo.setShowName(chan.sProgramm);
-            showInfo.setStartTime(chan.uiStart);
-            showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-            showInfo.setEndTime(chan.uiEnd);
-            showInfo.setPlayState(IncPlay::PS_PLAY);
-            showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                   .arg("rgb(255, 254, 212)")
-                                   .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+            if (grantAdultAccess(chan.bIsProtected))
+            {
+               showInfo.cleanShowInfo();
+               showInfo.setChanId(cid);
+               showInfo.setChanName(chan.sName);
+               showInfo.setShowType(ShowInfo::Live);
+               showInfo.setShowName(chan.sProgramm);
+               showInfo.setStartTime(chan.uiStart);
+               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+               showInfo.setEndTime(chan.uiEnd);
+               showInfo.setPCode(secCodeDlg.passWd());
+               showInfo.setPlayState(IncPlay::PS_PLAY);
+               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                      .arg("rgb(255, 254, 212)")
+                                      .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-            TouchPlayCtrlBtns(false);
-            Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+               TouchPlayCtrlBtns(false);
+               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+            }
          }
       }
    }
@@ -1856,47 +1874,52 @@ void Recorder::slotEpgAnchor (const QUrl &link)
 
    if (ok)
    {
-      TouchPlayCtrlBtns(false);
+      QString cid  = link.encodedQueryItemValue(QByteArray("cid"));
 
-      // get program map ...
-      showInfo.setEpgMap(ui->textEpg->exportProgMap());
-
-      // new own downloader ...
-      if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+      if (grantAdultAccess(chanMap[cid.toInt()].bIsProtected))
       {
-         streamLoader.stopDownload (iDwnReqId);
-         iDwnReqId = -1;
+         TouchPlayCtrlBtns(false);
+
+         // get program map ...
+         showInfo.setEpgMap(ui->textEpg->exportProgMap());
+
+         // new own downloader ...
+         if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+         {
+            streamLoader.stopDownload (iDwnReqId);
+            iDwnReqId = -1;
+         }
+
+         QString    gmt  = link.encodedQueryItemValue(QByteArray("gmt"));
+         QString    req  = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
+         epg::SShow sepg = ui->textEpg->epgShow(gmt.toUInt());
+
+         // store all info about show ...
+         showInfo.cleanShowInfo();
+         showInfo.setChanId(cid.toInt());
+         showInfo.setChanName(chanMap.value(cid.toInt()).sName);
+         showInfo.setShowName(sepg.sShowName);
+         showInfo.setStartTime(gmt.toUInt());
+         showInfo.setEndTime(sepg.uiEnd);
+         showInfo.setShowType(ShowInfo::Archive);
+         showInfo.setPlayState(ePlayState);
+         showInfo.setLastJumpTime(0);
+         showInfo.setPCode(secCodeDlg.passWd());
+
+         showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                .arg("rgb(255, 254, 212)")
+                                .arg(CShowInfo::createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
+                                                   QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
+                                                   sepg.uiStart, sepg.uiEnd))));
+
+         // add additional info to LCD ...
+         int     iTime = (sepg.uiEnd) ? (int)((sepg.uiEnd - sepg.uiStart) / 60) : 60;
+         QString sTime = tr("Length: %1 min.").arg(iTime);
+         ui->labState->setHeader(showInfo.chanName() + tr(" (Ar.)"));
+         ui->labState->setFooter(sTime);
+
+         Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req, secCodeDlg.passWd());
       }
-
-      QString    cid  = link.encodedQueryItemValue(QByteArray("cid"));
-      QString    gmt  = link.encodedQueryItemValue(QByteArray("gmt"));
-      QString    req  = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
-      epg::SShow sepg = ui->textEpg->epgShow(gmt.toUInt());
-
-      // store all info about show ...
-      showInfo.cleanShowInfo();
-      showInfo.setChanId(cid.toInt());
-      showInfo.setChanName(chanMap.value(cid.toInt()).sName);
-      showInfo.setShowName(sepg.sShowName);
-      showInfo.setStartTime(gmt.toUInt());
-      showInfo.setEndTime(sepg.uiEnd);
-      showInfo.setShowType(ShowInfo::Archive);
-      showInfo.setPlayState(ePlayState);
-      showInfo.setLastJumpTime(0);
-
-      showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                             .arg("rgb(255, 254, 212)")
-                             .arg(CShowInfo::createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
-                                                QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
-                                                sepg.uiStart, sepg.uiEnd))));
-
-      // add additional info to LCD ...
-      int     iTime = (sepg.uiEnd) ? (int)((sepg.uiEnd - sepg.uiStart) / 60) : 60;
-      QString sTime = tr("Length: %1 min.").arg(iTime);
-      ui->labState->setHeader(showInfo.chanName() + tr(" (Ar.)"));
-      ui->labState->setFooter(sTime);
-
-      Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
    }
 }
 
@@ -4532,6 +4555,57 @@ void Recorder::correctEpgOffset()
    {
       iEpgOffset = -14;
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: grantAdultAccess
+|  Begin: 01.06.2012
+|  Author: Jo2003
+|  Description: check protected channel / password
+|
+|  Parameters: channel entry
+|
+|  Returns: 1 --> access granted
+|           0 --> no access
+\----------------------------------------------------------------- */
+int Recorder::grantAdultAccess(bool bProtected)
+{
+   int iRV = 0;
+
+   if (!bProtected)
+   {
+      // unprotected channel --> always grant access ...
+      iRV = 1;
+   }
+   else
+   {
+      // protected channel allowed ... ?
+      if (Settings.AllowEros())
+      {
+         // is parent code stored ... ?
+         if (Settings.GetErosPasswd() != "")
+         {
+            // set external password to sec code dialog ...
+            secCodeDlg.setPasswd(Settings.GetErosPasswd());
+         }
+
+         // no password set?
+         if (secCodeDlg.passWd() == "")
+         {
+            // request password ...
+            secCodeDlg.exec();
+         }
+
+         // finaly we only can grant access if
+         // we have a password ...
+         if (secCodeDlg.passWd() != "")
+         {
+            iRV = 1;
+         }
+      }
+   }
+
+   return iRV;
 }
 
 /************************* History ***************************\

@@ -30,7 +30,7 @@
 #endif
 
 #define VERSION_MINOR "55"
-#define BETA_EXT      "B5"
+#define BETA_EXT      "B7"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
@@ -38,6 +38,10 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2012-06-01: Version 2.55B7
+| - new parental system ready (needs tests)
+| - still missing translation for the new stuff
+|
 | 2012-05-30: Version 2.55B5
 | - add password dialog
 | - ask for password on password protected videos
