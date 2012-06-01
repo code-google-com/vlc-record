@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>610</width>
-    <height>546</height>
+    <width>476</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -684,7 +684,7 @@ color: red;
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="secPage">
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -816,8 +816,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>269</width>
-                     <height>220</height>
+                     <width>207</width>
+                     <height>175</height>
                     </rect>
                    </property>
                   </widget>
@@ -959,8 +959,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>257</width>
-                     <height>166</height>
+                     <width>194</width>
+                     <height>134</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_10">
