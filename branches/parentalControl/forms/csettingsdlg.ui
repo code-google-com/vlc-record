@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
-    <height>462</height>
+    <width>610</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,9 +40,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineUsr"/>
-          </item>
           <item row="0" column="2">
            <widget class="QLabel" name="label_4">
             <property name="text">
@@ -57,29 +54,8 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkAdult">
-            <property name="text">
-             <string>Allow Adult Channels</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Parent Code: </string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLineEdit" name="lineErosPass">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
-            </property>
-           </widget>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineUsr"/>
           </item>
          </layout>
         </widget>
@@ -498,12 +474,6 @@ color: red;
           <string>Advanced Settings</string>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
-          <property name="horizontalSpacing">
-           <number>2</number>
-          </property>
-          <property name="verticalSpacing">
-           <number>2</number>
-          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="lanApiServer">
             <property name="text">
@@ -511,25 +481,59 @@ color: red;
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineApiServer">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
            <widget class="QLabel" name="label_15">
             <property name="text">
              <string>Player Module:</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbxPlayerMod"/>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
              <string>Log Level:</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="3">
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,3">
             <property name="spacing">
              <number>2</number>
             </property>
+            <item>
+             <widget class="QComboBox" name="cbxLogLevel">
+              <item>
+               <property name="text">
+                <string>Log disabled</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log Errors only</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log Errors and Warnings</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Log everything</string>
+               </property>
+              </item>
+             </widget>
+            </item>
             <item>
              <widget class="QLineEdit" name="lineVlcVerbose">
               <property name="enabled">
@@ -545,120 +549,24 @@ color: red;
             </item>
            </layout>
           </item>
-          <item row="6" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_13">
             <property name="text">
              <string>Shutdown Command:</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineShutdown"/>
+          </item>
+          <item row="4" column="0">
            <widget class="QCheckBox" name="checkRefresh">
             <property name="text">
              <string>Refresh EPG every:</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QCheckBox" name="checkAskForName">
-            <property name="text">
-             <string>Ask for Record Filename</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QCheckBox" name="checkHideToSystray">
-            <property name="text">
-             <string>Minimize to Systray</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QCheckBox" name="checkDetach">
-            <property name="text">
-             <string>Detach Player at startup</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QCheckBox" name="checkTranslit">
-            <property name="text">
-             <string>Translit Record Filename</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="0">
-           <widget class="QCheckBox" name="checkUpdate">
-            <property name="text">
-             <string>Check for updates</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="1">
-           <widget class="QCheckBox" name="checkGPUAcc">
-            <property name="text">
-             <string>Use GPU for video decoding</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="0">
-           <widget class="QCheckBox" name="check2ClicksToPlay">
-            <property name="text">
-             <string>Doubleclick on channel list starts play</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="1">
-           <widget class="QCheckBox" name="checkAds">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Show Ads</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineApiServer">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cbxPlayerMod"/>
-          </item>
           <item row="4" column="1">
-           <widget class="QComboBox" name="cbxLogLevel">
-            <item>
-             <property name="text">
-              <string>Log disabled</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log Errors only</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log Errors and Warnings</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Log everything</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="lineShutdown"/>
-          </item>
-          <item row="8" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QComboBox" name="cbxInterval">
@@ -691,6 +599,68 @@ color: red;
             </item>
            </layout>
           </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="checkAskForName">
+            <property name="text">
+             <string>Ask for Record Filename</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QCheckBox" name="checkHideToSystray">
+            <property name="text">
+             <string>Minimize to Systray</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="checkDetach">
+            <property name="text">
+             <string>Detach Player at startup</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QCheckBox" name="checkTranslit">
+            <property name="text">
+             <string>Translit Record Filename</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="checkUpdate">
+            <property name="text">
+             <string>Check for updates</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QCheckBox" name="checkGPUAcc">
+            <property name="text">
+             <string>Use GPU for video decoding</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="check2ClicksToPlay">
+            <property name="text">
+             <string>Doubleclick on channel list starts play</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QCheckBox" name="checkAds">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Show Ads</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -714,7 +684,7 @@ color: red;
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="secPage">
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -739,6 +709,9 @@ color: red;
                <property name="text">
                 <string>Enter Site</string>
                </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -759,7 +732,7 @@ color: red;
           </layout>
          </widget>
          <widget class="QWidget" name="setPage">
-          <layout class="QVBoxLayout" name="verticalLayout_7" stretch="20,1">
+          <layout class="QVBoxLayout" name="verticalLayout_7" stretch="20,13,0">
            <property name="spacing">
             <number>2</number>
            </property>
@@ -771,7 +744,7 @@ color: red;
              <item>
               <widget class="QGroupBox" name="groupBox">
                <property name="title">
-                <string>Channel Manager</string>
+                <string> Channel Manager </string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <property name="spacing">
@@ -815,7 +788,7 @@ color: red;
              <item>
               <widget class="QGroupBox" name="groupBox_2">
                <property name="title">
-                <string>VOD Manager</string>
+                <string> VOD Manager </string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_9">
                 <property name="spacing">
@@ -843,12 +816,188 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>203</width>
-                     <height>319</height>
+                     <width>269</width>
+                     <height>220</height>
                     </rect>
                    </property>
                   </widget>
                  </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="5,5">
+             <item>
+              <widget class="QGroupBox" name="groupBox_4">
+               <property name="title">
+                <string>Parental Code</string>
+               </property>
+               <layout class="QFormLayout" name="formLayout_4">
+                <property name="fieldGrowthPolicy">
+                 <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_20">
+                  <property name="text">
+                   <string>Old Code:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="lineOldPCode">
+                  <property name="echoMode">
+                   <enum>QLineEdit::Password</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_21">
+                  <property name="text">
+                   <string>New Code:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="lineNewPCode">
+                  <property name="echoMode">
+                   <enum>QLineEdit::Password</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_22">
+                  <property name="text">
+                   <string>Confirm Code:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="lineConfirmPCode">
+                  <property name="echoMode">
+                   <enum>QLineEdit::Password</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0" colspan="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <item>
+                   <spacer name="horizontalSpacer_7">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnChgPCode">
+                    <property name="text">
+                     <string>&amp;Change</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_3">
+               <property name="title">
+                <string>Adult Channels</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <property name="leftMargin">
+                 <number>2</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>2</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>2</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="checkAdult">
+                  <property name="text">
+                   <string>Allow Adult Channels</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QScrollArea" name="scrollArea_2">
+                  <property name="widgetResizable">
+                   <bool>true</bool>
+                  </property>
+                  <widget class="QWidget" name="scrollAreaWidgetContents">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>257</width>
+                     <height>166</height>
+                    </rect>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <item>
+                     <widget class="QLabel" name="label_23">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you're able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you'll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                      <property name="wordWrap">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <item>
+                   <widget class="QLabel" name="label_14">
+                    <property name="text">
+                     <string>Parent Code: </string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="lineErosPass">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </widget>
@@ -980,8 +1129,8 @@ color: red;
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
-     <y>434</y>
+     <x>217</x>
+     <y>546</y>
     </hint>
     <hint type="destinationlabel">
      <x>188</x>
@@ -996,8 +1145,8 @@ color: red;
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
-     <y>434</y>
+     <x>432</x>
+     <y>546</y>
     </hint>
     <hint type="destinationlabel">
      <x>366</x>
@@ -1012,12 +1161,12 @@ color: red;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>143</x>
-     <y>320</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>250</x>
-     <y>348</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -1028,12 +1177,12 @@ color: red;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>91</x>
-     <y>320</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>428</x>
-     <y>348</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -1044,12 +1193,12 @@ color: red;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>250</x>
-     <y>320</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>250</x>
-     <y>376</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -1060,28 +1209,12 @@ color: red;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>320</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
     <hint type="destinationlabel">
-     <x>428</x>
-     <y>376</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkAdult</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineErosPass</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>72</x>
-     <y>123</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>325</x>
-     <y>125</y>
+     <x>119</x>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -1092,12 +1225,28 @@ color: red;
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>39</x>
-     <y>298</y>
+     <x>78</x>
+     <y>87</y>
     </hint>
     <hint type="destinationlabel">
-     <x>205</x>
-     <y>299</y>
+     <x>119</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkAdult</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineErosPass</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>461</x>
+     <y>346</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>517</x>
+     <y>463</y>
     </hint>
    </hints>
   </connection>

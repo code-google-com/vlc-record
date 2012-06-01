@@ -1649,6 +1649,111 @@ void CSettingsDlg::on_btnEnterManager_clicked()
    pCmdQueue->TriggerRequest(Kartina::REQ_CHANLIST_ALL, sTempPasswd);
 }
 
+/* -----------------------------------------------------------------\
+|  Method: on_linePasswd_returnPressed [slot]
+|  Begin: 22.05.2012
+|  Author: Jo2003
+|  Description: request channel list for settings used in channel
+|               manager
+|  Parameters: --
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_linePasswd_returnPressed()
+{
+   on_btnEnterManager_clicked();
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_btnChgPCode_clicked [slot]
+|  Begin: 01.06.2012
+|  Author: Jo2003
+|  Description: save new pcode ...
+|
+|  Parameters: --
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_btnChgPCode_clicked()
+{
+   // precheck ...
+   QString sOldPCode = m_ui->lineOldPCode->text();
+   QString sNewPCode = m_ui->lineNewPCode->text();
+   QString sConPCode = m_ui->lineConfirmPCode->text();
+
+   if ((sOldPCode == sTempPasswd)
+      && (sNewPCode == sConPCode)
+      && (sNewPCode.count() > 0))
+   {
+      // disable dialog items while we're settings ...
+      m_ui->lineOldPCode->setDisabled(true);
+      m_ui->lineNewPCode->setDisabled(true);
+      m_ui->lineConfirmPCode->setDisabled(true);
+      m_ui->btnChgPCode->setDisabled(true);
+
+      pCmdQueue->TriggerRequest(Kartina::REQ_SET_PCODE, sOldPCode, sNewPCode);
+   }
+   else
+   {
+      QMessageBox::critical(this, tr("Error!"),
+                            QString("<b>%1</b><br /> <br />%2<ul><li>%3</li><li>%4</li><li>%5</li></ul>")
+                            .arg(tr("Please check the data entered."))
+                            .arg(tr("To change the parent code make sure:"))
+                            .arg(tr("The old parent code is correct."))
+                            .arg(tr("The new code and the confirm code are equal."))
+                            .arg(tr("The new code isn't empty.")));
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotNewPCodeSet [slot]
+|  Begin: 01.06.2012
+|  Author: Jo2003
+|  Description: got pcode change response
+|
+|  Parameters: error code
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::slotNewPCodeSet(int iErr)
+{
+   if (!iErr)
+   {
+      // internally store changed pcode ...
+      sTempPasswd = m_ui->lineNewPCode->text();
+
+      // store in db if needed (for adult channels) ...
+      if (m_ui->lineErosPass->text() == sTempPasswd)
+      {
+         // update eros passwd if set ...
+         m_ui->lineErosPass->setText(sTempPasswd);
+
+         // save to database ...
+         pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
+      }
+   }
+
+   // clear form ...
+   m_ui->lineOldPCode->clear();
+   m_ui->lineNewPCode->clear();
+   m_ui->lineConfirmPCode->clear();
+
+   // enable items ...
+   m_ui->lineOldPCode->setEnabled(true);
+   m_ui->lineNewPCode->setEnabled(true);
+   m_ui->lineConfirmPCode->setEnabled(true);
+   m_ui->btnChgPCode->setEnabled(true);
+
+   if (!iErr)
+   {
+      QMessageBox::information(this, tr("Information"), tr("Parent Code successfully changed."));
+      mInfo(tr("Parent Code successfully changed."));
+   }
+
+   // on error we'll get a message box from the XML parser ...
+}
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
+
