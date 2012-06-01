@@ -152,10 +152,15 @@ private slots:
     void on_btnEnterManager_clicked();
     void slotLockParentalManager ();
 
+    void on_btnChgPCode_clicked();
+
+    void on_linePasswd_returnPressed();
+
 public slots:
     void slotSplashStateChgd (bool bChecked);
     void slotBuildChanManager (const QString &str);
     void slotBuildVodManager (const QString &str);
+    void slotNewPCodeSet (int iErr);
 };
 
 #endif /* __011910__CSETTINGSDLG_H */

@@ -1476,9 +1476,12 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    mkCase(Kartina::REQ_GET_VOD_FAV, slotGotVideos(resp, true));
 
    ///////////////////////////////////////////////
+   // response after trying to change parent code
+   mkCase(Kartina::REQ_SET_PCODE, slotPCodeChangeResp(resp));
+
+   ///////////////////////////////////////////////
    // Make sure the unused responses are listed
    // This makes it easier to understand the log.
-   mkCase(Kartina::REQ_SET_PCODE, slotUnused(resp));
    mkCase(Kartina::REQ_ADD_VOD_FAV, slotUnused(resp));
    mkCase(Kartina::REQ_REM_VOD_FAV, slotUnused(resp));
    mkCase(Kartina::REQ_SET_VOD_MANAGER, slotUnused(resp));
@@ -3063,6 +3066,21 @@ void Recorder::slotRefreshChanLogos()
       // mark logo stuff as completed ...
       ulStartFlags |= FLAG_CLOGO_COMPL;
    }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotRefreshChanLogos [slot]
+|  Begin: 31.05.2012
+|  Author: Jo2003
+|  Description: update channel logos in channel list ...
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::slotPCodeChangeResp(const QString &str)
+{
+   Settings.slotNewPCodeSet(XMLParser.checkResponse(str, __FUNCTION__, __LINE__));
 }
 
 #ifdef INCLUDE_LIBVLC

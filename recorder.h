@@ -276,6 +276,7 @@ private slots:
     void slotKartinaResponse(QString resp, int req);
     void slotUnused(const QString &str);
     void slotRefreshChanLogos ();
+    void slotPCodeChangeResp (const QString &str);
 
 signals:
     void sigShow ();
