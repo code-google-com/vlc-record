@@ -253,7 +253,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
       iEpgOffset = QDate::currentDate().daysTo(QDate::fromString(sDate, "ddMMyyyy"));
 
       // if offset exceeds our limits: reset!
-      if (!inBetween(-14, 7, iEpgOffset))
+      if (!CSmallHelpers::inBetween(-14, 7, iEpgOffset))
       {
          iEpgOffset = 0;
       }
@@ -3026,7 +3026,7 @@ void Recorder::slotUpdateAnswer (QNetworkReply* pRes)
 void Recorder::slotCheckArchProg(ulong ulArcGmt)
 {
    // is actual showinfo still actual ?
-   if (!inBetween(showInfo.starts(), showInfo.ends(), (uint)ulArcGmt))
+   if (!CSmallHelpers::inBetween(showInfo.starts(), showInfo.ends(), (uint)ulArcGmt))
    {
       // search in archiv program map for matching entry ...
       if (!showInfo.autoUpdate(ulArcGmt))
@@ -3103,6 +3103,10 @@ void Recorder::slotRefreshChanLogos()
 \----------------------------------------------------------------- */
 void Recorder::slotPCodeChangeResp(const QString &str)
 {
+   // clear buffered password ...
+   secCodeDlg.setPasswd("");
+   showInfo.setPCode("");
+
    Settings.slotNewPCodeSet(XMLParser.checkResponse(str, __FUNCTION__, __LINE__));
 }
 

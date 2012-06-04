@@ -11,13 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Security Code</string>
+   <string>Parent Code</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Please enter security code:</string>
+      <string>Please enter your parent code:</string>
      </property>
     </widget>
    </item>
