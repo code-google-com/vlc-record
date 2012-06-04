@@ -136,13 +136,50 @@ void CSettingsDlg::readSettings()
    int         iErr;
    QDir        folder;
    QStringList sl;
+   bool        bUpdCase = false;
+
+   ////////////////////////////////////////////////////////////////////////////////
+   // update case: Encrypted passwords ---->
+   // We added a simply password encryption. In case there is an update,
+   // we must make sure that the unencrypted password is converted
+   // into an encrypted one. To make our lives easier we'll use new
+   // keys for the encrypted passwords ...
+   if (((s = pDb->stringValue("Passwd")) != "")
+       && (pDb->stringValue("PasswdEnc") == ""))
+   {
+      bUpdCase = true;
+      pDb->setPassword("PasswdEnc", s);
+   }
+
+   if (((s = pDb->stringValue("ErosPasswd")) != "")
+       && (pDb->stringValue("ErosPasswdEnc") == ""))
+   {
+      pDb->setPassword("ErosPasswdEnc", s);
+   }
+
+   if (((s = pDb->stringValue("ProxyPasswd")) != "")
+       && (pDb->stringValue("ProxyPasswdEnc") == ""))
+   {
+      pDb->setPassword("ProxyPasswdEnc", s);
+   }
+
+   // remove unused settings ...
+   if (bUpdCase)
+   {
+      pDb->removeSetting("Passwd");
+      pDb->removeSetting("ErosPasswd");
+      pDb->removeSetting("ProxyPasswd");
+   }
+   // update case: Encrypted passwords <----
+   ////////////////////////////////////////////////////////////////////////////////
+
 
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
    m_ui->lineDir->setText (pDb->stringValue("TargetDir"));
    m_ui->lineUsr->setText (pDb->stringValue("User"));
-   m_ui->linePass->setText (pDb->stringValue("Passwd"));
-   m_ui->lineErosPass->setText(pDb->stringValue("ErosPasswd"));
+   m_ui->linePass->setText (pDb->password("PasswdEnc"));
+   m_ui->lineErosPass->setText(pDb->password("ErosPasswdEnc"));
    m_ui->lineShutdown->setText(pDb->stringValue("ShutdwnCmd"));
    m_ui->lineApiServer->setText(pDb->stringValue ("APIServer"));
    m_ui->lineVlcVerbose->setText(pDb->stringValue ("libVlcLogLevel", &iErr));
@@ -173,7 +210,7 @@ void CSettingsDlg::readSettings()
    m_ui->lineProxyHost->setText(pDb->stringValue("ProxyHost"));
    m_ui->lineProxyPort->setText(pDb->stringValue("ProxyPort"));
    m_ui->lineProxyUser->setText(pDb->stringValue("ProxyUser"));
-   m_ui->lineProxyPassword->setText(pDb->stringValue("ProxyPasswd"));
+   m_ui->lineProxyPassword->setText(pDb->password("ProxyPasswdEnc"));
 
    // check boxes ...
    m_ui->useProxy->setCheckState((Qt::CheckState)pDb->intValue("UseProxy"));
@@ -465,12 +502,12 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("VLCPath", m_ui->lineVLC->text());
    pDb->setValue("User", m_ui->lineUsr->text());
    pDb->setValue("TargetDir", m_ui->lineDir->text());
-   pDb->setValue("Passwd", m_ui->linePass->text());
+   pDb->setPassword("PasswdEnc", m_ui->linePass->text());
 
    pDb->setValue("ProxyHost", m_ui->lineProxyHost->text());
    pDb->setValue("ProxyPort", m_ui->lineProxyPort->text());
    pDb->setValue("ProxyUser", m_ui->lineProxyUser->text());
-   pDb->setValue("ProxyPasswd", m_ui->lineProxyPassword->text());
+   pDb->setPassword("ProxyPasswdEnc", m_ui->lineProxyPassword->text());
    pDb->setValue("ShutdwnCmd", m_ui->lineShutdown->text());
    pDb->setValue("APIServer", m_ui->lineApiServer->text());
    pDb->setValue("libVlcLogLevel", m_ui->lineVlcVerbose->text());
@@ -1497,7 +1534,7 @@ void CSettingsDlg::on_btnSaveExitManager_clicked()
    // Adult Channels (Live) ...
    //////////////////////////////////////////////////
    pDb->setValue("AllowAdult", (int)m_ui->checkAdult->checkState());
-   pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
+   pDb->setPassword("ErosPasswdEnc", m_ui->lineErosPass->text());
 
 
    //////////////////////////////////////////////////
@@ -1676,13 +1713,18 @@ void CSettingsDlg::on_linePasswd_returnPressed()
 void CSettingsDlg::on_btnChgPCode_clicked()
 {
    // precheck ...
+   QRegExp rx("[^0-9]+");
    QString sOldPCode = m_ui->lineOldPCode->text();
    QString sNewPCode = m_ui->lineNewPCode->text();
    QString sConPCode = m_ui->lineConfirmPCode->text();
 
-   if ((sOldPCode == sTempPasswd)
-      && (sNewPCode == sConPCode)
-      && (sNewPCode.count() > 0))
+
+
+   if ((sOldPCode == sTempPasswd)                     // old password is ok
+      && (sNewPCode == sConPCode)                     // new and confirm are equal
+      && (sNewPCode.count() > 0)                      // there is a new password at all
+      && ((sOldPCode.indexOf(rx) == -1)               // there are only numbers
+          && (sNewPCode.indexOf(rx) == -1)))
    {
       // disable dialog items while we're settings ...
       m_ui->lineOldPCode->setDisabled(true);
@@ -1702,6 +1744,7 @@ void CSettingsDlg::on_btnChgPCode_clicked()
                                "<li>The old parent code is correct.</li>\n"
                                "<li>The new code and the confirm code are equal.</li>\n"
                                "<li>The new code isn't empty.</li>\n"
+                               "<li>The new code contains <b style='color: red;'>numbers only</b>.</li>\n"
                                "</ul>\n"));
    }
 }
@@ -1720,17 +1763,24 @@ void CSettingsDlg::slotNewPCodeSet(int iErr)
 {
    if (!iErr)
    {
+      QString oldPw;
+
       // internally store changed pcode ...
       sTempPasswd = m_ui->lineNewPCode->text();
 
-      // store in db if needed (for adult channels) ...
-      if (m_ui->lineErosPass->text() == sTempPasswd)
+      // Was there a code stored for adult channels ... ?
+      // To be sure ask database, but not text field.
+      if ((oldPw = pDb->password("ErosPasswdEnc")) != "")
       {
-         // update eros passwd if set ...
-         m_ui->lineErosPass->setText(sTempPasswd);
+         // there was an adult code stored ...
+         if (sTempPasswd != oldPw)
+         {
+            // update eros passwd if set ...
+            m_ui->lineErosPass->setText(sTempPasswd);
 
-         // save to database ...
-         pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
+            // save to database ...
+            pDb->setPassword("ErosPasswdEnc", sTempPasswd);
+         }
       }
    }
 
@@ -1757,4 +1807,3 @@ void CSettingsDlg::slotNewPCodeSet(int iErr)
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-

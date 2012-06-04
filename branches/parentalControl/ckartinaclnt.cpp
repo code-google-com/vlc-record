@@ -182,7 +182,11 @@ void CKartinaClnt::PostRequest (Kartina::EReq req,
    // post request ...
    iReq = request(header, content.toAscii(), &bufReq);
 
+#ifdef QT_NO_DEBUG
    mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (eReq));
+#else
+   mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (QString("%1?%2").arg(path).arg(content)));
+#endif
 }
 
 /*-----------------------------------------------------------------------------\
@@ -220,7 +224,11 @@ void CKartinaClnt::GetRequest (Kartina::EReq req,
    // post request ...
    iReq = request(header, QByteArray(), &bufReq);
 
+#ifdef QT_NO_DEBUG
    mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (eReq));
+#else
+   mInfo(tr("Request #%1 (%2) sent ...").arg(iReq).arg (sRequest));
+#endif
 }
 
 /*-----------------------------------------------------------------------------\

@@ -156,6 +156,7 @@ private slots:
 
     void on_linePasswd_returnPressed();
 
+
 public slots:
     void slotSplashStateChgd (bool bChecked);
     void slotBuildChanManager (const QString &str);

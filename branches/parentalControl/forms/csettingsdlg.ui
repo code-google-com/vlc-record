@@ -691,7 +691,7 @@ color: red;
            <item>
             <widget class="QLabel" name="label_17">
              <property name="text">
-              <string>Please enter security code:</string>
+              <string>Please enter your parent code:</string>
              </property>
             </widget>
            </item>
@@ -833,7 +833,7 @@ color: red;
              <item>
               <widget class="QGroupBox" name="groupBox_4">
                <property name="title">
-                <string>Parental Code</string>
+                <string>Parent Code</string>
                </property>
                <layout class="QFormLayout" name="formLayout_4">
                 <property name="fieldGrowthPolicy">
@@ -848,6 +848,9 @@ color: red;
                 </item>
                 <item row="0" column="1">
                  <widget class="QLineEdit" name="lineOldPCode">
+                  <property name="toolTip">
+                   <string>Number only (0 ... 9)!</string>
+                  </property>
                   <property name="echoMode">
                    <enum>QLineEdit::Password</enum>
                   </property>
@@ -862,6 +865,9 @@ color: red;
                 </item>
                 <item row="1" column="1">
                  <widget class="QLineEdit" name="lineNewPCode">
+                  <property name="toolTip">
+                   <string>Number only (0 ... 9)!</string>
+                  </property>
                   <property name="echoMode">
                    <enum>QLineEdit::Password</enum>
                   </property>
@@ -876,6 +882,9 @@ color: red;
                 </item>
                 <item row="2" column="1">
                  <widget class="QLineEdit" name="lineConfirmPCode">
+                  <property name="toolTip">
+                   <string>Number only (0 ... 9)!</string>
+                  </property>
                   <property name="echoMode">
                    <enum>QLineEdit::Password</enum>
                   </property>

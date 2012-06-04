@@ -473,7 +473,7 @@ int CShowInfo::autoUpdate(uint uiTime)
 
    for (cit = epgMap.constBegin(); cit != epgMap.constEnd(); cit++)
    {
-      if (inBetween((*cit).uiStart, (*cit).uiEnd, uiTime))
+      if (CSmallHelpers::inBetween((*cit).uiStart, (*cit).uiEnd, uiTime))
       {
          sShowName  = (*cit).sShowName;
          uiStart    = (*cit).uiStart;
