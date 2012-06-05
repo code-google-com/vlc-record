@@ -30,7 +30,7 @@
 #endif
 
 #define VERSION_MINOR "55"
-#define BETA_EXT      "B7"
+#define BETA_EXT      "B10"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT VERSION_APPENDIX " - " MY_BUILD_SYS ", built at " __DATE__
@@ -38,6 +38,12 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2012-06-05: Version 2.55B10
+| - put response error checking into kartina client class
+| - build pseudo class "Kartina" to have access to Qt's
+|   meta system (mainly for debug output)
+| - clear buffered passwords on password error
+|
 | 2012-06-01: Version 2.55B7
 | - new parental system ready (needs tests)
 | - still missing translation for the new stuff
