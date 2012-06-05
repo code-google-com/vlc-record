@@ -135,6 +135,7 @@ namespace cparser
 // make life easier ...
 typedef QMap<int, cparser::SChan> QChanMap;
 
+
 /********************************************************************\
 |  Class: CKartinaXMLParser
 |  Date:  19.01.2010 / 15:25:59
@@ -152,7 +153,6 @@ public:
    int GetFixTime () { return iOffset; }
 
    // new functions for use with API ...
-   int checkResponse (const QString &sResp, const QString& sFunction, int iLine);
    int parseCookie (const QString &sResp, QString &sCookie, cparser::SAccountInfo &sInf);
    int parseTimeShift (const QString &sResp, QVector<int> &vValues, int &iShift);
    int parseChannelList (const QString &sResp, QVector<cparser::SChan> &chanList, bool bFixTime);
@@ -167,7 +167,6 @@ public:
    int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
    int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);
    int parseVodManager (const QString& sResp, QVector<cparser::SVodRate>& vRates);
-   int fillErrorMap();
    int parseUpdInfo(const QString& sResp, cparser::SUpdInfo &updInfo);
 
 protected:
@@ -183,10 +182,13 @@ protected:
 
 private:
    int iOffset;
-   QString sErr, sCleanResp;
+   QString sErr;
    QXmlStreamReader   xmlSr;
    QMap<int, QString> mapError;
    QMutex             mutex;
+
+signals:
+   void sigWrongPass();
 };
 
 #endif /* __201005075459_CKARTINAXMLPARSER_H */

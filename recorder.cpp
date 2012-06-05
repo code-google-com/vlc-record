@@ -211,7 +211,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    // connect signals and slots ...
    connect (&pixCache,     SIGNAL(allDone()), this, SLOT(slotRefreshChanLogos()));
    connect (&KartinaTv,    SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
-   connect (&KartinaTv,    SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
+   connect (&KartinaTv,    SIGNAL(sigError(QString,int,int)), this, SLOT(slotKartinaErr(QString,int,int)));
    connect (&streamLoader, SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
    connect (&Refresh,      SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
    connect (ui->textEpg,   SIGNAL(anchorClicked(QUrl)), this, SLOT(slotEpgAnchor(QUrl)));
@@ -377,7 +377,7 @@ void Recorder::changeEvent(QEvent *e)
       retranslateShortcutTable();
 
       // translate error strings ...
-      XMLParser.fillErrorMap();
+      KartinaTv.fillErrorMap();
       break;
 
    default:
@@ -1412,7 +1412,7 @@ void Recorder::show()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotKartinaResponse(QString resp, int req)
+void Recorder::slotKartinaResponse(const QString& resp, int req)
 {
    // helper macro to have a nice info printout ...
 #define mkCase(__x__, __y__) \
@@ -1529,7 +1529,7 @@ void Recorder::slotKartinaResponse(QString resp, int req)
 \----------------------------------------------------------------- */
 void Recorder::slotUnused(const QString &str)
 {
-   XMLParser.checkResponse(str, __FUNCTION__, __LINE__);
+   Q_UNUSED(str)
 }
 
 /* -----------------------------------------------------------------\
@@ -1562,7 +1562,7 @@ void Recorder::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: slotErr
+|  Method: slotKartinaErr
 |  Begin: 19.01.2010 / 16:08:51
 |  Author: Jo2003
 |  Description: display errors signaled by other threads
@@ -1571,11 +1571,45 @@ void Recorder::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotErr(QString str)
+void Recorder::slotKartinaErr (const QString &str, int req, int err)
 {
-   QMessageBox::critical(this, tr("Error"),
-                         tr("%1 Client API reports some errors: %2")
-                         .arg(COMPANY_NAME).arg(str));
+   // special error handling for special requests ...
+   switch ((Kartina::EReq)req)
+   {
+   case Kartina::REQ_SET_PCODE:
+      Settings.slotEnablePCodeForm();
+      break;
+   default:
+      break;
+   }
+
+   // special error handling for special errors ...
+   switch ((Kartina::EErr)err)
+   {
+   case Kartina::ERR_WRONG_PCODE:
+      showInfo.setPCode("");
+      secCodeDlg.slotClearPasswd();
+      break;
+   default:
+      break;
+   }
+
+   mErr(tr("Error %1 (%2) in request '%3'")
+        .arg(err)
+        .arg(metaKartina.errValToKey((Kartina::EErr)err))
+        .arg(metaKartina.reqValToKey((Kartina::EReq)req)));
+
+   QString errMsg = TMPL_DETAILED_ERROR;
+   errMsg.replace(TMPL_NAME,  tr("Request:"));
+   errMsg.replace(TMPL_ERR,   tr("Error:"));
+   errMsg.replace(TMPL_DESCR, tr("Description:"));
+
+   errMsg = errMsg.arg(tr("%1 Client API Error").arg(COMPANY_NAME))
+         .arg(metaKartina.reqValToKey((Kartina::EReq)req))
+         .arg(QString("#%1 (%2)").arg(err).arg(metaKartina.errValToKey((Kartina::EErr)err)))
+         .arg(str);
+
+   QMessageBox::critical(this, tr("Error"), errMsg);
    TouchPlayCtrlBtns();
 }
 
@@ -1746,10 +1780,8 @@ void Recorder::slotCookie (const QString &str)
 \----------------------------------------------------------------- */
 void Recorder::slotTimeShift (const QString &str)
 {
-   if(!XMLParser.checkResponse(str, __FUNCTION__, __LINE__))
-   {
-      Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
-   }
+   Q_UNUSED(str)
+   Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
 }
 
 /* -----------------------------------------------------------------\
@@ -3103,11 +3135,13 @@ void Recorder::slotRefreshChanLogos()
 \----------------------------------------------------------------- */
 void Recorder::slotPCodeChangeResp(const QString &str)
 {
+   Q_UNUSED(str)
+
    // clear buffered password ...
    secCodeDlg.setPasswd("");
    showInfo.setPCode("");
 
-   Settings.slotNewPCodeSet(XMLParser.checkResponse(str, __FUNCTION__, __LINE__));
+   Settings.slotNewPCodeSet();
 }
 
 #ifdef INCLUDE_LIBVLC

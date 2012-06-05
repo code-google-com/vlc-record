@@ -164,6 +164,7 @@ private:
     QNetworkAccessManager          *pUpdateChecker;
     Ui::SVodSite                    lastVodSite;
     Ui::STabWidget                  vodTabWidget;
+    Kartina                         metaKartina;
 #ifdef INCLUDE_LIBVLC
     QStackedLayout                 *stackedLayout;
     QVlcVideoWidget                *pVideoWidget;
@@ -232,7 +233,6 @@ private slots:
     void on_btnNextSite_clicked();
     void on_pushLive_clicked();
     void on_channelList_clicked(QModelIndex index);
-    void slotErr (QString str);
     void slotChanList (const QString &str);
     void slotEPG(const QString &str);
     void slotStreamURL (const QString &str);
@@ -274,7 +274,9 @@ private slots:
     void slotUpdateAnswer (QNetworkReply* pRes);
     void slotCheckArchProg(ulong ulArcGmt);
 
-    void slotKartinaResponse(QString resp, int req);
+    void slotKartinaErr (const QString &str, int req, int err);
+    void slotKartinaResponse(const QString& resp, int req);
+
     void slotUnused(const QString &str);
     void slotRefreshChanLogos ();
     void slotPCodeChangeResp (const QString &str);

@@ -1755,35 +1755,52 @@ void CSettingsDlg::on_btnChgPCode_clicked()
 |  Author: Jo2003
 |  Description: got pcode change response
 |
-|  Parameters: error code
+|  Parameters: --
 |
 |  Returns:  --
 \----------------------------------------------------------------- */
-void CSettingsDlg::slotNewPCodeSet(int iErr)
+void CSettingsDlg::slotNewPCodeSet()
 {
-   if (!iErr)
+   QString oldPw;
+
+   // internally store changed pcode ...
+   sTempPasswd = m_ui->lineNewPCode->text();
+
+   // Was there a code stored for adult channels ... ?
+   // To be sure ask database, but not text field.
+   if ((oldPw = pDb->password("ErosPasswdEnc")) != "")
    {
-      QString oldPw;
-
-      // internally store changed pcode ...
-      sTempPasswd = m_ui->lineNewPCode->text();
-
-      // Was there a code stored for adult channels ... ?
-      // To be sure ask database, but not text field.
-      if ((oldPw = pDb->password("ErosPasswdEnc")) != "")
+      // there was an adult code stored ...
+      if (sTempPasswd != oldPw)
       {
-         // there was an adult code stored ...
-         if (sTempPasswd != oldPw)
-         {
-            // update eros passwd if set ...
-            m_ui->lineErosPass->setText(sTempPasswd);
+         // update eros passwd if set ...
+         m_ui->lineErosPass->setText(sTempPasswd);
 
-            // save to database ...
-            pDb->setPassword("ErosPasswdEnc", sTempPasswd);
-         }
+         // save to database ...
+         pDb->setPassword("ErosPasswdEnc", sTempPasswd);
       }
    }
 
+   slotEnablePCodeForm();
+
+   QMessageBox::information(this, tr("Information"), tr("Parent Code successfully changed."));
+   mInfo(tr("Parent Code successfully changed."));
+
+   // on error we'll get a message box from the Recorder ...
+}
+
+/* -----------------------------------------------------------------\
+|  Method: slotEnablePCodeForm [slot]
+|  Begin: 05.06.2012
+|  Author: Jo2003
+|  Description: enable dialog items
+|
+|  Parameters: --
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::slotEnablePCodeForm()
+{
    // clear form ...
    m_ui->lineOldPCode->clear();
    m_ui->lineNewPCode->clear();
@@ -1794,14 +1811,6 @@ void CSettingsDlg::slotNewPCodeSet(int iErr)
    m_ui->lineNewPCode->setEnabled(true);
    m_ui->lineConfirmPCode->setEnabled(true);
    m_ui->btnChgPCode->setEnabled(true);
-
-   if (!iErr)
-   {
-      QMessageBox::information(this, tr("Information"), tr("Parent Code successfully changed."));
-      mInfo(tr("Parent Code successfully changed."));
-   }
-
-   // on error we'll get a message box from the XML parser ...
 }
 
 /************************* History ***************************\

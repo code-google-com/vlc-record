@@ -36,6 +36,7 @@ CKartinaClnt::CKartinaClnt(const QString &host, const QString &usr,
    sCookie        = "";
    sHost          = host;
    eReq           = Kartina::REQ_UNKNOWN;
+   fillErrorMap();
 
    bufReq.open(QIODevice::WriteOnly);
 
@@ -62,6 +63,7 @@ CKartinaClnt::CKartinaClnt() :QHttp()
    sCookie        = "";
    sHost          = "";
    eReq           = Kartina::REQ_UNKNOWN;
+   fillErrorMap();
 
    bufReq.open(QIODevice::WriteOnly);
 
@@ -829,15 +831,22 @@ void CKartinaClnt::handleEndRequest(int id, bool err)
              sCookie = "";
          }
 
-         // send response ...
-         emit sigHttpResponse(QString::fromUtf8(baPageContent.constData()), (int)eReq);
+         // check response ...
+         int iErr;
+         if ((iErr = checkResponse(QString::fromUtf8(baPageContent.constData()))) != 0)
+         {
+            emit sigError(sCleanResp, (int)eReq, iErr);
+         }
+         else
+         {
+            // send response ...
+            emit sigHttpResponse (sCleanResp, (int)eReq);
+         }
       }
       else
       {
-         mErr(tr("Error in Request: %1!").arg(errorString()));
-
          // send error signal ...
-         emit sigError(errorString());
+         emit sigError(errorString(), (int)eReq, -1);
       }
 
       // mark request as ended so the API is "free for use" again ...
@@ -895,6 +904,98 @@ bool CKartinaClnt::busy ()
 bool CKartinaClnt::cookieSet()
 {
    return (sCookie != "") ? true : false;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: checkResponse
+|  Begin: 28.07.2010 / 18:42:54
+|  Author: Jo2003
+|  Description: format kartina error string
+|
+|  Parameters: --
+|
+|  Returns: error code
+\----------------------------------------------------------------- */
+int CKartinaClnt::checkResponse (const QString &sResp)
+{
+   int iRV = 0;
+
+   // clean response ... (delete content which may come
+   // after / before the xml code ...
+   QString sEndTag = "</response>";
+   int iStartPos   = sResp.indexOf("<?xml");
+   int iEndPos     = sResp.indexOf(sEndTag) + sEndTag.length();
+
+   // store clean string in private variable ...
+   sCleanResp      = sResp.mid(iStartPos, iEndPos - iStartPos);
+
+   QRegExp rx("<message>(.*)</message>[ \t\n\r]*"
+              "<code>(.*)</code>");
+
+   // quick'n'dirty error check ...
+   if (sCleanResp.contains("<error>"))
+   {
+      if (rx.indexIn(sCleanResp) > -1)
+      {
+         iRV = rx.cap(2).toInt();
+
+         sCleanResp = errMap.contains((Kartina::EErr)iRV) ? errMap[(Kartina::EErr)iRV] : rx.cap(1);
+      }
+   }
+
+   return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: fillErrorMap
+|  Begin: 21.07.2011 / 12:30
+|  Author: Jo2003
+|  Description: fill error translation map
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CKartinaClnt::fillErrorMap()
+{
+   errMap.clear();
+   errMap.insert(Kartina::ERR_UNKNOWN,                 tr("Unknown error"));
+   errMap.insert(Kartina::ERR_INCORRECT_REQUEST,       tr("Incorrect request"));
+   errMap.insert(Kartina::ERR_WRONG_LOGIN_DATA,        tr("Wrong login or password"));
+   errMap.insert(Kartina::ERR_ACCESS_DENIED,           tr("Access denied"));
+   errMap.insert(Kartina::ERR_LOGIN_INCORRECT,         tr("Login incorrect"));
+   errMap.insert(Kartina::ERR_CONTRACT_INACTIVE,       tr("Your contract is inactive"));
+   errMap.insert(Kartina::ERR_CONTRACT_PAUSED,         tr("Your contract is paused"));
+   errMap.insert(Kartina::ERR_CHANNEL_NOT_FOUND,       tr("Channel not found or not allowed"));
+   errMap.insert(Kartina::ERR_BAD_PARAM,               tr("Error in request: Bad parameters"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_DAY,       tr("Missing parameter (day) in format <DDMMYY>"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_CID,       tr("Missing parameter (cid)"));
+   errMap.insert(Kartina::ERR_MULTIPLE_ACCOUNT_USE,    tr("Another client with your data logged in"));
+   errMap.insert(Kartina::ERR_AUTHENTICATION,          tr("Authentication error"));
+   errMap.insert(Kartina::ERR_PACKAGE_EXPIRED,         tr("Your package expired"));
+   errMap.insert(Kartina::ERR_UNKNOWN_API_FUNCTION,    tr("Unknown API function"));
+   errMap.insert(Kartina::ERR_ARCHIVE_NOT_AVAIL,       tr("Archive not available"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_PLACE,     tr("Missing parameter (place)"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_NAME,      tr("Missing parameter (name)"));
+   errMap.insert(Kartina::ERR_CONFIRMATION_CODE,       tr("Incorrect confirmation code"));
+   errMap.insert(Kartina::ERR_WRONG_PCODE,             tr("Current code is wrong"));
+   errMap.insert(Kartina::ERR_NEW_CODE,                tr("New code is wrong"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_VAL,       tr("Missing parameter (val)"));
+   errMap.insert(Kartina::ERR_VALUE_NOT_ALLOWED,       tr("Value not allowed"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM,           tr("Missing parameter"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_ID,        tr("Missing parameter (id)"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_FILEID,    tr("Missing parameter (fileid)"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_TYPE,      tr("Missing parameter (type)"));
+   errMap.insert(Kartina::ERR_MISSING_PARAM_QUERY,     tr("Missing parameter (query)"));
+   errMap.insert(Kartina::ERR_BITRATE_NOT_AVAIL,       tr("Bitrate not available"));
+   errMap.insert(Kartina::ERR_SERVICE_NOT_AVAIL,       tr("Service not available"));
+   errMap.insert(Kartina::ERR_QUERY_LIMIT_EXCEEDED,    tr("Query limit exceeded"));
+   errMap.insert(Kartina::ERR_RULE_ALREADY_EXISTS,     tr("Rule already exists"));
+   errMap.insert(Kartina::ERR_RULE_NEED_CMD,           tr("Missing parameter (cmd)"));
+   errMap.insert(Kartina::ERR_MANAGE_NEED_CMD,         tr("Missing parameter (cmd)"));
+   errMap.insert(Kartina::ERR_MANAGE_BAD_VALUE,        tr("Bad value (rate)"));
+   errMap.insert(Kartina::ERR_MANAGE_FILM_NOT_FOUND,   tr("Can't find film"));
+   errMap.insert(Kartina::ERR_MANAGE_ALREADY_ADDED,    tr("Film already added"));
 }
 
 /*=============================================================================\

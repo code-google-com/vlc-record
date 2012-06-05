@@ -161,7 +161,8 @@ public slots:
     void slotSplashStateChgd (bool bChecked);
     void slotBuildChanManager (const QString &str);
     void slotBuildVodManager (const QString &str);
-    void slotNewPCodeSet (int iErr);
+    void slotNewPCodeSet ();
+    void slotEnablePCodeForm ();
 };
 
 #endif /* __011910__CSETTINGSDLG_H */
