@@ -1599,17 +1599,10 @@ void Recorder::slotKartinaErr (const QString &str, int req, int err)
         .arg(metaKartina.errValToKey((Kartina::EErr)err))
         .arg(metaKartina.reqValToKey((Kartina::EReq)req)));
 
-   QString errMsg = TMPL_DETAILED_ERROR;
-   errMsg.replace(TMPL_NAME,  tr("Request:"));
-   errMsg.replace(TMPL_ERR,   tr("Error:"));
-   errMsg.replace(TMPL_DESCR, tr("Description:"));
-
-   errMsg = errMsg.arg(tr("%1 Client API Error").arg(COMPANY_NAME))
-         .arg(metaKartina.reqValToKey((Kartina::EReq)req))
-         .arg(QString("#%1 (%2)").arg(err).arg(metaKartina.errValToKey((Kartina::EErr)err)))
-         .arg(str);
-
-   QMessageBox::critical(this, tr("Error"), errMsg);
+   QMessageBox::critical(this, tr("Error"), tr("%1 Client API Error:\n%2 (#%3)")
+                         .arg(COMPANY_NAME)
+                         .arg(str)
+                         .arg(err));
    TouchPlayCtrlBtns();
 }
 
