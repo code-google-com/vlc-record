@@ -307,157 +307,157 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaclnt.cpp" line="962"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Unbekannter Fehler</translation>
+        <translation>Unbekannter Fehler</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="963"/>
         <source>Incorrect request</source>
-        <translation type="unfinished">Falsche Anfrage</translation>
+        <translation>Falsche Anfrage</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="964"/>
         <source>Wrong login or password</source>
-        <translation type="unfinished">Falsche Login-Daten</translation>
+        <translation>Falsche Login-Daten</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="965"/>
         <source>Access denied</source>
-        <translation type="unfinished">Zugriff verboten</translation>
+        <translation>Zugriff verboten</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="966"/>
         <source>Login incorrect</source>
-        <translation type="unfinished">Falscher Login</translation>
+        <translation>Falscher Login</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="967"/>
         <source>Your contract is inactive</source>
-        <translation type="unfinished">Ihr Vertrag ist nicht aktiv</translation>
+        <translation>Ihr Vertrag ist nicht aktiv</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="968"/>
         <source>Your contract is paused</source>
-        <translation type="unfinished">Ihr Vertrag pausiert</translation>
+        <translation>Ihr Vertrag pausiert</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="969"/>
         <source>Channel not found or not allowed</source>
-        <translation type="unfinished">Kannal nicht gefunden oder nicht erlaubt</translation>
+        <translation>Kanal nicht gefunden oder nicht erlaubt</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="970"/>
         <source>Error in request: Bad parameters</source>
-        <translation type="unfinished">Fehler in der Anfrage: Falsche(r) Parameter</translation>
+        <translation>Fehler in der Anfrage: Falsche(r) Parameter</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="971"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
-        <translation type="unfinished">Fehlender Parameter (day) in Form &lt;DDMMYY&gt;</translation>
+        <translation>Fehlender Parameter (day) in Form &lt;DDMMYY&gt;</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="972"/>
         <source>Missing parameter (cid)</source>
-        <translation type="unfinished">Fehlender Parameter (cid)</translation>
+        <translation>Fehlender Parameter (cid)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="973"/>
         <source>Another client with your data logged in</source>
-        <translation type="unfinished">Ein anderer Client hat sich mit Ihren Daten eingeloggt</translation>
+        <translation>Ein anderer Client hat sich mit Ihren Daten eingeloggt</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="974"/>
         <source>Authentication error</source>
-        <translation type="unfinished">Authentifizierungsfehler</translation>
+        <translation>Authentifizierungsfehler</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="975"/>
         <source>Your package expired</source>
-        <translation type="unfinished">Ihr Paket ist abgelaufen</translation>
+        <translation>Ihr Paket ist abgelaufen</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="976"/>
         <source>Unknown API function</source>
-        <translation type="unfinished">Unbekannte API Funktion</translation>
+        <translation>Unbekannte API Funktion</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="977"/>
         <source>Archive not available</source>
-        <translation type="unfinished">Archiv nicht verfügbar</translation>
+        <translation>Archiv nicht verfügbar</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="978"/>
         <source>Missing parameter (place)</source>
-        <translation type="unfinished">Fehlender Parameter (place)</translation>
+        <translation>Fehlender Parameter (place)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="979"/>
         <source>Missing parameter (name)</source>
-        <translation type="unfinished">Fehlender Parameter (name)</translation>
+        <translation>Fehlender Parameter (name)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="980"/>
         <source>Incorrect confirmation code</source>
-        <translation type="unfinished">Falscher Bestätigungscode</translation>
+        <translation>Falscher Bestätigungscode</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="981"/>
         <source>Current code is wrong</source>
-        <translation type="unfinished">Der aktuelle Code ist falsch</translation>
+        <translation>Der aktuelle Code ist falsch</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="982"/>
         <source>New code is wrong</source>
-        <translation type="unfinished">Neuer Code ist falsch</translation>
+        <translation>Neuer Code ist falsch</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="983"/>
         <source>Missing parameter (val)</source>
-        <translation type="unfinished">Fehlender Parameter (val)</translation>
+        <translation>Fehlender Parameter (val)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="984"/>
         <source>Value not allowed</source>
-        <translation type="unfinished">Wert nicht zulässig</translation>
+        <translation>Wert nicht zulässig</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="985"/>
         <source>Missing parameter</source>
-        <translation type="unfinished">Fehlende(r) Parameter</translation>
+        <translation>Fehlende(r) Parameter</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="986"/>
         <source>Missing parameter (id)</source>
-        <translation type="unfinished">Fehlender Parameter (id)</translation>
+        <translation>Fehlender Parameter (id)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="987"/>
         <source>Missing parameter (fileid)</source>
-        <translation type="unfinished">Fehlender Parameter (fileid)</translation>
+        <translation>Fehlender Parameter (fileid)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="988"/>
         <source>Missing parameter (type)</source>
-        <translation type="unfinished">Fehlender Parameter (type)</translation>
+        <translation>Fehlender Parameter (type)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="989"/>
         <source>Missing parameter (query)</source>
-        <translation type="unfinished">Fehlender Parameter (query)</translation>
+        <translation>Fehlender Parameter (query)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="990"/>
         <source>Bitrate not available</source>
-        <translation type="unfinished">Bitrate nicht verfügbar</translation>
+        <translation>Bitrate nicht verfügbar</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="991"/>
         <source>Service not available</source>
-        <translation type="unfinished">Service nicht verfügbar</translation>
+        <translation>Service nicht verfügbar</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="992"/>
         <source>Query limit exceeded</source>
-        <translation type="unfinished">Query-Limit überschritten</translation>
+        <translation>Query-Limit überschritten</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="993"/>
@@ -2121,6 +2121,12 @@ dataDir: %1
         <location filename="recorder.cpp" line="3020"/>
         <source>There is the new version %1 of %2 available.&lt;br /&gt;Click %3 to download!</source>
         <translation>Es ist eine neue Version von %2 verfügbar (%1).&lt;br /&gt;Bitte klicken Sie %3, um das Update downzuladen!</translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="1602"/>
+        <source>%1 Client API Error:
+%2 (#%3)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3023"/>
