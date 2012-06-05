@@ -307,157 +307,157 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ckartinaclnt.cpp" line="962"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Неизвестная ошибка</translation>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="963"/>
         <source>Incorrect request</source>
-        <translation type="unfinished">Неверный запрос</translation>
+        <translation>Неверный запрос</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="964"/>
         <source>Wrong login or password</source>
-        <translation type="unfinished">Неверный логин или пароль</translation>
+        <translation>Неверный логин или пароль</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="965"/>
         <source>Access denied</source>
-        <translation type="unfinished">Доступ запрещен</translation>
+        <translation>Доступ запрещен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="966"/>
         <source>Login incorrect</source>
-        <translation type="unfinished">Неверный логин</translation>
+        <translation>Неверный логин</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="967"/>
         <source>Your contract is inactive</source>
-        <translation type="unfinished">Ваш договор неактивен</translation>
+        <translation>Ваш договор неактивен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="968"/>
         <source>Your contract is paused</source>
-        <translation type="unfinished">Ваш договор приостановлен</translation>
+        <translation>Ваш договор приостановлен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="969"/>
         <source>Channel not found or not allowed</source>
-        <translation type="unfinished">Канал не найден или не доступен</translation>
+        <translation>Канал не найден или не доступен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="970"/>
         <source>Error in request: Bad parameters</source>
-        <translation type="unfinished">Ошибка в запросе: Неверный параметр</translation>
+        <translation>Ошибка в запросе: Неверный параметр</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="971"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
-        <translation type="unfinished">Отсутствует параметр (day) в формате &lt;DDMMYY&gt;</translation>
+        <translation>Отсутствует параметр (day) в формате &lt;DDMMYY&gt;</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="972"/>
         <source>Missing parameter (cid)</source>
-        <translation type="unfinished">Отсутствует параметр (cid)</translation>
+        <translation>Отсутствует параметр (cid)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="973"/>
         <source>Another client with your data logged in</source>
-        <translation type="unfinished">Ваш абонемент используется другим устройством</translation>
+        <translation>Ваш абонемент используется другим устройством</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="974"/>
         <source>Authentication error</source>
-        <translation type="unfinished">Ошибка идентификации</translation>
+        <translation>Ошибка идентификации</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="975"/>
         <source>Your package expired</source>
-        <translation type="unfinished">Ваша подписка истекла или ещё не активирована</translation>
+        <translation>Ваша подписка истекла или ещё не активирована</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="976"/>
         <source>Unknown API function</source>
-        <translation type="unfinished">Неизвестная функция API</translation>
+        <translation>Неизвестная функция API</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="977"/>
         <source>Archive not available</source>
-        <translation type="unfinished">Архив не доступен</translation>
+        <translation>Архив не доступен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="978"/>
         <source>Missing parameter (place)</source>
-        <translation type="unfinished">Отсутствует параметр (place)</translation>
+        <translation>Отсутствует параметр (place)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="979"/>
         <source>Missing parameter (name)</source>
-        <translation type="unfinished">Отсутствует параметр (name)</translation>
+        <translation>Отсутствует параметр (name)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="980"/>
         <source>Incorrect confirmation code</source>
-        <translation type="unfinished">Неверный код подтверждения</translation>
+        <translation>Неверный код подтверждения</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="981"/>
         <source>Current code is wrong</source>
-        <translation type="unfinished">Текущий код неверный</translation>
+        <translation>Текущий код неверный</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="982"/>
         <source>New code is wrong</source>
-        <translation type="unfinished">Новый код неверный</translation>
+        <translation>Новый код неверный</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="983"/>
         <source>Missing parameter (val)</source>
-        <translation type="unfinished">Отсутствует параметр (val)</translation>
+        <translation>Отсутствует параметр (val)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="984"/>
         <source>Value not allowed</source>
-        <translation type="unfinished">Значение не доступно</translation>
+        <translation>Значение не доступно</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="985"/>
         <source>Missing parameter</source>
-        <translation type="unfinished">Отсутствует параметр</translation>
+        <translation>Отсутствует параметр</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="986"/>
         <source>Missing parameter (id)</source>
-        <translation type="unfinished">Отсутствует параметр (id)</translation>
+        <translation>Отсутствует параметр (id)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="987"/>
         <source>Missing parameter (fileid)</source>
-        <translation type="unfinished">Отсутствует параметр (fileid)</translation>
+        <translation>Отсутствует параметр (fileid)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="988"/>
         <source>Missing parameter (type)</source>
-        <translation type="unfinished">Отсутствует параметр (type)</translation>
+        <translation>Отсутствует параметр (type)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="989"/>
         <source>Missing parameter (query)</source>
-        <translation type="unfinished">Отсутствует параметр (query)</translation>
+        <translation>Отсутствует параметр (query)</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="990"/>
         <source>Bitrate not available</source>
-        <translation type="unfinished">Битрейт не доступен</translation>
+        <translation>Битрейт не доступен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="991"/>
         <source>Service not available</source>
-        <translation type="unfinished">Сервис не доступен</translation>
+        <translation>Сервис не доступен</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="992"/>
         <source>Query limit exceeded</source>
-        <translation type="unfinished">Превышен лимит запроса</translation>
+        <translation>Превышен лимит запроса</translation>
     </message>
     <message>
         <location filename="ckartinaclnt.cpp" line="993"/>
@@ -929,7 +929,15 @@ To change the parent code make sure:
 &lt;li&gt;The new code contains &lt;b&gt;numbers only&lt;/b&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Пожалуйста, проверте введенные данные.&lt;/b&gt;
+&lt;br /&gt; &lt;br /&gt;
+Для того, чтобы изменить родительский пароль, удостовертесь, что:
+&lt;ul&gt;
+&lt;li&gt;Старый пароль верен.&lt;/li&gt;
+&lt;li&gt;Новый пароль и пароль для подтверждения совпадают.&lt;li&gt;
+&lt;li&gt;Новый пароль не пустой.&lt;li&gt;
+&lt;li&gt;Новый пароль содержит &lt;b style=&apos;color: red;&apos;&gt;только цифры&lt;/b&gt;.&lt;/li&gt;
+&lt;/ul&gt;</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="1786"/>
@@ -1283,7 +1291,7 @@ To change the parent code make sure:
     <message>
         <location filename="forms/csettingsdlg.ui" line="979"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Пожалуста, имейте в виду:&lt;/span&gt;&lt;br/&gt;Если Вы введете родительский пароль внизу, у Вас будет возможность смотреть любой канал для взрослых без необходимости ввода каждый раз родительского пароля. &lt;/p&gt;&lt;p&gt;Если Вы оставите это поле пустым, Вам будет необходимо вводитить родительский пароль каждый раз, когда Вы захотите смотреть канал для взрослых.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="1082"/>
@@ -1767,7 +1775,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/qftsettings.ui" line="138"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Пожалуста, имейте в виду:&lt;/span&gt;&lt;br/&gt;Если Вы введете родительский пароль внизу, у Вас будет возможность смотреть любой канал для взрослых без необходимости ввода каждый раз родительского пароля. &lt;/p&gt;&lt;p&gt;Если Вы оставите это поле пустым, Вам будет необходимо вводитить родительский пароль каждый раз, когда Вы захотите смотреть канал для взрослых.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="forms/qftsettings.ui" line="116"/>
@@ -2100,6 +2108,12 @@ dataDir: %1
         <location filename="recorder.cpp" line="3020"/>
         <source>There is the new version %1 of %2 available.&lt;br /&gt;Click %3 to download!</source>
         <translation>Новая версия %2 доступна (%1).&lt;br /&gt;Для загрузки нажать %3!</translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="1602"/>
+        <source>%1 Client API Error:
+%2 (#%3)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3023"/>
