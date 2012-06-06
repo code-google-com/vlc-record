@@ -103,6 +103,7 @@ Recorder::Recorder(QTranslator *trans, QWidget *parent)
    secCodeDlg.setParent(this, Qt::Dialog);
    Settings.setXmlParser(&XMLParser);
    Settings.setWaitTrigger(&Trigger);
+   Settings.setAccountInfo(&accountInfo);
    timeRec.setParent(this, Qt::Dialog);
    trayIcon.setParent(this);
    vlcCtrl.setParent(this);

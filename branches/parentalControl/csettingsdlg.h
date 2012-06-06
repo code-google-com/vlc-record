@@ -114,6 +114,7 @@ public:
     uint libVlcVerboseLevel();
     void setWaitTrigger (CWaitTrigger *pTrigger);
     void setXmlParser (CKartinaXMLParser *parser);
+    void setAccountInfo(const cparser::SAccountInfo *pInfo);
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -126,8 +127,9 @@ private:
     QVector<float>     vBuffs;
     CWaitTrigger      *pCmdQueue;
     CKartinaXMLParser *pParser;
-    QVector<cparser::SChan>    channelVector;
-    QVector<cparser::SVodRate> vodRatesVector;
+    QVector<cparser::SChan>      channelVector;
+    QVector<cparser::SVodRate>   vodRatesVector;
+    const cparser::SAccountInfo *pAccountInfo;
 
 signals:
     void sigReloadLogos ();
