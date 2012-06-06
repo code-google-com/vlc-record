@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>610</width>
-    <height>546</height>
+    <width>543</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -684,7 +684,7 @@ color: red;
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="secPage">
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -816,8 +816,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>269</width>
-                     <height>220</height>
+                     <width>240</width>
+                     <height>175</height>
                     </rect>
                    </property>
                   </widget>
@@ -968,8 +968,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>257</width>
-                     <height>166</height>
+                     <width>227</width>
+                     <height>121</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -1127,6 +1127,60 @@ color: red;
    <header>qshortcuttable.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>lineUsr</tabstop>
+  <tabstop>linePass</tabstop>
+  <tabstop>lineDir</tabstop>
+  <tabstop>pushDir</tabstop>
+  <tabstop>lineVLC</tabstop>
+  <tabstop>pushVLC</tabstop>
+  <tabstop>cbxStreamServer</tabstop>
+  <tabstop>cbxBitRate</tabstop>
+  <tabstop>cbxBufferSeconds</tabstop>
+  <tabstop>cbxTimeShift</tabstop>
+  <tabstop>cbxLanguage</tabstop>
+  <tabstop>pushDelLogos</tabstop>
+  <tabstop>checkFixTime</tabstop>
+  <tabstop>checkExtChanInfo</tabstop>
+  <tabstop>checkAdvanced</tabstop>
+  <tabstop>tableShortCuts</tabstop>
+  <tabstop>btnResetShortcuts</tabstop>
+  <tabstop>useProxy</tabstop>
+  <tabstop>lineProxyHost</tabstop>
+  <tabstop>lineProxyPort</tabstop>
+  <tabstop>lineProxyUser</tabstop>
+  <tabstop>lineProxyPassword</tabstop>
+  <tabstop>lineApiServer</tabstop>
+  <tabstop>cbxPlayerMod</tabstop>
+  <tabstop>cbxLogLevel</tabstop>
+  <tabstop>lineVlcVerbose</tabstop>
+  <tabstop>lineShutdown</tabstop>
+  <tabstop>checkRefresh</tabstop>
+  <tabstop>cbxInterval</tabstop>
+  <tabstop>checkAskForName</tabstop>
+  <tabstop>checkHideToSystray</tabstop>
+  <tabstop>checkDetach</tabstop>
+  <tabstop>checkTranslit</tabstop>
+  <tabstop>checkUpdate</tabstop>
+  <tabstop>checkGPUAcc</tabstop>
+  <tabstop>check2ClicksToPlay</tabstop>
+  <tabstop>checkAds</tabstop>
+  <tabstop>linePasswd</tabstop>
+  <tabstop>btnEnterManager</tabstop>
+  <tabstop>listHide</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>lineOldPCode</tabstop>
+  <tabstop>lineNewPCode</tabstop>
+  <tabstop>lineConfirmPCode</tabstop>
+  <tabstop>btnChgPCode</tabstop>
+  <tabstop>checkAdult</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>lineErosPass</tabstop>
+  <tabstop>btnSaveExitManager</tabstop>
+  <tabstop>pushSave</tabstop>
+  <tabstop>pushCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="../common.qrc"/>
  </resources>
