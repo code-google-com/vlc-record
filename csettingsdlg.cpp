@@ -39,6 +39,7 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    m_ui->setupUi(this);
    pParser         = NULL;
    pCmdQueue       = NULL;
+   pAccountInfo    = NULL;
    pShortApiServer = new CShortcutEx(QKeySequence("CTRL+ALT+A"), this);
    pShortVerbLevel = new CShortcutEx(QKeySequence("CTRL+ALT+V"), this);
 
@@ -103,6 +104,21 @@ CSettingsDlg::~CSettingsDlg()
 void CSettingsDlg::setXmlParser(CKartinaXMLParser *parser)
 {
    pParser = parser;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setAccountInfo
+|  Begin: 06.06.2012
+|  Author: Jo2003
+|  Description: set account info struct
+|
+|  Parameters: pointer to account info struct
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::setAccountInfo(const cparser::SAccountInfo *pInfo)
+{
+   pAccountInfo = pInfo;
 }
 
 /* -----------------------------------------------------------------\
@@ -1417,8 +1433,17 @@ void CSettingsDlg::slotBuildChanManager(const QString &str)
          }
       }
 
-      // request vod manager data ...
-      pCmdQueue->TriggerRequest(Kartina::REQ_GET_VOD_MANAGER, sTempPasswd);
+      if (pAccountInfo->bHasVOD)
+      {
+         // request vod manager data ...
+         pCmdQueue->TriggerRequest(Kartina::REQ_GET_VOD_MANAGER, sTempPasswd);
+      }
+      else
+      {
+         // show manager widget ...
+         m_ui->stackedWidget->setCurrentIndex(1);
+         m_ui->tabWidget->setTabIcon(m_ui->tabWidget->currentIndex(), QIcon(":/access/unlocked"));
+      }
    }
 }
 
@@ -1443,6 +1468,11 @@ void CSettingsDlg::slotBuildVodManager(const QString &str)
    QRadioButton *pRadHide, *pRadShow, *pRadPass;
    QString       sLabel;
    QFont         font;
+   QStringList   sl;
+   const char   *pGenre;
+
+   // help translate the vod manager strings ...
+   sl << tr("blood") << tr("violence") << tr("obscene") << tr("porn") << tr("horror");
 
    // clear layout ...
    if (pLayout)
@@ -1463,12 +1493,17 @@ void CSettingsDlg::slotBuildVodManager(const QString &str)
       // make forms for every rate ...
       for (int i = 0; i < vodRatesVector.count(); i++)
       {
+         // fix a small typo in API ...
+         pGenre    = (vodRatesVector[i].sGenre == "obsence") ? "obscene" : vodRatesVector[i].sGenre.toUtf8().constData();
+
+         // translate label ...
+         sLabel    = tr(pGenre);
+
          // make label better looking ...
-         sLabel    = vodRatesVector[i].sGenre;
          sLabel[0] = sLabel[0].toUpper();
          sLabel   += ":";
 
-         // create the whole bunch new widgets needed in this from ...
+         // create the whole bunch new widgets needed in this form ...
          pChildWidget  = new QFrame();
          pVChildLayout = new QVBoxLayout();
          pTitle        = new QLabel(sLabel);
@@ -1483,6 +1518,9 @@ void CSettingsDlg::slotBuildVodManager(const QString &str)
          font = pTitle->font();
          font.setBold(true);
          pTitle->setFont(font);
+
+         // set spacing ...
+         pVChildLayout->setSpacing(2);
 
          // add all widgets to layout ...
          pVChildLayout->addWidget(pTitle);
@@ -1612,57 +1650,60 @@ void CSettingsDlg::on_btnSaveExitManager_clicked()
    //////////////////////////////////////////////////
    // VOD Manager ...
    //////////////////////////////////////////////////
-   QVBoxLayout  *pMainLayout, *pChildLayout;
-   QLayoutItem  *child;
-   QRadioButton *pRadShow, *pRadHide, *pRadPass;
-   QString       sRules, sAccess;
-   pMainLayout = (QVBoxLayout *)m_ui->scrollAreaContents->layout();
-
-   for (i = 0; i < pMainLayout->count(); i++)
+   if (pAccountInfo->bHasVOD)
    {
-      // layout was buildt from rates vector so we can
-      // assume that the index of the layout is equal
-      // to the index in the rates vector ...
-      if ((child = pMainLayout->itemAt(i)) != 0)
+      QVBoxLayout  *pMainLayout, *pChildLayout;
+      QLayoutItem  *child;
+      QRadioButton *pRadShow, *pRadHide, *pRadPass;
+      QString       sRules, sAccess;
+      pMainLayout = (QVBoxLayout *)m_ui->scrollAreaContents->layout();
+
+      for (i = 0; i < pMainLayout->count(); i++)
       {
-         // simple check ...
-         if (vodRatesVector[i].sGenre == child->widget()->objectName())
+         // layout was buildt from rates vector so we can
+         // assume that the index of the layout is equal
+         // to the index in the rates vector ...
+         if ((child = pMainLayout->itemAt(i)) != 0)
          {
-            sAccess      = "";
-            pChildLayout = (QVBoxLayout *)child->widget()->layout();
+            // simple check ...
+            if (vodRatesVector[i].sGenre == child->widget()->objectName())
+            {
+               sAccess      = "";
+               pChildLayout = (QVBoxLayout *)child->widget()->layout();
 
-            // assume the order as created ...
-            pRadShow = (QRadioButton *)pChildLayout->itemAt(1)->widget();
-            pRadHide = (QRadioButton *)pChildLayout->itemAt(2)->widget();
-            pRadPass = (QRadioButton *)pChildLayout->itemAt(3)->widget();
+               // assume the order as created ...
+               pRadShow = (QRadioButton *)pChildLayout->itemAt(1)->widget();
+               pRadHide = (QRadioButton *)pChildLayout->itemAt(2)->widget();
+               pRadPass = (QRadioButton *)pChildLayout->itemAt(3)->widget();
 
-            if (pRadShow->isChecked())
-            {
-               sAccess = "show";
-            }
-            else if (pRadHide->isChecked())
-            {
-               sAccess = "hide";
-            }
-            else if (pRadPass->isChecked())
-            {
-               sAccess = "pass";
-            }
+               if (pRadShow->isChecked())
+               {
+                  sAccess = "show";
+               }
+               else if (pRadHide->isChecked())
+               {
+                  sAccess = "hide";
+               }
+               else if (pRadPass->isChecked())
+               {
+                  sAccess = "pass";
+               }
 
-            if ((sAccess != "") && (sAccess != vodRatesVector[i].sAccess))
-            {
-               sRules += QString("&%1=%2")
-                     .arg(vodRatesVector[i].sGenre)
-                     .arg(sAccess);
+               if ((sAccess != "") && (sAccess != vodRatesVector[i].sAccess))
+               {
+                  sRules += QString("&%1=%2")
+                        .arg(vodRatesVector[i].sGenre)
+                        .arg(sAccess);
+               }
             }
          }
       }
-   }
 
-   if (sRules != "")
-   {
-      mInfo(tr("Changed VOD Rate: %1").arg(sRules));
-      pCmdQueue->TriggerRequest(Kartina::REQ_SET_VOD_MANAGER, sRules, sTempPasswd);
+      if (sRules != "")
+      {
+         mInfo(tr("Changed VOD Rate: %1").arg(sRules));
+         pCmdQueue->TriggerRequest(Kartina::REQ_SET_VOD_MANAGER, sRules, sTempPasswd);
+      }
    }
 
    QTimer::singleShot(1000, this, SLOT(slotLockParentalManager()));

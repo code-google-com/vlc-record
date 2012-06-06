@@ -24,7 +24,7 @@
      </property>
      <widget class="QWidget" name="tabStdSettings">
       <attribute name="title">
-       <string>&amp;Settings</string>
+       <string>Se&amp;ttings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -280,7 +280,7 @@
      </widget>
      <widget class="QWidget" name="tabShortCuts">
       <attribute name="title">
-       <string>Shortcuts</string>
+       <string>Sh&amp;ortcuts</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_11">
        <item row="0" column="0">
@@ -372,7 +372,7 @@ color: red;
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Advanced</string>
+       <string>&amp;Advanced</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -672,7 +672,7 @@ color: red;
         <normaloff>:/access/locked</normaloff>:/access/locked</iconset>
       </attribute>
       <attribute name="title">
-       <string>Parental Manager</string>
+       <string>Parental &amp;Manager</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <property name="spacing">
@@ -707,7 +707,7 @@ color: red;
              <item>
               <widget class="QPushButton" name="btnEnterManager">
                <property name="text">
-                <string>Enter Site</string>
+                <string>&amp;Enter Site</string>
                </property>
                <property name="default">
                 <bool>false</bool>
@@ -908,7 +908,7 @@ color: red;
                   <item>
                    <widget class="QPushButton" name="btnChgPCode">
                     <property name="text">
-                     <string>&amp;Change</string>
+                     <string>Chan&amp;ge</string>
                     </property>
                    </widget>
                   </item>
@@ -1034,7 +1034,7 @@ color: red;
              <item>
               <widget class="QPushButton" name="btnSaveExitManager">
                <property name="text">
-                <string>Save and &amp;Exit</string>
+                <string>Save and E&amp;xit</string>
                </property>
               </widget>
              </item>
