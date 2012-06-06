@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>330</height>
+    <width>370</width>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,8 +127,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>361</width>
-           <height>149</height>
+           <width>340</width>
+           <height>99</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -215,6 +215,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cbxLanguage</tabstop>
+  <tabstop>lineUsr</tabstop>
+  <tabstop>linePass</tabstop>
+  <tabstop>checkAdult</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>lineErosPass</tabstop>
+  <tabstop>pushSave</tabstop>
+  <tabstop>pushReset</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

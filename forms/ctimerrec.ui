@@ -398,6 +398,19 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ee
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>dtEdtStart</tabstop>
+  <tabstop>dtEdtEnd</tabstop>
+  <tabstop>edtName</tabstop>
+  <tabstop>cbxChannel</tabstop>
+  <tabstop>cbxTimeShift</tabstop>
+  <tabstop>checkShutdown</tabstop>
+  <tabstop>checkRecMini</tabstop>
+  <tabstop>btnSet</tabstop>
+  <tabstop>btnDel</tabstop>
+  <tabstop>tableRecordEntries</tabstop>
+  <tabstop>pushOK</tabstop>
+ </tabstops>
  <resources>
   <include location="../common.qrc"/>
  </resources>
