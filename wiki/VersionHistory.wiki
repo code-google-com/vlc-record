@@ -29,8 +29,8 @@
 
 == 2012-05-03: Version 2.54 ==
  * fullscreen problem on Mac Snowleo fixed:
- ** use QStackedLayout to place the videoWidget inside the main window at upper most layer
- ** after that make mainwindow fullscreen
+ # use QStackedLayout to place the videoWidget inside the main window at upper most layer
+ # after that make mainwindow fullscreen
  * as small minus the main window may flicker for a short time when toggeling fullscreen
 
 == 2012-04-26: Version 2.53B5 ==
@@ -65,7 +65,7 @@
  * activate proxy server for libVLC
 
 ----
-merge into trunk again ------
+merge into trunk again
 ----
 
 == 2011-12-01: Version 2.50 ==
