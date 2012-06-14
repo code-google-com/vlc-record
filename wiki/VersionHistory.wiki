@@ -3,6 +3,120 @@
 
 = New in version ... =
 
+== 2012-06-13: Version 2.56 ==
+ * small changes in translation
+ * delete parent code fields when wrong data was entered
+
+== 2012-06-05: Version 2.55B10 ==
+ * put response error checking into kartina client class
+ * build pseudo class "Kartina" to have access to Qt's meta system (mainly for debug output)
+ * clear buffered passwords on password error
+
+== 2012-06-01: Version 2.55B7 ==
+ * new parental system ready (needs tests)
+ * still missing translation for the new stuff
+
+== 2012-05-30: Version 2.55B5 ==
+ * add password dialog
+ * ask for password on password protected videos
+ * show per icon that a video is protected
+ * add favourite handling
+
+== 2012-05-25: Version 2.55B1 ==
+ * add VOD Manager
+ * add Channel Manager
+ * first steps to add fovourites
+
+== 2012-05-03: Version 2.54 ==
+ * fullscreen problem on Mac Snowleo fixed:
+ ** use QStackedLayout to place the videoWidget inside the main window at upper most layer
+ ** after that make mainwindow fullscreen
+ * as small minus the main window may flicker for a short time when toggeling fullscreen
+
+== 2012-04-26: Version 2.53B5 ==
+ * only show erotic channels in channel list if allowed in settings
+ * remove not working mac bugfix for fullscreen
+ * try to make another change to raise renderView after switching to fullscreen
+ * erotic channels are now off by default again in first time settings
+ * on ubuntu add another package dependency to make sure there are no GTK theme warnings at startup
+ * libVLC is initiated to be quiet now (you can set verbose level in settings [Ctrl+ALT+V])
+
+== 2012-04-18: Version 2.53B1 ==
+ * add Qt translations so standard widgets will use right translation
+ * optimized global init flags for libVLC
+ * many changes to the Mac port (mostly for App bundle)
+
+== 2012-03-02: Version 2.52 ==
+ * take care on timejump for offset time in showinfo
+ * many changes, tests and optimization on position slider
+ * change style of position slider (untested)
+ * remove progressbar from recorder because position slider will make this job
+ * add hardware acceleration switch in settings
+ * add mac support (with some limitations)
+ * change fullscreen stuff (simplification)
+ * grab libVLC logging info from stderr
+ * prepare for other projects (Kartina.TV, Afrobox, Polsky.TV)
+ * VLC-Record project is back
+ * many changes to simplify package creation
+ * mouse wheel changes volume when in videoWidget
+ * fix problems in timeshift stuff (pause handling)
+ * fix mouse hiding in fullscreen mode
+ * hide VOD if not supported by account
+ * activate proxy server for libVLC
+
+----
+merge into trunk again ------
+----
+
+== 2011-12-01: Version 2.50 ==
+ * add new bitrate "mobile"
+ * update shortinfo / slider / progress on archive play on show change
+ * use older libvlc 1.1.7 which still can remux mp4 to ts
+ * use timeshift module of libVLC to buffer stream on pause (if it works, it makes life much easier)
+
+== 2011-10-12: Version x.49B3 ==
+ * updated translation
+ * add update check at startup
+ * don't show systray icon when not minimizing to systray
+ * when searching without searchstring, show videos normal
+ * searching shows up too 100 results
+
+== 2011-09-29: Version x.49B2 ==
+ * add first time settings dialog
+ * store pre-defined values into config to make a good first start
+ * rework on VOD to have max. 20 entries on one site
+ * add filter "newest" and "best"
+ * VOD search request goes now out to kartina.tv
+ * reworked settings dialog
+ * EPG access only 2 weeks back / 1 week ahead
+ * in short info window show only what's playing now
+ * rework for progress bar to show progress of playing show
+ * memory function for last seen channel / day
+ * rework on wait trigger to add command queue
+ * major GUI rework to make VOD easier accessable
+ * many updated translations
+ * updated installation
+
+----
+branch to make an official Kartina.TV app
+----
+ * add app bundle support when getting VLCs file name
+ * own translation of error codes sent by kartina.tv
+ * more common error message box
+ * default player modules 1_vlc-player.mod and 5_libvlc.mod
+
+== 2011-07-10: Version x.45 ==
+ * use new libVLC 1.1.10
+ * updated CleanShowName() to remove any forbidden filename character
+
+== 2011-04-15: Version x.44 ==
+ * no changes to last beta
+
+== 2011-04-13: Version x.44 Beta 1 ==
+ * delete old db timerrec jobs from database
+ * new shortcut table
+ * take care of unique shortcuts
+
 == 2011-03-30: Version x.43 ==
  * make sure shortcut table is only re-translated if there is something to translate
  * add shortcut reset button
