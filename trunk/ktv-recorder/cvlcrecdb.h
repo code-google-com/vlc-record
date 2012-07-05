@@ -72,6 +72,10 @@ public:
    int     ask(QSqlQuery &query);
    QString getShortCut (const QString &sTarget, const QString &sSlot);
    int     setShortCut (const QString &sTarget, const QString &sSlot, const QString &sShortCut);
+   int     setPassword(const QString& key, const QString &pass);
+   QString password(const QString &sKey);
+   int     removeSetting(const QString &sKey);
+
    void setStatusBar(QStatusBar *pStBar);
 
 protected:

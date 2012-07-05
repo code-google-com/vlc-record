@@ -39,15 +39,15 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 {
    ui->setupUi(this);
 
-   pMediaPlayer  = NULL;
-   pVlcInstance  = NULL;
-   pEMPlay       = NULL;
-   pSettings     = NULL;
-   pTrigger      = NULL;
-   bCtrlStream   = false;
-   bSpoolPending = true;
-   uiDuration    = (uint)-1;
-
+   pMediaPlayer     = NULL;
+   pVlcInstance     = NULL;
+   pMedialistPlayer = NULL;
+   pEMPlay          = NULL;
+   pSettings        = NULL;
+   pTrigger         = NULL;
+   bCtrlStream      = false;
+   bSpoolPending    = true;
+   uiDuration       = (uint)-1;
    mAspect.clear();
    mCrop.clear();
 
@@ -89,7 +89,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(ui->volSlider, SIGNAL(sliderMoved(int)), this, SLOT(slotChangeVolume(int)));
 
    // connect double click signal from videoframe with fullscreen toggle ...
-//   connect(ui->videoWidget, SIGNAL(fullScreen()), ui->videoWidget, SLOT(toggleFullScreen()));
    connect(ui->videoWidget, SIGNAL(fullScreen()), this, SLOT(slotToggleFullscreen()));
 
    // mouse wheel changes volume ...
@@ -124,14 +123,22 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 \----------------------------------------------------------------- */
 CPlayer::~CPlayer()
 {
-   sliderTimer.stop();
+    // stop timer ...
+    sliderTimer.stop();
 
-   stop();
+    stop();
 
-   if (pMediaPlayer)
-   {
-      libvlc_media_player_release (pMediaPlayer);
-   }
+    if (pMediaPlayer)
+    {
+       libvlc_media_player_release (pMediaPlayer);
+       pMediaPlayer = NULL;
+    }
+
+    if (pMedialistPlayer)
+    {
+        libvlc_media_list_player_release (pMedialistPlayer);
+        pMedialistPlayer = NULL;
+    }
 
    if (pVlcInstance)
    {
@@ -306,9 +313,6 @@ int CPlayer::initPlayer()
        iRV |= libvlc_event_attach(pEMPlay, libvlc_MediaPlayerOpening,
                                   CPlayer::eventCallback, (void *)this);
 
-//       iRV |= libvlc_event_attach(pEMPlay, libvlc_MediaPlayerBuffering,
-//                                  CPlayer::eventCallback, (void *)this);
-
        iRV |= libvlc_event_attach(pEMPlay, libvlc_MediaPlayerPlaying,
                                   CPlayer::eventCallback, (void *)this);
 
@@ -320,6 +324,15 @@ int CPlayer::initPlayer()
 
        iRV |= libvlc_event_attach(pEMPlay, libvlc_MediaPlayerEndReached,
                                   CPlayer::eventCallback, (void *)this);
+    }
+
+    // create media list player ...
+    if (!iRV)
+    {
+       if ((pMedialistPlayer = libvlc_media_list_player_new(pVlcInstance)) != NULL)
+       {
+           libvlc_media_list_player_set_media_player (pMedialistPlayer, pMediaPlayer);
+       }
     }
 
     return iRV;
@@ -398,9 +411,9 @@ int CPlayer::play()
 {
     int  iRV    = 0;
 
-    if (pMediaPlayer)
+    if (pMedialistPlayer)
     {
-        libvlc_media_player_play (pMediaPlayer);
+        libvlc_media_list_player_play (pMedialistPlayer);
     }
 
     return iRV;
@@ -421,9 +434,9 @@ int CPlayer::stop()
 {
    int iRV = 0;
 
-   if (pMediaPlayer)
+   if (pMedialistPlayer)
    {
-      libvlc_media_player_stop (pMediaPlayer);
+      libvlc_media_list_player_stop (pMedialistPlayer);
    }
 
    stopPlayTimer();
@@ -446,9 +459,9 @@ int CPlayer::pause()
 {
    int iRV = 0;
 
-   if (pMediaPlayer && bCtrlStream)
+   if (pMedialistPlayer && bCtrlStream)
    {
-      libvlc_media_player_pause(pMediaPlayer);
+      libvlc_media_list_player_pause(pMedialistPlayer);
    }
 
    return iRV;
@@ -467,8 +480,9 @@ int CPlayer::pause()
 \----------------------------------------------------------------- */
 int CPlayer::playMedia(const QString &sCmdLine)
 {
-    int                         iRV  = 0;
-    libvlc_media_t             *p_md = NULL;
+    int                         iRV    = 0;
+    libvlc_media_t             *p_md   = NULL;
+    libvlc_media_list_t        *p_ml   = NULL;
     QStringList                 lArgs;
     QStringList::const_iterator cit;
 
@@ -506,6 +520,12 @@ int CPlayer::playMedia(const QString &sCmdLine)
     if (!pVlcInstance)
     {
        iRV = initPlayer();
+    }
+
+    // make sure we stop the player - needed since playlist support ...
+    if (isPlaying())
+    {
+        stop();
     }
 
     if (!iRV)
@@ -566,8 +586,26 @@ int CPlayer::playMedia(const QString &sCmdLine)
              libvlc_media_add_option(p_md, (*cit).toUtf8().constData());
           }
 
-          // set media in player ...
-          libvlc_media_player_set_media (pMediaPlayer, p_md);
+          // create media list ...
+          if ((p_ml = libvlc_media_list_new(pVlcInstance)) != NULL)
+          {
+             // add commercials if needed ...
+             addAd(p_ml);
+
+             // add media ...
+             libvlc_media_list_add_media(p_ml, p_md);
+
+             // set media in player ...
+             libvlc_media_list_player_set_media_list (pMedialistPlayer, p_ml);
+
+             // now it's safe to release medialist ...
+             libvlc_media_list_release (p_ml);
+          }
+          else
+          {
+             mInfo(tr("Can't create media list ..."));
+             iRV = -1;
+          }
 
           // now it's safe to release media ...
           libvlc_media_release (p_md);
@@ -585,6 +623,75 @@ int CPlayer::playMedia(const QString &sCmdLine)
     }
 
     return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: addAd
+|  Begin: 11.05.2012
+|  Author: Jo2003
+|  Description: add commercial
+|
+|  Parameters: medialist to add ad
+|
+|  Returns: 0 --> none added
+|           1 --> added
+\----------------------------------------------------------------- */
+int CPlayer::addAd(libvlc_media_list_t *pList)
+{
+   // play add ... ?
+   int             iRV    = 0;
+   libvlc_media_t *p_mdad = NULL;
+   QString         adUrl  = showInfo.adUrl();
+   QString         sOpt;
+
+   if ((adUrl != "") && (showInfo.showType() == ShowInfo::VOD) && pSettings->showAds())
+   {
+      mInfo(tr("Prepend Ad (Url):\n  --> %1").arg(adUrl));
+      if ((p_mdad = libvlc_media_new_location(pVlcInstance, adUrl.toUtf8().constData())) != NULL)
+      {
+         sOpt = QString(":http-caching=%1").arg(pSettings->GetBufferTime());
+         mInfo(tr("Add MRL Option: %1").arg(sOpt));
+         libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
+
+         sOpt = ":no-http-reconnect";
+         mInfo(tr("Add MRL Option: %1").arg(sOpt));
+         libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
+
+         ///////////////////////////////////////////////////////////////////////////
+         // set proxy server ...
+         ///////////////////////////////////////////////////////////////////////////
+         if (pSettings->UseProxy())
+         {
+            sOpt = ":http_proxy=http://";
+
+            if (pSettings->GetProxyUser() != "")
+            {
+               sOpt += QString("%1@").arg(pSettings->GetProxyUser());
+            }
+
+            sOpt += QString("%1:%2/").arg(pSettings->GetProxyHost()).arg(pSettings->GetProxyPort());
+            mInfo(tr("Add MRL Option: %1").arg(sOpt));
+            libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
+
+            if ((pSettings->GetProxyPasswd() != "") && (pSettings->GetProxyUser() != ""))
+            {
+               sOpt = QString(":http_proxy_pwd=%1").arg(pSettings->GetProxyPasswd());
+               mInfo(tr("Add MRL Option: :http_proxy_pwd=******"));
+               libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
+            }
+         }
+
+         // add media ...
+         libvlc_media_list_add_media(pList, p_mdad);
+
+         // release ad ...
+         libvlc_media_release (p_mdad);
+
+         iRV = 1;
+      }
+   }
+
+   return iRV;
 }
 
 /* -----------------------------------------------------------------\
@@ -724,12 +831,6 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *player)
       mInfo("libvlc_MediaPlayerOpening ...");
       emit pPlayer->sigPlayState((int)IncPlay::PS_OPEN);
       break;
-
-   // buffering media ...
-//   case libvlc_MediaPlayerBuffering:
-//      mInfo("libvlc_MediaPlayerBuffering ...");
-//      emit pPlayer->sigPlayState((int)IncPlay::PS_BUFFER);
-//      break;
 
    // playing media ...
    case libvlc_MediaPlayerPlaying:
@@ -957,7 +1058,7 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
          // save jump time ...
          showInfo.setLastJumpTime(pos);
 
-         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
+         pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req, showInfo.pCode());
 
          // do we reach another show?
          if ((pos < mToGmt(ui->posSlider->minimum())) || (pos > mToGmt(ui->posSlider->maximum())))
@@ -1028,7 +1129,6 @@ void CPlayer::stopPlayTimer()
 \----------------------------------------------------------------- */
 void CPlayer::on_btnFullScreen_clicked()
 {
-//   slotToggleFullscreen();
     emit sigToggleFullscreen();
 }
 
@@ -1138,7 +1238,7 @@ void CPlayer::slotSliderPosChanged()
             showInfo.setLastJumpTime(position);
 
             // trigger stream request ...
-            pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req);
+            pTrigger->TriggerRequest(Kartina::REQ_ARCHIV, req, showInfo.pCode());
          }
       }
 

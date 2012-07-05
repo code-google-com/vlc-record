@@ -902,6 +902,7 @@ void CTimerRec::slotRecTimer()
                   (*it).eState = rec::REC_RUNNING;
                   itActJob     = it;
 
+                  showInfo.cleanShowInfo();
                   showInfo.setChanId((*it).cid);
                   showInfo.setShowName((*it).sName);
                   showInfo.setShowType(ShowInfo::Live);
@@ -930,7 +931,7 @@ void CTimerRec::slotRecTimer()
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CTimerRec::slotTimerStreamUrl(QString str)
+void CTimerRec::slotTimerStreamUrl(const QString &str)
 {
    QString sCmdLine;
    Q_PID   vlcpid = 0;

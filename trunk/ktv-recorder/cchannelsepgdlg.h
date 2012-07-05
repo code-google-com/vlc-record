@@ -63,9 +63,10 @@ public:
     QStandardItemModel* getModel();
     int getCurrentCid();
     QListView* getChannelList();
-    QMap<int, cparser::SChan>* getChanMap();
+    QChanMap* getChanMap();
     void updateFavourites();
     void touchLastOrBestCbx();
+    void touchGenreCbx();
     void touchVodNavBar(const cparser::SGenreInfo &gInfo);
     void setGenreInfo(cparser::SGenreInfo *pGenrInf);
     void activateVOD();
@@ -86,7 +87,7 @@ private:
     CFavAction                    *pContextAct[MAX_NO_FAVOURITES];
     int                            iCurrentRow;
     QList<int>                     lFavourites;
-    QMap<int, cparser::SChan>      chanMap;
+    QChanMap                       chanMap;
     int                            iFontSzChg;
     int                            iEpgOffset;
     IncPlay::ePlayStates           ePlayState;
@@ -125,6 +126,7 @@ private slots:
     void slotHandleFavAction(QAction *pAct);
     void slotFavBtnContext(const QPoint &pt);
     void slotCurrentChannelChanged(const QModelIndex & current);
+    void slotAddFav(int cid);
 
 signals:
     void sigDoubliClickOnListWidget();

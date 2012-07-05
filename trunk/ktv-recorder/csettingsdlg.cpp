@@ -36,6 +36,8 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
     m_ui(new Ui::CSettingsDlg)
 {
    m_ui->setupUi(this);
+   pParser         = NULL;
+   pCmdQueue       = NULL;
 
    pStatusBar = NULL;
 
@@ -59,6 +61,10 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    // fill in buffer values ...
    vBuffs << 1.5 << 3 << 5 << 8 << 15 << 20 << 30 << 45 << 60 << 90;
    qSort(vBuffs);
+
+   #ifdef ENABLE_AD_SWITCH
+      m_ui->checkAds->setEnabled(true);
+   #endif // ENABLE_AD_SWITCH
 
    // fill in values ...
    readSettings();
@@ -101,13 +107,48 @@ void CSettingsDlg::readSettings()
    int     iErr;
    QDir        folder;
    QStringList sl;
+   bool        bUpdCase = false;
+
+   ////////////////////////////////////////////////////////////////////////////////
+   // update case: Encrypted passwords ---->
+   // We added a simply password encryption. In case there is an update,
+   // we must make sure that the unencrypted password is converted
+   // into an encrypted one. To make our lives easier we'll use new
+   // keys for the encrypted passwords ...
+   if (((s = pDb->stringValue("Passwd")) != "")
+       && (pDb->stringValue("PasswdEnc") == ""))
+   {
+      bUpdCase = true;
+      pDb->setPassword("PasswdEnc", s);
+   }
+
+   if (((s = pDb->stringValue("ErosPasswd")) != "")
+       && (pDb->stringValue("ErosPasswdEnc") == ""))
+   {
+      pDb->setPassword("ErosPasswdEnc", s);
+   }
+
+   if (((s = pDb->stringValue("ProxyPasswd")) != "")
+       && (pDb->stringValue("ProxyPasswdEnc") == ""))
+   {
+      pDb->setPassword("ProxyPasswdEnc", s);
+   }
+
+   // remove unused settings ...
+   if (bUpdCase)
+   {
+      pDb->removeSetting("Passwd");
+      pDb->removeSetting("ErosPasswd");
+      pDb->removeSetting("ProxyPasswd");
+   }
+   // update case: Encrypted passwords <----
+   ////////////////////////////////////////////////////////////////////////////////
 
    // line edits ...
    m_ui->lineVLC->setText (pDb->stringValue("VLCPath"));
    m_ui->lineDir->setText (pDb->stringValue("TargetDir"));
    m_ui->lineUsr->setText (pDb->stringValue("User"));
-   m_ui->linePass->setText (pDb->stringValue("Passwd"));
-   m_ui->lineErosPass->setText(pDb->stringValue("ErosPasswd"));
+   m_ui->linePass->setText (pDb->password("PasswdEnc"));
    m_ui->lineShutdown->setText(pDb->stringValue("ShutdwnCmd"));
    m_ui->lineApiServer->setText(pDb->stringValue ("APIServer"));
    m_ui->lineVlcVerbose->setText(pDb->stringValue ("libVlcLogLevel", &iErr));
@@ -138,11 +179,11 @@ void CSettingsDlg::readSettings()
    m_ui->lineProxyHost->setText(pDb->stringValue("ProxyHost"));
    m_ui->lineProxyPort->setText(pDb->stringValue("ProxyPort"));
    m_ui->lineProxyUser->setText(pDb->stringValue("ProxyUser"));
-   m_ui->lineProxyPassword->setText(pDb->stringValue("ProxyPasswd"));
+   m_ui->lineProxyPassword->setText(pDb->password("ProxyPasswdEnc"));
 
    // check boxes ...
    m_ui->useProxy->setCheckState((Qt::CheckState)pDb->intValue("UseProxy"));
-   m_ui->checkAdult->setCheckState((Qt::CheckState)pDb->intValue("AllowAdult"));
+   m_ui->checkAdult->setCheckState((Qt::CheckState)((pDb->password("AllowAdultEnc")).toInt() - 157239));
    m_ui->checkFixTime->setCheckState((Qt::CheckState)pDb->intValue("FixTime"));
    m_ui->checkRefresh->setCheckState((Qt::CheckState)pDb->intValue("Refresh"));
    m_ui->checkHideToSystray->setCheckState((Qt::CheckState)pDb->intValue("TrayHide"));
@@ -152,6 +193,15 @@ void CSettingsDlg::readSettings()
    m_ui->checkExtChanInfo->setCheckState((Qt::CheckState)pDb->intValue("ExtChanList"));
    m_ui->checkAdvanced->setCheckState((Qt::CheckState)pDb->intValue("AdvSet"));
    m_ui->checkGPUAcc->setCheckState((Qt::CheckState)pDb->intValue("GPUAcc"));
+   m_ui->checkAds->setCheckState((Qt::CheckState)pDb->intValue("AdsEnabled", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+       // enable by default ...
+       m_ui->checkAds->setCheckState(Qt::Checked);
+   }
+
    m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck", &iErr));
 
    // value doesn't exist in database ...
@@ -166,12 +216,6 @@ void CSettingsDlg::readSettings()
    if (m_ui->checkAdvanced->isChecked())
    {
       vBuffs.prepend(0.5);
-   }
-
-   // on update the password for adult channels may not be given ...
-   if (m_ui->checkAdult->isChecked() && (m_ui->lineErosPass->text() == ""))
-   {
-      m_ui->lineErosPass->setText(m_ui->linePass->text());
    }
 
    // fill player module box with available modules ...
@@ -277,7 +321,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
        }
        break;
     default:
-        break;
+       break;
     }
 }
 
@@ -418,20 +462,19 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("VLCPath", m_ui->lineVLC->text());
    pDb->setValue("User", m_ui->lineUsr->text());
    pDb->setValue("TargetDir", m_ui->lineDir->text());
-   pDb->setValue("Passwd", m_ui->linePass->text());
-   pDb->setValue("ErosPasswd", m_ui->lineErosPass->text());
+   pDb->setPassword("PasswdEnc", m_ui->linePass->text());
 
    pDb->setValue("ProxyHost", m_ui->lineProxyHost->text());
    pDb->setValue("ProxyPort", m_ui->lineProxyPort->text());
    pDb->setValue("ProxyUser", m_ui->lineProxyUser->text());
-   pDb->setValue("ProxyPasswd", m_ui->lineProxyPassword->text());
+   pDb->setPassword("ProxyPasswdEnc", m_ui->lineProxyPassword->text());
    pDb->setValue("ShutdwnCmd", m_ui->lineShutdown->text());
    pDb->setValue("APIServer", m_ui->lineApiServer->text());
    pDb->setValue("libVlcLogLevel", m_ui->lineVlcVerbose->text());
 
    // check boxes ...
    pDb->setValue("UseProxy", (int)m_ui->useProxy->checkState());
-   pDb->setValue("AllowAdult", (int)m_ui->checkAdult->checkState());
+   pDb->setPassword("AllowAdultEnc", QString::number((int)m_ui->checkAdult->checkState() + 157239));
    pDb->setValue("FixTime", (int)m_ui->checkFixTime->checkState());
    pDb->setValue("Refresh", (int)m_ui->checkRefresh->checkState());
    pDb->setValue("TrayHide", (int)m_ui->checkHideToSystray->checkState());
@@ -442,6 +485,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("AdvSet", (int)m_ui->checkAdvanced->checkState());
    pDb->setValue("UpdateCheck", (int)m_ui->checkUpdate->checkState());
    pDb->setValue("GPUAcc", (int)m_ui->checkGPUAcc->checkState());
+   pDb->setValue("AdsEnabled", (int)m_ui->checkAds->checkState());
 
    // combo boxes ...
    pDb->setValue("Language", m_ui->cbxLanguage->currentText());
@@ -1007,11 +1051,6 @@ QString CSettingsDlg::GetPasswd()
    return m_ui->linePass->text();
 }
 
-QString CSettingsDlg::GetErosPasswd()
-{
-   return m_ui->lineErosPass->text();
-}
-
 QString CSettingsDlg::GetProxyHost ()
 {
    return m_ui->lineProxyHost->text();
@@ -1143,6 +1182,11 @@ int CSettingsDlg::getTimeShift()
 bool CSettingsDlg::useGpuAcc()
 {
     return m_ui->checkGPUAcc->isChecked();
+}
+
+bool CSettingsDlg::showAds()
+{
+    return m_ui->checkAds->isChecked();
 }
 
 uint CSettingsDlg::libVlcVerboseLevel()
@@ -1368,7 +1412,28 @@ void CSettingsDlg::slotEmptyFocusOut(const QKeySequence &custKeySeq, const QKeyS
         pGrab->rollback(currentKeySequence);
     }
 }
-
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
+
+void CSettingsDlg::on_checkAdult_clicked()
+{
+    // request password ...
+    secCodeDlg.exec();
+
+    // we only can grant access if we have the correct password ...
+    if ( secCodeDlg.passWd() == "" || secCodeDlg.passWd() != pDb->password("ErosPasswdEnc") )
+    {
+        if (m_ui->checkAdult->isChecked())
+        {
+            m_ui->checkAdult->setChecked(false);
+        }
+        else
+        {
+            m_ui->checkAdult->setChecked(true);
+        }
+
+        QMessageBox::critical(this, tr("Error!"),
+            tr("<b>The parent code is empty or not correct.</b>\n</ul>\n"));
+    }
+}

@@ -13,6 +13,7 @@
    #define __011810__DEFDEF_H
 
 #include <QtGlobal>
+#include "customization.h"
 
 #define APP_NAME          "KTV-Recorder"
 
@@ -44,7 +45,8 @@
 #define KARTINA_HOST      "iptv.kartina.tv"
 #define KARTINA_API_PATH  "/api/xml/"
 #define LOGO_URL          "/img/ico/24"
-#define DEF_TIME_FORMAT   "MMM dd, yyyy hh:mm:ss"
+// #define DEF_TIME_FORMAT   "MMM dd, yyyy hh:mm:ss"
+#define DEF_TIME_FORMAT   "dd.MM.yyyy hh:mm:ss"
 #define DEF_TZ_STEP       1800            // time zone step is min. 30 minutes (1800 sec.) ...
 #define DEF_MAX_DIFF      600             // accept system clock inaccuracy up too 600 sec
 #define EPG_NAVBAR_HEIGHT 24              // default height for EPG navbar
@@ -59,7 +61,6 @@
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
 #define VIDEOS_PER_SITE   20              // number of videos / site
 #define GPU_ACC_TOKEN     ":ffmpeg-hw"    // mrl option to use GPU acceleration
-#define MAX_CHANNEL_ACTS  200             // max number of channel actions
 #define UPD_CHECK_URL     "http://code.google.com/p/vlc-record/downloads/list"
 #define MAX_CHANNEL_ACTS  200             // max number of channel actions
 #define MAX_CHANNEL_GROUPS 20             // max number of channel groups

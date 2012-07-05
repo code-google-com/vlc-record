@@ -22,11 +22,12 @@
 #include "cvlcrecdb.h"
 #include "clogfile.h"
 #include "defdef.h"
-#include "customization.h"
 #include "cdirstuff.h"
 #include "ckartinaxmlparser.h"
 #include "cshortcutex.h"
 #include "cshortcutgrabber.h"
+#include "cwaittrigger.h"
+#include "qseccodedlg.h"
 
 //===================================================================
 // namespace
@@ -55,7 +56,6 @@ public:
     QString GetTargetDir ();
     QString GetUser ();
     QString GetPasswd ();
-    QString GetErosPasswd ();
     QString GetProxyHost ();
     QString GetProxyUser ();
     QString GetProxyPasswd ();
@@ -77,6 +77,7 @@ public:
     bool checkForUpdate();
     int  getTimeShift();
     bool useGpuAcc();
+    bool showAds();
 
     int GetRefrInt ();
     int GetProxyPort ();
@@ -112,10 +113,18 @@ protected:
     virtual void changeEvent(QEvent *e);
 
 private:
-    Ui::CSettingsDlg *m_ui;
-    CShortcutEx *pShortApiServer;
-    QVector<float> vBuffs;
-    CShortcutEx *pShortVerbLevel;
+    Ui::CSettingsDlg  *m_ui;
+    QString            sTempPasswd;
+    CShortcutEx       *pShortApiServer;
+    CShortcutEx       *pShortVerbLevel;
+    QVector<float>     vBuffs;
+    CWaitTrigger      *pCmdQueue;
+    CKartinaXMLParser *pParser;
+    QSecCodeDlg        secCodeDlg;
+
+    QVector<cparser::SChan>    channelVector;
+    QVector<cparser::SVodRate> vodRatesVector;
+
     QStatusBar *pStatusBar;
     QString str;
 
@@ -127,6 +136,7 @@ signals:
     void sigSetTimeShift (int iShift);
 
 private slots:
+    void on_checkAdult_clicked();
     void on_btnResetShortcuts_clicked();
     void on_checkAdvanced_clicked(bool checked);
     void on_pushDelLogos_clicked();
@@ -137,7 +147,6 @@ private slots:
     void slotEnableVlcVerbLine ();
     void on_cbxStreamServer_activated(int index);
     void on_cbxBitRate_activated(int index);
-
     void on_cbxTimeShift_activated(int index);
 
     void slotKeySequenceChanged(const QKeySequence &custKeySeq, const QKeySequence &currKeySeq, int iRow);
