@@ -41,7 +41,8 @@ CChannelsEPGdlg::CChannelsEPGdlg(QWidget *parent) :
 
     connect (ui->channelList, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotChanListContext(QPoint)));
     connect (&favContext,   SIGNAL(triggered(QAction*)), this, SLOT(slotChgFavourites(QAction*)));
-    connect(ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
+    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
+    connect (ui->hFrameFav, SIGNAL(sigAddFav(int)), this, SLOT(slotAddFav(int)));
 
     // -------------------------------------------
     // get favourites ...
@@ -113,10 +114,17 @@ void CChannelsEPGdlg::on_cbxChannelGroup_activated(int index)
 
 void CChannelsEPGdlg::on_cbxGenre_activated(int index)
 {
-    int     iGid  = ui->cbxGenre->itemData(index).toInt();
+    // check for vod favourites ...
     QString sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+    int     iGid  = ui->cbxGenre->itemData(index).toInt();
     QUrl    url;
 
+    if (sType == "vodfav")
+    {
+       // set filter cbx to "last"  ...
+       ui->cbxLastOrBest->setCurrentIndex(0);
+       sType = "last";
+    }
 
     url.addQueryItem("type", sType);
 
@@ -130,18 +138,26 @@ void CChannelsEPGdlg::on_cbxGenre_activated(int index)
 
 void CChannelsEPGdlg::on_cbxLastOrBest_activated(int index)
 {
-    int     iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
     QString sType = ui->cbxLastOrBest->itemData(index).toString();
-    QUrl    url;
 
-    url.addQueryItem("type", sType);
-
-    if (iGid != -1)
+    if (sType == "vodfav")
     {
-       url.addQueryItem("genre", QString::number(iGid));
+        pTrigger->TriggerRequest(Kartina::REQ_GET_VOD_FAV);
     }
+    else
+    {
+       int  iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+       QUrl url;
 
-    pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+       url.addQueryItem("type", sType);
+
+       if (iGid != -1)
+       {
+          url.addQueryItem("genre", QString::number(iGid));
+       }
+
+       pTrigger->TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
+    }
 }
 
 void CChannelsEPGdlg::on_btnSearch_clicked()
@@ -217,6 +233,13 @@ void CChannelsEPGdlg::on_btnVodSearch_clicked()
        // no text means normal list ...
        iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
        sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+
+       // make sure type is supported ...
+       if (sType == "vodfav")
+       {
+           sType = "last";
+           ui->cbxLastOrBest->setCurrentIndex(0);
+       }
 
        url.addQueryItem("type", sType);
 
@@ -433,39 +456,45 @@ void CChannelsEPGdlg::slotChanListContext(const QPoint &pt)
 
 void CChannelsEPGdlg::slotChgFavourites (QAction *pAct)
 {
-   CFavAction      *pAction = (CFavAction *)pAct;
-   int              iCid    = 0;
-   kartinafav::eAct action  = kartinafav::FAV_WHAT;
+    CFavAction      *pAction = (CFavAction *)pAct;
+    int              iCid    = 0;
+    kartinafav::eAct action  = kartinafav::FAV_WHAT;
 
-   // get action details ...
-   pAction->favData(iCid, action);
+    // get action details ...
+    pAction->favData(iCid, action);
 
-   // what to do ... ?
-   if (action == kartinafav::FAV_ADD)
-   {
-      if (lFavourites.count() < MAX_NO_FAVOURITES)
-      {
-         // add new favourite ...
-         lFavourites.push_back(iCid);
+    // what to do ... ?
+    if (action == kartinafav::FAV_ADD)
+    {
+       if (!lFavourites.contains(iCid))
+       {
+          if (lFavourites.count() < MAX_NO_FAVOURITES)
+          {
+             // add new favourite ...
+             lFavourites.push_back(iCid);
 
-         HandleFavourites();
-         bSaveCng = true;
-      }
-      else
-      {
+             HandleFavourites();
+             bSaveCng = true;
+          }
+       else
+       {
 //         QMessageBox::information(this, tr("Note"),
 //                                  tr("Max. number of favourites (%1) reached.")
 //                                  .arg(MAX_NO_FAVOURITES));
          pStatusBar->showMessage(tr("Note: Max. number of favourites (%1) reached.").arg(MAX_NO_FAVOURITES));
-      }
+       }
+     }
    }
    else if (action == kartinafav::FAV_DEL)
    {
-      // remove favourite ...
-      lFavourites.removeOne(iCid);
+       if (lFavourites.contains(iCid))
+       {
+          // remove favourite ...
+          lFavourites.removeOne(iCid);
 
-      HandleFavourites();
-      bSaveCng = true;
+          HandleFavourites();
+          bSaveCng = true;
+       }
    }
 }
 
@@ -513,7 +542,7 @@ void CChannelsEPGdlg::slotFavBtnContext(const QPoint &pt)
       {
          sLogoFile = QString("%1/%2.gif").arg(pFolders->getLogoDir()).arg(lFavourites[i]);
          pContextAct[i]->setIcon(QIcon(sLogoFile));
-         pContextAct[i]->setText(tr("Remove from favourites"));
+         pContextAct[i]->setText(tr("Remove \"%1\" from favourites").arg(chanMap[lFavourites[i]].sName));
          pContextAct[i]->setFavData(lFavourites[i], kartinafav::FAV_DEL);
          favContext.addAction(pContextAct[i]);
       }
@@ -575,16 +604,59 @@ void CChannelsEPGdlg::slotCurrentChannelChanged(const QModelIndex & current)
    }
 }
 
+void CChannelsEPGdlg::slotAddFav(int cid)
+{
+   if (!lFavourites.contains(cid))
+   {
+      if (lFavourites.count() < MAX_NO_FAVOURITES)
+      {
+         lFavourites.append(cid);
+         HandleFavourites();
+         bSaveCng = true;
+      }
+      else
+      {
+//         QMessageBox::information(this, tr("Note"),
+//                                  tr("Max. number of favourites (%1) reached.")
+//                                  .arg(MAX_NO_FAVOURITES));
+
+         pStatusBar->showMessage(tr("Note: Max. number of favourites (%1) reached.").arg(MAX_NO_FAVOURITES));
+      }
+   }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //                             normal functions                               //
 ////////////////////////////////////////////////////////////////////////////////
 void CChannelsEPGdlg::touchLastOrBestCbx()
 {
-    // fill search area combo box ...
-    ui->cbxLastOrBest->clear();
-    ui->cbxLastOrBest->addItem(tr("Newest"), "last");
-    ui->cbxLastOrBest->addItem(tr("Best"), "best");
-    ui->cbxLastOrBest->setCurrentIndex(0);
+    // fill / update search area combo box ...
+    if (!ui->cbxLastOrBest->count())
+    {
+        ui->cbxLastOrBest->addItem(tr("Newest"), "last");
+        ui->cbxLastOrBest->addItem(tr("Best"), "best");
+        ui->cbxLastOrBest->addItem(tr("My Favourites"), "vodfav");
+        ui->cbxLastOrBest->setCurrentIndex(0);
+    }
+    else
+    {
+        int idx;
+
+        if ((idx = ui->cbxLastOrBest->findData("last")) > -1)
+        {
+            ui->cbxLastOrBest->setItemText(idx, tr("Newest"));
+        }
+
+        if ((idx = ui->cbxLastOrBest->findData("best")) > -1)
+        {
+            ui->cbxLastOrBest->setItemText(idx, tr("Best"));
+        }
+
+        if ((idx = ui->cbxLastOrBest->findData("vodfav")) > -1)
+        {
+            ui->cbxLastOrBest->setItemText(idx, tr("My Favourites"));
+        }
+    }
 }
 
 void CChannelsEPGdlg::touchVodNavBar(const cparser::SGenreInfo &gInfo)
@@ -624,6 +696,19 @@ void CChannelsEPGdlg::touchVodNavBar(const cparser::SGenreInfo &gInfo)
     {
        ui->btnNextSite->setEnabled(true);
     }
+}
+
+void CChannelsEPGdlg::touchGenreCbx()
+{
+   if (ui->cbxGenre->count())
+   {
+      int idx;
+
+      if ((idx = ui->cbxGenre->findData((int)-1)) > -1)
+      {
+         ui->cbxGenre->setItemText(idx, tr("All"));
+      }
+   }
 }
 
 void CChannelsEPGdlg::initDialog (bool bInit)
@@ -947,7 +1032,7 @@ void CChannelsEPGdlg::correctEpgOffset()
 //             Functions needed for connection with the MainWindow            //                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-QMap<int, cparser::SChan>* CChannelsEPGdlg::getChanMap()
+QChanMap* CChannelsEPGdlg::getChanMap()
 {
     return &chanMap;
 }

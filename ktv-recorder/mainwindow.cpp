@@ -32,9 +32,9 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 #endif
 
    ePlayState     = IncPlay::PS_WTF;
-   bLogosReady    = false;
    pTranslator    = trans;
    iDwnReqId      = -1;
+   ulStartFlags   =  0;
    bDoInitDlg     = true;
    bOnTop         = false;
    flags          = this->windowFlags();
@@ -42,6 +42,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    bFirstConnect  = true;
    bVODLogosReady = false;
    bGotVOD        = false; // update vod stuff only at startup ...
+   bEpgRefresh    = false;
 
    // init VOD site backup ...
    lastVodSite.iScrollBarVal = 0;
@@ -64,6 +65,11 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    // set this dialog as parent for settings and timerRec ...
    dlgSettings.setParent(this, Qt::Dialog);
    dlgTimeRec.setParent(this, Qt::Dialog);
+   dlgParentalControl.setParent(this, Qt::Dialog);
+   dlgParentalControl.setAccountInfo(&accountInfo);
+   secCodeDlg.setParent(this, Qt::Dialog);
+   dlgParentalControl.setXmlParser(&XMLParser);
+   dlgParentalControl.setWaitTrigger(&Trigger);
    vlcCtrl.setParent(this);
    trayIcon.setParent(this);
 
@@ -137,12 +143,14 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    // update checker ...
    pUpdateChecker = new QNetworkAccessManager(this);
 
-   // set logo dir and host for chan logo downloader ...
-   dwnLogos.setHostAndFolder(dlgSettings.GetAPIServer(), pFolders->getLogoDir());
-   dwnVodPics.setHostAndFolder(dlgSettings.GetAPIServer(), pFolders->getVodPixDir());
+   // set host for pix cache ...
+   pixCache.setHost(dlgSettings.GetAPIServer());
 
    // set settings for vod browser ...
    pChannelDlg->getVodBrowser()->setSettings(&dlgSettings);
+
+   // set pix cache ...
+   pChannelDlg->getVodBrowser()->setPixCache(&pixCache);
 
    // set log level ...
    VlcLog.SetLogLevel(dlgSettings.GetLogLevel());
@@ -173,6 +181,16 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    pChannelDlg->getTabEpgVOD()->removeTab(vodTabWidget.iPos);
 
 #ifdef INCLUDE_LIBVLC
+   // do we use libVLC ?
+   if (dlgSettings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
+   {
+      vlcCtrl.UseLibVlc(true);
+   }
+   else
+   {
+      vlcCtrl.UseLibVlc(false);
+   }
+
    // give player the list of shortcuts ...
    ui->player->setShortCuts (&vShortcutPool);
 
@@ -200,40 +218,28 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (ui->player, SIGNAL(sigPlayState(int)), this, SLOT(slotIncPlayState(int)));
 #endif /* INCLUDE_LIBVLC */
 
-   // connect signals and slots ...Поиск в телегиде
-   connect (&KartinaTv,    SIGNAL(sigLogout(QString)), this, SLOT(slotLogout(QString)));
-   connect (&KartinaTv,    SIGNAL(sigError(QString)), this, SLOT(slotErr(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotTimeShift(QString)), this, SLOT(slotGotTimeShift(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotChannelList(QString)), this, SLOT(slotChanList(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotStreamURL(QString)), this, SLOT(slotStreamURL(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotCookie(QString)), this, SLOT(slotCookie(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotEPG(QString)), this, SLOT(slotEPG(QString)));
-   connect (&KartinaTv,    SIGNAL(sigTimeShiftSet(QString)), this, SLOT(slotTimeShift(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotBitRate(QString)), this, SLOT(slotGotBitrate(QString)));
-   connect (&streamLoader, SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
-   connect (&Refresh,      SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
+   // connect signals and slots ...
+   connect (&pixCache,      SIGNAL(allDone()), this, SLOT(slotRefreshChanLogos()));
+   connect (&KartinaTv,     SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
+   connect (&KartinaTv,     SIGNAL(sigError(QString,int,int)), this, SLOT(slotKartinaErr(QString,int,int)));
+   connect (&streamLoader,  SIGNAL(sigStreamDownload(int,QString)), this, SLOT(slotDownloadStarted(int,QString)));
+   connect (&Refresh,       SIGNAL(timeout()), this, SLOT(slotEpgRefresh()));
+   connect (this,           SIGNAL(sigEpgRefresh()), &Trigger, SLOT(slotReqChanList()));
+   connect (&tEpgRefresh,   SIGNAL(timeout()), &Trigger, SLOT(slotReqChanList()));
    connect (pChannelDlg->getEpgBrowser(),   SIGNAL(anchorClicked(QUrl)), this, SLOT(slotEpgAnchor(QUrl)));
-   connect (&dwnLogos,     SIGNAL(sigPixReady()), this, SLOT(slotLogosReady()));
-   connect (&dlgSettings,  SIGNAL(sigReloadLogos()), this, SLOT(slotReloadLogos()));
-   connect (&KartinaTv,    SIGNAL(sigGotArchivURL(QString)), this, SLOT(slotArchivURL(QString)));
-   connect (&dlgSettings,  SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
-   connect (&dlgSettings,  SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
-   connect (&dlgSettings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
-   connect (&KartinaTv,    SIGNAL(sigGotTimerStreamURL(QString)), &dlgTimeRec, SLOT(slotTimerStreamUrl(QString)));
-   connect (&KartinaTv,    SIGNAL(sigSrvForm(QString)), this, SLOT(slotServerForm(QString)));
-   connect (&dlgTimeRec,   SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
-   connect (&dlgTimeRec,   SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
-   connect (&vlcCtrl,      SIGNAL(sigVlcStarts(int)), this, SLOT(slotVlcStarts(int)));
-   connect (&vlcCtrl,      SIGNAL(sigVlcEnds(int)), this, SLOT(slotVlcEnds(int)));
-   connect (&dlgTimeRec,   SIGNAL(sigShutdown()), this, SLOT(slotShutdown()));
-   connect (this,          SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
-   connect (&KartinaTv,    SIGNAL(sigGotVodGenres(QString)), this, SLOT(slotGotVodGenres(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotVideos(QString)), this, SLOT(slotGotVideos(QString)));
+   connect (&dlgSettings,   SIGNAL(sigReloadLogos()), this, SLOT(slotReloadLogos()));
+   connect (&dlgSettings,   SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
+   connect (&dlgSettings,   SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
+   connect (&dlgSettings,   SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
+   connect (&dlgTimeRec,    SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
+   connect (&dlgTimeRec,    SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
+   connect (&vlcCtrl,       SIGNAL(sigVlcStarts(int)), this, SLOT(slotVlcStarts(int)));
+   connect (&vlcCtrl,       SIGNAL(sigVlcEnds(int)), this, SLOT(slotVlcEnds(int)));
+   connect (&dlgTimeRec,    SIGNAL(sigShutdown()), this, SLOT(slotShutdown()));
+   connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
    connect (pChannelDlg->getVodBrowser(), SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
-   connect (&KartinaTv,    SIGNAL(sigGotVideoInfo(QString)), this, SLOT(slotGotVideoInfo(QString)));
-   connect (&KartinaTv,    SIGNAL(sigGotVodUrl(QString)), this, SLOT(slotVodURL(QString)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
-   connect (&trayIcon,     SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
+   connect (&trayIcon,      SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
 
    if (dlgSettings.HideToSystray())
    {
@@ -241,10 +247,11 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
        connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
    }
 
-   connect (pChannelDlg,   SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
-   connect (pChannelDlg,   SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
-   connect (ui->player,    SIGNAL(sigAspectToggle(int)), this, SLOT(slotAspectToggle(int)));
-   connect (ui->player,    SIGNAL(sigCropToggle(int)), this, SLOT(slotCropToggle(int)));
+   connect (pChannelDlg,         SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
+   connect (pChannelDlg,         SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
+   connect (ui->player,          SIGNAL(sigAspectToggle(int)), this, SLOT(slotAspectToggle(int)));
+   connect (ui->player,          SIGNAL(sigCropToggle(int)), this, SLOT(slotCropToggle(int)));
+   connect (this,                SIGNAL(sigLockParentalManager()), &dlgParentalControl, SLOT(slotLockParentalManager()));
 
    // trigger read of saved timer records ...
    dlgTimeRec.ReadRecordList();
@@ -336,11 +343,14 @@ void MainWindow::changeEvent(QEvent *e)
        // translate type cbx ...
        pChannelDlg->touchLastOrBestCbx();
 
+       // translate genre cbx ...
+       pChannelDlg->touchGenreCbx();
+
        // translate error strings ...
-         XMLParser.fillErrorMap();
-      break;
-      default:
-      break;
+       KartinaTv.fillErrorMap();
+       break;
+    default:
+       break;
    }
 }
 
@@ -348,15 +358,13 @@ void MainWindow::showEvent(QShowEvent *event)
 {
    emit sigShow();
 
-/*
-   if (bFirstConnect)
+   if (!(ulStartFlags & FLAG_CONN_CHAIN))
    {
-       bFirstConnect = false;
+       ulStartFlags |= FLAG_CONN_CHAIN;
 
        // start connection stuff in 0.5 seconds ...
-       QTimer::singleShot(500, this, SLOT(slotStartConnectionChain()));
+//       QTimer::singleShot(500, this, SLOT(slotStartConnectionChain()));
    }
-*/
 
    QWidget::showEvent(event);
 }
@@ -426,7 +434,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
       pChannelDlg->CleanContextMenu();
 
       // cancel any running kartina request ...
-      KartinaTv.abort();
+      Trigger.TriggerRequest (Kartina::REQ_ABORT);
 
       // no logout needed ...
       // close programm right now ...
@@ -522,7 +530,7 @@ void MainWindow::on_actionExit_triggered()
         pChannelDlg->CleanContextMenu();
 
        // cancel any running kartina request ...
-       KartinaTv.abort();
+       Trigger.TriggerRequest (Kartina::REQ_ABORT);
 
        // no logout needed ...
        // close programm right now ...
@@ -665,6 +673,26 @@ void MainWindow::on_actionClear_Recent_Channel_List_triggered()
 
 }
 
+void MainWindow::on_actionParental_Control_triggered()
+{
+    // pause EPG reload ...
+    if (Refresh.isActive())
+    {
+        Refresh.stop();
+    }
+
+    dlgParentalControl.exec();
+
+    // lock parental manager ...
+    emit sigLockParentalManager();
+
+    // enable EPG reload again ...
+    if (dlgSettings.DoRefresh() && !Refresh.isActive())
+    {
+       Refresh.start(dlgSettings.GetRefrInt() * 60000); // 1 minutes: (60 * 1000 msec) ...
+    }
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     CAboutDialog dlg(this, accountInfo.sExpires);
@@ -695,7 +723,7 @@ void MainWindow::on_pushRecord_clicked()
          showInfo.setPlayState(IncPlay::PS_RECORD);
 
          TouchPlayCtrlBtns(false);
-         Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
+         Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req, showInfo.pCode());
       }
    }
    else
@@ -710,27 +738,32 @@ void MainWindow::on_pushRecord_clicked()
             {
                cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-               // new own downloader ...
-               if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+               if (grantAdultAccess(chan.bIsProtected))
                {
-                  streamLoader.stopDownload (iDwnReqId);
-                  iDwnReqId = -1;
+                  // new own downloader ...
+                  if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+                  {
+                     streamLoader.stopDownload (iDwnReqId);
+                     iDwnReqId = -1;
+                  }
+
+                  showInfo.cleanShowInfo();
+                  showInfo.setChanId(cid);
+                  showInfo.setChanName(chan.sName);
+                  showInfo.setShowType(ShowInfo::Live);
+                  showInfo.setShowName(chan.sProgramm);
+                  showInfo.setStartTime(chan.uiStart);
+                  showInfo.setEndTime(chan.uiEnd);
+                  showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+                  showInfo.setPCode(secCodeDlg.passWd());
+                  showInfo.setPlayState(IncPlay::PS_RECORD);
+                  showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                         .arg("rgb(255, 254, 212)")
+                                         .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+
+                  TouchPlayCtrlBtns(false);
+                  Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
                }
-
-               showInfo.setChanId(cid);
-               showInfo.setChanName(chan.sName);
-               showInfo.setShowType(ShowInfo::Live);
-               showInfo.setShowName(chan.sProgramm);
-               showInfo.setStartTime(chan.uiStart);
-               showInfo.setEndTime(chan.uiEnd);
-               showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-               showInfo.setPlayState(IncPlay::PS_RECORD);
-               showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                     .arg("rgb(255, 254, 212)")
-                                     .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
-
-               TouchPlayCtrlBtns(false);
-               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
             }
       }
 #ifdef INCLUDE_LIBVLC
@@ -742,6 +775,7 @@ void MainWindow::on_pushRecord_clicked()
 void MainWindow::on_pushLive_clicked()
 {
     int cid = pChannelDlg->getCurrentCid();
+
     if  (pChannelDlg->getChanMap()->contains(cid))
     {
        // set EPG offset to 0 ...
@@ -760,20 +794,25 @@ void MainWindow::on_pushLive_clicked()
              {
                 cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-                showInfo.setChanId(cid);
-                showInfo.setChanName(chan.sName);
-                showInfo.setShowType(ShowInfo::Live);
-                showInfo.setShowName(chan.sProgramm);
-                showInfo.setStartTime(chan.uiStart);
-                showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-                showInfo.setEndTime(chan.uiEnd);
-                showInfo.setPlayState(IncPlay::PS_PLAY);
-                showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                       .arg("rgb(255, 254, 212)")
-                                       .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                if (grantAdultAccess(chan.bIsProtected))
+                {
+                   showInfo.cleanShowInfo();
+                   showInfo.setChanId(cid);
+                   showInfo.setChanName(chan.sName);
+                   showInfo.setShowType(ShowInfo::Live);
+                   showInfo.setShowName(chan.sProgramm);
+                   showInfo.setStartTime(chan.uiStart);
+                   showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+                   showInfo.setEndTime(chan.uiEnd);
+                   showInfo.setPCode(secCodeDlg.passWd());
+                   showInfo.setPlayState(IncPlay::PS_PLAY);
+                   showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                          .arg("rgb(255, 254, 212)")
+                                          .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-                TouchPlayCtrlBtns(false);
-                Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+                   TouchPlayCtrlBtns(false);
+                   Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+                }
              }
           }
        }
@@ -819,20 +858,25 @@ void MainWindow::on_pushPlay_clicked()
              {
                 cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-                showInfo.setChanId(cid);
-                showInfo.setChanName(chan.sName);
-                showInfo.setShowType(ShowInfo::Live);
-                showInfo.setShowName(chan.sProgramm);
-                showInfo.setStartTime(chan.uiStart);
-                showInfo.setEndTime(chan.uiEnd);
-                showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-                showInfo.setPlayState(IncPlay::PS_PLAY);
-                showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                     .arg("rgb(255, 254, 212)")
-                                     .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+                if (grantAdultAccess(chan.bIsProtected))
+                {
+                   showInfo.cleanShowInfo();
+                   showInfo.setChanId(cid);
+                   showInfo.setChanName(chan.sName);
+                   showInfo.setShowType(ShowInfo::Live);
+                   showInfo.setShowName(chan.sProgramm);
+                   showInfo.setStartTime(chan.uiStart);
+                   showInfo.setEndTime(chan.uiEnd);
+                   showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+                   showInfo.setPlayState(IncPlay::PS_PLAY);
+                   showInfo.setPCode(secCodeDlg.passWd());
+                   showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                          .arg("rgb(255, 254, 212)")
+                                          .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-               TouchPlayCtrlBtns(false);
-               Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+                   TouchPlayCtrlBtns(false);
+                   Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+                }
             }
       }
 #ifdef INCLUDE_LIBVLC
@@ -896,6 +940,133 @@ void MainWindow::exec()
    QMainWindow::show();
 }
 
+/* -----------------------------------------------------------------\
+|  Method: slotKartinaResponse [slot]
+|  Begin: 29.05.2012
+|  Author: Jo2003
+|  Description: A central point to catch all http responses
+|               from kartina client.
+|               Please note: There is no real need for this
+|               function because signals / slots can be connected
+|               directly. The main goal of this function is to have
+|               a central point to find out which function is called
+|               when a certain response comes in.
+|
+|  Parameters: resp: response string
+|              req: request type as defined in Kartina workspace
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void MainWindow::slotKartinaResponse(const QString& resp, int req)
+{
+   // helper macro to have a nice info printout ...
+#define mkCase(__x__, __y__) \
+      case __x__: \
+         mInfo(tr("\n  --> HTTP Response '%1', calling '%2'").arg(#__x__).arg(#__y__)); \
+         __y__; \
+         break
+
+   switch ((Kartina::EReq)req)
+   {
+   ///////////////////////////////////////////////
+   // This function also grabs all settings
+   // from response. After that channel list
+   // will be requested.
+   mkCase(Kartina::REQ_COOKIE, slotCookie(resp));
+
+   ///////////////////////////////////////////////
+   // Fills channel list as well as channel map.
+   // Due to changing actual channel entry
+   // slotCurrentChannelChanged() will be called
+   // which requests the EPG ...
+   mkCase(Kartina::REQ_CHANNELLIST, slotChanList(resp));
+
+   ///////////////////////////////////////////////
+   // Fills EPG browser and triggers the load
+   // of VOD genres (if there in account info).
+   mkCase(Kartina::REQ_EPG, slotEPG(resp));
+
+   ///////////////////////////////////////////////
+   // Indicates that a new timeshift value was set.
+   // Triggers reload of channel list.
+   mkCase(Kartina::REQ_TIMESHIFT, slotTimeShift(resp));
+
+   ///////////////////////////////////////////////
+   // Got Stream URL, start play or record
+   mkCase(Kartina::REQ_STREAM, slotStreamURL(resp));
+
+   ///////////////////////////////////////////////
+   // Got requested stream url for timer record
+   mkCase(Kartina::REQ_TIMERREC, dlgTimeRec.slotTimerStreamUrl(resp));
+
+   ///////////////////////////////////////////////
+   // got requested archiv url
+   mkCase(Kartina::REQ_ARCHIV, slotArchivURL(resp));
+
+   ///////////////////////////////////////////////
+   // logout done
+   mkCase(Kartina::REQ_LOGOUT, slotLogout(resp));
+
+   ///////////////////////////////////////////////
+   // got requested VOD genres
+   mkCase(Kartina::REQ_GETVODGENRES, slotGotVodGenres(resp));
+
+   ///////////////////////////////////////////////
+   // got requested videos
+   mkCase(Kartina::REQ_GETVIDEOS, slotGotVideos(resp));
+
+   ///////////////////////////////////////////////
+   // got requested video details
+   mkCase(Kartina::REQ_GETVIDEOINFO, slotGotVideoInfo(resp));
+
+   ///////////////////////////////////////////////
+   // got requested vod url
+   mkCase(Kartina::REQ_GETVODURL, slotVodURL(resp));
+
+   ///////////////////////////////////////////////
+   // got complete channel list
+   // (used in settings dialog)
+   mkCase(Kartina::REQ_CHANLIST_ALL, dlgParentalControl.slotBuildChanManager(resp));
+
+   ///////////////////////////////////////////////
+   // got requested VOD management data
+   // (used in settings dialog)
+   mkCase(Kartina::REQ_GET_VOD_MANAGER, dlgParentalControl.slotBuildVodManager(resp));
+
+   ///////////////////////////////////////////////
+   // handle vod favourites like vod genre to display
+   // all videos in favourites
+   mkCase(Kartina::REQ_GET_VOD_FAV, slotGotVideos(resp, true));
+
+   ///////////////////////////////////////////////
+   // response after trying to change parent code
+   mkCase(Kartina::REQ_SET_PCODE, slotPCodeChangeResp(resp));
+
+   ///////////////////////////////////////////////
+   // Make sure the unused responses are listed
+   // This makes it easier to understand the log.
+   mkCase(Kartina::REQ_ADD_VOD_FAV, slotUnused(resp));
+   mkCase(Kartina::REQ_REM_VOD_FAV, slotUnused(resp));
+   mkCase(Kartina::REQ_SET_VOD_MANAGER, slotUnused(resp));
+   mkCase(Kartina::REQ_SETCHAN_SHOW, slotUnused(resp));
+   mkCase(Kartina::REQ_SETCHAN_HIDE, slotUnused(resp));
+   mkCase(Kartina::REQ_SETBITRATE, slotUnused(resp));
+   mkCase(Kartina::REQ_GETBITRATE, slotUnused(resp));
+   mkCase(Kartina::REQ_GETTIMESHIFT, slotUnused(resp));
+   mkCase(Kartina::REQ_GET_SERVER, slotUnused(resp));
+   mkCase(Kartina::REQ_SERVER, slotUnused(resp));
+   mkCase(Kartina::REQ_HTTPBUFF, slotUnused(resp));
+   default:
+      break;
+   }
+#undef mkCase
+}
+
+void MainWindow::slotUnused(const QString &str)
+{
+   Q_UNUSED(str)
+}
+
 void MainWindow::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
 {
    switch (reason)
@@ -915,26 +1086,53 @@ void MainWindow::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
    }
 }
 
-void MainWindow::slotErr(QString str)
+void MainWindow::slotKartinaErr (const QString &str, int req, int err)
 {
-//   QMessageBox::critical(this, tr("Error"),
-//                         tr("%1 Client API reports some errors: %2")
-//                         .arg(COMPANY_NAME).arg(str));
-   ui->statusBar->showMessage(tr("Error: %1 Client API reports some errors: %2")
-                              .arg(COMPANY_NAME).arg(str));
-   TouchPlayCtrlBtns();
+    // special error handling for special requests ...
+    switch ((Kartina::EReq)req)
+    {
+    case Kartina::REQ_SET_PCODE:
+       dlgParentalControl.slotEnablePCodeForm();
+       break;
+    default:
+       break;
+    }
+
+    // special error handling for special errors ...
+    switch ((Kartina::EErr)err)
+    {
+    case Kartina::ERR_WRONG_PCODE:
+       showInfo.setPCode("");
+       secCodeDlg.slotClearPasswd();
+       break;
+    default:
+       break;
+    }
+
+    mErr(tr("Error %1 (%2) in request '%3'")
+         .arg(err)
+         .arg(metaKartina.errValToKey((Kartina::EErr)err))
+         .arg(metaKartina.reqValToKey((Kartina::EReq)req)));
+
+//    QMessageBox::critical(this, tr("Error"), tr("%1 Client API Error:\n%2 (#%3)")
+//           .arg(COMPANY_NAME).arg(str).arg(err));
+
+    ui->statusBar->showMessage(tr("Error: %1 Client API Error: %2 (#%3)")
+                               .arg(COMPANY_NAME).arg(str).arg(err));
+    TouchPlayCtrlBtns();
 }
 
-void MainWindow::slotLogout(QString str)
+void MainWindow::slotLogout(const QString &str)
 {
-    XMLParser.checkResponse(str, __FUNCTION__, __LINE__);
+   // no need to look for errors in response ...
+   Q_UNUSED(str);
 
    mInfo(tr("logout done ..."));
 
  //  QDialog::accept ();
 }
 
-void MainWindow::slotStreamURL(QString str)
+void MainWindow::slotStreamURL(const QString &str)
 {
    QString sChan, sShow, sUrl, sTime;
 
@@ -985,7 +1183,7 @@ void MainWindow::slotStreamURL(QString str)
    TouchPlayCtrlBtns();
 }
 
-void MainWindow::slotCookie (QString str)
+void MainWindow::slotCookie (const QString &str)
 {
     QString sCookie;
 
@@ -1018,75 +1216,57 @@ void MainWindow::slotCookie (QString str)
              pChannelDlg->getTabEpgVOD()->removeTab(vodTabWidget.iPos);
           }
        }
+       // ------------------------------------------------
+       // parse settings (new 11.05.2012)
+       // ------------------------------------------------
 
-       // request streamserver ...
-       Trigger.TriggerRequest(Kartina::REQ_GET_SERVER);
-    }
-}
+       // timeshift
+       QVector<int> values;
+       int          actVal = -1;
+       if (!XMLParser.parseSetting(str, "timeshift", values, actVal))
+       {
+          dlgSettings.fillTimeShiftCbx(values, actVal);
 
-void MainWindow::slotServerForm(QString str)
-{
-   QVector<cparser::SSrv> vSrv;
-   QString                sActSrv;
+          // set timeshift ...
+          pChannelDlg->getEpgBrowser()->SetTimeShift(actVal);
+          dlgTimeRec.SetTimeShift(actVal);
+          mInfo(tr("Using following timeshift: %1").arg(actVal));
+       }
 
-   if (!XMLParser.parseSServers(str, vSrv, sActSrv))
-   {
-      dlgSettings.SetStreamServerCbx(vSrv, sActSrv);
-      mInfo(tr("Active stream server is %1").arg(sActSrv));
-   }
+       // bitrate
+       values.clear();
+       actVal = -1;
+       if (!XMLParser.parseSetting(str, "bitrate", values, actVal))
+       {
+          dlgSettings.SetBitrateCbx(values, actVal);
+          mInfo (tr("Using Bitrate %1 kbit/s ...").arg(actVal));
+       }
 
-   Trigger.TriggerRequest(Kartina::REQ_GETBITRATE);
-}
+       // stream server
+       QVector<cparser::SSrv> vSrv;
+       QString sActIp;
+       if (!XMLParser.parseSServersLogin(str, vSrv, sActIp))
+       {
+          dlgSettings.SetStreamServerCbx(vSrv, sActIp);
+          mInfo(tr("Active stream server is %1").arg(sActIp));
+       }
 
-void MainWindow::slotGotTimeShift(QString str)
-{
-   // parse timeshift ...
-   QVector<int> vValues;
-   int          iShift;
-   QString      sName;
-
-   if (!XMLParser.parseSettings(str, vValues, iShift, sName))
-   {
-      dlgSettings.fillTimeShiftCbx(vValues, iShift);
-
-      // set timeshift ...
-      pChannelDlg->getEpgBrowser()->SetTimeShift(iShift);
-      dlgTimeRec.SetTimeShift(iShift);
-
-      // request channel list ...
-      Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
-   }
-}
-
-void MainWindow::slotGotBitrate(QString str)
-{
-   QVector<int> vValues;
-   int          iActVal = 0;
-   QString      sName;
-
-   if (!XMLParser.parseSettings(str, vValues, iActVal, sName))
-   {
-      dlgSettings.SetBitrateCbx(vValues, iActVal);
-      mInfo (tr("Using Bitrate %1 kbit/s ...").arg(iActVal));
-   }
-
-   Trigger.TriggerRequest(Kartina::REQ_GETTIMESHIFT);
-}
-
-void MainWindow::slotTimeShift (QString str)
-{
-    if(!XMLParser.checkResponse(str, __FUNCTION__, __LINE__))
-    {
+       // request channel list ...
        Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
     }
+ }
+
+void MainWindow::slotTimeShift (const QString &str)
+{
+    Q_UNUSED(str)
+    Trigger.TriggerRequest(Kartina::REQ_CHANNELLIST);
 }
 
-void MainWindow::slotChanList (QString str)
+void MainWindow::slotChanList (const QString &str)
 {
    QVector<cparser::SChan> chanList;
-   QVector<cparser::SChan>::const_iterator cit;
 
-   if(!XMLParser.parseChannelList(str, chanList, dlgSettings.FixTime(), dlgSettings.AllowEros()))
+   if (!XMLParser.parseChannelList(str, chanList, dlgSettings.FixTime()))
    {
       FillChanMap(chanList);
       FillChannelList(chanList);
@@ -1096,39 +1276,22 @@ void MainWindow::slotChanList (QString str)
       dlgTimeRec.StartTimer();
    }
 
-   // only download channel logos, if they aren't there ...
-   if (!dwnLogos.IsRunning() && !bLogosReady)
-   {
-      QStringList lLogos;
-
-      for (cit = chanList.constBegin(); cit != chanList.constEnd(); cit ++)
-      {
-         if(!(*cit).bIsGroup)
-         {
-            lLogos.push_back((*cit).sIcon);
-         }
-      }
-
-      dwnLogos.setPictureList(lLogos);
-   }
-
    // create favourite buttons if needed ...
-      pChannelDlg->CreateFav();
+   pChannelDlg->CreateFav();
 
    TouchPlayCtrlBtns();
 }
 
-void MainWindow::slotEPG(QString str)
+void MainWindow::slotEPG(const QString &str)
 {
-   QVector<cparser::SEpg> epg;
    QDateTime epgTime = QDateTime::currentDateTime().addDays(pChannelDlg->getEpgOffset());
    QModelIndex idx   = pChannelDlg->getChannelList()->currentIndex();
    int cid           = qvariant_cast<int>(idx.data(channellist::cidRole));
    QIcon icon;
 
-   if (!XMLParser.parseEpg(str, epg))
+   if (!XMLParser.parseEpg(str, vEpgList))
    {
-      pChannelDlg->getEpgBrowser()->DisplayEpg(epg, pChannelDlg->getChanMap()->value(cid).sName,
+      pChannelDlg->getEpgBrowser()->DisplayEpg(vEpgList, pChannelDlg->getChanMap()->value(cid).sName,
                               cid, epgTime.toTime_t(),
                               accountInfo.bHasArchive ?
                               pChannelDlg->getChanMap()->value(cid).bHasArchive : false);
@@ -1175,7 +1338,14 @@ void MainWindow::slotEPG(QString str)
       {
           if (ui->actionOne_Click_Play->isChecked())
           {
-              on_pushPlay_clicked();
+              if (!bEpgRefresh)
+              {
+                  on_pushPlay_clicked();
+              }
+              else
+              {
+                  bEpgRefresh = false;
+              }
           }
       }
       else
@@ -1194,7 +1364,14 @@ void MainWindow::slotEPG(QString str)
          {
             if (ui->actionOne_Click_Play->isChecked())
             {
-                on_pushPlay_clicked();
+                if (!bEpgRefresh)
+                {
+                    on_pushPlay_clicked();
+                }
+                else
+                {
+                    bEpgRefresh = false;
+                }
             }
          }
       }
@@ -1233,77 +1410,72 @@ void MainWindow::slotEpgAnchor (const QUrl &link)
 
    if (ok)
    {
-      TouchPlayCtrlBtns(false);
+      QString cid  = link.encodedQueryItemValue(QByteArray("cid"));
+      cparser::SChan chan = pChannelDlg->getChanMap()->value(cid.toInt());
 
-      // get program map ...
-      showInfo.setEpgMap(pChannelDlg->getTextEpg()->exportProgMap());
-
-      // new own downloader ...
-      if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+      if (grantAdultAccess(chan.bIsProtected))
       {
-         streamLoader.stopDownload (iDwnReqId);
-         iDwnReqId = -1;
+          TouchPlayCtrlBtns(false);
+
+          // get program map ...
+          showInfo.setEpgMap(pChannelDlg->getTextEpg()->exportProgMap());
+
+          // new own downloader ...
+          if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+          {
+             streamLoader.stopDownload (iDwnReqId);
+             iDwnReqId = -1;
+          }
+
+          QString    gmt  = link.encodedQueryItemValue(QByteArray("gmt"));
+          QString    req  = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
+          epg::SShow sepg = pChannelDlg->getEpgBrowser()->epgShow(gmt.toUInt());
+
+          // store all info about show ...
+          showInfo.cleanShowInfo();
+          showInfo.setChanId(cid.toInt());
+          showInfo.setChanName(chan.sName);
+          showInfo.setShowName(sepg.sShowName);
+          showInfo.setStartTime(gmt.toUInt());
+          showInfo.setEndTime(sepg.uiEnd);
+          showInfo.setShowType(ShowInfo::Archive);
+          showInfo.setPlayState(ePlayState);
+          showInfo.setLastJumpTime(0);
+          showInfo.setPCode(secCodeDlg.passWd());
+
+          showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                 .arg("rgb(255, 254, 212)")
+                                 .arg(CShowInfo::createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
+                                                    QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
+                                                    sepg.uiStart, sepg.uiEnd))));
+
+          // add additional info to LCD ...
+          int     iTime = (sepg.uiEnd) ? (int)((sepg.uiEnd - sepg.uiStart) / 60) : 60;
+          QString sTime = tr("Length: %1 min.").arg(iTime);
+
+          ui->labState->setHeader(showInfo.chanName() + tr(" (Ar.)"));
+          ui->labState->setFooter(sTime);
+
+          Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req, secCodeDlg.passWd());
       }
-
-      QString    cid  = link.encodedQueryItemValue(QByteArray("cid"));
-      QString    gmt  = link.encodedQueryItemValue(QByteArray("gmt"));
-      QString    req  = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
-      epg::SShow sepg = pChannelDlg->getEpgBrowser()->epgShow(gmt.toUInt());
-
-      // store all info about show ...
-      showInfo.setChanId(cid.toInt());
-      showInfo.setChanName(pChannelDlg->getChanMap()->value(cid.toInt()).sName);
-      showInfo.setShowName(sepg.sShowName);
-      showInfo.setStartTime(gmt.toUInt());
-      showInfo.setEndTime(sepg.uiEnd);
-      showInfo.setShowType(ShowInfo::Archive);
-      showInfo.setPlayState(ePlayState);
-      showInfo.setLastJumpTime(0);
-      showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                            .arg("rgb(255, 254, 212)")
-                            .arg(CShowInfo::createTooltip(tr("%1 (Archive)").arg(showInfo.chanName()),
-                            QString("%1 %2").arg(sepg.sShowName).arg(sepg.sShowDescr),
-                            sepg.uiStart, sepg.uiEnd))));
-
-      // add additional info to LCD ...
-      int     iTime = (sepg.uiEnd) ? (int)((sepg.uiEnd - sepg.uiStart) / 60) : 60;
-      QString sTime = tr("Length: %1 min.").arg(iTime);
-      ui->labState->setHeader(showInfo.chanName() + tr(" (Ar.)"));
-      ui->labState->setFooter(sTime);
-
-      Trigger.TriggerRequest(Kartina::REQ_ARCHIV, req);
    }
-}
-
-void MainWindow::slotLogosReady()
-{
-   // downloader sayd ... logos are there ...
-   bLogosReady = true;
 }
 
 void MainWindow::slotReloadLogos()
 {
-   bLogosReady = false;
+    QChanMap::const_iterator cit;
+    // create tmp channel list with channels from channelList ...
 
-   if (!dwnLogos.IsRunning())
-   {
-      QStringList lLogos;
-      QMap<int, cparser::SChan>::const_iterator cit;
-
-      // create tmp channel list with channels from channelList ...
-      for (cit = pChannelDlg->getChanMap()->constBegin(); cit != pChannelDlg->getChanMap()->constEnd(); cit++)
-      {
-         if (!(*cit).bIsGroup)
-         {
-            lLogos.push_back((*cit).sIcon);
-         }
-      }
-
-      dwnLogos.setPictureList(lLogos);
-   }
+    for (cit = pChannelDlg->getChanMap()->constBegin(); cit != pChannelDlg->getChanMap()->constEnd(); cit++)
+    {
+        if (!(*cit).bIsGroup)
+        {
+            pixCache.enqueuePic((*cit).sIcon, pFolders->getLogoDir());
+        }
+    }
 }
 
-void MainWindow::slotArchivURL(QString str)
+void MainWindow::slotArchivURL(const QString &str)
 {
    QString sUrl;
 
@@ -1472,10 +1644,11 @@ void MainWindow::slotDownloadStarted(int id, QString sFileName)
    }
 }
 
-void MainWindow::slotGotVodGenres(QString str)
+void MainWindow::slotGotVodGenres(const QString &str)
 {
    QVector<cparser::SGenre> vGenres;
    QVector<cparser::SGenre>::const_iterator cit;
+   QString sName;
 
    // delete content ...
    pChannelDlg->getCbxGenre()->clear();
@@ -1487,7 +1660,10 @@ void MainWindow::slotGotVodGenres(QString str)
 
       for (cit = vGenres.constBegin(); cit != vGenres.constEnd(); cit ++)
       {
-         pChannelDlg->getCbxGenre()->addItem((*cit).sGName, QVariant((int)(*cit).uiGid));
+         // make first genre character upper case ...
+         sName    = (*cit).sGName;
+         sName[0] = sName[0].toUpper();
+         pChannelDlg->getCbxGenre()->addItem(sName, QVariant((int)(*cit).uiGid));
       }
    }
 
@@ -1497,42 +1673,22 @@ void MainWindow::slotGotVodGenres(QString str)
 
    // trigger video load ...
    QUrl url;
-   url.addQueryItem("type", "last");
-   url.addQueryItem("nums", "10000");
+   url.addQueryItem("type", pChannelDlg->getCbxLastOrBest()->itemData(pChannelDlg->getCbxLastOrBest()->currentIndex()).toString());
+   url.addQueryItem("nums", "20");
    Trigger.TriggerRequest(Kartina::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
-void MainWindow::slotGotVideos(QString str)
+void MainWindow::slotGotVideos(const QString &str, bool bVodFavs)
 {
    QVector<cparser::SVodVideo> vVodList;
-   QVector<cparser::SVodVideo>::const_iterator cit;
    cparser::SGenreInfo gInfo;
 
    if (!XMLParser.parseVodList(str, vVodList, gInfo))
    {
-       if (!bVODLogosReady)
-       {
-         bVODLogosReady = true;
-
-         // download pictures ...
-         QStringList lPix;
-
-         for (cit = vVodList.constBegin(); cit != vVodList.constEnd(); cit ++)
-         {
-            lPix.push_back((*cit).sImg);
-         }
-
-         dwnVodPics.setPictureList(lPix);
-
-         // get normal video view ...
-         pChannelDlg->activateVOD();
-      }
-      else
-      {
-         genreInfo = gInfo;
-         pChannelDlg->touchVodNavBar(gInfo);
-         pChannelDlg->getVodBrowser()->displayVodList (vVodList, pChannelDlg->getCbxGenre()->currentText());
-      }
+       QString sGenre = bVodFavs ? pChannelDlg->getCbxLastOrBest()->currentText() : pChannelDlg->getCbxGenre()->currentText();
+       genreInfo      = gInfo;
+       pChannelDlg->touchVodNavBar(gInfo);
+       pChannelDlg->getVodBrowser()->displayVodList (vVodList, sGenre);
 
       //it works only with real accounts, not with 140, 141, ...
       if (ui->actionOne_Click_Play->isChecked())
@@ -1548,6 +1704,20 @@ void MainWindow::slotVodAnchor(const QUrl &link)
    bool ok        = false;
    int  id        = 0;
 
+   // check password ...
+   if (link.encodedQueryItemValue(QByteArray("pass_protect")).toInt())
+   {
+      // need password ... ?
+      if (secCodeDlg.passWd().isEmpty())
+      {
+         // request password ...
+         secCodeDlg.exec();
+      }
+
+      // no further error check here, API will tell
+      // about a missing password ...
+   }
+
    if (action == "vod_info")
    {
       // buffer last used page (whole code) ...
@@ -1555,7 +1725,7 @@ void MainWindow::slotVodAnchor(const QUrl &link)
       lastVodSite.iScrollBarVal = pChannelDlg->getVodBrowser()->verticalScrollBar()->value();
 
       id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
-      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id);
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
    }
    else if (action == "backtolist")
    {
@@ -1577,6 +1747,18 @@ void MainWindow::slotVodAnchor(const QUrl &link)
          ok = true;
       }
    }
+   else if (action == "add_fav")
+   {
+      id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
+      Trigger.TriggerRequest(Kartina::REQ_ADD_VOD_FAV, id, secCodeDlg.passWd());
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
+   }
+   else if (action == "del_fav")
+   {
+      id = link.encodedQueryItemValue(QByteArray("vodid")).toInt();
+      Trigger.TriggerRequest(Kartina::REQ_REM_VOD_FAV, id, secCodeDlg.passWd());
+      Trigger.TriggerRequest(Kartina::REQ_GETVIDEOINFO, id, secCodeDlg.passWd());
+   }
 
    if (ok)
    {
@@ -1591,25 +1773,21 @@ void MainWindow::slotVodAnchor(const QUrl &link)
 
       id = link.encodedQueryItemValue(QByteArray("vid")).toInt();
 
-      showInfo.setChanId(-1);
-      showInfo.setChanName("");
+      showInfo.cleanShowInfo();
       showInfo.setShowName(pChannelDlg->getVodBrowser()->getName());
-      showInfo.setStartTime(0);
-      showInfo.setEndTime(0);
       showInfo.setShowType(ShowInfo::VOD);
       showInfo.setPlayState(ePlayState);
-      showInfo.setLastJumpTime(0);
       showInfo.setHtmlDescr(pChannelDlg->getVodBrowser()->getShortContent());
       showInfo.setVodId(id);
 
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());
 
-      Trigger.TriggerRequest(Kartina::REQ_GETVODURL, id);
+      Trigger.TriggerRequest(Kartina::REQ_GETVODURL, id, secCodeDlg.passWd());
    }
 }
 
-void MainWindow::slotGotVideoInfo(QString str)
+void MainWindow::slotGotVideoInfo(const QString &str)
 {
    cparser::SVodVideo vodInfo;
    if (!XMLParser.parseVideoInfo(str, vodInfo))
@@ -1618,29 +1796,34 @@ void MainWindow::slotGotVideoInfo(QString str)
    }
 }
 
-void MainWindow::slotVodURL(QString str)
+void MainWindow::slotVodURL(const QString &str)
 {
-   QString sUrl;
+   QStringList sUrls;
 
-   if (!XMLParser.parseUrl(str, sUrl))
+   if (!XMLParser.parseVodUrls(str, sUrls))
    {
+      if (sUrls.count() > 1)
+      {
+          showInfo.setAdUrl(sUrls[1]);
+      }
+
       if (ePlayState == IncPlay::PS_RECORD)
       {
          // use own downloader ... ?
          if (!vlcCtrl.ownDwnld())
          {
-            StartVlcRec(sUrl, CleanShowName(showInfo.showName()));
+            StartVlcRec(sUrls[0], CleanShowName(showInfo.showName()));
          }
          else
          {
-            StartStreamDownload(sUrl, CleanShowName(showInfo.showName()), "m4v");
+            StartStreamDownload(sUrls[0], CleanShowName(showInfo.showName()), "m4v");
          }
 
          showInfo.setPlayState(IncPlay::PS_RECORD);
       }
       else if (ePlayState == IncPlay::PS_PLAY)
       {
-         StartVlcPlay(sUrl);
+         StartVlcPlay(sUrls[0]);
 
          showInfo.setPlayState(IncPlay::PS_PLAY);
       }
@@ -1659,20 +1842,25 @@ void MainWindow::slotDoubleClick()
        {
           cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-          showInfo.setChanId(cid);
-          showInfo.setChanName(chan.sName);
-          showInfo.setShowType(ShowInfo::Live);
-          showInfo.setShowName(chan.sProgramm);
-          showInfo.setStartTime(chan.uiStart);
-          showInfo.setEndTime(chan.uiEnd);
-          showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-          showInfo.setPlayState(IncPlay::PS_PLAY);
-          showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                            .arg("rgb(255, 254, 212)")
-                            .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+          if (grantAdultAccess(chan.bIsProtected))
+          {
+             showInfo.cleanShowInfo();
+             showInfo.setChanId(cid);
+             showInfo.setChanName(chan.sName);
+             showInfo.setShowType(ShowInfo::Live);
+             showInfo.setShowName(chan.sProgramm);
+             showInfo.setStartTime(chan.uiStart);
+             showInfo.setEndTime(chan.uiEnd);
+             showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+             showInfo.setPlayState(IncPlay::PS_PLAY);
+             showInfo.setPCode(secCodeDlg.passWd());
+             showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                    .arg("rgb(255, 254, 212)")
+                                    .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-          TouchPlayCtrlBtns(false);
-          Trigger.TriggerRequest(Kartina::REQ_STREAM, cid);
+             TouchPlayCtrlBtns(false);
+             Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+          }
        }
     }
 }
@@ -1896,18 +2084,13 @@ void MainWindow::slotUpdateAnswer (QNetworkReply* pRes)
    pRes->deleteLater();
 }
 
-// void MainWindow::slotStartConnectionChain()
-// {
-//    Trigger.TriggerRequest(Kartina::REQ_COOKIE);
-// }
-
 void MainWindow::slotCheckArchProg(ulong ulArcGmt)
 {
    // is actual showinfo still actual ?
-    if (!inBetween(showInfo.starts(), showInfo.ends(), (uint)ulArcGmt))
+    if (!CSmallHelpers::inBetween(showInfo.starts(), showInfo.ends(), (uint)ulArcGmt))
     {
        // search in archiv program map for matching entry ...
-       if (!showInfo.autoUpdate(ulArcGmt))
+       if (!showInfo.autoUpdate(ulArcGmt, vEpgList))
        {
           // add additional info to LCD ...
           int     iTime = showInfo.ends() ? (int)((showInfo.ends() - showInfo.starts()) / 60) : 60;
@@ -1920,8 +2103,64 @@ void MainWindow::slotCheckArchProg(ulong ulArcGmt)
 
           // done ...
           emit sigShowInfoUpdated();
+
+          bEpgRefresh = true;
+          tEpgRefresh.setSingleShot(true);
+          tEpgRefresh.start(61000); // 1000 ms = 1 sec
        }
     }
+}
+
+void MainWindow::slotEpgRefresh()
+{
+    bEpgRefresh = true;
+    emit sigEpgRefresh();
+}
+
+void MainWindow::slotRefreshChanLogos()
+{
+   if (!(ulStartFlags & FLAG_CLOGO_COMPL))
+   {
+      QStandardItem      *pItem;
+      QPixmap             icon;
+      int                 cid, curCid, i;
+      QString             fLogo;
+
+      // get current selection ...
+      curCid = pChannelDlg->getModel()->itemFromIndex(pChannelDlg->getChannelList()->currentIndex())->data(channellist::cidRole).toInt();
+
+      for (i = 0; i < pChannelDlg->getModel()->rowCount(); i++)
+      {
+         pItem = pChannelDlg->getModel()->item(i);
+         cid   = pItem->data(channellist::cidRole).toInt();
+         fLogo = QString("%1/%2.gif").arg(pFolders->getLogoDir()).arg(cid);
+
+         if (icon.load(fLogo, "image/gif"))
+         {
+            pItem->setData(QIcon(icon), channellist::iconRole);
+
+            // update channel icon on EPG browser ...
+            if (cid == curCid)
+            {
+               pChannelDlg->getLabChanIcon()->setPixmap(QIcon(icon).pixmap(24, 24));
+            }
+         }
+      }
+
+      // mark logo stuff as completed ...
+      ulStartFlags |= FLAG_CLOGO_COMPL;
+   }
+}
+
+void MainWindow::slotPCodeChangeResp(const QString &str)
+{
+    Q_UNUSED(str)
+
+    // clear buffered password ...
+    secCodeDlg.setPasswd("");
+    showInfo.setPCode("");
+
+    dlgParentalControl.slotNewPCodeSet();
 }
 
 #ifdef INCLUDE_LIBVLC
@@ -1929,6 +2168,9 @@ void MainWindow::slotToogleFullscreen()
 {
    if (!pVideoWidget)
    {
+      // store size and position ...
+      sizePos = geometry();
+
       // get videoWidget ...
       pVideoWidget = ui->player->getAndRemoveVideoWidget();
 
@@ -1961,12 +2203,16 @@ void MainWindow::slotToogleFullscreen()
       // reset videoWidgets local pointer ...
       pVideoWidget = NULL;
 
+      // restore geometry ...
+      setGeometry(sizePos);
+
       // show normal ...
-      // show();
       showNormal();
+
       emit sigFullScreenToggled(0);
    }
 }
+
 #endif // INCLUDE_LIBVLC
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2026,8 +2272,7 @@ void MainWindow::ConnectionInit()
     KartinaTv.abort();
 
     // set connection data ...
-    KartinaTv.SetData(dlgSettings.GetAPIServer(), dlgSettings.GetUser(), dlgSettings.GetPasswd(),
-                         dlgSettings.GetErosPasswd(), dlgSettings.AllowEros());
+    KartinaTv.SetData(dlgSettings.GetAPIServer(), dlgSettings.GetUser(), dlgSettings.GetPasswd());
 
     // set proxy stuff ...
     if (dlgSettings.UseProxy())
@@ -2037,8 +2282,7 @@ void MainWindow::ConnectionInit()
                            dlgSettings.GetProxyUser(), dlgSettings.GetProxyPasswd());
 
        KartinaTv.setProxy(proxy);
-       dwnLogos.setProxy(proxy);
-       dwnVodPics.setProxy(proxy);
+       pixCache.setProxy(proxy);
        streamLoader.setProxy(proxy);
        pUpdateChecker->setProxy(proxy);
    }
@@ -2116,14 +2360,16 @@ void MainWindow::FillChanMap(const QVector<cparser::SChan> &chanlist)
 
 int MainWindow::FillChannelList (const QVector<cparser::SChan> &chanlist)
 {
-   QString  sLine;
-   QString  sLogoFile;
+   QString   sLine;
+   QString   sLogoFile;
    QStandardItem *pItem;
-   int      iRow, iRowGroup;
-   QPixmap  Pix(16, 16);
-   QPixmap  icon;
-   int      iChanCount = 0;
-   int      iChanGroupCount = 0;
+   bool      bMissingIcon = false;
+   int       iRow, iRowGroup;
+   QFileInfo fInfo;
+   QPixmap   Pix(16, 16);
+   QPixmap   icon;
+   int       iChanCount = 0;
+   int       iChanGroupCount = 0;
 
    int iRecentRow = 0;
    QString sRecentChan = "";
@@ -2154,110 +2400,136 @@ int MainWindow::FillChannelList (const QVector<cparser::SChan> &chanlist)
 
    for (int i = 0; i < chanlist.size(); i++)
    {
-       // create new item ...
-       pItem = new QStandardItem;
+       // check if we should display channel in channel list ...
+       if (chanlist[i].bIsHidden)
+       {
+          mInfo(tr("Exclude '%1' from channel list (hidden: %2, protected: %3).")
+                .arg(chanlist[i].sName)
+                .arg(chanlist[i].bIsHidden)
+                .arg(chanlist[i].bIsProtected));
+       }
+       else
+       {
+           // create new item ...
+           pItem = new QStandardItem;
 
-      // is this a channel group ... ?
-      if (chanlist[i].bIsGroup)
-      {
-          pItem->setData(-1, channellist::cidRole);
-          pItem->setData(chanlist[i].sName, channellist::nameRole);
-          pItem->setData(chanlist[i].sProgramm, channellist::bgcolorRole);
-          pItem->setData(QIcon(":png/group"), channellist::iconRole);
+          // is this a channel group ... ?
+          if (chanlist[i].bIsGroup)
+          {
+              pItem->setData(-1, channellist::cidRole);
+              pItem->setData(chanlist[i].sName, channellist::nameRole);
+              pItem->setData(chanlist[i].sProgramm, channellist::bgcolorRole);
+              pItem->setData(QIcon(":png/group"), channellist::iconRole);
 
-         // add channel group entry ...
-         Pix.fill(QColor(chanlist[i].sProgramm));
-         pChannelDlg->getCbxChannelGroup()->addItem(QIcon(Pix), chanlist[i].sName, QVariant(i));
+             // add channel group entry ...
+             Pix.fill(QColor(chanlist[i].sProgramm));
+             pChannelDlg->getCbxChannelGroup()->addItem(QIcon(Pix), chanlist[i].sName, QVariant(i));
 
-         //only one time create channel group menu
-         if (bFirstInit)
-         {
-            ChanGroup[iChanGroupCount] = new QMenu(chanlist[i].sName, this);
-            ui->menuChannels->addMenu(ChanGroup[iChanGroupCount]);
-            iChanGroupCount++;
-         }
-      }
-      else
-      {
-         sLogoFile = QString("%1/%2.gif").arg(pFolders->getLogoDir()).arg(chanlist[i].iId);
-         sLine     = QString("%1. %2").arg(++ iChanCount).arg(chanlist[i].sName);
-
-         // check if file exists ...
-         if (!QFile::exists(sLogoFile))
-         {
-             // no --> load default image ...
-             icon.load(":png/no_logo");
-         }
-         else
-         {
-             //////////////////////////////////////////////////////////
-             // Note: Some Icons can't be loaded.
-             // First we try to load the image.
-             // If this isn't possible we force
-             // the file format to gif.
-             // If it's still impossible to load
-             // the image we take the default image instead.
-             //////////////////////////////////////////////////////////
-
-             // check if file can be loaded ...
-             if (!icon.load(sLogoFile, "image/gif"))
+             //only one time create channel group menu
+             if (bFirstInit)
              {
-                // still can't load --> load default image ...
-                icon.load(":png/no_logo");
-//                mInfo(tr("Can't load channel image \"%1.gif\" ...").arg(chanlist[i].iId));
-                ui->statusBar->showMessage(tr("Can't load channel image \"%1.gif\" ...").
-                                           arg(chanlist[i].iId));
+                ChanGroup[iChanGroupCount] = new QMenu(chanlist[i].sName, this);
+                ui->menuChannels->addMenu(ChanGroup[iChanGroupCount]);
+                iChanGroupCount++;
              }
-         }
+          }
+          else
+          {
+             fInfo.setFile(chanlist[i].sIcon);
+             sLogoFile = QString("%1/%2").arg(pFolders->getLogoDir()).arg(fInfo.fileName());
+             sLine     = QString("%1. %2").arg(++ iChanCount).arg(chanlist[i].sName);
 
-         pItem->setData(chanlist[i].iId, channellist::cidRole);
-         pItem->setData(sLine, channellist::nameRole);
-         pItem->setData(QIcon(icon), channellist::iconRole);
+             // check if file exists ...
+             if (!QFile::exists(sLogoFile))
+             {
+                 // no --> load default image ...
+                 icon.load(":png/no_logo");
 
-         if(dlgSettings.extChanList())
-         {
-            pItem->setData(chanlist[i].sProgramm, channellist::progRole);
-            pItem->setData(chanlist[i].uiStart, channellist::startRole);
-            pItem->setData(chanlist[i].uiEnd, channellist::endRole);
-         }
-         else
-         {
-             pItem->setToolTip(CShowInfo::createTooltip(chanlist[i].sName, chanlist[i].sProgramm,
-                                            chanlist[i].uiStart, chanlist[i].uiEnd));
-         }
+                 // enqueue pic to cache ...
+                 pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
 
-         //only one time create channel actions
-         if (bFirstInit)
-         {
-            ChannelActs[i] = new QAction(this);
-            ChannelActs[i]->setText(sLine);
-            connect(ChannelActs[i], SIGNAL(triggered()), this, SLOT(slotSelectChannel()));
-            ChanGroup[iChanGroupCount - 1]->addAction(ChannelActs[i]);
-         }
+                 // mark for reload ...
+                 bMissingIcon = true;
+             }
+             else
+             {
+                 // check if image file can be loaded ...
+                 if (!icon.load(sLogoFile, "image/gif"))
+                 {
+                    // can't load --> load default image ...
+                    icon.load(":png/no_logo");
 
-         // set icons to the channel actions
-         if (QFile::exists(sLogoFile))
-         {
-             ChannelActs[i]->setIcon(QIcon(sLogoFile));
-         }
-         else
-         {
-             // no --> load default image ...
-             icon.load(":png/no_logo");
-             ChannelActs[i]->setIcon(QIcon(icon));
-         }
+    //                mInfo(tr("Can't load channel image \"%1.gif\" ...").arg(chanlist[i].iId));
+                    ui->statusBar->showMessage(tr("Can't load channel image \"%1.gif\" ...").
+                                               arg(chanlist[i].iId));
 
-         sChan = chanlist[i].sName;
-         sChan = sChan.trimmed();
+                    // delete logo file ...
+                    QFile::remove(sLogoFile);
 
-         //find recent channel-row
-         if (sRecentChan.contains(sChan, Qt::CaseInsensitive))
-         {
-             iRecentRow = i;
-         }
-      }
+                    // enqueue pic to cache ...
+                    pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
 
-      pChannelDlg->getModel()->appendRow(pItem);
+                    // mark for reload ...
+                    bMissingIcon = true;
+                 }
+             }
+
+             pItem->setData(chanlist[i].iId, channellist::cidRole);
+             pItem->setData(sLine, channellist::nameRole);
+             pItem->setData(QIcon(icon), channellist::iconRole);
+
+             if(dlgSettings.extChanList())
+             {
+                pItem->setData(chanlist[i].sProgramm, channellist::progRole);
+                pItem->setData(chanlist[i].uiStart, channellist::startRole);
+                pItem->setData(chanlist[i].uiEnd, channellist::endRole);
+             }
+             else
+             {
+                 pItem->setToolTip(CShowInfo::createTooltip(chanlist[i].sName, chanlist[i].sProgramm,
+                                                chanlist[i].uiStart, chanlist[i].uiEnd));
+             }
+
+             //only one time create channel actions
+             if (bFirstInit)
+             {
+                ChannelActs[i] = new QAction(this);
+                ChannelActs[i]->setText(sLine);
+                connect(ChannelActs[i], SIGNAL(triggered()), this, SLOT(slotSelectChannel()));
+                ChanGroup[iChanGroupCount - 1]->addAction(ChannelActs[i]);
+             }
+
+             // set icons to the channel actions
+             if (QFile::exists(sLogoFile))
+             {
+                 ChannelActs[i]->setIcon(QIcon(sLogoFile));
+             }
+             else
+             {
+                 // no --> load default image ...
+                 icon.load(":png/no_logo");
+                 ChannelActs[i]->setIcon(QIcon(icon));
+             }
+
+             sChan = chanlist[i].sName;
+             sChan = sChan.trimmed();
+
+             //find recent channel-row
+             if (sRecentChan.contains(sChan, Qt::CaseInsensitive))
+             {
+                 iRecentRow = i;
+             }
+          }
+
+          pChannelDlg->getModel()->appendRow(pItem);
+
+       } // not hidden ...
+
+   }
+
+   if (!bMissingIcon)
+   {
+       ulStartFlags |= FLAG_CLOGO_COMPL;
    }
 
    // first time and after saving of settings set the current channel-row
@@ -2876,8 +3148,43 @@ void MainWindow::setRecentChannel(const QString &ChanName)
     vShortcutPool.clear();
  }
 
+ int MainWindow::grantAdultAccess(bool bProtected)
+ {
+    int iRV = 0;
+
+    if (!bProtected)
+    {
+       // unprotected channel --> always grant access ...
+       iRV = 1;
+    }
+    else
+    {
+       // protected channel allowed ... ?
+       if (dlgSettings.AllowEros())
+       {
+           secCodeDlg.setPasswd(pDb->password("ErosPasswdEnc"));
+           iRV = 1;
+       }
+       else
+       {
+           // request password ...
+           secCodeDlg.exec();
+
+           // we only can grant access if we have the correct password ...
+           if ( secCodeDlg.passWd() == pDb->password("ErosPasswdEnc") )
+           {
+               iRV = 1;
+           }
+           else
+           {
+               QMessageBox::critical(this, tr("Error!"),
+                   tr("<b>The parent code is empty or not correct.</b>\n</ul>\n"));
+           }
+       }
+    }
+
+    return iRV;
+ }
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-
-

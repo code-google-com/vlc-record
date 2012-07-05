@@ -16,7 +16,8 @@
 #include "ckartinaxmlparser.h"
 #include "ctranslit.h"
 #include "cinstruction.h"
-
+#include "cparentalcontroldlg.h"
+#include "qseccodedlg.h"
 #ifdef INCLUDE_LIBVLC
     #include <QStackedLayout>
     #include "qvlcvideowidget.h"
@@ -30,8 +31,7 @@
 #define FLAG_CONN_CHAIN     (ulong)(1<<1) ///< should we start connection chain
 #define FLAG_CHAN_LIST      (ulong)(1<<2) ///< should we set channel from former session
 #define FLAG_EPG_DAY        (ulong)(1<<3) ///< should we set epg day from former session
-#define FLAG_CLOGOS_READY   (ulong)(1<<4) ///< are the channel logos ready
-#define FLAG_VLOGOS_READY   (ulong)(1<<5) ///< are the VOD logos ready
+#define FLAG_CLOGO_COMPL    (ulong)(1<<4) ///< channel logos completely loaded
 // @}
 
 namespace Ui
@@ -42,7 +42,6 @@ namespace Ui
     {
        QString     sDescr;
        QObject    *pObj;
-//       QString     sObj;
        const char *pSlot;
        QString     sShortCut;
     };
@@ -78,14 +77,16 @@ private:
     Ui::MainWindow 		  *ui;
     CChannelsEPGdlg               *pChannelDlg;
     CSettingsDlg                   dlgSettings;
+    CParentalControlDlg            dlgParentalControl;
+    QSecCodeDlg                    secCodeDlg;
     CKartinaClnt                   KartinaTv;
     CKartinaXMLParser              XMLParser;
     CWaitTrigger                   Trigger;
     CStreamLoader                  streamLoader;
     QTranslator                   *pTranslator;
     QTimer                         Refresh;
-    CPixLoader                     dwnLogos;
-    CPixLoader                     dwnVodPics;
+    QTimer                         tEpgRefresh;
+    CPixLoader                      pixCache;
     CTimerRec                      dlgTimeRec;
     CVlcCtrl                       vlcCtrl;
     CTranslit                      translit;
@@ -114,9 +115,13 @@ private:
     QVector<Ui::SShortCuts>        vShortCutTab;
     cparser::SAccountInfo          accountInfo;
     cparser::SGenreInfo            genreInfo;
-    QNetworkAccessManager          *pUpdateChecker;
-    Ui::SVodSite                    lastVodSite;
-    Ui::STabWidget                  vodTabWidget;
+    ulong                          ulStartFlags;
+    QNetworkAccessManager         *pUpdateChecker;
+    Ui::SVodSite                   lastVodSite;
+    Ui::STabWidget                 vodTabWidget;
+    Kartina                        metaKartina;
+    QVector<cparser::SEpg>         vEpgList;
+    bool                           bEpgRefresh;
 
     #ifdef INCLUDE_LIBVLC
         QStackedLayout                 *stackedLayout;
@@ -146,6 +151,7 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event);
     void retranslateShortcutTable();
     void fillShortCutTab();
+    int  grantAdultAccess (bool bProtected);
 
     virtual void changeEvent(QEvent *e);
     virtual void keyPressEvent(QKeyEvent *event);
@@ -154,6 +160,7 @@ protected:
     virtual void closeEvent(QCloseEvent *event);
 
 private slots:
+    void on_actionParental_Control_triggered();
     void on_actionOne_Click_Play_triggered();
     void on_actionShow_Live_triggered();
     void on_pushLive_clicked();
@@ -183,16 +190,13 @@ private slots:
     void on_pushStop_clicked();
     void on_pushPlay_clicked();
     void on_pushRecord_clicked();
-    void slotErr (QString str);
-    void slotChanList (QString str);
-    void slotEPG(QString str);
-    void slotStreamURL (QString str);
-    void slotArchivURL (QString str);
-    void slotServerForm (QString str);
-    void slotCookie (QString str);
-    void slotTimeShift (QString str);
+    void slotChanList (const QString &str);
+    void slotEPG(const QString &str);
+    void slotStreamURL (const QString &str);
+    void slotArchivURL (const QString &str);
+    void slotCookie (const QString &str);
+    void slotTimeShift (const QString &str);
     void slotEpgAnchor (const QUrl & link);
-    void slotLogosReady ();
     void slotReloadLogos ();
     void slotSetSServer (QString sIp);
     void slotTimerRecActive (int iState);
@@ -202,15 +206,13 @@ private slots:
     void slotShutdown ();
     void slotSplashScreen ();
     void slotIncPlayState (int);
-    void slotGotTimeShift (QString str);
-    void slotLogout (QString str);
+    void slotLogout (const QString &str);
     void slotDownloadStarted (int id, QString sFileName);
-    void slotGotVodGenres (QString str);
-    void slotGotVideos (QString str);
+    void slotGotVodGenres (const QString &str);
+    void slotGotVideos (const QString &str, bool bVodFavs = false);
     void slotVodAnchor (const QUrl &link);
-    void slotGotVideoInfo (QString str);
-    void slotVodURL(QString str);
-    void slotGotBitrate (QString str);
+    void slotGotVideoInfo (const QString &str);
+    void slotVodURL(const QString &str);
     void slotSetBitrate (int iRate);
     void slotSetTimeShift (int iShift);
     void slotDoubleClick();
@@ -224,9 +226,15 @@ private slots:
     void slotCrop();
     void slotAspectToggle(int idx);
     void slotCropToggle(int idx);
-//    void slotStartConnectionChain();
     void slotUpdateAnswer (QNetworkReply* pRes);
     void slotCheckArchProg(ulong ulArcGmt);
+    void slotEpgRefresh();
+
+    void slotKartinaErr (const QString &str, int req, int err);
+    void slotKartinaResponse(const QString& resp, int req);
+    void slotUnused(const QString &str);
+    void slotRefreshChanLogos ();
+    void slotPCodeChangeResp (const QString &str);
 
 signals:
     void sigToggleFullscreen ();
@@ -239,6 +247,8 @@ signals:
     void sigShow ();
     void sigHide ();
     void sigFullScreenToggled (int on);
+    void sigEpgRefresh();
+    void sigLockParentalManager();
 };
 
 #endif // MAINWINDOW_H

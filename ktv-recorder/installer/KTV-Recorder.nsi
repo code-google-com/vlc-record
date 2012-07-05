@@ -99,6 +99,9 @@ Section "KTV-Recorder" SecInst
   File "${SRCDIR}\modules\10_vlc-player_odl.mod"
   File "${SRCDIR}\modules\11_libvlc-mp4.mod"
 
+  SetOutPath "$INSTDIR\instruction"
+  File /r "${SRCDIR}\release\instruction\*.*"
+
 SectionEnd
 
 ;-------------------------------------------------------
@@ -150,6 +153,9 @@ Section "qt Framework" SecQt
    
    SetOutPath "$INSTDIR\translations"
    File /r "${QTLIBS}\translations\*.qm"
+   
+   SetOutPath "$INSTDIR"
+   
 SectionEnd
 
 ;-------------------------------------------------------
@@ -262,10 +268,13 @@ Section "un.Program"
   Delete "$INSTDIR\modules\9_libvlc_odl.mod"
   Delete "$INSTDIR\modules\10_vlc-player_odl.mod"
   Delete "$INSTDIR\modules\11_libvlc-mp4.mod"
+  
+  Delete "$INSTDIR\instruction\*.*"
 
   ; delete directories ...
   RMDir  "$INSTDIR\modules"
   RMDir  "$INSTDIR\language"
+  RMDir  "$INSTDIR\instruction"
 
   ; delete KTV-Recorder itself ...
   Delete "$INSTDIR\KTV-Recorder.exe"

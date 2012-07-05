@@ -56,7 +56,10 @@ SOURCES += main.cpp\
     qftsettings.cpp \
     qshortcuttable.cpp \
     qvlcvideowidget.cpp \
-    cshowinfo.cpp
+    cshowinfo.cpp \
+    cparentalcontroldlg.cpp \
+    qseccodedlg.cpp \
+    qfavframe.cpp
 
 HEADERS  += mainwindow.h \
     customization.h \
@@ -98,7 +101,10 @@ HEADERS  += mainwindow.h \
     qclickandgoslider.h \
     qtimelabel.h \
     small_helpers.h \
-    cshowinfo.h
+    cshowinfo.h \
+    cparentalcontroldlg.h \
+    qseccodedlg.h \
+    qfavframe.h
 
 FORMS    += forms/mainwindow.ui \
     forms/ctimerrec.ui \
@@ -107,8 +113,9 @@ FORMS    += forms/mainwindow.ui \
     forms/cplayer.ui \
     forms/cinstruction.ui \
     forms/cchannelsepgdlg.ui \
-    forms/qftsettings.ui
-
+    forms/qftsettings.ui \
+    forms/cparentalcontroldlg.ui \
+    forms/qseccodedlg.ui
 
 win32:INCLUDEPATH += include
 

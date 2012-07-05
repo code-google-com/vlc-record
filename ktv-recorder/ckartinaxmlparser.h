@@ -25,7 +25,6 @@
 
 #include "clogfile.h"
 #include "defdef.h"
-#include "customization.h"
 
 //===================================================================
 // namespace
@@ -50,6 +49,7 @@ namespace cparser
       bool    bIsProtected;
       bool    bHasArchive;
       bool    bIsGroup;
+      bool    bIsHidden;
       QVector<cparser::STimeShift> vTs;
    };
 
@@ -97,6 +97,8 @@ namespace cparser
       QString sDirector;
       QString sGenres;
       uint    uiLength;
+      bool    bProtected;
+      bool    bFavourit;
       QVector<cparser::SVodFileInfo> vVodFiles;
    };
 
@@ -117,12 +119,22 @@ namespace cparser
 
    struct SUpdInfo
    {
-     QString                sVersion;
-     int                    iMajor;
-     int                    iMinor;
-     QString                sUrl;
+     QString      sVersion;
+     int          iMajor;
+     int          iMinor;
+     QString      sUrl;
+   };
+
+   struct SVodRate
+   {
+      int     iRateID;
+      QString sGenre;
+      QString sAccess;
    };
 }
+
+// make life easier ...
+typedef QMap<int, cparser::SChan> QChanMap;
 
 /********************************************************************\
 |  Class: CKartinaXMLParser
@@ -141,18 +153,20 @@ public:
    int GetFixTime () { return iOffset; }
 
    // new functions for use with API ...
-   int checkResponse (const QString &sResp, const QString& sFunction, int iLine);
    int parseCookie (const QString &sResp, QString &sCookie, cparser::SAccountInfo &sInf);
    int parseTimeShift (const QString &sResp, QVector<int> &vValues, int &iShift);
    int parseChannelList (const QString &sResp, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgList);
    int parseSettings(const QString& sResp, QVector<int>& vValues, int& iActVal, QString &sName);
+   int parseSetting(const QString& sResp, const QString &sName, QVector<int>& vValues, int& iActVal);
    int parseSServers (const QString& sResp, QVector<cparser::SSrv>& vSrv, QString& sActIp);
+   int parseSServersLogin (const QString& sResp, QVector<cparser::SSrv>& vSrv, QString& sActIp);
    int parseVodList (const QString& sResp, QVector<cparser::SVodVideo>& vVodList, cparser::SGenreInfo &gInfo);
    int parseUrl (const QString& sResp, QString& sUrl);
+   int parseVodUrls (const QString& sResp, QStringList& sUrls);
    int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
    int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);
-   int fillErrorMap();
+   int parseVodManager (const QString& sResp, QVector<cparser::SVodRate>& vRates);
    int parseUpdInfo(const QString& sResp, cparser::SUpdInfo &updInfo);
    void setStatusBar(QStatusBar *pStBar);
 
@@ -164,16 +178,19 @@ protected:
    int parseChannels(QXmlStreamReader &xml, QVector<cparser::SChan> &chanList, bool bFixTime);
    int parseStreamParams (QXmlStreamReader &xml, QVector<cparser::STimeShift>& vTs);
    int oneLevelParser (const QString &sEndElement, const QStringList& slNeeded, QMap<QString, QString>& mResults);
-
+   int ignoreUntil(const QString &sEndElement);
 
 private:
    int iOffset;
-   QString sErr, sCleanResp;
+   QString sErr;
    QXmlStreamReader   xmlSr;
    QMap<int, QString> mapError;
    QMutex             mutex;
    QStatusBar *pStatusBar;
    QString str;
+
+signals:
+   void sigWrongPass();
 };
 
 #endif /* __201005075459_CKARTINAXMLPARSER_H */
