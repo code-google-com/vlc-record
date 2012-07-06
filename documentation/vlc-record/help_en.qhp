@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <QtHelpProject version="1.0">
+     <namespace>Jo2003.com.VLC-Record.1.0</namespace>
+     <virtualFolder>doc</virtualFolder>
+     <customFilter name="VLC-Record 1.0">
+         <filterAttribute>vlc-record</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+     </customFilter>
+     <filterSection>
+         <filterAttribute>vlc-record</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+         <toc>
+             <section title="VLC-Record Manual" ref="help_en.html">
+                 <section title="About" ref="help_en.html#about" />
+                 <section title="Versions" ref="help_en.html#versions" />
+                 <section title="Branding" ref="help_en.html#branding" />
+                 <section title="Features" ref="help_en.html#features" />
+                 <section title="Installation" ref="help_en.html#installation" />
+                 <section title="First Time Settings" ref="help_en.html#ftsettings" />
+                 <section title="Settings" ref="help_en.html#settings">
+                     <section title="Main Settings" ref="help_en.html#mainsettings" />
+                     <section title="Shortcuts" ref="help_en.html#shortcuts" />
+                     <section title="Advanced Settings" ref="help_en.html#advsettings" />
+                     <section title="Parental Manager" ref="help_en.html#parentmanager" />
+                 </section>
+                 <section title="Discovering the GUI" ref="help_en.html#discovergui" />
+                 <section title="Discovering Features" ref="help_en.html#discoverfeatures">
+                     <section title="Favourite Channels" ref="help_en.html#favchannels" />
+                     <section title="Video on Demand" ref="help_en.html#vodbrowser" />
+                     <section title="Archive" ref="help_en.html#archive" />
+                     <section title="Timer Record" ref="help_en.html#timerrec" />
+                 </section>
+             </section>
+         </toc>
+         <keywords>
+             <keyword name="archive" ref="help_en.html#archive" />
+             <keyword name="timer" ref="help_en.html#timerrec" />
+             <keyword name="settings" ref="help_en.html#settings" />
+             <keyword name="favourites" ref="help_en.html#favchannels" />
+             <keyword name="vod" ref="help_en.html#vodbrowser" />
+             <keyword name="parent" ref="help_en.html#parentmanager" />
+             <keyword name="filter" ref="help_en.html#parentmanager" />
+             <keyword name="porno" ref="help_en.html#parentmanager" />
+         </keywords>
+         <files>
+             <file>help.css</file>
+             <file>help_en.html</file>
+             <file>images/en/*.png</file>
+             <file>images/common/*.png</file>
+         </files>
+     </filterSection>
+ </QtHelpProject>

@@ -1,0 +1,55 @@
+/*
+ * Cascading Style Sheet for VLC-Record Help
+ * Author:  Jo2003
+ * Begin:   2012-07-05
+ * $HeadURL$
+ * $Id$
+ */
+
+body {
+   color: #555;
+   padding: 30px;
+}
+
+h1 {
+   color: #000;
+}
+
+h2 {
+   color: #036;
+}
+
+h3 {
+   color: #800;
+   text-decoration: underline;
+}
+
+b {
+   color: #036;
+}
+
+.toplink {
+   width: 100%;
+   text-align: right;
+}
+
+.index {
+   width: 300px;
+   background-color: #eee;
+   color: black;
+   border: #036 1px solid;
+}
+
+a:link, a:visited, a:active {
+   color: #036;
+   text-decoration: none;
+}
+
+a:hover {
+   color: #800;
+   text-decoration: underline;
+}
+
+.extern:before {
+  content: "\2197\00A0";
+}
