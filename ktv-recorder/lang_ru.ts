@@ -452,7 +452,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/cinstruction.ui" line="77"/>
+        <location filename="forms/cinstruction.ui" line="80"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -586,6 +586,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;
 &lt;body&gt;
 &lt;p align=&quot;center&quot;&gt;&lt;font size=&quot;+2&quot;&gt;Инструкция к программе &lt;/font&gt;&lt;font size=&quot;+3&quot;&gt;&lt;b&gt;KTV-Recorder&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;Программа &lt;b&gt;KTV-Recorder&lt;/b&gt; предназначена для воспроизведения и записи потокового видео, получаемого с сайта компании &lt;a href=&quot;http://www.kartina.tv&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;Kartina.TV&lt;/b&gt;&lt;/a&gt; через интернет (&lt;b&gt;IPTV&lt;/b&gt;). Программа написана на языке &lt;b&gt;C++&lt;/b&gt; с использованием программной оболочки &lt;a href=&quot;http://qt.nokia.com/downloads&quot; target=&quot;_blank&quot;&gt;Qt framework&lt;/a&gt;, разработанной фирмой &lt;b&gt;Nokia&lt;/b&gt;. Программа свободно распространяется, ее открытый исходный код может быть найден на &lt;a href=&quot;http://code.google.com/p/vlc-record/source/browse/&quot; target=&quot;_blank&quot;&gt;сайте&lt;/a&gt; автора программы. Встроенный плеер для воспроизведения и записи потокового видео реализован с использованием библиотеки &lt;b&gt;libvlc&lt;/b&gt; разработчиков видеоплеера &lt;a href=&quot;http://www.videolan.org/vlc/download-windows.html&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;VLC player&lt;/b&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Программа установки создает по умолчанию в папке &lt;b&gt;C:\Program Files&lt;/b&gt; папку &lt;b&gt;KTV-Recorder&lt;/b&gt;, в которую помещает загрузочный модуль программы, программу деинсталляции, библиотеки &lt;b&gt;Qt&lt;/b&gt;, а также папки &lt;b&gt;imageformats, instruction, language, modules, plugins, sqldrivers&lt;/b&gt; и  &lt;b&gt;translations&lt;/b&gt;. Для пользователя интерес представляет только папка &lt;b&gt;modules &lt;/b&gt;, в которой находятся  файлы модулей &lt;b&gt;vlc-player&lt;/b&gt;, используемые для воспроизведения каналов. Эти модули являются текстовыми файлами и могут быть, если это требуется, легко модифицированы пользователем&lt;/p&gt;
 
 &lt;p&gt;При первом запуске (обычно во время установки программы) программа создает в &lt;b&gt;C:\Documents and Settings\UserName\Application Data &lt;/b&gt; (здесь &lt;b&gt;C&lt;/b&gt; - раздел жесткого диска, где установлена операционная система. Может быть и другая буква - &lt;b&gt;D, E&lt;/b&gt; и т.д.) папку &lt;b&gt;KTV-Recorder&lt;/b&gt; и в этой папке папки &lt;b&gt;logos&lt;/b&gt; - для хранения значков каналов и &lt;b&gt;vod&lt;/b&gt; - для хранения картинок фильмов из видеотеки, а также файлы с ошибками и предупреждениями &lt;b&gt;(*.log)&lt;/b&gt; и файл базы данных &lt;b&gt;vlcrec.db.sqlite&lt;/b&gt; для таблиц &lt;b&gt;aspect, settings, timerrec&lt;/b&gt; и &lt;b&gt;shortcuts&lt;/b&gt;, в которых хранятся соотношения сторон для каждого канала, установки программы, данные планировщика и фавориты.&lt;/p&gt;
@@ -705,7 +706,7 @@ p, li { white-space: pre-wrap; }
 
 &lt;p&gt;После смены абонемента и пароля на новые может потебоваться стартовать программу заново, т.к. иногда смена абонемента и пароля приводит к системной ошибке.&lt;/p&gt;
 
-&lt;p&gt;Программа использует библиотеки &lt;b&gt;vlc-player libvlc.dll, libvlccore.dll&lt;/b&gt; и &lt;b&gt;plugins&lt;/b&gt;. Эти библиотеки находятся в установочной директории программы &lt;b&gt;C:\Program Files\KTV-Recorder&lt;/b&gt;, библиотеки &lt;b&gt;plugins&lt;/b&gt; находятся в директории &lt;b&gt;C:\Program Files\KTV-Recorder\plugins&lt;/b&gt;. Эти библиотеки всегда можно заменить на набор библиотек другой версии - следует менять две указанные библиотеки и библиотеки &lt;b&gt;plugins&lt;/b&gt;. Набор библиотек соответствующей версии можно найти в установочной директории после установки соответствующей версии &lt;b&gt;vlc-record&lt;/b&gt; или &lt;b&gt;KTV-Recorder&lt;/b&gt;. Установочный модуль программы с набором библиотек той или иной версии можно найти на сайте разработчиков &lt;b&gt;vlc-record&lt;/b&gt;.&lt;/p&gt;
+&lt;p&gt;Программа использует библиотеки &lt;b&gt;VLC player libvlc.dll, libvlccore.dll&lt;/b&gt; и &lt;b&gt;plugins&lt;/b&gt;. Эти библиотеки находятся в установочной директории программы &lt;b&gt;C:\Program Files\KTV-Recorder&lt;/b&gt;, библиотеки &lt;b&gt;plugins&lt;/b&gt; находятся в директории &lt;b&gt;C:\Program Files\KTV-Recorder\plugins&lt;/b&gt;. Эти библиотеки всегда можно заменить на набор библиотек другой версии - следует менять две указанные библиотеки и библиотеки &lt;b&gt;plugins&lt;/b&gt;. Набор библиотек соответствующей версии можно найти в установочной директории после установки соответствующей версии &lt;b&gt;vlc-record&lt;/b&gt; или &lt;b&gt;KTV-Recorder&lt;/b&gt;. Установочный модуль программы с набором библиотек той или иной версии можно найти на сайте разработчиков &lt;b&gt;vlc-record&lt;/b&gt;.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;&lt;font size=&quot;+2&quot;&gt;Средства, необходимые для сборки и модификации проекта &lt;/font&gt;&lt;font size=&quot;+3&quot;&gt;&lt;b&gt;kartina.tv&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
 &lt;p&gt;Для начала нужно скачать с сайта &lt;b&gt;Nokia&lt;/b&gt; &lt;a href=&apos;http://qt.nokia.com/downloads&apos; target=&quot;_blank&quot;&gt;
@@ -717,7 +718,7 @@ http://qt.nokia.com/downloads&lt;/a&gt;
 
 &lt;p&gt;После того, как &lt;b&gt;Qt SDK&lt;/b&gt; скачен, его нужно установить на компьютере. Директория по умолчанию, в которую устанавливается &lt;b&gt;Qt SDK&lt;/b&gt; - &lt;b&gt;C:\Qt&lt;/b&gt;. Для работы нужен будет &lt;b&gt;Qt Creator&lt;/b&gt; и &lt;b&gt;Qt Linguist&lt;/b&gt; – &lt;b&gt;Windos&lt;/b&gt; – приложения с ярлыками на рабочем столе, а также &lt;b&gt;lupdate.exe&lt;/b&gt; и &lt;b&gt;lrelease.exe&lt;/b&gt; – утилиты, выполняемые из командной строки, находятся в ой же папке &lt;b&gt;C:\Qt\2010.05\qt\bin&lt;/b&gt;, что и &lt;b&gt;Qt Linguist&lt;/b&gt;. Кроме того, потребуются библиотеки, которые позволяют запускать приложение вне &lt;b&gt;Qt Creator&lt;/b&gt; для дебага - &lt;b&gt;libgcc_s_dw2-1.dll, QtCored4.dll, QtGuid4.dll, QtNetworkd4.dll, QtSqld4.dll, QtXmld4.dll, QtXmlPatternsd4.dll&lt;/b&gt; и релиза - &lt;b&gt;libgcc_s_dw2-1.dll, QtCore4.dll, QtGui4.dll, QtNetwork4.dll, QtSql4.dll, QtXml4.dll, QtXmlPatterns4.dll&lt;/b&gt;, находящиеся там же, где и утилиты &lt;b&gt;lupdate.exe&lt;/b&gt; и &lt;b&gt;lrelease.exe&lt;/b&gt;, для дебага и релиза библиотека &lt;b&gt;mingwm10.dll&lt;/b&gt;, находящаяся в папке &lt;b&gt;C:\Qt\2010.05\mingw\bin&lt;/b&gt;, библиотеки &lt;b&gt;qgif4.dll, qico4.dll, qjpeg4.dll&lt;/b&gt;, находящиеся в папке &lt;b&gt;C:\Qt\2010.05\qt\plugins\imageformats&lt;/b&gt;, библиотека &lt;b&gt;qsqlite4.dll&lt;/b&gt;, находящаяся в папке &lt;b&gt;C:\Qt\2010.05\qt\plugins\sqldrivers&lt;/b&gt;.&lt;/p&gt;
 
-&lt;p&gt;Поскольку программа использует помимо внешнего также и встроенный &lt;b&gt;vlc-плеер&lt;/b&gt;, то ей необходимы соответствующие библиотеки. Эти библиотеки можно скачать с сайта разработчиков &lt;b&gt;vlc-плеера&lt;/b&gt; &lt;a href=&quot;http://www.videolan.org/vlc/download-windows.html&quot; target=&quot;_blank&quot;&gt;http://www.videolan.org/vlc/download-windows.html&lt;/a&gt; - кликнуть на ссылку &lt;b&gt;Zip pakage&lt;/b&gt;. Это библиотеки &lt;b&gt;libgcc_s_dw2-1.dll, libvlc.dll, libvlccore.dll&lt;/b&gt;, а также библиотеки &lt;b&gt;plugins&lt;/b&gt; (порядка 150 библиотек).&lt;/p&gt;
+&lt;p&gt;Поскольку программа использует помимо внешнего &lt;b&gt;VLC player&lt;/b&gt; также и встроенный плеер, реализованный с использованием библиотек &lt;b&gt;VLC player&lt;/b&gt;, то ей необходимы соответствующие библиотеки. Эти библиотеки можно скачать с сайта разработчиков &lt;b&gt;VLC player&lt;/b&gt; &lt;a href=&quot;http://www.videolan.org/vlc/download-windows.html&quot; target=&quot;_blank&quot;&gt;http://www.videolan.org/vlc/download-windows.html&lt;/a&gt; - кликнуть на ссылку &lt;b&gt;Zip pakage&lt;/b&gt;. Это библиотеки &lt;b&gt;libgcc_s_dw2-1.dll, libvlc.dll, libvlccore.dll&lt;/b&gt;, а также библиотеки &lt;b&gt;plugins&lt;/b&gt; (порядка 150 библиотек).&lt;/p&gt;
 
 &lt;p&gt;Для работы с проектом приложения &lt;b&gt;kartina.tv&lt;/b&gt;, надо будет создать определенную структуру папок:&lt;/p&gt;&lt;pre&gt;kartina.tv&lt;br&gt;      |______checkout&lt;br&gt;      |______debug&lt;br&gt;      |      |______instruction&lt;br&gt;      |      |______language&lt;br&gt;      |      |______modules&lt;br&gt;      |      |______plugins&lt;br&gt;      |      |______translations&lt;br&gt;      |______forms&lt;br&gt;      |______include&lt;br&gt;      |      |______vlc&lt;br&gt;      |______installer&lt;br&gt;      |______lib&lt;br&gt;      |______modules&lt;br&gt;      |______packages&lt;br&gt;      |______release&lt;br&gt;      |      |______imagefaormats&lt;br&gt;      |      |______instruction&lt;br&gt;      |      |______language&lt;br&gt;      |      |______modules&lt;br&gt;      |      |______plugins&lt;br&gt;      |      |______sqldrivers&lt;br&gt;      |      |______translations&lt;br&gt;      |______resources&lt;br&gt;      |______tastes&lt;/pre&gt;
  
@@ -783,8 +784,7 @@ http://qt.nokia.com/downloads&lt;/a&gt;
 
 &lt;p&gt;Наконец, реализовать метод, обрабатывающем событие смены языка в комбобоксе:&lt;/p&gt;&lt;pre&gt;void CRegistration::on_cbxLanguage_currentIndexChanged(QString str)&lt;br&gt;{&lt;br&gt;    QString sAppDir = QApplication::applicationDirPath();&lt;br&gt;    pTranslator-&gt;load(QString(&quot;lang_%1&quot;).arg(str), sAppDir.append(&quot;\\Language&quot;));&lt;br&gt;}&lt;/pre&gt;
 
-&lt;p&gt;Для работы с видеопотоками сайта &lt;b&gt;Kartina.TV&lt;/b&gt;, а также для различных запросов программа использует &lt;a href=&quot;http://forum.kartina.tv/index.php?showforum=39&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;REST API&lt;/b&gt;&lt;/a&gt; разработчиков &lt;b&gt;Kartina.TV&lt;/b&gt;.&lt;/p&gt;
-&lt;/body&gt;
+&lt;p&gt;Для работы с видеопотоками сайта &lt;b&gt;Kartina.TV&lt;/b&gt;, а также для различных запросов программа использует &lt;a href=&quot;http://forum.kartina.tv/index.php?showforum=39&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;REST API&lt;/b&gt;&lt;/a&gt; разработчиков &lt;b&gt;Kartina.TV&lt;/b&gt;.&lt;/p&gt;&lt;/body&gt;
 &lt;/html&gt;
 </translation>
     </message>
@@ -1545,7 +1545,7 @@ To change the parent code make sure:
 </translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="306"/>
+        <location filename="cparentalcontroldlg.cpp" line="305"/>
         <source>blood</source>
         <translation>кровь</translation>
     </message>
@@ -1555,32 +1555,33 @@ To change the parent code make sure:
         <translation>насилие</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="306"/>
+        <location filename="cparentalcontroldlg.cpp" line="307"/>
+        <location filename="cparentalcontroldlg.cpp" line="308"/>
         <source>obscene</source>
         <translation>непристойности</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="306"/>
+        <location filename="cparentalcontroldlg.cpp" line="309"/>
         <source>porn</source>
         <translation>порнография</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="306"/>
+        <location filename="cparentalcontroldlg.cpp" line="310"/>
         <source>horror</source>
         <translation>ужасы</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="341"/>
+        <location filename="cparentalcontroldlg.cpp" line="342"/>
         <source>hide</source>
         <translation>скрывать</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="342"/>
+        <location filename="cparentalcontroldlg.cpp" line="343"/>
         <source>show</source>
         <translation>показывать</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="343"/>
+        <location filename="cparentalcontroldlg.cpp" line="344"/>
         <source>password protected</source>
         <translation>защищен паролем</translation>
     </message>
@@ -1632,13 +1633,13 @@ To change the parent code make sure:
 </translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="400"/>
+        <location filename="cparentalcontroldlg.cpp" line="401"/>
         <source>Information</source>
         <translation>Сообщение</translation>
     </message>
     <message>
-        <location filename="cparentalcontroldlg.cpp" line="400"/>
         <location filename="cparentalcontroldlg.cpp" line="401"/>
+        <location filename="cparentalcontroldlg.cpp" line="402"/>
         <source>Parent Code successfully changed.</source>
         <translation>Родительский пароль успешно изменен.</translation>
     </message>
@@ -2835,12 +2836,12 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/mainwindow.ui" line="199"/>
         <location filename="forms/mainwindow.ui" line="634"/>
-        <location filename="mainwindow.cpp" line="2752"/>
+        <location filename="mainwindow.cpp" line="2758"/>
         <source>Play selected Channel</source>
         <translation>Просмотр выбранной передачи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2740"/>
+        <location filename="mainwindow.cpp" line="2746"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
@@ -2859,14 +2860,14 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/mainwindow.ui" line="278"/>
         <location filename="forms/mainwindow.ui" line="652"/>
-        <location filename="mainwindow.cpp" line="3073"/>
+        <location filename="mainwindow.cpp" line="3079"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="335"/>
         <location filename="forms/mainwindow.ui" line="661"/>
-        <location filename="mainwindow.cpp" line="3090"/>
+        <location filename="mainwindow.cpp" line="3096"/>
         <source>Jump Backward</source>
         <translation>Шаг назад</translation>
     </message>
@@ -2908,7 +2909,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="forms/mainwindow.ui" line="416"/>
         <location filename="forms/mainwindow.ui" line="670"/>
-        <location filename="mainwindow.cpp" line="3089"/>
+        <location filename="mainwindow.cpp" line="3095"/>
         <source>Jump Forward</source>
         <translation>Шаг вперед</translation>
     </message>
@@ -2963,7 +2964,7 @@ or start time is later than end time!</source>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="598"/>
-        <location filename="mainwindow.cpp" line="3076"/>
+        <location filename="mainwindow.cpp" line="3082"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -2979,7 +2980,7 @@ or start time is later than end time!</source>
     </message>
     <message>
         <location filename="forms/mainwindow.ui" line="617"/>
-        <location filename="mainwindow.cpp" line="3077"/>
+        <location filename="mainwindow.cpp" line="3083"/>
         <source>About</source>
         <translation>О программе...</translation>
     </message>
@@ -3134,7 +3135,7 @@ dataDir: %1
         <translation>vlcCtrl сообщает: vlc player активный!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3174"/>
+        <location filename="mainwindow.cpp" line="3180"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
@@ -3158,15 +3159,15 @@ dataDir: %1
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1637"/>
-        <location filename="mainwindow.cpp" line="2626"/>
-        <location filename="mainwindow.cpp" line="2673"/>
+        <location filename="mainwindow.cpp" line="2632"/>
+        <location filename="mainwindow.cpp" line="2679"/>
         <source>Error! Can&apos;t start VLC-Media Player!</source>
         <translation>Ошибка! Невозможно запустить VLC-Media Player!</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="1643"/>
-        <location filename="mainwindow.cpp" line="2633"/>
-        <location filename="mainwindow.cpp" line="2679"/>
+        <location filename="mainwindow.cpp" line="2639"/>
+        <location filename="mainwindow.cpp" line="2685"/>
         <source>Started VLC with pid #%1!</source>
         <translation></translation>
     </message>
@@ -3208,97 +3209,97 @@ dataDir: %1
         <translation type="obsolete">%1 мин.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2400"/>
+        <location filename="mainwindow.cpp" line="2406"/>
         <source>Exclude &apos;%1&apos; from channel list (hidden: %2, protected: %3).</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3072"/>
+        <location filename="mainwindow.cpp" line="3078"/>
         <source>Play / Pause</source>
         <translation>Воспроизведение / Пауза</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3074"/>
+        <location filename="mainwindow.cpp" line="3080"/>
         <source>Record</source>
         <translation>Запись</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3075"/>
+        <location filename="mainwindow.cpp" line="3081"/>
         <source>Timer Record</source>
         <translation>Планировщик записи</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3078"/>
+        <location filename="mainwindow.cpp" line="3084"/>
         <source>Channels, EPG/VOD</source>
         <translation>Каналы, Телегид/Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3079"/>
+        <location filename="mainwindow.cpp" line="3085"/>
         <source>Search EPG</source>
         <translation>Поиск в Телегиде</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3080"/>
+        <location filename="mainwindow.cpp" line="3086"/>
         <source>Text Size +</source>
         <translation>Увеличить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3081"/>
+        <location filename="mainwindow.cpp" line="3087"/>
         <source>Text Size -</source>
         <translation>Уменьшить Размер Шрифта</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3082"/>
+        <location filename="mainwindow.cpp" line="3088"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3083"/>
+        <location filename="mainwindow.cpp" line="3089"/>
         <source>Toggle Aspect Ratio</source>
         <translation>Изменение Соотношения Сторон</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3084"/>
+        <location filename="mainwindow.cpp" line="3090"/>
         <source>Toggle Crop Geometry</source>
         <translation>Изменение Подрезки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3085"/>
+        <location filename="mainwindow.cpp" line="3091"/>
         <source>Toggle Fullscreen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3086"/>
+        <location filename="mainwindow.cpp" line="3092"/>
         <source>Volume +</source>
         <translation>Громче +</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3087"/>
+        <location filename="mainwindow.cpp" line="3093"/>
         <source>Volume -</source>
         <translation>Тише -</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3088"/>
+        <location filename="mainwindow.cpp" line="3094"/>
         <source>Toggle Mute</source>
         <translation>Без/Со Звуком</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3091"/>
+        <location filename="mainwindow.cpp" line="3097"/>
         <source>Next Channel</source>
         <translation>Следующий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3092"/>
+        <location filename="mainwindow.cpp" line="3098"/>
         <source>Previous Channel</source>
         <translation>Предыдущий Канал</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3093"/>
+        <location filename="mainwindow.cpp" line="3099"/>
         <source>Show EPG / VOD</source>
         <translation>Телегид / Видеотека</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3175"/>
+        <location filename="mainwindow.cpp" line="3181"/>
         <source>&lt;b&gt;The parent code is empty or not correct.&lt;/b&gt;
 &lt;/ul&gt;
 </source>
@@ -3311,12 +3312,12 @@ dataDir: %1
         <translation type="obsolete">VLC Mediaplayer ещё в работае.&lt;br /&gt;&lt;b&gt;Если вы остановите работу VLC-Record, то и VLC-Player закроется.&lt;/b&gt;&lt;br /&gt; &lt;br /&gt;Уверены ли Вы?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2865"/>
+        <location filename="mainwindow.cpp" line="2871"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2457"/>
+        <location filename="mainwindow.cpp" line="2463"/>
         <source>Can&apos;t load channel image &quot;%1.gif&quot; ...</source>
         <translation>Невозможно загрузить значок канала</translation>
     </message>
@@ -3333,18 +3334,18 @@ dataDir: %1
         <translation type="obsolete">Окончание:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2561"/>
-        <location filename="mainwindow.cpp" line="2697"/>
+        <location filename="mainwindow.cpp" line="2567"/>
+        <location filename="mainwindow.cpp" line="2703"/>
         <source>Save Stream as</source>
         <translation>Сохранить поток как...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2861"/>
+        <location filename="mainwindow.cpp" line="2867"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <translation>VLC Mediaplayer ещё в работе.&lt;br /&gt; &lt;br /&gt;Уверены ли Вы что хотите закрыть VLC-Player?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2964"/>
+        <location filename="mainwindow.cpp" line="2970"/>
         <source>KTV-Recorder - Click to activate!</source>
         <translation></translation>
     </message>
