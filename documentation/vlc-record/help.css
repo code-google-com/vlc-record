@@ -43,12 +43,18 @@ b {
 
 a:link, a:visited, a:active {
    color: #036;
-   text-decoration: none;
+   /*
+    * QTextBrowser doesn't support CSS pseudo classes!
+    * text-decoration: none; 
+    */
 }
 
 a:hover {
    color: #800;
-   text-decoration: underline;
+   /*
+    * QTextBrowser doesn't support CSS pseudo classes!
+    * text-decoration: underline; 
+    */
 }
 
 .extern:before {
