@@ -41,21 +41,17 @@ b {
    border: #036 1px solid;
 }
 
+/* QTextBrowser doesn't support CSS pseudo classes!
 a:link, a:visited, a:active {
    color: #036;
-   /*
-    * QTextBrowser doesn't support CSS pseudo classes!
-    * text-decoration: none; 
-    */
+   text-decoration: none; 
 }
 
 a:hover {
    color: #800;
-   /*
-    * QTextBrowser doesn't support CSS pseudo classes!
-    * text-decoration: underline; 
-    */
+   text-decoration: underline; 
 }
+*/
 
 .extern:before {
   content: "\2197\00A0";
