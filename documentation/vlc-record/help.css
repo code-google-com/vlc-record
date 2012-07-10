@@ -62,7 +62,10 @@ a {
    text-decoration: none;
 }
 
+/* ... and it doesn't like "no-repeat" ...
 .extern {
-   background: url('images/common/external.png') 99% 40% no-repeat; 
+   background-repeat: no-repeat;
+   background-position: 99% 50%;
    padding-right: 14px;
-}
+   background-image: url('images/common/external.png');
+} */
