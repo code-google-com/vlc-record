@@ -51,8 +51,18 @@ a:hover {
    color: #800;
    text-decoration: underline; 
 }
-*/
 
 .extern:before {
   content: "\2197\00A0";
+}
+*/
+
+a {
+   color: #036;
+   text-decoration: none;
+}
+
+.extern {
+   background: url('images/common/external.png') 99% 40% no-repeat; 
+   padding-right: 14px;
 }
