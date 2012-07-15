@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+ <QtHelpProject version="1.0">
+     <namespace>Jo2003.com.KTV-Recorder.1.0</namespace>
+     <virtualFolder>doc</virtualFolder>
+     <customFilter name="KTV-Recoedr 1.0">
+         <filterAttribute>KTV-Recorder</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+     </customFilter>
+     <filterSection>
+         <filterAttribute>KTV-Recorder</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+         <toc>
+           <section title="Инструкция" ref="help_en.html">
+             <section title="Описание программы" ref="help_en.html#about"/>
+             <section title="Установка программы" ref="help_en.html#installation"/>
+             <section title="Первичные установки" ref="help_en.html#firstsettings"/>
+             <section title="Главное окно и меню программы" ref="help_en.html#mainwindow"/>
+             <section title="Настройки" ref="help_en.html#settings">
+                <section title="Настройки" ref="help_en.html#setsettings"/>
+                <section title="Сокращения" ref="help_en.html#sethots"/>
+                <section title="Допол. настройки" ref="help_en.html#setadvanced"/>
+             </section>
+             <section title="Список каналов и программы передач" ref="help_en.html#epg"/>
+             <section title="Видеотека" ref="help_en.html#vod"/>
+             <section title="Планировщик записи" ref="help_en.html#timerecorder"/>
+             <section title="Родительский контроль" ref="help_en.html#parentcontrol">
+                <section title="Родительский Пароль" ref="help_en.html#parentpassword"/>
+                <section title="Родительский Менеджер" ref="help_en.html#parentmanager"/>
+             </section>
+             <section title="Помощь" ref="help_en.html#help"/>
+             <section title="Библиотеки VLC плеера" ref="help_en.html#libvlc"/>
+           </section>
+           <section title="Средства разработки" ref="dev_help_en.html">
+             <section title="Инструментальные средства" ref="dev_help_en.html#instumentals"/>
+             <section title="Структура приложения" ref="dev_help_en.html#structures"/>
+             <section title="Компилляция приложения" ref="dev_help_en.html#kompilation"/>
+             <section title="Создание файлов-переводов на локальные языки" ref="dev_help_en.html#translation"/>
+             <section title="Программирование локализации приложения" ref="dev_help_en.html#langprogramming"/>
+           </section>
+         </toc>
+         <files>
+             <file>help.css</file>
+             <file>dev_help_en.html</file>
+             <file>help_en.html</file>
+             <file>images/common/*.png</file>
+             <file>images/en/*.jpg</file>
+         </files>
+     </filterSection>
+ </QtHelpProject>

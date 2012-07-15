@@ -27,6 +27,9 @@
     <stylestrategy>NoAntialias</stylestrategy>
    </font>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>KTV-Recorder</string>
   </property>
@@ -541,10 +544,11 @@ border-top: 0px;
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionTime_Record"/>
     <addaction name="actionSettings"/>
-    <addaction name="actionClear_Recent_Channel_List"/>
+    <addaction name="actionTime_Record"/>
     <addaction name="actionParental_Control"/>
+    <addaction name="separator"/>
+    <addaction name="actionClear_Recent_Channel_List"/>
    </widget>
    <widget class="QMenu" name="menuPlayer">
     <property name="title">
@@ -604,6 +608,10 @@ border-top: 0px;
    </property>
   </action>
   <action name="actionGuid">
+   <property name="icon">
+    <iconset resource="../vlc-record.qrc">
+     <normaloff>:/app/help</normaloff>:/app/help</iconset>
+   </property>
    <property name="text">
     <string>Guide</string>
    </property>
@@ -757,6 +765,10 @@ border-top: 0px;
    </property>
   </action>
   <action name="actionParental_Control">
+   <property name="icon">
+    <iconset resource="../vlc-record.qrc">
+     <normaloff>:/access/locked</normaloff>:/access/locked</iconset>
+   </property>
    <property name="text">
     <string>Parental Control</string>
    </property>

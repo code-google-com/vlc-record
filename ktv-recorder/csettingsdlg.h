@@ -18,6 +18,7 @@
 #include <QDir>
 #include <QTableWidget>
 #include <QStatusBar>
+#include <QSystemTrayIcon>
 
 #include "cvlcrecdb.h"
 #include "clogfile.h"
@@ -84,12 +85,8 @@ public:
     int GetBufferTime ();
     vlclog::eLogLevel GetLogLevel ();
 
-    void  SaveWindowRect (const QRect &wnd);
-    QRect GetWindowRect (bool *ok = NULL);
     void  SaveSplitterSizes (const QString &name, const QList<int> &sz);
     QList<int> GetSplitterSizes (const QString &name, bool *ok = NULL);
-    bool  IsMaximized ();
-    void  SetIsMaximized (bool bMax);
     int   GetCustFontSize ();
     void  SetCustFontSize (int iSize);
     void  SaveFavourites (const QList<int> &favList);
@@ -108,6 +105,8 @@ public:
     void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
     uint libVlcVerboseLevel();
     void setStatusBar(QStatusBar *pStBar);
+    void setGeometry(const QByteArray &ba);
+    QByteArray getGeometry();
 
 protected:
     virtual void changeEvent(QEvent *e);

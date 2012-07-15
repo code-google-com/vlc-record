@@ -99,8 +99,9 @@ Section "KTV-Recorder" SecInst
   File "${SRCDIR}\modules\10_vlc-player_odl.mod"
   File "${SRCDIR}\modules\11_libvlc-mp4.mod"
 
-  SetOutPath "$INSTDIR\instruction"
-  File /r "${SRCDIR}\release\instruction\*.*"
+  SetOutPath "$INSTDIR\doc"
+  File /r "${LIBVLCFW}\doc\*.qhc"
+  File /r "${LIBVLCFW}\doc\*.qch"
 
 SectionEnd
 
@@ -144,6 +145,8 @@ Section "qt Framework" SecQt
    FILE "${QTLIBS}\QtGui4.dll"
    FILE "${QTLIBS}\QtNetwork4.dll"
    FILE "${QTLIBS}\QtXml4.dll"
+   FILE "${QTLIBS}\QtHelp4.dll"
+   FILE "${QTLIBS}\QtCLucene4.dll"
 
    SetOutPath "$INSTDIR\imageformats"
    File /r "${QTLIBS}\imageformats\*.dll"
@@ -244,6 +247,8 @@ Section "un.Qt"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtXml4.dll"
+  Delete "$INSTDIR\QtHelp4.dll"
+  Delete "$INSTDIR\QtCLucene4.dll"
   RMDir  "$INSTDIR\imageformats"
   RMDir  "$INSTDIR\sqldrivers"
   RMDir  "$INSTDIR\translations"
@@ -255,6 +260,7 @@ Section "un.Program"
   ; delete installed language files ...
   Delete "$INSTDIR\language\lang_de.qm"
   Delete "$INSTDIR\language\lang_ru.qm"
+  Delete "$INSTDIR\doc\*.q??"
 
   ; delete installed module files ...
   Delete "$INSTDIR\modules\1_vlc-player.mod"
@@ -269,12 +275,10 @@ Section "un.Program"
   Delete "$INSTDIR\modules\10_vlc-player_odl.mod"
   Delete "$INSTDIR\modules\11_libvlc-mp4.mod"
   
-  Delete "$INSTDIR\instruction\*.*"
-
   ; delete directories ...
   RMDir  "$INSTDIR\modules"
   RMDir  "$INSTDIR\language"
-  RMDir  "$INSTDIR\instruction"
+  RMDir  "$INSTDIR\doc"
 
   ; delete KTV-Recorder itself ...
   Delete "$INSTDIR\KTV-Recorder.exe"

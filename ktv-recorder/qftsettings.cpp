@@ -155,7 +155,7 @@ void QFTSettings::saveFTSettings()
 {
    // use settings from form ...
    pDb->setValue("User",             ui->lineUsr->text());
-   pDb->setPassword("AllowAdultEnc", QString::number((int)ui->checkAdult->checkState() + 157239));
+   pDb->setPassword("AllowAdultEnc", QString::number((int)ui->checkAdult->checkState() + ALAD_STAT_SHIF));
    pDb->setValue("Language",         ui->cbxLanguage->currentText());
    pDb->setPassword("PasswdEnc",     ui->linePass->text());
    pDb->setPassword("ErosPasswdEnc", ui->lineErosPass->text());
@@ -177,7 +177,7 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("LogLevel",     3);                 // log everything
 
    // set windows size and position ...
-   pDb->setValue("WndRect",        "74;71;1220;752");
+   pDb->setValue("WndGeometry",    "01:d9:d0:cb:00:01:00:00:00:00:01:71:00:00:00:9d:00:00:06:0e:00:00:03:98:00:00:01:79:00:00:00:bb:00:00:06:06:00:00:03:90:00:00:00:01:00:00");
    pDb->setValue("spVChanEpg",     "270;394;");
    pDb->setValue("spVChanEpgPlay", "693;500;");
    pDb->setValue("spHPlay",        "450;185;");
