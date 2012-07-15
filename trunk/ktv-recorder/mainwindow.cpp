@@ -12,7 +12,7 @@ extern CDirStuff *pFolders;
 // global showinfo class ...
 extern CShowInfo showInfo;
 
-// storage db ...
+// global rec db ...
 extern CVlcRecDB *pDb;
 
 MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
@@ -20,6 +20,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
     ui(new Ui::MainWindow)
 {
    ui->setupUi(this);
+   QString sHlp;
 
 #ifdef INCLUDE_LIBVLC
    // build layout stack ...
@@ -72,6 +73,9 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    dlgParentalControl.setWaitTrigger(&Trigger);
    vlcCtrl.setParent(this);
    trayIcon.setParent(this);
+
+   // non-modal ...
+   Help.setParent(NULL);
 
    pChannelDlg = new CChannelsEPGdlg(this);
    pChannelDlg->initDialog(true);
@@ -162,6 +166,17 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
           + tr("modDir:  %1\n").arg(pFolders->getModDir())
           + tr("appDir:  %1").arg(pFolders->getAppDir()));
 
+    // set help file ...
+    // be sure the file we want to load exists ... fallback to english help ...
+    sHlp = QString("%1/help_%2.qhc").arg(pFolders->getDocDir()).arg(dlgSettings.GetLanguage());
+
+    if (!QFile::exists(sHlp))
+    {
+        sHlp = QString("%1/help_en.qhc").arg(pFolders->getDocDir());
+    }
+
+    Help.setHelpFile(sHlp);
+
    // configure trigger and start it ...
    Trigger.SetKartinaClient(&KartinaTv);
    Trigger.start();
@@ -206,7 +221,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    // short info update on archive play ...
    connect (ui->player, SIGNAL(sigCheckArchProg(ulong)), this, SLOT(slotCheckArchProg(ulong)));
    connect (this, SIGNAL(sigShowInfoUpdated()), ui->player, SLOT(slotShowInfoUpdated()));
-   connect (ui->player, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToogleFullscreen()));
+   connect (ui->player, SIGNAL(sigToggleFullscreen()), this, SLOT(slotToggleFullscreen()));
    connect (this, SIGNAL(sigFullScreenToggled(int)), ui->player, SLOT(slotFsToggled(int)));
 
    // aspect ratio, crop and full screen ...
@@ -239,9 +254,8 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
    connect (pChannelDlg->getVodBrowser(), SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
-   connect (&trayIcon,      SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
 
-   if (dlgSettings.HideToSystray())
+   if (dlgSettings.HideToSystray() && QSystemTrayIcon::isSystemTrayAvailable())
    {
        connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
        connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
@@ -293,34 +307,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::changeEvent(QEvent *e)
 {
-   QWidget::changeEvent(e);
+    switch (e->type())
+    {
+    // catch minimize event ...
+    case QEvent::WindowStateChange:
 
-   switch (e->type())
-   {
-   // catch minimize event ...
-   case QEvent::WindowStateChange:
+       // printStateChange (((QWindowStateChangeEvent *)e)->oldState());
+       if (isMinimized())
+       {
+          Help.close();
 
-      // only hide window, if trayicon stuff is available ...
-      if (QSystemTrayIcon::isSystemTrayAvailable ())
-      {
-         if (isMinimized())
-         {
-            QWindowStateChangeEvent *pEvent = (QWindowStateChangeEvent *)e;
-
-            // store last position only, if it wasn't maximized ...
-            if (!(pEvent->oldState() & (Qt::WindowMaximized | Qt::WindowFullScreen)))
-            {
-               sizePos = geometry();
-            }
-
-            if (dlgSettings.HideToSystray())
-            {
-               // hide dialog ...
-               QTimer::singleShot(300, this, SLOT(hide()));
-            }
-         }
-      }
-      break;
+          // only hide window, if trayicon stuff is available ...
+          if (QSystemTrayIcon::isSystemTrayAvailable () && dlgSettings.HideToSystray())
+          {
+             // hide dialog ...
+             QTimer::singleShot(300, this, SLOT(hide()));
+          }
+       }
+       break;
 
       // language switch ...
       case QEvent::LanguageChange:
@@ -350,6 +354,7 @@ void MainWindow::changeEvent(QEvent *e)
        KartinaTv.fillErrorMap();
        break;
     default:
+       QWidget::changeEvent(e);
        break;
    }
 }
@@ -415,15 +420,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
    if (bAccept)
    {
+      // close help dialog ..
+      Help.close();
+
+      // We want to close program, store all needed values ...
+      // Note: putting this function in destructor doesn't work!
+      savePositions();
+
       if (pChannelDlg->isVisible())
       {
           pChannelDlg->close();
       }
 
       on_pushStop_clicked();
-
-      // disconnect trayicon stuff ...
-      disconnect (&trayIcon);
 
       // clear shortcuts ...
       ClearShortCuts ();
@@ -511,15 +520,19 @@ void MainWindow::on_actionExit_triggered()
 
     if (bAccept)
     {
+        // close help dialog ..
+        Help.close();
+
+        // We want to close program, store all needed values ...
+        // Note: putting this function in destructor doesn't work!
+        savePositions();
+
         if (pChannelDlg->isVisible())
         {
             pChannelDlg->close();
         }
 
         on_pushStop_clicked();
-
-        // disconnect trayicon stuff ...
-        disconnect (&trayIcon);
 
         // clear shortcuts ...
         ClearShortCuts ();
@@ -702,8 +715,8 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionGuid_triggered()
 {
-    CInstruction inst;
-    inst.exec();
+    Help.show();
+    Help.raise();
 }
 
 void MainWindow::on_pushRecord_clicked()
@@ -1067,25 +1080,6 @@ void MainWindow::slotUnused(const QString &str)
    Q_UNUSED(str)
 }
 
-void MainWindow::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
-{
-   switch (reason)
-   {
-   case QSystemTrayIcon::MiddleClick:
-   case QSystemTrayIcon::DoubleClick:
-   case QSystemTrayIcon::Trigger:
-   case QSystemTrayIcon::Context:
-      if (isHidden())
-      {
-         setGeometry(sizePos);
-         QTimer::singleShot(300, this, SLOT(showNormal()));
-      }
-      break;
-   default:
-      break;
-   }
-}
-
 void MainWindow::slotKartinaErr (const QString &str, int req, int err)
 {
     // special error handling for special requests ...
@@ -1417,9 +1411,6 @@ void MainWindow::slotEpgAnchor (const QUrl &link)
       {
           TouchPlayCtrlBtns(false);
 
-          // get program map ...
-          showInfo.setEpgMap(pChannelDlg->getTextEpg()->exportProgMap());
-
           // new own downloader ...
           if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
           {
@@ -1433,6 +1424,7 @@ void MainWindow::slotEpgAnchor (const QUrl &link)
 
           // store all info about show ...
           showInfo.cleanShowInfo();
+          showInfo.setEpgMap(pChannelDlg->getTextEpg()->exportProgMap());
           showInfo.setChanId(cid.toInt());
           showInfo.setChanName(chan.sName);
           showInfo.setShowName(sepg.sShowName);
@@ -2163,14 +2155,17 @@ void MainWindow::slotPCodeChangeResp(const QString &str)
     dlgParentalControl.slotNewPCodeSet();
 }
 
+void MainWindow::slotRestoreMinimized()
+{
+   setWindowState(windowState() & ~(Qt::WindowMinimized | Qt::WindowActive));
+   show();
+}
+
 #ifdef INCLUDE_LIBVLC
-void MainWindow::slotToogleFullscreen()
+void MainWindow::slotToggleFullscreen()
 {
    if (!pVideoWidget)
    {
-      // store size and position ...
-      sizePos = geometry();
-
       // get videoWidget ...
       pVideoWidget = ui->player->getAndRemoveVideoWidget();
 
@@ -2181,12 +2176,8 @@ void MainWindow::slotToogleFullscreen()
       stackedLayout->setCurrentWidget(pVideoWidget);
 
       // make dialog fullscreen ...
-      showFullScreen();
+      toggleFullscreen();
 
-      // a possible bug fix -> make sure all is visible ...
-      pVideoWidget->show();
-      pVideoWidget->raise();
-      pVideoWidget->raiseRender();
       emit sigFullScreenToggled(1);
    }
    else
@@ -2203,11 +2194,8 @@ void MainWindow::slotToogleFullscreen()
       // reset videoWidgets local pointer ...
       pVideoWidget = NULL;
 
-      // restore geometry ...
-      setGeometry(sizePos);
-
       // show normal ...
-      showNormal();
+      toggleFullscreen();
 
       emit sigFullScreenToggled(0);
    }
@@ -2236,25 +2224,16 @@ void MainWindow::initDialog()
     // -------------------------------------------
     // set last windows size / position ...
     // -------------------------------------------
-    bool ok = false;
-    sizePos = dlgSettings.GetWindowRect(&ok);
-
-    if (ok)
+    if (dlgSettings.getGeometry().size() > 0)
     {
-       setGeometry(sizePos);
+        restoreGeometry(dlgSettings.getGeometry());
     }
     else
     {
-       // store default size ...
-       sizePos = geometry();
-    }
-
-    // -------------------------------------------
-    // maximize if it was maximized
-    // -------------------------------------------
-    if (dlgSettings.IsMaximized())
-    {
-       setWindowState(Qt::WindowMaximized);
+        // delete old values ...
+        pDb->removeSetting("WndRect");
+        pDb->removeSetting("WndState");
+        pDb->removeSetting("IsMaximized");
     }
 
     // check for program updates ...
@@ -2266,6 +2245,7 @@ void MainWindow::initDialog()
 
 void MainWindow::ConnectionInit()
 {
+    QString sHlp;
     VlcLog.SetLogLevel(dlgSettings.GetLogLevel());
 
     pChannelDlg->getModel()->clear();
@@ -2330,7 +2310,10 @@ void MainWindow::ConnectionInit()
        }
     }
 
-    if (dlgSettings.HideToSystray())
+    // lock parental manager ...
+    emit sigLockParentalManager();
+
+    if (dlgSettings.HideToSystray() && QSystemTrayIcon::isSystemTrayAvailable())
     {
         connect (this, SIGNAL(sigHide()), &trayIcon, SLOT(show()));
         connect (this, SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
@@ -2340,6 +2323,38 @@ void MainWindow::ConnectionInit()
         disconnect(this, SIGNAL(sigHide()));
         disconnect(this, SIGNAL(sigShow()));
     }
+
+    // set new(?) helpfile ...
+    // be sure the file we want to load exists ... fallback to english help ...
+    sHlp = QString("%1/help_%2.qhc").arg(pFolders->getDocDir()).arg(dlgSettings.GetLanguage());
+
+    if (!QFile::exists(sHlp))
+    {
+        sHlp = QString("%1/help_en.qhc").arg(pFolders->getDocDir());
+    }
+
+    Help.setHelpFile(sHlp);
+}
+
+void MainWindow::savePositions()
+{
+   // -------------------------------------------
+   // save gui settings ...
+   // -------------------------------------------
+   dlgSettings.setGeometry(saveGeometry());
+}
+
+void MainWindow::CreateSystray()
+{
+   trayIcon.setIcon(QIcon(":/app/tv"));
+   trayIcon.setToolTip(APP_NAME);
+
+   // create context menu for tray icon ...
+   QMenu *pShowMenu = new QMenu (this);
+   pShowMenu->addAction(QIcon(":/app/restore"),
+                        tr("&restore %1").arg(APP_NAME),
+                        this, SLOT(slotRestoreMinimized()));
+   trayIcon.setContextMenu(pShowMenu);
 }
 
 void MainWindow::FillChanMap(const QVector<cparser::SChan> &chanlist)
@@ -2964,12 +2979,6 @@ bool MainWindow::TimeJumpAllowed()
    return bRV;
 }
 
-void MainWindow::CreateSystray()
-{
-   trayIcon.setIcon(QIcon(":/app/tv"));
-   trayIcon.setToolTip(tr("KTV-Recorder - Click to activate!"));
-}
-
 void MainWindow::setRecentChannel(const QString &ChanName)
  {
      QSettings settings;
@@ -3097,6 +3106,7 @@ void MainWindow::setRecentChannel(const QString &ChanName)
          {tr("Next Channel"),         this,         SLOT(slotChannelDown()),                "CTRL+N"},
          {tr("Previous Channel"),     this,         SLOT(slotChannelUp()),                  "CTRL+P"},
          {tr("Show EPG / VOD"),       this,         SLOT(slotToggleEpgVod()),               "CTRL+E"},
+         {tr("Help"),                 this,         SLOT(on_actionGuid_triggered()),        "F1"},
         // add further entries below ...
 
         // last entry, don't touch ...
@@ -3185,6 +3195,73 @@ void MainWindow::setRecentChannel(const QString &ChanName)
 
     return iRV;
  }
+
+ void MainWindow::toggleFullscreen()
+ {
+     setWindowState(windowState() ^ Qt::WindowFullScreen);
+     show();
+ }
+
+ void MainWindow::printStateChange(const Qt::WindowStates &old)
+ {
+    Qt::WindowStates cur = windowState();
+    QStringList sOld, sNew;
+
+    if (old.testFlag(Qt::WindowNoState))
+    {
+       sOld << "Qt::WindowNoState";
+    }
+
+    if (old.testFlag(Qt::WindowMinimized))
+    {
+       sOld << "Qt::WindowMinimized";
+    }
+
+    if (old.testFlag(Qt::WindowMaximized))
+    {
+       sOld << "Qt::WindowMaximized";
+    }
+
+    if (old.testFlag(Qt::WindowFullScreen))
+    {
+       sOld << "Qt::WindowFullScreen";
+    }
+
+    if (old.testFlag(Qt::WindowActive))
+    {
+       sOld << "Qt::WindowActive";
+    }
+
+    //////////
+
+    if (cur.testFlag(Qt::WindowNoState))
+    {
+       sNew << "Qt::WindowNoState";
+    }
+
+    if (cur.testFlag(Qt::WindowMinimized))
+    {
+       sNew << "Qt::WindowMinimized";
+    }
+
+    if (cur.testFlag(Qt::WindowMaximized))
+    {
+       sNew << "Qt::WindowMaximized";
+    }
+
+    if (cur.testFlag(Qt::WindowFullScreen))
+    {
+       sNew << "Qt::WindowFullScreen";
+    }
+
+    if (cur.testFlag(Qt::WindowActive))
+    {
+       sNew << "Qt::WindowActive";
+    }
+
+    mInfo(tr("WindowState change: \n --> %1 <--> %2").arg(sOld.join("|")).arg(sNew.join("|")));
+ }
+
 /************************* History ***************************\
 | $Log$
 \*************************************************************/

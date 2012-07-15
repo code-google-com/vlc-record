@@ -42,6 +42,7 @@
 #define LANG_DIR_QT       "translations"
 #define LOGO_DIR          "logos"
 #define VOD_DIR           "vod"
+#define DOC_DIR           "doc"
 #define KARTINA_HOST      "iptv.kartina.tv"
 #define KARTINA_API_PATH  "/api/xml/"
 #define LOGO_URL          "/img/ico/24"
@@ -62,6 +63,7 @@
 #define VIDEOS_PER_SITE   20              // number of videos / site
 #define GPU_ACC_TOKEN     ":ffmpeg-hw"    // mrl option to use GPU acceleration
 #define UPD_CHECK_URL     "http://code.google.com/p/vlc-record/downloads/list"
+#define ALAD_STAT_SHIF    157239
 #define MAX_CHANNEL_ACTS  200             // max number of channel actions
 #define MAX_CHANNEL_GROUPS 20             // max number of channel groups
 #define MAX_RECENT_CHANNELS 10            // max number of recent channels

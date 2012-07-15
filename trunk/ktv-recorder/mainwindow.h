@@ -15,9 +15,9 @@
 #include "ckartinaclnt.h"
 #include "ckartinaxmlparser.h"
 #include "ctranslit.h"
-#include "cinstruction.h"
 #include "cparentalcontroldlg.h"
 #include "qseccodedlg.h"
+#include "qhelpdialog.h"
 #ifdef INCLUDE_LIBVLC
     #include <QStackedLayout>
     #include "qvlcvideowidget.h"
@@ -72,9 +72,11 @@ public:
 
 public slots:
     virtual void exec();
+    void slotRestoreMinimized ();
 
 private:
     Ui::MainWindow 		  *ui;
+    QHelpDialog                    Help;
     CChannelsEPGdlg               *pChannelDlg;
     CSettingsDlg                   dlgSettings;
     CParentalControlDlg            dlgParentalControl;
@@ -83,6 +85,7 @@ private:
     CKartinaXMLParser              XMLParser;
     CWaitTrigger                   Trigger;
     CStreamLoader                  streamLoader;
+    QRect                          sizePos;
     QTranslator                   *pTranslator;
     QTimer                         Refresh;
     QTimer                         tEpgRefresh;
@@ -94,7 +97,6 @@ private:
     QVector<CShortcutEx *>         vShortcutPool;
     int                            iDwnReqId;
     QSystemTrayIcon                trayIcon;
-    QRect                          sizePos;
     bool                           bLogosReady;
     bool                           bDoInitDlg;
     bool                           bFirstConnect;
@@ -129,14 +131,14 @@ private:
     #endif //INCLUDE_LIBVLC
 
 protected:
-    int StartVlcRec (const QString &sURL, const QString &sChannel);
-    int StartVlcPlay (const QString &sURL);
+    int  StartVlcRec (const QString &sURL, const QString &sChannel);
+    int  StartVlcPlay (const QString &sURL);
     void StartStreamDownload (const QString &sURL, const QString &sName, const QString &sFileExt = "ts");
     void TouchPlayCtrlBtns (bool bEnable = true);
     QString CleanShowName (const QString &str);
     bool WantToStopRec ();
     void FillChanMap (const QVector<cparser::SChan> &chanlist);
-    int FillChannelList (const QVector<cparser::SChan> &chanlist);
+    int  FillChannelList (const QVector<cparser::SChan> &chanlist);
     int  CheckCookie (const QString &cookie);
     int  AllowAction (IncPlay::ePlayStates newState);
     bool TimeJumpAllowed ();
@@ -147,11 +149,13 @@ protected:
     void initDialog();
     void setRecentChannel(const QString &ChanName);
     void updateRecentChanActions();
-    int getChanId(const QString &chanName);
+    int  getChanId(const QString &chanName);
     void contextMenuEvent(QContextMenuEvent *event);
     void retranslateShortcutTable();
     void fillShortCutTab();
     int  grantAdultAccess (bool bProtected);
+    void savePositions ();
+    void toggleFullscreen();
 
     virtual void changeEvent(QEvent *e);
     virtual void keyPressEvent(QKeyEvent *event);
@@ -185,7 +189,7 @@ private slots:
 #ifdef INCLUDE_LIBVLC
     void on_pushBwd_clicked();
     void on_pushFwd_clicked();
-    void slotToogleFullscreen();
+    void slotToggleFullscreen();
 #endif /* INCLUDE_LIBVLC */
     void on_pushStop_clicked();
     void on_pushPlay_clicked();
@@ -217,7 +221,6 @@ private slots:
     void slotSetTimeShift (int iShift);
     void slotDoubleClick();
     void slotChannelDlgClosed();
-    void slotSystrayActivated (QSystemTrayIcon::ActivationReason reason);
     void slotSelectChannel();
     void slotChannelDown();
     void slotChannelUp();
@@ -235,6 +238,7 @@ private slots:
     void slotUnused(const QString &str);
     void slotRefreshChanLogos ();
     void slotPCodeChangeResp (const QString &str);
+    void printStateChange(const Qt::WindowStates &old);
 
 signals:
     void sigToggleFullscreen ();

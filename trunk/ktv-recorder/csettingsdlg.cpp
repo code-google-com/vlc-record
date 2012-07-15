@@ -183,7 +183,7 @@ void CSettingsDlg::readSettings()
 
    // check boxes ...
    m_ui->useProxy->setCheckState((Qt::CheckState)pDb->intValue("UseProxy"));
-   m_ui->checkAdult->setCheckState((Qt::CheckState)((pDb->password("AllowAdultEnc")).toInt() - 157239));
+   m_ui->checkAdult->setCheckState((Qt::CheckState)((pDb->password("AllowAdultEnc")).toInt() - ALAD_STAT_SHIF));
    m_ui->checkFixTime->setCheckState((Qt::CheckState)pDb->intValue("FixTime"));
    m_ui->checkRefresh->setCheckState((Qt::CheckState)pDb->intValue("Refresh"));
    m_ui->checkHideToSystray->setCheckState((Qt::CheckState)pDb->intValue("TrayHide"));
@@ -276,10 +276,11 @@ void CSettingsDlg::readSettings()
    iIdx = m_ui->cbxPlayerMod->findText(s);
    m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 
-   // disable "minimize to tray" on mac because this isn't supported ...
-#ifdef Q_OS_MAC
-    m_ui->checkHideToSystray->setDisabled(true);
-#endif // Q_OS_MAC
+   // check if hide to systray is supported ...
+   if (!QSystemTrayIcon::isSystemTrayAvailable())
+   {
+       m_ui->checkHideToSystray->setDisabled(true);
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -474,7 +475,7 @@ void CSettingsDlg::on_pushSave_clicked()
 
    // check boxes ...
    pDb->setValue("UseProxy", (int)m_ui->useProxy->checkState());
-   pDb->setPassword("AllowAdultEnc", QString::number((int)m_ui->checkAdult->checkState() + 157239));
+   pDb->setPassword("AllowAdultEnc", QString::number((int)m_ui->checkAdult->checkState() + ALAD_STAT_SHIF));
    pDb->setValue("FixTime", (int)m_ui->checkFixTime->checkState());
    pDb->setValue("Refresh", (int)m_ui->checkRefresh->checkState());
    pDb->setValue("TrayHide", (int)m_ui->checkHideToSystray->checkState());
@@ -739,65 +740,6 @@ void CSettingsDlg::on_cbxTimeShift_activated(int index)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: SaveWindowRect
-|  Begin: 27.01.2010 / 11:22:39
-|  Author: Jo2003
-|  Description: save windows position in ini file
-|
-|  Parameters: windows position / size
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void CSettingsDlg::SaveWindowRect (const QRect &wnd)
-{
-   QString sGeo = QString("%1;%2;%3;%4").arg(wnd.x()).arg(wnd.y())
-                  .arg(wnd.width()).arg(wnd.height());
-
-   pDb->setValue ("WndRect", sGeo);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: GetWindowRect
-|  Begin: 27.01.2010 / 11:22:39
-|  Author: Jo2003
-|  Description: get windows position / size from ini file
-|
-|  Parameters: pointer to ok flag
-|
-|  Returns:  position, size of window
-\----------------------------------------------------------------- */
-QRect CSettingsDlg::GetWindowRect (bool *ok)
-{
-   QString sGeo = pDb->stringValue("WndRect");
-   QRect   wnd;
-
-   if (ok)
-   {
-      *ok = false;
-   }
-
-   if (sGeo.length() > 0)
-   {
-      QRegExp rx("^([0-9]*);([0-9]*);([0-9]*);([0-9]*).*$");
-
-      if (rx.indexIn(sGeo) > -1)
-      {
-         wnd.setX(rx.cap(1).toInt());
-         wnd.setY(rx.cap(2).toInt());
-         wnd.setWidth(rx.cap(3).toInt());
-         wnd.setHeight(rx.cap(4).toInt());
-
-         if (ok)
-         {
-            *ok = true;
-         }
-      }
-   }
-
-   return wnd;
-}
-
-/* -----------------------------------------------------------------\
 |  Method: SaveSplitterSizes
 |  Begin: 18.02.2010 / 11:22:39
 |  Author: Jo2003
@@ -809,15 +751,14 @@ QRect CSettingsDlg::GetWindowRect (bool *ok)
 \----------------------------------------------------------------- */
 void CSettingsDlg::SaveSplitterSizes (const QString &name, const QList<int> &sz)
 {
-   QString     sSz;
-   QTextStream str(&sSz);
+   QStringList sl;
 
    for (int i = 0; i < sz.size(); i++)
    {
-      str << sz[i] << ";";
+      sl << QString::number(sz[i]);
    }
 
-   pDb->setValue (name, sSz);
+   pDb->setValue (name, sl.join(";"));
 }
 
 /* -----------------------------------------------------------------\
@@ -855,27 +796,27 @@ void CSettingsDlg::SaveFavourites(const QList<int> &favList)
 \----------------------------------------------------------------- */
 QList<int> CSettingsDlg::GetSplitterSizes(const QString &name, bool *ok)
 {
-   QString    sSz = pDb->stringValue(name);
-   QList<int> sz;
+   int         err;
+   QString     s   = pDb->stringValue(name, &err);
+   QList<int>  sz;
 
    if (ok)
    {
       *ok = false;
    }
 
-   if (sSz.length() > 0)
+   if ((s.size() > 0) && !err)
    {
-      for (int i = 0; i < sSz.count(';'); i++)
+      QStringList sl  = s.split(";");
+
+      for (int i = 0; i < sl.count(); i++)
       {
-         sz << sSz.section(';', i, i).toInt();
+         sz << sl.at(i).toInt();
       }
 
       if (ok)
       {
-         if (sz.size() > 0)
-         {
-            *ok = true;
-         }
+         *ok = true;
       }
    }
 
@@ -919,38 +860,6 @@ QList<int> CSettingsDlg::GetFavourites(bool *ok)
    }
 
    return lFav;
-}
-
-/* -----------------------------------------------------------------\
-|  Method: SetIsMaximized
-|  Begin: 18.02.2010 / 11:22:39
-|  Author: Jo2003
-|  Description: store windows state (maximized or something else)
-|
-|  Parameters: maximized flag
-|
-|  Returns:  --
-\----------------------------------------------------------------- */
-void CSettingsDlg::SetIsMaximized(bool bMax)
-{
-   int iState = (bMax) ? 1 : 0;
-   pDb->setValue("IsMaximized", iState);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: IsMaximized
-|  Begin: 18.02.2010 / 11:22:39
-|  Author: Jo2003
-|  Description: get last windows state (maximized or something else)
-|
-|  Parameters: --
-|
-|  Returns:  true --> maximized
-|           false --> not maximized
-\----------------------------------------------------------------- */
-bool CSettingsDlg::IsMaximized()
-{
-   return (pDb->intValue("IsMaximized")) ? true : false;
 }
 
 /* -----------------------------------------------------------------\
@@ -1011,6 +920,36 @@ QString CSettingsDlg::GetCookie()
 void CSettingsDlg::SaveCookie(const QString &str)
 {
    pDb->setValue ("LastCookie", str);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: setGeometry
+|  Begin: 11.07.2012
+|  Author: Jo2003
+|  Description: save a geometry
+|
+|  Parameters: ref. byte array
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::setGeometry(const QByteArray &ba)
+{
+   pDb->setBlob("WndGeometry", ba);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: getGeometry
+|  Begin: 11.07.2012
+|  Author: Jo2003
+|  Description: get stored geometry
+|
+|  Parameters: --
+|
+|  Returns:  byte array with geometry data
+\----------------------------------------------------------------- */
+QByteArray CSettingsDlg::getGeometry()
+{
+   return pDb->blobValue("WndGeometry");
 }
 
 /* -----------------------------------------------------------------\

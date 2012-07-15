@@ -980,19 +980,6 @@ void CChannelsEPGdlg::HandleFavourites()
 
 void CChannelsEPGdlg::savePositions()
 {
-   // -------------------------------------------
-   // save gui settings ...
-   // -------------------------------------------
-   if (windowState() != Qt::WindowMaximized)
-   {
-      pSettings->SaveWindowRect(geometry());
-      pSettings->SetIsMaximized(false);
-   }
-   else
-   {
-      pSettings->SetIsMaximized(true);
-   }
-
 #ifndef INCLUDE_LIBVLC
    pSettings.SaveSplitterSizes("spChanEpg", ui->vSplitterChanEpg->sizes());
 #else  /* ifdef INCLUDE_LIBVLC */

@@ -9,6 +9,8 @@ QT       += core gui \
             network \
             xml \
             xmlpatterns
+            
+CONFIG += help            
 
 TEMPLATE = app
 
@@ -50,7 +52,6 @@ SOURCES += main.cpp\
     cplayer.cpp \
     cvideoframe.cpp \
     clogfile.cpp \
-    cinstruction.cpp \
     cshortcutgrabber.cpp \
     qchanlistdelegate.cpp \
     qftsettings.cpp \
@@ -59,7 +60,8 @@ SOURCES += main.cpp\
     cshowinfo.cpp \
     cparentalcontroldlg.cpp \
     qseccodedlg.cpp \
-    qfavframe.cpp
+    qfavframe.cpp \
+    qhelpdialog.cpp
 
 HEADERS  += mainwindow.h \
     customization.h \
@@ -92,7 +94,6 @@ HEADERS  += mainwindow.h \
     ckartinaclnt.h \
     cplayer.h \
     cvideoframe.h \
-    cinstruction.h \
     cshortcutgrabber.h \
     qchanlistdelegate.h \
     qftsettings.h \
@@ -104,18 +105,19 @@ HEADERS  += mainwindow.h \
     cshowinfo.h \
     cparentalcontroldlg.h \
     qseccodedlg.h \
-    qfavframe.h
+    qfavframe.h \
+    qhelpdialog.h
 
 FORMS    += forms/mainwindow.ui \
     forms/ctimerrec.ui \
     forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/cplayer.ui \
-    forms/cinstruction.ui \
     forms/cchannelsepgdlg.ui \
     forms/qftsettings.ui \
     forms/cparentalcontroldlg.ui \
-    forms/qseccodedlg.ui
+    forms/qseccodedlg.ui \
+    forms/qhelpdialog.ui
 
 win32:INCLUDEPATH += include
 

@@ -22,6 +22,8 @@
         <file alias="oj">resources/OJ.PNG</file>
         <file alias="kartina">resources/kartina_256x256.PNG</file>
         <file alias="live">resources/kartina_live_128x128.png</file>
+        <file alias="help">resources/help.png</file>
+        <file alias="restore">resources/restore.png</file>
     </qresource>
     <qresource prefix="/flags">
         <file alias="de">resources/de.png</file>
