@@ -10,10 +10,12 @@
          <filterAttribute>vlc-record</filterAttribute>
          <filterAttribute>1.0</filterAttribute>
          <toc>
-             <section title="VLC-Record Manual" ref="help_en.html">
+             <section title="[%PROGRAM%] Manual" ref="help_en.html">
                  <section title="About" ref="help_en.html#about" />
                  <section title="Versions" ref="help_en.html#versions" />
+                 <!-- [%HIDDEN%]
                  <section title="Branding" ref="help_en.html#branding" />
+                 [%HIDDEN%] -->
                  <section title="Features" ref="help_en.html#features" />
                  <section title="Installation" ref="help_en.html#installation" />
                  <section title="First Time Settings" ref="help_en.html#ftsettings" />
@@ -45,8 +47,8 @@
          <files>
              <file>help.css</file>
              <file>help_en.html</file>
-             <file>images/en/*.png</file>
-             <file>images/common/*.png</file>
+             <file>images/[%PROGRAM%]/en/*.png</file>
+             <file>images/[%PROGRAM%]/common/*.png</file>
          </files>
      </filterSection>
  </QtHelpProject>

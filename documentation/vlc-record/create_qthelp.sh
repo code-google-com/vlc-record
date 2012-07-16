@@ -7,6 +7,7 @@ case $1 in
       PROGRAM="VLC-Record"
       SERVICE="Kartina.TV"
       APISERVER="iptv.kartina.tv"
+      LANGUAGES="en de ru pl"
       HIDDENFEATURES=1
       ;;
    
@@ -14,32 +15,35 @@ case $1 in
       PROGRAM="Kartina.TV"
       SERVICE=$PROGRAM
       APISERVER="iptv.kartina.tv"
+      LANGUAGES="en de ru"
       ;;
    
    polsky_tv)
       PROGRAM="Polsky.TV"
       SERVIVE=$PROGRAM
       APISERVER="iptv.polsky.tv"
+      LANGUAGES="en de pl"
       ;;
    *)
       PROGRAM="VLC-Record"
       SERVICE="Kartina.TV"
       APISERVER="iptv.kartina.tv"
+      LANGUAGES="en de ru"
       ;;
    
 esac
 
-
-LANGUAGES="en de ru pl"
-
-
 for i in $LANGUAGES ; do
-   # patch html files ...
+   # patch files ...
    sed -e "s/\[%PROGRAM%\]/$PROGRAM/g" -e "s/\[%SERVICE%\]/$SERVICE/g" -e "s/\[%APISERVER%\]/$APISERVER/g" help_$i.tmpl > help_$i.html
+   sed -e "s/\[%PROGRAM%\]/$PROGRAM/g" help_$i.qhp_tmpl > help_$i.qhp
+   
    
    if [ $HIDDENFEATURES -gt 0 ]; then
       sed -e "s/^.*\[%HIDDEN%\].*$//g" help_$i.html > $TMPFILE
       mv $TMPFILE help_$i.html
+      sed -e "s/^.*\[%HIDDEN%\].*$//g" help_$i.qhp > $TMPFILE
+      mv $TMPFILE help_$i.qhp
    fi
 
 	qhelpgenerator help_$i.qhp -o help_$i.qch
