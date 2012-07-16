@@ -12,11 +12,11 @@
       * $Id$
       ************************************************************
       -->
-      <title>VLC-Record Hilfe</title>
+      <title>[%PROGRAM%] Hilfe</title>
       <link rel="stylesheet" type="text/css" href="help.css" />
    </head>
    <body>
-      <h1 id="top">VLC-Record</h1>
+      <h1 id="top">[%PROGRAM%]</h1>
       <!-- 8< 8< 8< 8< --
         ************************************************************
         * TOC not needed for QtHelp
@@ -52,11 +52,11 @@
       </div>
       -->
       <h2 id="about">Über das Programm</h2>
-      VLC-Record ist ein Programm, um IPTV Streams von Kartina.TV / Polsky.TV anzusehen oder aufzuzeichen.
+      [%PROGRAM%] ist ein Programm, um IPTV Streams von [%SERVICE%] anzusehen oder aufzuzeichen.
       Es wurde in C++ unter der Benutzung von <a class="extern" href="http://qt.nokia.com" target="_blank">Nokias Qt-Framework <img src="images/common/external.png" /></a> geschrieben.
       Die Player-Funktion wurde mit Hilfe der libVLC von 
       <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/common/external.png" /></a> realisiert.<br />
-      VLC-Record ist OpenSource. Sie können den Source-Code als auch die neuesten Builds auf der 
+      [%PROGRAM%] ist OpenSource. Sie können den Source-Code als auch die neuesten Builds auf der 
       <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">Projektseite <img src="images/common/external.png" /></a> finden (gehostet von Google-Code).
       <h2 id="versions">Versionen</h2>
       Es sind Versionen verfügbar für:
@@ -66,6 +66,7 @@
          <li>Ubuntu Linux x86 (laufende Version)</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
+      <!-- [%HIDDEN%]
       <h2 id="branding">Branding (Customization)</h2>
       VLC-Record gibt es in verschiedenen Brandings:
       <ul>
@@ -75,9 +76,10 @@
       </ul>
       Diese Brandings unterscheiden sich nur minimal (z.B. in den Icons und dem API Server-Pfad). 
       Somit passt diese Dokumentation für alle verfügbaren Brandings.
+      [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Features</h2>
-      VLC-Record hat folgende Features:
+      [%PROGRAM%] hat folgende Features:
       <ul>
          <li>Wiedergabe und Aufnahme von Live-Streams</li>
          <li>EPG - Elektronische Programmvorschau</li>
@@ -90,14 +92,14 @@
       <h2 id="installation">Installation</h2>
       <h3>Windows</h3>
       Das Programm wird standardmäßig in ihrem lokalen Programmordner installiert
-      (c:\Users\[Benutzername]\AppData\Local\[VLC-Record | Kartina.TV | Polsky.TV]). Damit benötigen sie 
+      (c:\Users\[Benutzername]\AppData\Local\[%PROGRAM%]). Damit benötigen sie 
       keine Administratorrechte, um das Programm zu installieren.<br />
       Die Programmeinstellungen werden in ihrem Ordner für die lokalen Einstellungen gespeichert
-      (c:\Users\[Benutzername]\AppData\Roaming\[VLC-Record | Kartina.TV | Polsky.TV]).
+      (c:\Users\[Benutzername]\AppData\Roaming\[%PROGRAM%]).
       <h3>Mac OSX</h3>
       Nachdem sie das dmg-Image geöffnet haben, können sie das App-Paket per Drag und Drop in ihren Programmordner
       kopieren. Die Programmeinstellungen werden in ihrem Benutzerordner gespeicher
-      (~/[.VLC-Record | .Kartina.TV | .Polsky.TV]).
+      (~/.[%PROGRAM%]).
       <h3>Ubuntu</h3>
       Nachdem sie einen Doppelklick auf das deb-Paket gemacht haben, wird das Ubuntu Softwarecenter gestartet. Wenn 
       sie auf "installieren" klicken, werden das Programm sowie alle benötigten Bibliotheken installiert.
@@ -106,7 +108,7 @@
       Jetzt sollte der Starter angezeigt werden. Ein Klick auf den Starter startet das Programm. 
       Sie können das laufende Programm auch an die Unity-Leiste (links) anheften. Dann können sie das Pogramm einfach
       per Klick auf das Programm-Symbol starten.<br />
-      Die Programmeinstellungen werden in ihrem Benutzerverzeichnis gespeichert (~/[.VLC-Record | .Kartina.TV | .Polsky.TV]).
+      Die Programmeinstellungen werden in ihrem Benutzerverzeichnis gespeichert (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">Einstellungen beim ersten Start</h2><br />
       <img src="images/de/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
@@ -151,7 +153,7 @@
       Auf dieser Seite können sie folgende Einstellungen ändern:
       <ul>
          <li>Proxy Server - Konfigurieren sie hier einen Proxy-Server, wenn sie nicht direkt auf das Internet zugreifen können.</li>
-         <li>API Server - Hier können sie den API Server ändern. Drücken sie <b>Strg+Alt+A</b> um dieses Feld zu aktivieren (Voreinstellung: iptv.[kartina | polsky].tv {Besser nicht ändern!})</li>
+         <li>API Server - Hier können sie den API Server ändern. Drücken sie <b>Strg+Alt+A</b> um dieses Feld zu aktivieren (Voreinstellung: [%APISERVER%] {Besser nicht ändern!})</li>
          <li>Player Module - Player-abhängige Konfigurationsdateien. Wählen sie zwischen "5_libvlc.mod" und "9_libvlc_odl.mod" (Voreinstellung: 5_libvlc.mod). 
          Sie können sich diese Dateien in einem Text-Editor ansehen. Nur ändern, wenn sie wirklich wissen was sie tun!</li>
          <li>Log Level - Hier konfigurieren sie, was alles mitgeloggt wird (Voreinstellung: logge alles). 
@@ -160,15 +162,17 @@
          geben sie hier bitte das passende Kommando ein. Für Windows gibt es eine Voreinstellung.</li>
          <li>Lade EPG - Macht ein Update der EPG Daten im x-Minuten-Intervall (Voreinstellung: an mit 5 Minuten Intervall).</li>
          <li>Frage nach Zieldateinamen - Das Programm wird sie nach einem Dateinamen für das aufzuzeichnende Video fragen (Voreinstellung: aus).</li>
-         <li>Trenne Player - Wenn sie ein externes Playerprogramm nutzen, wird dieses nach dem Start von VLC-Record getrennt.
-         Es ist dann unabhängig und kann nicht mehr von VLC-Record kontrolliert werden (Voreinstellung: aus).</li>
+         <li>Trenne Player - Wenn sie ein externes Playerprogramm nutzen, wird dieses nach dem Start von [%PROGRAM%] getrennt.
+         Es ist dann unabhängig und kann nicht mehr von [%PROGRAM%] kontrolliert werden (Voreinstellung: aus).</li>
          <li>Auf Updates prüfen - Wenn diese Option auf <b>an</b> steht, prüft das Programm beim Start, ob Updates zur Verfügung stehen (Voreinstellung: an).</li>
          <li>Doppelklick ... startet Player - Wenn diese Option auf <b>an</b> steht, startet die Wiedergabe einer Sendung, wenn sie einen Doppelklick auf einen Sender in der Kanalliste machen (Voreinstellung: an).</li>
          <li>Ins Systray minimieren - Wenn diese Option auf <b>an</b> steht, wird das Programm von der Taskleiste versteckt, wenn sie es minimieren. 
          Stattdessen wird ein Icon im Systray über das laufende Programm informieren (Voreinstellung: aus).</li>
          <li>Translit für Dateinamen - Transliteriert den Dateinamen für eine Videoaufnahme in lateinische Buchstaben (Voreinstellung: aus).</li>
          <li>GPU-Beschleunigung - Benutzt die GPU, um das Video zu dekodieren (experimentell, Voreinstellung: aus).</li>
+         <!-- [%HIDDEN%]
          <li>Zeige Reklame - Zeigt Reklame vor einem Video aus der Videothek (änderbar nur in VLC-Record, Voreinstellung: an).</li>
+         [%HIDDEN%] -->
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Elternmanager</h3><br />

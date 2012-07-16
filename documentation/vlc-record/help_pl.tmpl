@@ -5,18 +5,18 @@
       <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
       <!--
       ************************************************************
-      * VLC-Record Help (russian version)
+      * VLC-Record Help (polish version)
       * Author:  Jo2003
       * Begin:   2012-07-05
       * $HeadURL$
       * $Id$
       ************************************************************
       -->
-      <title>VLC-Record Help</title>
+      <title>[%PROGRAM%] Help</title>
       <link rel="stylesheet" type="text/css" href="help.css" />
    </head>
    <body>
-      <h1 id="top">VLC-Record</h1>
+      <h1 id="top">[%PROGRAM%]</h1>
       <!-- 8< 8< 8< 8< --
         ************************************************************
         * TOC not needed for QtHelp
@@ -52,11 +52,11 @@
       </div>
       -->
       <h2 id="about">About</h2>
-      VLC-Record is a tool to watch / record IPTV streams sent by Kartina.TV / Polsky.TV. 
+      [%PROGRAM%] is a tool to watch / record IPTV streams sent by [%SERVICE%]. 
       It is written in C++ using the <a class="extern" href="http://qt.nokia.com" target="_blank">Qt framework by Nokia <img src="images/common/external.png" /></a>. 
       The player functionality is realized by using the libvlc library from 
       <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/common/external.png" /></a>.<br />
-      VLC-Record is open source. You can always find the source code as well as
+      [%PROGRAM%] is open source. You can always find the source code as well as
       the latest builds at the <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">projects site <img src="images/common/external.png" /></a> 
       (hosted by Google Code).
       <h2 id="versions">Versions</h2>
@@ -67,6 +67,7 @@
          <li>Ubuntu Linux x86 (current version)</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
+      <!-- [%HIDDEN%]
       <h2 id="branding">Branding (customization)</h2>
       VLC-Record is available in several brandings:
       <ul>
@@ -76,9 +77,10 @@
       </ul>
       These brandings differ only slightly (icons, API server path). So this documentation 
       matches all available brandings.
+      [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Features</h2>
-      VLC-Record has following features:
+      [%PROGRAM%] has following features:
       <ul>
          <li>play / record live streams</li>
          <li>EPG - electronic program guide</li>
@@ -91,22 +93,22 @@
       <h2 id="installation">Installation</h2>
       <h3>Windows</h3>
       The program will be installed by default in your local application folder 
-      (c:\Users\[User Name]\AppData\Local\[VLC-Record | Kartina.TV | Polsky.TV]). This means that you don't need
+      (c:\Users\[User Name]\AppData\Local\[%PROGRAM%]). This means that you don't need
       administrator privileges to install the program.<br />
       The program settings will be stored in your local roaming folder
-      (c:\Users\[User Name]\AppData\Roaming\[VLC-Record | Kartina.TV | Polsky.TV]).
+      (c:\Users\[User Name]\AppData\Roaming\[%PROGRAM%]).
       <h3>Mac OSX</h3>
       After opening the dmg file you can drag and drop the application bundle into your application folder.<br /> 
-      The program settings will be stored inside your home folder (~/[.VLC-Record | .Kartina.TV | .Polsky.TV]).
+      The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
       <h3>Ubuntu</h3>
       After a double click on the deb package all dependencies as well as the program will be installed. 
       A launcher will also be added to your system. To start the program open the dash (Windows Key) and type
       the first letters of the programs name. Now the program should be listed in dash and you can
       start it by clicking on the launcher icon.<br />
-      The program settings will be stored inside your home folder (~/[.VLC-Record | .Kartina.TV | .Polsky.TV]).
+      The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">First Time Settings</h2><br />
-      <img src="images/ru/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
+      <img src="images/pl/[%PROGRAM%]/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
       Please enter your account data there. If you want to have erotic channels displayed in your channel list, 
       check the related checkbox. If you insert your parental code in the lower textfield you can watch these
       channels without the need to enter the parental code. I'd strongly recomment to leave this field blank.
@@ -117,7 +119,7 @@
       <h2 id="settings">Settings</h2>
       You can enter the settings by pressing following symbol on the GUI: <img src="images/common/tools.png" alt="Settings" title="Settings" />
       <h3 id="mainsettings">Main Settings</h3><br />
-      <img src="images/ru/set_main.png" alt="Main Settings" title="Main Settings" /><br />
+      <img src="images/pl/[%PROGRAM%]/set_main.png" alt="Main Settings" title="Main Settings" /><br />
       In this tab you can change / enter basic program settings:
       <ul>
          <li>Account / Password</li>
@@ -135,18 +137,18 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="shortcuts">Shortcuts</h3><br />
-      <img src="images/ru/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
+      <img src="images/pl/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
       Here you can change the default shortcuts used in this program. To do so mark a shortcut with the mouse.
       Now press the key combination you want as new shortcut. If the line turns red you already used this
       shortcut for another command.<br />
       You can reset the shortcuts to the default values using the tool button at the lower end of this tab.
       <!-- <div class="toplink"><a href="#about" target="_self">Top</a></div> -->
       <h3 id="advsettings">Advanced Settings</h3><br />
-      <img src="images/ru/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
+      <img src="images/pl/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
       In this tab you can change following program settings:
       <ul>
          <li>Proxy Server - Configure a proxy server if you can't connect directly to the internet.</li>
-         <li>API Server - Change the API server. Activate this field by pressing <b>Ctrl+Alt+A</b> (default: iptv.[kartina | polsky].tv {Don't touch it!})</li>
+         <li>API Server - Change the API server. Activate this field by pressing <b>Ctrl+Alt+A</b> (default: [%APISERVER%] {Don't touch it!})</li>
          <li>Player Module - Player dependent configuration files. Choose between "5_libvlc.mod" and "9_libvlc_odl.mod" (default: 5_libvlc.mod). 
          You can have a look at the module files itself to get an idea what's going on there. Don't touch it if you don't know what you're doing!</li>
          <li>Log Level - Configure what will be written to logfile (default: log everything). If you need help if something doesn't work as you 
@@ -155,21 +157,23 @@
          For Windows a default command is set.</li>
          <li>Refresh EPG - Update EPG information in a interval of X minutes (default: on with 5 min interval).</li>
          <li>Ask for Record Filename - Program will ask you for a filename as soon as you want to record any show (default: off).</li>
-         <li>Detach player at startup - If you use an external player it will be detached from VLC-Record. 
-         It then runs as independent process which VLC-Record can't control at all (default: off).</li>
+         <li>Detach player at startup - If you use an external player it will be detached from [%PROGRAM%]. 
+         It then runs as independent process which [%PROGRAM%] can't control at all (default: off).</li>
          <li>Check for Updates - If <b>on</b> the program will check for updates each time it starts (default: on).</li>
          <li>Doubleclick starts play - If <b>off</b> play starts as soon as you click on a channel in channel list (default: on).</li>
          <li>Minimize to Systray - If <b>on</b> program will be hidden from taskbar when minimized. 
          An icon in the tasktray will tell about the running program instead (default: off).</li>
          <li>Translit record filename - Transliterates a record filename from cyrillic into latin letters (default: off).</li>
          <li>GPU acceleration - Uses GPU for video decoding (highly experimental, default: off).</li>
+         <!-- [%HIDDEN%]
          <li>Show Ads - Show commercials at the begin of a video (VOD). Changeable only in VLC-Record (default: on).</li>
+         [%HIDDEN%] -->
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Parental Manager</h3><br />
-      <img src="images/ru/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
+      <img src="images/pl/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
       Enter your parental code to enter the parental manager.<br /> <br />
-      <img src="images/ru/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
+      <img src="images/pl/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
       Here you can configure following things:
       <ul>
          <li>Channel Manager - Selected channels will be <b>hidden</b> from channel list.</li>
@@ -180,7 +184,7 @@
       <b>Please Note: You have to save these settings directly in the parent manager. They are independent from the other settings.</b>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discovergui">Discovering the GUI</h2><br />
-      <img src="images/ru/whole_view.png" alt="Whole View" title="Whole View" /><br />
+      <img src="images/pl/[%PROGRAM%]/whole_view.png" alt="Whole View" title="Whole View" /><br />
       At the left side you see the channel list. Above the channel list is the area for the channel favourites. At the top left corner
       you can choose between the live program and video on demand (VOD) - where available.<br />
       In the middle of the GUI you can see the electronic program guide (EPG). It shows the program for the choosen day and channel. 
@@ -192,24 +196,24 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discoverfeatures">Discovering Features</h2>
       <h3 id="favchannels">Favourite Channels</h3><br />
-      <img src="images/ru/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
+      <img src="images/pl/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
       You can define up to 10 favourite channels - either by doing a right click at the channel in the channel list 
       and choosing "Add to favourites" or by using drag'n'drop. The channel will now be placed in the area above 
       the channel list. If you press at a favourite button the channel in channel list will be selected and the 
       EPG for this channel will be loaded. You can remove channels from the favourite area by making a right click there.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="vodbrowser">Video on Demand (where available)</h3><br />
-      <img src="images/ru/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
+      <img src="images/pl/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
       You can activate the VOD browser by clicking at the button at the upper left corner.<br /> <br />
-      <img src="images/ru/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
+      <img src="images/pl/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
       You can choose a genre ...<br /> <br />
-      <img src="images/ru/vod_sort.png" alt="Sort" title="Sort" /><br />
+      <img src="images/pl/vod_sort.png" alt="Sort" title="Sort" /><br />
       ... and sort the videos. There you can also choose to show you favourite videos.<br /> <br />
-      <img src="images/ru/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
+      <img src="images/pl/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
       Or you can search for a video.<br /> <br />
       <img src="images/common/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
       You choose a video with a mouse click.<br /> <br />
-      <img src="images/ru/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
+      <img src="images/pl/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
       Now you can see the information about the selected video. You can add / remove the video to / from your favourites by clicking
       at the heart at the top. You can record or play the video by clicking at the lower buttons. A click at <b>[Back]</b> brings you
       back to the former site.
@@ -228,7 +232,7 @@
       at the clock in the EPG browser.<br />
       <img src="images/common/arch_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Timer Record dialog will open:<br />
-      <img src="images/ru/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
+      <img src="images/pl/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
       In this dialog you can plan a record job. You can choose the channel to record from. You must give a name 
       for the file in which the video will be saved. You have to insert the start and the end time of the program.
       When choosing "silent record" the program only will record the program, but not show. Checking the
