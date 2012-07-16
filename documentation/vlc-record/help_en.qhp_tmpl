@@ -47,6 +47,7 @@
          <files>
              <file>help.css</file>
              <file>help_en.html</file>
+             <file>images/*.png</file>
              <file>images/[%PROGRAM%]/en/*.png</file>
              <file>images/[%PROGRAM%]/common/*.png</file>
          </files>
