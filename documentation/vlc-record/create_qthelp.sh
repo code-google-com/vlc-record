@@ -20,7 +20,7 @@ case $1 in
    
    polsky_tv)
       PROGRAM="Polsky.TV"
-      SERVIVE=$PROGRAM
+      SERVICE=$PROGRAM
       APISERVER="iptv.polsky.tv"
       LANGUAGES="en de pl"
       ;;
