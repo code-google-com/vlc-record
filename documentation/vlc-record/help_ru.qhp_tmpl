@@ -10,27 +10,27 @@
          <filterAttribute>vlc-record</filterAttribute>
          <filterAttribute>1.0</filterAttribute>
          <toc>
-             <section title="[%PROGRAM%] Manual" ref="help_ru.html">
-                 <section title="About" ref="help_ru.html#about" />
-                 <section title="Versions" ref="help_ru.html#versions" />
+             <section title="[%PROGRAM%] - Инструкции" ref="help_ru.html">
+                 <section title="О программе" ref="help_ru.html#about" />
+                 <section title="Версии" ref="help_ru.html#versions" />
                  <!-- [%HIDDEN%]
-                 <section title="Branding" ref="help_ru.html#branding" />
+                 <section title="Брендинг" ref="help_ru.html#branding" />
                  [%HIDDEN%] -->
-                 <section title="Features" ref="help_ru.html#features" />
-                 <section title="Installation" ref="help_ru.html#installation" />
-                 <section title="First Time Settings" ref="help_ru.html#ftsettings" />
-                 <section title="Settings" ref="help_ru.html#settings">
-                     <section title="Main Settings" ref="help_ru.html#mainsettings" />
-                     <section title="Shortcuts" ref="help_ru.html#shortcuts" />
-                     <section title="Advanced Settings" ref="help_ru.html#advsettings" />
-                     <section title="Parental Manager" ref="help_ru.html#parentmanager" />
+                 <section title="Особенности" ref="help_ru.html#features" />
+                 <section title="Установка" ref="help_ru.html#installation" />
+                 <section title="Настройки при первом включении" ref="help_ru.html#ftsettings" />
+                 <section title="Настройки" ref="help_ru.html#settings">
+                     <section title="Основные настройки" ref="help_ru.html#mainsettings" />
+                     <section title="Сокращения" ref="help_ru.html#shortcuts" />
+                     <section title="Дополнительные настройки" ref="help_ru.html#advsettings" />
+                     <section title="Родительский менеджер" ref="help_ru.html#parentmanager" />
                  </section>
-                 <section title="Discovering the GUI" ref="help_ru.html#discovergui" />
-                 <section title="Discovering Features" ref="help_ru.html#discoverfeatures">
-                     <section title="Favourite Channels" ref="help_ru.html#favchannels" />
-                     <section title="Video on Demand" ref="help_ru.html#vodbrowser" />
-                     <section title="Archive" ref="help_ru.html#archive" />
-                     <section title="Timer Record" ref="help_ru.html#timerrec" />
+                 <section title="Описание графического интерфейса" ref="help_ru.html#discovergui" />
+                 <section title="Описание дополнительных возможностей" ref="help_ru.html#discoverfeatures">
+                     <section title="Избранные каналы" ref="help_ru.html#favchannels" />
+                     <section title="Видеотека" ref="help_ru.html#vodbrowser" />
+                     <section title="Архив" ref="help_ru.html#archive" />
+                     <section title="Таймер записи" ref="help_ru.html#timerrec" />
                  </section>
              </section>
          </toc>

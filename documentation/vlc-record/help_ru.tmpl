@@ -25,225 +25,226 @@
         -- >8 >8 >8 >8 --
       <div class="index">
          <ol>
-            <li><a href="#about">About</a></li>
-            <li><a href="#versions">Versions</a></li>
-            <li><a href="#branding">Branding (customization)</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#installation">Installation</a></li>
-            <li><a href="#ftsettings">First Time Settings</a></li>
-            <li><a href="#settings">Settings</a>
+            <li><a href="#about">О программе</a></li>
+            <li><a href="#versions">Версии</a></li>
+            <li><a href="#branding">Брендинг (кастомизация)</a></li>
+            <li><a href="#features">Особенности</a></li>
+            <li><a href="#installation">Установка</a></li>
+            <li><a href="#ftsettings">Настройки при первом включении</a></li>
+            <li><a href="#settings">Настройки</a>
                <ol>
-                  <li><a href="#mainsettings">Main Settings</a></li>
-                  <li><a href="#shortcuts">Shortcuts</a></li>
-                  <li><a href="#advsettings">Advanced Settings</a></li>
-                  <li><a href="#parentmanager">Parental Manager</a></li>
+                  <li><a href="#mainsettings">Основные настройки</a></li>
+                  <li><a href="#shortcuts">Сокращения</a></li>
+                  <li><a href="#advsettings">Дополнительные настройки</a></li>
+                  <li><a href="#parentmanager">Родительский менеджер</a></li>
                </ol>
             </li>
-            <li><a href="#discovergui">Discovering the GUI</a></li>
-            <li><a href="#discoverfeatures">Discovering Features</a>
+            <li><a href="#discovergui">Описание графического интерфейса</a></li>
+            <li><a href="#discoverfeatures">Описание дополнительных возможностей</a>
                <ol>
-                  <li><a href="#favchannels">Favourite Channels</a></li>
-                  <li><a href="#vodbrowser">Video on Demand</a></li>
-                  <li><a href="#archive">Archive</a></li>
-                  <li><a href="#timerrec">Timer Record</a></li>
+                  <li><a href="#favchannels">Избранные каналы</a></li>
+                  <li><a href="#vodbrowser">Видеотека</a></li>
+                  <li><a href="#archive">Архив</a></li>
+                  <li><a href="#timerrec">Таймер записи</a></li>
                </ol>
             </li>
          </ol>
       </div>
       -->
-      <h2 id="about">About</h2>
-      [%PROGRAM%] is a tool to watch / record IPTV streams sent by [%SERVICE%]. 
-      It is written in C++ using the <a class="extern" href="http://qt.nokia.com" target="_blank">Qt framework by Nokia <img src="images/external.png" /></a>. 
-      The player functionality is realized by using the libvlc library from 
+      <h2 id="about">О программе</h2>
+      [%PROGRAM%] программа для просмотра / записи IPTV сервиса [%SERVICE%]. 
+      Она написана на C++ при использовании <a class="extern" href="http://qt.nokia.com" target="_blank">Qt framework by Nokia <img src="images/external.png" /></a>.
+      Функциональность плеера реализуется с помощью библиотеки libvlc 
       <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" /></a>.<br />
-      [%PROGRAM%] is open source. You can always find the source code as well as
-      the latest builds at the <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">projects site <img src="images/external.png" /></a> 
-      (hosted by Google Code).
-      <h2 id="versions">Versions</h2>
-      There are versions available for:
+      [%PROGRAM%] имеет открытый исходный код. Вы всегда сможете найти исходный код а так же
+      последние сборки программы на <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">сайте проекта <img src="images/external.png" /></a> 
+      (организовано Google Code).
+      <h2 id="versions">Версии</h2>
+      Имеются версии подходящие для:
       <ul>
-         <li>Windows (XP or better)</li>
-         <li>Mac OSX 10.6 x86_64 or better</li>
-         <li>Ubuntu Linux x86 (current version)</li>
+         <li>Windows (XP или выше)</li>
+         <li>Mac OSX 10.6 x86_64 или выше</li>
+         <li>Ubuntu Linux x86 (Текущая версия)</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <!-- [%HIDDEN%]
-      <h2 id="branding">Branding (customization)</h2>
-      VLC-Record is available in several brandings:
+      <h2 id="branding">Брендинг (кастомизация)</h2>
+      VLC-Record доступен в различных вариантах:
       <ul>
-         <li>VLC-Record (the original for <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Kartina.TV (the official player for <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Polsky.TV (the official player for <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" /></a>)</li>
+         <li>VLC-Record (оригинальный для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
+         <li>Kartina.TV (официальный плеер для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
+         <li>Polsky.TV (официальный плеер для <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" /></a>)</li>
       </ul>
-      These brandings differ only slightly (icons, API server path).
+      Этот брендинг отличается незначительно (иконы, API).
       [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="features">Features</h2>
-      [%PROGRAM%] has following features:
+      <h2 id="features">Особенности</h2>
+      [%PROGRAM%] имеет следующие особенности:
       <ul>
-         <li>play / record live streams</li>
-         <li>EPG - electronic program guide</li>
-         <li>Archiv - 2 weeks for most channels (play / record)</li>
-         <li>Timer Record</li>
-         <li>VOD - video on demand (play / record)</li>
-         <li>Parental Manager</li>
+         <li>Просмотр / Запись трансляции</li>
+         <li>EPG - Электронная программа передач</li>
+         <li>Архив - 2 недели для большинства каналов (просмотр / запись)</li>
+         <li>Таймер записи</li>
+         <li>Видеотека - видео по запросу (просмотр / запись)</li>
+         <li>Менеджер родительского контроля</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="installation">Installation</h2>
+      <h2 id="installation">Установка</h2>
       <h3>Windows</h3>
-      The program will be installed by default in your local application folder 
-      (c:\Users\[User Name]\AppData\Local\[%PROGRAM%]). This means that you don't need
-      administrator privileges to install the program.<br />
-      The program settings will be stored in your local roaming folder
-      (c:\Users\[User Name]\AppData\Roaming\[%PROGRAM%]).
+      Программа будет установлена ​​по умолчанию в вашей локальной папке приложений 
+      (c:\Users\[Имя пользователя]\AppData\Local\[%PROGRAM%]). Это означает, что вам не нужны
+      права администратора для установки программы.<br />
+      Программа настройки будут храниться в локальной папки Roaming
+      (c:\Users\[Имя пользователя]\AppData\Roaming\[%PROGRAM%]).
       <h3>Mac OSX</h3>
-      After opening the dmg file you can drag and drop the application bundle into your application folder.<br /> 
-      The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
+      После открытия DMG файл, вы можете перетащить приложения в папку с приложениями.<br /> 
+      Программа настройки будут храниться в вашем домашнем каталоге (~/.[%PROGRAM%]).
       <h3>Ubuntu</h3>
-      After a double click on the deb package all dependencies as well as the program will be installed. 
-      A launcher will also be added to your system. To start the program open the dash (Windows Key) and type
-      the first letters of the programs name. Now the program should be listed in dash and you can
-      start it by clicking on the launcher icon.<br />
-      The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
+      После двойного щелчка на пакет deb, будет запущен Ubuntu Software Center.Если вы нажмите на кнопку "установка", 
+	   программа установит сама все требуемые библиотеки файлов. А так же добавлена в меню старт. Чтобы запустить программу 
+	   нужно нажать на кнопку Windows на клавиатуре, в окне поиска задать начальные буквы. После будет 
+	   отображена иконка программы. Кликнув на иконку вы запустите программу. Вы можете данную программу прикрепить на панель 
+	   задач (слева). Затем вы всегда сможете запустить программу из панели задач кликнув на символ программы.<br />
+      Программа настройки будут храниться в вашем домашнем каталоге (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="ftsettings">First Time Settings</h2><br />
+      <h2 id="ftsettings">Настройки при первом включении</h2><br />
       <img src="images/[%PROGRAM%]/ru/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
-      Please enter your account data there. If you want to have erotic channels displayed in your channel list, 
-      check the related checkbox. If you insert your parental code in the lower textfield you can watch these
-      channels without the need to enter the parental code. I'd strongly recomment to leave this field blank.
-      <b>Please Note: Your parental code is equal to your accounts password as long as you haven't changed this.</b><br />
-      This dialog is displayed when you start the program for the first time. You can force the display of this dialog
-      if you remove the folder for the programs settings.
+      Пожалуйста, введите данные вашего абонемента. Если вы хотите видеть в списке каналы для взрослых, 
+      то вы должны отметить их галочкой. Если вы ввели ваш родительский пароль в текстовое поле ниже вы можете смотреть эти
+      каналы без необходимости повторно вводить родительский пароль. <b>Обратите внимание: Ваш родительский пароль соответствует 
+      вашему паролю от абонемента пока вы его не смените.</b><br />
+      Это диалоговое окно отображается если вы первый раз запустили программу. Вы можете вызвать данное диалоговое окно снова
+      если вы удалите папку с настройками программы.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="settings">Settings</h2>
-      You can enter the settings by pressing following symbol on the GUI: <img src="images/tools.png" alt="Settings" title="Settings" />
-      <h3 id="mainsettings">Main Settings</h3><br />
+      <h2 id="settings">Настройки</h2>
+      Вы можете зайти в настройки нажав следующий символ в программе: <img src="images/tools.png" alt="Settings" title="Settings" />
+      <h3 id="mainsettings">Основные настройки</h3><br />
       <img src="images/[%PROGRAM%]/ru/set_main.png" alt="Main Settings" title="Main Settings" /><br />
-      In this tab you can change / enter basic program settings:
+      В данной вкладке вы можете изменять / вносить базовые настройки программы:
       <ul>
-         <li>Account / Password</li>
-         <li>Record Path - Where to save recorded video files?</li>
-         <li>Player Path - If you want to start an external player you have to choose the executable file there (optional).</li>
-         <li>Stream Server (location) - Choose the nearest one.</li>
-         <li>Bitrate - Choose between "Premium", "Standard", "Eco" and "Mobile"</li>
-         <li>Buffer - Buffer time in seconds. Increase this value if you encounter problems in video playback (default: 8s).</li>
-         <li>Timeshift - Hours between Moscow time and your localtime.</li>
-         <li>Language - Takes effect only after saving the settings.</li>
-         <li>Reload Logos - If you encounter erros in channel list (e.g. a logo doesn't match the channel) you can reload all channel logos there.</li>
-         <li>Fix time offset - Compensates small time difference between Kartinas server and your local computer (default: on).</li>
-         <li>Extended Channel List - Shows extended information in channel list (default: on).</li>
-         <li>Enable Adv. Settings - Enables advanced settings tab (default: off).</li>
+         <li>Абонемент / Пароль</li>
+         <li>Директория записи - путь куда сохранить записываемые файлы</li>
+         <li>Проигрыватель - если вы хотите запустить внешний проигрыватель, вы должны указать путь к исполняемому файлу (опционально).</li>
+         <li>Сервер вещания (расположение) - Выберите ближайший к вам. Скорость подключения к серверам можно проверить на сайте 
+         <a class="extern" href="http://speedtest.kartina.tv/new/" target="_blank">speedtest.kartina.tv <img src="images/external.png" /></a></li>
+         <li>Битрэйт - выберете между "Премиум", "Стандарт", "Эко" и "Мобильный"</li>
+         <li>Буферизация - время буферизации в секундах. Увеличьте это параметр, если вы сталкиваетесь с проблемами воспроизведения видео (по умолчанию: 8 сек).</li>
+         <li>Задержка - разница во времени между Московским и вашем местным временем.</li>
+         <li>Язык - вступает в силу только после сохранения настроек.</li>
+         <li>Обновить логотипы - если вы столкнетесь с ошибками в списке каналов (например, логотип не соответствует каналу), вы можете обновить логотипы каналов.</li>
+         <li>Синхронизировать время - компенсирует небольшую разницы во времени между серверами [%SERVICE%] и на локальном компьютере (по умолчанию: вкл).</li>
+         <li>Дополнительная информация в списке каналов - показывает дополнительную информацию в списке каналов (по умолчанию: вкл).</li>
+         <li>Включить дополнительные настройки - включает закладку дополнительные настройки (по умолчанию: выкл).</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="shortcuts">Shortcuts</h3><br />
+      <h3 id="shortcuts">Сокращения</h3><br />
       <img src="images/[%PROGRAM%]/ru/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
-      Here you can change the default shortcuts used in this program. To do so mark a shortcut with the mouse.
-      Now press the key combination you want as new shortcut. If the line turns red you already used this
-      shortcut for another command.<br />
-      You can reset the shortcuts to the default values using the tool button at the lower end of this tab.
+      Здесь вы можете изменить сокращения используемые по умолчанию в этой программе. Для этого отметьте сокращение с помощью мышки.
+      Теперь нажмите комбинацию клавиш которую вы хотите установить как новое сокращение. Если линия становится красной вы уже использовали это
+      сокращение для другой команды.<br />
+      Вы можете вернуть значения по умолчанию используя кнопку внизу этой вкладки (Вернуть стандартные настройки).
       <!-- <div class="toplink"><a href="#about" target="_self">Top</a></div> -->
-      <h3 id="advsettings">Advanced Settings</h3><br />
+      <h3 id="advsettings">Дополнительные настройки</h3><br />
       <img src="images/[%PROGRAM%]/ru/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
-      In this tab you can change following program settings:
+      В данной вкладке вы можете менять следующие настройки:
       <ul>
-         <li>Proxy Server - Configure a proxy server if you can't connect directly to the internet.</li>
-         <li>API Server - Change the API server. Activate this field by pressing <b>Ctrl+Alt+A</b> (default: [%APISERVER%] {Don't touch it!})</li>
-         <li>Player Module - Player dependent configuration files. Choose between "5_libvlc.mod" and "9_libvlc_odl.mod" (default: 5_libvlc.mod). 
-         You can have a look at the module files itself to get an idea what's going on there. Don't touch it if you don't know what you're doing!</li>
-         <li>Log Level - Configure what will be written to logfile (default: log everything). If you need help if something doesn't work as you 
-         expected - don't change it!</li>
-         <li>Shutdown Command - If you want to shutdown your computer (e.g. after timer record) you can insert a command here. 
-         For Windows a default command is set.</li>
-         <li>Refresh EPG - Update EPG information in a interval of X minutes (default: on with 5 min interval).</li>
-         <li>Ask for Record Filename - Program will ask you for a filename as soon as you want to record any show (default: off).</li>
-         <li>Detach player at startup - If you use an external player it will be detached from [%PROGRAM%]. 
-         It then runs as independent process which [%PROGRAM%] can't control at all (default: off).</li>
-         <li>Check for Updates - If <b>on</b> the program will check for updates each time it starts (default: on).</li>
-         <li>Doubleclick starts play - If <b>off</b> play starts as soon as you click on a channel in channel list (default: on).</li>
-         <li>Minimize to Systray - If <b>on</b> program will be hidden from taskbar when minimized. 
-         An icon in the tasktray will tell about the running program instead (default: off).</li>
-         <li>Translit record filename - Transliterates a record filename from cyrillic into latin letters (default: off).</li>
-         <li>GPU acceleration - Uses GPU for video decoding (highly experimental, default: off).</li>
+         <li>Прокси сервер - Настройка прокси сервера, если вы не можете подключиться непосредственно к интернету.</li>
+         <li>Сервер API - Изменить сервер API. Активируйте это окно нажав <b>Ctrl+Alt+A</b> (по умолчанию: [%APISERVER%] {Не меняйте этот параметр!})</li>
+         <li>Модуль проигрывателя - используемые проигрывателем файлы конфигурации. Выбор между "5_libvlc.mod" и "9_libvlc_odl.mod" (по умолчанию: 5_libvlc.mod). 
+         Вы можете посмотреть файл модуля если хотите знать его параметр. Если вы не уверены в предназначении параметра, не меняйте его!</li>
+         <li>Уровень протокола - выберите что будет записано в лог-файл (по умолчанию: все протоколы). Если вам нужна помощь или что то работает не так как вы 
+         ожидали не меняйте этот параметр!</li>
+         <li>Команда отключения системы - если вы хотите выключить ваш компьютер (например, после таймера записи) вы можете установить параметр здесь. 
+         Для Windows этот параметр установлен по умолчанию.</li>
+         <li>Обновлять EPG каждые - обновление программы передач, с интервалом в "Х" минут (по умолчанию интервал в 5 минут).</li>
+         <li>Запрос исходного файла - программа каждый раз будет запрашивать имя записываемой передачи (по умолчанию: выкл).</li>
+         <li>Отделить проигрыватель при записи - Если вы используете внешнее устройство воспроизведения оно будет отделено от [%PROGRAM%]. 
+         Запускается как независимый процесс, которым затем не может управлять [%PROGRAM%] (по умолчанию: выкл).</li>
+         <li>Проверка обновлений программы - если <b>вкл</b> программа будет проверять наличие обновлений при каждом запуске (по умолчанию: вкл).</li>
+         <li>Двойной щелчок на список каналов стартует плеер - Если <b>выкл</b> проигрывание начнется как только вы кликните на канал в списке каналов (по умолчанию: вкл).</li>
+         <li>Сворачивать в трей - если <b>вкл</b> программа будет скрыта из панели задач (по умолчанию: выкл).</li>
+         <li>Транслит исходного файла - транслитерация записанных файлов из кириллицы в латинские буквы (по умолчанию: выкл).</li>
+         <li>GPU декодирует видео - использовать графический процессор для декодирования видео (экспериментальный, по умолчанию: выкл).</li>
          <!-- [%HIDDEN%]
-         <li>Show Ads - Show commercials at the begin of a video (VOD). Changeable only in VLC-Record (default: on).</li>
+         <li>Показывать рекламу - показывает рекламу перед фильмом в Видеотеке. Изменяется только в VLC-Record (по умолчанию: вкл).</li>
          [%HIDDEN%] -->
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="parentmanager">Parental Manager</h3><br />
+      <h3 id="parentmanager">Родительский менеджер</h3><br />
       <img src="images/[%PROGRAM%]/ru/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
-      Enter your parental code to enter the parental manager.<br /> <br />
+      Введите ваш родительский пароль чтобы зайти в родительский менеджер.<br /> <br />
       <img src="images/[%PROGRAM%]/ru/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
-      Here you can configure following things:
+      В данной вкладке вы можете менять следующие настройки:
       <ul>
-         <li>Channel Manager - Selected channels will be <b>hidden</b> from channel list.</li>
-         <li>VOD Manager - Select access for the various genres.</li>
-         <li>Parant Code - Here you can change the parent code.</li>
-         <li>Adult Channels - Here you can choose what to be done with the adult channels (in channel list).</li>
+         <li>Менеджер каналов - выбранный канал будет <b>скрыт</b> из списка каналов.</li>
+         <li>Менеджер видеотеки - позволяет изменить доступ к разным жанрам.</li>
+         <li>Родительский пароль - позволяет изменить родительский пароль.</li>
+         <li>Каналы для взрослых - позволяет выбрать отображать или нет каналы для взрослых (в списке каналов).</li>
       </ul>
-      <b>Please Note: You have to save these settings directly in the parent manager. They are independent from the other settings.</b>
+      <b>Обратите внимание: Чтобы сохранить изменения настроек родительского менеджера вы должны нажать "Сохранить и выйти". 
+      Эта кнопка не сохраняет другие настройки.</b>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="discovergui">Discovering the GUI</h2><br />
+      <h2 id="discovergui">Описание графического интерфейса</h2><br />
       <img src="images/[%PROGRAM%]/ru/whole_view.png" alt="Whole View" title="Whole View" /><br />
-      At the left side you see the channel list. Above the channel list is the area for the channel favourites. At the top left corner
-      you can choose between the live program and video on demand (VOD) - where available.<br />
-      In the middle of the GUI you can see the electronic program guide (EPG). It shows the program for the choosen day and channel. 
-      At the top of the EPG view there are buttons to choose a day and to jump one week forward or back. 
-      At the lower end you can see a search field which lets you search for words in the currently shown EPG.<br />
-      At the upper right side you see the player widget. Below it there are the play control buttons and below these buttons you can see a small
-      info widget.<br />
-      At the lower right corner there are the settings-, the info-, help- and the quit button.
+      В левой стороне вы видите список каналов. Над списком каналов находится областью избранных каналов. В верхнем левом углу
+      вы можете выбрать между прямым эфиром и видеотекой (опционально).<br />
+      В середине расположена программа передач. Она отображает программу на выбранном канале в выбранный день. 
+      В верхней части программы передач имеются кнопки для выбора дня, есть возможность переместится на неделю вперед или назад. 
+      Снизу расположено окно поиска, которое позволяет искать слова в настоящее время показываемой программе передач.<br />
+      В правом верхнем углу вы видите управление плеером. Ниже расположены кнопки управления воспроизведением и 
+      ниже этих кнопок вы можете видеть небольшой информационный блок.<br />
+      В правом нижнем углу расположены кнопки настройки, информации, помощь и кнопка выхода.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h2 id="discoverfeatures">Discovering Features</h2>
-      <h3 id="favchannels">Favourite Channels</h3><br />
+      <h2 id="discoverfeatures">Описание дополнительных возможностей</h2>
+      <h3 id="favchannels">Избранные каналы</h3><br />
       <img src="images/[%PROGRAM%]/ru/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
-      You can define up to 10 favourite channels - either by doing a right click at the channel in the channel list 
-      and choosing "Add to favourites" or by using drag'n'drop. The channel will now be placed in the area above 
-      the channel list. If you press at a favourite button the channel in channel list will be selected and the 
-      EPG for this channel will be loaded. You can remove channels from the favourite area by making a right click there.
+      Вы можете добавить до 10 каналов в избранные - для этого вам нужно нажать правой кнопкой на канал в списке 
+      и выбрать "Добавить в избранное" или переместить канал в избранное. Область избранного расположена над списком каналов. 
+	   Нажав на соответствующую иконку будет запущен канал и отображена программа передач для этого канала. 
+      Чтобы удалить канал из избранного нажмите на соответствующую иконку и выберите удалить.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="vodbrowser">Video on Demand (where available)</h3><br />
+      <h3 id="vodbrowser">Видеотека (опционально)</h3><br />
       <img src="images/[%PROGRAM%]/ru/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
-      You can activate the VOD browser by clicking at the button at the upper left corner.<br /> <br />
+      Кнопка видеотека расположена в верхнем левом углу.<br /> <br />
       <img src="images/[%PROGRAM%]/ru/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
-      You can choose a genre ...<br /> <br />
+      Вы можете выбрать жанр ...<br /> <br />
       <img src="images/[%PROGRAM%]/ru/vod_sort.png" alt="Sort" title="Sort" /><br />
-      ... and sort the videos. There you can also choose to show you favourite videos.<br /> <br />
+      ... и сортировку фильмов. Там же находятся ваши избранные фильмы.<br /> <br />
       <img src="images/[%PROGRAM%]/ru/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
-      Or you can search for a video.<br /> <br />
+      Вы так же можете воспользоваться поиском - окно поиска расположено ниже списка фильмов.<br /> <br />
       <img src="images/[%PROGRAM%]/common/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
-      You choose a video with a mouse click.<br /> <br />
+      Для выбора фильма нажмите на картинку.<br /> <br />
       <img src="images/[%PROGRAM%]/ru/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
-      Now you can see the information about the selected video. You can add / remove the video to / from your favourites by clicking
-      at the heart at the top. You can record or play the video by clicking at the lower buttons. A click at <b>[Back]</b> brings you
-      back to the former site.
+      Теперь вы можете видеть информацию о выбранном фильме. Вы можете добавить или удалить фильм из списка избранного нажав 
+      на сердце рядом с названием. Вы можете запустить или записать фильм нажав на соответствующую кнопку. Нажав <b>[Назад]</b> 
+      вы попадёте в список фильмов.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="archive">Archive</h3>
-      For most channels a archive is available. This means that you can watch any program which was sent on this channel 
-      for the last two weeks.<br />
+      <h3 id="archive">Архив</h3>
+      Архив доступен для большинства каналов. Это означает что вы можете всегда посмотреть любимые передачи которые вы 
+      пропустили за последние 2 недели.<br />
       <img src="images/[%PROGRAM%]/common/arch_timer_rec.png" alt="Archive Play Record" title="Archive Play Record" /><br />
-      You can watch or record this program by clicking at the play / record buttons in the EPG browser. If you choose
-      play here you can jump to any time in that program by using the slider below the player widget.<br /> <br />
+      Вы можете смотреть записанную программу нажав на кнопку запустить в программе передач. 
+      Используя ползунок вы можете промотать передачу до нужного вам отрезка времени.<br /> <br />
       <img src="images/click_n_go_slider.png" alt="Click'n'Go Slider" title="Click'n'Go Slider" /><br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="timerrec">Timer Record</h3>
-      You can open the timer record dialog either by pressing on this 
-      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> button or by clicking 
-      at the clock in the EPG browser.<br />
+      <h3 id="timerrec">Таймер записи</h3>
+      Вы можете открыть диалоговое окно таймера записи нажав на эту 
+      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> кнопку или нажав на 
+      будильник в программе передач.<br />
       <img src="images/[%PROGRAM%]/common/arch_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
-      Timer Record dialog will open:<br />
+      Таймер записи выглядит следующим образом:<br />
       <img src="images/[%PROGRAM%]/ru/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
-      In this dialog you can plan a record job. You can choose the channel to record from. You must give a name 
-      for the file in which the video will be saved. You have to insert the start and the end time of the program.
-      When choosing "silent record" the program only will record the program, but not show. Checking the
-      "shutdown" box lets shutdown the computer after all records are completed. This only works if you have set
-      a shutdown command in the <a href="#advsettings">settings</a>.
-      A click at the <img src="images/add.png" alt="Add Job" title="Add Job" /> button will add this record
-      to the job list. You can edit a stored record job by making a double click at the entry in the job list. 
-      The data will now be displayed in the upper fields. You can now make your changes. A click at the 
-      <img src="images/add.png" alt="Add Job" title="Add Job" /> will save your changes. You can remove a 
-      stored record job by marking it in job list and pressing the 
-      <img src="images/delete.png" alt="Remove Job" title="Remove Job" /> button. When adding a new timer record job the 
-      program will check its validness. 
+      В данном диалоговом окне отображен список задач на запись. Вы можете выбрать канал для записи. Вы должны задать имя файла 
+      который будет сохранен. Вы можете установить время начало и окончания записи передачи.
+      При выборе режима "Запись без просмотра", программа будет вести запись в фоновом режиме без вывода диалогового окна. Выбрав функцию
+	   "Выключить компьютер по окончанию" - компьютер будет отключен после записи всех выбранных передач в списке. Эта функция работает только если
+      вы ввели команду выключения компьютера в <a href="#advsettings">настройки</a>.
+      Кликнув на кнопку <img src="images/add.png" alt="Add Job" title="Add Job" />  программа добавить запись в список задач. 
+      Вы можете изменить добавленную задачу нажав на неё дважды в списке задач. 
+      Данные записи теперь будут отображаться в верхней части поля. Теперь вы можете внести изменения. Нажав на кнопку 
+      <img src="images/add.png" alt="Add Job" title="Add Job" /> вы сохраните ваши изменения. Для того чтобы удалить задачу 
+      нажмите на кнопку <img src="images/delete.png" alt="Remove Job" title="Remove Job" />. 
+      При добавлении нового задания в таймер записи программа будет проверять его валидность. 
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
    </body>
 </html>
