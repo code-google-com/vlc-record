@@ -10,37 +10,37 @@
          <filterAttribute>vlc-record</filterAttribute>
          <filterAttribute>1.0</filterAttribute>
          <toc>
-             <section title="[%PROGRAM%] Manual" ref="help_pl.html">
-                 <section title="About" ref="help_pl.html#about" />
-                 <section title="Versions" ref="help_pl.html#versions" />
+             <section title="[%PROGRAM%] Ręczny" ref="help_pl.html">
+                 <section title="O programie" ref="help_pl.html#about" />
+                 <section title="Wersje" ref="help_pl.html#versions" />
                  <!-- [%HIDDEN%]
-                 <section title="Branding" ref="help_pl.html#branding" />
+                 <section title="Marka" ref="help_pl.html#branding" />
                  [%HIDDEN%] -->
-                 <section title="Features" ref="help_pl.html#features" />
-                 <section title="Installation" ref="help_pl.html#installation" />
-                 <section title="First Time Settings" ref="help_pl.html#ftsettings" />
-                 <section title="Settings" ref="help_pl.html#settings">
-                     <section title="Main Settings" ref="help_pl.html#mainsettings" />
-                     <section title="Shortcuts" ref="help_pl.html#shortcuts" />
-                     <section title="Advanced Settings" ref="help_pl.html#advsettings" />
-                     <section title="Parental Manager" ref="help_pl.html#parentmanager" />
+                 <section title="Cechy" ref="help_pl.html#features" />
+                 <section title="Instalacja" ref="help_pl.html#installation" />
+                 <section title="Pierwsze ustawienia" ref="help_pl.html#ftsettings" />
+                 <section title="Ustawienia" ref="help_pl.html#settings">
+                     <section title="Ustawienia głowne" ref="help_pl.html#mainsettings" />
+                     <section title="Skróty" ref="help_pl.html#shortcuts" />
+                     <section title="Ustawienia zaawansowane" ref="help_pl.html#advsettings" />
+                     <section title="Ustawienia kontroli rodzicielskiej" ref="help_pl.html#parentmanager" />
                  </section>
-                 <section title="Discovering the GUI" ref="help_pl.html#discovergui" />
-                 <section title="Discovering Features" ref="help_pl.html#discoverfeatures">
-                     <section title="Favourite Channels" ref="help_pl.html#favchannels" />
-                     <section title="Video on Demand" ref="help_pl.html#vodbrowser" />
-                     <section title="Archive" ref="help_pl.html#archive" />
-                     <section title="Timer Record" ref="help_pl.html#timerrec" />
+                 <section title="Odkrywanie Graficznego Interfejsu Użytkownika" ref="help_pl.html#discovergui" />
+                 <section title="Funkcje wyszukiwania" ref="help_pl.html#discoverfeatures">
+                     <section title="Ulubione kanały" ref="help_pl.html#favchannels" />
+                     <section title="Wideoteka" ref="help_pl.html#vodbrowser" />
+                     <section title="Archiwum" ref="help_pl.html#archive" />
+                     <section title="Nagrywanie" ref="help_pl.html#timerrec" />
                  </section>
              </section>
          </toc>
          <keywords>
-             <keyword name="archive" ref="help_pl.html#archive" />
+             <keyword name="Archiwum" ref="help_pl.html#archive" />
              <keyword name="timer" ref="help_pl.html#timerrec" />
-             <keyword name="settings" ref="help_pl.html#settings" />
+             <keyword name="Ustawienia" ref="help_pl.html#settings" />
              <keyword name="favourites" ref="help_pl.html#favchannels" />
              <keyword name="vod" ref="help_pl.html#vodbrowser" />
-             <keyword name="parent" ref="help_pl.html#parentmanager" />
+             <keyword name="kontroli" ref="help_pl.html#parentmanager" />
              <keyword name="filter" ref="help_pl.html#parentmanager" />
              <keyword name="porno" ref="help_pl.html#parentmanager" />
          </keywords>
