@@ -16,14 +16,14 @@
                  <!-- [%HIDDEN%]
                  <section title="Брендинг" ref="help_ru.html#branding" />
                  [%HIDDEN%] -->
-                 <section title="Особенности" ref="help_ru.html#features" />
+                 <section title="Функциональные возможности" ref="help_ru.html#features" />
                  <section title="Установка" ref="help_ru.html#installation" />
                  <section title="Настройки при первом включении" ref="help_ru.html#ftsettings" />
                  <section title="Настройки" ref="help_ru.html#settings">
                      <section title="Основные настройки" ref="help_ru.html#mainsettings" />
-                     <section title="Сокращения" ref="help_ru.html#shortcuts" />
+                     <section title="Комбинации клавиш" ref="help_ru.html#shortcuts" />
                      <section title="Дополнительные настройки" ref="help_ru.html#advsettings" />
-                     <section title="Родительский менеджер" ref="help_ru.html#parentmanager" />
+                     <section title="Родительский контроль" ref="help_ru.html#parentmanager" />
                  </section>
                  <section title="Описание графического интерфейса" ref="help_ru.html#discovergui" />
                  <section title="Описание дополнительных возможностей" ref="help_ru.html#discoverfeatures">
