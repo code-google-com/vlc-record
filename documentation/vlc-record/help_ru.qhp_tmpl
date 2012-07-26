@@ -30,7 +30,7 @@
                      <section title="Избранные каналы" ref="help_ru.html#favchannels" />
                      <section title="Видеотека" ref="help_ru.html#vodbrowser" />
                      <section title="Архив" ref="help_ru.html#archive" />
-                     <section title="Таймер записи" ref="help_ru.html#timerrec" />
+                     <section title="Планировщик записи" ref="help_ru.html#timerrec" />
                  </section>
              </section>
          </toc>
