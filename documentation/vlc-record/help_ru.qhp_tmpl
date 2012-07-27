@@ -10,7 +10,7 @@
          <filterAttribute>vlc-record</filterAttribute>
          <filterAttribute>1.0</filterAttribute>
          <toc>
-             <section title="[%PROGRAM%] - Инструкции" ref="help_ru.html">
+             <section title="[%PROGRAM%] - Инструкция" ref="help_ru.html">
                  <section title="О программе" ref="help_ru.html#about" />
                  <section title="Версии" ref="help_ru.html#versions" />
                  <!-- [%HIDDEN%]
