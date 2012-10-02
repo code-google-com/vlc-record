@@ -39,9 +39,9 @@
  * add autoreleasepool on mac
  * try that libVLC handles no-idle stuff (needs testing)
  * fix a huge bug in CPlayer
- ** eventCallback causes big trouble when emiiting signals
- ** eventCallback now only stores event type
- **a poller checks for state changes
+  * eventCallback causes big trouble when emiiting signals
+  * eventCallback now only stores event type
+  * a poller checks for state changes
 
 == 2012-07-26: Version 2.57B4 ==
  * use branded help
