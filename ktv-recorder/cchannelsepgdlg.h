@@ -134,4 +134,3 @@ signals:
 };
 
 #endif // CCHANNELSEPGDLG_H
-

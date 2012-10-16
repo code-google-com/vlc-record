@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cshowinfo.h $
 |
 | Author: Jo2003
 |
 | Begin: 15.06.2010 / 16:41:34
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: cshowinfo.h 892 2012-08-31 13:26:27Z Olenka.Joerg $
 \*************************************************************/
 #ifndef __150610_CSHOWINFO_H
    #define __150610_CSHOWINFO_H
@@ -67,6 +67,7 @@ public:
    void setPCode (const QString &code);
    void setVodId (int id);
    void setEpgMap(const t_EpgMap &map);
+   void useStreamLoader (bool bUse);
 
    // get values ...
    const QString &showName();
@@ -81,9 +82,11 @@ public:
    const IncPlay::ePlayStates &playState();
    const ShowInfo::eProgType &showType();
    bool  canCtrlStream();
+   bool  streamLoader();
    const int& vodId();
-   int autoUpdate(uint uiTime, QVector<cparser::SEpg> &vEpgList);
-   static QString createTooltip (const QString & name, const QString & prog, uint start, uint end);
+
+int autoUpdate(uint uiTime, QVector<cparser::SEpg> &vEpgList);
+static QString createTooltip (const QString & name, const QString & prog, uint start, uint end);
 
 private:
    QString              sShowName;
@@ -99,6 +102,7 @@ private:
    QString              sPCode;
    int                  iVodId;
    t_EpgMap             epgMap;
+   bool                 bStreamLoader;
 };
 
 #endif // __150610_CSHOWINFO_H

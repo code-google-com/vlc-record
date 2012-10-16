@@ -75,7 +75,7 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    trayIcon.setParent(this);
 
    // non-modal ...
-   Help.setParent(NULL);
+   pHelp = new QHelpDialog(this);
 
    pChannelDlg = new CChannelsEPGdlg(this);
    pChannelDlg->initDialog(true);
@@ -158,6 +158,11 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 
    // set log level ...
    VlcLog.SetLogLevel(dlgSettings.GetLogLevel());
+   mLog(tr("Starting: %1 / Version: %2").arg(APP_NAME).arg(__MY__VERSION__));
+
+   #ifdef INCLUDE_LIBVLC
+      mLog(tr("Using libVLC 0x%1").arg(ui->player->libvlcVersion(), 8, 16, QChar('0')));
+   #endif
 
    // log folder locations ...
     mInfo (tr("\ndataDir: %1\n").arg(pFolders->getDataDir())
@@ -172,14 +177,17 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 
     if (!QFile::exists(sHlp))
     {
-        sHlp = QString("%1/help_en.qhc").arg(pFolders->getDocDir());
+        sHlp = QString("%1/help_ru.qhc").arg(pFolders->getDocDir());
     }
 
-    Help.setHelpFile(sHlp);
+    pHelp->setHelpFile(sHlp);
 
    // configure trigger and start it ...
    Trigger.SetKartinaClient(&KartinaTv);
    Trigger.start();
+
+   // set pointer to translit by control ...
+   vlcCtrl.SetTranslitPointer(&translit);
 
    // give timerRec all needed infos ...
    dlgTimeRec.SetXmlParser(&XMLParser);
@@ -196,16 +204,6 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    pChannelDlg->getTabEpgVOD()->removeTab(vodTabWidget.iPos);
 
 #ifdef INCLUDE_LIBVLC
-   // do we use libVLC ?
-   if (dlgSettings.GetPlayerModule().contains("libvlc", Qt::CaseInsensitive))
-   {
-      vlcCtrl.UseLibVlc(true);
-   }
-   else
-   {
-      vlcCtrl.UseLibVlc(false);
-   }
-
    // give player the list of shortcuts ...
    ui->player->setShortCuts (&vShortcutPool);
 
@@ -234,6 +232,8 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 #endif /* INCLUDE_LIBVLC */
 
    // connect signals and slots ...
+   connect (&streamLoader,  SIGNAL(sigStreamRequested(int)), this, SLOT(slotDownStreamRequested(int)));
+   connect (&streamLoader,  SIGNAL(sigBufferPercent(int)), ui->labState, SLOT(bufferPercent(int)));
    connect (&pixCache,      SIGNAL(allDone()), this, SLOT(slotRefreshChanLogos()));
    connect (&KartinaTv,     SIGNAL(sigHttpResponse(QString,int)), this, SLOT(slotKartinaResponse(QString,int)));
    connect (&KartinaTv,     SIGNAL(sigError(QString,int,int)), this, SLOT(slotKartinaErr(QString,int,int)));
@@ -254,18 +254,12 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
    connect (this,           SIGNAL(sigLCDStateChange(int)), ui->labState, SLOT(updateState(int)));
    connect (pChannelDlg->getVodBrowser(), SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (pUpdateChecker, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateAnswer (QNetworkReply*)));
-
-   if (dlgSettings.HideToSystray() && QSystemTrayIcon::isSystemTrayAvailable())
-   {
-       connect (this,          SIGNAL(sigHide()), &trayIcon, SLOT(show()));
-       connect (this,          SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
-   }
-
-   connect (pChannelDlg,         SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
-   connect (pChannelDlg,         SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
-   connect (ui->player,          SIGNAL(sigAspectToggle(int)), this, SLOT(slotAspectToggle(int)));
-   connect (ui->player,          SIGNAL(sigCropToggle(int)), this, SLOT(slotCropToggle(int)));
-   connect (this,                SIGNAL(sigLockParentalManager()), &dlgParentalControl, SLOT(slotLockParentalManager()));
+   connect (pChannelDlg,    SIGNAL(sigDoubliClickOnListWidget()), this, SLOT(slotDoubleClick()));
+   connect (pChannelDlg,    SIGNAL(sigChannelDlgClosed()), this, SLOT(slotChannelDlgClosed()));
+   connect (ui->player,     SIGNAL(sigAspectToggle(int)), this, SLOT(slotAspectToggle(int)));
+   connect (ui->player,     SIGNAL(sigCropToggle(int)), this, SLOT(slotCropToggle(int)));
+   connect (this,           SIGNAL(sigLockParentalManager()), &dlgParentalControl, SLOT(slotLockParentalManager()));
+   connect (&trayIcon,      SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(slotSystrayActivated(QSystemTrayIcon::ActivationReason)));
 
    // trigger read of saved timer records ...
    dlgTimeRec.ReadRecordList();
@@ -284,21 +278,6 @@ MainWindow::MainWindow(QTranslator *trans, QWidget *parent) :
 MainWindow::~MainWindow()
 {
    delete ui;
-
-   if (pUpdateChecker)
-   {
-       delete pUpdateChecker;
-       pUpdateChecker = NULL;
-   }
-
-#ifdef INCLUDE_LIBVLC
-   if (stackedLayout)
-   {
-      delete stackedLayout;
-      stackedLayout = NULL;
-   }
-#endif // INCLUDE_LIBVLC
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -307,24 +286,34 @@ MainWindow::~MainWindow()
 
 void MainWindow::changeEvent(QEvent *e)
 {
+    QWidget::changeEvent(e);
+
     switch (e->type())
     {
     // catch minimize event ...
     case QEvent::WindowStateChange:
 
-       // printStateChange (((QWindowStateChangeEvent *)e)->oldState());
-       if (isMinimized())
+       // only hide window, if trayicon stuff is available ...
+       if (QSystemTrayIcon::isSystemTrayAvailable ())
        {
-          Help.close();
-
-          // only hide window, if trayicon stuff is available ...
-          if (QSystemTrayIcon::isSystemTrayAvailable () && dlgSettings.HideToSystray())
+          if (isMinimized())
           {
-             // hide dialog ...
-             QTimer::singleShot(300, this, SLOT(hide()));
+             QWindowStateChangeEvent *pEvent = (QWindowStateChangeEvent *)e;
+
+             // store last position only, if it wasn't maximized ...
+             if (!(pEvent->oldState() & (Qt::WindowMaximized | Qt::WindowFullScreen)))
+             {
+                sizePos = geometry();
+             }
+
+             if (dlgSettings.HideToSystray())
+             {
+                // hide dialog ...
+                QTimer::singleShot(300, this, SLOT(hide()));
+             }
           }
        }
-       break;
+      break;
 
       // language switch ...
       case QEvent::LanguageChange:
@@ -353,8 +342,7 @@ void MainWindow::changeEvent(QEvent *e)
        // translate error strings ...
        KartinaTv.fillErrorMap();
        break;
-    default:
-       QWidget::changeEvent(e);
+       default:
        break;
    }
 }
@@ -421,7 +409,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
    if (bAccept)
    {
       // close help dialog ..
-      Help.close();
+      pHelp->close();
+
+      // disconnect trayicon stuff ...
+      disconnect (&trayIcon);
 
       // We want to close program, store all needed values ...
       // Note: putting this function in destructor doesn't work!
@@ -521,7 +512,10 @@ void MainWindow::on_actionExit_triggered()
     if (bAccept)
     {
         // close help dialog ..
-        Help.close();
+        pHelp->close();
+
+        // disconnect trayicon stuff ...
+        disconnect (&trayIcon);
 
         // We want to close program, store all needed values ...
         // Note: putting this function in destructor doesn't work!
@@ -715,8 +709,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionGuid_triggered()
 {
-    Help.show();
-    Help.raise();
+    pHelp->show();
 }
 
 void MainWindow::on_pushRecord_clicked()
@@ -743,47 +736,47 @@ void MainWindow::on_pushRecord_clicked()
    {
 
 #endif // INCLUDE_LIBVLC
-      int cid = pChannelDlg->getCurrentCid();
+  int cid = pChannelDlg->getCurrentCid();
 
-      if (pChannelDlg->getChanMap()->contains(cid))
+  if (pChannelDlg->getChanMap()->contains(cid))
+  {
+      if (AllowAction(IncPlay::PS_RECORD))
       {
-            if (AllowAction(IncPlay::PS_RECORD))
-            {
-               cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
+           cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-               if (grantAdultAccess(chan.bIsProtected))
-               {
-                  // new own downloader ...
-                  if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
-                  {
-                     streamLoader.stopDownload (iDwnReqId);
-                     iDwnReqId = -1;
-                  }
+           if (grantAdultAccess(chan.bIsProtected))
+           {
+              // new own downloader ...
+              if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+              {
+                 streamLoader.stopDownload (iDwnReqId);
+                 iDwnReqId = -1;
+              }
 
-                  showInfo.cleanShowInfo();
-                  showInfo.setChanId(cid);
-                  showInfo.setChanName(chan.sName);
-                  showInfo.setShowType(ShowInfo::Live);
-                  showInfo.setShowName(chan.sProgramm);
-                  showInfo.setStartTime(chan.uiStart);
-                  showInfo.setEndTime(chan.uiEnd);
-                  showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-                  showInfo.setPCode(secCodeDlg.passWd());
-                  showInfo.setPlayState(IncPlay::PS_RECORD);
-                  showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                         .arg("rgb(255, 254, 212)")
-                                         .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+              showInfo.cleanShowInfo();
+              showInfo.setChanId(cid);
+              showInfo.setChanName(chan.sName);
+              showInfo.setShowType(ShowInfo::Live);
+              showInfo.setShowName(chan.sProgramm);
+              showInfo.setStartTime(chan.uiStart);
+              showInfo.setEndTime(chan.uiEnd);
+              showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+              showInfo.setPCode(secCodeDlg.passWd());
+              showInfo.setPlayState(IncPlay::PS_RECORD);
+              showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                     .arg("rgb(255, 254, 212)")
+                                     .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-                  TouchPlayCtrlBtns(false);
-                  Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
-               }
-            }
-      }
+              TouchPlayCtrlBtns(false);
+              Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+           }
+        }
+     }
+
 #ifdef INCLUDE_LIBVLC
-   }
+  }
 #endif // INCLUDE_LIBVLC
 }
-
 
 void MainWindow::on_pushLive_clicked()
 {
@@ -803,7 +796,7 @@ void MainWindow::on_pushLive_clicked()
 
           if (pChannelDlg->getChanMap()->contains(cid))
           {
-             if (AllowAction(IncPlay::PS_PLAY))
+              if (AllowAction(IncPlay::PS_PLAY))
              {
                 cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
@@ -867,28 +860,28 @@ void MainWindow::on_pushPlay_clicked()
 
        if (pChannelDlg->getChanMap()->contains(cid))
        {
-             if (AllowAction(IncPlay::PS_PLAY))
-             {
-                cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
+           if (AllowAction(IncPlay::PS_PLAY))
+           {
+               cparser::SChan chan = pChannelDlg->getChanMap()->value(cid);
 
-                if (grantAdultAccess(chan.bIsProtected))
-                {
-                   showInfo.cleanShowInfo();
-                   showInfo.setChanId(cid);
-                   showInfo.setChanName(chan.sName);
-                   showInfo.setShowType(ShowInfo::Live);
-                   showInfo.setShowName(chan.sProgramm);
-                   showInfo.setStartTime(chan.uiStart);
-                   showInfo.setEndTime(chan.uiEnd);
-                   showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
-                   showInfo.setPlayState(IncPlay::PS_PLAY);
-                   showInfo.setPCode(secCodeDlg.passWd());
-                   showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
-                                          .arg("rgb(255, 254, 212)")
-                                          .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
+              if (grantAdultAccess(chan.bIsProtected))
+              {
+                 showInfo.cleanShowInfo();
+                 showInfo.setChanId(cid);
+                 showInfo.setChanName(chan.sName);
+                 showInfo.setShowType(ShowInfo::Live);
+                 showInfo.setShowName(chan.sProgramm);
+                 showInfo.setStartTime(chan.uiStart);
+                 showInfo.setEndTime(chan.uiEnd);
+                 showInfo.setLastJumpTime(QDateTime::currentDateTime().toTime_t());
+                 showInfo.setPlayState(IncPlay::PS_PLAY);
+                 showInfo.setPCode(secCodeDlg.passWd());
+                 showInfo.setHtmlDescr((QString(TMPL_BACKCOLOR)
+                                        .arg("rgb(255, 254, 212)")
+                                        .arg(CShowInfo::createTooltip(chan.sName, chan.sProgramm, chan.uiStart, chan.uiEnd))));
 
-                   TouchPlayCtrlBtns(false);
-                   Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
+                 TouchPlayCtrlBtns(false);
+                 Trigger.TriggerRequest(Kartina::REQ_STREAM, cid, secCodeDlg.passWd());
                 }
             }
       }
@@ -899,22 +892,22 @@ void MainWindow::on_pushPlay_clicked()
 
 void MainWindow::on_pushStop_clicked()
 {
-   if (AllowAction(IncPlay::PS_STOP))
-   {
-      ui->labState->setHeader("");
-      ui->labState->setFooter("");
+    if (AllowAction(IncPlay::PS_STOP))
+    {
+       ui->labState->setHeader("");
+       ui->labState->setFooter("");
 
-      // new own downloader ...
-      if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
-      {
-         streamLoader.stopDownload (iDwnReqId);
-         iDwnReqId = -1;
-      }
+       // new own downloader ...
+       if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+       {
+          streamLoader.stopDownload (iDwnReqId);
+          iDwnReqId = -1;
+       }
 
-      vlcCtrl.stop();
+       vlcCtrl.stop();
 
-      showInfo.setPlayState(IncPlay::PS_STOP);
-      TouchPlayCtrlBtns(true);
+       showInfo.setPlayState(IncPlay::PS_STOP);
+       TouchPlayCtrlBtns(true);
    }
 }
 
@@ -1099,6 +1092,46 @@ void MainWindow::slotKartinaErr (const QString &str, int req, int err)
        showInfo.setPCode("");
        secCodeDlg.slotClearPasswd();
        break;
+
+    case Kartina::ERR_MULTIPLE_ACCOUNT_USE:
+       // if someone else uses this account
+       // we have to stop the player ...
+#ifdef INCLUDE_LIBVLC
+       if (vlcCtrl.withLibVLC())
+       {
+          // stop internal player ...
+          if (ui->player->isPlaying())
+          {
+             ui->player->stop();
+          }
+       }
+       else
+#endif
+       if (vlcCtrl.IsRunning())
+       {
+          // stop external player if under control ...
+          if (!dlgSettings.DetachPlayer())
+          {
+             vlcCtrl.stop();
+          }
+       }
+
+       // || Fall through here ||
+       // VV                   VV
+
+       // Handle errors which lead to
+       // cookie removal ... !
+    case Kartina::ERR_WRONG_LOGIN_DATA:
+    case Kartina::ERR_ACCESS_DENIED:
+    case Kartina::ERR_LOGIN_INCORRECT:
+    case Kartina::ERR_CONTRACT_INACTIVE:
+    case Kartina::ERR_CONTRACT_PAUSED:
+    case Kartina::ERR_AUTHENTICATION:
+
+       // and delete the cookie ...
+       KartinaTv.SetCookie("");
+       break;
+
     default:
        break;
     }
@@ -1156,6 +1189,19 @@ void MainWindow::slotStreamURL(const QString &str)
          }
          else
          {
+#ifdef INCLUDE_LIBVLC
+            if (vlcCtrl.withLibVLC())
+            {
+                ui->player->silentStop();
+            }
+            else
+#endif
+            if (vlcCtrl.IsRunning())
+            {
+               vlcCtrl.stop();
+            }
+
+            showInfo.useStreamLoader(true);
             StartStreamDownload(sUrl, sShow);
          }
       }
@@ -1481,6 +1527,19 @@ void MainWindow::slotArchivURL(const QString &str)
          }
          else
          {
+#ifdef INCLUDE_LIBVLC
+            if (vlcCtrl.withLibVLC())
+            {
+               ui->player->silentStop();
+            }
+            else
+#endif
+            if (vlcCtrl.IsRunning())
+            {
+               vlcCtrl.stop();
+            }
+
+            showInfo.useStreamLoader(true);
             StartStreamDownload(sUrl, CleanShowName(showInfo.showName()));
          }
 
@@ -1584,6 +1643,7 @@ void MainWindow::slotIncPlayState(int iState)
       break;
 
    case IncPlay::PS_END:
+   case IncPlay::PS_STOP:
       // display "stop" in case of "end" ...
       emit sigLCDStateChange ((int)IncPlay::PS_STOP);
       break;
@@ -1591,6 +1651,13 @@ void MainWindow::slotIncPlayState(int iState)
    case IncPlay::PS_ERROR:
       // note about the error also in showInfo class ...
       showInfo.setPlayState((IncPlay::ePlayStates)iState);
+
+      // new own downloader ...
+      if (vlcCtrl.ownDwnld() && (iDwnReqId != -1))
+      {
+          streamLoader.stopDownload (iDwnReqId);
+          iDwnReqId = -1;
+      }
 
       // update play buttons ...
       TouchPlayCtrlBtns(true);
@@ -1614,7 +1681,8 @@ void MainWindow::slotDownloadStarted(int id, QString sFileName)
    sExt      = info.suffix();
 
    sCmdLine  = vlcCtrl.CreateClArgs(vlcctrl::VLC_REC_LIVE, dlgSettings.GetVLCPath(),
-                                    "", dlgSettings.GetBufferTime(), fileName, sExt);
+                                    "", dlgSettings.GetBufferTime(),
+                                    fileName, sExt);
 
    // start player if we have a command line ...
    if (sCmdLine != "")
@@ -1625,14 +1693,14 @@ void MainWindow::slotDownloadStarted(int id, QString sFileName)
    // successfully started ?
    if (!vlcpid)
    {
-//      QMessageBox::critical(this, tr("Error!"), tr("Can't start VLC-Media Player!"));
-      ui->statusBar->showMessage(tr("Error! Can't start VLC-Media Player!"));
+//      QMessageBox::critical(this, tr("Error!"), tr("Can't start player!"));
+      ui->statusBar->showMessage(tr("Error! Can't start player!"));
       ePlayState = IncPlay::PS_ERROR;
       TouchPlayCtrlBtns();
    }
    else
    {
-      mInfo(tr("Started VLC with pid #%1!").arg((uint)vlcpid));
+      mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
    }
 }
 
@@ -1790,38 +1858,54 @@ void MainWindow::slotGotVideoInfo(const QString &str)
 
 void MainWindow::slotVodURL(const QString &str)
 {
-   QStringList sUrls;
+    QStringList sUrls;
 
-   if (!XMLParser.parseVodUrls(str, sUrls))
-   {
-      if (sUrls.count() > 1)
-      {
-          showInfo.setAdUrl(sUrls[1]);
-      }
+    if (!XMLParser.parseVodUrls(str, sUrls))
+    {
+       // show ads if there ...
+       if (sUrls.count() > 1)
+       {
+           showInfo.setAdUrl(sUrls[1]);
+       }
 
-      if (ePlayState == IncPlay::PS_RECORD)
-      {
-         // use own downloader ... ?
-         if (!vlcCtrl.ownDwnld())
-         {
-            StartVlcRec(sUrls[0], CleanShowName(showInfo.showName()));
-         }
-         else
-         {
+       if (ePlayState == IncPlay::PS_RECORD)
+       {
+          // use own downloader ... ?
+          if (!vlcCtrl.ownDwnld())
+          {
+             StartVlcRec(sUrls[0], CleanShowName(showInfo.showName()));
+          }
+          else
+          {
+#ifdef INCLUDE_LIBVLC
+            if (vlcCtrl.withLibVLC())
+            {
+               ui->player->silentStop();
+            }
+            else
+#endif
+            if (vlcCtrl.IsRunning())
+            {
+               vlcCtrl.stop();
+            }
+
+            // stream loader doesn't support adds so far ... ;-)
+            showInfo.setAdUrl("");
+
             StartStreamDownload(sUrls[0], CleanShowName(showInfo.showName()), "m4v");
-         }
+          }
 
-         showInfo.setPlayState(IncPlay::PS_RECORD);
-      }
-      else if (ePlayState == IncPlay::PS_PLAY)
-      {
-         StartVlcPlay(sUrls[0]);
+          showInfo.setPlayState(IncPlay::PS_RECORD);
+       }
+       else if (ePlayState == IncPlay::PS_PLAY)
+       {
+          StartVlcPlay(sUrls[0]);
 
-         showInfo.setPlayState(IncPlay::PS_PLAY);
-      }
-   }
+          showInfo.setPlayState(IncPlay::PS_PLAY);
+       }
+    }
 
-   TouchPlayCtrlBtns(true);
+    TouchPlayCtrlBtns(true);
 }
 
 void MainWindow::slotDoubleClick()
@@ -2144,6 +2228,25 @@ void MainWindow::slotRefreshChanLogos()
    }
 }
 
+void MainWindow::slotSystrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+   switch (reason)
+   {
+   case QSystemTrayIcon::MiddleClick:
+   case QSystemTrayIcon::DoubleClick:
+   case QSystemTrayIcon::Trigger:
+   case QSystemTrayIcon::Context:
+      if (isHidden())
+      {
+         setGeometry(sizePos);
+         QTimer::singleShot(300, this, SLOT(showNormal()));
+      }
+      break;
+   default:
+      break;
+   }
+}
+
 void MainWindow::slotPCodeChangeResp(const QString &str)
 {
     Q_UNUSED(str)
@@ -2155,10 +2258,9 @@ void MainWindow::slotPCodeChangeResp(const QString &str)
     dlgParentalControl.slotNewPCodeSet();
 }
 
-void MainWindow::slotRestoreMinimized()
+void MainWindow::slotDownStreamRequested (int id)
 {
-   setWindowState(windowState() & ~(Qt::WindowMinimized | Qt::WindowActive));
-   show();
+    iDwnReqId = id;
 }
 
 #ifdef INCLUDE_LIBVLC
@@ -2166,6 +2268,9 @@ void MainWindow::slotToggleFullscreen()
 {
    if (!pVideoWidget)
    {
+      // store size and position ...
+      sizePos = geometry();
+
       // get videoWidget ...
       pVideoWidget = ui->player->getAndRemoveVideoWidget();
 
@@ -2176,7 +2281,12 @@ void MainWindow::slotToggleFullscreen()
       stackedLayout->setCurrentWidget(pVideoWidget);
 
       // make dialog fullscreen ...
-      toggleFullscreen();
+      showFullScreen();
+
+      // a possible bug fix -> make sure all is visible ...
+      pVideoWidget->show();
+      pVideoWidget->raise();
+      pVideoWidget->raiseRender();
 
       emit sigFullScreenToggled(1);
    }
@@ -2194,8 +2304,11 @@ void MainWindow::slotToggleFullscreen()
       // reset videoWidgets local pointer ...
       pVideoWidget = NULL;
 
+      // restore geometry ...
+      setGeometry(sizePos);
+
       // show normal ...
-      toggleFullscreen();
+      showNormal();
 
       emit sigFullScreenToggled(0);
    }
@@ -2224,16 +2337,25 @@ void MainWindow::initDialog()
     // -------------------------------------------
     // set last windows size / position ...
     // -------------------------------------------
-    if (dlgSettings.getGeometry().size() > 0)
+    bool ok = false;
+    sizePos = dlgSettings.GetWindowRect(&ok);
+
+    if (ok)
     {
-        restoreGeometry(dlgSettings.getGeometry());
+        setGeometry(sizePos);
     }
     else
     {
-        // delete old values ...
-        pDb->removeSetting("WndRect");
-        pDb->removeSetting("WndState");
-        pDb->removeSetting("IsMaximized");
+        // store default size ...
+        sizePos = geometry();
+    }
+
+    // -------------------------------------------
+    // maximize if it was maximized
+    // -------------------------------------------
+    if (dlgSettings.IsMaximized())
+    {
+        setWindowState(Qt::WindowMaximized);
     }
 
     // check for program updates ...
@@ -2313,7 +2435,7 @@ void MainWindow::ConnectionInit()
     // lock parental manager ...
     emit sigLockParentalManager();
 
-    if (dlgSettings.HideToSystray() && QSystemTrayIcon::isSystemTrayAvailable())
+    if (dlgSettings.HideToSystray())
     {
         connect (this, SIGNAL(sigHide()), &trayIcon, SLOT(show()));
         connect (this, SIGNAL(sigShow()), &trayIcon, SLOT(hide()));
@@ -2330,10 +2452,10 @@ void MainWindow::ConnectionInit()
 
     if (!QFile::exists(sHlp))
     {
-        sHlp = QString("%1/help_en.qhc").arg(pFolders->getDocDir());
+        sHlp = QString("%1/help_ru.qhc").arg(pFolders->getDocDir());
     }
 
-    Help.setHelpFile(sHlp);
+    pHelp->setHelpFile(sHlp);
 }
 
 void MainWindow::savePositions()
@@ -2341,20 +2463,21 @@ void MainWindow::savePositions()
    // -------------------------------------------
    // save gui settings ...
    // -------------------------------------------
-   dlgSettings.setGeometry(saveGeometry());
+   if (windowState() != Qt::WindowMaximized)
+   {
+       dlgSettings.SaveWindowRect(geometry());
+       dlgSettings.SetIsMaximized(false);
+   }
+   else
+   {
+       dlgSettings.SetIsMaximized(true);
+   }
 }
 
 void MainWindow::CreateSystray()
 {
-   trayIcon.setIcon(QIcon(":/app/tv"));
-   trayIcon.setToolTip(APP_NAME);
-
-   // create context menu for tray icon ...
-   QMenu *pShowMenu = new QMenu (this);
-   pShowMenu->addAction(QIcon(":/app/restore"),
-                        tr("&restore %1").arg(APP_NAME),
-                        this, SLOT(slotRestoreMinimized()));
-   trayIcon.setContextMenu(pShowMenu);
+   trayIcon.setIcon(QIcon(":/app/kartina"));
+   trayIcon.setToolTip(tr("KTV-Recorder - Click to open!"));
 }
 
 void MainWindow::FillChanMap(const QVector<cparser::SChan> &chanlist)
@@ -2643,15 +2766,15 @@ int MainWindow::StartVlcRec (const QString &sURL, const QString &sChannel)
       if (!vlcpid)
       {
          iRV = -1;
-//         QMessageBox::critical(this, tr("Error!"), tr("Can't start VLC-Media Player!"));
-         ui->statusBar->showMessage(tr("Error! Can't start VLC-Media Player!"));
+//         QMessageBox::critical(this, tr("Error!"), tr("Can't start player!"));
+         ui->statusBar->showMessage(tr("Error! Can't start player!"));
          ePlayState = IncPlay::PS_ERROR;
          TouchPlayCtrlBtns();
       }
       else
       {
          iRV = 0;
-         mInfo(tr("Started VLC with pid #%1!").arg((uint)vlcpid));
+         mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
       }
    }
 
@@ -2690,14 +2813,14 @@ int MainWindow::StartVlcPlay (const QString &sURL)
    if (!vlcpid)
    {
       iRV = -1;
-//      QMessageBox::critical(this, tr("Error!"), tr("Can't start VLC-Media Player!"));
-      ui->statusBar->showMessage(tr("Error! Can't start VLC-Media Player!"));
+//      QMessageBox::critical(this, tr("Error!"), tr("Can't start player!"));
+      ui->statusBar->showMessage(tr("Error! Can't start player!"));
       ePlayState = IncPlay::PS_ERROR;
       TouchPlayCtrlBtns();
    }
    else
    {
-      mInfo(tr("Started VLC with pid #%1!").arg((uint)vlcpid));
+      mInfo(tr("Started player with pid #%1!").arg((uint)vlcpid));
    }
    return iRV;
 }
@@ -2713,7 +2836,8 @@ void MainWindow::StartStreamDownload (const QString &sURL, const QString &sName,
       // yes! Create file save dialog ...
       QString   sFilter;
       QString   sTarget  = QString("%1/%2(%3)").arg(dlgSettings.GetTargetDir())
-                          .arg(sName).arg(now.toString("yyyy-MM-dd__hh-mm"));
+                          .arg(vlcCtrl.doTranslit() ? translit.CyrToLat(sName, true) : sName)
+                          .arg(now.toString("yyyy-MM-dd__hh-mm"));
 
       fileName = QFileDialog::getSaveFileName(this, tr("Save Stream as"),
                  sTarget, QString("Transport Stream (*.ts);;MPEG 4 Video (*.m4v)"),
@@ -2732,7 +2856,8 @@ void MainWindow::StartStreamDownload (const QString &sURL, const QString &sName,
    {
       // create filename as we think it's good ...
       fileName = QString("%1/%2(%3)").arg(dlgSettings.GetTargetDir())
-                 .arg(sName).arg(now.toString("yyyy-MM-dd__hh-mm"));
+                  .arg(vlcCtrl.doTranslit() ? translit.CyrToLat(sName, true) : sName)
+                  .arg(now.toString("yyyy-MM-dd__hh-mm"));
    }
 
    if (fileName != "")
@@ -2749,86 +2874,92 @@ void MainWindow::TouchPlayCtrlBtns (bool bEnable)
    if (vlcCtrl.withLibVLC())
    {
       if ((showInfo.playState() == IncPlay::PS_PLAY)
-         && showInfo.canCtrlStream() && bEnable)
+         && showInfo.canCtrlStream()
+         && bEnable)
       {
          ui->pushBwd->setEnabled(true);
          ui->pushFwd->setEnabled(true);
-         ui->actionJumpBackward->setEnabled(true);
-         ui->actionJumpForward->setEnabled(true);
          ui->cbxTimeJumpVal->setEnabled(true);
          ui->pushPlay->setIcon(QIcon(":/app/pause"));
+
+         ui->actionJumpBackward->setEnabled(true);
+         ui->actionJumpForward->setEnabled(true);
          ui->actionPlay->setIcon(QIcon(":/app/pause"));
          ui->actionPlay->setText(tr("Pause"));
       }
       else
       {
-         ui->pushBwd->setEnabled(false);
-         ui->pushFwd->setEnabled(false);
-         ui->actionJumpBackward->setEnabled(false);
-         ui->actionJumpForward->setEnabled(false);
-         ui->cbxTimeJumpVal->setEnabled(false);
+          ui->pushBwd->setEnabled(false);
+          ui->pushFwd->setEnabled(false);
+          ui->cbxTimeJumpVal->setEnabled(false);
+          ui->pushPlay->setIcon(QIcon(":/app/play"));
 
-         ui->pushPlay->setIcon(QIcon(":/app/play"));
-         ui->actionPlay->setIcon(QIcon(":/app/play"));
-         ui->actionPlay->setText(tr("Play selected Channel"));
+          ui->actionJumpBackward->setEnabled(false);
+          ui->actionJumpForward->setEnabled(false);
+          ui->actionPlay->setIcon(QIcon(":/app/play"));
+          ui->actionPlay->setText(tr("Play selected Channel"));
       }
    }
    else
    {
-      ui->pushBwd->setEnabled(false);
-      ui->pushFwd->setEnabled(false);
-      ui->actionJumpBackward->setEnabled(false);
-      ui->actionJumpForward->setEnabled(false);
-      ui->cbxTimeJumpVal->setEnabled(false);
+       ui->pushBwd->setEnabled(false);
+       ui->pushFwd->setEnabled(false);
+       ui->cbxTimeJumpVal->setEnabled(false);
+
+       ui->actionJumpBackward->setEnabled(false);
+       ui->actionJumpForward->setEnabled(false);
    }
 #endif /* INCLUDE_LIBVLC */
 
    switch (ePlayState)
    {
    case IncPlay::PS_PLAY:
-
       ui->pushPlay->setEnabled(bEnable);
-      ui->actionPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
-      ui->actionRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
-      ui->actionStop->setEnabled(bEnable);
       ui->pushLive->setEnabled(bEnable);
+
+      ui->actionPlay->setEnabled(bEnable);
+      ui->actionRecord->setEnabled(bEnable);
+      ui->actionStop->setEnabled(bEnable);
       ui->actionShow_Live->setEnabled(bEnable);
       break;
 
    case IncPlay::PS_RECORD:
       ui->pushPlay->setEnabled(false);
-      ui->actionPlay->setEnabled(false);
-      ui->pushRecord->setEnabled(false);
-      ui->actionRecord->setEnabled(false);
+      ui->pushRecord->setEnabled(bEnable);
       ui->pushStop->setEnabled(bEnable);
-      ui->actionStop->setEnabled(bEnable);
       ui->pushLive->setEnabled(false);
+
+      ui->actionPlay->setEnabled(false);
+      ui->actionRecord->setEnabled(bEnable);
+      ui->actionStop->setEnabled(bEnable);
       ui->actionShow_Live->setEnabled(false);
       break;
 
    case IncPlay::PS_TIMER_RECORD:
    case IncPlay::PS_TIMER_STBY:
       ui->pushPlay->setEnabled(false);
-      ui->actionPlay->setEnabled(false);
       ui->pushRecord->setEnabled(false);
-      ui->actionRecord->setEnabled(false);
-      ui->pushStop->setEnabled(bEnable);
-      ui->actionStop->setEnabled(bEnable);
       ui->pushLive->setEnabled(false);
+      ui->pushStop->setEnabled(bEnable);
+
+      ui->actionPlay->setEnabled(false);
+      ui->actionRecord->setEnabled(false);
       ui->actionShow_Live->setEnabled(false);
+      ui->actionStop->setEnabled(bEnable);
       break;
 
    default:
       ui->pushPlay->setEnabled(bEnable);
-      ui->actionPlay->setEnabled(bEnable);
       ui->pushRecord->setEnabled(bEnable);
-      ui->actionRecord->setEnabled(bEnable);
-      ui->pushStop->setEnabled(false);
-      ui->actionStop->setEnabled(false);
       ui->pushLive->setEnabled(bEnable);
+      ui->pushStop->setEnabled(false);
+
+      ui->actionPlay->setEnabled(bEnable);
+      ui->actionRecord->setEnabled(bEnable);
       ui->actionShow_Live->setEnabled(bEnable);
+      ui->actionStop->setEnabled(false);
       break;
    }
 
@@ -3089,6 +3220,7 @@ void MainWindow::setRecentChannel(const QString &ChanName)
          {tr("Record"),               this,         SLOT(on_actionRecord_triggered()),      "ALT+R"},
          {tr("Timer Record"),         this,         SLOT(on_actionTime_Record_triggered()), "ALT+T"},
          {tr("Settings"),             this,         SLOT(on_actionSettings_triggered()),    "ALT+O"},
+         {tr("Parental Control"),     this,         SLOT(on_actionParental_Control_triggered()),"ALT+E"},
          {tr("About"),                this,         SLOT(on_actionAbout_triggered()),       "ALT+I"},
          {tr("Channels, EPG/VOD"),    this,         SLOT(on_actionChannelsEPG_triggered()), "ALT+K"},
          {tr("Search EPG"),           pChannelDlg,  SLOT(on_btnSearch_clicked()),           "CTRL+F"},
@@ -3194,72 +3326,6 @@ void MainWindow::setRecentChannel(const QString &ChanName)
     }
 
     return iRV;
- }
-
- void MainWindow::toggleFullscreen()
- {
-     setWindowState(windowState() ^ Qt::WindowFullScreen);
-     show();
- }
-
- void MainWindow::printStateChange(const Qt::WindowStates &old)
- {
-    Qt::WindowStates cur = windowState();
-    QStringList sOld, sNew;
-
-    if (old.testFlag(Qt::WindowNoState))
-    {
-       sOld << "Qt::WindowNoState";
-    }
-
-    if (old.testFlag(Qt::WindowMinimized))
-    {
-       sOld << "Qt::WindowMinimized";
-    }
-
-    if (old.testFlag(Qt::WindowMaximized))
-    {
-       sOld << "Qt::WindowMaximized";
-    }
-
-    if (old.testFlag(Qt::WindowFullScreen))
-    {
-       sOld << "Qt::WindowFullScreen";
-    }
-
-    if (old.testFlag(Qt::WindowActive))
-    {
-       sOld << "Qt::WindowActive";
-    }
-
-    //////////
-
-    if (cur.testFlag(Qt::WindowNoState))
-    {
-       sNew << "Qt::WindowNoState";
-    }
-
-    if (cur.testFlag(Qt::WindowMinimized))
-    {
-       sNew << "Qt::WindowMinimized";
-    }
-
-    if (cur.testFlag(Qt::WindowMaximized))
-    {
-       sNew << "Qt::WindowMaximized";
-    }
-
-    if (cur.testFlag(Qt::WindowFullScreen))
-    {
-       sNew << "Qt::WindowFullScreen";
-    }
-
-    if (cur.testFlag(Qt::WindowActive))
-    {
-       sNew << "Qt::WindowActive";
-    }
-
-    mInfo(tr("WindowState change: \n --> %1 <--> %2").arg(sOld.join("|")).arg(sNew.join("|")));
  }
 
 /************************* History ***************************\

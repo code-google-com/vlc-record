@@ -477,6 +477,9 @@ color: red;
        </item>
        <item>
         <widget class="QGroupBox" name="groupAdvanced">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="title">
           <string>Advanced Settings</string>
          </property>
@@ -618,8 +621,11 @@ color: red;
             <property name="text">
              <string>Show Ads</string>
             </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
             <property name="checked">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>

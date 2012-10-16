@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cvlcrecdb.cpp $
 |
 | Author: Jo2003
 |
 | Begin: 13.06.2010 / 14:50:35
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: cvlcrecdb.cpp 890 2012-08-30 12:05:19Z Olenka.Joerg $
 \*************************************************************/
 #include "cvlcrecdb.h"
 #include "tables.h"
@@ -35,7 +35,7 @@ CVlcRecDB::CVlcRecDB()
    if(!db.open())
    {
 //      QMessageBox::critical(NULL, tr("Error!"), tr("Can't create / open SQLite database ..."));
-      pStatusBar->showMessage(tr("Error! Can't create / open SQLite database ..."));
+       pStatusBar->showMessage(tr("Error! Can't create / open SQLite database ..."));
    }
    else
    {
@@ -90,6 +90,9 @@ int CVlcRecDB::checkDb()
    if (!lAllTabs.contains("settings"))
    {
       iRV |= query.exec(TAB_SETTINGS) ? 0 : -1;
+
+      // store current data base version ...
+      setValue("db_version", REC_DB_VER);
    }
 
    if (!lAllTabs.contains("timerrec"))
@@ -100,6 +103,71 @@ int CVlcRecDB::checkDb()
    if (!lAllTabs.contains("shortcuts"))
    {
       iRV |= query.exec(TAB_SHORTCUTS) ? 0 : -1;
+   }
+
+   // db update ...
+   iRV |= updateDB();
+
+   return iRV;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: updateDB
+|  Begin: 30.08.2012
+|  Author: Jo2003
+|  Description: check if db needs update, update if needed
+|
+|  Parameters: --
+|
+|  Returns: 0 --> ok
+|          -1 --> error
+\----------------------------------------------------------------- */
+int CVlcRecDB::updateDB()
+{
+   int       iRV      = 0;
+   int       iVer     = intValue("db_version");
+   bool      bUpdVer  = (iVer != REC_DB_VER) ? true : false;
+
+   QSqlQuery query;
+
+   if (iVer > REC_DB_VER)
+   {
+      // Downgrade --> delete all settings!
+      QStringList lAllTabs = db.tables();
+
+      for (int i = 0; i < lAllTabs.count(); i++)
+      {
+         query.prepare("DELETE from ?");
+         query.addBindValue(lAllTabs.at(i));
+         iRV |= query.exec() ? 0 : -1;
+      }
+   }
+
+   while (iVer++ < REC_DB_VER)
+   {
+      // Upgrade ...
+      switch (iVer)
+      {
+      // version change 0 ... 1
+      case 1:
+         // clear aspect table since there may be
+         // many unwanted values ...
+         iRV |= query.exec("DELETE FROM aspect") ? 0 : -1;
+         break;
+
+      // Add any changes needed for version update here.
+      // E.g. 'case 2:' for changes from 1 ... 2
+      // ...
+
+      // per default nothing to do ...
+      default:
+         break;
+      }
+   }
+
+   if (bUpdVer)
+   {
+      iRV |= setValue("db_version", REC_DB_VER);
    }
 
    return iRV;
@@ -218,6 +286,32 @@ int CVlcRecDB::addAspect(int iCid, const QString &sAspect, const QString &sCrop)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: delAspect
+|  Begin: 15.08.2012
+|  Author: Jo2003
+|  Description: delete one aspect entry
+|
+|  Parameters: channel id
+|
+|  Returns: 0 --> ok
+|          -1 --> error
+\----------------------------------------------------------------- */
+int CVlcRecDB::delAspect(int iCid)
+{
+   int       iRV = 0;
+   QSqlQuery query;
+   query.prepare("DELETE FROM aspect WHERE cid=?");
+   query.addBindValue(iCid);
+
+   if (!query.exec())
+   {
+      iRV = -1;
+   }
+
+   return iRV;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: sqlError
 |  Begin: 13.06.2010 / 16:17:51
 |  Author: Jo2003
@@ -258,17 +352,16 @@ QString CVlcRecDB::stringValue(const QString &key, int *pErr)
    {
       if (pErr)
       {
-          *pErr = 0;
+         *pErr = 0;
       }
-
       rv = query.value(0).toString();
    }
    else
    {
-       if (pErr)
-       {
-           *pErr = -1;
-       }
+      if (pErr)
+      {
+         *pErr = -1;
+      }
    }
 
    return rv;
@@ -295,19 +388,18 @@ int CVlcRecDB::intValue(const QString &key, int *pErr)
 
    if (query.first())
    {
-       if (pErr)
-       {
-           *pErr = 0;
-       }
-
+      if (pErr)
+      {
+         *pErr = 0;
+      }
       rv = query.value(0).toInt();
    }
    else
    {
-       if (pErr)
-       {
-           *pErr = -1;
-       }
+      if (pErr)
+      {
+         *pErr = -1;
+      }
    }
 
    return rv;
@@ -334,19 +426,18 @@ float CVlcRecDB::floatValue(const QString &key, int *pErr)
 
    if (query.first())
    {
-       if (pErr)
-       {
-           *pErr = 0;
-       }
-
-       rv = query.value(0).toFloat();
+      if (pErr)
+      {
+         *pErr = 0;
+      }
+      rv = query.value(0).toFloat();
    }
    else
    {
-       if (pErr)
-       {
-           *pErr = -1;
-       }
+      if (pErr)
+      {
+         *pErr = -1;
+      }
    }
 
    return rv;
@@ -519,11 +610,11 @@ QByteArray CVlcRecDB::blobValue(const QString &sKey, int *pErr)
    return blob;
 }
 
+/************************* History ***************************\
+| $Log$
+\*************************************************************/
+
 void CVlcRecDB::setStatusBar(QStatusBar *pStBar)
 {
     pStatusBar = pStBar;
 }
-
-/************************* History ***************************\
-| $Log$
-\*************************************************************/

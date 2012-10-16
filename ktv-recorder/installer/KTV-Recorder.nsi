@@ -115,6 +115,10 @@ Section "libVLC Framework" SecFw
 ;   File "${LIBVLCFW}\axvlc.dll"
 ;   File "${LIBVLCFW}\npvlc.dll"
 
+; In case of update make sure we delete all old
+; VLC plugins!
+   RMDir /r "$INSTDIR\plugins"
+
    SetOutPath "$INSTDIR\plugins"
    File /r "${LIBVLCFW}\plugins\*.dll"
 SectionEnd
@@ -224,7 +228,7 @@ SectionEnd
 ; Uninstaller Section framework ...
 Section "un.Framework"
   ; delete vlc framework ...
-  Delete "$INSTDIR\plugins\*.*"
+  RMDir /r "$INSTDIR\plugins"
   Delete "$INSTDIR\libvlc.dll"
   Delete "$INSTDIR\libvlccore.dll"
 ;  Delete "$INSTDIR\axvlc.dll"
@@ -232,7 +236,6 @@ Section "un.Framework"
   Delete "$INSTDIR\cache-gen.exe"
   Delete "$INSTDIR\clearcache.bat"
 
-  RMDir  "$INSTDIR\plugins"
 SectionEnd
 
 ;-------------------------------------------------------

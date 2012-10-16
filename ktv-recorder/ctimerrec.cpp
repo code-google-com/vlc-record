@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/ctimerrec.cpp $
 |
 | Author: Jo2003
 |
 | Begin: 24.01.2010 / 15:41:34
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: ctimerrec.cpp 878 2012-08-14 09:07:41Z Olenka.Joerg $
 \*************************************************************/
 #include "ctimerrec.h"
 #include "ui_ctimerrec.h"
@@ -36,20 +36,22 @@ extern CShowInfo showInfo;
 \----------------------------------------------------------------- */
 CTimerRec::CTimerRec(QWidget *parent) : QDialog(parent), r_ui(new Ui::CTimerRec)
 {
-    r_ui->setupUi(this);
-    iTimeShift    = 0;
-    iReqId        = -1;
-    uiActId       = 0;
-    uiEdtId       = INVALID_ID;
-    pTrigger      = NULL;
-    pXmlParser    = NULL;
-    pSettings     = NULL;
-    itActJob      = NULL;
-    pStreamLoader = NULL;
-    pStatusBar    = NULL;
-    InitTab();
-    connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
-    connect (this, SIGNAL(accepted()), this, SLOT(slotSaveRecordList()));
+   r_ui->setupUi(this);
+   iTimeShift    = 0;
+   iReqId        = -1;
+   uiActId       = 0;
+   uiEdtId       = INVALID_ID;
+   pTrigger      = NULL;
+   pXmlParser    = NULL;
+   pSettings     = NULL;
+   itActJob      = NULL;
+   pStreamLoader = NULL;
+
+   pStatusBar    = NULL;
+
+   InitTab();
+   connect (&recTimer, SIGNAL(timeout()), this, SLOT(slotRecTimer()));
+   connect (this, SIGNAL(accepted()), this, SLOT(slotSaveRecordList()));
 }
 
 /* -----------------------------------------------------------------\
@@ -340,14 +342,24 @@ int CTimerRec::slotSaveRecordList()
       {
 //         QMessageBox::critical(NULL, tr("Error in %1").arg(__FUNCTION__),
 //                               tr("SQL Error String: %1").arg(pDb->sqlError()));
-         str = tr("Error in %1").arg(__FUNCTION__);
-         pStatusBar->showMessage(str.append(tr("SQL Error String: %1").arg(pDb->sqlError())));
+          str = tr("Error in %1").arg(__FUNCTION__);
+          pStatusBar->showMessage(str.append(tr("SQL Error String: %1").arg(pDb->sqlError())));
       }
    }
 
    return iRV;
 }
 
+/* -----------------------------------------------------------------\
+|  Method: on_btnSet_clicked
+|  Begin: 26.01.2010 / 16:05:00
+|  Author: Jo2003
+|  Description: insert entry into tab and joblist
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
 void CTimerRec::on_btnSet_clicked()
 {
    // sanity check ...
@@ -413,7 +425,7 @@ void CTimerRec::on_btnSet_clicked()
       {
 //         QMessageBox::warning(this, tr("Please Correct!"),
 //                              tr("Please insert a name!"));
-         pStatusBar->showMessage(tr("Please Correct! Please insert a name!"));
+          pStatusBar->showMessage(tr("Please Correct! Please insert a name!"));
       }
    }
    else
@@ -421,8 +433,9 @@ void CTimerRec::on_btnSet_clicked()
 //      QMessageBox::warning(this, tr("Please Correct!"),
 //                           tr("The entry you want to add overlapps with an existing entry\n"
 //                              "or start time is later than end time!"));
-      pStatusBar->showMessage(tr("Please Correct! The entry you want to add overlapps with an existing entry\n"
-                                 "or start time is later than end time!"));
+       pStatusBar->showMessage(tr("Please Correct! The entry you want to add overlapps with an existing entry\n"
+                                  "or start time is later than end time!"));
+
    }
 }
 
@@ -464,8 +477,9 @@ int CTimerRec::ReadRecordList()
    {
 //      QMessageBox::critical(NULL, tr("Error in %1").arg(__FUNCTION__),
 //                            tr("SQL Error String: %1").arg(pDb->sqlError()));
-      str = tr("Error in %1").arg(__FUNCTION__);
-      pStatusBar->showMessage(tr("SQL Error String: %1").arg(pDb->sqlError()));
+       str = tr("Error in %1").arg(__FUNCTION__);
+       pStatusBar->showMessage(tr("SQL Error String: %1").arg(pDb->sqlError()));
+
       iRV = -1;
    }
 
@@ -970,7 +984,7 @@ void CTimerRec::slotTimerStreamUrl(const QString &str)
          if (!vlcpid)
          {
 //            QMessageBox::critical(this, tr("Error!"), tr("Can't start Player!"));
-            pStatusBar->showMessage(tr("Error! Can't start Player!"));
+             pStatusBar->showMessage(tr("Error! Can't start Player!"));
          }
          else
          {
@@ -1027,7 +1041,8 @@ void CTimerRec::slotStreamReady (int Id, QString sName)
       sExt      = info.suffix();
 
       sCmdLine  = pVlcCtrl->CreateClArgs(vlcctrl::VLC_REC_LIVE, pSettings->GetVLCPath(),
-                                         "", pSettings->GetBufferTime(), fileName, sExt);
+                                         "", pSettings->GetBufferTime(),
+                                         fileName, sExt);
 
       // start player if we have a command line ...
       if (sCmdLine != "")
@@ -1039,7 +1054,7 @@ void CTimerRec::slotStreamReady (int Id, QString sName)
       if (!vlcpid)
       {
 //         QMessageBox::critical(this, tr("Error!"), tr("Can't start Player!"));
-         pStatusBar->showMessage(tr("Error! Can't start Player!"));
+          pStatusBar->showMessage(tr("Error! Can't start Player!"));
       }
       else
       {
@@ -1048,11 +1063,11 @@ void CTimerRec::slotStreamReady (int Id, QString sName)
    }
 }
 
+/************************* History ***************************\
+| $Log$
+\*************************************************************/
+
 void CTimerRec::setStatusBar(QStatusBar *pStBar)
 {
     pStatusBar = pStBar;
 }
-
-/************************* History ***************************\
-| $Log$
-\*************************************************************/

@@ -167,17 +167,17 @@ void QFTSettings::saveFTSettings()
    pDb->setValue("TargetDir",    tr("%1/Videos").arg(QDir::homePath()));
 #endif
    pDb->setValue("FixTime",      (int)Qt::Checked);  // fix time
-   pDb->setValue("Refresh",      (int)Qt::Checked);  // refresh channel list
+   pDb->setValue("Refresh",      (int)Qt::Unchecked);  // refresh channel list
    pDb->setValue("RefIntv",      5);                 // refresh interval
    pDb->setValue("ExtChanList",  (int)Qt::Checked);  // show extended channel list
    pDb->setValue("PlayerModule", "5_libvlc.mod");    // default player module
-   pDb->setValue("HttpCache",    8000);              // 8 sec. cache
-   pDb->setValue("UpdateCheck",  (int)Qt::Checked);  // check for updates
-   pDb->setValue("2ClickPlay",   (int)Qt::Checked);  // double click on channel list starts player
+   pDb->setValue("HttpCache",    3000);              // 3 sec. cache
+   pDb->setValue("UpdateCheck",  (int)Qt::Unchecked);  // check for updates
+   pDb->setValue("2ClickPlay",   (int)Qt::Unchecked);  // double click on channel list starts player
    pDb->setValue("LogLevel",     3);                 // log everything
 
    // set windows size and position ...
-   pDb->setValue("WndGeometry",    "01:d9:d0:cb:00:01:00:00:00:00:01:71:00:00:00:9d:00:00:06:0e:00:00:03:98:00:00:01:79:00:00:00:bb:00:00:06:06:00:00:03:90:00:00:00:01:00:00");
+   pDb->setValue("WndRect",        "74;71;1220;752");
    pDb->setValue("spVChanEpg",     "270;394;");
    pDb->setValue("spVChanEpgPlay", "693;500;");
    pDb->setValue("spHPlay",        "450;185;");

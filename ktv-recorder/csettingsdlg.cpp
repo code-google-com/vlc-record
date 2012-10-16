@@ -36,8 +36,6 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
     m_ui(new Ui::CSettingsDlg)
 {
    m_ui->setupUi(this);
-   pParser         = NULL;
-   pCmdQueue       = NULL;
 
    pStatusBar = NULL;
 
@@ -199,7 +197,7 @@ void CSettingsDlg::readSettings()
    if (iErr)
    {
        // enable by default ...
-       m_ui->checkAds->setCheckState(Qt::Checked);
+       m_ui->checkAds->setCheckState(Qt::Unchecked);
    }
 
    m_ui->checkUpdate->setCheckState((Qt::CheckState)pDb->intValue("UpdateCheck", &iErr));
@@ -208,7 +206,7 @@ void CSettingsDlg::readSettings()
    if (iErr)
    {
        // enable by default ...
-       m_ui->checkUpdate->setCheckState(Qt::Checked);
+       m_ui->checkUpdate->setCheckState(Qt::Unchecked);
    }
 
    m_ui->tabWidget->setTabEnabled(2, pDb->intValue("AdvSet") ? true : false);
@@ -275,12 +273,6 @@ void CSettingsDlg::readSettings()
 
    iIdx = m_ui->cbxPlayerMod->findText(s);
    m_ui->cbxPlayerMod->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
-
-   // check if hide to systray is supported ...
-   if (!QSystemTrayIcon::isSystemTrayAvailable())
-   {
-       m_ui->checkHideToSystray->setDisabled(true);
-   }
 }
 
 /* -----------------------------------------------------------------\
@@ -740,6 +732,65 @@ void CSettingsDlg::on_cbxTimeShift_activated(int index)
 }
 
 /* -----------------------------------------------------------------\
+|  Method: SaveWindowRect
+|  Begin: 27.01.2010 / 11:22:39
+|  Author: Jo2003
+|  Description: save windows position in ini file
+|
+|  Parameters: windows position / size
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::SaveWindowRect (const QRect &wnd)
+{
+   QString sGeo = QString("%1;%2;%3;%4").arg(wnd.x()).arg(wnd.y())
+                  .arg(wnd.width()).arg(wnd.height());
+
+   pDb->setValue ("WndRect", sGeo);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: GetWindowRect
+|  Begin: 27.01.2010 / 11:22:39
+|  Author: Jo2003
+|  Description: get windows position / size from ini file
+|
+|  Parameters: pointer to ok flag
+|
+|  Returns:  position, size of window
+\----------------------------------------------------------------- */
+QRect CSettingsDlg::GetWindowRect (bool *ok)
+{
+   QString sGeo = pDb->stringValue("WndRect");
+   QRect   wnd;
+
+   if (ok)
+   {
+      *ok = false;
+   }
+
+   if (sGeo.length() > 0)
+   {
+      QRegExp rx("^([0-9]*);([0-9]*);([0-9]*);([0-9]*).*$");
+
+      if (rx.indexIn(sGeo) > -1)
+      {
+         wnd.setX(rx.cap(1).toInt());
+         wnd.setY(rx.cap(2).toInt());
+         wnd.setWidth(rx.cap(3).toInt());
+         wnd.setHeight(rx.cap(4).toInt());
+
+         if (ok)
+         {
+            *ok = true;
+         }
+      }
+   }
+
+   return wnd;
+}
+
+/* -----------------------------------------------------------------\
 |  Method: SaveSplitterSizes
 |  Begin: 18.02.2010 / 11:22:39
 |  Author: Jo2003
@@ -751,14 +802,15 @@ void CSettingsDlg::on_cbxTimeShift_activated(int index)
 \----------------------------------------------------------------- */
 void CSettingsDlg::SaveSplitterSizes (const QString &name, const QList<int> &sz)
 {
-   QStringList sl;
+   QString     sSz;
+   QTextStream str(&sSz);
 
    for (int i = 0; i < sz.size(); i++)
    {
-      sl << QString::number(sz[i]);
+      str << sz[i] << ";";
    }
 
-   pDb->setValue (name, sl.join(";"));
+   pDb->setValue (name, sSz);
 }
 
 /* -----------------------------------------------------------------\
@@ -796,27 +848,27 @@ void CSettingsDlg::SaveFavourites(const QList<int> &favList)
 \----------------------------------------------------------------- */
 QList<int> CSettingsDlg::GetSplitterSizes(const QString &name, bool *ok)
 {
-   int         err;
-   QString     s   = pDb->stringValue(name, &err);
-   QList<int>  sz;
+   QString    sSz = pDb->stringValue(name);
+   QList<int> sz;
 
    if (ok)
    {
       *ok = false;
    }
 
-   if ((s.size() > 0) && !err)
+   if (sSz.length() > 0)
    {
-      QStringList sl  = s.split(";");
-
-      for (int i = 0; i < sl.count(); i++)
+      for (int i = 0; i < sSz.count(';'); i++)
       {
-         sz << sl.at(i).toInt();
+         sz << sSz.section(';', i, i).toInt();
       }
 
       if (ok)
       {
-         *ok = true;
+         if (sz.size() > 0)
+         {
+            *ok = true;
+         }
       }
    }
 
@@ -860,6 +912,38 @@ QList<int> CSettingsDlg::GetFavourites(bool *ok)
    }
 
    return lFav;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: SetIsMaximized
+|  Begin: 18.02.2010 / 11:22:39
+|  Author: Jo2003
+|  Description: store windows state (maximized or something else)
+|
+|  Parameters: maximized flag
+|
+|  Returns:  --
+\----------------------------------------------------------------- */
+void CSettingsDlg::SetIsMaximized(bool bMax)
+{
+   int iState = (bMax) ? 1 : 0;
+   pDb->setValue("IsMaximized", iState);
+}
+
+/* -----------------------------------------------------------------\
+|  Method: IsMaximized
+|  Begin: 18.02.2010 / 11:22:39
+|  Author: Jo2003
+|  Description: get last windows state (maximized or something else)
+|
+|  Parameters: --
+|
+|  Returns:  true --> maximized
+|           false --> not maximized
+\----------------------------------------------------------------- */
+bool CSettingsDlg::IsMaximized()
+{
+   return (pDb->intValue("IsMaximized")) ? true : false;
 }
 
 /* -----------------------------------------------------------------\
@@ -920,36 +1004,6 @@ QString CSettingsDlg::GetCookie()
 void CSettingsDlg::SaveCookie(const QString &str)
 {
    pDb->setValue ("LastCookie", str);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: setGeometry
-|  Begin: 11.07.2012
-|  Author: Jo2003
-|  Description: save a geometry
-|
-|  Parameters: ref. byte array
-|
-|  Returns:  --
-\----------------------------------------------------------------- */
-void CSettingsDlg::setGeometry(const QByteArray &ba)
-{
-   pDb->setBlob("WndGeometry", ba);
-}
-
-/* -----------------------------------------------------------------\
-|  Method: getGeometry
-|  Begin: 11.07.2012
-|  Author: Jo2003
-|  Description: get stored geometry
-|
-|  Parameters: --
-|
-|  Returns:  byte array with geometry data
-\----------------------------------------------------------------- */
-QByteArray CSettingsDlg::getGeometry()
-{
-   return pDb->blobValue("WndGeometry");
 }
 
 /* -----------------------------------------------------------------\

@@ -17,7 +17,7 @@
              <section title="Главное окно и меню программы" ref="help_ru.html#mainwindow"/>
              <section title="Настройки" ref="help_ru.html#settings">
                 <section title="Настройки" ref="help_ru.html#setsettings"/>
-                <section title="Сокращения" ref="help_ru.html#sethots"/>
+                <section title="Горячие клавиши" ref="help_ru.html#sethots"/>
                 <section title="Допол. настройки" ref="help_ru.html#setadvanced"/>
              </section>
              <section title="Список каналов и программы передач" ref="help_ru.html#epg"/>
