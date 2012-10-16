@@ -601,10 +601,22 @@ border-top: 0px;
    <property name="text">
     <string>Settings</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+O</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
   </action>
   <action name="actionChannelsEPG">
    <property name="text">
     <string>Channels, EPG and VOD</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+K</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionGuid">
@@ -615,6 +627,12 @@ border-top: 0px;
    <property name="text">
     <string>Guide</string>
    </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="icon">
@@ -624,10 +642,22 @@ border-top: 0px;
    <property name="text">
     <string>About</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Q</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionPlay">
@@ -685,6 +715,12 @@ border-top: 0px;
    </property>
    <property name="text">
     <string>Time Record</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
   <action name="actionShow_Upper_Tools_Panel">
@@ -771,6 +807,12 @@ border-top: 0px;
    </property>
    <property name="text">
     <string>Parental Control</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
    </property>
   </action>
  </widget>

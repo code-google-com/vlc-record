@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cvlcctrl.h $
 |
 | Author: Jo2003
 |
 | Begin: 01.02.2010 / 10:50:35
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg@gmail.com $
 |
-| $Id$
+| $Id: cvlcctrl.h 882 2012-08-14 16:32:48Z Olenka.Joerg@gmail.com $
 \*************************************************************/
 #ifndef __020110__CVLCCTRL_H
    #define __020110__CVLCCTRL_H
@@ -78,6 +78,8 @@ public:
    void    UseLibVlc (bool bUsage);
    bool    withLibVLC();
    bool    ownDwnld();
+   bool    doTranslit();
+
    void setStatusBar(QStatusBar *pStBar);
 
 private:
@@ -96,6 +98,7 @@ private:
    IncPlay::ePlayStates libVlcPlayState;
    IncPlay::ePlayStates reqState;
    bool       bOwnDownloader;
+
    QStatusBar *pStatusBar;
 
 private slots:
@@ -118,4 +121,3 @@ public slots:
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-

@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cplayer.h $
 |
 | Author: Jo2003
 |
 | Begin: 24.02.2010 / 10:41:34
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: cplayer.h 893 2012-09-03 10:37:14Z Olenka.Joerg $
 \*************************************************************/
 #ifndef __022410__CPLAYER_H
    #define __022410__CPLAYER_H
@@ -21,7 +21,6 @@
 #include <QTime>
 #include <QDesktopWidget>
 #include <QComboBox>
-#include <QMap>
 
 #include <vlc/vlc.h>
 
@@ -65,54 +64,69 @@ public:
    void stopPlayTimer ();
    void setSettings (CSettingsDlg *pDlg);
    void setTrigger (CWaitTrigger *pTrig);
-   static void eventCallback (const libvlc_event_t *ev, void *player);
+   static void eventCallback (const libvlc_event_t *ev, void *userdata);
    bool isPositionable();
    void initSlider ();
    uint getSilderPos();
+   QVlcVideoWidget* getAndRemoveVideoWidget();
+   void  addAndEmbedVideoWidget();
+   ulong libvlcVersion();
+
+   static libvlc_event_type_t _actEvent;
+   static const char*         _pAspect[];
+   static const char*         _pCrop[];
+
    QFrame* getFrameTimerInfo();
    QComboBox* getCbxAspect();
    QComboBox* getCbxCrop();
-   QVlcVideoWidget* getAndRemoveVideoWidget();
-   void addAndEmbedVideoWidget();
 
 protected:
    virtual void changeEvent(QEvent *e);
    void enableDisablePlayControl (bool bEnable);
    void connectToVideoWidget ();
-   int  addAd (libvlc_media_list_t *pList);
+   int  addAd ();
+   int  clearMediaList();
+   QString aspectCropToString (const char *pFormat);
 
 private:
    Ui::CPlayer                 *ui;
    QTimer                       sliderTimer;
    QTimer                       tAspectShot;
+   QTimer                       tEventPoll;
    CTimerEx                     timer;
    libvlc_instance_t           *pVlcInstance;
    libvlc_media_player_t       *pMediaPlayer;
    libvlc_event_manager_t      *pEMPlay;
    libvlc_media_list_player_t  *pMedialistPlayer;
+   libvlc_media_list_t         *pMediaList;
+   libvlc_event_type_t          lastEvent;
    bool                         bCtrlStream;
    CSettingsDlg                *pSettings;
    CWaitTrigger                *pTrigger;
    bool                         bSpoolPending;
    uint                         uiDuration;
-   QMap<QString, QString>       mAspect;
-   QMap<QString, QString>       mCrop;
+   ulong                        ulLibvlcVersion;
+   bool                         bOmitNextEvent;
 
 private slots:
    void on_posSlider_valueChanged(int value);
    void on_btnFullScreen_clicked();
-   void on_cbxAspect_currentIndexChanged(QString str);
-   void on_cbxCrop_currentIndexChanged(QString str);
+   void on_cbxAspect_currentIndexChanged(int idx);
+   void on_cbxCrop_currentIndexChanged(int idx);
    void slotChangeVolume(int newVolume);
    void slotUpdateSlider ();
    void slotChangeVolumeDelta (const bool up);
    void slotSliderPosChanged();
    void slotToggleFullscreen();
+   void slotEventPoll();
+
+   void on_btnSaveAspectCrop_clicked();
 
 public slots:
    int  playMedia (const QString &sCmdLine);
    int  play();
    int  stop();
+   int  silentStop();
    int  pause();
    int  slotToggleAspectRatio ();
    int  slotToggleCropGeometry ();
@@ -123,12 +137,14 @@ public slots:
    void slotMute();
    void slotShowInfoUpdated();
    void slotFsToggled (int on);
+   void slotResetVideoFormat();
 
 signals:
    void sigPlayState (int ps);
    void sigTriggerAspectChg ();
    void sigCheckArchProg(ulong ulArchGmt);
    void sigToggleFullscreen();
+
    void sigAspectToggle(int idx);
    void sigCropToggle(int idx);
 };

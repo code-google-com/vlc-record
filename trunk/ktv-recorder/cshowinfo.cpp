@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cshowinfo.cpp $
 |
 | Author: Jo2003
 |
 | Begin: 24.02.2010 / 10:41:34
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: cshowinfo.cpp 892 2012-08-31 13:26:27Z Olenka.Joerg $
 \*************************************************************/
 #include "cshowinfo.h"
 #include "templates.h"
@@ -26,7 +26,7 @@
 \----------------------------------------------------------------- */
 CShowInfo::CShowInfo(QObject *parent) : QObject(parent)
 {
-    cleanShowInfo();
+   cleanShowInfo();
 }
 
 /* -----------------------------------------------------------------\
@@ -41,18 +41,19 @@ CShowInfo::CShowInfo(QObject *parent) : QObject(parent)
 \----------------------------------------------------------------- */
 void CShowInfo::cleanShowInfo()
 {
-   sShowName  = "";
-   sChanName  = "";
-   sDescr     = "";
-   sAdUrl     = "";
-   sPCode     = "";
-   iChannelId = -1;
-   iVodId     = -1;
-   ePlayState = IncPlay::PS_STOP;
-   eShowType  = ShowInfo::Live;
-   uiStart    = 0;
-   uiEnd      = 0;
-   uiJumpTime = 0;
+   sShowName     = "";
+   sChanName     = "";
+   sDescr        = "";
+   sAdUrl        = "";
+   sPCode        = "";
+   iChannelId    = -1;
+   iVodId        = -1;
+   ePlayState    = IncPlay::PS_STOP;
+   eShowType     = ShowInfo::Live;
+   uiStart       = 0;
+   uiEnd         = 0;
+   uiJumpTime    = 0;
+   bStreamLoader = false;
    epgMap.clear();
 }
 
@@ -233,7 +234,7 @@ void CShowInfo::setAdUrl(const QString &adUrl)
 \----------------------------------------------------------------- */
 void CShowInfo::setPCode(const QString &code)
 {
-    sPCode = code;
+   sPCode = code;
 }
 
 /* -----------------------------------------------------------------\
@@ -249,6 +250,36 @@ void CShowInfo::setPCode(const QString &code)
 void CShowInfo::setEpgMap(const t_EpgMap &map)
 {
    epgMap = map;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: useStreamLoader
+|  Begin: 31.08.2012
+|  Author: Jo2003
+|  Description: do we use the streamloader?
+|
+|  Parameters: true or false
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CShowInfo::useStreamLoader(bool bUse)
+{
+   bStreamLoader = bUse;
+}
+
+/* -----------------------------------------------------------------\
+|  Method: streamLoader
+|  Begin: 31.08.2012
+|  Author: Jo2003
+|  Description: get streamloader flag
+|
+|  Parameters: --
+|
+|  Returns: true or false
+\----------------------------------------------------------------- */
+bool CShowInfo::streamLoader()
+{
+   return bStreamLoader;
 }
 
 /* -----------------------------------------------------------------\
@@ -452,7 +483,7 @@ const QString& CShowInfo::adUrl()
 \----------------------------------------------------------------- */
 const QString& CShowInfo::pCode()
 {
-    return sPCode;
+   return sPCode;
 }
 
 /* -----------------------------------------------------------------\

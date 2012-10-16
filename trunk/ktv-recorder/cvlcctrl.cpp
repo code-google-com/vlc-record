@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cvlcctrl.cpp $
 |
 | Author: Jo2003
 |
 | Begin: 01.02.2010 / 10:50:35
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg@gmail.com $
 |
-| $Id$
+| $Id: cvlcctrl.cpp 882 2012-08-14 16:32:48Z Olenka.Joerg@gmail.com $
 \*************************************************************/
 #include "cvlcctrl.h"
 
@@ -37,6 +37,7 @@ CVlcCtrl::CVlcCtrl(const QString &path, QObject *parent) : QProcess(parent)
    libVlcPlayState   = IncPlay::PS_WTF;
    reqState          = IncPlay::PS_WTF;
    bOwnDownloader    = false;
+
    pStatusBar = NULL;
 
    if (path != "")
@@ -458,7 +459,7 @@ QString CVlcCtrl::CreateClArgs (vlcctrl::eVlcAct eAct, const QString &sPlayer,
       sMux = sFrcMx;
    }
 
-   if (bTranslit || bForcedTranslit)
+   if (doTranslit() && !bOwnDownloader)
    {
       sDstFile = QString("%1/%2").arg(dstInfo.path())
                  .arg(pTranslit->CyrToLat(dstInfo.baseName()));
@@ -679,12 +680,34 @@ bool CVlcCtrl::ownDwnld()
    return bOwnDownloader;
 }
 
-void CVlcCtrl::setStatusBar(QStatusBar *pStBar)
+/* -----------------------------------------------------------------\
+|  Method: doTranslit
+|  Begin: 14.08.2012
+|  Author: Jo2003
+|  Description: should we translit the filename
+|
+|  Parameters: --
+|
+|  Returns: true --> yes
+|          false --> no
+\----------------------------------------------------------------- */
+bool CVlcCtrl::doTranslit()
 {
-    pStatusBar = pStBar;
+   if (bTranslit || bForcedTranslit)
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
 }
 
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
 
+void CVlcCtrl::setStatusBar(QStatusBar *pStBar)
+{
+    pStatusBar = pStBar;
+}

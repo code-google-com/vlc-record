@@ -1,13 +1,13 @@
 /*********************** Information *************************\
-| $HeadURL$
+| $HeadURL: https://vlc-record.googlecode.com/svn/trunk/vlc-record/cvlcrecdb.h $
 |
 | Author: Jo2003
 |
 | Begin: 13.06.2010 / 14:50:35
 |
-| Last edited by: $Author$
+| Last edited by: $Author: Olenka.Joerg $
 |
-| $Id$
+| $Id: cvlcrecdb.h 890 2012-08-30 12:05:19Z Olenka.Joerg $
 \*************************************************************/
 #ifndef __120610_VLC_REC_DB_H
    #define __120610_VLC_REC_DB_H
@@ -25,6 +25,7 @@
 #include "cdirstuff.h"
 
 #define VLC_REC_DB "vlcrec.db.sqlite"
+#define REC_DB_VER  1
 
 /********************************************************************\
 |  Class: CVlcRecDB
@@ -42,6 +43,8 @@ public:
    ~CVlcRecDB();
    int aspect (int iCid, QString &sAspect, QString &sCrop);
    int addAspect (int iCid, const QString &sAspect, const QString &sCrop);
+   int delAspect (int iCid);
+   int updateDB ();
    QString sqlError();
 
    /* -----------------------------------------------------------------\
@@ -78,8 +81,8 @@ public:
    int        removeSetting(const QString &sKey);
    QByteArray blobValue(const QString &sKey, int *pErr = NULL);
 
-
    void       setStatusBar(QStatusBar *pStBar);
+
 
 protected:
    int checkDb();
@@ -88,6 +91,7 @@ protected:
 private:
    QSqlDatabase db;
    QSqlQuery    qExp;
+
    QStatusBar  *pStatusBar;
 };
 
@@ -95,3 +99,4 @@ private:
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
+

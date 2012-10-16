@@ -18,7 +18,6 @@
 #include <QDir>
 #include <QTableWidget>
 #include <QStatusBar>
-#include <QSystemTrayIcon>
 
 #include "cvlcrecdb.h"
 #include "clogfile.h"
@@ -27,7 +26,6 @@
 #include "ckartinaxmlparser.h"
 #include "cshortcutex.h"
 #include "cshortcutgrabber.h"
-#include "cwaittrigger.h"
 #include "qseccodedlg.h"
 
 //===================================================================
@@ -85,6 +83,10 @@ public:
     int GetBufferTime ();
     vlclog::eLogLevel GetLogLevel ();
 
+    void  SaveWindowRect (const QRect &wnd);
+    QRect GetWindowRect (bool *ok = NULL);
+    bool  IsMaximized ();
+    void  SetIsMaximized (bool bMax);
     void  SaveSplitterSizes (const QString &name, const QList<int> &sz);
     QList<int> GetSplitterSizes (const QString &name, bool *ok = NULL);
     int   GetCustFontSize ();
@@ -105,20 +107,15 @@ public:
     void fillTimeShiftCbx(const QVector<int> &vVals, int iAct);
     uint libVlcVerboseLevel();
     void setStatusBar(QStatusBar *pStBar);
-    void setGeometry(const QByteArray &ba);
-    QByteArray getGeometry();
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 private:
     Ui::CSettingsDlg  *m_ui;
-    QString            sTempPasswd;
     CShortcutEx       *pShortApiServer;
     CShortcutEx       *pShortVerbLevel;
     QVector<float>     vBuffs;
-    CWaitTrigger      *pCmdQueue;
-    CKartinaXMLParser *pParser;
     QSecCodeDlg        secCodeDlg;
 
     QVector<cparser::SChan>    channelVector;

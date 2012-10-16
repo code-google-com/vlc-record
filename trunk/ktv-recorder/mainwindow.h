@@ -72,11 +72,10 @@ public:
 
 public slots:
     virtual void exec();
-    void slotRestoreMinimized ();
 
 private:
     Ui::MainWindow 		  *ui;
-    QHelpDialog                    Help;
+    QHelpDialog                   *pHelp;
     CChannelsEPGdlg               *pChannelDlg;
     CSettingsDlg                   dlgSettings;
     CParentalControlDlg            dlgParentalControl;
@@ -155,7 +154,6 @@ protected:
     void fillShortCutTab();
     int  grantAdultAccess (bool bProtected);
     void savePositions ();
-    void toggleFullscreen();
 
     virtual void changeEvent(QEvent *e);
     virtual void keyPressEvent(QKeyEvent *event);
@@ -232,13 +230,14 @@ private slots:
     void slotUpdateAnswer (QNetworkReply* pRes);
     void slotCheckArchProg(ulong ulArcGmt);
     void slotEpgRefresh();
+    void slotSystrayActivated (QSystemTrayIcon::ActivationReason reason);
 
     void slotKartinaErr (const QString &str, int req, int err);
     void slotKartinaResponse(const QString& resp, int req);
     void slotUnused(const QString &str);
     void slotRefreshChanLogos ();
     void slotPCodeChangeResp (const QString &str);
-    void printStateChange(const Qt::WindowStates &old);
+    void slotDownStreamRequested (int id);
 
 signals:
     void sigToggleFullscreen ();

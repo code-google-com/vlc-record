@@ -37,6 +37,7 @@
 #define APP_INI_FILE      "ktv-rcd.ini"
 #define APP_LOG_FILE      "ktv-recorder.log"
 #define PLAYER_LOG_FILE   "player.log"
+#define LIBVLC_LOG_FILE   "libvlc.log"
 #define MOD_DIR           "modules"
 #define LANG_DIR          "language"
 #define LANG_DIR_QT       "translations"
@@ -58,7 +59,7 @@
 #define ARCHIV_OFFSET     900             // 15 minutes after show start, archiv should be available
 #define MAX_ARCHIV_AGE    1209000         // < 2 weeks in seconds
 #define MAX_NO_FAVOURITES 10              // max. number of favourites ...
-#define MIN_CACHE_SIZE    5000000         // < 5 MB ...
+#define MIN_CACHE_SIZE    6000000         // < 6 MB ...
 #define TIME_OFFSET       (35 * 365 * 24 * 3600) // make the slider handle gmt
 #define VIDEOS_PER_SITE   20              // number of videos / site
 #define GPU_ACC_TOKEN     ":ffmpeg-hw"    // mrl option to use GPU acceleration
@@ -85,5 +86,4 @@ namespace Translators
 /************************* History ***************************\
 | $Log$
 \*************************************************************/
-
 
