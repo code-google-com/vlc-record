@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customization>
+  <strings>
+    <string name="APP_NAME" value="Polsky.TV" />
+    <string name="UPD_CHECK_URL" value="http://rt.coujo.de/polsky_tv_ver.xml" />
+    <string name="KARTINA_HOST" value="iptv.polsky.tv" />
+    <string name="COMPANY_NAME" value="Polsky.TV" />
+    <string name="COMPANY_LINK" value="<a href='http://www.polsky.tv'>Polsky.TV</a>" />
+  </strings>
+  <dialog>
+    <widget class="CSettingsDlg" object="checkAds" action="setDisabled" value="true" />
+  </dialog>
+</customization>
