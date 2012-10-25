@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customization>
+  <strings>
+    <string name="APP_NAME" value="VLC-Record" />
+    <string name="UPD_CHECK_URL" value="http://rt.coujo.de/vlc_record_ver.xml" />
+    <string name="BIN_NAME" value="vlc-record" />
+    <string name="KARTINA_HOST" value="iptv.kartina.tv" />
+    <string name="COMPANY_NAME" value="Kartina.TV" />
+    <string name="COMPANY_LINK" value="<a href='http://www.kartina.tv'>Kartina.TV</a>" />
+  </strings>
+  <dialog>
+    <widget class="CSettingsDlg" object="checkAds" action="setDisabled" value="true" />
+  </dialog>
+</customization>
