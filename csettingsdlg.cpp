@@ -22,6 +22,9 @@ extern CDirStuff *pFolders;
 // storage db ...
 extern CVlcRecDB *pDb;
 
+// global customization class ...
+extern QCustParser *pCustomization;
+
 /* -----------------------------------------------------------------\
 |  Method: CSettingsDlg / constructor
 |  Begin: 19.01.2010 / 15:43:38
@@ -56,7 +59,7 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
 
    // set company name for login data ...
    QString s = m_ui->groupAccount->title();
-   m_ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
+   m_ui->groupAccount->setTitle(s.arg(pCustomization->strVal("COMPANY_NAME")));
 
    // fill in buffer values ...
    vBuffs << 1.5 << 3 << 5 << 8 << 15 << 20 << 30 << 45 << 60 << 90;
@@ -215,7 +218,7 @@ void CSettingsDlg::readSettings()
 
    if (m_ui->lineApiServer->text() == "")
    {
-      m_ui->lineApiServer->setText (KARTINA_HOST);
+      m_ui->lineApiServer->setText (pCustomization->strVal("KARTINA_HOST"));
    }
 
    // in case we use customization we should hide the API server name stuff ...
@@ -376,7 +379,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
 
           // set company name ...
           QString s = m_ui->groupAccount->title();
-          m_ui->groupAccount->setTitle(s.arg(COMPANY_NAME));
+          m_ui->groupAccount->setTitle(s.arg(pCustomization->strVal("COMPANY_NAME")));
        }
        break;
     default:

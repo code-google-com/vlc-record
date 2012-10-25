@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/app">
+    <qresource prefix="/oem">
+        <file alias="cust">resources/cust_polsky_tv.xml</file>
         <file alias="kartina">resources/polsky_tv.png</file>
         <file alias="live">resources/polskytv_live.png</file>
     </qresource>

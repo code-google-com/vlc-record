@@ -13,7 +13,8 @@
    #define __011810__DEFDEF_H
 
 #include <QtGlobal>
-
+#include "qcustparser.h"
+/*
 #ifdef _TASTE_KARTINA_TV
    #include <defines_kartina_tv.h>
 #elif defined _TASTE_POLSKY_TV
@@ -23,14 +24,12 @@
 #else
    #include <defines_vlc_record.h>
 #endif // _TASTE_XXX
-
+*/
 
 #ifdef Q_OS_WIN32
    #define DATA_DIR_ENV   "APPDATA"
-   #define DATA_DIR       APP_NAME
 #else
    #define DATA_DIR_ENV   "HOME"
-   #define DATA_DIR       "." APP_NAME
 #endif
 
 #ifdef __GNUC__
@@ -39,11 +38,12 @@
    #define __UNUSED
 #endif
 
-#define APP_LOG_FILE      BIN_NAME ".log"
+// #define APP_LOG_FILE      BIN_NAME ".log"
 #define PLAYER_LOG_FILE   "player.log"
 #define LIBVLC_LOG_FILE   "libvlc.log"
 #define MOD_DIR           "modules"
 #define LANG_DIR          "language"
+#define RES_DIR           "resources"
 #define LANG_DIR_QT       "translations"
 #define LOGO_DIR          "logos"
 #define VOD_DIR           "vod"
