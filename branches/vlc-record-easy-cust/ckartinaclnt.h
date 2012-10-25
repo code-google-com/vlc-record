@@ -217,10 +217,8 @@ public:
    void fillErrorMap();
 
 protected:
-   void PostRequest (Kartina::EReq req, const QString &path, const QString &content,
-                     const QString &sBrowser = APP_NAME " " __MY__VERSION__);
-   void GetRequest (Kartina::EReq req, const QString &sRequest,
-                    const QString &sBrowser = APP_NAME " " __MY__VERSION__);
+   void PostRequest (Kartina::EReq req, const QString &path, const QString &content);
+   void GetRequest (Kartina::EReq req, const QString &sRequest);
 
 private:
    Kartina::EReq eReq;

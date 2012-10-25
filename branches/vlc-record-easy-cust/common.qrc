@@ -59,4 +59,9 @@
         <file alias="unlocked">resources/lock_open.png</file>
         <file alias="locked">resources/lock_closed.png</file>
     </qresource>
+    <qresource prefix="/unbranded">
+        <file alias="kartina">resources/vlc-record.png</file>
+        <file alias="cust">resources/cust_vlc-record.xml</file>
+        <file alias="live">resources/television_live.png</file>
+    </qresource>
 </RCC>

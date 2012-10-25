@@ -15,6 +15,9 @@
 // log file functions ...
 extern CLogFile VlcLog;
 
+// global customization class ...
+extern QCustParser *pCustomization;
+
 /*-----------------------------------------------------------------------------\
 | Function:    CKartinaClnt / constructor
 |
@@ -163,14 +166,13 @@ void CKartinaClnt::Logout ()
 \-----------------------------------------------------------------------------*/
 void CKartinaClnt::PostRequest (Kartina::EReq req,
                                 const QString &path,
-                                const QString &content,
-                                const QString &sBrowser)
+                                const QString &content)
 {
    eReq = req;
    QHttpRequestHeader header("POST", path.toAscii());
    header.addValue("Host", sHost);
    header.setContentType("application/x-www-form-urlencoded");
-   header.addValue("User-Agent", sBrowser);
+   header.addValue("User-Agent", QString("%1 %2").arg(pCustomization->strVal("APP_NAME")).arg(__MY__VERSION__));
    header.addValue("Connection", "close");
    if (sCookie != "")
    {
@@ -204,15 +206,13 @@ void CKartinaClnt::PostRequest (Kartina::EReq req,
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetRequest (Kartina::EReq req,
-                               const QString &sRequest,
-                               const QString &sBrowser)
+void CKartinaClnt::GetRequest (Kartina::EReq req, const QString &sRequest)
 {
    eReq = req;
    QHttpRequestHeader header("GET", sRequest.toAscii());
    header.addValue("Host", sHost);
    header.setContentType("application/x-www-form-urlencoded");
-   header.addValue("User-Agent", sBrowser);
+   header.addValue("User-Agent", QString("%1 %2").arg(pCustomization->strVal("APP_NAME")).arg(__MY__VERSION__));
    header.addValue("Connection", "close");
    if (sCookie != "")
    {

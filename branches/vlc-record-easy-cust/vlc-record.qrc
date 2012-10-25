@@ -3,4 +3,7 @@
         <file alias="kartina">resources/vlc-record.png</file>
         <file alias="live">resources/television_live.png</file>
     </qresource>
+    <qresource prefix="/customization">
+        <file alias="cust">resources/cust_vlc-record.xml</file>
+    </qresource>
 </RCC>
