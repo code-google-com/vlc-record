@@ -1891,6 +1891,79 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     </message>
 </context>
 <context>
+    <name>QOverlayedControl</name>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="154"/>
+        <source> 0:00:00</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="174"/>
+        <source>Play selected Channel</source>
+        <translation type="unfinished">Zeige markierten Sender</translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="206"/>
+        <source>Record selected Channel</source>
+        <translation type="unfinished">Nehme markierten Sender auf</translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="247"/>
+        <source>Stop Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="289"/>
+        <source>Jump Backward</source>
+        <translation type="unfinished">springe zurück</translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="318"/>
+        <source>Time Jump Value in minutes</source>
+        <translation type="unfinished">Sprungwert in Minuten</translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="322"/>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="327"/>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="332"/>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="337"/>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="342"/>
+        <source>5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="347"/>
+        <source>10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qoverlayedcontrol.ui" line="364"/>
+        <source>Jump Forward</source>
+        <translation type="unfinished">springe vorwärts</translation>
+    </message>
+</context>
+<context>
     <name>QSecCodeDlg</name>
     <message>
         <location filename="forms/qseccodedlg.ui" line="14"/>
@@ -1911,7 +1984,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
 <context>
     <name>QVlcVideoWidget</name>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="301"/>
+        <location filename="qvlcvideowidget.cpp" line="317"/>
         <source>Activate shortcut: %1</source>
         <translation></translation>
     </message>
