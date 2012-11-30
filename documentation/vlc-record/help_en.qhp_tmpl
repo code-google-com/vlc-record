@@ -31,6 +31,7 @@
                      <section title="Video on Demand" ref="help_en.html#vodbrowser" />
                      <section title="Archive" ref="help_en.html#archive" />
                      <section title="Timer Record" ref="help_en.html#timerrec" />
+                     <section title="Full Screen Mode" ref="help_en.html#fullscreen" />
                  </section>
              </section>
          </toc>
@@ -43,6 +44,7 @@
              <keyword name="parent" ref="help_en.html#parentmanager" />
              <keyword name="filter" ref="help_en.html#parentmanager" />
              <keyword name="porno" ref="help_en.html#parentmanager" />
+             <keyword name="fullscreen" ref="help_en.html#fullscreen" />
          </keywords>
          <files>
              <file>help.css</file>

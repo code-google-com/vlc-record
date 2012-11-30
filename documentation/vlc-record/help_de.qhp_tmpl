@@ -31,6 +31,7 @@
                      <section title="Videothek" ref="help_de.html#vodbrowser" />
                      <section title="Archiv" ref="help_de.html#archive" />
                      <section title="Aufnahme-Timer" ref="help_de.html#timerrec" />
+                     <section title="Vollbild Modus" ref="help_de.html#fullscreen" />
                  </section>
              </section>
          </toc>
@@ -43,6 +44,7 @@
              <keyword name="Eltern" ref="help_de.html#parentmanager" />
              <keyword name="filter" ref="help_de.html#parentmanager" />
              <keyword name="porno" ref="help_de.html#parentmanager" />
+             <keyword name="Vollbild" ref="help_de.html#fullscreen" />
          </keywords>
          <files>
              <file>help.css</file>
