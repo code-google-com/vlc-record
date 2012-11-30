@@ -17,12 +17,11 @@
    </head>
    <body>
       <h1 id="top">[%PROGRAM%]</h1>
-      <!-- 8< 8< 8< 8< --
+      <!--
         ************************************************************
         * TOC not needed for QtHelp
         * Remove comment to have it available for e.g. web view!
         ************************************************************
-        -- >8 >8 >8 >8 --
       <div class="index">
          <ol>
             <li><a href="#about">Über das Programm</a></li>
@@ -54,11 +53,11 @@
       -->
       <h2 id="about">Über das Programm</h2>
       [%PROGRAM%] ist ein Programm, um IPTV Streams von [%SERVICE%] anzusehen oder aufzuzeichen.
-      Es wurde in C++ unter der Benutzung von <a class="extern" href="http://qt.digia.com" target="_blank">Digias Qt-Framework <img src="images/external.png" /></a> geschrieben.
+      Es wurde in C++ unter der Benutzung von <a class="extern" href="http://qt.digia.com" target="_blank">Digias Qt-Framework <img src="images/external.png" alt="external" /></a> geschrieben.
       Die Player-Funktion wurde mit Hilfe der libVLC von 
-      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" /></a> realisiert.<br />
+      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" alt="external" /></a> realisiert.<br />
       [%PROGRAM%] ist OpenSource. Sie können den Source-Code als auch die neuesten Builds auf der 
-      <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">Projektseite <img src="images/external.png" /></a> finden (gehostet von Google-Code).
+      <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">Projektseite <img src="images/external.png" alt="external" /></a> finden (gehostet von Google-Code).
       <h2 id="versions">Versionen</h2>
       Es sind Versionen verfügbar für:
       <ul>
@@ -71,9 +70,9 @@
       <h2 id="branding">Branding (Customization)</h2>
       VLC-Record gibt es in verschiedenen Brandings:
       <ul>
-         <li>VLC-Record (das Original für  <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Kartina.TV (der offizielle Player für <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Polsky.TV (der offizielle Player für <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" /></a>)</li>
+         <li>VLC-Record (das Original für  <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
+         <li>Kartina.TV (der offizielle Player für <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
+         <li>Polsky.TV (der offizielle Player für <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" alt="external" /></a>)</li>
       </ul>
       Diese Brandings unterscheiden sich nur minimal (z.B. in den Icons und dem API Server-Pfad). 
       [%HIDDEN%] -->
@@ -270,9 +269,12 @@
         <li>Einen Doppelklick auf das Videofenster machen.</li>
         <li>Die gespeicherte Tastenkombination aktivieren.</li>
         <li>Den blauen Button, wie unten gezeigt, drücken.</li>
-      </ul>
-      <br />
-      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" /><br />
+      </ul><br /> <!-- Note: The break is needed here! 
+                       Without it it looks strange in help browser 
+                       ... don't know why!
+                  -->
+      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
+      <br /> <br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
    </body>
 </html>

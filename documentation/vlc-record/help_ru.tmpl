@@ -17,12 +17,11 @@
    </head>
    <body>
       <h1 id="top">[%PROGRAM%]</h1>
-      <!-- 8< 8< 8< 8< --
+      <!--
         ************************************************************
         * TOC not needed for QtHelp
         * Remove comment to have it available for e.g. web view!
         ************************************************************
-        -- >8 >8 >8 >8 --
       <div class="index">
          <ol>
             <li><a href="#about">О программе</a></li>
@@ -53,11 +52,11 @@
       -->
       <h2 id="about">О программе</h2>
       [%PROGRAM%] программа предназначена для просмотра / записи IPTV сервиса [%SERVICE%]. 
-      Программа написана на C++ с использованием <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" /></a>.
+      Программа написана на C++ с использованием <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" alt="external" /></a>.
       Функциональность плеера реализуется с помощью библиотеки libvlc 
-      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC player <img src="images/external.png" /></a>.<br />
+      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC player <img src="images/external.png" alt="external" /></a>.<br />
       [%PROGRAM%] имеет открытый исходный код. Вы всегда сможете найти исходный код, а так же
-      последние сборки программы на <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">сайте проекта <img src="images/external.png" /></a> 
+      последние сборки программы на <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">сайте проекта <img src="images/external.png" alt="external" /></a> 
       (организовано Google Code).
       <h2 id="versions">Версии</h2>
       Имеются версии для:
@@ -71,9 +70,9 @@
       <h2 id="branding">Брендинг (кастомизация)</h2>
       VLC-Record доступен в различных вариантах:
       <ul>
-         <li>VLC-Record (оригинальный для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Kartina.TV (официальный плеер для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" /></a>)</li>
-         <li>Polsky.TV (официальный плеер для <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" /></a>)</li>
+         <li>VLC-Record (оригинальный для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
+         <li>Kartina.TV (официальный плеер для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
+         <li>Polsky.TV (официальный плеер для <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" alt="external" /></a>)</li>
       </ul>
       Этот брендинг отличается незначительно (иконы, API).
       [%HIDDEN%] -->
@@ -126,7 +125,7 @@
          <li>Директория записи - сюда будут помещаться записываемые файлы</li>
          <li>Проигрыватель - если вы хотите использовать внешний VLC-плеер, вы должны указать путь к его исполняемому файлу (опционально).</li>
          <li>Сервер вещания (расположение) - выберите ближайший к вам с максимальной скоростью подключения. Скорость подключения к серверам можно проверить на сайте 
-         <a class="extern" href="http://speedtest.kartina.tv/new/" target="_blank">speedtest.kartina.tv <img src="images/external.png" /></a></li>
+         <a class="extern" href="http://speedtest.kartina.tv/new/" target="_blank">speedtest.kartina.tv <img src="images/external.png" alt="external" /></a></li>
          <li>Битрэйт - выберете между "Премиум", "Стандарт", "Эко" и "Мобильный"</li>
          <li>Буферизация - время буферизации в секундах. Увеличьте это параметр, если вы сталкиваетесь с проблемами воспроизведения видео (по умолчанию: 8 сек).</li>
          <li>Задержка - разница во времени между Московским и вашем местным временем.</li>
@@ -262,9 +261,12 @@
         <li>Einen Doppelklick auf das Videofenster machen.</li>
         <li>Die gespeicherte Tastenkombination aktivieren.</li>
         <li>Den blauen Button, wie unten gezeigt, drücken.</li>
-      </ul>
-      <br />
-      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" /><br />
+      </ul><br /> <!-- Note: The break is needed here! 
+                       Without it it looks strange in help browser 
+                       ... don't know why!
+                  -->
+      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
+      <br /> <br />
       <br /><b style='color: red;'>Bitte übersetzen &lt;&lt;&lt;</b><br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
    </body>
