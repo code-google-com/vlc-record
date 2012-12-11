@@ -31,7 +31,7 @@
                      <section title="Видеотека" ref="help_ru.html#vodbrowser" />
                      <section title="Архив" ref="help_ru.html#archive" />
                      <section title="Планировщик записи" ref="help_ru.html#timerrec" />
-                     <section title="One Touch Record" ref="help_ru.html#otr" />
+                     <section title="Ограничение времени записи" ref="help_ru.html#otr" />
                      <section title="Полноэкранный режим" ref="help_ru.html#fullscreen" />
                  </section>
              </section>
