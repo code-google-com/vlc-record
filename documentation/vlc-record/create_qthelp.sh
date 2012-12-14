@@ -2,7 +2,12 @@
 TMPFILE=/tmp/_0815.tmp
 HIDDENFEATURES=0
 QHCFOLDER="../qhc"
-CUSTS="vlc-record polsky_tv kartina_tv"
+
+if [ ${#} -gt 0 ]; then
+   CUSTS=${1}
+else
+   CUSTS="polsky_tv kartina_tv vlc-record"
+fi
 
 for CUST in $CUSTS ; do
 
