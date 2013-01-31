@@ -6,7 +6,7 @@ QHCFOLDER="../qhc"
 if [ ${#} -gt 0 ]; then
    CUSTS=${1}
 else
-   CUSTS="polsky_tv kartina_tv vlc-record"
+   CUSTS="moidom_tv polsky_tv kartina_tv vlc-record"
 fi
 
 for CUST in $CUSTS ; do
@@ -34,6 +34,12 @@ for CUST in $CUSTS ; do
           SERVICE=$PROGRAM
           APISERVER="iptv.polsky.tv"
           LANGUAGES="en de pl"
+          ;;
+       moidom_tv)
+          PROGRAM="Moi-Dom.TV"
+          SERVICE=$PROGRAM
+          APISERVER="iptv.moi-dom.tv"
+          LANGUAGES="en ru"
           ;;
        *)
           PROGRAM="VLC-Record"
