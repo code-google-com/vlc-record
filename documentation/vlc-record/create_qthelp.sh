@@ -39,7 +39,7 @@ for CUST in $CUSTS ; do
           PROGRAM="Moi-Dom.TV"
           SERVICE=$PROGRAM
           APISERVER="iptv.moi-dom.tv"
-          LANGUAGES="en ru"
+          LANGUAGES="en ru de"
           ;;
        *)
           PROGRAM="VLC-Record"
