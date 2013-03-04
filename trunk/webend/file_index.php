@@ -1,6 +1,6 @@
 <?php
   // init needed variables (only $_GET supported) ...
-  $_filter = isset($_GET['filter']) ? $_GET['filter'] : "legacy";
+  $_filter = isset($_GET['filter']) ? $_GET['filter'] : "native";
   $_sort   = isset($_GET['sort'])   ? $_GET['sort']   : "name";
   $_order  = isset($_GET['order'])  ? $_GET['order']  : "asc";
 ?>
@@ -116,8 +116,8 @@
       else
       {
         echo "&nbsp;&nbsp;<img src='images/arrow_down.gif' alt='arrow down' title='desc' />";
-	  }
-	}
+      }
+    }
   }
   
   
@@ -193,20 +193,20 @@
   function showRow($name, $filter)
   {
     $rv     = 0;
-	
-    if ($filter == "legacy")
+
+    if ($filter == "native")
     {
       $rv = (stripos($name, "moi") === false) ? 1 : 0;
-	}
-	else if (($filter == "none") || ($filter == "all"))
-	{
-      $rv = 1;
-	}
-	else if (stripos($name, $filter) !== false)
+    }
+    else if (($filter == "none") || ($filter == "all"))
     {
-	  $rv = 1;
-	}
-	
+      $rv = 1;
+    }
+    else if (stripos($name, $filter) !== false)
+    {
+      $rv = 1;
+    }
+
     return $rv;
   }
   
@@ -228,15 +228,15 @@
 
   for ($i = 0; $i < count($files); $i++)
   {
-	if (showRow($files[$i]['name'], $_filter))
-	{
+    if (showRow($files[$i]['name'], $_filter))
+    {
       echo "      <tr>\n"
           ."         <td><a href='".$files[$i]['name']."' title='click to download'>".$files[$i]['name']."</a></td>\n"
           ."         <td><img src='images/".$files[$i]['arch'].".png' alt='".$files[$i]['arch']."' title='".$files[$i]['arch']."' /></td>\n"
           ."         <td>".$files[$i]['size']."MB</td>\n"
           ."         <td>".date ("d.m.Y H:i:s", $files[$i]['date'])."</td>\n"
           ."      </tr>\n";
-	}
+    }
   }
 
 ?>
