@@ -3,6 +3,10 @@
   $_filter = isset($_GET['filter']) ? $_GET['filter'] : "native";
   $_sort   = isset($_GET['sort'])   ? $_GET['sort']   : "name";
   $_order  = isset($_GET['order'])  ? $_GET['order']  : "asc";
+
+  // prepare link ...
+  $_link   = $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;order=".(($_order == "asc") ? "desc" : "asc")."&amp;sort=";
+  
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -15,7 +19,7 @@
         body {font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; margin: 0px; padding: 0px; text-align: center; color: #3A3A3A; background-color: #F4F4F4}
         table {width:50%;background-color:#333333;color:white;padding:0px;border:2px outset}
         td {text-align:center;vertical-align:middle;border:0px;padding:2px;background-color:white;color:black}
-        th {background-color:#333333;color:white;font-weight:bold;}
+        th {background-color:#333333;color:white;font-weight:bold; font-size: 14px}
         th a:link, th a:visited, th a:active { text-decoration: none; color: white }
         th a:hover { text-decoration: underline; color: red }
         a:link, a:visited, a:active { text-decoration: underline; color: #444444}
@@ -29,10 +33,10 @@
       <h1>Beta Versions for VLC-Record</h1>
       <table class='fileinfo'>
       <tr>
-         <th><a href="<?php echo $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;sort=name&amp;order=".(($_order == "asc") ? "desc" : "asc"); ?>">File</a><?php sortMarker("name"); ?></th>
-         <th><a href="<?php echo $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;sort=arch&amp;order=".(($_order == "asc") ? "desc" : "asc"); ?>">Architechture</a><?php sortMarker("arch"); ?></th>
-         <th><a href="<?php echo $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;sort=size&amp;order=".(($_order == "asc") ? "desc" : "asc"); ?>">Size</a><?php sortMarker("size"); ?></th>
-         <th><a href="<?php echo $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;sort=date&amp;order=".(($_order == "asc") ? "desc" : "asc"); ?>">Date</a><?php sortMarker("date"); ?></th>
+         <th><a href="<?php echo $_link."name"; ?>">File</a><?php sortMarker("name"); ?></th>
+         <th><a href="<?php echo $_link."arch"; ?>">Arch.</a><?php sortMarker("arch"); ?></th>
+         <th><a href="<?php echo $_link."size"; ?>">Size</a><?php sortMarker("size"); ?></th>
+         <th><a href="<?php echo $_link."date"; ?>">Date</a><?php sortMarker("date"); ?></th>
       </tr>
 <?php
 
@@ -83,7 +87,7 @@
             {
                 $files[] = array("name" => $file,
                                  "arch" => $arch,
-                                 "size" => round(filesize($file) / (1024 * 1024), 2),
+                                 "size" => filesize($file),
                                  "date" => filemtime($file)
                                  );
             }
@@ -117,6 +121,10 @@
       {
         echo "&nbsp;&nbsp;<img src='images/arrow_down.gif' alt='arrow down' title='desc' />";
       }
+    }
+    else
+    {
+      echo "&nbsp;&nbsp;<img src='images/no_arrow.png' alt='no arrow' title='nothing' />";
     }
   }
   
@@ -233,7 +241,7 @@
       echo "      <tr>\n"
           ."         <td><a href='".$files[$i]['name']."' title='click to download'>".$files[$i]['name']."</a></td>\n"
           ."         <td><img src='images/".$files[$i]['arch'].".png' alt='".$files[$i]['arch']."' title='".$files[$i]['arch']."' /></td>\n"
-          ."         <td>".$files[$i]['size']."MB</td>\n"
+          ."         <td>".round($files[$i]['size'] / (1024 * 1024), 2)."MB</td>\n"
           ."         <td>".date ("d.m.Y H:i:s", $files[$i]['date'])."</td>\n"
           ."      </tr>\n";
     }
