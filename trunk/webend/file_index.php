@@ -3,7 +3,10 @@
   $_filter = isset($_GET['filter']) ? $_GET['filter'] : "native";
   $_sort   = isset($_GET['sort'])   ? $_GET['sort']   : "name";
   $_order  = isset($_GET['order'])  ? $_GET['order']  : "asc";
-
+  
+  // build projects array
+  $_projects = array("VLC-Record", "Kartina.TV", "Polsky.TV", "Moi-Dom.TV");
+  
   // prepare link ...
   $_link   = $_SERVER['PHP_SELF']."?filter=".$_filter."&amp;order=".(($_order == "asc") ? "desc" : "asc")."&amp;sort=";
   
@@ -30,7 +33,7 @@
    </head>
    <body>
       <div align='center'>
-      <h1>Beta Versions for VLC-Record</h1>
+      <h1><?php echo getProjectName(); ?> Downloads</h1>
       <table class='fileinfo'>
       <tr>
          <th><a href="<?php echo $_link."name"; ?>">File</a><?php sortMarker("name"); ?></th>
@@ -82,7 +85,6 @@
               break;
             }
 
-
             if ($arch != "")
             {
                 $files[] = array("name" => $file,
@@ -98,6 +100,37 @@
     }
 
     return $files;
+  }
+  
+  //--------------------------------------------------------------------
+  //! \brief    get project name depending on $_filter
+  //! \date     2013-03-08
+  //! \author   Jo2003
+  //! \param    --
+  //! \return   project name
+  //--------------------------------------------------------------------
+  function getProjectName ()
+  {
+    global $_projects, $_filter;
+    
+    $match    = 0;
+    $i        = 0;
+    $project  = "";
+  
+    for ($i = 0; $i < count($_projects); $i ++)
+    {
+      if (stripos ($_projects[$i], $_filter) !== false)
+      {
+        $project = $_projects[$i];
+        $match ++;      
+      }
+    }
+    
+    if (($match == 0) || ($match > 1))
+    {
+      $project = "VLC-Record";
+    }
+    return $project;
   }
   
   //--------------------------------------------------------------------
@@ -249,7 +282,9 @@
 
 ?>
       </table>
-      Use it at your own risk! As stated above - these are beta versions. Please inform me when you find a bug: olenka.joerg(at)gmail.com!
+      <b>Note:</b> Use this software at your own risk!<br />
+      Be careful when trying beta versions (marked with a &quot;B&quot; in file name right behind the version number e.g. 2.61<b>B</b>).<br /> 
+      Please inform me when you find a bug: olenka.joerg(at)gmail.com!
       <br /> <br />
 <?php
 
