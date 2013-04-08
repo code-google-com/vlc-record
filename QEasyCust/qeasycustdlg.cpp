@@ -404,7 +404,7 @@ void QEasyCustDlg::on_pushGo_clicked()
          cmdQueue << cmdLine;
 
          // create customization file ...
-         cmdLine = QString("\"%1/%2\" -binary -o \"%1/%3/%4.cust\" \"%1/%5/%4/cust.qrc\"")
+         cmdLine = QString("\"%1/%2\" -binary -o \"%1/%3/%4.qcr\" \"%1/%5/%4/cust.qrc\"")
                .arg(sAppPath).arg(RCC_EXE).arg(PATH_RES).arg(ui->lineIntName->text())
                .arg(PATH_CUST);
 
