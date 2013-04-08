@@ -727,6 +727,7 @@ int QEasyCustDlg::saveValues()
    {
       QFile save(name);
       QString s;
+      QStringList sl;
 
       if (save.open(QIODevice::WriteOnly | QIODevice::Text))
       {
@@ -746,12 +747,11 @@ int QEasyCustDlg::saveValues()
          {
             if (ui->listLang->item(i)->isSelected())
             {
-               if (i) s += ",";
-               s += ui->listLang->item(i)->text();
+               sl << ui->listLang->item(i)->text();
             }
          }
 
-         save.write(QString("LANGUAGES=\"%1\"\n").arg(s).toUtf8());
+         save.write(QString("LANGUAGES=\"%1\"\n").arg(sl.join(",")).toUtf8());
 
          settings.setValue("LastSave", name);
       }
