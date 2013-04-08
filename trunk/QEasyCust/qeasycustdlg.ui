@@ -188,7 +188,10 @@
         </size>
        </property>
        <property name="shortcut">
-        <string>Alt+Q</string>
+        <string>Ctrl+Q</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -473,6 +476,9 @@
             <property name="scaledContents">
              <bool>false</bool>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
          </layout>
@@ -500,6 +506,9 @@
             </property>
             <property name="scaledContents">
              <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>

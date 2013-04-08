@@ -272,7 +272,7 @@ void QEasyCustDlg::on_pushGo_clicked()
 
          //////////////////////////////////////////////////////////////////////
          // create live png stuff ...
-         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 -brightness-contrast 50x-50 \"%3\" \"%1/%5/logo_tmp.png\"")
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 -brightness-contrast 60x-50 \"%3\" \"%1/%5/logo_tmp.png\"")
                .arg(sAppPath).arg(CONV_EXE)
                .arg(ui->lineLogoFile->text()).arg(PATH_TEMP);
 
@@ -783,6 +783,9 @@ int QEasyCustDlg::readValues(const QString& load)
 
    if (!name.isEmpty())
    {
+      // clear entries ..
+      on_pushNew_clicked();
+
       QFile load(name);
       QString s;
 
@@ -904,9 +907,6 @@ void QEasyCustDlg::on_pushNew_clicked()
 //----------------------------------------------------------------------
 void QEasyCustDlg::on_pushOpen_clicked()
 {
-   // clear entries ..
-   on_pushNew_clicked();
-
    readValues();
    showPngImage(ui->labLogo, ui->lineLogoFile->text());
    showPngImage(ui->labBg, ui->lineBgFile->text());
