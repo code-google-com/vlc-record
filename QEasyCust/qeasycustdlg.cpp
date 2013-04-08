@@ -1,15 +1,15 @@
 /*------------------------------ Information ---------------------------*//**
 *
 *  $HeadURL$
-*  
+*
 *  @file     qeasycustdlg.cpp
-*  
+*
 *  @author   Jo2003
-*  
+*
 *  @date     04.04.2013
-*  
+*
 *  $Id$
-*  
+*
 */ //----------------- (c) 2013 Jo2003 --------------------------------------
 #include "qeasycustdlg.h"
 #include "ui_qeasycustdlg.h"
@@ -230,75 +230,88 @@ void QEasyCustDlg::on_pushGo_clicked()
          // merged channels for one session ...
          procBuilder->setProcessChannelMode(QProcess::MergedChannels);
 
+         //////////////////////////////////////////////////////////////////////
          // first create Windows icon ...
-         cmdLine = QString("\"%1/%2\" -resize 64x64 \"%3\" \"%1/%5/%6.ico\"")
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 64x64 \"%3\" \"%1/%4/%5.ico\"")
                .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
                .arg(PATH_ICONS).arg(ui->lineIntName->text());
 
          cmdQueue << cmdLine;
 
+         //////////////////////////////////////////////////////////////////////
+         // create mac icns file ...
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 \"%3\" \"%1/%4/128.png\"")
+               .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
+               .arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 48x48 \"%3\" \"%1/%4/48.png\"")
+               .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
+               .arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 32x32 \"%3\" \"%1/%4/32.png\"")
+               .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
+               .arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 16x16 \"%3\" \"%1/%4/16.png\"")
+               .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
+               .arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         cmdLine = QString("\"%1/%2\" \"%1/%3/%4.icns\" \"%1/%5/16.png\" \"%1/%5/32.png\" \"%1/%5/48.png\" \"%1/%5/128.png\"")
+               .arg(sAppPath).arg(ICNS_EXE).arg(PATH_ICONS).arg(ui->lineIntName->text())
+               .arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         //////////////////////////////////////////////////////////////////////
          // create live png stuff ...
-         cmdLine = QString("\"%1/%2\" -resize 128x128 -brightness-contrast 50x-50 \"%3\" \"%1/%5/logo_tmp.png\"")
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 -brightness-contrast 50x-50 \"%3\" \"%1/%5/logo_tmp.png\"")
                .arg(sAppPath).arg(CONV_EXE)
                .arg(ui->lineLogoFile->text()).arg(PATH_TEMP);
 
          cmdQueue << cmdLine;
 
-
-         // create live png stuff ...
-         cmdLine = QString("\"%1/%2\" -resize 128x128 \"%3/%4\" \"%5/%6/live_tmp.png\"")
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 \"%3/%4\" \"%5/%6/live_tmp.png\"")
                .arg(sAppPath).arg(CONV_EXE).arg(sAppPath)
                .arg(LIVE_PNG).arg(sAppPath).arg(PATH_TEMP);
 
          cmdQueue << cmdLine;
 
-         // composite ...
          cmdLine = QString("\"%1/%2\" -gravity center \"%1/%3/live_tmp.png\" \"%1/%3/logo_tmp.png\" \"%1/%4/%5/live.png\"")
                .arg(sAppPath).arg(COMP_EXE).arg(PATH_TEMP)
                .arg(PATH_CUST).arg(ui->lineIntName->text());
 
          cmdQueue << cmdLine;
 
+         //////////////////////////////////////////////////////////////////////
          // program logo ...
-         cmdLine = QString("\"%1/%2\" -resize 128x128 \"%3\" \"%1/%4/%5/logo.png\"")
+         cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 128x128 \"%3\" \"%1/%4/%5/logo.png\"")
                .arg(sAppPath).arg(CONV_EXE).arg(ui->lineLogoFile->text())
                .arg(PATH_CUST).arg(ui->lineIntName->text());
 
          cmdQueue << cmdLine;
 
+         //////////////////////////////////////////////////////////////////////
          // player background ...
          if (ui->lineBgFile->text() != "")
          {
             QPixmap pix(ui->lineBgFile->text(), "png");
             QSize   sz = pix.size();
 
-            // we want to resize
-            if ((sz.height() > 196) || (sz.width() > 196))
+            // maximum display size is 350 x 200 ...
+            if ((sz.height() > 200) || (sz.width() > 350))
             {
-               // need to resize ...
-               if (sz.height() != sz.width())
-               {
-                  if(sz.width() > sz.height())
-                  {
-                     sz.setHeight((196 * sz.height()) / sz.width());
-                     sz.setWidth(196);
-                  }
-                  else
-                  {
-                     sz.setWidth((196 * sz.width()) / sz.height());
-                     sz.setHeight(196);
-                  }
-               }
-               else
-               {
-                  sz.setHeight(196);
-                  sz.setWidth(196);
-               }
-
-               cmdLine = QString("\"%1/%2\" -resize %6x%7 \"%3\" \"%1/%4/%5/bg.png\"")
+               // we have to resize
+               cmdLine = QString("\"%1/%2\" -filter Lanczos -resize 350x200 \"%3\" \"%1/%4/%5/bg.png\"")
                      .arg(sAppPath).arg(CONV_EXE).arg(ui->lineBgFile->text())
-                     .arg(PATH_CUST).arg(ui->lineIntName->text())
-                     .arg(sz.width()).arg(sz.height());
+                     .arg(PATH_CUST).arg(ui->lineIntName->text());
 
                cmdQueue << cmdLine;
             }
@@ -436,7 +449,7 @@ void QEasyCustDlg::patchAllFiles(const QVector<SPatch> &vecPatches)
 //! \Date     04.04.2013
 //
 //! \param    file (const QString&) in file to patch
-//! \param    saveFile (const QString&) file to save as 
+//! \param    saveFile (const QString&) file to save as
 //
 //! \return   patched file content
 //----------------------------------------------------------------------
@@ -891,6 +904,9 @@ void QEasyCustDlg::on_pushNew_clicked()
 //----------------------------------------------------------------------
 void QEasyCustDlg::on_pushOpen_clicked()
 {
+   // clear entries ..
+   on_pushNew_clicked();
+
    readValues();
    showPngImage(ui->labLogo, ui->lineLogoFile->text());
    showPngImage(ui->labBg, ui->lineBgFile->text());

@@ -157,6 +157,41 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushQuit">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cancel and &lt;span style=&quot; text-decoration: underline;&quot;&gt;Q&lt;/span&gt;uit!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/commands/quit</normaloff>:/commands/quit</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="shortcut">
+        <string>Alt+Q</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -516,17 +551,6 @@ font-family: &quot;Consolas, monospace&quot;;
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QPushButton" name="pushQuit">
-           <property name="text">
-            <string>&amp;Quit</string>
-           </property>
-           <property name="icon">
-            <iconset resource="icons.qrc">
-             <normaloff>:/commands/quit</normaloff>:/commands/quit</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -549,19 +573,6 @@ font-family: &quot;Consolas, monospace&quot;;
              <normaloff>:/commands/save</normaloff>:/commands/save</iconset>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="pushGo">

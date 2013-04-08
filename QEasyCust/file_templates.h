@@ -1,15 +1,15 @@
 /*------------------------------ Information ---------------------------*//**
 *
 *  $HeadURL$
-*  
+*
 *  @file     file_templates.h
-*  
+*
 *  @author   Jo2003
-*  
+*
 *  @date     04.04.2013
-*  
+*
 *  $Id$
-*  
+*
 */ //----------------- (c) 2013 Jo2003 --------------------------------------
 #ifndef __040413__FILE_TEMPLATES_H
    #define __040413__FILE_TEMPLATES_H
@@ -39,6 +39,7 @@
 #define COMP_EXE        "toolkit/imagic/composite.exe"
 #define LIVE_PNG        PATH_TMPL"/live.png"
 #define COPY_EXE        "toolkit/bash/cp.exe"
+#define ICNS_EXE        "toolkit/icns/png2icns.exe"
 
 #define PATH_INST       "installer"
 #define PATH_CUST       "cust"
@@ -54,5 +55,5 @@
 #define PATH_RES        "resources"
 #define PATH_BIN        "master"
 
-#endif // __040413__FILE_TEMPLATES_H 
+#endif // __040413__FILE_TEMPLATES_H
 
