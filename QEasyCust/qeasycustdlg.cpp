@@ -180,6 +180,7 @@ void QEasyCustDlg::on_pushGo_clicked()
 {
    QString  cmdLine;
    SPatch patchFile;
+   QString sMacBundle = QString("%1/%2/%3.app").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
    QVector<SPatch> vPatchFiles;
    int i;
 
@@ -264,9 +265,9 @@ void QEasyCustDlg::on_pushGo_clicked()
 
          cmdQueue << cmdLine;
 
-         cmdLine = QString("\"%1/%2\" \"%1/%3/%4.icns\" \"%1/%5/16.png\" \"%1/%5/32.png\" \"%1/%5/48.png\" \"%1/%5/128.png\"")
-               .arg(sAppPath).arg(ICNS_EXE).arg(PATH_ICONS).arg(ui->lineIntName->text())
-               .arg(PATH_TEMP);
+         cmdLine = QString("\"%1/%2\" \"%3/%4/%5.icns\" \"%1/%6/16.png\" \"%1/%6/32.png\" \"%1/%6/48.png\" \"%1/%6/128.png\"")
+               .arg(sAppPath).arg(ICNS_EXE).arg(sMacBundle)
+               .arg(PATH_MAC_RES).arg(ui->lineIntName->text()).arg(PATH_TEMP);
 
          cmdQueue << cmdLine;
 
@@ -351,6 +352,11 @@ void QEasyCustDlg::on_pushGo_clicked()
          patchFile.trg = QString("%1/%2/%3.nsi").arg(sAppPath).arg(PATH_INST).arg(ui->lineIntName->text());
          vPatchFiles.append(patchFile);
 
+         // Info.plist ...
+         patchFile.src = QString("%1/%2/Info.plist").arg(sAppPath).arg(PATH_TMPL);
+         patchFile.trg = QString("%1/%2/Info.plist").arg(sMacBundle).arg(PATH_MAC_CNT);
+         vPatchFiles.append(patchFile);
+
          // help files ...
          for (i = 0; i < ui->listLang->count(); i++)
          {
@@ -383,12 +389,26 @@ void QEasyCustDlg::on_pushGo_clicked()
 
                cmdQueue << cmdLine;
 
+               cmdLine = QString("\"%1/%2\" \"%1/%3/help_%4.qhc\" \"%1/%3/help_%4.qch\" \"%5/%6/\"")
+                        .arg(sAppPath).arg(COPY_EXE).arg(PATH_HLP_SRC)
+                        .arg(ui->listLang->item(i)->text())
+                        .arg(sMacBundle).arg(PATH_MAC_DOC);
+
+               cmdQueue << cmdLine;
+
                // add commands for language copy ...
                if (ui->listLang->item(i)->text() != "en")
                {
                   cmdLine = QString("\"%1/%2\" \"%1/%3/lang_%4.qm\" \"%1/%5/\"")
                            .arg(sAppPath).arg(COPY_EXE).arg(PATH_LNG_SRC)
                            .arg(ui->listLang->item(i)->text()).arg(PATH_LNG);
+
+                  cmdQueue << cmdLine;
+
+                  cmdLine = QString("\"%1/%2\" \"%1/%3/lang_%4.qm\" \"%5/%6/\"")
+                           .arg(sAppPath).arg(COPY_EXE).arg(PATH_LNG_SRC)
+                           .arg(ui->listLang->item(i)->text())
+                           .arg(sMacBundle).arg(PATH_MAC_LNG);
 
                   cmdQueue << cmdLine;
                }
@@ -549,6 +569,8 @@ int QEasyCustDlg::createCleanFolders()
    QStringList folders, entries;
    QStringList::iterator it, it2;
 
+   QString sMacBundle = QString("%1/%2/%3.app").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
+
    folders << QString("%1/%2/%3").arg(sAppPath).arg(PATH_CUST).arg(ui->lineIntName->text())
            << QString("%1/%2").arg(sAppPath).arg(PATH_ICONS)
            << QString("%1/%2").arg(sAppPath).arg(PATH_REL)
@@ -556,7 +578,12 @@ int QEasyCustDlg::createCleanFolders()
            << QString("%1/%2").arg(sAppPath).arg(PATH_PACK)
            << QString("%1/%2").arg(sAppPath).arg(PATH_TEMP)
            << QString("%1/%2").arg(sAppPath).arg(PATH_RES)
-           << QString("%1/%2").arg(sAppPath).arg(PATH_LNG);
+           << QString("%1/%2").arg(sAppPath).arg(PATH_LNG)
+           // mac folders ...
+           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_OS)
+           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_RES)
+           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_DOC)
+           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_LNG);
 
    for (it = folders.begin(); it != folders.end(); it++)
    {
