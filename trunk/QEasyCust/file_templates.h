@@ -55,5 +55,12 @@
 #define PATH_RES        "resources"
 #define PATH_BIN        "master"
 
+#define PATH_MAC_CNT    "Contents"
+#define PATH_MAC_OS     PATH_MAC_CNT "/MacOS"
+#define PATH_MAC_RES    PATH_MAC_CNT "/Resources"
+#define PATH_MAC_DOC    PATH_MAC_RES "/doc"
+#define PATH_MAC_LNG    PATH_MAC_RES "/language"
+
+
 #endif // __040413__FILE_TEMPLATES_H
 
