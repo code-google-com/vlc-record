@@ -387,26 +387,6 @@
          <property name="selectionMode">
           <enum>QAbstractItemView::MultiSelection</enum>
          </property>
-         <item>
-          <property name="text">
-           <string>ru</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>en</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>pl</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>de</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="9" column="2">

@@ -84,6 +84,28 @@ void QEasyCustDlg::showEvent(QShowEvent *e)
 {
    e->accept();
 
+   QDir *pLangDir = new QDir(QString("%1/%2").arg(sAppPath).arg(PATH_LNG_SRC));
+   QRegExp rx("lang_([^.]*).qm");
+
+   if (pLangDir)
+   {
+      QStringList sl = pLangDir->entryList(QStringList() << "lang_*.qm");
+      delete pLangDir;
+
+      // fake english language - it's there without language file also ...
+      sl << "lang_en.qm";
+
+      for (int i = 0; i < sl.count(); i++)
+      {
+         if (rx.indexIn(sl.at(i)) > -1)
+         {
+            ui->listLang->addItem(rx.cap(1));
+         }
+      }
+
+      ui->listLang->sortItems();
+   }
+
    // load last saved customization
    if (settings.contains("LastSave"))
    {
