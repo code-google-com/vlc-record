@@ -1,0 +1,18 @@
+<RCC>
+  <!-- 
+  Please note: 
+  The only thing to change here are the file names.
+  If you have named the files as suggested there is 
+  nothing you have to do here! 
+  -->
+    <qresource prefix="/oem">
+        <file alias="cust">cust.xml</file>
+    </qresource>
+    <qresource prefix="/oem/main">
+        <file alias="icon">logo.png</file>        
+        <file alias="live">live.png</file>
+    </qresource>
+    <qresource prefix="/oem/video">
+        <file alias="logo">[%PLAYER_BG_IMG%]</file>
+    </qresource>
+</RCC>

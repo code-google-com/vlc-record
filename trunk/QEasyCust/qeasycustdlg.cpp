@@ -219,6 +219,7 @@ void QEasyCustDlg::on_pushGo_clicked()
    patchMap.insert(TMPL_COMP_LINK, ui->lineCompLink->text());
    patchMap.insert(TMPL_API_XML, ui->lineApiXml->text());
    patchMap.insert(TMPL_API_JSON, ui->lineApiJson->text());
+   patchMap.insert(TMPL_MAC_BUNDLE, QString("%1.app").arg(ui->lineOffName->text()));
 
    // prepare process ...
    if (procBuilder)
@@ -333,6 +334,13 @@ void QEasyCustDlg::on_pushGo_clicked()
             patchMap.insert(TMPL_BG_IMAGE, "logo.png");
          }
 
+         // should we hide project site ... ?
+         if (!ui->checkHideProj->isChecked())
+         {
+            patchMap.insert(TMPL_HIDE_P_IN, "");
+            patchMap.insert(TMPL_HIDE_P_OUT, "");
+         }
+
          enableDisableDlg(false);
 
          // collect a vector of all files to patch ...
@@ -355,6 +363,11 @@ void QEasyCustDlg::on_pushGo_clicked()
          // Info.plist ...
          patchFile.src = QString("%1/%2/Info.plist").arg(sAppPath).arg(PATH_TMPL);
          patchFile.trg = QString("%1/%2/Info.plist").arg(sMacBundle).arg(PATH_MAC_CNT);
+         vPatchFiles.append(patchFile);
+
+         // bash script for mac bundle patching ...
+         patchFile.src = QString("%1/%2/patch_mac_bundle.sh").arg(sAppPath).arg(PATH_TMPL);
+         patchFile.trg = QString("%1/%2/patch_mac_%3.sh").arg(sAppPath).arg(PATH_PACK).arg(ui->lineIntName->text());
          vPatchFiles.append(patchFile);
 
          // help files ...
@@ -430,6 +443,14 @@ void QEasyCustDlg::on_pushGo_clicked()
 
          cmdQueue << cmdLine;
 
+         // copy customization file to Mac baundle ...
+         cmdLine = QString("\"%1/%2\" \"%1/%6/%5.qcr\" \"%3/%4/\"")
+               .arg(sAppPath).arg(COPY_EXE).arg(sMacBundle)
+               .arg(PATH_MAC_RES).arg(ui->lineIntName->text())
+               .arg(PATH_RES);
+
+         cmdQueue << cmdLine;
+
          // run installer ...
          cmdLine = QString("\"%1/%2\" \"%1/%3/%4.nsi\"")
                .arg(sAppPath).arg(NSIS_EXE).arg(PATH_INST)
@@ -478,7 +499,7 @@ QString QEasyCustDlg::patchTextFile(const QString &file, const QString& saveFile
    QFile   txtFile(file);
    QString strContent;
 
-   if (txtFile.open(QIODevice::ReadOnly | QIODevice::Text))
+   if (txtFile.open(QIODevice::ReadOnly))
    {
       strContent = QString::fromUtf8(txtFile.readAll().constData());
 
@@ -499,7 +520,7 @@ QString QEasyCustDlg::patchTextFile(const QString &file, const QString& saveFile
    {
       txtFile.setFileName(saveFile);
 
-      if (txtFile.open(QIODevice::WriteOnly | QIODevice::Text))
+      if (txtFile.open(QIODevice::WriteOnly))
       {
          txtFile.write(strContent.toUtf8());
          txtFile.close();
@@ -580,7 +601,6 @@ int QEasyCustDlg::createCleanFolders()
            << QString("%1/%2").arg(sAppPath).arg(PATH_RES)
            << QString("%1/%2").arg(sAppPath).arg(PATH_LNG)
            // mac folders ...
-           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_OS)
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_RES)
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_DOC)
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_LNG);
@@ -769,6 +789,7 @@ int QEasyCustDlg::saveValues()
          save.write(QString("API_JSON=\"%1\"\n").arg(ui->lineApiJson->text()).toUtf8());
          save.write(QString("LOGO=\"%1\"\n").arg(ui->lineLogoFile->text()).toUtf8());
          save.write(QString("BACKGROUND=\"%1\"\n").arg(ui->lineBgFile->text()).toUtf8());
+         save.write(QString("HIDEPRO=\"%1\"\n").arg((int)ui->checkHideProj->checkState()).toUtf8());
 
          for (int i = 0; i < ui->listLang->count(); i++)
          {
@@ -868,6 +889,10 @@ int QEasyCustDlg::readValues(const QString& load)
                {
                   ui->lineBgFile->setText(rx.cap(2));
                }
+               else if(rx.cap(1) == "HIDEPRO")
+               {
+                  ui->checkHideProj->setCheckState((Qt::CheckState)rx.cap(2).toInt());
+               }
                else if(rx.cap(1) == "LANGUAGES")
                {
                   QStringList sl = rx.cap(2).split(",", QString::SkipEmptyParts);
@@ -915,6 +940,7 @@ void QEasyCustDlg::on_pushNew_clicked()
    ui->plainTextEdit->clear();
    ui->labBg->setPixmap(QPixmap());
    ui->labLogo->setPixmap(QPixmap());
+   ui->checkHideProj->setChecked(true);
 
    for (int i = 0; i < ui->listLang->count(); i++)
    {
@@ -1009,6 +1035,7 @@ void QEasyCustDlg::enableDisableDlg(bool enable)
    ui->pushOpen->setEnabled(enable);
    ui->pushSave->setEnabled(enable);
    ui->pushSaveLog->setEnabled(enable);
+   ui->checkHideProj->setEnabled(enable);
 }
 
 //----------------------------------------------------------------------
