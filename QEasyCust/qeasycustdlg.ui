@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
+    <width>459</width>
     <height>431</height>
    </rect>
   </property>
@@ -214,7 +214,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="1" colspan="2">
         <widget class="QLineEdit" name="lineOffName">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Official Name of the Program&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Use a name like &amp;quot;VLC-Record&amp;quot; here. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -231,7 +231,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="1" column="1" colspan="2">
         <widget class="QLineEdit" name="lineIntName">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Internal Name&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Use a name in ASCII characters without spaces e.g. &amp;quot;vlc-record&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -248,7 +248,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="2" column="1" colspan="2">
         <widget class="QLineEdit" name="lineCompName">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Company Name&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Type the (not to long) company name here e.g. &amp;quot;Jo2003.Inc&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -265,7 +265,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="3" column="1" colspan="2">
         <widget class="QLineEdit" name="lineCompLink">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Company Link&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Type the http link to you company, e.g.&lt;/p&gt;&lt;p&gt;&amp;quot;http://vlc-record.coujo.de&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -282,7 +282,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="4" column="1" colspan="2">
         <widget class="QLineEdit" name="lineVersion">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Version&lt;/span&gt;&lt;/p&gt;&lt;p&gt;insert the version of the application here. The version should match the one of the program binary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -299,7 +299,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="5" column="1" colspan="2">
         <widget class="QLineEdit" name="lineUpdUrl">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Update URL&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Please type in the URL of the update XML file. This file contains the update information for your product.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -316,7 +316,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="6" column="1" colspan="2">
         <widget class="QLineEdit" name="lineApiSrv">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;API Server&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Insert the URL of the API server without leading &amp;quot;http://&amp;quot; e.g. &amp;quot;iptv.kartina.tv&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -333,7 +333,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="7" column="1" colspan="2">
         <widget class="QLineEdit" name="lineApiXml">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Api Path XML&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Insert the path to the XML interface on the API server, e.g. &amp;quot;/api/v2/xml/&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -350,7 +350,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="8" column="1" colspan="2">
         <widget class="QLineEdit" name="lineApiJson">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Api Path JSON&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Insert the path to the JSON interface on the API server, e.g. &amp;quot;/api/v2/json/&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -370,7 +370,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="9" column="1" rowspan="2">
         <widget class="QListWidget" name="listLang">
          <property name="maximumSize">
           <size>
@@ -382,7 +382,7 @@
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Supported Languages&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Please supported languages. &lt;/p&gt;&lt;p&gt;Please choose at least one language!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alternatingRowColors">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::MultiSelection</enum>
@@ -409,6 +409,16 @@
          </item>
         </widget>
        </item>
+       <item row="9" column="2">
+        <widget class="QCheckBox" name="checkHideProj">
+         <property name="text">
+          <string>Hide Project related</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
       </layout>
       <zorder>label</zorder>
       <zorder>lineOffName</zorder>
@@ -430,6 +440,7 @@
       <zorder>lineApiJson</zorder>
       <zorder>listLang</zorder>
       <zorder>label_10</zorder>
+      <zorder>checkHideProj</zorder>
      </widget>
      <widget class="QWidget" name="tabImages">
       <attribute name="title">
