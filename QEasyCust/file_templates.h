@@ -28,8 +28,9 @@
 #define TMPL_SERVICE    "[%SERVICE%]"
 #define TMPL_APISERVER  "[%APISERVER%]"
 #define TMPL_BG_IMAGE   "[%PLAYER_BG_IMG%]"
-#define TMPL_HIDE_P_IN  "<!-- [%HIDEPROJECT%]"
-#define TMPL_HIDE_P_OUT "[%HIDEPROJECT%] -->"
+#define TMPL_HIDE_PRO   "[%HIDEPROJECT%]"
+#define TMPL_HIDE_P_IN  "<!-- " TMPL_HIDE_PRO
+#define TMPL_HIDE_P_OUT TMPL_HIDE_PRO " -->"
 #define TMPL_MAC_BUNDLE "[%MAC_BUNDLE%]"
 
 // program file path ...
