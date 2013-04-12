@@ -361,6 +361,11 @@ void QEasyCustDlg::on_pushGo_clicked()
          {
             patchMap.insert(TMPL_HIDE_P_IN, "");
             patchMap.insert(TMPL_HIDE_P_OUT, "");
+            patchMap.insert(TMPL_HIDE_PRO, "");
+         }
+         else
+         {
+            patchMap.insert(TMPL_HIDE_PRO, "!define HIDEPROJECT 1");
          }
 
          enableDisableDlg(false);
