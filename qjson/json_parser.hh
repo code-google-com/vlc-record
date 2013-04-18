@@ -77,10 +77,11 @@
 #include "location.hh"
 
 /* Enabling traces.  */
+/* no traces so far
 #ifndef YYDEBUG
 # define YYDEBUG 1
 #endif
-
+*/
 
 namespace yy {
 /* Line 33 of lalr1.cc  */
