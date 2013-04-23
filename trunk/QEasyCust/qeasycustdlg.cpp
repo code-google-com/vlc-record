@@ -243,6 +243,16 @@ void QEasyCustDlg::on_pushGo_clicked()
    patchMap.insert(TMPL_API_JSON, ui->lineApiJson->text());
    patchMap.insert(TMPL_MAC_BUNDLE, QString("%1.app").arg(ui->lineOffName->text()));
 
+   // application shortcut code ...
+   if (ui->lineApplShortCut->text().isEmpty())
+   {
+      patchMap.insert(TMPL_APPL_SCUT, "");
+   }
+   else
+   {
+      patchMap.insert(TMPL_APPL_SCUT, QString("<string name=\"APPLICATION_SHORTCUT\" value=\"%1\" />").arg(ui->lineApplShortCut->text()));
+   }
+
    // prepare process ...
    if (procBuilder)
    {
@@ -818,6 +828,11 @@ int QEasyCustDlg::saveValues()
          save.write(QString("BACKGROUND=\"%1\"\n").arg(ui->lineBgFile->text()).toUtf8());
          save.write(QString("HIDEPRO=\"%1\"\n").arg((int)ui->checkHideProj->checkState()).toUtf8());
 
+         if (!ui->lineApplShortCut->text().isEmpty())
+         {
+            save.write(QString("APPL_SCUT=\"%1\"\n").arg(ui->lineApplShortCut->text()).toUtf8());
+         }
+
          for (int i = 0; i < ui->listLang->count(); i++)
          {
             if (ui->listLang->item(i)->isSelected())
@@ -915,6 +930,10 @@ int QEasyCustDlg::readValues(const QString& load)
                else if(rx.cap(1) == "BACKGROUND")
                {
                   ui->lineBgFile->setText(rx.cap(2));
+               }
+               else if(rx.cap(1) == "APPL_SCUT")
+               {
+                  ui->lineApplShortCut->setText(rx.cap(2));
                }
                else if(rx.cap(1) == "HIDEPRO")
                {
@@ -1054,6 +1073,7 @@ void QEasyCustDlg::enableDisableDlg(bool enable)
    ui->lineApiJson->setEnabled(enable);
    ui->lineLogoFile->setEnabled(enable);
    ui->lineBgFile->setEnabled(enable);
+   ui->lineApplShortCut->setEnabled(enable);
    ui->listLang->setEnabled(enable);
    ui->pushGetBg->setEnabled(enable);
    ui->pushGetLogo->setEnabled(enable);

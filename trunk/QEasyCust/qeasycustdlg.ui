@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>431</height>
+    <width>410</width>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -361,6 +361,23 @@
         </widget>
        </item>
        <item row="9" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Appl. Shortcut: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineApplShortCut">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Application Shortcut&lt;/span&gt;&lt;/p&gt;&lt;p&gt;A 3 character string e.g. &amp;quot;ktv&amp;quot; for Kartina.TV. If you don't know anything about, leave it blank!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
           <string>Languages:</string>
@@ -370,7 +387,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1" rowspan="2">
+       <item row="10" column="1">
         <widget class="QListWidget" name="listLang">
          <property name="maximumSize">
           <size>
@@ -389,7 +406,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="2">
+       <item row="10" column="2">
         <widget class="QCheckBox" name="checkHideProj">
          <property name="text">
           <string>Hide Project related</string>
@@ -421,6 +438,8 @@
       <zorder>listLang</zorder>
       <zorder>label_10</zorder>
       <zorder>checkHideProj</zorder>
+      <zorder>label_11</zorder>
+      <zorder>lineApplShortCut</zorder>
      </widget>
      <widget class="QWidget" name="tabImages">
       <attribute name="title">
