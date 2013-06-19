@@ -203,6 +203,7 @@ void QEasyCustDlg::on_pushGo_clicked()
    QString  cmdLine;
    SPatch patchFile;
    QString sMacBundle = QString("%1/%2/%3.app").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
+   QString sUnxContent = QString("%1/%2/%3.linux").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
    QVector<SPatch> vPatchFiles;
    int i;
 
@@ -301,6 +302,15 @@ void QEasyCustDlg::on_pushGo_clicked()
          cmdLine = QString("\"%1/%2\" \"%3/%4/%5.icns\" \"%1/%6/16.png\" \"%1/%6/32.png\" \"%1/%6/48.png\" \"%1/%6/128.png\"")
                .arg(sAppPath).arg(ICNS_EXE).arg(sMacBundle)
                .arg(PATH_MAC_RES).arg(ui->lineIntName->text()).arg(PATH_TEMP);
+
+         cmdQueue << cmdLine;
+
+         //////////////////////////////////////////////////////////////////////
+         // copy large png file as linux icon ...
+         cmdLine = QString("\"%1/%2\" \"%1/%3/128.png\" \"%4/%5/%6.png\"")
+                  .arg(sAppPath).arg(COPY_EXE).arg(PATH_TEMP)
+                  .arg(sUnxContent).arg(PATH_RES)
+                  .arg(ui->lineIntName->text());
 
          cmdQueue << cmdLine;
 
@@ -407,6 +417,16 @@ void QEasyCustDlg::on_pushGo_clicked()
          patchFile.trg = QString("%1/%2/patch_mac_%3.sh").arg(sAppPath).arg(PATH_PACK).arg(ui->lineIntName->text());
          vPatchFiles.append(patchFile);
 
+         // linux make file
+         patchFile.src = QString("%1/%2/install_deb.tmpl").arg(sAppPath).arg(PATH_TMPL);
+         patchFile.trg = QString("%1/install.mak").arg(sUnxContent);
+         vPatchFiles.append(patchFile);
+
+         // linux desktop file
+         patchFile.src = QString("%1/%2/linux.desktop").arg(sAppPath).arg(PATH_TMPL);
+         patchFile.trg = QString("%1/%2.desktop").arg(sUnxContent).arg(ui->lineIntName->text());
+         vPatchFiles.append(patchFile);
+
          // help files ...
          for (i = 0; i < ui->listLang->count(); i++)
          {
@@ -446,6 +466,13 @@ void QEasyCustDlg::on_pushGo_clicked()
 
                cmdQueue << cmdLine;
 
+               cmdLine = QString("\"%1/%2\" \"%1/%3/help_%4.qhc\" \"%1/%3/help_%4.qch\" \"%5/%6/\"")
+                        .arg(sAppPath).arg(COPY_EXE).arg(PATH_HLP_SRC)
+                        .arg(ui->listLang->item(i)->text())
+                        .arg(sUnxContent).arg(PATH_HLP);
+
+               cmdQueue << cmdLine;
+
                // add commands for language copy ...
                if (ui->listLang->item(i)->text() != "en")
                {
@@ -459,6 +486,13 @@ void QEasyCustDlg::on_pushGo_clicked()
                            .arg(sAppPath).arg(COPY_EXE).arg(PATH_LNG_SRC)
                            .arg(ui->listLang->item(i)->text())
                            .arg(sMacBundle).arg(PATH_MAC_LNG);
+
+                  cmdQueue << cmdLine;
+
+                  cmdLine = QString("\"%1/%2\" \"%1/%3/lang_%4.qm\" \"%5/%6/\"")
+                           .arg(sAppPath).arg(COPY_EXE).arg(PATH_LNG_SRC)
+                           .arg(ui->listLang->item(i)->text())
+                           .arg(sUnxContent).arg(PATH_LNG);
 
                   cmdQueue << cmdLine;
                }
@@ -485,6 +519,27 @@ void QEasyCustDlg::on_pushGo_clicked()
                .arg(sAppPath).arg(COPY_EXE).arg(sMacBundle)
                .arg(PATH_MAC_RES).arg(ui->lineIntName->text())
                .arg(PATH_RES);
+
+         cmdQueue << cmdLine;
+
+         // copy customization file to linux content ...
+         cmdLine = QString("\"%1/%2\" \"%1/%4/%5.qcr\" \"%3/%4/\"")
+               .arg(sAppPath).arg(COPY_EXE).arg(sUnxContent)
+               .arg(PATH_RES).arg(ui->lineIntName->text());
+
+         cmdQueue << cmdLine;
+
+         // copy module files to linux content ...
+         cmdLine = QString("\"%1/%2\" \"%1/%3/*.mod\" \"%4/%3/\"")
+               .arg(sAppPath).arg(COPY_EXE).arg(PATH_MOD)
+               .arg(sUnxContent);
+
+         cmdQueue << cmdLine;
+
+         // copy create deb shell script to linux content ...
+         cmdLine = QString("\"%1/%2\" \"%1/%3/create_cust_deb.sh\" \"%4/\"")
+               .arg(sAppPath).arg(COPY_EXE).arg(PATH_TMPL)
+               .arg(sUnxContent);
 
          cmdQueue << cmdLine;
 
@@ -627,7 +682,8 @@ int QEasyCustDlg::createCleanFolders()
    QStringList folders, entries;
    QStringList::iterator it, it2;
 
-   QString sMacBundle = QString("%1/%2/%3.app").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
+   QString sMacBundle  = QString("%1/%2/%3.app").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
+   QString sUnxContent = QString("%1/%2/%3.linux").arg(sAppPath).arg(PATH_PACK).arg(ui->lineOffName->text());
 
    folders << QString("%1/%2/%3").arg(sAppPath).arg(PATH_CUST).arg(ui->lineIntName->text())
            << QString("%1/%2").arg(sAppPath).arg(PATH_ICONS)
@@ -640,7 +696,13 @@ int QEasyCustDlg::createCleanFolders()
            // mac folders ...
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_RES)
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_DOC)
-           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_LNG);
+           << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_LNG)
+           // linux folders ...
+           << QString("%1/%2").arg(sUnxContent).arg(PATH_RES)
+           << QString("%1/%2").arg(sUnxContent).arg(PATH_HLP)
+           << QString("%1/%2").arg(sUnxContent).arg(PATH_MOD)
+           << QString("%1/%2").arg(sUnxContent).arg(PATH_REL)
+           << QString("%1/%2").arg(sUnxContent).arg(PATH_LNG);
 
    for (it = folders.begin(); it != folders.end(); it++)
    {
