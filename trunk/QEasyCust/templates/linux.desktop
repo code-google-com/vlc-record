@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=[%OFF_NAME%]
+Comment=A tool to watch / record IPTV program streams from [%COMP_NAME%].
+Exec=/usr/bin/[%INT_NAME%]
+Terminal=false
+Type=Application
+Icon=/usr/share/[%INT_NAME%]/[%INT_NAME%].png
+Categories=Application;VideoPlayer;
