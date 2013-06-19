@@ -26,7 +26,6 @@
          <ol>
             <li><a href="#about">About</a></li>
             <li><a href="#versions">Versions</a></li>
-            <li><a href="#branding">Branding (customization)</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#installation">Installation</a></li>
             <li><a href="#ftsettings">First Time Settings</a></li>
@@ -56,10 +55,13 @@
       [%PROGRAM%] is a tool to watch / record IPTV streams sent by [%SERVICE%]. 
       It is written in C++ using the <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" alt="external" /></a>. 
       The player functionality is realized by using the libvlc library from 
-      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" alt="external" /></a>.<br />
+      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" alt="external" /></a>.
+      <!-- [%HIDEPROJECT%]
+      <br />
       [%PROGRAM%] is open source. You can always find the source code as well as
       the latest builds at the <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">projects site <img src="images/external.png" alt="external" /></a> 
       (hosted by Google Code).
+      [%HIDEPROJECT%] -->
       <h2 id="versions">Versions</h2>
       There are versions available for:
       <ul>
@@ -67,17 +69,6 @@
          <li>Mac OSX 10.6 x86_64 or better</li>
          <li>Ubuntu Linux x86 (current version)</li>
       </ul>
-      <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <!-- [%HIDDEN%]
-      <h2 id="branding">Branding (customization)</h2>
-      VLC-Record is available in several brandings:
-      <ul>
-         <li>VLC-Record (the original for <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Kartina.TV (the official player for <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Polsky.TV (the official player for <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" alt="external" /></a>)</li>
-      </ul>
-      These brandings differ only slightly (icons, API server path).
-      [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Features</h2>
       [%PROGRAM%] has following features:
@@ -108,7 +99,7 @@
       The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">First Time Settings</h2><br />
-      <img src="images/[%PROGRAM%]/en/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
+      <img src="images/lang/en/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
       Please enter your account data there. If you want to have erotic channels displayed in your channel list, 
       check the related checkbox. If you insert your parental code in the lower textfield you can watch these
       channels without the need to enter the parental code. I'd strongly recomment to leave this field blank.
@@ -119,7 +110,7 @@
       <h2 id="settings">Settings</h2>
       You can enter the settings by pressing following symbol on the GUI: <img src="images/tools.png" alt="Settings" title="Settings" />
       <h3 id="mainsettings">Main Settings</h3><br />
-      <img src="images/[%PROGRAM%]/en/set_main.png" alt="Main Settings" title="Main Settings" /><br />
+      <img src="images/lang/en/set_main.png" alt="Main Settings" title="Main Settings" /><br />
       In this tab you can change / enter basic program settings:
       <ul>
          <li>Account / Password</li>
@@ -136,14 +127,14 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="shortcuts">Shortcuts</h3><br />
-      <img src="images/[%PROGRAM%]/en/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
+      <img src="images/lang/en/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
       Here you can change the default shortcuts used in this program. To do so mark a shortcut with the mouse.
       Now press the key combination you want as new shortcut. If the line turns red you already used this
       shortcut for another command.<br />
       You can reset the shortcuts to the default values using the tool button at the lower end of this tab.
       <!-- <div class="toplink"><a href="#about" target="_self">Top</a></div> -->
       <h3 id="advsettings">Advanced Settings</h3><br />
-      <img src="images/[%PROGRAM%]/en/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
+      <img src="images/lang/en/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
       In this tab you can change following program settings:
       <ul>
          <li>Proxy Server - Configure a proxy server if you can't connect directly to the internet.</li>
@@ -157,7 +148,6 @@
          <li>Ask for Record Filename - Program will ask you for a filename as soon as you want to record any show (default: off).</li>
          <li>Detach player at startup - If you use an external player it will be detached from [%PROGRAM%]. 
          It then runs as independent process which [%PROGRAM%] can't control at all (default: off).</li>
-         <li>Check for Updates - If <b>on</b> the program will check for updates each time it starts (default: on).</li>
          <li>Doubleclick starts play - If <b>off</b> play starts as soon as you click on a channel in channel list (default: on).</li>
          <li>Minimize to Systray - If <b>on</b> program will be hidden from taskbar when minimized. 
          An icon in the tasktray will tell about the running program instead (default: off).</li>
@@ -169,9 +159,9 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Parental Manager</h3><br />
-      <img src="images/[%PROGRAM%]/en/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
+      <img src="images/lang/en/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
       Enter your parental code to enter the parental manager.<br /> <br />
-      <img src="images/[%PROGRAM%]/en/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
+      <img src="images/lang/en/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
       Here you can configure following things:
       <ul>
          <li>Channel Manager - Selected channels will be <b>hidden</b> from channel list.</li>
@@ -182,7 +172,7 @@
       <b>Please Note: You have to save these settings directly in the parent manager. They are independent from the other settings.</b>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discovergui">Discovering the GUI</h2><br />
-      <img src="images/[%PROGRAM%]/en/whole_view.png" alt="Whole View" title="Whole View" /><br />
+      <img src="images/lang/en/whole_view.png" alt="Whole View" title="Whole View" /><br />
       At the left side you see the channel list. Above the channel list is the area for the channel favourites. At the top left corner
       you can choose between the live program and video on demand (VOD) - where available.<br />
       In the middle of the GUI you can see the electronic program guide (EPG). It shows the program for the choosen day and channel. 
@@ -194,24 +184,24 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discoverfeatures">Discovering Features</h2>
       <h3 id="favchannels">Favourite Channels</h3><br />
-      <img src="images/[%PROGRAM%]/en/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
+      <img src="images/lang/en/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
       You can define up to 10 favourite channels - either by doing a right click at the channel in the channel list 
       and choosing "Add to favourites" or by using drag'n'drop. The channel will now be placed in the area above 
       the channel list. If you press at a favourite button the channel in channel list will be selected and the 
       EPG for this channel will be loaded. You can remove channels from the favourite area by making a right click there.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="vodbrowser">Video on Demand (where available)</h3><br />
-      <img src="images/[%PROGRAM%]/en/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
+      <img src="images/lang/en/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
       You can activate the VOD browser by clicking at the button at the upper left corner.<br /> <br />
-      <img src="images/[%PROGRAM%]/en/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
+      <img src="images/lang/en/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
       You can choose a genre ...<br /> <br />
-      <img src="images/[%PROGRAM%]/en/vod_sort.png" alt="Sort" title="Sort" /><br />
+      <img src="images/lang/en/vod_sort.png" alt="Sort" title="Sort" /><br />
       ... and sort the videos. There you can also choose to show you favourite videos.<br /> <br />
-      <img src="images/[%PROGRAM%]/en/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
+      <img src="images/lang/en/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
       Or you can search for a video.<br /> <br />
-      <img src="images/[%PROGRAM%]/common/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
+      <img src="images/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
       You choose a video with a mouse click.<br /> <br />
-      <img src="images/[%PROGRAM%]/en/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
+      <img src="images/lang/en/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
       Now you can see the information about the selected video. You can add / remove the video to / from your favourites by clicking
       at the heart at the top. You can record or play the video by clicking at the lower buttons. A click at <b>[Back]</b> brings you
       back to the former site.
@@ -219,7 +209,7 @@
       <h3 id="archive">Archive</h3>
       For most channels a archive is available. This means that you can watch any program which was sent on this channel 
       for the last two weeks.<br />
-      <img src="images/[%PROGRAM%]/en/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
+      <img src="images/lang/en/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
       You can watch or record this program by clicking at the play / record buttons in the EPG browser. If you choose
       play here you can jump to any time in that program by using the slider below the player widget.<br /> <br />
       <img src="images/click_n_go_slider.png" alt="Click'n'Go Slider" title="Click'n'Go Slider" /><br />
@@ -228,9 +218,9 @@
       You can open the timer record dialog either by pressing on this 
       <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> button or by clicking 
       at the clock in the EPG browser.<br />
-      <img src="images/[%PROGRAM%]/en/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
+      <img src="images/lang/en/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Timer Record dialog will open:<br />
-      <img src="images/[%PROGRAM%]/en/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
+      <img src="images/lang/en/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
       In this dialog you can plan a record job. You can choose the channel to record from. You must give a name 
       for the file in which the video will be saved. You have to insert the start and the end time of the program.
       When choosing "silent record" the program only will record the program, but not show. Checking the
@@ -250,10 +240,10 @@
       you record a show either from live stream or from archive. In this case the record button will change from
       <img src="images/record.png" alt="record" title="record" /> to <img src="images/record_timer.png" alt="record" title="record" />. 
       If you press this button a new dialog will appear:<br />
-      <img src="images/[%PROGRAM%]/en/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
+      <img src="images/lang/en/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
       You can choose the time the record should run. A click at the button <img src="images/button_ok.png" alt="set" title="set" /> 
       will activate the timer. You will see the time running. Now you can close this windows.<br />
-      <img src="images/[%PROGRAM%]/en/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
+      <img src="images/lang/en/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
       When time is up the record will be stopped automatically.<br />
       <b>Please Note:</b> You can change the timer setting or disable the timer by again clicking at the record button. 
       A click at <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" /> will cancel the record timer.

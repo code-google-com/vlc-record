@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en'>
    <head>
@@ -26,7 +26,6 @@
          <ol>
             <li><a href="#about">О программе</a></li>
             <li><a href="#versions">Версии</a></li>
-            <li><a href="#branding">Брендинг (кастомизация)</a></li>
             <li><a href="#features">Функциональные возможности</a></li>
             <li><a href="#installation">Установка</a></li>
             <li><a href="#ftsettings">Настройки при первом включении</a></li>
@@ -56,10 +55,13 @@
       [%PROGRAM%] программа предназначена для просмотра / записи IPTV сервиса [%SERVICE%]. 
       Программа написана на C++ с использованием <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" alt="external" /></a>.
       Функциональность плеера реализуется с помощью библиотеки libvlc 
-      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC player <img src="images/external.png" alt="external" /></a>.<br />
+      <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC player <img src="images/external.png" alt="external" /></a>.
+      <!-- [%HIDEPROJECT%]
+      <br />
       [%PROGRAM%] имеет открытый исходный код. Вы всегда сможете найти исходный код, а так же
       последние сборки программы на <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">сайте проекта <img src="images/external.png" alt="external" /></a> 
       (организовано Google Code).
+      [%HIDEPROJECT%] -->
       <h2 id="versions">Версии</h2>
       Имеются версии для:
       <ul>
@@ -67,17 +69,6 @@
          <li>Mac OSX 10.6 x86_64 или выше</li>
          <li>Ubuntu Linux x86 (Текущая версия)</li>
       </ul>
-      <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <!-- [%HIDDEN%]
-      <h2 id="branding">Брендинг (кастомизация)</h2>
-      VLC-Record доступен в различных вариантах:
-      <ul>
-         <li>VLC-Record (оригинальный для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Kartina.TV (официальный плеер для <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Polsky.TV (официальный плеер для <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" alt="external" /></a>)</li>
-      </ul>
-      Этот брендинг отличается незначительно (иконы, API).
-      [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Функциональные возможности</h2>
       [%PROGRAM%] имеет следующие функциональные возможности:
@@ -109,7 +100,7 @@
       Настройки программы будут храниться в вашем домашнем каталоге (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">Настройки при первом включении</h2><br />
-      <img src="images/[%PROGRAM%]/ru/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
+      <img src="images/lang/ru/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
       Пожалуйста, введите данные вашего абонемента. Если вы хотите видеть в списке каналы для взрослых, 
       то вы должны отметить их галочкой. Если вы ввели ваш родительский пароль в текстовое поле ниже, вы можете смотреть эти
       каналы без необходимости повторного ввода родительского пароля. <b>Обратите внимание: Ваш родительский пароль соответствует 
@@ -120,7 +111,7 @@
       <h2 id="settings">Настройки</h2>
       Вы можете зайти в настройки, нажав следующий символ в программе: <img src="images/tools.png" alt="Settings" title="Settings" />
       <h3 id="mainsettings">Основные настройки</h3><br />
-      <img src="images/[%PROGRAM%]/ru/set_main.png" alt="Main Settings" title="Main Settings" /><br />
+      <img src="images/lang/ru/set_main.png" alt="Main Settings" title="Main Settings" /><br />
       На данной закладке вы можете изменять / производить базовые настройки программы:
       <ul>
          <li>Абонемент / Пароль</li>
@@ -138,14 +129,14 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="shortcuts">Комбинации клавиш (горячие клавиши)</h3><br />
-      <img src="images/[%PROGRAM%]/ru/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
+      <img src="images/lang/ru/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
       Здесь вы можете изменить комбинации клавиш, используемые по умолчанию в этой программе. Для этого отметьте комбинацию клавиш с помощью мышки.
       Теперь нажмите комбинацию клавиш, которую вы хотите установить, как новую комбинацию клавиш. Если строка становится красной, вы уже использовали эту
       комбинацию клавиш для другой команды.<br />
       Вы можете вернуть все комбинации клавиш к заданным по умолчанию, используя кнопку внизу этой закладки (Вернуть стандартные настройки).
       <!-- <div class="toplink"><a href="#about" target="_self">Top</a></div> -->
       <h3 id="advsettings">Дополнительные настройки</h3><br />
-      <img src="images/[%PROGRAM%]/ru/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
+      <img src="images/lang/ru/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
       На данной закладке вы можете менять следующие настройки:
       <ul>
          <li>Прокси сервер - настройка прокси сервера, если вы не можете подключиться непосредственно к интернету.</li>
@@ -159,7 +150,6 @@
          <li>Запрос исходного файла - программа каждый раз будет запрашивать имя файла для записываемой передачи (по умолчанию: выкл).</li>
          <li>Отделить проигрыватель при записи - если вы используете VLC-плеер для воспроизведения/записи, он будет отделен от [%PROGRAM%]. 
          Запускается как независимый процесс, который не может управляться [%PROGRAM%] (по умолчанию: выкл).</li>
-         <li>Проверка обновлений программы - если <b>вкл</b>, программа будет проверять наличие обновлений при каждом запуске (по умолчанию: вкл).</li>
          <li>Двойной щелчок на списке каналов стартует плеер - если <b>выкл</b>, воспроизведение начинается, как только вы кликните на канале в списке каналов (по умолчанию: вкл).</li>
          <li>Сворачивать в трей - если <b>вкл</b>, при минимизации главного окна программы она будет скрыта на панели задач (по умолчанию: выкл).</li>
          <li>Транслит исходного файла - транслитерация имен записываемых файлов из кириллицы в латинские буквы (по умолчанию: выкл).</li>
@@ -170,9 +160,9 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Родительский контроль</h3><br />
-      <img src="images/[%PROGRAM%]/ru/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
+      <img src="images/lang/ru/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
       Введите ваш родительский пароль, чтобы зайти в родительский контроль.<br /> <br />
-      <img src="images/[%PROGRAM%]/ru/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
+      <img src="images/lang/ru/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
       На данной закладке вы можете менять следующие настройки:
       <ul>
          <li>Менеджер каналов - выбранный канал будет <b>удален</b> из списка отображаемых каналов.</li>
@@ -184,7 +174,7 @@
       Эта кнопка не сохраняет другие настройки.</b>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discovergui">Описание графического интерфейса</h2><br />
-      <img src="images/[%PROGRAM%]/ru/whole_view.png" alt="Whole View" title="Whole View" /><br />
+      <img src="images/lang/ru/whole_view.png" alt="Whole View" title="Whole View" /><br />
       Слева вы видите список каналов. Над списком каналов находится область избранных каналов. В верхнем левом углу
       вы можете выбрать между прямым эфиром и видеотекой (опционально).<br />
       В середине расположена программа передач. Она отображает программу для выбранного канала в выбранный день. 
@@ -196,31 +186,31 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discoverfeatures">Описание дополнительных возможностей</h2>
       <h3 id="favchannels">Избранные каналы</h3><br />
-      <img src="images/[%PROGRAM%]/ru/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
+      <img src="images/lang/ru/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
       Вы можете добавить до 10 каналов в избранные - для этого вам нужно нажать правой кнопкой на канал в списке 
       и выбрать "Добавить в избранные" или переместить канал в избранные. Область избранных каналов расположена над списком каналов. 
 	   Нажатие на иконку в избранных запускает соответствующий этой иконке канал и отображает программу передач для этого канала. 
       Чтобы удалить канал из избранных, нажмите на соответствующую иконку и выберите удалить.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="vodbrowser">Видеотека (опционально)</h3><br />
-      <img src="images/[%PROGRAM%]/ru/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
+      <img src="images/lang/ru/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
       Кнопка видеотека расположена в верхнем левом углу.<br /> <br />
-      <img src="images/[%PROGRAM%]/ru/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
+      <img src="images/lang/ru/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
       Вы можете выбрать жанр ...<br /> <br />
-      <img src="images/[%PROGRAM%]/ru/vod_sort.png" alt="Sort" title="Sort" /><br />
+      <img src="images/lang/ru/vod_sort.png" alt="Sort" title="Sort" /><br />
       ... и сортировку фильмов - последние, лучшие и избранные фильмы.<br /> <br />
-      <img src="images/[%PROGRAM%]/ru/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
+      <img src="images/lang/ru/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
       Вы так же можете воспользоваться поиском - окно поиска расположено ниже списка фильмов.<br /> <br />
-      <img src="images/[%PROGRAM%]/common/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
+      <img src="images/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
       Для выбора фильма нажмите на картинку.<br /> <br />
-      <img src="images/[%PROGRAM%]/ru/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
+      <img src="images/lang/ru/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
       Теперь появляется информация о выбранном фильме. Вы можете добавить фильм в избранные или удалить фильм из избранных, нажав 
       на значок в виде сердечка, рядом с названием фильма. Вы можете начать воспроизведение или запись фильма, нажав на соответствующую кнопку. Нажав <b>[Назад]</b>, 
       вы вернетесь в список фильмов.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="archive">Архив</h3>
       Архив доступен для большинства каналов. Это означает, что вы всегда можете посмотреть пропущенные за последние 2 недели любимые передачи.<br />
-      <img src="images/[%PROGRAM%]/ru/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
+      <img src="images/lang/ru/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
       Вы можете смотреть программу из архива, нажав на кнопку воспроизведение в программе передач. 
       Используя ползунок, вы можете промотать передачу до нужного вам момента времени.<br /> <br />
       <img src="images/click_n_go_slider.png" alt="Click'n'Go Slider" title="Click'n'Go Slider" /><br />
@@ -229,9 +219,9 @@
       Вы можете открыть диалоговое окно планировщика записи, нажав на эту 
       <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> кнопку или нажав на 
       значок будильника в программе передач.<br />
-      <img src="images/[%PROGRAM%]/ru/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
+      <img src="images/lang/ru/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Планировщик записи выглядит следующим образом:<br />
-      <img src="images/[%PROGRAM%]/ru/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
+      <img src="images/lang/ru/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
       В данном диалоговом окне отображается список передач для записи. Для добавления передачи в список передач для записи следует выбрать канал, установить время начала и окончания записи передачи, задать имя файла для записи выбранной передача.
       При выборе режима "Запись без просмотра" программа будет вести запись в фоновом режиме без вывода главного окна программы. При выборе функции
 	   "Выключить компьютер по окончанию" компьютер будет отключен после записи всех передач в списке. Эта функция работает только, если
@@ -250,10 +240,10 @@
       из архива. В этих случаях кнопка записи меняется с <img src="images/record.png" alt="record" title="record" /> на 
       <img src="images/record_timer.png" alt="record" title="record" />. 
       Если Вы нажмете на эту кнопку появится новое диалоговое окошко:<br />
-      <img src="images/[%PROGRAM%]/ru/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
+      <img src="images/lang/ru/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
       Здесь вы сможете выбрать требуемую длительность записи. Щелчок на кнопке <img src="images/button_ok.png" alt="set" title="set" /> 
       активирует таймер. Вы будете видеть отсчет времени. Теперь вы можете закрыть это диалоговое окошко.<br />
-      <img src="images/[%PROGRAM%]/ru/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
+      <img src="images/lang/ru/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
       Когда время закончится, запись остановится автоматически.<br />
       <b>Пожалуйста имейте в виду:</b> Вы можете изменять установки таймера путем повторного щелчка на кнопку записи.
       Вы можете отключать таймер нажав на кнопку <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" />.

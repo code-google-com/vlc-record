@@ -13,9 +13,6 @@
              <section title="[%PROGRAM%] Manual" ref="help_en.html">
                  <section title="About" ref="help_en.html#about" />
                  <section title="Versions" ref="help_en.html#versions" />
-                 <!-- [%HIDDEN%]
-                 <section title="Branding" ref="help_en.html#branding" />
-                 [%HIDDEN%] -->
                  <section title="Features" ref="help_en.html#features" />
                  <section title="Installation" ref="help_en.html#installation" />
                  <section title="First Time Settings" ref="help_en.html#ftsettings" />
@@ -51,8 +48,7 @@
              <file>help.css</file>
              <file>help_en.html</file>
              <file>images/*.png</file>
-             <file>images/[%PROGRAM%]/en/*.png</file>
-             <file>images/[%PROGRAM%]/common/*.png</file>
+             <file>images/lang/en/*.png</file>
          </files>
      </filterSection>
  </QtHelpProject>

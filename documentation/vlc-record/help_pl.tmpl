@@ -26,7 +26,6 @@
          <ol>
             <li><a href="#about">O programie</a></li>
             <li><a href="#versions">Wersje</a></li>
-            <li><a href="#branding">Marka (personanlizacja)</a></li>
             <li><a href="#features">Cechy</a></li>
             <li><a href="#installation">Instalacja</a></li>
             <li><a href="#ftsettings">Pierwsze ustawienia</a></li>
@@ -55,10 +54,13 @@
       <h2 id="about">O programie</h2>
       [%PROGRAM%] jest narzędziem służącym  do oglądania / nagrywania sygnału IPTV nadawanego przez [%SERVICE%]. 
       Jest napisany językiem C++ przy użyciu podbudowy <a class="extern" href="http://qt.digia.com" target="_blank">Qt firmy Digia <img src="images/external.png" alt="external" /></a>.
-      Funkcjonalność  zawdzięcza użyciu  pliku libvlc od <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC Player <img src="images/external.png" alt="external" /></a>.<br />
+      Funkcjonalność  zawdzięcza użyciu  pliku libvlc od <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolan VLC Player <img src="images/external.png" alt="external" /></a>.
+      <!-- [%HIDEPROJECT%]
+      <br />
       [%PROGRAM%] jest otwartym oprogramowaniem. Zawsze można znaleźć kod źródłowy jak i najnowsze modyfikacje na 
       <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">stronie projektu <img src="images/external.png" alt="external" /></a> 
       (zarządzane  przez Google).
+      [%HIDEPROJECT%] -->
       <h2 id="versions">Wersje</h2>
       Dostępne są następujące wersje:
       <ul>
@@ -66,17 +68,6 @@
          <li>Mac OSX 10.6 x86_64 lub nowszy</li>
          <li>Ubuntu Linux x86 (obecna wersja)</li>
       </ul>
-      <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <!-- [%HIDDEN%]
-      <h2 id="branding">Marka (personanlizacja)</h2>
-      VLC-Record używają następujące firmy:
-      <ul>
-         <li>VLC-Record (oryginalny dla <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Kartina.TV (oficjalny Player dla <a class="extern" href="http://www.kartina.tv" target="_blank">Kartina.TV <img src="images/external.png" alt="external" /></a>)</li>
-         <li>Polsky.TV (oficjalny Player dla <a class="extern" href="http://www.polsky.tv" target="_blank">Polsky.TV <img src="images/external.png" alt="external" /></a>)</li>
-      </ul>
-      Te marki różnią się nieznacznie (ikony, ścieżka serwera API).
-      [%HIDDEN%] -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Cechy</h2>
       [%PROGRAM%] posiada następujące cechy:
@@ -107,7 +98,7 @@
       Ustawienia programu bedą przechowywane w folderze macierzystym (~/.[%PROGRAM%]).
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">Pierwsze ustawienia</h2><br />
-      <img src="images/[%PROGRAM%]/pl/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
+      <img src="images/lang/pl/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
       Proszę wpisać dane dostępu w tym miejscu (subskrybcja i hasło). Jeśli chcesz mieć wyświetlane kanały 
       erotyczne na swojej liście kanałów, zaznacz odpowiednie pole. Jeśli wpiszesz kod blokady rodzicielskiej 
       w polu poniżej, będziesz mógł oglądać te kanały bez konieczności wpisywania kodu blokady rodzicielskiej 
@@ -119,7 +110,7 @@
       <h2 id="settings">Ustawienia</h2>
       Możesz wejść w ustawienia przyciskając podany symbol: <img src="images/tools.png" alt="Settings" title="Settings" />
       <h3 id="mainsettings">Ustawienia głowne</h3><br />
-      <img src="images/[%PROGRAM%]/pl/set_main.png" alt="Main Settings" title="Main Settings" /><br />
+      <img src="images/lang/pl/set_main.png" alt="Main Settings" title="Main Settings" /><br />
       W tej zakładce możesz zmienić / wpisać głowne ustawienia programu:
       <ul>
          <li>Abonament / hasło</li>
@@ -136,14 +127,14 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="shortcuts">Skróty</h3><br />
-      <img src="images/[%PROGRAM%]/pl/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
+      <img src="images/lang/pl/set_shortcuts.png" alt="Shortcut Settings" title="Shortcut Settings" /><br />
       Tutaj możesz zmienić domyślne ustawienia skrótów w używanych przez program. Żeby to zrobić zaznacz skrót 
       używając myszki. Teraz wciśnij nową kombinacje, która ma oznaczać skrót. Jeżeli tekst zmieni się na 
       czerwono to już użyłeś tego skrótu do innej komendy.<br />
       Możesz przywrócić skróty na domyślne używając przycisku narzedzi w lewym dolnym rogu tego okna.
       <!-- <div class="toplink"><a href="#about" target="_self">Top</a></div> -->
       <h3 id="advsettings">Ustawienia zaawansowane</h3><br />
-      <img src="images/[%PROGRAM%]/pl/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
+      <img src="images/lang/pl/set_advanced.png" alt="Advanced Settings" title="Advanced Settings" /><br />
       W tym oknie możesz zmienić następujące ustawienia programu:
       <ul>
          <li>Server Proxy - Konfiguracja serwera proxy, jeśli nie można się podłączyć bezpośrednio do Internetu.</li>
@@ -157,7 +148,6 @@
          <li>Zapytaj o nazwę pliku nagrania - Program zapyta o nazwie pliku jak tylko będziesz chciał nagrać jakiś program (domyślnie: wyłączone).</li>
          <li>Odłącz odtwarzacz podczas uruchamiania - Jeżeli używasz zewnętrznych odtwarzaczy zostaną odłączone od [%PROGRAM%]. 
          Wtedy działają one niezależnie i [%PROGRAM%] nie kontroluje tego procesu (domyślnie: wyłączony).</li>
-         <li>Sprawdź aktualizacje - Jeżeli jest ustawione na <b>włączone</b> program będzie sprawdzał aktualizacje przy każdym uruchomieniu (domyślnie: włączony).</li>
          <li>Kliknij dwukrotnie na początek odtwarzania listy kanałów - Jeżeli jest <b>wyłączony</b> odtwarzanie zacznie się gdy 
          klikniesz na dany kanał na liście kanałów (domyślnie: włączony).</li>
          <li>Minimalizuj do Systray - Jeżeli jest włączony program będzie ukryty w pasku narzędzi. 
@@ -170,9 +160,9 @@
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Ustawienia kontroli rodzicielskiej</h3><br />
-      <img src="images/[%PROGRAM%]/pl/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
+      <img src="images/lang/pl/set_parent_login.png" alt="Parental Login" title="Parental Login" /><br />
       Wpisz swój kod blokady rodzicielskiej, aby wejść w ustawienia kontroli rodzicielskiej.<br /> <br />
-      <img src="images/[%PROGRAM%]/pl/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
+      <img src="images/lang/pl/set_parent_manager.png" alt="Parental Manager" title="Parental Manager" /><br />
       Możesz tutaj zmienić następujące ustawienia:
       <ul>
          <li>Ustawienia kanałów - Wybrane kanały bedą <b>ukryte</b> na liście kanałów.</li>
@@ -183,7 +173,7 @@
       <b>Ważne: Musisz zapisać te ustawienia bezpośrednio w  ustawieniach kontroli rodzicielskiej. Są one niezależne od innych ustawień.</b>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discovergui">Odkrywanie Graficznego Interfejsu Użytkownika</h2><br />
-      <img src="images/[%PROGRAM%]/pl/whole_view.png" alt="Whole View" title="Whole View" /><br />
+      <img src="images/lang/pl/whole_view.png" alt="Whole View" title="Whole View" /><br />
       Po lewej stronie widnieje lista kanałów. Nad listą kanałów jest pole zarezerwowane na ulubione kanały. 
       W lewym górnym rogu można wybrać pomiędzy programami na żywo a wideoteką (VOD) – opcjonalne.<br />
       Na środku Graficznego Interfejsu Użytkownika można zobaczyć elektroniczny przewodnik TV (EPG). 
@@ -197,31 +187,31 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discoverfeatures">Funkcje wyszukiwania</h2>
       <h3 id="favchannels">Ulubione kanały</h3><br />
-      <img src="images/[%PROGRAM%]/pl/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
+      <img src="images/lang/pl/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
       Możesz wybrać do 10 ulubionych kanałów - poprzez kliknięcie prawego przycisku myszy i wybranie "Dodaj do ulubionych" 
       jak i poprzez przeciagnięcie wybranego kanału w odpowiednie pole. Teraz kanał powinien znajdować się w polu 
       nad listą kanałów. Jeśli naciśniesz dany kanał w polu ulubione,  zostanie on wybrany i załaduje się 
       elektroniczny przewodnik dla tego wyboru. Możesz usunąć kanał z ulubionych klikając prawym przyciskiem myszy. 
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="vodbrowser">Wideoteka (dla posiadających tą opcję)</h3><br />
-      <img src="images/[%PROGRAM%]/pl/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
+      <img src="images/lang/pl/vod_show.png" alt="Show VOD Browser" title="Show VOD Browser" /><br />
       Możesz aktywować przeglądarkę wideoteki klikając na zakładkę w lewym górnym rogu.<br /> <br />
-      <img src="images/[%PROGRAM%]/pl/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
+      <img src="images/lang/pl/vod_genre.png" alt="Choose Genre" title="Choose Genre" /><br />
       Możesz wybrać gatunek ...<br /> <br />
-      <img src="images/[%PROGRAM%]/pl/vod_sort.png" alt="Sort" title="Sort" /><br />
+      <img src="images/lang/pl/vod_sort.png" alt="Sort" title="Sort" /><br />
       ... i rodzaj nagrania. Tutaj możesz również wybrać ulubione nagrania.<br /> <br />
-      <img src="images/[%PROGRAM%]/pl/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
+      <img src="images/lang/pl/vod_search.png" alt="Search VOD" title="Search VOD" /><br />
       Lub po prostu wyszukać film.<br /> <br />
-      <img src="images/[%PROGRAM%]/common/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
+      <img src="images/video_choose.png" alt="Choose Video" title="Choose Video" /><br />
       Wybierasz wideo klikając myszą.<br /> <br />
-      <img src="images/[%PROGRAM%]/pl/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
+      <img src="images/lang/pl/vod_videoinfo.png" alt="Video Information" title="Video Information" /><br />
       Teraz można zobaczyć informacje o wybranym filmie. Można dodać / usunąć film z ulubionych klikając na serce (górna część okna). 
       Można nagrywać lub odtwarzać film klikając na przyciski poniżej. Kliknięcie na <b>[Powrót]</b> odsyła do poprzedniej strony. 
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="archive">Archiwum</h3>
       Archiwum jest dostępne dla większości kanałów. Oznacza to, że można oglądać każdy program, 
       który był wyemitowany na danym kanale w przeciągu ostatnich dwóch tygodni.<br />
-      <img src="images/[%PROGRAM%]/pl/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
+      <img src="images/lang/pl/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
       Można oglądać lub nagrywać ten program klikając przycisk odtwórz / nagraj w elektronicznym przewodniku TV. 
       Jeśli wybierzesz tutaj odtwórz możesz obejrzeć dowolny moment audycji przeciągając pasek z nagrania w odpowiednie miejsce. 
       <br /> <br />
@@ -231,9 +221,9 @@
       Możesz otworzyć okno dialogowe nagrywania przez naciśnięcie przycisku
       <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> lub klikając na zegarek w 
       elektronicznym przewodniku.<br />
-      <img src="images/[%PROGRAM%]/pl/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
+      <img src="images/lang/pl/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Otworzy się okno dialogowe nagrywania:<br />
-      <img src="images/[%PROGRAM%]/pl/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
+      <img src="images/lang/pl/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
       W tym oknie można zaplanować nagrywanie. Można wybrać kanał, z którego ma pochodzić na granie. Trzeba też podać nazwę pliku, 
       pod jakim ma być zapisane nagranie. Trzeba podać czas rozpoczęcia i zakończenia programu. Wybierając 
       "ciche nagrywanie" Player nagra program, ale nie przekaz. Wybierając "zamknij jeśli wszystko zrobione" 
@@ -254,10 +244,10 @@
       zmianą wyglądu przycisku nagrywanie z <img src="images/record.png" alt="record" title="record" /> 
       na <img src="images/record_timer.png" alt="record" title="record" />. 
       Naciśnięcie tego przycisku wywoła okno dialogowe:<br />
-      <img src="images/[%PROGRAM%]/pl/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
+      <img src="images/lang/pl/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
       W tym oknie ustawić można czas trwania nagrania. Wciśnięcie przycisku 
       <img src="images/button_ok.png" alt="set" title="set" /> rozpoczyna odliczanie. Można już zamknąć okno dialogowe.<br />
-      <img src="images/[%PROGRAM%]/pl/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
+      <img src="images/lang/pl/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
       Po upływie zaplanowanego czasu nagrywanie zatrzyma się automatycznie.<br />
       <b>Zapamiętaj:</b> Możesz zmienić ustawienia licznika, bądź go wyłączyć klikająć ponownie na przycisk nagrywania. 
       Wciśnięcie przycisku <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" /> 

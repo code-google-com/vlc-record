@@ -13,9 +13,6 @@
              <section title="[%PROGRAM%] Ręczny" ref="help_pl.html">
                  <section title="O programie" ref="help_pl.html#about" />
                  <section title="Wersje" ref="help_pl.html#versions" />
-                 <!-- [%HIDDEN%]
-                 <section title="Marka" ref="help_pl.html#branding" />
-                 [%HIDDEN%] -->
                  <section title="Cechy" ref="help_pl.html#features" />
                  <section title="Instalacja" ref="help_pl.html#installation" />
                  <section title="Pierwsze ustawienia" ref="help_pl.html#ftsettings" />
@@ -51,8 +48,7 @@
              <file>help.css</file>
              <file>help_pl.html</file>
              <file>images/*.png</file>
-             <file>images/[%PROGRAM%]/pl/*.png</file>
-             <file>images/[%PROGRAM%]/common/*.png</file>
+             <file>images/lang/pl/*.png</file>
          </files>
      </filterSection>
  </QtHelpProject>

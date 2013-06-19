@@ -13,9 +13,6 @@
              <section title="[%PROGRAM%] - Инструкция" ref="help_ru.html">
                  <section title="О программе" ref="help_ru.html#about" />
                  <section title="Версии" ref="help_ru.html#versions" />
-                 <!-- [%HIDDEN%]
-                 <section title="Брендинг" ref="help_ru.html#branding" />
-                 [%HIDDEN%] -->
                  <section title="Функциональные возможности" ref="help_ru.html#features" />
                  <section title="Установка" ref="help_ru.html#installation" />
                  <section title="Настройки при первом включении" ref="help_ru.html#ftsettings" />
@@ -51,8 +48,7 @@
              <file>help.css</file>
              <file>help_ru.html</file>
              <file>images/*.png</file>
-             <file>images/[%PROGRAM%]/ru/*.png</file>
-             <file>images/[%PROGRAM%]/common/*.png</file>
+             <file>images/lang/ru/*.png</file>
          </files>
      </filterSection>
  </QtHelpProject>
