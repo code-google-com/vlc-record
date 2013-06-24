@@ -423,7 +423,8 @@ void CNovoeClient::GetServer()
 {
    mInfo(tr("Request Stream Server List ..."));
 
-   q_get((int)CIptvDefs::REQ_GET_SERVER, sApiUrl + "settings?var=stream_server");
+   q_get((int)CIptvDefs::REQ_GET_SERVER, sApiUrl + "settings?var=stream_server"
+         + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -443,7 +444,8 @@ void CNovoeClient::GetTimeShift()
 {
    mInfo(tr("Request Time Shift ..."));
 
-   q_get((int)CIptvDefs::REQ_GETTIMESHIFT, sApiUrl + "settings?var=timeshift");
+   q_get((int)CIptvDefs::REQ_GETTIMESHIFT, sApiUrl + "settings?var=timeshift"
+          + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -463,8 +465,8 @@ void CNovoeClient::SetTimeShift (int iHours)
 {
    mInfo(tr("Set TimeShift to %1 hour(s) ...").arg(iHours));
 
-   q_post((int)CIptvDefs::REQ_TIMESHIFT, sApiUrl + "settings_set",
-               QString("var=timeshift&val=%1").arg(iHours));
+   q_get((int)CIptvDefs::REQ_TIMESHIFT, sApiUrl + "settings_set?"
+         + QString("var=timeshift&val=%1").arg(iHours) + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -484,7 +486,8 @@ void CNovoeClient::GetBitRate()
 {
    mInfo(tr("Request Bit Rate ..."));
 
-   q_get((int)CIptvDefs::REQ_GETBITRATE, sApiUrl + "settings?var=bitrate");
+   q_get((int)CIptvDefs::REQ_GETBITRATE, sApiUrl + "settings?var=bitrate"
+          + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -504,8 +507,8 @@ void CNovoeClient::SetBitRate(int iRate)
 {
    mInfo(tr("Set BitRate to %1 kbit/s ...").arg(iRate));
 
-   q_post((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set",
-               QString("var=bitrate&val=%1").arg(iRate));
+   q_get((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set?"
+         + QString("var=bitrate&val=%1").arg(iRate) + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -532,8 +535,8 @@ void CNovoeClient::GetStreamURL(int iChanID, const QString &secCode, bool bTimer
       req += QString("&protect_code=%1").arg(secCode);
    }
 
-   q_post((bTimerRec) ? (int)CIptvDefs::REQ_TIMERREC : (int)CIptvDefs::REQ_STREAM,
-               sApiUrl + "get_url.php", req);
+   q_get((bTimerRec) ? (int)CIptvDefs::REQ_TIMERREC : (int)CIptvDefs::REQ_STREAM,
+               sApiUrl + "get_url.php?" + req  + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -598,7 +601,7 @@ void CNovoeClient::GetEPG(int iChanID, int iOffset)
    QDate now = QDate::currentDate().addDays(iOffset);
 
    q_get((int)CIptvDefs::REQ_EPG, sApiUrl + QString("epg.php?cid=%1&day=%2")
-       .arg(iChanID).arg(now.toString("ddMMyy")));
+       .arg(iChanID).arg(now.toString("ddMMyy")) + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -625,7 +628,7 @@ void CNovoeClient::GetArchivURL (const QString &prepared, const QString &secCode
       req += QString("&protect_code=%1").arg(secCode);
    }
 
-   q_post((int)CIptvDefs::REQ_ARCHIV, sApiUrl + "get_url.php", req);
+   q_get((int)CIptvDefs::REQ_ARCHIV, sApiUrl + "get_url.php?" + req + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -645,7 +648,7 @@ void CNovoeClient::GetVodGenres()
 {
    mInfo(tr("Request VOD Genres ..."));
 
-   q_get((int)CIptvDefs::REQ_GETVODGENRES, sApiUrl + "vod_genres.php");
+   q_get((int)CIptvDefs::REQ_GETVODGENRES, sApiUrl + "vod_genres.php?" + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -665,7 +668,15 @@ void CNovoeClient::GetVideos(const QString &sPrepared)
 {
    mInfo(tr("Request Videos ..."));
 
-   q_get((int)CIptvDefs::REQ_GETVIDEOS, sApiUrl + QString("vod_list.php?%1").arg(sPrepared));
+   QUrl url(sPrepared);
+   QString sTmp = sPrepared;
+   if(url.encodedQueryItemValue("genre") == "")
+   {
+       sTmp += "&genre=0";
+   }
+
+   q_get((int)CIptvDefs::REQ_GETVIDEOS, sApiUrl + QString("vod_list.php?%1").arg(sTmp)
+         + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -692,7 +703,7 @@ void CNovoeClient::GetVideoInfo(int iVodID, const QString &secCode)
       req += QString("&protect_code=%1").arg(secCode);
    }
 
-   q_get((int)CIptvDefs::REQ_GETVIDEOINFO, sApiUrl + req);
+   q_get((int)CIptvDefs::REQ_GETVIDEOINFO, sApiUrl + req + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -720,7 +731,7 @@ void CNovoeClient::GetVodUrl(int iVidId, const QString &secCode)
       req += QString("&protect_code=%1").arg(secCode);
    }
 
-   q_get((int)CIptvDefs::REQ_GETVODURL, sApiUrl + req);
+   q_get((int)CIptvDefs::REQ_GETVODURL, sApiUrl + req + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -929,7 +940,7 @@ void CNovoeClient::epgCurrent(const QString &cids)
    mInfo(tr("EPG current for Channels: %1 ...").arg(cids));
 
    q_get((int)CIptvDefs::REQ_EPG_CURRENT, sApiUrl + QString("epg_current.php?cids=%1&epg=3")
-       .arg(cids));
+       .arg(cids) + QString("&") + sCookie);
 }
 
 //---------------------------------------------------------------------------

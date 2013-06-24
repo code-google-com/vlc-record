@@ -92,11 +92,11 @@ int CNovoeParser::parseChannelList (const QString &sResp,
                chan.bIsVideo     = mChannel.value("is_video").toBool();
                chan.bHasArchive  = mChannel.value("have_archive").toBool();
                chan.bIsProtected = mChannel.value("protected").toBool();
-               chan.sIcon        = mChannel.value("icon").toString();
+               chan.sIcon        = mChannel.value("logo_big").toString();
                chan.sProgramm    = mChannel.value("epg_progname").toString();
                chan.uiStart      = mChannel.value("epg_start").toUInt();
                chan.uiEnd        = mChannel.value("epg_end").toUInt();
-               chan.bIsHidden    = mChannel.value("hide").toBool();
+               // chan.bIsHidden    = mChannel.value("hide").toBool();
 
                if (bFixTime)
                {
@@ -173,57 +173,6 @@ int CNovoeParser::parseSServersLogin(const QString &sResp, QVector<cparser::SSrv
 
          vSrv.append(srv);
       }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse cookie response
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   sCookie (QString&) ref. to cookie string
-//! \param   sInf (cparser::SAccountInfo &) ref. to account info
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseCookie (const QString &sResp, QString &sCookie, cparser::SAccountInfo &sInf)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   QVariantMap   contentMap, nestedMap;
-   QJson::Parser parser;
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      sCookie = QString("%1=%2")
-            .arg(contentMap.value("sid_name").toString())
-            .arg(contentMap.value("sid").toString());
-
-
-      nestedMap        = contentMap.value("account").toMap();
-      sInf.sExpires    = QDateTime::fromTime_t(nestedMap.value("packet_expire").toUInt())
-                           .toString(DEF_TIME_FORMAT);
-
-      nestedMap        = contentMap.value("services").toMap();
-      sInf.bHasArchive = nestedMap.value("archive").toBool();
-      sInf.bHasVOD     = nestedMap.value("vod").toBool();
-
-      // check offset ...
-      checkTimeOffSet (contentMap.value("servertime").toUInt());
    }
    else
    {
