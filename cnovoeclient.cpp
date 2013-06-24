@@ -668,9 +668,11 @@ void CNovoeClient::GetVideos(const QString &sPrepared)
 {
    mInfo(tr("Request Videos ..."));
 
-   QUrl url(sPrepared);
+   QUrl    url(sPrepared);
    QString sTmp = sPrepared;
-   if(url.encodedQueryItemValue("genre") == "")
+
+   // add genre in case not used...
+   if(!url.hasQueryItem("genre"))
    {
        sTmp += "&genre=0";
    }
