@@ -769,303 +769,303 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="444"/>
+        <location filename="cnovoeclient.cpp" line="445"/>
         <source>Request Time Shift ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="464"/>
+        <location filename="cnovoeclient.cpp" line="466"/>
         <source>Set TimeShift to %1 hour(s) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="485"/>
+        <location filename="cnovoeclient.cpp" line="487"/>
         <source>Request Bit Rate ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="505"/>
+        <location filename="cnovoeclient.cpp" line="508"/>
         <source>Set BitRate to %1 kbit/s ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="526"/>
+        <location filename="cnovoeclient.cpp" line="529"/>
         <source>Request URL for channel %1 ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="554"/>
+        <location filename="cnovoeclient.cpp" line="557"/>
         <source>Set Streaming Server to %1 ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="575"/>
+        <location filename="cnovoeclient.cpp" line="578"/>
         <source>Set Http Buffer to %1 msec. ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="596"/>
+        <location filename="cnovoeclient.cpp" line="599"/>
         <source>Request EPG for Channel %1 ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="619"/>
+        <location filename="cnovoeclient.cpp" line="622"/>
         <source>Request Archiv URL ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="646"/>
+        <location filename="cnovoeclient.cpp" line="649"/>
         <source>Request VOD Genres ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="666"/>
+        <location filename="cnovoeclient.cpp" line="669"/>
         <source>Request Videos ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="686"/>
+        <location filename="cnovoeclient.cpp" line="697"/>
         <source>Request Video info for video %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="713"/>
+        <location filename="cnovoeclient.cpp" line="724"/>
         <source>Request Video Url for video %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="741"/>
+        <location filename="cnovoeclient.cpp" line="752"/>
         <source>Hide channel(s) %1 from channel list ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="764"/>
+        <location filename="cnovoeclient.cpp" line="775"/>
         <source>Show channel(s) %1 in channel list ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="787"/>
+        <location filename="cnovoeclient.cpp" line="798"/>
         <source>Request VOD manager data ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="810"/>
+        <location filename="cnovoeclient.cpp" line="821"/>
         <source>Set VOD manager data (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="833"/>
+        <location filename="cnovoeclient.cpp" line="844"/>
         <source>Add VOD favourite (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="860"/>
+        <location filename="cnovoeclient.cpp" line="871"/>
         <source>Remove VOD favourite (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="887"/>
+        <location filename="cnovoeclient.cpp" line="898"/>
         <source>Get VOD favourites (%1) ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="906"/>
+        <location filename="cnovoeclient.cpp" line="917"/>
         <source>Change parent code ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="929"/>
+        <location filename="cnovoeclient.cpp" line="940"/>
         <source>EPG current for Channels: %1 ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="948"/>
+        <location filename="cnovoeclient.cpp" line="959"/>
         <source>Check for available updates ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="966"/>
+        <location filename="cnovoeclient.cpp" line="977"/>
         <source>Download image ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1047"/>
+        <location filename="cnovoeclient.cpp" line="1058"/>
         <source>Unknown error</source>
         <translation type="unfinished">Unbekannter Fehler</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1048"/>
+        <location filename="cnovoeclient.cpp" line="1059"/>
         <source>Incorrect request</source>
         <translation type="unfinished">Falsche Anfrage</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1049"/>
+        <location filename="cnovoeclient.cpp" line="1060"/>
         <source>Wrong login or password</source>
         <translation type="unfinished">Falsche Login-Daten</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1050"/>
+        <location filename="cnovoeclient.cpp" line="1061"/>
         <source>Access denied</source>
         <translation type="unfinished">Zugriff verboten</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1051"/>
+        <location filename="cnovoeclient.cpp" line="1062"/>
         <source>Login incorrect</source>
         <translation type="unfinished">Falscher Login</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1052"/>
+        <location filename="cnovoeclient.cpp" line="1063"/>
         <source>Your contract is inactive</source>
         <translation type="unfinished">Ihr Vertrag ist nicht aktiv</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1053"/>
+        <location filename="cnovoeclient.cpp" line="1064"/>
         <source>Your contract is paused</source>
         <translation type="unfinished">Ihr Vertrag pausiert</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1054"/>
+        <location filename="cnovoeclient.cpp" line="1065"/>
         <source>Channel not found or not allowed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1055"/>
+        <location filename="cnovoeclient.cpp" line="1066"/>
         <source>Error in request: Bad parameters</source>
         <translation type="unfinished">Fehler in der Anfrage: Falsche(r) Parameter</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1056"/>
+        <location filename="cnovoeclient.cpp" line="1067"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
         <translation type="unfinished">Fehlender Parameter (day) in Form &lt;DDMMYY&gt;</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1057"/>
+        <location filename="cnovoeclient.cpp" line="1068"/>
         <source>Missing parameter (cid)</source>
         <translation type="unfinished">Fehlender Parameter (cid)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1058"/>
+        <location filename="cnovoeclient.cpp" line="1069"/>
         <source>Another client with your data logged in</source>
         <translation type="unfinished">Ein anderer Client hat sich mit Ihren Daten eingeloggt</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1059"/>
+        <location filename="cnovoeclient.cpp" line="1070"/>
         <source>Authentication error</source>
         <translation type="unfinished">Authentifizierungsfehler</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1060"/>
+        <location filename="cnovoeclient.cpp" line="1071"/>
         <source>Your package expired</source>
         <translation type="unfinished">Ihr Paket ist abgelaufen</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1061"/>
+        <location filename="cnovoeclient.cpp" line="1072"/>
         <source>Unknown API function</source>
         <translation type="unfinished">Unbekannte API Funktion</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1062"/>
+        <location filename="cnovoeclient.cpp" line="1073"/>
         <source>Archive not available</source>
         <translation type="unfinished">Archiv nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1063"/>
+        <location filename="cnovoeclient.cpp" line="1074"/>
         <source>Missing parameter (place)</source>
         <translation type="unfinished">Fehlender Parameter (place)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1064"/>
+        <location filename="cnovoeclient.cpp" line="1075"/>
         <source>Missing parameter (name)</source>
         <translation type="unfinished">Fehlender Parameter (name)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1065"/>
+        <location filename="cnovoeclient.cpp" line="1076"/>
         <source>Incorrect confirmation code</source>
         <translation type="unfinished">Falscher Bestätigungscode</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1066"/>
+        <location filename="cnovoeclient.cpp" line="1077"/>
         <source>Current code is wrong</source>
         <translation type="unfinished">Der aktuelle Code ist falsch</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1067"/>
+        <location filename="cnovoeclient.cpp" line="1078"/>
         <source>New code is wrong</source>
         <translation type="unfinished">Neuer Code ist falsch</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1068"/>
+        <location filename="cnovoeclient.cpp" line="1079"/>
         <source>Missing parameter (val)</source>
         <translation type="unfinished">Fehlender Parameter (val)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1069"/>
+        <location filename="cnovoeclient.cpp" line="1080"/>
         <source>Value not allowed</source>
         <translation type="unfinished">Wert nicht zulässig</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1070"/>
+        <location filename="cnovoeclient.cpp" line="1081"/>
         <source>Missing parameter</source>
         <translation type="unfinished">Fehlende(r) Parameter</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1071"/>
+        <location filename="cnovoeclient.cpp" line="1082"/>
         <source>Missing parameter (id)</source>
         <translation type="unfinished">Fehlender Parameter (id)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1072"/>
+        <location filename="cnovoeclient.cpp" line="1083"/>
         <source>Missing parameter (fileid)</source>
         <translation type="unfinished">Fehlender Parameter (fileid)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1073"/>
+        <location filename="cnovoeclient.cpp" line="1084"/>
         <source>Missing parameter (type)</source>
         <translation type="unfinished">Fehlender Parameter (type)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1074"/>
+        <location filename="cnovoeclient.cpp" line="1085"/>
         <source>Missing parameter (query)</source>
         <translation type="unfinished">Fehlender Parameter (query)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1075"/>
+        <location filename="cnovoeclient.cpp" line="1086"/>
         <source>Bitrate not available</source>
         <translation type="unfinished">Bitrate nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1076"/>
+        <location filename="cnovoeclient.cpp" line="1087"/>
         <source>Service not available</source>
         <translation type="unfinished">Service nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1077"/>
+        <location filename="cnovoeclient.cpp" line="1088"/>
         <source>Query limit exceeded</source>
         <translation type="unfinished">Query-Limit überschritten</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1078"/>
+        <location filename="cnovoeclient.cpp" line="1089"/>
         <source>Rule already exists</source>
         <translation type="unfinished">Die Regel existiert bereits</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1079"/>
-        <location filename="cnovoeclient.cpp" line="1080"/>
+        <location filename="cnovoeclient.cpp" line="1090"/>
+        <location filename="cnovoeclient.cpp" line="1091"/>
         <source>Missing parameter (cmd)</source>
         <translation type="unfinished">Fehlender Parameter (cmd)</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1081"/>
+        <location filename="cnovoeclient.cpp" line="1092"/>
         <source>Bad value (rate)</source>
         <translation type="unfinished">Falscher Wert für Einstufung</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1082"/>
+        <location filename="cnovoeclient.cpp" line="1093"/>
         <source>Can&apos;t find film</source>
         <translation type="unfinished">Film nicht gefunden</translation>
     </message>
     <message>
-        <location filename="cnovoeclient.cpp" line="1083"/>
+        <location filename="cnovoeclient.cpp" line="1094"/>
         <source>Film already added</source>
         <translation type="unfinished">Film wurde schon zu Favoriten hinzugefügt</translation>
     </message>
@@ -1075,32 +1075,30 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cnovoeparser.cpp" line="124"/>
         <location filename="cnovoeparser.cpp" line="179"/>
-        <location filename="cnovoeparser.cpp" line="230"/>
-        <location filename="cnovoeparser.cpp" line="278"/>
-        <location filename="cnovoeparser.cpp" line="338"/>
-        <location filename="cnovoeparser.cpp" line="387"/>
-        <location filename="cnovoeparser.cpp" line="447"/>
-        <location filename="cnovoeparser.cpp" line="528"/>
-        <location filename="cnovoeparser.cpp" line="593"/>
-        <location filename="cnovoeparser.cpp" line="642"/>
-        <location filename="cnovoeparser.cpp" line="684"/>
-        <location filename="cnovoeparser.cpp" line="745"/>
+        <location filename="cnovoeparser.cpp" line="227"/>
+        <location filename="cnovoeparser.cpp" line="287"/>
+        <location filename="cnovoeparser.cpp" line="336"/>
+        <location filename="cnovoeparser.cpp" line="396"/>
+        <location filename="cnovoeparser.cpp" line="477"/>
+        <location filename="cnovoeparser.cpp" line="542"/>
+        <location filename="cnovoeparser.cpp" line="591"/>
+        <location filename="cnovoeparser.cpp" line="633"/>
+        <location filename="cnovoeparser.cpp" line="694"/>
         <source>Error in %1</source>
         <translation type="unfinished">Fehler in %1</translation>
     </message>
     <message>
         <location filename="cnovoeparser.cpp" line="125"/>
         <location filename="cnovoeparser.cpp" line="180"/>
-        <location filename="cnovoeparser.cpp" line="231"/>
-        <location filename="cnovoeparser.cpp" line="279"/>
-        <location filename="cnovoeparser.cpp" line="339"/>
-        <location filename="cnovoeparser.cpp" line="388"/>
-        <location filename="cnovoeparser.cpp" line="448"/>
-        <location filename="cnovoeparser.cpp" line="529"/>
-        <location filename="cnovoeparser.cpp" line="594"/>
-        <location filename="cnovoeparser.cpp" line="643"/>
-        <location filename="cnovoeparser.cpp" line="685"/>
-        <location filename="cnovoeparser.cpp" line="746"/>
+        <location filename="cnovoeparser.cpp" line="228"/>
+        <location filename="cnovoeparser.cpp" line="288"/>
+        <location filename="cnovoeparser.cpp" line="337"/>
+        <location filename="cnovoeparser.cpp" line="397"/>
+        <location filename="cnovoeparser.cpp" line="478"/>
+        <location filename="cnovoeparser.cpp" line="543"/>
+        <location filename="cnovoeparser.cpp" line="592"/>
+        <location filename="cnovoeparser.cpp" line="634"/>
+        <location filename="cnovoeparser.cpp" line="695"/>
         <source>QJSON error: %1</source>
         <translation type="unfinished"></translation>
     </message>
