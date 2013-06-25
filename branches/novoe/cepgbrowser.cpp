@@ -63,11 +63,16 @@ void CEpgBrowser::DisplayEpg(QVector<cparser::SEpg> epglist,
       actShow.sShowName  = epglist[i].sName;
       actShow.sShowDescr = epglist[i].sDescr;
       actShow.uiStart    = epglist[i].uiGmt;
-#ifdef _TASTE_IPTV_RECORD
-      actShow.uiEnd      = epglist[i].uiEnd;
-#else
-      actShow.uiEnd      = ((i + 1) < epglist.size()) ? epglist[i + 1].uiGmt : 0;
-#endif
+      actShow.uiId       = epglist[i].uiId;
+
+      if (epglist[i].uiEnd != 0)
+      {
+         actShow.uiEnd   = epglist[i].uiEnd;
+      }
+      else
+      {
+         actShow.uiEnd   = ((i + 1) < epglist.size()) ? epglist[i + 1].uiGmt : 0;
+      }
 
       // store start time and show info ...
       mProgram.insert(epglist[i].uiGmt, actShow);
@@ -173,18 +178,20 @@ QString CEpgBrowser::createHtmlCode()
                                    .arg(tr("Ar."));
 
             // play ...
-            sArchivLinks += QString("<a href='vlc-record?action=archivplay&cid=%1&gmt=%2'>"
+            sArchivLinks += QString("<a href='vlc-record?action=archivplay&cid=%1&gmt=%2%4'>"
                                     "<img src=':png/play' width='16' height='16' alt='play' "
                                     "title='%3' /></a>&nbsp;")
                                     .arg(iCid).arg(actShow.uiStart)
-                                    .arg(tr("play from archive ..."));
+                                    .arg(tr("play from archive ..."))
+                                    .arg((actShow.uiId != 0) ? ("&id=" + QString::number(actShow.uiId)) : "");
 
             // record ...
-            sArchivLinks += QString("<a href='vlc-record?action=archivrec&cid=%1&gmt=%2'>"
+            sArchivLinks += QString("<a href='vlc-record?action=archivrec&cid=%1&gmt=%2%4'>"
                                     "<img src=':png/record' width='16' height='16' alt='record' "
                                     "title='%3' /></a>")
                                     .arg(iCid).arg(actShow.uiStart)
-                                    .arg(tr("record from archive ..."));
+                                    .arg(tr("record from archive ..."))
+                                    .arg((actShow.uiId != 0) ? ("&id=" + QString::number(actShow.uiId)) : "");
 
             sStartTime += sArchivLinks;
          }

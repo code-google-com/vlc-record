@@ -56,6 +56,8 @@ int CNovoeParser::parseChannelList (const QString &sResp,
    QVariantMap   contentMap;
    QJson::Parser parser;
    int iGrpIdx = 0;
+   // QString strImgPrefix = "http://iptv6.new-rus.tv/_logos/channelLogos/";
+   QString strImgPrefix = "/_logos/channelLogos/";
 
    // clear channel list ...
    chanList.clear();
@@ -92,7 +94,7 @@ int CNovoeParser::parseChannelList (const QString &sResp,
                chan.bIsVideo     = mChannel.value("is_video").toBool();
                chan.bHasArchive  = mChannel.value("have_archive").toBool();
                chan.bIsProtected = mChannel.value("protected").toBool();
-               chan.sIcon        = mChannel.value("logo_big").toString();
+               chan.sIcon        = strImgPrefix + mChannel.value("logo_big").toString();
                chan.sProgramm    = mChannel.value("epg_progname").toString();
                chan.uiStart      = mChannel.value("epg_start").toUInt();
                chan.uiEnd        = mChannel.value("epg_end").toUInt();
@@ -169,7 +171,7 @@ int CNovoeParser::parseSServersLogin(const QString &sResp, QVector<cparser::SSrv
          QVariantMap mSrv = lSrv.toMap();
 
          srv.sIp   = mSrv.value("ip").toString();
-         srv.sName = mSrv.value("descr").toString();
+         srv.sName = mSrv.value("desc").toString();
 
          vSrv.append(srv);
       }
@@ -383,10 +385,9 @@ int CNovoeParser::parseVodList(const QString &sResp, QVector<cparser::SVodVideo>
          entry.sName      = mRow.value("name").toString();
          entry.sDescr     = mRow.value("description").toString();
          entry.sYear      = mRow.value("year").toString();
-         entry.sCountry   = mRow.value("country").toString();
          entry.sImg       = mRow.value("poster").toString();
-         entry.bProtected = mRow.value("pass_protect").toBool();
-         entry.bFavourit  = mRow.value("favorite").toBool();
+         entry.bProtected = (mRow.value("vis").toString() != "on") ? true : false;
+         entry.sCountry   = mRow.value("country").toMap().value("name").toString();
 
          vVodList.append(entry);
       }
@@ -443,7 +444,6 @@ int CNovoeParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vidIn
       contentMap = contentMap.value("film").toMap();
 
       vidInfo.sActors    = contentMap.value("actors").toString();
-      vidInfo.sCountry   = contentMap.value("country").toString();
       vidInfo.sDescr     = contentMap.value("description").toString();
       vidInfo.sDirector  = contentMap.value("director").toString();
       vidInfo.sImg       = contentMap.value("poster").toString();
@@ -452,8 +452,8 @@ int CNovoeParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vidIn
       vidInfo.sGenres    = contentMap.value("genre_str").toString();
       vidInfo.uiLength   = contentMap.value("lenght").toUInt();
       vidInfo.uiVidId    = contentMap.value("id").toUInt();
-      vidInfo.bFavourit  = contentMap.value("favorite").toBool();
-      vidInfo.bProtected = contentMap.value("pass_protect").toBool();
+      vidInfo.bProtected = (contentMap.value("vis").toString() != "on") ? true : false;
+      vidInfo.sCountry   = contentMap.value("country").toMap().value("name").toString();
 
       foreach (const QVariant& lVideo, contentMap.value("videos").toList())
       {
@@ -517,6 +517,8 @@ int CNovoeParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgLis
 
          entry.sDescr = "";
          entry.uiGmt  = mEpg.value("ut_start").toUInt();
+         entry.uiEnd  = mEpg.value("ut_end").toUInt();
+         entry.uiId   = mEpg.value("id").toUInt();
          sTmp         = mEpg.value("progname").toString();
 
          if (sTmp.contains('\n'))

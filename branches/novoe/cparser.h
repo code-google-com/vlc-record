@@ -46,10 +46,13 @@ namespace cparser
 
    struct SEpg
    {
+      // constructor inits values ...
+      SEpg():uiGmt(0), uiEnd(0), uiId(0) {}
       QString sName;
       QString sDescr;
       uint    uiGmt;
       uint    uiEnd;
+      uint    uiId;
    };
 
    struct SSrv
