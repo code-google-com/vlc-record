@@ -14,13 +14,6 @@
 #ifndef __20130612_CNOVOEPARSER_H
    #define __20130612_CNOVOEPARSER_H
 
-#include <QDateTime>
-#include <QJson/Parser>
-#include <QVariantMap>
-
-#include "clogfile.h"
-#include "defdef.h"
-#include "cparser.h"
 #include "cstdjsonparser.h"
 
 //---------------------------------------------------------------------------
@@ -42,13 +35,7 @@ public:
    virtual int parseSetting(const QString& sResp, const QString &sName, QVector<int>& vValues, int& iActVal);
    virtual int parseSServersLogin (const QString& sResp, QVector<cparser::SSrv>& vSrv, QString& sActIp);
    virtual int parseVodList (const QString& sResp, QVector<cparser::SVodVideo>& vVodList, cparser::SGenreInfo &gInfo);
-   virtual int parseUrl (const QString& sResp, QString& sUrl);
-   virtual int parseVodUrls (const QString& sResp, QStringList& sUrls);
    virtual int parseVideoInfo (const QString& sResp, cparser::SVodVideo &vidInfo);
-   virtual int parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres);
-   virtual int parseVodManager (const QString& sResp, QVector<cparser::SVodRate>& vRates);
-   virtual int parseEpgCurrent (const QString& sResp, QCurrentMap &currentEpg);
-   virtual int parseError (const QString& sResp, QString& sMsg, int& eCode);
 };
 
 #endif // __20130612_CNOVOEPARSER_H

@@ -23,7 +23,7 @@
 #endif // INCLUDE_LIBVLC
 
 #define BIN_NAME             "novoe_tv"
-#define API_SERVER           "93.189.144.156:8501"
+#define API_SERVER           "api.new-rus.tv:8501"
 
 #define COMPANY_NAME "Novoe.TV"
 #define COMPANY_LINK "<a href='http://www.novoe.tv'>" COMPANY_NAME "</a>"

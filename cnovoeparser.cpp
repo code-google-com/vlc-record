@@ -54,7 +54,6 @@ int CNovoeParser::parseChannelList (const QString &sResp,
    cparser::SChan      chan;
    cparser::STimeShift ts;
    QVariantMap   contentMap;
-   QJson::Parser parser;
    int iGrpIdx = 0;
    // QString strImgPrefix = "http://iptv6.new-rus.tv/_logos/channelLogos/";
    QString strImgPrefix = "/_logos/channelLogos/";
@@ -62,7 +61,7 @@ int CNovoeParser::parseChannelList (const QString &sResp,
    // clear channel list ...
    chanList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -124,7 +123,8 @@ int CNovoeParser::parseChannelList (const QString &sResp,
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -152,12 +152,11 @@ int CNovoeParser::parseSServersLogin(const QString &sResp, QVector<cparser::SSrv
    bool bOk = false;
    cparser::SSrv   srv;
    QVariantMap     contentMap, nestedMap;
-   QJson::Parser   parser;
 
    // clear server list ...
    vSrv.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -179,164 +178,8 @@ int CNovoeParser::parseSServersLogin(const QString &sResp, QVector<cparser::SSrv
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse vod genres response
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   vGenres (QVector<cparser::SGenre>&) ref. to genre vector
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseGenres (const QString& sResp, QVector<cparser::SGenre>& vGenres)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   cparser::SGenre sGenre;
-   QVariantMap     contentMap;
-   QJson::Parser   parser;
-
-   // clear genres ...
-   vGenres.clear();
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      foreach (const QVariant& lGenre, contentMap.value("genres").toList())
-      {
-         QVariantMap mGenre = lGenre.toMap();
-
-         sGenre.sGName = mGenre.value("name").toString();
-         sGenre.uiGid  = mGenre.value("id").toUInt();
-
-         vGenres.append(sGenre);
-      }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse current epg current response
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   currentEpg (QCurrentMap &) ref. to epg data map
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseEpgCurrent (const QString& sResp, QCurrentMap &currentEpg)
-{
-   int  iRV = 0, cid;
-   bool bOk = false;
-   cparser::SEpgCurrent          entry;
-   QVector<cparser::SEpgCurrent> vEntries;
-   QVariantMap   contentMap;
-   QJson::Parser parser;
-
-   // clear map ...
-   currentEpg.clear();
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      foreach (const QVariant& lEpg1, contentMap.value("epg").toList())
-      {
-         QVariantMap mEpg1 = lEpg1.toMap();
-
-         vEntries.clear();
-
-         cid = mEpg1.value("cid").toInt();
-
-         foreach (const QVariant& lEpg2, mEpg1.value("epg").toList())
-         {
-            QVariantMap mEpg2 = lEpg2.toMap();
-
-            entry.sShow   = mEpg2.value("progname").toString();
-            entry.uiStart = mEpg2.value("ts").toUInt();
-
-            vEntries.append(entry);
-         }
-
-         currentEpg.insert(cid, vEntries);
-      }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse Vod Manager data (genre rating)
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   currentEpg (QVector<cparser::SVodRate> &) ref. to rates vector
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseVodManager (const QString &sResp, QVector<cparser::SVodRate> &vRates)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   cparser::SVodRate entry;
-   QVariantMap   contentMap;
-   QJson::Parser parser;
-
-   // clear map ...
-   vRates.clear();
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      foreach (const QVariant& lAccess, contentMap.value("result").toList())
-      {
-         QVariantMap mAccess = lAccess.toMap();
-
-         entry.iRateID = mAccess.value("id_rate").toInt();
-         entry.sGenre  = mAccess.value("rate_name").toString();
-         entry.sAccess = mAccess.value("action").toString();
-
-         vRates.append(entry);
-      }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -363,12 +206,11 @@ int CNovoeParser::parseVodList(const QString &sResp, QVector<cparser::SVodVideo>
    bool bOk = false;
    cparser::SVodVideo entry;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
    // clear vector ...
    vVodList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -395,7 +237,8 @@ int CNovoeParser::parseVodList(const QString &sResp, QVector<cparser::SVodVideo>
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -420,7 +263,6 @@ int CNovoeParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vidIn
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
    cparser::SVodFileInfo fInfo;
 
    // init struct ...
@@ -437,7 +279,7 @@ int CNovoeParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vidIn
    vidInfo.bFavourit  = false;
    vidInfo.vVodFiles.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -475,7 +317,8 @@ int CNovoeParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vidIn
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -501,13 +344,12 @@ int CNovoeParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgLis
    bool bOk = false;
    cparser::SEpg entry;
    QVariantMap   contentMap;
-   QJson::Parser parser;
    QString sTmp;
 
    // clear vector ...
    epgList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -542,7 +384,8 @@ int CNovoeParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgLis
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -569,12 +412,11 @@ int CNovoeParser::parseSetting(const QString& sResp, const QString &sName, QVect
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
    // clear vector ...
    vValues.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -591,7 +433,8 @@ int CNovoeParser::parseSetting(const QString& sResp, const QString &sName, QVect
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -599,144 +442,4 @@ int CNovoeParser::parseSetting(const QString& sResp, const QString &sName, QVect
    return iRV;
 }
 
-//---------------------------------------------------------------------------
-//
-//! \brief   parse URL response
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   sUrl (QString &) ref. to url string
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseUrl(const QString &sResp, QString &sUrl)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   QVariantMap   contentMap;
-   QJson::Parser parser;
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      sUrl = contentMap.value("url").toString();
-      sUrl.replace("&amp;", "&");
-
-      if (sUrl.contains(' '))
-      {
-         sUrl = sUrl.left(sUrl.indexOf(' '));
-      }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse VOD URL response
-//
-//! \author  Jo2003
-//! \date    15.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   sUrls (QStringList &) ref. to url list
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseVodUrls (const QString& sResp, QStringList& sUrls)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   QVariantMap   contentMap;
-   QJson::Parser parser;
-   QString       sUrl, sAdUrl;
-
-   // clear url list ...
-   sUrls.clear();
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      sUrl = contentMap.value("url").toString();
-      sUrl.replace("&amp;", "&");
-
-      if (sUrl.contains(' '))
-      {
-         sUrl = sUrl.left(sUrl.indexOf(' '));
-      }
-
-      sAdUrl = contentMap.value("ad_url").toString();
-      sAdUrl.replace("&amp;", "&");
-
-      if (sAdUrl.contains(' '))
-      {
-         sAdUrl = sAdUrl.left(sAdUrl.indexOf(' '));
-      }
-
-      sUrls << sUrl;
-
-      if (!sAdUrl.isEmpty())
-      {
-         sUrls << sAdUrl;
-      }
-   }
-   else
-   {
-      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
-
-      iRV = -1;
-   }
-
-   return iRV;
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   parse error
-//
-//! \author  Jo2003
-//! \date    16.04.2013
-//
-//! \param   sResp (const QString &) ref. to response string
-//! \param   sMsg (QString &) ref. to error message
-//! \param   eCode (int&) ref. to error code
-//
-//! \return  0 --> ok; -1 --> any error
-//---------------------------------------------------------------------------
-int CNovoeParser::parseError (const QString& sResp, QString &sMsg, int &eCode)
-{
-   int  iRV = 0;
-   bool bOk = false;
-   QVariantMap   contentMap;
-   QJson::Parser parser;
-
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
-
-   if (bOk)
-   {
-      contentMap = contentMap.value("error").toMap();
-
-      sMsg       = contentMap.value("message").toString();
-      eCode      = contentMap.value("code").toInt();
-   }
-   else
-   {
-      // we shouldn't report any error using sigError when
-      // parsing an error ... !
-      iRV = -1;
-   }
-
-   return iRV;
-}

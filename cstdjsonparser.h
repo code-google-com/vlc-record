@@ -15,7 +15,7 @@
    #define __20130415_CSTDJSONPARSER_H
 
 #include <QDateTime>
-#include <QJson/Parser>
+#include <QtJson>
 #include <QVariantMap>
 
 #include "clogfile.h"
