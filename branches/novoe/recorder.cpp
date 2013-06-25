@@ -3398,12 +3398,16 @@ void Recorder::slotRefreshChanLogos()
    {
       QStandardItem      *pItem;
       QPixmap             icon;
-      int                 cid, curCid, i;
+      int                 cid, curCid = -1, i;
       QString             fLogo;
       bool                bLoaded;
+      QModelIndex         modIdx = ui->channelList->currentIndex();
 
-      // get current selection ...
-      curCid = pModel->itemFromIndex(ui->channelList->currentIndex())->data(channellist::cidRole).toInt();
+      if(modIdx.isValid())
+      {
+         // get current selection ...
+         curCid = pModel->itemFromIndex(modIdx)->data(channellist::cidRole).toInt();
+      }
 
       for (i = 0; i < pModel->rowCount(); i++)
       {
@@ -3428,7 +3432,7 @@ void Recorder::slotRefreshChanLogos()
                pItem->setData(QIcon(icon), channellist::iconRole);
 
                // update channel icon on EPG browser ...
-               if (cid == curCid)
+               if ((curCid != -1) && (cid == curCid))
                {
                   ui->labChanIcon->setPixmap(QIcon(icon).pixmap(24, 24));
                }
@@ -3442,10 +3446,10 @@ void Recorder::slotRefreshChanLogos()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: slotRefreshChanLogos [slot]
+|  Method: slotPCodeChangeResp [slot]
 |  Begin: 31.05.2012
 |  Author: Jo2003
-|  Description: update channel logos in channel list ...
+|  Description: parent code was changed ...
 |
 |  Parameters: --
 |
