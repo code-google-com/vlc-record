@@ -344,7 +344,11 @@ void CNovoeClient::SetCookie(const QString &cookie)
 void CNovoeClient::Logout ()
 {
    mInfo(tr("Logout ..."));
-   q_get((int)CIptvDefs::REQ_LOGOUT, sApiUrl + "logout", Iptv::Logout);
+
+   // fake logout while it's not supported so far ...
+   slotStringResponse((int)CIptvDefs::REQ_LOGOUT, "Logout faked ... ");
+
+   // q_get((int)CIptvDefs::REQ_LOGOUT, sApiUrl + "logout.php?" + sCookie, Iptv::Logout);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -363,12 +367,7 @@ void CNovoeClient::Logout ()
 void CNovoeClient::GetCookie ()
 {
    mInfo(tr("Request Authentication ..."));
-/*
-   q_post((int)CIptvDefs::REQ_COOKIE, sApiUrl + "login.php",
-        QString("login=%1&pass=%2&settings=all")
-            .arg(sUsr).arg(sPw),
-        Iptv::Login);
-        */
+
    q_get((int)CIptvDefs::REQ_COOKIE, sApiUrl + "login.php?" +
         QString("login=%1&pass=%2&settings=all")
             .arg(sUsr).arg(sPw),
@@ -465,7 +464,7 @@ void CNovoeClient::SetTimeShift (int iHours)
 {
    mInfo(tr("Set TimeShift to %1 hour(s) ...").arg(iHours));
 
-   q_get((int)CIptvDefs::REQ_TIMESHIFT, sApiUrl + "settings_set?"
+   q_get((int)CIptvDefs::REQ_TIMESHIFT, sApiUrl + "settings_set.php?"
          + QString("var=timeshift&val=%1").arg(iHours) + QString("&") + sCookie);
 }
 
@@ -507,7 +506,7 @@ void CNovoeClient::SetBitRate(int iRate)
 {
    mInfo(tr("Set BitRate to %1 kbit/s ...").arg(iRate));
 
-   q_get((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set?"
+   q_get((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set.php?"
          + QString("var=bitrate&val=%1").arg(iRate) + QString("&") + sCookie);
 }
 
@@ -556,8 +555,8 @@ void CNovoeClient::SetServer (const QString &sIp)
 {
    mInfo(tr("Set Streaming Server to %1 ...").arg(sIp));
 
-   q_post((int)CIptvDefs::REQ_SERVER, sApiUrl + "settings_set",
-               QString("var=stream_server&val=%1").arg(sIp));
+   q_get((int)CIptvDefs::REQ_SERVER, sApiUrl + "settings_set.php?"
+         + QString("var=stream_server&val=%1").arg(sIp) + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\
@@ -668,13 +667,12 @@ void CNovoeClient::GetVideos(const QString &sPrepared)
 {
    mInfo(tr("Request Videos ..."));
 
-   QUrl    url(sPrepared);
    QString sTmp = sPrepared;
 
    // add genre in case not used...
-   if(!url.hasQueryItem("genre"))
+   if(!sTmp.contains("genre"))
    {
-       sTmp += "&genre=0";
+       sTmp += "&genre=2";
    }
 
    q_get((int)CIptvDefs::REQ_GETVIDEOS, sApiUrl + QString("vod_list.php?%1").arg(sTmp)
@@ -921,7 +919,7 @@ void CNovoeClient::setParentCode(const QString &oldCode, const QString &newCode)
    QString req = QString("var=pcode&old_code=%1&new_code=%2&confirm_code=%2")
          .arg(oldCode).arg(newCode);
 
-   q_post((int)CIptvDefs::REQ_SET_PCODE, sApiUrl + "settings_set", req);
+   q_get((int)CIptvDefs::REQ_SET_PCODE, sApiUrl + "settings_set.php?" + req + QString("&") + sCookie);
 }
 
 /*-----------------------------------------------------------------------------\

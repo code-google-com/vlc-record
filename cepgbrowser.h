@@ -24,9 +24,10 @@ namespace epg
    struct SShow
    {
       // make sure start and end are initiated with 0 ...
-      SShow():uiStart(0), uiEnd(0){}
+      SShow():uiStart(0), uiEnd(0), uiId(0) {}
       uint uiStart;
       uint uiEnd;
+      uint uiId;
       QString sShowName;
       QString sShowDescr;
    };

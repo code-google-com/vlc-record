@@ -1695,6 +1695,18 @@ void Recorder::slotLogout(const QString &str)
    // no need to look for errors in response ...
    Q_UNUSED(str);
 
+#ifdef INCLUDE_LIBVLC
+   if (vlcCtrl.withLibVLC())
+   {
+      ui->player->stop();
+   }
+   else
+#endif
+   if (vlcCtrl.IsRunning())
+   {
+      vlcCtrl.stop();
+   }
+
    mInfo(tr("logout done ..."));
    QDialog::accept ();
 }
@@ -2077,6 +2089,8 @@ void Recorder::slotEpgAnchor (const QUrl &link)
 
    if (ok)
    {
+      mInfo(link.toString());
+
       QString cid  = link.encodedQueryItemValue(QByteArray("cid"));
 
       cparser::SChan chan;
@@ -2095,7 +2109,18 @@ void Recorder::slotEpgAnchor (const QUrl &link)
             }
 
             QString    gmt  = link.encodedQueryItemValue(QByteArray("gmt"));
-            QString    req  = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
+            uint       id   = link.encodedQueryItemValue(QByteArray("id")).toUInt();
+            QString    req;
+
+            /* if (id != 0)
+            {
+               req = QString("id=%1").arg(id);
+            }
+            else */
+            {
+               req = QString("cid=%1&gmt=%2").arg(cid.toInt()).arg(gmt.toUInt());
+            }
+
             epg::SShow sepg = ui->textEpg->epgShow(gmt.toUInt());
 
             // store all info about show ...
@@ -3375,19 +3400,30 @@ void Recorder::slotRefreshChanLogos()
       QPixmap             icon;
       int                 cid, curCid, i;
       QString             fLogo;
+      bool                bLoaded;
 
       // get current selection ...
       curCid = pModel->itemFromIndex(ui->channelList->currentIndex())->data(channellist::cidRole).toInt();
 
       for (i = 0; i < pModel->rowCount(); i++)
       {
-         pItem = pModel->item(i);
-         cid   = pItem->data(channellist::cidRole).toInt();
+         bLoaded = false;
+         pItem   = pModel->item(i);
+         cid     = pItem->data(channellist::cidRole).toInt();
 
          // is there a logo file ... ?
          if ((fLogo = pItem->data(channellist::logoFileRole).toString()) != "")
          {
-            if (icon.load(fLogo, "image/gif"))
+            if (icon.load(fLogo))                     // auto type detection ...
+            {
+               bLoaded = true;
+            }
+            else if (icon.load(fLogo, "image/gif"))   // force gif load ...
+            {
+               bLoaded = true;
+            }
+
+            if (bLoaded)
             {
                pItem->setData(QIcon(icon), channellist::iconRole);
 
@@ -4356,21 +4392,24 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
             else
             {
                // check if image file can be loaded ...
-               if (!icon.load(sLogoFile, "image/gif"))
+               if (!icon.load(sLogoFile))                   // try auto type detection ...
                {
-                  // can't load --> load default image ...
-                  icon.load(":png/no_logo");
+                  if (!icon.load(sLogoFile, "image/gif"))   // try to force to gif if auto type detection doesn't work ...
+                  {
+                     // can't load --> load default image ...
+                     icon.load(":png/no_logo");
 
-                  mInfo(tr("Can't load channel image \"%1.gif\" ...").arg(chanlist[i].iId));
+                     mInfo(tr("Can't load channel image \"%1\" ...").arg(sLogoFile));
 
-                  // delete logo file ...
-                  QFile::remove(sLogoFile);
+                     // delete logo file ...
+                     QFile::remove(sLogoFile);
 
-                  // enqueue pic to cache ...
-                  pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
+                     // enqueue pic to cache ...
+                     pixCache.enqueuePic(chanlist[i].sIcon, pFolders->getLogoDir());
 
-                  // mark for reload ...
-                  bMissingIcon = true;
+                     // mark for reload ...
+                     bMissingIcon = true;
+                  }
                }
             }
 
