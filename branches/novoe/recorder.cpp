@@ -1937,7 +1937,7 @@ void Recorder::slotEPG(const QString &str)
 
    QDateTime   epgTime = QDateTime::currentDateTime().addDays(iEpgOffset);
    QModelIndex idx     = ui->channelList->currentIndex();
-   int         cid     = qvariant_cast<int>(idx.data(channellist::cidRole));
+   int         cid     = idx.isValid() ? qvariant_cast<int>(idx.data(channellist::cidRole)) : -1;
    QIcon       icon;
 
    if (!apiParser.parseEpg(str, epg))
@@ -3055,32 +3055,35 @@ void Recorder::slotChannelUp()
    bool        bSuccess = false;
    idx  = ui->channelList->currentIndex();
 
-   do
+   if (idx.isValid())
    {
-      iRow = idx.row();
-
-      if (!iRow)
+      do
       {
-         iRow = pModel->rowCount() - 1;
-      }
-      else
-      {
-         iRow --;
-      }
+         iRow = idx.row();
 
-      idx = pModel->index(iRow, 0);
+         if (!iRow)
+         {
+            iRow = pModel->rowCount() - 1;
+         }
+         else
+         {
+            iRow --;
+         }
 
-      // make sure to not mark a channel group ...
-      if (qvariant_cast<int>(idx.data(channellist::cidRole)) != -1)
-      {
-         bSuccess = true;
-      }
+         idx = pModel->index(iRow, 0);
 
-   } while (!bSuccess);
+         // make sure to not mark a channel group ...
+         if (qvariant_cast<int>(idx.data(channellist::cidRole)) != -1)
+         {
+            bSuccess = true;
+         }
+
+      } while (!bSuccess);
 
 
-   ui->channelList->setCurrentIndex(idx);
-   ui->channelList->scrollTo(idx);
+      ui->channelList->setCurrentIndex(idx);
+      ui->channelList->scrollTo(idx);
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -3100,31 +3103,34 @@ void Recorder::slotChannelDown()
    bool        bSuccess = false;
    idx  = ui->channelList->currentIndex();
 
-   do
+   if (idx.isValid())
    {
-      iRow = idx.row();
-
-      if (iRow == (pModel->rowCount() - 1))
+      do
       {
-         iRow = 0;
-      }
-      else
-      {
-         iRow ++;
-      }
+         iRow = idx.row();
 
-      idx = pModel->index(iRow, 0);
+         if (iRow == (pModel->rowCount() - 1))
+         {
+            iRow = 0;
+         }
+         else
+         {
+            iRow ++;
+         }
 
-      // make sure to not mark a channel group ...
-      if (qvariant_cast<int>(idx.data(channellist::cidRole)) != -1)
-      {
-         bSuccess = true;
-      }
+         idx = pModel->index(iRow, 0);
 
-   } while (!bSuccess);
+         // make sure to not mark a channel group ...
+         if (qvariant_cast<int>(idx.data(channellist::cidRole)) != -1)
+         {
+            bSuccess = true;
+         }
 
-   ui->channelList->setCurrentIndex(idx);
-   ui->channelList->scrollTo(idx);
+      } while (!bSuccess);
+
+      ui->channelList->setCurrentIndex(idx);
+      ui->channelList->scrollTo(idx);
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -4323,18 +4329,19 @@ int Recorder::FillChannelList (const QVector<cparser::SChan> &chanlist)
    QString   sLine;
    QString   sLogoFile;
    QStandardItem *pItem;
-   bool      bMissingIcon = false;
-   int       iRow, iRowGroup;
-   QFileInfo fInfo;
-   QPixmap   Pix(16, 16);
-   QPixmap   icon;
-   int       iChanCount =  0;
-   int       iLastChan  = -1;
-   int       iPos;
-   uint      now = QDateTime::currentDateTime().toTime_t();
+   bool        bMissingIcon = false;
+   int         iRow, iRowGroup;
+   QFileInfo   fInfo;
+   QPixmap     Pix(16, 16);
+   QPixmap     icon;
+   int         iChanCount =  0;
+   int         iLastChan  = -1;
+   int         iPos;
+   uint        now = QDateTime::currentDateTime().toTime_t();
+   QModelIndex idx = ui->channelList->currentIndex();
 
    iRowGroup = ui->cbxChannelGroup->currentIndex();
-   iRow      = ui->channelList->currentIndex().row();
+   iRow      = idx.isValid() ? idx.row() : -1;
    iRow      = (iRow <= 0) ? 1 : iRow;
    iRowGroup = (iRowGroup < 0) ? 0 : iRowGroup;
 
@@ -5098,7 +5105,7 @@ bool Recorder::TimeJumpAllowed()
 int Recorder::getCurrentCid()
 {
    QModelIndex idx = ui->channelList->currentIndex();
-   int         cid = qvariant_cast<int>(idx.data(channellist::cidRole));
+   int         cid = idx.isValid() ? qvariant_cast<int>(idx.data(channellist::cidRole)) : -1;
 
    return cid;
 }
