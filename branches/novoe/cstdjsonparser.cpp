@@ -54,13 +54,12 @@ int CStdJsonParser::parseChannelList (const QString &sResp,
    cparser::SChan      chan;
    cparser::STimeShift ts;
    QVariantMap   contentMap;
-   QJson::Parser parser;
    int iGrpIdx = 0;
 
    // clear channel list ...
    chanList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -122,7 +121,8 @@ int CStdJsonParser::parseChannelList (const QString &sResp,
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -150,12 +150,13 @@ int CStdJsonParser::parseSServersLogin(const QString &sResp, QVector<cparser::SS
    bool bOk = false;
    cparser::SSrv   srv;
    QVariantMap     contentMap, nestedMap;
-   QJson::Parser   parser;
+
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    // clear server list ...
    vSrv.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -177,7 +178,8 @@ int CStdJsonParser::parseSServersLogin(const QString &sResp, QVector<cparser::SS
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -203,9 +205,8 @@ int CStdJsonParser::parseCookie (const QString &sResp, QString &sCookie, cparser
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap, nestedMap;
-   QJson::Parser parser;
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -228,7 +229,8 @@ int CStdJsonParser::parseCookie (const QString &sResp, QString &sCookie, cparser
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -254,12 +256,11 @@ int CStdJsonParser::parseGenres (const QString& sResp, QVector<cparser::SGenre>&
    bool bOk = false;
    cparser::SGenre sGenre;
    QVariantMap     contentMap;
-   QJson::Parser   parser;
 
    // clear genres ...
    vGenres.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -276,7 +277,8 @@ int CStdJsonParser::parseGenres (const QString& sResp, QVector<cparser::SGenre>&
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -303,12 +305,11 @@ int CStdJsonParser::parseEpgCurrent (const QString& sResp, QCurrentMap &currentE
    cparser::SEpgCurrent          entry;
    QVector<cparser::SEpgCurrent> vEntries;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
    // clear map ...
    currentEpg.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -336,7 +337,8 @@ int CStdJsonParser::parseEpgCurrent (const QString& sResp, QCurrentMap &currentE
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -362,12 +364,11 @@ int CStdJsonParser::parseVodManager (const QString &sResp, QVector<cparser::SVod
    bool bOk = false;
    cparser::SVodRate entry;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
    // clear map ...
    vRates.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -385,7 +386,8 @@ int CStdJsonParser::parseVodManager (const QString &sResp, QVector<cparser::SVod
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -412,12 +414,11 @@ int CStdJsonParser::parseVodList(const QString &sResp, QVector<cparser::SVodVide
    bool bOk = false;
    cparser::SVodVideo entry;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
    // clear vector ...
    vVodList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -445,7 +446,8 @@ int CStdJsonParser::parseVodList(const QString &sResp, QVector<cparser::SVodVide
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -470,7 +472,7 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
+
    cparser::SVodFileInfo fInfo;
 
    // init struct ...
@@ -487,7 +489,7 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
    vidInfo.bFavourit  = false;
    vidInfo.vVodFiles.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -526,7 +528,8 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -552,13 +555,13 @@ int CStdJsonParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgL
    bool bOk = false;
    cparser::SEpg entry;
    QVariantMap   contentMap;
-   QJson::Parser parser;
+
    QString sTmp;
 
    // clear vector ...
    epgList.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -591,7 +594,8 @@ int CStdJsonParser::parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgL
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -618,12 +622,12 @@ int CStdJsonParser::parseSetting(const QString& sResp, const QString &sName, QVe
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
+
 
    // clear vector ...
    vValues.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -640,7 +644,8 @@ int CStdJsonParser::parseSetting(const QString& sResp, const QString &sName, QVe
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -665,9 +670,9 @@ int CStdJsonParser::parseUrl(const QString &sResp, QString &sUrl)
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -682,7 +687,8 @@ int CStdJsonParser::parseUrl(const QString &sResp, QString &sUrl)
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -707,13 +713,13 @@ int CStdJsonParser::parseVodUrls (const QString& sResp, QStringList& sUrls)
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
+
    QString       sUrl, sAdUrl;
 
    // clear url list ...
    sUrls.clear();
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {
@@ -743,7 +749,8 @@ int CStdJsonParser::parseVodUrls (const QString& sResp, QStringList& sUrls)
    else
    {
       emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
-                    tr("QJSON error: %1").arg(parser.errorString()));
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
 
       iRV = -1;
    }
@@ -769,9 +776,9 @@ int CStdJsonParser::parseError (const QString& sResp, QString &sMsg, int &eCode)
    int  iRV = 0;
    bool bOk = false;
    QVariantMap   contentMap;
-   QJson::Parser parser;
 
-   contentMap = parser.parse(sResp.toUtf8(), &bOk).toMap();
+
+   contentMap = QtJson::parse(sResp, bOk).toMap();
 
    if (bOk)
    {

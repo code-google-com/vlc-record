@@ -1077,34 +1077,28 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CNovoeParser</name>
     <message>
-        <location filename="cnovoeparser.cpp" line="126"/>
-        <location filename="cnovoeparser.cpp" line="181"/>
-        <location filename="cnovoeparser.cpp" line="229"/>
-        <location filename="cnovoeparser.cpp" line="289"/>
-        <location filename="cnovoeparser.cpp" line="338"/>
-        <location filename="cnovoeparser.cpp" line="397"/>
-        <location filename="cnovoeparser.cpp" line="477"/>
-        <location filename="cnovoeparser.cpp" line="544"/>
-        <location filename="cnovoeparser.cpp" line="593"/>
-        <location filename="cnovoeparser.cpp" line="635"/>
-        <location filename="cnovoeparser.cpp" line="696"/>
+        <location filename="cnovoeparser.cpp" line="125"/>
+        <location filename="cnovoeparser.cpp" line="180"/>
+        <location filename="cnovoeparser.cpp" line="239"/>
+        <location filename="cnovoeparser.cpp" line="319"/>
+        <location filename="cnovoeparser.cpp" line="386"/>
+        <location filename="cnovoeparser.cpp" line="435"/>
         <source>Error in %1</source>
         <translation type="unfinished">Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="cnovoeparser.cpp" line="127"/>
-        <location filename="cnovoeparser.cpp" line="182"/>
-        <location filename="cnovoeparser.cpp" line="230"/>
-        <location filename="cnovoeparser.cpp" line="290"/>
-        <location filename="cnovoeparser.cpp" line="339"/>
-        <location filename="cnovoeparser.cpp" line="398"/>
-        <location filename="cnovoeparser.cpp" line="478"/>
-        <location filename="cnovoeparser.cpp" line="545"/>
-        <location filename="cnovoeparser.cpp" line="594"/>
-        <location filename="cnovoeparser.cpp" line="636"/>
-        <location filename="cnovoeparser.cpp" line="697"/>
+        <location filename="cnovoeparser.cpp" line="126"/>
+        <location filename="cnovoeparser.cpp" line="181"/>
+        <location filename="cnovoeparser.cpp" line="240"/>
+        <location filename="cnovoeparser.cpp" line="320"/>
+        <location filename="cnovoeparser.cpp" line="387"/>
+        <location filename="cnovoeparser.cpp" line="436"/>
+        <source>QtJson parser error in %1 %2():%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>QJSON error: %1</source>
-        <translation type="unfinished">Ошибка QJSON строки: %1</translation>
+        <translation type="obsolete">Ошибка QJSON строки: %1</translation>
     </message>
 </context>
 <context>
@@ -2206,36 +2200,36 @@ To change the parent code make sure:
 <context>
     <name>CStdJsonParser</name>
     <message>
-        <location filename="cstdjsonparser.cpp" line="124"/>
-        <location filename="cstdjsonparser.cpp" line="179"/>
-        <location filename="cstdjsonparser.cpp" line="230"/>
-        <location filename="cstdjsonparser.cpp" line="278"/>
-        <location filename="cstdjsonparser.cpp" line="338"/>
-        <location filename="cstdjsonparser.cpp" line="387"/>
-        <location filename="cstdjsonparser.cpp" line="447"/>
-        <location filename="cstdjsonparser.cpp" line="528"/>
-        <location filename="cstdjsonparser.cpp" line="593"/>
-        <location filename="cstdjsonparser.cpp" line="642"/>
-        <location filename="cstdjsonparser.cpp" line="684"/>
-        <location filename="cstdjsonparser.cpp" line="745"/>
-        <source>Error in %1</source>
-        <translation>Ошибка в %1</translation>
-    </message>
-    <message>
-        <location filename="cstdjsonparser.cpp" line="125"/>
+        <location filename="cstdjsonparser.cpp" line="123"/>
         <location filename="cstdjsonparser.cpp" line="180"/>
         <location filename="cstdjsonparser.cpp" line="231"/>
         <location filename="cstdjsonparser.cpp" line="279"/>
         <location filename="cstdjsonparser.cpp" line="339"/>
         <location filename="cstdjsonparser.cpp" line="388"/>
         <location filename="cstdjsonparser.cpp" line="448"/>
-        <location filename="cstdjsonparser.cpp" line="529"/>
-        <location filename="cstdjsonparser.cpp" line="594"/>
-        <location filename="cstdjsonparser.cpp" line="643"/>
-        <location filename="cstdjsonparser.cpp" line="685"/>
-        <location filename="cstdjsonparser.cpp" line="746"/>
-        <source>QJSON error: %1</source>
-        <translation>Ошибка QJSON строки: %1</translation>
+        <location filename="cstdjsonparser.cpp" line="530"/>
+        <location filename="cstdjsonparser.cpp" line="596"/>
+        <location filename="cstdjsonparser.cpp" line="646"/>
+        <location filename="cstdjsonparser.cpp" line="689"/>
+        <location filename="cstdjsonparser.cpp" line="751"/>
+        <source>Error in %1</source>
+        <translation>Ошибка в %1</translation>
+    </message>
+    <message>
+        <location filename="cstdjsonparser.cpp" line="124"/>
+        <location filename="cstdjsonparser.cpp" line="181"/>
+        <location filename="cstdjsonparser.cpp" line="232"/>
+        <location filename="cstdjsonparser.cpp" line="280"/>
+        <location filename="cstdjsonparser.cpp" line="340"/>
+        <location filename="cstdjsonparser.cpp" line="389"/>
+        <location filename="cstdjsonparser.cpp" line="449"/>
+        <location filename="cstdjsonparser.cpp" line="531"/>
+        <location filename="cstdjsonparser.cpp" line="597"/>
+        <location filename="cstdjsonparser.cpp" line="647"/>
+        <location filename="cstdjsonparser.cpp" line="690"/>
+        <location filename="cstdjsonparser.cpp" line="752"/>
+        <source>QtJson parser error in %1 %2():%3</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>QJSON can&apos;t parse respone!</source>
