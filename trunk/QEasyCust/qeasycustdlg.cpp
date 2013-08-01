@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QRegExp>
+#include <QDateTime>
 
 #include "file_templates.h"
 
@@ -36,11 +37,14 @@
 //
 //! \return   --
 //----------------------------------------------------------------------
-QEasyCustDlg::QEasyCustDlg(QWidget *parent) :
+QEasyCustDlg::QEasyCustDlg(QWidget *parent, const QString &tmpl) :
    QDialog(parent),
    ui(new Ui::QEasyCustDlg)
 {
    ui->setupUi(this);
+
+   s2Process = tmpl;
+   bCLMode   = false;
 
    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
    sAppPath = QApplication::applicationDirPath();
@@ -106,9 +110,27 @@ void QEasyCustDlg::showEvent(QShowEvent *e)
       ui->listLang->sortItems();
    }
 
-   // load last saved customization
-   if (settings.contains("LastSave"))
+   if (s2Process != "")
    {
+      if (!readValues(s2Process))
+      {
+         // command line mode ...
+         bCLMode = true;
+
+         showPngImage(ui->labLogo, ui->lineLogoFile->text());
+         showPngImage(ui->labBg, ui->lineBgFile->text());
+
+         ui->tabWidget->setCurrentIndex(2);
+         on_pushGo_clicked();
+      }
+      else
+      {
+         addLog(tr("Error: Can't open template file %1!").arg(s2Process));
+      }
+   }
+   else if (settings.contains("LastSave"))
+   {
+      // load last saved customization
       readValues(settings.value("LastSave").toString());
       showPngImage(ui->labLogo, ui->lineLogoFile->text());
       showPngImage(ui->labBg, ui->lineBgFile->text());
@@ -693,6 +715,7 @@ int QEasyCustDlg::createCleanFolders()
            << QString("%1/%2").arg(sAppPath).arg(PATH_TEMP)
            << QString("%1/%2").arg(sAppPath).arg(PATH_RES)
            << QString("%1/%2").arg(sAppPath).arg(PATH_LNG)
+           << QString("%1/%2").arg(sAppPath).arg(PATH_LOG)
            // mac folders ...
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_RES)
            << QString("%1/%2").arg(sMacBundle).arg(PATH_MAC_DOC)
@@ -755,7 +778,17 @@ void QEasyCustDlg::doit()
       addLog(tr("All done!\n"));
       enableDisableDlg(true);
 
-      QProcess::startDetached(QString("explorer.exe \"%1/%2\"").arg(sAppPath).arg(PATH_PACK).replace("/", "\\"));
+      if (bCLMode)
+      {
+         on_pushSaveLog_clicked(QString("%1/%2/%3_%4.log").arg(sAppPath).arg(PATH_LOG)
+                                .arg(ui->lineIntName->text())
+                                .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss")));
+         accept();
+      }
+      else
+      {
+         QProcess::startDetached(QString("explorer.exe \"%1/%2\"").arg(sAppPath).arg(PATH_PACK).replace("/", "\\"));
+      }
    }
 }
 
@@ -925,6 +958,8 @@ int QEasyCustDlg::saveValues()
 //----------------------------------------------------------------------
 int QEasyCustDlg::readValues(const QString& load)
 {
+   int iRet = -1;
+
    QRegExp rx("^([^=]+)=\"(.*)\"");
 
    QString name = (!load.isEmpty()) ? load : QFileDialog::getOpenFileName(this,
@@ -943,6 +978,8 @@ int QEasyCustDlg::readValues(const QString& load)
 
       if (load.open(QIODevice::ReadOnly | QIODevice::Text))
       {
+         iRet = 0;
+
          while (!load.atEnd())
          {
             s = QString::fromUtf8(load.readLine());
@@ -1018,7 +1055,7 @@ int QEasyCustDlg::readValues(const QString& load)
       }
    }
 
-   return 0;
+   return iRet;
 }
 
 //----------------------------------------------------------------------
@@ -1154,12 +1191,13 @@ void QEasyCustDlg::enableDisableDlg(bool enable)
 //! \Author   Jo2003
 //! \Date     04.04.2013
 //
+//! \param    fName (const QString&) optional save file name
 //
 //! \return   --
 //----------------------------------------------------------------------
-void QEasyCustDlg::on_pushSaveLog_clicked()
+void QEasyCustDlg::on_pushSaveLog_clicked(const QString &fName)
 {
-   QString name = QFileDialog::getSaveFileName(this, tr("Save Logfile"),
+   QString name = !fName.isEmpty() ? fName : QFileDialog::getSaveFileName(this, tr("Save Logfile"),
                                                ui->lineIntName->text(),
                                                "Logfiles (*.log);;"
                                                "All Files (*.*)");
@@ -1167,7 +1205,6 @@ void QEasyCustDlg::on_pushSaveLog_clicked()
    if (!name.isEmpty())
    {
       QFile save(name);
-      QString s;
 
       if (save.open(QIODevice::WriteOnly | QIODevice::Text))
       {
