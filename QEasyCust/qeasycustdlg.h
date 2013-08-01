@@ -1,15 +1,15 @@
 /*------------------------------ Information ---------------------------*//**
 *
 *  $HeadURL$
-*  
+*
 *  @file     qeasycustdlg.h
-*  
+*
 *  @author   Jo2003
-*  
+*
 *  @date     04.04.2013
-*  
+*
 *  $Id$
-*  
+*
 */ //----------------- (c) 2013 Jo2003 --------------------------------------
 #ifndef __040413__QEASYCUSTDLG_H
    #define __040413__QEASYCUSTDLG_H
@@ -42,7 +42,7 @@ class QEasyCustDlg : public QDialog
    Q_OBJECT
 
 public:
-   explicit QEasyCustDlg(QWidget *parent = 0);
+   explicit QEasyCustDlg(QWidget *parent = 0, const QString& tmpl = QString());
    ~QEasyCustDlg();
 
    struct SPatch
@@ -75,7 +75,7 @@ private slots:
    void on_pushNew_clicked();
    void on_pushOpen_clicked();
    void on_pushSave_clicked();
-   void on_pushSaveLog_clicked();
+   void on_pushSaveLog_clicked(const QString& fName = QString());
 
 private:
    Ui::QEasyCustDlg *ui;
@@ -84,6 +84,8 @@ private:
    QProcess *procBuilder;
    QStringList cmdQueue;
    QSettings settings;
+   QString   s2Process;
+   bool      bCLMode;
 };
 
-#endif // __040413__QEASYCUSTDLG_H 
+#endif // __040413__QEASYCUSTDLG_H

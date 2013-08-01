@@ -60,6 +60,7 @@
 #define PATH_RES        "resources"
 #define PATH_BIN        "master"
 #define PATH_MOD        "modules"
+#define PATH_LOG        "log"
 
 #define PATH_MAC_CNT    "Contents"
 #define PATH_MAC_OS     PATH_MAC_CNT "/MacOS"
