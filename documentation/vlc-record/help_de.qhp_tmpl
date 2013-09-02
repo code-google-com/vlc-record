@@ -29,6 +29,9 @@
                      <section title="Archiv" ref="help_de.html#archive" />
                      <section title="Aufnahme-Timer" ref="help_de.html#timerrec" />
                      <section title="Ein-Klick-Aufnahme" ref="help_de.html#otr" />
+                     <section title="Kanallistenfilter" ref="help_de.html#clfilter" />
+                     <section title="Merkliste" ref="help_de.html#watchlist" />
+                     <section title="Videokontextmenü" ref="help_de.html#context" />
                      <section title="Vollbild Modus" ref="help_de.html#fullscreen" />
                  </section>
              </section>

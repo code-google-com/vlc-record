@@ -29,6 +29,9 @@
                      <section title="Archive" ref="help_en.html#archive" />
                      <section title="Timer Record" ref="help_en.html#timerrec" />
                      <section title="One Touch Record" ref="help_en.html#otr" />
+                     <section title="Channel List Filter" ref="help_en.html#clfilter" />
+                     <section title="Watch List" ref="help_en.html#watchlist" />
+                     <section title="Video Context Menu" ref="help_en.html#context" />
                      <section title="Full Screen Mode" ref="help_en.html#fullscreen" />
                  </section>
              </section>
