@@ -6,7 +6,7 @@ QHCFOLDER="../qhc"
 if [ ${#} -gt 0 ]; then
    CUSTS=${1}
 else
-   CUSTS="moidom_tv polsky_tv kartina_tv vlc-record"
+   CUSTS="polsky_tv kartina_tv vlc-record"
 fi
 
 for CUST in $CUSTS ; do
