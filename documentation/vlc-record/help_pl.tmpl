@@ -44,9 +44,9 @@
                   <li><a href="#vodbrowser">Wideoteka</a></li>
                   <li><a href="#archive">Archiwum</a></li>
                   <li><a href="#timerrec">Nagrywanie</a></li>
-                  <li><a href="#otr">One Touch Record</a></li>
-                  <li><a href="#clfilter">Channel List Filter</a></li>
-                  <li><a href="#watchlist">Watch List</a></li>
+                  <li><a href="#otr">Łatwe / szybkie nagrywanie</a></li>
+                  <li><a href="#clfilter">Filtr listy kanałów</a></li>
+                  <li><a href="#watchlist">Lista odtwarzania</a></li>
                   <li><a href="#context">Video Context Menu</a></li>
                   <li><a href="#fullscreen">Tryb Pełno-Ekranowy</a></li>
                </ol>
@@ -81,10 +81,8 @@
          <li>Opoźnienie nagrywania</li>
          <li>VOD - wideoteka na życzenie (odtwarzanie / nagrywanie)</li>
          <li>Zarządzanie blokadą rodzicielską</li>
-         <!-- to translate start -->
-         <li>OTR - One touch record</li>
-         <li>Watch List</li>
-         <!-- to translate end -->
+         <li>Łatwe / szybkie nagrywanie</li>
+         <li>Lista odtwarzania</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="installation">Instalacja</h2>
@@ -161,9 +159,7 @@
          Zamiast tego ikona w pasku narzędzi będzie informować o działającym programie (domyślnie: wyłączony).</li>
          <li>Transliteracja nazwy pliku nagrania - Transliteruje nazwę nagrania z cyrilycy na alfabet łaciński (domyślnie: wyłączony).</li>
          <li>Przyśpieszenie GPU - Użycie GPU do dekodowania wideo (wysoce eksperymentalne, domyślnie: wyłączony).</li>
-         <!-- to translate start -->
-         <li>Deinterlacing Mode - In case you enable deinterlacing from video context menu this algorithm will be used for deinterlacing (a good default: blend).</li>
-         <!-- to translate end -->
+         <li>Tryb przeplatany - Gdy włączony- tryb ten będzie używał algorytmu do usuwania przeplotu (domyślnie: blend).</li>
          <!-- [%HIDDEN%]
          <li>Pokaż pomoc - Pokaz reklam na początku nagrania (VOD). Zmienny tylko w VLC-Record (domyślnie: włączony).</li>
          [%HIDDEN%] -->
@@ -247,7 +243,7 @@
       i kliknięcie przycisku <img src="images/delete.png" alt="Remove Job" title="Remove Job" />.
       Podczas dodawania nowego nagrania program sprawdzi zgodność. 
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="otr">OTR (One Touch Record)</h3><br />
+      <h3 id="otr">Łatwe / szybkie nagrywanie</h3><br />
       <b>Info:</b> Nie mylić z <a href="#timerrec">Nagrywaniem</a>!<br />
       Umożliwia ustawienie czasu, po którym nagrywanie zostanie zatrzymane. Ta funkcja będzie dostępna podczas 
       nagrywania programu strumieniowanego, bądź też odtwarzanego z archiwum. Zostatnie to zasygnalizowane 
@@ -263,37 +259,37 @@
       Wciśnięcie przycisku <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" /> 
       anuluje zaplanowany czas zakończenia nagrywania.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <!-- to translate start -->
-      <h3 id="clfilter">Channel List Filter</h3><br />
-      You can filter / search the channel list for a given string. To enable the filter, press the button right beside the
-      channel group box:<br />
+      <h3 id="clfilter">Filtr listy kanałów</h3><br />
+      Możesz filtrować/przeszukiwać listę kanałów dla danego ciągu znaków.
+      Aby właczyć filtr kliknij przycisk po prawej stronie okna listy kanałów:<br />
       <img src="images/lang/pl/chanlist_filter.png" alt="channel list filter" title="channel list filter" /><br /> <br />
-      Now you can enter a string:<br />
+      Teraz możesz wpisać ciąg znaków:<br />
       <img src="images/lang/pl/chanlist_filter_string.png" alt="channel list filter string" title="channel list filter string" /><br /> <br />
-      When accepting the input mask the channel list will be displayed filtered (all channels which contain the filter 
-      string in name will be displayed). The filter button will change to <img src="images/filter_active.png" alt="active filter" title="active filter" />
-      to reflect the active filter state. To disable the filter remove the filter string and accept the empty filter mask.
+      Po zaakceptowaniu lista kanałów wyświetli się przefiltrowana (wszystkie kanały, które zawierają dany ciąg znaków zostaną wyświetlone na liście).
+      Przycisk filtr zmieni się na <img src="images/filter_active.png" alt="active filter" title="active filter" />
+      aby odwzorować aktywny filtr. Aby wyłączyć filtr, usuń ciąg znaków i potwierdź pusty filtr.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="watchlist">Watch List</h3><br />
-      The watch list is a list which contains all shows you want to watch at a later time. To add a show to the
-      watch list simply press the <img src="images/page_add.png" alt="add show" title="add show" /> button in the <a href="#archive">EPG window</a>. 
-      The watch list button at the right below the player window now shows an updated number of watch list entries:<br />
+      <h3 id="watchlist">Lista odtwarzania</h3><br />
+      Lista odtwarzania - jest to lista zawierająca wszystkie programy, które chcesz obejrzec w późniejszym czasie. 
+      Aby dodać program do listy odtwarzania naciśnij przycisk <img src="images/page_add.png" alt="add show" title="add show" /> 
+      w oknie <a href="#archive">EPG</a>. 
+      Cyfra znajdująca się na ikonie listy odtwarzania będzie wyświetlała aktualną liczbę pozycji zapisanych na liście odtwarzania:<br />
       <img src="images/watch_list_btn.png" alt="watch list button" title="watch list button" /><br /> <br />
-      To open the watch list, click at this button. A new window opens which contains a table with all added shows. 
-      From this window you can watch or record any show listed there. The number of entries in this list isn't limited. 
-      You also can remove a show from watch list using the <img src="images/del_sm.png" alt="del show" title="del show" />
-      button.<br />
+      Aby otworzyć listę odtwarzania kliknij na ikonę listy odtwarzania. Otworzy się nowe okno zawierające listę wszystkich dodanych programow. 
+      Z poziomu okna możesz oglądać lub nagrywać każdy dodany program. Lista kanałów które możesz dodać jest nieograniczona. 
+      Możesz także usunąć dany kanał z listy używając przycisk <img src="images/del_sm.png" alt="del show" title="del show" />.<br />
       <img src="images/lang/pl/watchlist.png" alt="watch list" title="watch list" /><br /> <br />
-      <b>Please note:</b> The watch list is only available for channels with archive. Entries which are no longer within the 
-      archive timeframe will be deleted automatically. You also can add shows which aren't yet part of the archive. 
-      In that case the play and record button in the watch list will appear as soon as the show is archived.
+      <b>Uwaga:</b> Lista odtwarzania dostępna jest tylko dla programów, które posiadają archiwum. 
+      Pozycje które znajdują się poza okresem archiwum zostaną automatycznie usunięte. 
+      Możesz także dodać programy które nie są jeszcze dostępne w archiwum. W tym przypadku przyciski odtwarzania 
+      i nagrywania pojawią się gdy program zostanie dodany do archiwum.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="context">Video Context Menu</h3>
-      The video window has a context menu with some useful entries. You can open this menu when clicking with 
-      right mouse button at the video window. Here you can enable / disable the deinterlacer and change the audio 
-      language of the video stream (where supported).<br />
+      <h3 id="context">Menu kontekstowe wideo</h3>
+      Okno wideo posiada menu kontekstowe z kilkoma przydatnymi funkcjami.
+      Możesz otworzyć to menu klikając prawym przyciskiem myszy na okno wideo.
+      W menu tym możesz włączyć/wyłączyć tryb przeplatany, a także zmienić język audio 
+      odtwarzanego wideo(gdy dostępne).<br />
       <img src="images/lang/pl/play_context.png" alt="player context menu" title="player context menu" /><br /> <br />
-      <!-- to translate end -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="fullscreen">Tryb Pełno-Ekranowy</h3><br />
       <img src="images/fullscreen.png" alt="full screen mode" title="full screen mode" /><br /> <br />

@@ -29,11 +29,9 @@
                      <section title="Архив" ref="help_ru.html#archive" />
                      <section title="Планировщик записи" ref="help_ru.html#timerrec" />
                      <section title="Ограничение времени записи" ref="help_ru.html#otr" />
-                     <!-- to translate start -->
-                     <section title="Channel List Filter" ref="help_ru.html#clfilter" />
-                     <section title="Watch List" ref="help_ru.html#watchlist" />
-                     <section title="Video Context Menu" ref="help_ru.html#context" />
-                     <!-- to translate end -->
+                     <section title="Фильтр списка каналов" ref="help_ru.html#clfilter" />
+                     <section title="Список отложенных передач" ref="help_ru.html#watchlist" />
+                     <section title="Видео-контекстное меню" ref="help_ru.html#context" />
                      <section title="Полноэкранный режим" ref="help_ru.html#fullscreen" />
                  </section>
              </section>

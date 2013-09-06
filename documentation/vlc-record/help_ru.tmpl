@@ -45,9 +45,9 @@
                   <li><a href="#archive">Архив</a></li>
                   <li><a href="#timerrec">Планировщик записи</a></li>
                   <li><a href="#otr">Ограничение времени записи</a></li>
-                  <li><a href="#clfilter">Channel List Filter</a></li>
-                  <li><a href="#watchlist">Watch List</a></li>
-                  <li><a href="#context">Video Context Menu</a></li>
+                  <li><a href="#clfilter">Фильтр списка каналов</a></li>
+                  <li><a href="#watchlist">Список отложенных передач</a></li>
+                  <li><a href="#context">Видео-контекстное меню</a></li>
                   <li><a href="#fullscreen">Полноэкранный режим</a></li>
                </ol>
             </li>
@@ -82,10 +82,8 @@
          <li>Планировщик записи</li>
          <li>Видеотека - видео по запросу (просмотр / запись)</li>
          <li>Менеджер родительского контроля</li>
-         <!-- to translate start -->
-         <li>OTR - One touch record</li>
-         <li>Watch List</li>
-         <!-- to translate end -->
+         <li>Ограничение времени записи</li>
+         <li>Список отложенных передач</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="installation">Установка</h2>
@@ -165,9 +163,7 @@
          <li>Сворачивать в трей - если <b>вкл</b>, при минимизации главного окна программы она будет скрыта на панели задач (по умолчанию: выкл).</li>
          <li>Транслит исходного файла - транслитерация имен записываемых файлов из кириллицы в латинские буквы (по умолчанию: выкл).</li>
          <li>GPU декодирует видео - использовать графический процессор для декодирования видео (экспериментальный параметр, по умолчанию: выкл).</li>
-         <!-- to translate start -->
-         <li>Deinterlacing Mode - In case you enable deinterlacing from video context menu this algorithm will be used for deinterlacing (a good default: blend).</li>
-         <!-- to translate end -->
+         <li>Режим деинтерлейсинга - в случае, если вы задействуете режим деинтерлейсинга в видео-контекстном меню, данный алгоритм будет использоваться для деинтерлейсинга (по умолчанию используется достаточно хороший алгоритм: blend). Из выпадающего списка могут быть выбраны и другие алгоритмы, которые могут дать лучшие результаты.</li>
          <!-- [%HIDDEN%]
          <li>Показывать рекламу - показывает рекламу перед фильмом в видеотеке. Можно изменить только в VLC-Record (по умолчанию: вкл).</li>
          [%HIDDEN%] -->
@@ -262,37 +258,34 @@
       <b>Пожалуйста имейте в виду:</b> Вы можете изменять установки таймера путем повторного щелчка на кнопку записи.
       Вы можете отключать таймер нажав на кнопку <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" />.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <!-- to translate start -->
-      <h3 id="clfilter">Channel List Filter</h3><br />
-      You can filter / search the channel list for a given string. To enable the filter, press the button right beside the
-      channel group box:<br />
+      <h3 id="clfilter">Фильтр списка каналов</h3><br />
+      С помощью фильтра списка каналов вы можете получить сокращенный список каналов в соответствии с заданной строкой. Для того, чтобы задействовать фильтр, нажмите кнопку справа вверху
+      от группы каналов:<br />
       <img src="images/lang/ru/chanlist_filter.png" alt="channel list filter" title="channel list filter" /><br /> <br />
-      Now you can enter a string:<br />
+      Теперь вы можете ввести строку для фильтра:<br />
       <img src="images/lang/ru/chanlist_filter_string.png" alt="channel list filter string" title="channel list filter string" /><br /> <br />
-      When accepting the input mask the channel list will be displayed filtered (all channels which contain the filter 
-      string in name will be displayed). The filter button will change to <img src="images/filter_active.png" alt="active filter" title="active filter" />
-      to reflect the active filter state. To disable the filter remove the filter string and accept the empty filter mask.
+      После задействования введенной строки список каналов будет отображен в сокращенном виде (будут отображены только те каналы, которые в своем названии содержат введенную в фильтре строку 
+      ). При этом кнопка фильтра приобретет вид <img src="images/filter_active.png" alt="active filter" title="active filter" />
+      чтобы показать, что фильтр активен. Для дективации фильтра надо активировать фильтр с пустой строкой.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="watchlist">Watch List</h3><br />
-      The watch list is a list which contains all shows you want to watch at a later time. To add a show to the
-      watch list simply press the <img src="images/page_add.png" alt="add show" title="add show" /> button in the <a href="#archive">EPG window</a>. 
-      The watch list button at the right below the player window now shows an updated number of watch list entries:<br />
+      <h3 id="watchlist">Список отложенных передач</h3><br />
+      Список отложенных передач является списком, который содержит передачи, которые вы хотели бы посмотреть позже. Чтобы добавить передачу в
+      список отложенных передач, просто нажмите на кнопку <img src="images/page_add.png" alt="add show" title="add show" /> в <a href="#archive">EPG окне</a>. 
+      Цифра справа внизу кнопки Отложенные передачи показывает число передач в списке отложенных передач:<br />
       <img src="images/watch_list_btn.png" alt="watch list button" title="watch list button" /><br /> <br />
-      To open the watch list, click at this button. A new window opens which contains a table with all added shows. 
-      From this window you can watch or record any show listed there. The number of entries in this list isn't limited. 
-      You also can remove a show from watch list using the <img src="images/del_sm.png" alt="del show" title="del show" />
-      button.<br />
+      Чтобы открыть список отложенных передач, щелкните на этой кнопке. Появится новое окно, которое содержит  все отложенные передачи. 
+      Из этого окна можно воспроизводить или записывать любую прередачу в списке. Число передач в списке не ограничено. 
+      Можно также удалить передачу из списка отложенных передач, используя кнопку <img src="images/del_sm.png" alt="del show" title="del show" />.<br />
       <img src="images/lang/ru/watchlist.png" alt="watch list" title="watch list" /><br /> <br />
-      <b>Please note:</b> The watch list is only available for channels with archive. Entries which are no longer within the 
-      archive timeframe will be deleted automatically. You also can add shows which aren't yet part of the archive. 
-      In that case the play and record button in the watch list will appear as soon as the show is archived.
+      <b>Пожалуйста имейте в виду:</b> Список отложенных передач доступен только для архивированных передач. Передачи, срок пребывания которых в архиве истек, 
+      удаляются из списка автоматически. Вы также можете добавлять в список отложенных передач передачи, которые еще не заархивированы. 
+      В этом случае кнопки воспроизведения и записи у таких передач появляются как только передача будет заархивирована.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
-      <h3 id="context">Video Context Menu</h3>
-      The video window has a context menu with some useful entries. You can open this menu when clicking with 
-      right mouse button at the video window. Here you can enable / disable the deinterlacer and change the audio 
-      language of the video stream (where supported).<br />
+      <h3 id="context">Видео-контекстное меню</h3>
+      Окно видео плеера имеет контекстное меню с полезными возможностями. Вы можете открыть это меню щелкнув правой кнопкой мыши 
+      в окне видео плеера. Посредством этого меню вы можете активировать / деактивировать режим деинтерлейсинга, а также сменить 
+      аудио дорожку для видео (если это доступно).<br />
       <img src="images/lang/ru/play_context.png" alt="player context menu" title="player context menu" /><br /> <br />
-      <!-- to translate end -->
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="fullscreen">Полноэкранный режим</h3><br />
       <img src="images/fullscreen.png" alt="full screen mode" title="full screen mode" /><br /> <br />

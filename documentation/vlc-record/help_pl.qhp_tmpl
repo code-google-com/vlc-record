@@ -29,11 +29,9 @@
                      <section title="Archiwum" ref="help_pl.html#archive" />
                      <section title="Nagrywanie" ref="help_pl.html#timerrec" />
                      <section title="One Touch Record" ref="help_pl.html#otr" />
-                     <!-- to translate start -->
-                     <section title="Channel List Filter" ref="help_pl.html#clfilter" />
-                     <section title="Watch List" ref="help_pl.html#watchlist" />
-                     <section title="Video Context Menu" ref="help_pl.html#context" />
-                     <!-- to translate end -->
+                     <section title="Filtr listy kanałów" ref="help_pl.html#clfilter" />
+                     <section title="Lista odtwarzania" ref="help_pl.html#watchlist" />
+                     <section title="Menu kontekstowe wideo" ref="help_pl.html#context" />
                      <section title="Tryb Pełno-Ekranowy" ref="help_pl.html#fullscreen" />
                  </section>
              </section>
