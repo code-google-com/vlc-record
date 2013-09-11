@@ -147,7 +147,7 @@ else if(($action == "list") || ($action == "")) // list files ...
     
     $res = $db_access->query($sql);
     
-    $content = "<h1>Downloads</h1>\n<table>\n<tr><th>File</th><th>Arch</th><th>Version</th><th>Date</th><th>md5</th><th>Downloads</th></tr>\n";
+    $content = "<h1 class='center_simply'>Downloads</h1>\n<table>\n<tr><th>File</th><th>Arch</th><th>Version</th><th>Date</th><th>md5</th><th>Downloads</th></tr>\n";
     
     while (($entry = $db_access->fetch_array($res)) !== false)
     {
@@ -172,28 +172,13 @@ if ($content == "")
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en'>
    <head>
       <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
       <title>Downloads</title>
-      <style type="text/css">
-      <!--
-        body {font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; margin: 0px; padding: 0px; text-align: center; color: #3A3A3A; background-color: #F4F4F4}
-        table {width:50%;background-color:#333333;color:white;padding:0px;border:2px outset}
-        td {text-align:center;vertical-align:middle;border:0px;padding:2px;background-color:white;color:black;white-space: nowrap;}
-        th {background-color:#333333;color:white;font-weight:bold; font-size: 14px;white-space: nowrap;}
-        th a:link, th a:visited, th a:active { text-decoration: none; color: white }
-        th a:hover { text-decoration: underline; color: red }
-        a:link, a:visited, a:active { text-decoration: underline; color: #444444}
-        a:hover { text-decoration: underline; color: #0482FE }
-        pre {color: #444; background-color: #eee; border: 1px dashed gray; padding: 5px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace;}
-        .error {color: red; font-weight: bold;}
-        .note {color: #800; background-color: #fc0; border: 1px dashed red; padding: 15px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace; font-size: 14px;}
-        .links {color: #444; background-color: white; border: 1px solid green; padding: 15px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace; font-size: 14px;}
-      -->
-      </style>
+      <link rel="stylesheet" type="text/css" href="master.css" />
    </head>
    <body>
       <!--
@@ -205,26 +190,22 @@ if ($content == "")
       - ver: show entries with excactly this version
       Example: "<?php echo $link; ?>list&filter=polsky&arch=lin&ver=2.64" will list all entries of Polsky.TV in version 2.64 for Linux (x86 and amd64).
       -->
-      <div align="center">
-         <?php echo $content ."\n"; ?>
-         <br /> <br />
-         <div class='links'>
-            <b>[</b> <a href='http://rt.coujo.de'>Here</a> <b>]</b> is an alternate download location. Please use only if your download above doesn't work.<br />
-            <b>[</b> <a href='https://code.google.com/p/vlc-record/downloads/list?can=4'>Here</a> <b>]</b> you'll find <b>former (deprecated) program versions</b> (up to 2.64).
-         </div>
-         <br /> <br />
-         <div class='note'>
-            <h3>Please note:</h3>
-            Since Google Code deprecated downloads all files are now located at my Google-Drive.
-            When clicking a file to download you might get a warning that the file is to large
-            so that it couldn't be tested for viruses. <b>This doesn't mean that there is a virus
-            in that file!</b> This only means the file isn't checked by Google.
-            <b>All files are checked and free from viruses, ad- and spy-ware!</b>
-         </div>
-         <p>
-            <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
-            <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="CSS ist valide!" height="31" width="88" /></a>
-         </p>
+      <?php echo $content ."\n"; ?>
+      <div class='links'>
+         <b>[</b> <a href='http://rt.coujo.de'>Here</a> <b>]</b> is an alternate download location. Please use only if your download above doesn't work.<br />
+         <b>[</b> <a href='https://code.google.com/p/vlc-record/downloads/list?can=4'>Here</a> <b>]</b> you'll find <b>former (deprecated) program versions</b> (up to 2.64).
       </div>
+      <div class='note'>
+         <h3>Please note:</h3>
+         Since Google Code deprecated downloads all files are now located at my Google-Drive.
+         When clicking a file to download you might get a warning that the file is to large
+         so that it couldn't be tested for viruses. <b>This doesn't mean that there is a virus
+         in that file!</b> This only means the file isn't checked by Google.
+         <b>All files are checked and free from viruses, ad- and spy-ware!</b>
+      </div>
+      <p class='center_simply'>
+         <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+         <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="CSS ist valide!" height="31" width="88" /></a>
+      </p>
    </body>
 </html>
