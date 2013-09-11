@@ -190,6 +190,7 @@ if ($content == "")
         pre {color: #444; background-color: #eee; border: 1px dashed gray; padding: 5px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace;}
         .error {color: red; font-weight: bold;}
         .note {color: #800; background-color: #fc0; border: 1px dashed red; padding: 15px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace; font-size: 14px;}
+        .links {color: #444; background-color: white; border: 1px solid green; padding: 15px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace; font-size: 14px;}
       -->
       </style>
    </head>
@@ -205,10 +206,15 @@ if ($content == "")
       -->
       <div align="center">
          <?php echo $content ."\n"; ?>
-         <br />
+         <br /> <br />
+         <div class='links'>
+            <b>[</b> <a href='http://rt.coujo.de'>Here</a> <b>]</b> is an alternate download location. Please use only if your download above doesn't work.<br />
+            <b>[</b> <a href='https://code.google.com/p/vlc-record/downloads/list?can=4'>Here</a> <b>]</b> you'll find <b>former (deprecated) program versions</b> (up to 2.64).
+         </div>
+         <br /> <br />
          <div class='note'>
             <h3>Please note:</h3>
-            Since Google Code depricated downloads all files are now located at my Google-Drive.
+            Since Google Code deprecated downloads all files are now located at my Google-Drive.
             When clicking a file to download you might get a warning that the file is to large
             so that it couldn't be tested for viruses. <b>This doesn't mean that there is a virus
             in that file!</b> This only means the file isn't checked by Google.
