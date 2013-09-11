@@ -182,8 +182,8 @@ if ($content == "")
       <!--
         body {font-family: Verdana, Tahoma, Arial, sans-serif; font-size: 11px; margin: 0px; padding: 0px; text-align: center; color: #3A3A3A; background-color: #F4F4F4}
         table {width:50%;background-color:#333333;color:white;padding:0px;border:2px outset}
-        td {text-align:center;vertical-align:middle;border:0px;padding:2px;background-color:white;color:black}
-        th {background-color:#333333;color:white;font-weight:bold; font-size: 14px}
+        td {text-align:center;vertical-align:middle;border:0px;padding:2px;background-color:white;color:black;white-space: nowrap;}
+        th {background-color:#333333;color:white;font-weight:bold; font-size: 14px;white-space: nowrap;}
         th a:link, th a:visited, th a:active { text-decoration: none; color: white }
         th a:hover { text-decoration: underline; color: red }
         a:link, a:visited, a:active { text-decoration: underline; color: #444444}
