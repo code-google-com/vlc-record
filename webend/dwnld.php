@@ -135,7 +135,7 @@ else if(($action == "list") || ($action == "")) // list files ...
     
     if ($count != "")
     {
-        $limit = " LIMIT 0, ".$count;
+        $limit = " LIMIT 0,".$count;
     }
     
     if ($where != "")
@@ -143,11 +143,11 @@ else if(($action == "list") || ($action == "")) // list files ...
         $sql .= " WHERE " .$where;
     }
     
-    $sql .= " ORDER BY ver".$limit.$sort;
+    $sql .= " ORDER BY ver".$sort.$limit;
     
     $res = $db_access->query($sql);
     
-    $content = "<h1>Downloads</h1>\n<table>\n<tr><th>File</th><th>Arch</th><th>Version</th><th>Date</th><th>Downloads</th></tr>\n";
+    $content = "<h1>Downloads</h1>\n<table>\n<tr><th>File</th><th>Arch</th><th>Version</th><th>Date</th><th>md5</th><th>Downloads</th></tr>\n";
     
     while (($entry = $db_access->fetch_array($res)) !== false)
     {
@@ -156,6 +156,7 @@ else if(($action == "list") || ($action == "")) // list files ...
                    ."<td>".archImg($entry['arch'])."</td>"
                    ."<td>".$entry['ver']."</td>"
                    ."<td>".$entry['date']."</td>"
+                   ."<td>".$entry['checksum']."</td>"
                    ."<td>".$entry['downloads']."</td>"
                    ."</tr>\n";
     }
