@@ -189,6 +189,7 @@ if ($content == "")
         a:hover { text-decoration: underline; color: #0482FE }
         pre {color: #444; background-color: #eee; border: 1px dashed gray; padding: 5px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace;}
         .error {color: red; font-weight: bold;}
+        .note {color: #800; background-color: #fc0; border: 1px dashed red; padding: 15px; width: 50%; text-align: left; font-family: Consolas, Courier New, monospace; font-size: 14px;}
       -->
       </style>
    </head>
@@ -204,6 +205,19 @@ if ($content == "")
       -->
       <div align="center">
          <?php echo $content ."\n"; ?>
+         <br />
+         <div class='note'>
+            <h3>Please note:</h3>
+            Since Google Code depricated downloads all files are now located at my Google-Drive.
+            When clicking a file to download you might get a warning that the file is to large
+            so that it couldn't be tested for viruses. <b>This doesn't mean that there is a virus
+            in that file!</b> This only means the file isn't checked by Google.
+            <b>All files are checked and free from viruses, ad- and spy-ware!</b>
+         </div>
+         <p>
+            <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+            <a href="http://jigsaw.w3.org/css-validator/check/referer"><img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="CSS ist valide!" height="31" width="88" /></a>
+         </p>
       </div>
    </body>
 </html>
