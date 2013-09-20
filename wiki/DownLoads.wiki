@@ -1,0 +1,15 @@
+#summary Downloads for VLC-Record
+
+= No more Downloads on Google Code =
+Google Code has *deprecated* downloads. Therefore I put all new files
+on Google Drive and added a (more or less) nice site that lists all current downloads.
+
+
+
+== Downloads ==
+  * [http://rt.coujo.de/downloads/dwnld.php?ver=current Current Downloads]
+  * [http://rt.coujo.de/downloads/dwnld.php All Downloads since Version 2.64]
+  * [https://code.google.com/p/vlc-record/downloads/list?can=4 All older Downloads]
+
+== Help ==
+If you find an issue when downloading, please start a [https://code.google.com/p/vlc-record/issues/entry new issue].
