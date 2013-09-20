@@ -1,4 +1,5 @@
 #summary Downloads for VLC-Record
+#labels Featured
 
 = No more Downloads on Google Code =
 Google Code has *deprecated* downloads. Therefore I put all new files
