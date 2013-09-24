@@ -1,6 +1,6 @@
 #!/bin/bash
 SRC_BUNDLE=$1
-TRG_BUNDLE=[%MAC_BUNDLE%]
+TRG_BUNDLE="[%MAC_BUNDLE%]"
 DATESTR=`date +%Y%m%d`
 TMP_FILE=/tmp/_patch_${DATESTR}
 
@@ -25,7 +25,7 @@ mv "${TRG_BUNDLE}/Contents/MacOS/${BIN_SRC}" "${TRG_BUNDLE}/Contents/MacOS/[%INT
 
 # create dmg folder ...
 mkdir -p $DSTFOLDER
-mv ${TRG_BUNDLE} "$DSTFOLDER/"
+mv "${TRG_BUNDLE}" $DSTFOLDER/
 ln -s /Applications $DSTFOLDER/
 
 ./create_dmg.sh $DSTFOLDER
