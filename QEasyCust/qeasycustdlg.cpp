@@ -403,11 +403,12 @@ void QEasyCustDlg::on_pushGo_clicked()
          {
             patchMap.insert(TMPL_HIDE_P_IN, "");
             patchMap.insert(TMPL_HIDE_P_OUT, "");
-            patchMap.insert(TMPL_HIDE_PRO, "");
+            patchMap.insert(TMPL_NO_SCUT, "");
          }
          else
          {
-            patchMap.insert(TMPL_HIDE_PRO, "!define HIDEPROJECT 1");
+            patchMap.insert(TMPL_HIDE_PRO, "");
+            patchMap.insert(TMPL_NO_SCUT, "!define HIDEPROJECT 1");
          }
 
          enableDisableDlg(false);
