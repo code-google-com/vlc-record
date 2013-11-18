@@ -33,6 +33,7 @@
 #define TMPL_HIDE_P_OUT TMPL_HIDE_PRO " -->"
 #define TMPL_MAC_BUNDLE "[%MAC_BUNDLE%]"
 #define TMPL_APPL_SCUT  "[%APPL_SCUT%]"
+#define TMPL_NO_SCUT    "[%NOSHORTCUT%]"
 
 // program file path ...
 #define NSIS_EXE        "toolkit/NSIS/makensis.exe"
