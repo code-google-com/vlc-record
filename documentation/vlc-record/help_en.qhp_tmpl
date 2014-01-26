@@ -32,7 +32,8 @@
                      <section title="Channel List Filter" ref="help_en.html#clfilter" />
                      <section title="Watch List" ref="help_en.html#watchlist" />
                      <section title="Video Context Menu" ref="help_en.html#context" />
-                     <section title="Full Screen Mode" ref="help_en.html#fullscreen" />
+                     <section title="The Full Screen Mode" ref="help_en.html#fullscreen" />
+                     <section title="The Minimal Interface" ref="help_en.html#minimode" />
                  </section>
              </section>
          </toc>
@@ -46,6 +47,7 @@
              <keyword name="filter" ref="help_en.html#parentmanager" />
              <keyword name="porno" ref="help_en.html#parentmanager" />
              <keyword name="fullscreen" ref="help_en.html#fullscreen" />
+             <keyword name="minimal" ref="help_en.html#minimode" />
          </keywords>
          <files>
              <file>help.css</file>

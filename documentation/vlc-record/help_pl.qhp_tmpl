@@ -33,6 +33,7 @@
                      <section title="Lista odtwarzania" ref="help_pl.html#watchlist" />
                      <section title="Menu kontekstowe wideo" ref="help_pl.html#context" />
                      <section title="Tryb Pełno-Ekranowy" ref="help_pl.html#fullscreen" />
+                     <section title="Tryb Minimalny" ref="help_pl.html#minimode" />
                  </section>
              </section>
          </toc>
@@ -46,6 +47,7 @@
              <keyword name="filter" ref="help_pl.html#parentmanager" />
              <keyword name="porno" ref="help_pl.html#parentmanager" />
              <keyword name="fullscreen" ref="help_pl.html#fullscreen" />
+             <keyword name="minimal" ref="help_pl.html#minimode" />
          </keywords>
          <files>
              <file>help.css</file>

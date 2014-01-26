@@ -33,6 +33,7 @@
                      <section title="Merkliste" ref="help_de.html#watchlist" />
                      <section title="Videokontextmenü" ref="help_de.html#context" />
                      <section title="Vollbild Modus" ref="help_de.html#fullscreen" />
+                     <section title="Das Minimale Interface" ref="help_de.html#minimode" />
                  </section>
              </section>
          </toc>
@@ -46,6 +47,7 @@
              <keyword name="filter" ref="help_de.html#parentmanager" />
              <keyword name="porno" ref="help_de.html#parentmanager" />
              <keyword name="Vollbild" ref="help_de.html#fullscreen" />
+             <keyword name="Minimal" ref="help_de.html#minimode" />
          </keywords>
          <files>
              <file>help.css</file>

@@ -33,6 +33,7 @@
                      <section title="Список отложенных передач" ref="help_ru.html#watchlist" />
                      <section title="Видео-контекстное меню" ref="help_ru.html#context" />
                      <section title="Полноэкранный режим" ref="help_ru.html#fullscreen" />
+                     <section title="Мини-интерфейс" ref="help_ru.html#minimode" />
                  </section>
              </section>
          </toc>
@@ -46,6 +47,7 @@
              <keyword name="filter" ref="help_ru.html#parentmanager" />
              <keyword name="porno" ref="help_ru.html#parentmanager" />
              <keyword name="fullscreen" ref="help_ru.html#fullscreen" />
+             <keyword name="Мини" ref="help_ru.html#minimode" />
          </keywords>
          <files>
              <file>help.css</file>
