@@ -17,6 +17,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QNetworkConfiguration>
+#include <QNetworkInterface>
 #include <QVariant>
 #include <QMetaEnum>
 #include <QUrl>
@@ -123,6 +125,7 @@ private:
    bool              bBusy;
    QVector<SRequest> vCmdQueue;
    QMutex            mtxCmdQueue;
+   QString           sStbSerial;
 #ifdef __TRACE
    Iptv              iptv;
 #endif
