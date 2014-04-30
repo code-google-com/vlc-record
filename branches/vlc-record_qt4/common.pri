@@ -20,7 +20,7 @@ CONFIG += shared
 # program version
 # -------------------------------------
 PROGMAJ=2
-PROGMIN=67
+PROGMIN=68
 
 # here you can enable traces ...
 # DEFINES += __TRACE
@@ -65,7 +65,8 @@ SOURCES += main.cpp \
     qvlcvideowidget.cpp \
     cplayer.cpp \
     qhlscontrol.cpp \
-    qexpirenotifydlg.cpp
+    qexpirenotifydlg.cpp \
+    qauthdlg.cpp
 HEADERS += recorder.h \
     csettingsdlg.h \
     templates.h \
@@ -123,7 +124,8 @@ HEADERS += recorder.h \
     qclickandgoslider.h \
     qtimelabel.h \
     qhlscontrol.h \
-    qexpirenotifydlg.h
+    qexpirenotifydlg.h \
+    qauthdlg.h
 FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/ctimerrec.ui \
@@ -135,7 +137,8 @@ FORMS += forms/csettingsdlg.ui \
     forms/qnotifydlg.ui \
     forms/qwatchlistdlg.ui \
     forms/cplayer.ui \
-    forms/recorder_inc.ui
+    forms/recorder_inc.ui \
+    forms/qauthdlg.ui
 RESOURCES += common.qrc \
     lcd.qrc
 INCLUDEPATH += tastes
