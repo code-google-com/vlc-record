@@ -221,6 +221,7 @@ protected:
     void toggleFullscreen();
     int  check4PlayList (const QString& sUrl, const QString& sName = QString());
     QString recFileName (const QString& name, QString& ext);
+    void loginOnly(const QString& resp);
 
     virtual void changeEvent(QEvent *e);
     virtual void showEvent (QShowEvent * event);
