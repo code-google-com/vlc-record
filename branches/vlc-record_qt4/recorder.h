@@ -66,6 +66,7 @@
 #include "qvlcvideowidget.h"
 #include "qhlscontrol.h"
 #include "qauthdlg.h"
+#include "qwaitwidget.h"
 
 //------------------------------------------------------------------
 /// \name definition of start flags
@@ -189,6 +190,7 @@ private:
     QRect                           playWndRect;
     QHlsControl                    *pHlsControl;
     QAuthDlg                        authDlg;
+    QWaitWidget                     waitWidget;
 
 protected:
     void setDisplayMode(Ui::EDisplayMode newMode);

@@ -2090,6 +2090,7 @@ void Recorder::slotCookie (const QString &str)
 
       // request channel list ...
       pApiClient->queueRequest(CIptvDefs::REQ_CHANNELLIST);
+      waitWidget.show();
    }
 }
 
@@ -2122,6 +2123,8 @@ void Recorder::slotTimeShift (const QString &str)
 void Recorder::slotChanList (const QString &str)
 {
    QChanList chanList;
+
+   waitWidget.hide();
 
    if (!pApiParser->parseChannelList(str, chanList, Settings.FixTime()))
    {
