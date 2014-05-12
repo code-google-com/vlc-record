@@ -30,9 +30,13 @@ QWaitWidget::QWaitWidget(QWidget *parent) :
    ui(new Ui::QWaitWidget)
 {
    ui->setupUi(this);
-   QMovie *movie = new QMovie(":app/wait");
-   ui->labWait->setMovie(movie);
-   movie->start();
+   pMov = new QMovie(":app/wait");
+   ui->labWait->setMovie(pMov);
+
+   longWait.setSingleShot(true);
+   longWait.setInterval(2500);
+
+   connect (&longWait, SIGNAL(timeout()), this, SLOT(show()));
 }
 
 //---------------------------------------------------------------------------
@@ -66,4 +70,33 @@ void QWaitWidget::changeEvent(QEvent *pEv)
    }
 
    QWidget::changeEvent(pEv);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   start delayed show()
+//
+//! \author  Jo2003
+//! \date    12.05.2014
+//
+//---------------------------------------------------------------------------
+void QWaitWidget::longWaitShow()
+{
+   longWait.start();
+   pMov->start();
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   hide and stop show timer
+//
+//! \author  Jo2003
+//! \date    12.05.2014
+//
+//---------------------------------------------------------------------------
+void QWaitWidget::longWaitHide()
+{
+   longWait.stop();
+   pMov->stop();
+   hide();
 }

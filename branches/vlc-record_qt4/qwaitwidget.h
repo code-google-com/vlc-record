@@ -16,6 +16,8 @@
 
 #include <QWidget>
 #include <QEvent>
+#include <QTimer>
+#include <QMovie>
 
 namespace Ui {
    class QWaitWidget;
@@ -35,11 +37,16 @@ public:
    explicit QWaitWidget(QWidget *parent = 0);
    ~QWaitWidget();
 
+   void longWaitShow();
+   void longWaitHide();
+
 protected:
    virtual void changeEvent(QEvent *pEv);
 
 private:
    Ui::QWaitWidget *ui;
+   QTimer           longWait;
+   QMovie          *pMov;
 };
 
 #endif // __20140512_QWAITWIDGET_H
