@@ -35,7 +35,8 @@ QOverlayedControl::QOverlayedControl(QWidget *parent, Qt::WindowFlags f) :
    QFadeWidget(parent, f),
    ui(new Ui::QOverlayedControl),
    _offset(0, 0),
-   _mouseOverMoveHandle(false)
+   _mouseOverMoveHandle(false),
+   _pAnimation(NULL)
 {
    ui->setupUi(this);
 
@@ -62,6 +63,14 @@ QOverlayedControl::QOverlayedControl(QWidget *parent, Qt::WindowFlags f) :
 
    connect (ui->labMoveHandle, SIGNAL(mouseEnters()), this, SLOT(slotMouseEntersMoveHandle()));
    connect (ui->labMoveHandle, SIGNAL(mouseLeabes()), this, SLOT(slotMouseLeavesMoveHandle()));
+
+   _pAnimation = new QPropertyAnimation (this, "geometry");
+   _pAnimation->setDuration(150);
+   connect (_pAnimation, SIGNAL(finished()), this, SLOT(fitToContent()));
+
+   ui->frameToHide->hide();
+
+   resize(__PANEL_WIDTH_STD, 190);
 }
 
 //---------------------------------------------------------------------------
@@ -322,5 +331,63 @@ void QOverlayedControl::chgFullscreen (bool on)
    else
    {
       ui->btnFullScreen->setIcon(QIcon(":/player/fullscreen"));
+   }
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   extend / reduce button clicked
+//
+//! \author  Jo2003
+//! \date    19.05.2014
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QOverlayedControl::on_toolButton_clicked()
+{
+   QRect geo   = geometry();
+   QRect trg   = geo;
+   bool  bShow = ui->frameToHide->isHidden();
+
+   _pAnimation->setStartValue(geo);
+
+   if (bShow)
+   {
+      trg.setWidth(__PANEL_WIDTH_EXT);
+      _pAnimation->setEndValue(trg);
+      _pAnimation->start();
+   }
+   else
+   {
+      ui->frameToHide->setVisible(false);
+      trg.setWidth(__PANEL_WIDTH_STD);
+      _pAnimation->setEndValue(trg);
+      _pAnimation->start();
+   }
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   extend / reduce animation finished
+//
+//! \author  Jo2003
+//! \date    19.05.2014
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void QOverlayedControl::fitToContent()
+{
+   if (width() > (__PANEL_WIDTH_STD + 100))
+   {
+      ui->frameToHide->setVisible(true);
+      ui->toolButton->setArrowType(Qt::LeftArrow);
+   }
+   else
+   {
+      ui->toolButton->setArrowType(Qt::RightArrow);
    }
 }

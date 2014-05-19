@@ -3071,104 +3071,118 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="610"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="856"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="799"/>
         <source> 0:00:00</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="328"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1003"/>
         <source>Aspect</source>
         <translation>Seitenverhältnis</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="223"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="262"/>
         <source>Minimal Interface</source>
         <translation>Minimales Interface</translation>
     </message>
+    <message utf8="true">
+        <location filename="forms/qoverlayedcontrol.ui" line="825"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jörg, fill with content :-D ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="372"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1019"/>
         <source>Crop</source>
         <translation>Zuschneiden</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="391"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1040"/>
         <source>Save Video Format</source>
         <translation>Videoformat speichern</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="766"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="463"/>
         <source>Screenshot</source>
         <oldsource>Take a screenshot</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="782"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="479"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="847"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="544"/>
         <source>1 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="852"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="549"/>
         <source>2 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="857"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="554"/>
         <source>3 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="862"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="559"/>
         <source>4 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="867"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="564"/>
         <source>5 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="642"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="339"/>
         <source>Play selected Channel</source>
         <translation>Zeige markierten Sender</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="674"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="371"/>
         <source>Record selected Channel</source>
         <translation>Nehme markierten Sender auf</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="715"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="412"/>
         <source>Stop Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="814"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="511"/>
         <source>Jump Backward</source>
         <translation>springe zurück</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="843"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="540"/>
         <source>Time Jump Value in minutes</source>
         <translation>Sprungwert in Minuten</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="872"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="569"/>
         <source>10 min</source>
         <oldsource>10</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="889"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="586"/>
         <source>Jump Forward</source>
         <translation>springe vorwärts</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="258"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="297"/>
         <source>Toggle Fullscreen</source>
         <oldsource>Leave Fullscreen</oldsource>
         <translation>Fullscreen verlassen</translation>

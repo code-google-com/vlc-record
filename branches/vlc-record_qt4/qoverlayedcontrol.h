@@ -18,7 +18,12 @@
 #include <QShowEvent>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QPropertyAnimation>
+#include <QTimer>
 #include "qfadewidget.h"
+
+#define __PANEL_WIDTH_EXT 700
+#define __PANEL_WIDTH_STD 526
 
 namespace Ui {
   class QOverlayedControl;
@@ -59,12 +64,17 @@ private slots:
   void slotMouseLeavesMoveHandle ();
   void on_pushHide_clicked();
 
+  void on_toolButton_clicked();
+
+  void fitToContent();
+
 public slots:
 
 private:
   Ui::QOverlayedControl *ui;
-  QPoint _offset;
-  bool   _mouseOverMoveHandle;
+  QPoint              _offset;
+  bool                _mouseOverMoveHandle;
+  QPropertyAnimation *_pAnimation;
 };
 
 #endif // __20121109_QOVERLAYEDCONTROL_H
