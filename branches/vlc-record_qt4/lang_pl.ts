@@ -3084,6 +3084,31 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation></translation>
     </message>
     <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="847"/>
+        <source>1 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="852"/>
+        <source>2 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="857"/>
+        <source>3 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="862"/>
+        <source>4 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="867"/>
+        <source>5 min</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="forms/qoverlayedcontrol.ui" line="642"/>
         <source>Play selected Channel</source>
         <translation>Odtwarzaj wybrany kanał</translation>
@@ -3109,33 +3134,9 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Czas przewijania w minutach</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="847"/>
-        <source>1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="852"/>
-        <source>2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="857"/>
-        <source>3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="862"/>
-        <source>4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="867"/>
-        <source>5</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="forms/qoverlayedcontrol.ui" line="872"/>
-        <source>10</source>
+        <source>10 min</source>
+        <oldsource>10</oldsource>
         <translation></translation>
     </message>
     <message>
@@ -3351,53 +3352,53 @@ lub czas początkowy jest później niż czas końcowy!</translation>
 <context>
     <name>Recorder</name>
     <message>
-        <location filename="forms/recorder_inc.ui" line="119"/>
+        <location filename="forms/recorder_inc.ui" line="128"/>
         <source>Program Guide</source>
         <translation>Przewodnik TV</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="154"/>
+        <location filename="forms/recorder_inc.ui" line="172"/>
         <source> Channels </source>
         <translation> Kanały </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="230"/>
+        <location filename="forms/recorder_inc.ui" line="257"/>
         <source>Channel Group</source>
         <translation>Grupa kanałów</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="243"/>
+        <location filename="forms/recorder_inc.ui" line="270"/>
         <source>Channel list filter</source>
         <translation>Filtr listy kanałów</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="274"/>
+        <location filename="forms/recorder_inc.ui" line="301"/>
         <source>Channel List</source>
         <translation>Lista kanałów</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1336"/>
+        <location filename="forms/recorder_inc.ui" line="1408"/>
         <source>Short EPG</source>
         <translation>Krótki Przewodnik TV</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="319"/>
+        <location filename="forms/recorder_inc.ui" line="346"/>
         <source> EPG - Electronic Program Guide </source>
         <translation> EPG - Elektroniczny Przewodnik TV </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="586"/>
+        <location filename="forms/recorder_inc.ui" line="640"/>
         <source>Textsize</source>
         <translation>Rozmiar tekstu</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="640"/>
-        <location filename="forms/recorder_inc.ui" line="862"/>
+        <location filename="forms/recorder_inc.ui" line="694"/>
+        <location filename="forms/recorder_inc.ui" line="925"/>
         <source>Search: </source>
         <translation>Wyszukiwanie: </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="716"/>
+        <location filename="forms/recorder_inc.ui" line="770"/>
         <location filename="recorder.cpp" line="3300"/>
         <location filename="recorder.cpp" line="5150"/>
         <location filename="recorder.cpp" line="5223"/>
@@ -3406,123 +3407,123 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Wideoteka</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="727"/>
+        <location filename="forms/recorder_inc.ui" line="790"/>
         <source>Lang.:</source>
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="737"/>
+        <location filename="forms/recorder_inc.ui" line="800"/>
         <source>Genre: </source>
         <translation>Gatunek: </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="747"/>
+        <location filename="forms/recorder_inc.ui" line="810"/>
         <source>Order: </source>
         <translation>Zamówienie: </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="799"/>
+        <location filename="forms/recorder_inc.ui" line="862"/>
         <source>Page: </source>
         <translation>Strona: </translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1007"/>
+        <location filename="forms/recorder_inc.ui" line="1079"/>
         <source>Show Live!</source>
         <translation>Odtwarzaj na żywo!</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1043"/>
+        <location filename="forms/recorder_inc.ui" line="1115"/>
         <source>Play selected Channel</source>
         <translation>Odtwarzaj wybrany kanał</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1075"/>
+        <location filename="forms/recorder_inc.ui" line="1147"/>
         <source>Record selected Channel</source>
         <translation>Nagrywaj wybrany kanał</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1116"/>
+        <location filename="forms/recorder_inc.ui" line="1188"/>
         <source>Stop Player</source>
         <oldsource>Stop VLC ...</oldsource>
         <translation>Zatrzymaj Odtwarzacz</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1275"/>
+        <location filename="forms/recorder_inc.ui" line="1269"/>
+        <source>1 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1274"/>
+        <source>2 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1279"/>
+        <source>3 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1284"/>
+        <source>4 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1289"/>
+        <source>5 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1294"/>
+        <source>10 min</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="forms/recorder_inc.ui" line="1347"/>
         <location filename="recorder.cpp" line="4380"/>
         <source>Timer Record</source>
         <translation>Programator nagrywania</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1485"/>
+        <location filename="forms/recorder_inc.ui" line="1566"/>
         <location filename="recorder.cpp" line="4381"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1523"/>
+        <location filename="forms/recorder_inc.ui" line="1604"/>
         <source>About ...</source>
         <translation>O …</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1599"/>
+        <location filename="forms/recorder_inc.ui" line="1680"/>
         <location filename="recorder.cpp" line="4386"/>
         <source>Quit</source>
         <translation>Wyjdź</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="929"/>
+        <location filename="forms/recorder_inc.ui" line="992"/>
         <source> Player </source>
         <translation>Odtwarzacz</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1164"/>
+        <location filename="forms/recorder_inc.ui" line="1236"/>
         <location filename="recorder.cpp" line="4394"/>
         <source>Jump Backward</source>
         <translation>Do tyłu</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1193"/>
+        <location filename="forms/recorder_inc.ui" line="1265"/>
         <source>Time Jump Value in minutes</source>
         <translation>Czas przewijania w minutach</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1197"/>
-        <source>1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1202"/>
-        <source>2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1207"/>
-        <source>3</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1212"/>
-        <source>4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1217"/>
-        <source>5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1222"/>
-        <source>10</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="forms/recorder_inc.ui" line="1239"/>
+        <location filename="forms/recorder_inc.ui" line="1311"/>
         <location filename="recorder.cpp" line="4393"/>
         <source>Jump Forward</source>
         <translation>Do przodu</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1307"/>
+        <location filename="forms/recorder_inc.ui" line="1379"/>
         <location filename="recorder.cpp" line="4402"/>
         <source>Watch List</source>
         <oldsource>Open Watch List</oldsource>
@@ -3836,7 +3837,7 @@ dataDir: %1
         <translation>Przełącz na brak dźwięku</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1392"/>
+        <location filename="forms/recorder_inc.ui" line="1473"/>
         <location filename="recorder.cpp" line="4395"/>
         <source>Screenshot</source>
         <translation>Zrzut ekranu</translation>
@@ -3873,7 +3874,7 @@ dataDir: %1
         <translation>&amp;przywrócić %1</translation>
     </message>
     <message>
-        <location filename="forms/recorder_inc.ui" line="1561"/>
+        <location filename="forms/recorder_inc.ui" line="1642"/>
         <location filename="recorder.cpp" line="4403"/>
         <source>Help</source>
         <translation>Pomóż</translation>
