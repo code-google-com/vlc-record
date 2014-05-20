@@ -3078,12 +3078,12 @@ oder die Startzeit liegt nach der Endzeit!</translation>
     <message>
         <location filename="forms/qoverlayedcontrol.ui" line="1001"/>
         <source>Additional Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzliche Informationen</translation>
     </message>
     <message>
         <location filename="forms/qoverlayedcontrol.ui" line="1054"/>
         <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzliche Einstellungen</translation>
     </message>
     <message>
         <location filename="forms/qoverlayedcontrol.ui" line="201"/>
@@ -3107,7 +3107,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jörg, fill with content :-D ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="forms/qoverlayedcontrol.ui" line="217"/>
