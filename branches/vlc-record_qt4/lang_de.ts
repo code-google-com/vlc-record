@@ -3071,32 +3071,32 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="810"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="959"/>
         <source> 0:00:00</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="852"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1001"/>
         <source>Additional Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="984"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1054"/>
         <source>Additional Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1132"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="201"/>
         <source>Aspect</source>
         <translation>Seitenverhältnis</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="267"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="416"/>
         <source>Minimal Interface</source>
         <translation>Minimales Interface</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="953"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="270"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3110,89 +3110,89 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1148"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="217"/>
         <source>Crop</source>
         <translation>Zuschneiden</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1169"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="238"/>
         <source>Save Video Format</source>
         <translation>Videoformat speichern</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="468"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="617"/>
         <source>Screenshot</source>
         <oldsource>Take a screenshot</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="484"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="633"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="549"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="698"/>
         <source>1 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="554"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="703"/>
         <source>2 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="559"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="708"/>
         <source>3 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="564"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="713"/>
         <source>4 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="569"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="718"/>
         <source>5 min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="344"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="493"/>
         <source>Play selected Channel</source>
         <translation>Zeige markierten Sender</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="376"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="525"/>
         <source>Record selected Channel</source>
         <translation>Nehme markierten Sender auf</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="417"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="566"/>
         <source>Stop Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="516"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="665"/>
         <source>Jump Backward</source>
         <translation>springe zurück</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="545"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="694"/>
         <source>Time Jump Value in minutes</source>
         <translation>Sprungwert in Minuten</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="574"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="723"/>
         <source>10 min</source>
         <oldsource>10</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="591"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="740"/>
         <source>Jump Forward</source>
         <translation>springe vorwärts</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="302"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="451"/>
         <source>Toggle Fullscreen</source>
         <oldsource>Leave Fullscreen</oldsource>
         <translation>Fullscreen verlassen</translation>
@@ -3303,39 +3303,39 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="724"/>
+        <location filename="qvlcvideowidget.cpp" line="744"/>
         <source>Deinterlacing</source>
         <oldsource>Deinterlacing Video</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="743"/>
+        <location filename="qvlcvideowidget.cpp" line="763"/>
         <source>Minimal Interface</source>
         <oldsource>Minimal Mode</oldsource>
         <translation>Minimales Interface</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="746"/>
+        <location filename="qvlcvideowidget.cpp" line="767"/>
         <source>Enable</source>
         <translation>Aktivieren</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="760"/>
+        <location filename="qvlcvideowidget.cpp" line="781"/>
         <source>Stay on top</source>
         <translation>Fenster anpinnen</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="783"/>
+        <location filename="qvlcvideowidget.cpp" line="804"/>
         <source>Show Control Panel</source>
         <translation>Zeige Steuerung</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="817"/>
+        <location filename="qvlcvideowidget.cpp" line="838"/>
         <source>Audio Streams</source>
         <translation>Audio Spuren</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="830"/>
+        <location filename="qvlcvideowidget.cpp" line="851"/>
         <source>Audio %1</source>
         <translation></translation>
     </message>
