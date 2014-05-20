@@ -2049,8 +2049,8 @@ To change the parent code make sure:
 <context>
     <name>CShowInfo</name>
     <message>
-        <location filename="cshowinfo.cpp" line="587"/>
-        <location filename="cshowinfo.cpp" line="623"/>
+        <location filename="cshowinfo.cpp" line="588"/>
+        <location filename="cshowinfo.cpp" line="624"/>
         <source>%1 (Archive)</source>
         <translation>%1 (Архив)</translation>
     </message>
@@ -3071,118 +3071,128 @@ or start time is later than end time!</source>
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="856"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="799"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="810"/>
         <source> 0:00:00</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1003"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="852"/>
+        <source>Additional Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="984"/>
+        <source>Additional Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="1132"/>
         <source>Aspect</source>
         <translation>Формат изображения</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="262"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="267"/>
         <source>Minimal Interface</source>
         <translation>Мини-интерфейс</translation>
     </message>
-    <message utf8="true">
-        <location filename="forms/qoverlayedcontrol.ui" line="825"/>
+    <message>
+        <location filename="forms/qoverlayedcontrol.ui" line="953"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jörg, fill with content :-D ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <oldsource>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jörg, fill with content :-D ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1019"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1148"/>
         <source>Crop</source>
         <translation>Размер кадра</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="1040"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="1169"/>
         <source>Save Video Format</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="463"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="468"/>
         <source>Screenshot</source>
         <oldsource>Take a screenshot</oldsource>
         <translation>Скриншот</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="479"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="484"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="544"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="549"/>
         <source>1 min</source>
         <translation>1 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="549"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="554"/>
         <source>2 min</source>
         <translation>2 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="554"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="559"/>
         <source>3 min</source>
         <translation>3 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="559"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="564"/>
         <source>4 min</source>
         <translation>4 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="564"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="569"/>
         <source>5 min</source>
         <translation>5 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="339"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="344"/>
         <source>Play selected Channel</source>
         <translation>Просмотр передачи</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="371"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="376"/>
         <source>Record selected Channel</source>
         <translation>Запись выбранной передачи</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="412"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="417"/>
         <source>Stop Player</source>
         <translation>Остановить плеер</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="511"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="516"/>
         <source>Jump Backward</source>
         <translation>Шаг назад</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="540"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="545"/>
         <source>Time Jump Value in minutes</source>
         <translation>Длинна временного шага</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="569"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="574"/>
         <source>10 min</source>
         <oldsource>10</oldsource>
         <translation>10 мин</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="586"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="591"/>
         <source>Jump Forward</source>
         <translation>Шаг вперед</translation>
     </message>
     <message>
-        <location filename="forms/qoverlayedcontrol.ui" line="297"/>
+        <location filename="forms/qoverlayedcontrol.ui" line="302"/>
         <source>Toggle Fullscreen</source>
         <oldsource>Leave Fullscreen</oldsource>
         <translation>Полный экран</translation>
