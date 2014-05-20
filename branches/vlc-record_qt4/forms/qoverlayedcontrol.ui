@@ -48,7 +48,7 @@ QComboBox::drop-down {
 }
 
 QComboBox::drop-down:enabled {
-   background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+   background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,
    stop:0 #313163,
    stop:0.3  #60609A,
    stop:0.67 #39395B,
@@ -654,7 +654,7 @@ border: 1px solid gray;
 }
 
  QSlider::handle:horizontal {
-     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee, 	stop:0.7 grey, stop:1 #dedede);
+     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #eee,     stop:0.7 grey, stop:1 #dedede);
      border: 1px solid #5c5c5c;
      width: 4px;
      margin: -5px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
@@ -901,7 +901,7 @@ color: #aaa;
             <height>16777215</height>
            </size>
           </property>
-          <layout class="QHBoxLayout" name="hLayoutMainControl" stretch="0">
+          <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0">
            <property name="spacing">
             <number>0</number>
            </property>
@@ -917,6 +917,13 @@ color: #aaa;
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item>
+            <spacer name="inf_expander">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </spacer>
+           </item>
            <item>
             <widget class="QFrame" name="frameInfo">
              <property name="minimumSize">
@@ -1003,7 +1010,7 @@ p, li { white-space: pre-wrap; }
       </item>
       <item>
        <widget class="QFrame" name="gBVideFormat">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -1020,6 +1027,13 @@ p, li { white-space: pre-wrap; }
           <number>0</number>
          </property>
          <item>
+          <spacer name="ext_expander">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QFrame" name="frameToHide">
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
@@ -1027,7 +1041,7 @@ p, li { white-space: pre-wrap; }
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_6" stretch="1,1,1">
+           <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,1,1">
             <property name="spacing">
              <number>0</number>
             </property>
