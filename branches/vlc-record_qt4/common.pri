@@ -20,10 +20,10 @@ CONFIG += shared
 # program version
 # -------------------------------------
 PROGMAJ=2
-PROGMIN=68
+PROGMIN=69
 
 # here you can enable traces ...
-DEFINES += __TRACE
+# DEFINES += __TRACE
 
 SOURCES += main.cpp \
     recorder.cpp \
