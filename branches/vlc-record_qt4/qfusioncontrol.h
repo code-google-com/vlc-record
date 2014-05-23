@@ -70,6 +70,7 @@ public:
    void addJumpBox (QComboBoxEx *pBox);
    void addCngSlider (QClickAndGoSlider *pSli);
    void addTimeLab (QTimeLabel *pLab);
+   void addLengthLab (QTimeLabel *pLab);
    void addMuteLab (QLabel *pLab);
    void enableBtn (bool enable, eBtnRole role);
    void setVolSliderPosition (int vol);
@@ -104,8 +105,8 @@ public:
    bool isPopupActive ();
    void addInfoLab (QMoveHandle *pLab);
    void setVideoInfo(const QString &str);
+   void setLength(quint64 time);
 
-   
 signals:
    void sigVolSliderMoved (int vol);
    void sigPlay ();
@@ -175,6 +176,7 @@ private:
 
    // timer label ...
    QVector<QTimeLabel *>        _timeLabVector;
+   QVector<QTimeLabel *>        _lengthLabVector;
 
    // mute label ...
    QVector<QLabel *>            _muteLabel;

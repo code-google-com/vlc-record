@@ -67,7 +67,8 @@ SOURCES += main.cpp \
     qhlscontrol.cpp \
     qexpirenotifydlg.cpp \
     qauthdlg.cpp \
-    qwaitwidget.cpp
+    qwaitwidget.cpp \
+    qclickandgoslider.cpp
 HEADERS += recorder.h \
     csettingsdlg.h \
     templates.h \
