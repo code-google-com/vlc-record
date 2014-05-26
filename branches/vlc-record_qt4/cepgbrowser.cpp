@@ -141,104 +141,112 @@ QString CEpgBrowser::createHtmlCode()
    // wrap in row ...
    tab = pHtml->tableRow(row);
 
-   for (cit = mProgram.constBegin(), i = 0; cit != mProgram.constEnd(); cit++, i++)
+   if (mProgram.isEmpty())
    {
-      buttons     = "";
-      actShow     = *cit;
-      bMark       = false;
-      dtStartThis = QDateTime::fromTime_t(actShow.uiStart + _iTs);
-
-      // find out if we should mark the time ...
-      if (actShow.uiEnd)
+      row  = pHtml->tableCell(tr("No information available!"), TMPL_A_STYLE, 2, "center");
+      tab += pHtml->tableRow(row);
+   }
+   else
+   {
+      for (cit = mProgram.constBegin(), i = 0; cit != mProgram.constEnd(); cit++, i++)
       {
-         dtStartNext = QDateTime::fromTime_t(actShow.uiEnd + _iTs);
-         bMark       = NowRunning(dtStartThis, dtStartNext);
-      }
-      else
-      {
-         bMark       = NowRunning(dtStartThis);
-      }
+         buttons     = "";
+         actShow     = *cit;
+         bMark       = false;
+         dtStartThis = QDateTime::fromTime_t(actShow.uiStart + _iTs);
 
-      timeCell  = bMark ? pHtml->simpleTag("a", "name='nowPlaying'") : "";
-      timeCell += dtStartThis.toString("hh:mm") + "<hr>";
-
-      // timer record stuff ...
-      if (dtStartThis > QDateTime::currentDateTime())
-      {
-         // has not started so far ... add timer record link ...
-         url.clear();
-         url.setPath("vlc-record");
-         url.addQueryItem("action", "timerrec");
-         url.addQueryItem("cid"  , QString::number(iCid));
-         url.addQueryItem("start", QString::number(actShow.uiStart));
-         url.addQueryItem("end"  , QString::number(actShow.uiEnd));
-
-         // rec button ...
-         img = pHtml->image(":/png/timer", 16, 16, "", tr("add timer record ..."));
-
-         // wrap in link ...
-         buttons = pHtml->link(url.toEncoded(), img) + "&nbsp;";
-      }
-
-      // archive supported and still available ...
-      if (bArchive && ((iAa = CSmallHelpers::archiveAvailable(actShow.uiStart)) > -2))
-      {
-         // only show archiv links if this show is already available ...
-         if (iAa == 1)
+         // find out if we should mark the time ...
+         if (actShow.uiEnd)
          {
-            url.clear();
-            url.setPath("vlc-record");
-            url.addQueryItem("action", "archivplay");
-            url.addQueryItem("cid", QString::number(iCid));
-            url.addQueryItem("gmt", QString::number(actShow.uiStart));
-
-            // play button ...
-            img = pHtml->image(":/png/play", 16, 16, "", tr("play from archive ..."));
-
-            // wrap in link ...
-            buttons += pHtml->link(url.toEncoded(), img) + "&nbsp;";
-
-            url.clear();
-            url.setPath("vlc-record");
-            url.addQueryItem("action", "archivrec");
-            url.addQueryItem("cid", QString::number(iCid));
-            url.addQueryItem("gmt", QString::number(actShow.uiStart));
-
-            // rec button ...
-            img = pHtml->image(":/png/record", 16, 16, "", tr("record from archive ..."));
-
-            // wrap in link ...
-            buttons += pHtml->link(url.toEncoded(), img) + "&nbsp;";
+            dtStartNext = QDateTime::fromTime_t(actShow.uiEnd + _iTs);
+            bMark       = NowRunning(dtStartThis, dtStartNext);
+         }
+         else
+         {
+            bMark       = NowRunning(dtStartThis);
          }
 
-         // mark for later view ...
-         url.clear();
-         url.setPath("vlc-record");
-         url.addQueryItem("action", "remember");
-         url.addQueryItem("cid"  , QString::number(iCid));
-         url.addQueryItem("gmt"  , QString::number(actShow.uiStart));
+         timeCell  = bMark ? pHtml->simpleTag("a", "name='nowPlaying'") : "";
+         timeCell += dtStartThis.toString("hh:mm") + "<hr>";
 
-         // remember button ...
-         img = pHtml->image(":/png/remember", 16, 16, "", tr("add to watch list ..."));
+         // timer record stuff ...
+         if (dtStartThis > QDateTime::currentDateTime())
+         {
+            // has not started so far ... add timer record link ...
+            url.clear();
+            url.setPath("vlc-record");
+            url.addQueryItem("action", "timerrec");
+            url.addQueryItem("cid"  , QString::number(iCid));
+            url.addQueryItem("start", QString::number(actShow.uiStart));
+            url.addQueryItem("end"  , QString::number(actShow.uiEnd));
 
-         // wrap in link ...
-         buttons += pHtml->link(url.toEncoded(), img);
+            // rec button ...
+            img = pHtml->image(":/png/timer", 16, 16, "", tr("add timer record ..."));
+
+            // wrap in link ...
+            buttons = pHtml->link(url.toEncoded(), img) + "&nbsp;";
+         }
+
+         // archive supported and still available ...
+         if (bArchive && ((iAa = CSmallHelpers::archiveAvailable(actShow.uiStart)) > -2))
+         {
+            // only show archiv links if this show is already available ...
+            if (iAa == 1)
+            {
+               url.clear();
+               url.setPath("vlc-record");
+               url.addQueryItem("action", "archivplay");
+               url.addQueryItem("cid", QString::number(iCid));
+               url.addQueryItem("gmt", QString::number(actShow.uiStart));
+
+               // play button ...
+               img = pHtml->image(":/png/play", 16, 16, "", tr("play from archive ..."));
+
+               // wrap in link ...
+               buttons += pHtml->link(url.toEncoded(), img) + "&nbsp;";
+
+               url.clear();
+               url.setPath("vlc-record");
+               url.addQueryItem("action", "archivrec");
+               url.addQueryItem("cid", QString::number(iCid));
+               url.addQueryItem("gmt", QString::number(actShow.uiStart));
+
+               // rec button ...
+               img = pHtml->image(":/png/record", 16, 16, "", tr("record from archive ..."));
+
+               // wrap in link ...
+               buttons += pHtml->link(url.toEncoded(), img) + "&nbsp;";
+            }
+
+            // mark for later view ...
+            url.clear();
+            url.setPath("vlc-record");
+            url.addQueryItem("action", "remember");
+            url.addQueryItem("cid"  , QString::number(iCid));
+            url.addQueryItem("gmt"  , QString::number(actShow.uiStart));
+
+            // remember button ...
+            img = pHtml->image(":/png/remember", 16, 16, "", tr("add to watch list ..."));
+
+            // wrap in link ...
+            buttons += pHtml->link(url.toEncoded(), img);
+         }
+
+         timeCell += pHtml->htmlTag("div", buttons, "white-space: pre;");
+
+         progCell = actShow.sShowName;
+
+         if (actShow.sShowDescr != "")
+         {
+            progCell += "<br />" + pHtml->span(actShow.sShowDescr, "color: #666");
+         }
+
+         row  = pHtml->tableCell(timeCell, bMark ? TMPL_CUR_STYLE : ((i % 2) ? TMPL_B_STYLE : TMPL_A_STYLE));
+         row += pHtml->tableCell(progCell, bMark ? TMPL_CUR_STYLE : ((i % 2) ? TMPL_B_STYLE : TMPL_A_STYLE));
+
+         // wrap in table row ...
+         tab += pHtml->tableRow(row);
       }
-
-      timeCell += pHtml->htmlTag("div", buttons, "white-space: pre;");
-
-      progCell = actShow.sShowName;
-
-      if (actShow.sShowDescr != "")
-      {
-         progCell += "<br />" + pHtml->span(actShow.sShowDescr, "color: #666");
-      }
-
-      row  = pHtml->tableCell(timeCell, bMark ? TMPL_CUR_STYLE : ((i % 2) ? TMPL_B_STYLE : TMPL_A_STYLE));
-      row += pHtml->tableCell(progCell, bMark ? TMPL_CUR_STYLE : ((i % 2) ? TMPL_B_STYLE : TMPL_A_STYLE));
-
-      // wrap in table row ...
-      tab += pHtml->tableRow(row);
    }
 
    // wrap in table ...
