@@ -622,6 +622,32 @@ void Recorder::on_pushSettings_clicked()
 
    if (Settings.exec() == QDialog::Accepted)
    {
+      // in case we're playing a stream we should continue it after
+      // settings took effect ...
+      // only takes effect when using internal player ...
+      if (vlcCtrl.withLibVLC() && (ePlayState == IncPlay::PS_PLAY))
+      {
+         if (showInfo.showType() == ShowInfo::Live)
+         {
+            // create request to get current channel ...
+            reRequest.bValid = true;
+            reRequest.req    = CIptvDefs::REQ_STREAM;
+            reRequest.par_1  = showInfo.channelId();
+            reRequest.par_2  = showInfo.pCode();
+         }
+         else if (showInfo.showType() == ShowInfo::Archive)
+         {
+            // create request to get current channel / position ...
+            quint64 pos = ui->player->getSilderPos();
+            QString req = QString("cid=%1&gmt=%2").arg(showInfo.channelId()).arg(pos);
+
+            reRequest.bValid = true;
+            reRequest.req    = CIptvDefs::REQ_ARCHIV;
+            reRequest.par_1  = req;
+            reRequest.par_2  = showInfo.pCode();
+         }
+      }
+
       // if changes where saved, accept it here ...
       VlcLog.SetLogLevel(Settings.GetLogLevel());
 
@@ -1671,12 +1697,9 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    mkCase(CIptvDefs::REQ_LOGIN_ONLY, loginOnly(resp));
 
    ///////////////////////////////////////////////
-   // response for stream server changed ...
-   mkCase(CIptvDefs::REQ_SERVER, slotSSrvChgd(resp));
-
-   ///////////////////////////////////////////////
    // Make sure the unused responses are listed
    // This makes it easier to understand the log.
+   mkCase(CIptvDefs::REQ_SERVER, slotUnused(resp));
    mkCase(CIptvDefs::REQ_ADD_VOD_FAV, slotUnused(resp));
    mkCase(CIptvDefs::REQ_REM_VOD_FAV, slotUnused(resp));
    mkCase(CIptvDefs::REQ_SET_VOD_MANAGER, slotUnused(resp));
@@ -2204,6 +2227,14 @@ void Recorder::slotEPG(const QString &str)
 
             TouchPlayCtrlBtns();
             ui->channelList->setFocus(Qt::OtherFocusReason);
+
+            // EPG is there ... we might need
+            // to restart a stream ... ?!
+            if (reRequest.bValid)
+            {
+               reRequest.bValid = false;
+               pApiClient->queueRequest(reRequest.req, reRequest.par_1, reRequest.par_2);
+            }
 
             // update vod stuff only at startup ...
             if (accountInfo.bHasVOD)
@@ -4302,47 +4333,6 @@ void Recorder::slotStayOnTop(bool on)
       }
 
       show();
-   }
-}
-
-//---------------------------------------------------------------------------
-//
-//! \brief   stream server was changed [slot]
-//
-//! \author  Jo2003
-//! \date    19.05.2014
-//
-//! \param   str (const QString &) response string
-//
-//! \return  --
-//---------------------------------------------------------------------------
-void Recorder::slotSSrvChgd(const QString &str)
-{
-   Q_UNUSED(str)
-
-   // only takes effect when using internal player ...
-   if (vlcCtrl.withLibVLC())
-   {
-      // in case a stream is played we should stop and restart so
-      // the new stream server takes effect ...
-
-      if (ePlayState == IncPlay::PS_PLAY)
-      {
-         if (showInfo.showType() == ShowInfo::Live)
-         {
-            // simply re-request live stream url ...
-            ui->player->silentStop();
-            pApiClient->queueRequest(CIptvDefs::REQ_STREAM, showInfo.channelId(), showInfo.pCode());
-         }
-         else if (showInfo.showType() == ShowInfo::Archive)
-         {
-            // request stream url taking care about the time it already runs ...
-            quint64 pos = ui->player->getSilderPos();
-            QString req = QString("cid=%1&gmt=%2").arg(showInfo.channelId()).arg(pos);
-            ui->player->silentStop();
-            pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
-         }
-      }
    }
 }
 
