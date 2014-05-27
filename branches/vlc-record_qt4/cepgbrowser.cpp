@@ -13,6 +13,10 @@
 #include "cepgbrowser.h"
 #include "small_helpers.h"
 #include "chtmlwriter.h"
+#include "qdatetimesyncro.h"
+
+// global syncronized timer ...
+extern QDateTimeSyncro tmSync;
 
 // log file functions ...
 extern CLogFile VlcLog;
@@ -170,7 +174,7 @@ QString CEpgBrowser::createHtmlCode()
          timeCell += dtStartThis.toString("hh:mm") + "<hr>";
 
          // timer record stuff ...
-         if (dtStartThis > QDateTime::currentDateTime())
+         if (dtStartThis > tmSync.currentDateTimeSync())
          {
             // has not started so far ... add timer record link ...
             url.clear();
@@ -188,7 +192,7 @@ QString CEpgBrowser::createHtmlCode()
          }
 
          // archive supported and still available ...
-         if (bArchive && ((iAa = CSmallHelpers::archiveAvailable(actShow.uiStart)) > -2))
+         if (bArchive && ((iAa = CSmallHelpers::archiveAvailable(actShow.uiStart, tmSync)) > -2))
          {
             // only show archiv links if this show is already available ...
             if (iAa == 1)
@@ -276,7 +280,7 @@ bool CEpgBrowser::NowRunning (const QDateTime &startThis, const QDateTime &start
    // now given, later not given ...
    if (startThis.isValid() && !startNext.isValid())
    {
-      int diff = QDateTime::currentDateTime().toTime_t() - startThis.toTime_t();
+      int diff = tmSync.syncronizedTime_t() - startThis.toTime_t();
 
       // mark this show as running, if start wasn't more
       // than 3 hours ago ...
@@ -288,8 +292,8 @@ bool CEpgBrowser::NowRunning (const QDateTime &startThis, const QDateTime &start
    // now and later given ...
    else if (startThis.isValid() && startNext.isValid())
    {
-      if ((QDateTime::currentDateTime() >= startThis)
-         && (QDateTime::currentDateTime() <= startNext))
+      if ((tmSync.currentDateTimeSync() >= startThis)
+         && (tmSync.currentDateTimeSync() <= startNext))
       {
          bNowRunning = true;
       }

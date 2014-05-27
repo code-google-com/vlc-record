@@ -41,13 +41,11 @@ CNovoeParser::CNovoeParser(QObject * parent) : CStdJsonParser(parent)
 //
 //! \param   sResp (const QString &) ref. to response string
 //! \param   chanList (QVector<cparser::SChan> &) data vector
-//! \param   bFixTime (bool) flag for time correction
 //
 //! \return  0 --> ok; -1 --> any error
 //---------------------------------------------------------------------------
 int CNovoeParser::parseChannelList (const QString &sResp,
-                                         QVector<cparser::SChan> &chanList,
-                                         bool bFixTime)
+                                         QVector<cparser::SChan> &chanList)
 {
    int  iRV = 0;
    bool bOk = false;
@@ -96,12 +94,6 @@ int CNovoeParser::parseChannelList (const QString &sResp,
                chan.sProgramm    = mChannel.value("epg_progname").toString();
                chan.uiStart      = mChannel.value("epg_start").toUInt();
                chan.uiEnd        = mChannel.value("epg_end").toUInt();
-
-               if (bFixTime)
-               {
-                  fixTime(chan.uiStart);
-                  fixTime(chan.uiEnd);
-               }
 
                foreach (const QVariant& lParam, mChannel.value("stream_params").toList())
                {

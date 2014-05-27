@@ -60,7 +60,6 @@
 #include "qexpirenotifydlg.h"
 #include "qstringfilterwidgetaction.h"
 #include "qwatchlistdlg.h"
-#include "ctimeshift.h"
 #include "qchannelmap.h"
 #include <QStackedLayout>
 #include "qvlcvideowidget.h"

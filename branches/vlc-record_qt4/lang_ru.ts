@@ -88,17 +88,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CApiParser</name>
     <message>
-        <location filename="capiparser.cpp" line="103"/>
+        <location filename="capiparser.cpp" line="84"/>
         <source>Set time offset to %1 seconds!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="capiparser.cpp" line="270"/>
+        <location filename="capiparser.cpp" line="210"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="capiparser.cpp" line="271"/>
+        <location filename="capiparser.cpp" line="211"/>
         <source>XML Error String: %1</source>
         <translation>Ошибка XML строки: %1</translation>
     </message>
@@ -118,29 +118,29 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">R.</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="146"/>
+        <location filename="cepgbrowser.cpp" line="150"/>
         <source>No information available!</source>
         <oldsource>Sorry, no information available!</oldsource>
         <translation>Нет доступной информации!</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="203"/>
+        <location filename="cepgbrowser.cpp" line="207"/>
         <source>play from archive ...</source>
         <translation>Просмотр архива ...</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="215"/>
+        <location filename="cepgbrowser.cpp" line="219"/>
         <source>record from archive ...</source>
         <translation>Запись архива ...</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="229"/>
+        <location filename="cepgbrowser.cpp" line="233"/>
         <source>add to watch list ...</source>
         <oldsource>watch later ...</oldsource>
         <translation>Добавить в отложенные ...</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="184"/>
+        <location filename="cepgbrowser.cpp" line="188"/>
         <source>add timer record ...</source>
         <translation>Добавить запись ...</translation>
     </message>
@@ -509,50 +509,50 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CKartinaXMLParser</name>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="79"/>
-        <location filename="ckartinaxmlparser.cpp" line="496"/>
-        <location filename="ckartinaxmlparser.cpp" line="606"/>
-        <location filename="ckartinaxmlparser.cpp" line="672"/>
-        <location filename="ckartinaxmlparser.cpp" line="754"/>
-        <location filename="ckartinaxmlparser.cpp" line="840"/>
-        <location filename="ckartinaxmlparser.cpp" line="935"/>
-        <location filename="ckartinaxmlparser.cpp" line="1075"/>
-        <location filename="ckartinaxmlparser.cpp" line="1159"/>
-        <location filename="ckartinaxmlparser.cpp" line="1247"/>
-        <location filename="ckartinaxmlparser.cpp" line="1370"/>
+        <location filename="ckartinaxmlparser.cpp" line="78"/>
+        <location filename="ckartinaxmlparser.cpp" line="483"/>
+        <location filename="ckartinaxmlparser.cpp" line="593"/>
+        <location filename="ckartinaxmlparser.cpp" line="659"/>
+        <location filename="ckartinaxmlparser.cpp" line="741"/>
+        <location filename="ckartinaxmlparser.cpp" line="827"/>
+        <location filename="ckartinaxmlparser.cpp" line="922"/>
+        <location filename="ckartinaxmlparser.cpp" line="1062"/>
+        <location filename="ckartinaxmlparser.cpp" line="1146"/>
+        <location filename="ckartinaxmlparser.cpp" line="1234"/>
+        <location filename="ckartinaxmlparser.cpp" line="1357"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="80"/>
-        <location filename="ckartinaxmlparser.cpp" line="497"/>
-        <location filename="ckartinaxmlparser.cpp" line="607"/>
-        <location filename="ckartinaxmlparser.cpp" line="673"/>
-        <location filename="ckartinaxmlparser.cpp" line="755"/>
-        <location filename="ckartinaxmlparser.cpp" line="841"/>
-        <location filename="ckartinaxmlparser.cpp" line="936"/>
-        <location filename="ckartinaxmlparser.cpp" line="1076"/>
-        <location filename="ckartinaxmlparser.cpp" line="1160"/>
-        <location filename="ckartinaxmlparser.cpp" line="1248"/>
-        <location filename="ckartinaxmlparser.cpp" line="1371"/>
+        <location filename="ckartinaxmlparser.cpp" line="79"/>
+        <location filename="ckartinaxmlparser.cpp" line="484"/>
+        <location filename="ckartinaxmlparser.cpp" line="594"/>
+        <location filename="ckartinaxmlparser.cpp" line="660"/>
+        <location filename="ckartinaxmlparser.cpp" line="742"/>
+        <location filename="ckartinaxmlparser.cpp" line="828"/>
+        <location filename="ckartinaxmlparser.cpp" line="923"/>
+        <location filename="ckartinaxmlparser.cpp" line="1063"/>
+        <location filename="ckartinaxmlparser.cpp" line="1147"/>
+        <location filename="ckartinaxmlparser.cpp" line="1235"/>
+        <location filename="ckartinaxmlparser.cpp" line="1358"/>
         <source>XML Error String: %1</source>
         <translation>Ошибка XML строки: %1</translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="158"/>
-        <location filename="ckartinaxmlparser.cpp" line="293"/>
-        <location filename="ckartinaxmlparser.cpp" line="369"/>
+        <location filename="ckartinaxmlparser.cpp" line="156"/>
+        <location filename="ckartinaxmlparser.cpp" line="280"/>
+        <location filename="ckartinaxmlparser.cpp" line="356"/>
         <source>Found unused element %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="164"/>
-        <location filename="ckartinaxmlparser.cpp" line="299"/>
+        <location filename="ckartinaxmlparser.cpp" line="162"/>
+        <location filename="ckartinaxmlparser.cpp" line="286"/>
         <source>Found unused child %1: %2 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ckartinaxmlparser.cpp" line="895"/>
+        <location filename="ckartinaxmlparser.cpp" line="882"/>
         <source>Got Type: %1, Count: %2, Page: %3, Total: %4</source>
         <oldsource>Got Genre %1, Count %2, Page %3, Total %4</oldsource>
         <translation></translation>
@@ -903,25 +903,25 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CNovoeParser</name>
     <message>
-        <location filename="cnovoeparser.cpp" line="123"/>
-        <location filename="cnovoeparser.cpp" line="206"/>
-        <location filename="cnovoeparser.cpp" line="286"/>
-        <location filename="cnovoeparser.cpp" line="352"/>
-        <location filename="cnovoeparser.cpp" line="451"/>
+        <location filename="cnovoeparser.cpp" line="115"/>
+        <location filename="cnovoeparser.cpp" line="198"/>
+        <location filename="cnovoeparser.cpp" line="278"/>
+        <location filename="cnovoeparser.cpp" line="344"/>
+        <location filename="cnovoeparser.cpp" line="443"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="cnovoeparser.cpp" line="124"/>
-        <location filename="cnovoeparser.cpp" line="207"/>
-        <location filename="cnovoeparser.cpp" line="287"/>
-        <location filename="cnovoeparser.cpp" line="353"/>
-        <location filename="cnovoeparser.cpp" line="452"/>
+        <location filename="cnovoeparser.cpp" line="116"/>
+        <location filename="cnovoeparser.cpp" line="199"/>
+        <location filename="cnovoeparser.cpp" line="279"/>
+        <location filename="cnovoeparser.cpp" line="345"/>
+        <location filename="cnovoeparser.cpp" line="444"/>
         <source>QtJson parser error in %1 %2():%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cnovoeparser.cpp" line="435"/>
+        <location filename="cnovoeparser.cpp" line="427"/>
         <source>Update Entries for channel %1:
 </source>
         <translation></translation>
@@ -1081,7 +1081,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CRodnoeClient</name>
     <message>
-        <location filename="crodnoeclient.cpp" line="90"/>
+        <location filename="crodnoeclient.cpp" line="94"/>
         <source>Response for request &apos;%1&apos;:
  ==8&lt;==8&lt;==8&lt;==
 %2
@@ -1089,12 +1089,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="104"/>
+        <location filename="crodnoeclient.cpp" line="108"/>
         <source>Request &apos;%2&apos; done!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="246"/>
+        <location filename="crodnoeclient.cpp" line="250"/>
         <source>Patched channel list:
  ==8&lt;==8&lt;==8&lt;==
 %2
@@ -1102,354 +1102,354 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="439"/>
+        <location filename="crodnoeclient.cpp" line="443"/>
         <source>We&apos;ve got following Cookie: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="457"/>
+        <location filename="crodnoeclient.cpp" line="461"/>
         <source>Logout ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="476"/>
+        <location filename="crodnoeclient.cpp" line="480"/>
         <source>Request Authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="500"/>
-        <location filename="crodnoeclient.cpp" line="569"/>
+        <location filename="crodnoeclient.cpp" line="504"/>
+        <location filename="crodnoeclient.cpp" line="573"/>
         <source>Request Channel List ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="524"/>
+        <location filename="crodnoeclient.cpp" line="528"/>
         <source>Request Channel List (language filtered) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="548"/>
+        <location filename="crodnoeclient.cpp" line="552"/>
         <source>Request available audio streams ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="592"/>
+        <location filename="crodnoeclient.cpp" line="596"/>
         <source>Request Stream Server List ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="612"/>
+        <location filename="crodnoeclient.cpp" line="616"/>
         <source>Request Time Shift ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="632"/>
+        <location filename="crodnoeclient.cpp" line="636"/>
         <source>Set TimeShift to %1 hour(s) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="653"/>
+        <location filename="crodnoeclient.cpp" line="657"/>
         <source>Request Bit Rate ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="673"/>
+        <location filename="crodnoeclient.cpp" line="677"/>
         <source>Set BitRate to %1 kbit/s ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="694"/>
+        <location filename="crodnoeclient.cpp" line="698"/>
         <source>Request URL for channel %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="722"/>
+        <location filename="crodnoeclient.cpp" line="726"/>
         <source>Set Streaming Server to %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="743"/>
+        <location filename="crodnoeclient.cpp" line="747"/>
         <source>Set Http Buffer to %1 msec. ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="764"/>
+        <location filename="crodnoeclient.cpp" line="768"/>
         <source>Request EPG for Channel %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="787"/>
+        <location filename="crodnoeclient.cpp" line="791"/>
         <source>Request Archiv URL ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="817"/>
+        <location filename="crodnoeclient.cpp" line="821"/>
         <source>Request VOD Genres ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="837"/>
+        <location filename="crodnoeclient.cpp" line="841"/>
         <source>Request Videos ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="857"/>
+        <location filename="crodnoeclient.cpp" line="861"/>
         <source>Request Video info for video %1...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="884"/>
+        <location filename="crodnoeclient.cpp" line="888"/>
         <source>Request Video Url for video %1...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="912"/>
+        <location filename="crodnoeclient.cpp" line="916"/>
         <source>Hide channel(s) %1 from channel list ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="935"/>
+        <location filename="crodnoeclient.cpp" line="939"/>
         <source>Show channel(s) %1 in channel list ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="958"/>
+        <location filename="crodnoeclient.cpp" line="962"/>
         <source>Request VOD manager data ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="981"/>
+        <location filename="crodnoeclient.cpp" line="985"/>
         <source>Set VOD manager data (%1) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1004"/>
+        <location filename="crodnoeclient.cpp" line="1008"/>
         <source>Add VOD favourite (%1) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1031"/>
+        <location filename="crodnoeclient.cpp" line="1035"/>
         <source>Remove VOD favourite (%1) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1058"/>
+        <location filename="crodnoeclient.cpp" line="1062"/>
         <source>Get VOD favourites (%1) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1077"/>
+        <location filename="crodnoeclient.cpp" line="1081"/>
         <source>Change parent code ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1100"/>
+        <location filename="crodnoeclient.cpp" line="1104"/>
         <source>EPG current for Channels: %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1118"/>
+        <location filename="crodnoeclient.cpp" line="1122"/>
         <source>Check for available updates ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1136"/>
+        <location filename="crodnoeclient.cpp" line="1140"/>
         <source>Download image ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1153"/>
+        <location filename="crodnoeclient.cpp" line="1157"/>
         <source>Download radio list ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1179"/>
+        <location filename="crodnoeclient.cpp" line="1183"/>
         <source>Get radio stream Url ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1198"/>
+        <location filename="crodnoeclient.cpp" line="1202"/>
         <source>Set interface language ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1282"/>
+        <location filename="crodnoeclient.cpp" line="1286"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1283"/>
+        <location filename="crodnoeclient.cpp" line="1287"/>
         <source>Incorrect request</source>
         <translation>Неверный запрос</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1284"/>
+        <location filename="crodnoeclient.cpp" line="1288"/>
         <source>Wrong login or password</source>
         <translation>Неверный логин или пароль</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1285"/>
+        <location filename="crodnoeclient.cpp" line="1289"/>
         <source>Access denied</source>
         <translation>Доступ запрещен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1286"/>
+        <location filename="crodnoeclient.cpp" line="1290"/>
         <source>Login incorrect</source>
         <translation>Неверный логин</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1287"/>
+        <location filename="crodnoeclient.cpp" line="1291"/>
         <source>Your contract is inactive</source>
         <translation>Ваш договор неактивен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1288"/>
+        <location filename="crodnoeclient.cpp" line="1292"/>
         <source>Your contract is paused</source>
         <translation>Ваш договор приостановлен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1289"/>
+        <location filename="crodnoeclient.cpp" line="1293"/>
         <source>Channel not found or not allowed</source>
         <translation>Канал не найден или не доступен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1290"/>
+        <location filename="crodnoeclient.cpp" line="1294"/>
         <source>Error in request: Bad parameters</source>
         <translation>Ошибка в запросе: Неверный параметр</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1291"/>
+        <location filename="crodnoeclient.cpp" line="1295"/>
         <source>Missing parameter (day) in format &lt;DDMMYY&gt;</source>
         <translation>Отсутствует параметр (day) в формате &lt;DDMMYY&gt;</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1292"/>
+        <location filename="crodnoeclient.cpp" line="1296"/>
         <source>Missing parameter (cid)</source>
         <translation>Отсутствует параметр (cid)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1293"/>
+        <location filename="crodnoeclient.cpp" line="1297"/>
         <source>Another client with your data logged in</source>
         <translation>Ваш абонемент используется другим устройством</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1294"/>
+        <location filename="crodnoeclient.cpp" line="1298"/>
         <source>Authentication error</source>
         <translation>Ошибка идентификации</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1295"/>
+        <location filename="crodnoeclient.cpp" line="1299"/>
         <source>Your package expired</source>
         <translation>Ваша подписка истекла или ещё не активирована</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1296"/>
+        <location filename="crodnoeclient.cpp" line="1300"/>
         <source>Unknown API function</source>
         <translation>Неизвестная функция API</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1297"/>
+        <location filename="crodnoeclient.cpp" line="1301"/>
         <source>Archive not available</source>
         <translation>Архив не доступен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1298"/>
+        <location filename="crodnoeclient.cpp" line="1302"/>
         <source>Missing parameter (place)</source>
         <translation>Отсутствует параметр (place)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1299"/>
+        <location filename="crodnoeclient.cpp" line="1303"/>
         <source>Missing parameter (name)</source>
         <translation>Отсутствует параметр (name)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1300"/>
+        <location filename="crodnoeclient.cpp" line="1304"/>
         <source>Incorrect confirmation code</source>
         <translation>Неверный код подтверждения</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1301"/>
+        <location filename="crodnoeclient.cpp" line="1305"/>
         <source>Current code is wrong</source>
         <translation>Текущий код неверный</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1302"/>
+        <location filename="crodnoeclient.cpp" line="1306"/>
         <source>New code is wrong</source>
         <translation>Новый код неверный</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1303"/>
+        <location filename="crodnoeclient.cpp" line="1307"/>
         <source>Missing parameter (val)</source>
         <translation>Отсутствует параметр (val)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1304"/>
+        <location filename="crodnoeclient.cpp" line="1308"/>
         <source>Value not allowed</source>
         <translation>Значение не доступно</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1305"/>
+        <location filename="crodnoeclient.cpp" line="1309"/>
         <source>Missing parameter</source>
         <translation>Отсутствует параметр</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1306"/>
+        <location filename="crodnoeclient.cpp" line="1310"/>
         <source>Missing parameter (id)</source>
         <translation>Отсутствует параметр (id)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1307"/>
+        <location filename="crodnoeclient.cpp" line="1311"/>
         <source>Missing parameter (fileid)</source>
         <translation>Отсутствует параметр (fileid)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1308"/>
+        <location filename="crodnoeclient.cpp" line="1312"/>
         <source>Missing parameter (type)</source>
         <translation>Отсутствует параметр (type)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1309"/>
+        <location filename="crodnoeclient.cpp" line="1313"/>
         <source>Missing parameter (query)</source>
         <translation>Отсутствует параметр (query)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1310"/>
+        <location filename="crodnoeclient.cpp" line="1314"/>
         <source>Bitrate not available</source>
         <translation>Битрейт не доступен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1311"/>
+        <location filename="crodnoeclient.cpp" line="1315"/>
         <source>Service not available</source>
         <translation>Сервис не доступен</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1312"/>
+        <location filename="crodnoeclient.cpp" line="1316"/>
         <source>Query limit exceeded</source>
         <translation>Превышен лимит запроса</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1313"/>
+        <location filename="crodnoeclient.cpp" line="1317"/>
         <source>Rule already exists</source>
         <translation>Правило уже существует</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1314"/>
-        <location filename="crodnoeclient.cpp" line="1315"/>
+        <location filename="crodnoeclient.cpp" line="1318"/>
+        <location filename="crodnoeclient.cpp" line="1319"/>
         <source>Missing parameter (cmd)</source>
         <translation>Отсутствует параметр (cmd)</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1316"/>
+        <location filename="crodnoeclient.cpp" line="1320"/>
         <source>Bad value (rate)</source>
         <translation>Неверное значение рейтинга</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1317"/>
+        <location filename="crodnoeclient.cpp" line="1321"/>
         <source>Can&apos;t find film</source>
         <translation>Невозможно найти фильм</translation>
     </message>
     <message>
-        <location filename="crodnoeclient.cpp" line="1318"/>
+        <location filename="crodnoeclient.cpp" line="1322"/>
         <source>Film already added</source>
         <translation>Этот фильм уже добавлен в список избранных</translation>
     </message>
@@ -1457,52 +1457,52 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CRodnoeParser</name>
     <message>
-        <location filename="crodnoeparser.cpp" line="88"/>
-        <location filename="crodnoeparser.cpp" line="531"/>
-        <location filename="crodnoeparser.cpp" line="649"/>
-        <location filename="crodnoeparser.cpp" line="715"/>
-        <location filename="crodnoeparser.cpp" line="809"/>
-        <location filename="crodnoeparser.cpp" line="895"/>
-        <location filename="crodnoeparser.cpp" line="990"/>
-        <location filename="crodnoeparser.cpp" line="1130"/>
-        <location filename="crodnoeparser.cpp" line="1223"/>
-        <location filename="crodnoeparser.cpp" line="1324"/>
-        <location filename="crodnoeparser.cpp" line="1447"/>
-        <location filename="crodnoeparser.cpp" line="1508"/>
+        <location filename="crodnoeparser.cpp" line="87"/>
+        <location filename="crodnoeparser.cpp" line="522"/>
+        <location filename="crodnoeparser.cpp" line="640"/>
+        <location filename="crodnoeparser.cpp" line="706"/>
+        <location filename="crodnoeparser.cpp" line="800"/>
+        <location filename="crodnoeparser.cpp" line="886"/>
+        <location filename="crodnoeparser.cpp" line="981"/>
+        <location filename="crodnoeparser.cpp" line="1121"/>
+        <location filename="crodnoeparser.cpp" line="1214"/>
+        <location filename="crodnoeparser.cpp" line="1315"/>
+        <location filename="crodnoeparser.cpp" line="1438"/>
+        <location filename="crodnoeparser.cpp" line="1499"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="crodnoeparser.cpp" line="89"/>
-        <location filename="crodnoeparser.cpp" line="532"/>
-        <location filename="crodnoeparser.cpp" line="650"/>
-        <location filename="crodnoeparser.cpp" line="716"/>
-        <location filename="crodnoeparser.cpp" line="810"/>
-        <location filename="crodnoeparser.cpp" line="896"/>
-        <location filename="crodnoeparser.cpp" line="991"/>
-        <location filename="crodnoeparser.cpp" line="1131"/>
-        <location filename="crodnoeparser.cpp" line="1224"/>
-        <location filename="crodnoeparser.cpp" line="1325"/>
-        <location filename="crodnoeparser.cpp" line="1448"/>
-        <location filename="crodnoeparser.cpp" line="1509"/>
+        <location filename="crodnoeparser.cpp" line="88"/>
+        <location filename="crodnoeparser.cpp" line="523"/>
+        <location filename="crodnoeparser.cpp" line="641"/>
+        <location filename="crodnoeparser.cpp" line="707"/>
+        <location filename="crodnoeparser.cpp" line="801"/>
+        <location filename="crodnoeparser.cpp" line="887"/>
+        <location filename="crodnoeparser.cpp" line="982"/>
+        <location filename="crodnoeparser.cpp" line="1122"/>
+        <location filename="crodnoeparser.cpp" line="1215"/>
+        <location filename="crodnoeparser.cpp" line="1316"/>
+        <location filename="crodnoeparser.cpp" line="1439"/>
+        <location filename="crodnoeparser.cpp" line="1500"/>
         <source>XML Error String: %1</source>
         <translation>Ошибка XML строки: %1</translation>
     </message>
     <message>
-        <location filename="crodnoeparser.cpp" line="174"/>
-        <location filename="crodnoeparser.cpp" line="334"/>
-        <location filename="crodnoeparser.cpp" line="410"/>
+        <location filename="crodnoeparser.cpp" line="172"/>
+        <location filename="crodnoeparser.cpp" line="325"/>
+        <location filename="crodnoeparser.cpp" line="401"/>
         <source>Found unused element %1 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeparser.cpp" line="180"/>
-        <location filename="crodnoeparser.cpp" line="340"/>
+        <location filename="crodnoeparser.cpp" line="178"/>
+        <location filename="crodnoeparser.cpp" line="331"/>
         <source>Found unused child %1: %2 ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crodnoeparser.cpp" line="950"/>
+        <location filename="crodnoeparser.cpp" line="941"/>
         <source>Got Type: %1, Count: %2, Page: %3, Total: %4</source>
         <translation></translation>
     </message>
@@ -1510,22 +1510,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CSettingsDlg</name>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="540"/>
+        <location filename="forms/csettingsdlg.ui" line="533"/>
         <source>Log disabled</source>
         <translation>Протокол выкл.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="545"/>
+        <location filename="forms/csettingsdlg.ui" line="538"/>
         <source>Log Errors only</source>
         <translation>Только протокол ошибок</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="550"/>
+        <location filename="forms/csettingsdlg.ui" line="543"/>
         <source>Log Errors and Warnings</source>
         <translation>Протокол ошибок и предупреждений</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="555"/>
+        <location filename="forms/csettingsdlg.ui" line="548"/>
         <source>Log everything</source>
         <translation>Все протоколы</translation>
     </message>
@@ -1550,86 +1550,86 @@ p, li { white-space: pre-wrap; }
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="701"/>
+        <location filename="csettingsdlg.cpp" line="700"/>
         <source>Mobile</source>
         <translation>Мобильный</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="705"/>
+        <location filename="csettingsdlg.cpp" line="704"/>
         <source>Eco</source>
         <translation>Эко</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="153"/>
         <location filename="forms/csettingsdlg.ui" line="172"/>
-        <location filename="csettingsdlg.cpp" line="709"/>
+        <location filename="csettingsdlg.cpp" line="708"/>
         <source>Standard</source>
         <translation>Стандарт</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="713"/>
+        <location filename="csettingsdlg.cpp" line="712"/>
         <source>Premium</source>
         <translation>Премиум</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="717"/>
+        <location filename="csettingsdlg.cpp" line="716"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation>%1 Кбит/с</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1491"/>
+        <location filename="csettingsdlg.cpp" line="1485"/>
         <source>blood</source>
         <translation>кровь</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1492"/>
+        <location filename="csettingsdlg.cpp" line="1486"/>
         <source>violence</source>
         <translation>насилие</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1495"/>
+        <location filename="csettingsdlg.cpp" line="1489"/>
         <source>porn</source>
         <translation>порнография</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1496"/>
+        <location filename="csettingsdlg.cpp" line="1490"/>
         <source>horror</source>
         <translation>ужасы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1493"/>
-        <location filename="csettingsdlg.cpp" line="1494"/>
+        <location filename="csettingsdlg.cpp" line="1487"/>
+        <location filename="csettingsdlg.cpp" line="1488"/>
         <source>obscene</source>
         <translation>непристойности</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1528"/>
+        <location filename="csettingsdlg.cpp" line="1522"/>
         <source>hide</source>
         <translation>скрывать</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1529"/>
+        <location filename="csettingsdlg.cpp" line="1523"/>
         <source>show</source>
         <translation>показывать</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1530"/>
+        <location filename="csettingsdlg.cpp" line="1524"/>
         <source>password protected</source>
         <translation>защищен паролем</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1722"/>
+        <location filename="csettingsdlg.cpp" line="1716"/>
         <source>Changed VOD Rate: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1801"/>
+        <location filename="csettingsdlg.cpp" line="1795"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1802"/>
+        <location filename="csettingsdlg.cpp" line="1796"/>
         <source>&lt;b&gt;Please check the data entered.&lt;/b&gt;
 &lt;br /&gt; &lt;br /&gt;
 To change the parent code make sure:
@@ -1661,13 +1661,13 @@ To change the parent code make sure:
 &lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1853"/>
+        <location filename="csettingsdlg.cpp" line="1847"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1853"/>
-        <location filename="csettingsdlg.cpp" line="1854"/>
+        <location filename="csettingsdlg.cpp" line="1847"/>
+        <location filename="csettingsdlg.cpp" line="1848"/>
         <source>Parent Code successfully changed.</source>
         <translation>Родительский пароль успешно изменен.</translation>
     </message>
@@ -1688,7 +1688,7 @@ To change the parent code make sure:
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="43"/>
-        <location filename="forms/csettingsdlg.ui" line="463"/>
+        <location filename="forms/csettingsdlg.ui" line="456"/>
         <source>User: </source>
         <translation>Абонемент:</translation>
     </message>
@@ -1699,17 +1699,17 @@ To change the parent code make sure:
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="50"/>
-        <location filename="forms/csettingsdlg.ui" line="477"/>
+        <location filename="forms/csettingsdlg.ui" line="470"/>
         <source>Password: </source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="984"/>
+        <location filename="forms/csettingsdlg.ui" line="995"/>
         <source>Allow Adult Channels</source>
         <translation>Разрешить каналы для взрослых</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="404"/>
+        <location filename="forms/csettingsdlg.ui" line="397"/>
         <source> Proxy Server </source>
         <translation>Прокси сервер</translation>
     </message>
@@ -1747,7 +1747,7 @@ To change the parent code make sure:
         <translation>Битрэйт:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="517"/>
+        <location filename="forms/csettingsdlg.ui" line="510"/>
         <source>Player Module:</source>
         <translation>Модуль проигрывателя:</translation>
     </message>
@@ -1787,263 +1787,262 @@ To change the parent code make sure:
         <translation>Язык: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="293"/>
+        <location filename="forms/csettingsdlg.ui" line="286"/>
         <source>Enable Advanced Settings</source>
         <oldsource>Enable Advacned Settings</oldsource>
         <translation>Вкл. допол. настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="398"/>
+        <location filename="forms/csettingsdlg.ui" line="391"/>
         <source>&amp;Advanced</source>
         <oldsource>Advanced</oldsource>
         <translation>&amp;Допол. настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="503"/>
+        <location filename="forms/csettingsdlg.ui" line="496"/>
         <source>API Server: </source>
         <translation>Сервер АПИ: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="527"/>
+        <location filename="forms/csettingsdlg.ui" line="520"/>
         <source>Log Level:</source>
         <translation>Уровень Протокола: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="684"/>
+        <location filename="forms/csettingsdlg.ui" line="677"/>
         <source>Show Ads</source>
         <translation>Показать рекламу</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="792"/>
+        <location filename="forms/csettingsdlg.ui" line="803"/>
         <source>Select Channels to hide:</source>
         <translation>Пометить каналы, чтобы скрыть:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="818"/>
+        <location filename="forms/csettingsdlg.ui" line="829"/>
         <source> VOD Manager </source>
         <oldsource>VOD Manager</oldsource>
         <translation>Менеджер видеотеки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1077"/>
+        <location filename="forms/csettingsdlg.ui" line="1088"/>
         <source>Save and E&amp;xit</source>
         <oldsource>Save and &amp;Exit</oldsource>
         <translation>Сохр&amp;анить и выйти</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="646"/>
+        <location filename="forms/csettingsdlg.ui" line="639"/>
         <source>Minimize to Systray</source>
         <translation>Сворачивать в трей</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="410"/>
+        <location filename="forms/csettingsdlg.ui" line="403"/>
         <source>Enable Proxy</source>
         <translation>Вкл. Прокси</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="423"/>
+        <location filename="forms/csettingsdlg.ui" line="416"/>
         <source>Address: </source>
         <translation>Адрес:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="437"/>
+        <location filename="forms/csettingsdlg.ui" line="430"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="286"/>
         <source>Try to fix time offset</source>
-        <translation>Синхронизировать время</translation>
+        <translation type="obsolete">Синхронизировать время</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1022"/>
+        <location filename="forms/csettingsdlg.ui" line="1033"/>
         <source>Parent Code: </source>
         <translation>Родительский пароль: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="639"/>
+        <location filename="forms/csettingsdlg.ui" line="632"/>
         <source>Ask for Record Filename</source>
         <translation>Запрос файла записи</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="629"/>
+        <location filename="forms/csettingsdlg.ui" line="622"/>
         <source>Shutdown Command:</source>
         <translation>Команда отключения системы: </translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="660"/>
+        <location filename="forms/csettingsdlg.ui" line="653"/>
         <source>Translit Record Filename</source>
         <translation>Транслит файла записи</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="653"/>
+        <location filename="forms/csettingsdlg.ui" line="646"/>
         <source>Detach Player at startup</source>
         <oldsource>Detach Player on startup</oldsource>
         <translation>Отдели проигр. при запуске</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="306"/>
+        <location filename="forms/csettingsdlg.ui" line="299"/>
         <source>Sh&amp;ortcuts</source>
         <oldsource>Shortcuts</oldsource>
         <translation>Горячие &amp;клавиши</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="325"/>
+        <location filename="forms/csettingsdlg.ui" line="318"/>
         <source>Function</source>
         <translation>Функция</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="330"/>
+        <location filename="forms/csettingsdlg.ui" line="323"/>
         <source>ShortCut</source>
         <translation>Комбинация клавиш</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="385"/>
+        <location filename="forms/csettingsdlg.ui" line="378"/>
         <source>Reset Shortcuts to default</source>
         <oldsource>Reset Shortcuts</oldsource>
         <translation>Вернуть стандартные настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="348"/>
+        <location filename="forms/csettingsdlg.ui" line="341"/>
         <source>Changes in shortcuts take effect only after restarting the program.</source>
         <translation>Изменения в горячих клавишах вступят в силу только после перезагрузки программы.</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="497"/>
+        <location filename="forms/csettingsdlg.ui" line="490"/>
         <source>Advanced Settings</source>
         <translation>Дополнительные настройки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="667"/>
+        <location filename="forms/csettingsdlg.ui" line="660"/>
         <source>Doubleclick on channel list starts play</source>
         <translation>Двойной щелчок на списке каналов стартует плеер</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="674"/>
+        <location filename="forms/csettingsdlg.ui" line="667"/>
         <source>Use GPU for video decoding</source>
         <translation>GPU декодирует видео</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="578"/>
+        <location filename="forms/csettingsdlg.ui" line="571"/>
         <source>Deinterlacing Mode: </source>
         <oldsource>Deinterlace Mode: </oldsource>
         <translation>Режим деинтерлейсинга:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="586"/>
+        <location filename="forms/csettingsdlg.ui" line="579"/>
         <source>blend</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="591"/>
+        <location filename="forms/csettingsdlg.ui" line="584"/>
         <source>bob</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="596"/>
+        <location filename="forms/csettingsdlg.ui" line="589"/>
         <source>discard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="601"/>
+        <location filename="forms/csettingsdlg.ui" line="594"/>
         <source>linear</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="606"/>
+        <location filename="forms/csettingsdlg.ui" line="599"/>
         <source>mean</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="611"/>
+        <location filename="forms/csettingsdlg.ui" line="604"/>
         <source>x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="616"/>
+        <location filename="forms/csettingsdlg.ui" line="609"/>
         <source>yadif</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="621"/>
+        <location filename="forms/csettingsdlg.ui" line="614"/>
         <source>yadif2x</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="702"/>
+        <location filename="forms/csettingsdlg.ui" line="695"/>
         <source>Parental &amp;Manager</source>
         <oldsource>Parental Manager</oldsource>
         <translation>&amp;Родительский контроль</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="721"/>
+        <location filename="forms/csettingsdlg.ui" line="723"/>
         <source>Please enter your parent code:</source>
         <oldsource>Please enter security code:</oldsource>
         <translation>Пожалуйста, введите родительский пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="737"/>
+        <location filename="forms/csettingsdlg.ui" line="739"/>
         <source>&amp;Enter Site</source>
         <oldsource>Enter Site</oldsource>
         <translation>Дос&amp;туп</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="774"/>
+        <location filename="forms/csettingsdlg.ui" line="785"/>
         <source> Channel Manager </source>
         <oldsource>Channel Manager</oldsource>
         <translation>Менеджер каналов</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="863"/>
+        <location filename="forms/csettingsdlg.ui" line="874"/>
         <source>Parent Code</source>
         <oldsource>Parental Code</oldsource>
         <translation>Родительский пароль</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="872"/>
+        <location filename="forms/csettingsdlg.ui" line="883"/>
         <source>Old Code:</source>
         <translation>Старый пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="879"/>
-        <location filename="forms/csettingsdlg.ui" line="896"/>
-        <location filename="forms/csettingsdlg.ui" line="913"/>
+        <location filename="forms/csettingsdlg.ui" line="890"/>
+        <location filename="forms/csettingsdlg.ui" line="907"/>
+        <location filename="forms/csettingsdlg.ui" line="924"/>
         <source>Number only (0 ... 9)!</source>
         <translation>Использовать только цифры (0 ... 9)!</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="889"/>
+        <location filename="forms/csettingsdlg.ui" line="900"/>
         <source>New Code:</source>
         <translation>Новый пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="906"/>
+        <location filename="forms/csettingsdlg.ui" line="917"/>
         <source>Confirm Code:</source>
         <translation>Подтвердите пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="938"/>
+        <location filename="forms/csettingsdlg.ui" line="949"/>
         <source>Chan&amp;ge</source>
         <oldsource>&amp;Change</oldsource>
         <translation>Смен&amp;ить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="963"/>
+        <location filename="forms/csettingsdlg.ui" line="974"/>
         <source>Adult Channels</source>
         <translation>Каналы для взрослых</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1006"/>
+        <location filename="forms/csettingsdlg.ui" line="1017"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Пожалуста, имейте в виду:&lt;/span&gt;&lt;br/&gt;Если Вы введете родительский пароль внизу, у Вас будет возможность смотреть любой канал для взрослых без необходимости ввода каждый раз родительского пароля. &lt;/p&gt;&lt;p&gt;Если Вы оставите это поле пустым, Вам будет необходимо вводитить родительский пароль каждый раз, когда Вы захотите смотреть канал для взрослых.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1122"/>
+        <location filename="forms/csettingsdlg.ui" line="1133"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1142"/>
+        <location filename="forms/csettingsdlg.ui" line="1153"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>
@@ -2068,36 +2067,36 @@ To change the parent code make sure:
 <context>
     <name>CStdJsonParser</name>
     <message>
-        <location filename="cstdjsonparser.cpp" line="129"/>
-        <location filename="cstdjsonparser.cpp" line="186"/>
-        <location filename="cstdjsonparser.cpp" line="238"/>
-        <location filename="cstdjsonparser.cpp" line="286"/>
-        <location filename="cstdjsonparser.cpp" line="346"/>
-        <location filename="cstdjsonparser.cpp" line="395"/>
-        <location filename="cstdjsonparser.cpp" line="455"/>
-        <location filename="cstdjsonparser.cpp" line="536"/>
-        <location filename="cstdjsonparser.cpp" line="605"/>
-        <location filename="cstdjsonparser.cpp" line="654"/>
-        <location filename="cstdjsonparser.cpp" line="696"/>
-        <location filename="cstdjsonparser.cpp" line="757"/>
-        <location filename="cstdjsonparser.cpp" line="835"/>
+        <location filename="cstdjsonparser.cpp" line="121"/>
+        <location filename="cstdjsonparser.cpp" line="178"/>
+        <location filename="cstdjsonparser.cpp" line="230"/>
+        <location filename="cstdjsonparser.cpp" line="278"/>
+        <location filename="cstdjsonparser.cpp" line="338"/>
+        <location filename="cstdjsonparser.cpp" line="387"/>
+        <location filename="cstdjsonparser.cpp" line="447"/>
+        <location filename="cstdjsonparser.cpp" line="528"/>
+        <location filename="cstdjsonparser.cpp" line="597"/>
+        <location filename="cstdjsonparser.cpp" line="646"/>
+        <location filename="cstdjsonparser.cpp" line="688"/>
+        <location filename="cstdjsonparser.cpp" line="749"/>
+        <location filename="cstdjsonparser.cpp" line="827"/>
         <source>Error in %1</source>
         <translation>Ошибка в %1</translation>
     </message>
     <message>
-        <location filename="cstdjsonparser.cpp" line="130"/>
-        <location filename="cstdjsonparser.cpp" line="187"/>
-        <location filename="cstdjsonparser.cpp" line="239"/>
-        <location filename="cstdjsonparser.cpp" line="287"/>
-        <location filename="cstdjsonparser.cpp" line="347"/>
-        <location filename="cstdjsonparser.cpp" line="396"/>
-        <location filename="cstdjsonparser.cpp" line="456"/>
-        <location filename="cstdjsonparser.cpp" line="537"/>
-        <location filename="cstdjsonparser.cpp" line="606"/>
-        <location filename="cstdjsonparser.cpp" line="655"/>
-        <location filename="cstdjsonparser.cpp" line="697"/>
-        <location filename="cstdjsonparser.cpp" line="758"/>
-        <location filename="cstdjsonparser.cpp" line="836"/>
+        <location filename="cstdjsonparser.cpp" line="122"/>
+        <location filename="cstdjsonparser.cpp" line="179"/>
+        <location filename="cstdjsonparser.cpp" line="231"/>
+        <location filename="cstdjsonparser.cpp" line="279"/>
+        <location filename="cstdjsonparser.cpp" line="339"/>
+        <location filename="cstdjsonparser.cpp" line="388"/>
+        <location filename="cstdjsonparser.cpp" line="448"/>
+        <location filename="cstdjsonparser.cpp" line="529"/>
+        <location filename="cstdjsonparser.cpp" line="598"/>
+        <location filename="cstdjsonparser.cpp" line="647"/>
+        <location filename="cstdjsonparser.cpp" line="689"/>
+        <location filename="cstdjsonparser.cpp" line="750"/>
+        <location filename="cstdjsonparser.cpp" line="828"/>
         <source>QtJson parser error in %1 %2():%3</source>
         <translation></translation>
     </message>
@@ -2872,26 +2871,26 @@ or start time is later than end time!</source>
 <context>
     <name>QExpireNotifyDlg</name>
     <message>
-        <location filename="qexpirenotifydlg.cpp" line="37"/>
-        <location filename="qexpirenotifydlg.cpp" line="76"/>
+        <location filename="qexpirenotifydlg.cpp" line="40"/>
+        <location filename="qexpirenotifydlg.cpp" line="79"/>
         <source>Account Notification</source>
         <translation>Уведомление аккаунта</translation>
     </message>
     <message>
-        <location filename="qexpirenotifydlg.cpp" line="39"/>
-        <location filename="qexpirenotifydlg.cpp" line="80"/>
+        <location filename="qexpirenotifydlg.cpp" line="42"/>
+        <location filename="qexpirenotifydlg.cpp" line="83"/>
         <source>Tomorrow</source>
         <translation>Завтра</translation>
     </message>
     <message>
-        <location filename="qexpirenotifydlg.cpp" line="40"/>
-        <location filename="qexpirenotifydlg.cpp" line="81"/>
+        <location filename="qexpirenotifydlg.cpp" line="43"/>
+        <location filename="qexpirenotifydlg.cpp" line="84"/>
         <source>In two days</source>
         <translation>Через два дня</translation>
     </message>
     <message>
-        <location filename="qexpirenotifydlg.cpp" line="41"/>
-        <location filename="qexpirenotifydlg.cpp" line="82"/>
+        <location filename="qexpirenotifydlg.cpp" line="44"/>
+        <location filename="qexpirenotifydlg.cpp" line="85"/>
         <source>In five days</source>
         <translation>Через пять дней</translation>
     </message>
@@ -3281,32 +3280,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Напомнить: </translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="37"/>
-        <location filename="qupdatenotifydlg.cpp" line="79"/>
+        <location filename="qupdatenotifydlg.cpp" line="40"/>
+        <location filename="qupdatenotifydlg.cpp" line="82"/>
         <source>Update Notification</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="39"/>
-        <location filename="qupdatenotifydlg.cpp" line="83"/>
+        <location filename="qupdatenotifydlg.cpp" line="42"/>
+        <location filename="qupdatenotifydlg.cpp" line="86"/>
         <source>Tomorrow</source>
         <translation>Завтра</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="40"/>
-        <location filename="qupdatenotifydlg.cpp" line="84"/>
+        <location filename="qupdatenotifydlg.cpp" line="43"/>
+        <location filename="qupdatenotifydlg.cpp" line="87"/>
         <source>In one week</source>
         <translation>Через неделю</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="41"/>
-        <location filename="qupdatenotifydlg.cpp" line="85"/>
+        <location filename="qupdatenotifydlg.cpp" line="44"/>
+        <location filename="qupdatenotifydlg.cpp" line="88"/>
         <source>In one month</source>
         <translation>Через месяц</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="43"/>
-        <location filename="qupdatenotifydlg.cpp" line="87"/>
+        <location filename="qupdatenotifydlg.cpp" line="46"/>
+        <location filename="qupdatenotifydlg.cpp" line="90"/>
         <source>Never for this release</source>
         <translation>Никогда не для этой версии</translation>
     </message>
@@ -3372,32 +3371,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QWatchListDlg</name>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="133"/>
+        <location filename="qwatchlistdlg.cpp" line="132"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="134"/>
+        <location filename="qwatchlistdlg.cpp" line="133"/>
         <source>Program</source>
         <translation>Программа</translation>
     </message>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="167"/>
+        <location filename="qwatchlistdlg.cpp" line="166"/>
         <source>play from archive ...</source>
         <translation>Просмотр архива ...</translation>
     </message>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="182"/>
+        <location filename="qwatchlistdlg.cpp" line="181"/>
         <source>record from archive ...</source>
         <translation>Запись архива ...</translation>
     </message>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="205"/>
+        <location filename="qwatchlistdlg.cpp" line="204"/>
         <source>delete from list ...</source>
         <translation>Удалить из списка ...</translation>
     </message>
     <message>
-        <location filename="qwatchlistdlg.cpp" line="225"/>
+        <location filename="qwatchlistdlg.cpp" line="224"/>
         <source>%1 min.</source>
         <translation>%1 мин.</translation>
     </message>
@@ -3418,114 +3417,124 @@ p, li { white-space: pre-wrap; }
         <location filename="recorder.cpp" line="4732"/>
         <location filename="recorder.cpp" line="4753"/>
         <source>Mon</source>
-        <translation>Пон</translation>
+        <translation type="unfinished">Пон</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4733"/>
         <location filename="recorder.cpp" line="4754"/>
         <source>Tue</source>
-        <translation>Вт</translation>
+        <translation type="unfinished">Вт</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4734"/>
         <location filename="recorder.cpp" line="4755"/>
         <source>Wed</source>
-        <translation>Ср</translation>
+        <translation type="unfinished">Ср</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4735"/>
         <location filename="recorder.cpp" line="4756"/>
         <source>Thu</source>
-        <translation>Чт</translation>
+        <translation type="unfinished">Чт</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4736"/>
         <location filename="recorder.cpp" line="4757"/>
         <source>Fri</source>
-        <translation>Пят</translation>
+        <translation type="unfinished">Пят</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4737"/>
         <location filename="recorder.cpp" line="4758"/>
         <source>Sat</source>
-        <translation>Суб</translation>
+        <translation type="unfinished">Суб</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4746"/>
         <location filename="recorder.cpp" line="4759"/>
         <source>Sun</source>
-        <translation>Воск</translation>
+        <translation type="unfinished">Воск</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4371"/>
         <source>Stop</source>
-        <translation>Стоп</translation>
+        <translation type="unfinished">Стоп</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4383"/>
         <source>Volume +</source>
-        <translation>Громче</translation>
+        <translation type="unfinished">Громче</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4384"/>
         <source>Volume -</source>
-        <translation>Тише</translation>
+        <translation type="unfinished">Тише</translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="4925"/>
+        <source>Exclude &apos;%1&apos; from channel list (hidden: %2, protected: %3).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="4976"/>
+        <source>Can&apos;t load channel image &quot;%1&quot; ...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5407"/>
         <source>Question</source>
-        <translation>Вопрос</translation>
+        <translation type="unfinished">Вопрос</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2407"/>
         <location filename="recorder.cpp" line="2526"/>
         <location filename="recorder.cpp" line="3765"/>
         <source>Length: %1 min.</source>
-        <translation>Длит.: %1 мин.</translation>
+        <translation type="unfinished">Длит.: %1 мин.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2408"/>
         <location filename="recorder.cpp" line="2527"/>
         <source> (Ar.)</source>
         <oldsource>(Ar.)</oldsource>
-        <translation> (Ар.)</translation>
+        <translation type="unfinished"> (Ар.)</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5408"/>
         <source>Pending Record!&lt;br /&gt; &lt;br /&gt;Do you really want to stop recording now?</source>
         <oldsource>VLC is still running.&lt;br /&gt; &lt;br /&gt;Do you really want to close the VLC Player now?</oldsource>
-        <translation>Запись в процессе!&lt;br /&gt; &lt;br /&gt;Вы действительно хотите остановить запись?</translation>
+        <translation type="unfinished">Запись в процессе!&lt;br /&gt; &lt;br /&gt;Вы действительно хотите остановить запись?</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2908"/>
         <source>Remove from favourites</source>
-        <translation>Удалить из избранных</translation>
+        <translation type="unfinished">Удалить из избранных</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2915"/>
         <source>Add to favourites</source>
-        <translation>Добавить в избранные</translation>
+        <translation type="unfinished">Добавить в избранные</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2961"/>
         <location filename="recorder.cpp" line="3885"/>
         <source>Note</source>
-        <translation>Примечание</translation>
+        <translation type="unfinished">Примечание</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2962"/>
         <location filename="recorder.cpp" line="3886"/>
         <source>Max. number of favourites (%1) reached.</source>
-        <translation>Макс. число избранных (%1) достигнуто.</translation>
+        <translation type="unfinished">Макс. число избранных (%1) достигнуто.</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4689"/>
         <location filename="recorder.cpp" line="4766"/>
         <source>1 week backward</source>
-        <translation>1 неделю назад</translation>
+        <translation type="unfinished">1 неделю назад</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="189"/>
+        <location filename="recorder.cpp" line="190"/>
         <source>
 dataDir: %1
 </source>
@@ -3534,19 +3543,19 @@ dataDir: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="190"/>
+        <location filename="recorder.cpp" line="191"/>
         <source>logoDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="191"/>
+        <location filename="recorder.cpp" line="192"/>
         <source>langDir: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="192"/>
+        <location filename="recorder.cpp" line="193"/>
         <source>modDir:  %1
 </source>
         <oldsource>modDir: %1
@@ -3554,7 +3563,7 @@ dataDir: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="193"/>
+        <location filename="recorder.cpp" line="194"/>
         <source>appDir:  %1</source>
         <oldsource>appDir: %1</oldsource>
         <translation></translation>
@@ -3564,27 +3573,27 @@ dataDir: %1
         <location filename="recorder.cpp" line="4238"/>
         <location filename="recorder.cpp" line="4648"/>
         <source>All</source>
-        <translation>Все</translation>
+        <translation type="unfinished">Все</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4389"/>
         <source>Minimal Interface</source>
-        <translation>Мини-интерфейс</translation>
+        <translation type="unfinished">Мини-интерфейс</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4723"/>
         <location filename="recorder.cpp" line="4771"/>
         <source>1 week forward</source>
-        <translation>1 неделю вперед</translation>
+        <translation type="unfinished">1 неделю вперед</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4370"/>
         <source>Play / Pause</source>
-        <translation>Воспроизведение / Пауза</translation>
+        <translation type="unfinished">Воспроизведение / Пауза</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="152"/>
-        <location filename="recorder.cpp" line="428"/>
+        <location filename="recorder.cpp" line="153"/>
+        <location filename="recorder.cpp" line="429"/>
         <source>Language Filter</source>
         <oldsource>Audio Filter</oldsource>
         <translation>Языковый фильтр</translation>
@@ -3593,42 +3602,27 @@ dataDir: %1
         <location filename="recorder.cpp" line="2401"/>
         <location filename="recorder.cpp" line="2520"/>
         <source>%1 (Archive)</source>
-        <translation>%1 (Архив)</translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="3691"/>
-        <source>Program up to date!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="4047"/>
-        <source>Record timer timed out ... end pending record!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="4093"/>
-        <source>Unknown Message: %1</source>
-        <translation></translation>
+        <translation type="unfinished">%1 (Архив)</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4606"/>
         <location filename="recorder.cpp" line="4625"/>
         <source>My Favourites</source>
-        <translation>Избранные фильмы</translation>
+        <translation type="unfinished">Избранные фильмы</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3680"/>
         <source>There is the new version %1 of %2 available.&lt;br /&gt;Click %3 to download!</source>
-        <translation>Новая версия %2 доступна (%1).&lt;br /&gt;Для загрузки нажать %3!</translation>
+        <translation type="unfinished">Новая версия %2 доступна (%1).&lt;br /&gt;Для загрузки нажать %3!</translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="185"/>
+        <location filename="recorder.cpp" line="186"/>
         <source>Starting: %1 / Version: %2</source>
         <oldsource>Starting %1 Version: %2</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="186"/>
+        <location filename="recorder.cpp" line="187"/>
         <source>Using libVLC 0x%1</source>
         <translation></translation>
     </message>
@@ -3675,48 +3669,21 @@ dataDir: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="recorder.cpp" line="2791"/>
-        <source>timeRec reports: record done!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="2809"/>
-        <source>timeRec reports: record active!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="2833"/>
-        <source>vlcCtrl reports: vlc player ended!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="2853"/>
-        <source>vlcCtrl reports: vlc player active!</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="recorder.cpp" line="3046"/>
         <source>Remove &quot;%1&quot; from favourites</source>
-        <translation>Удалить &quot;%1&quot; из избранных</translation>
+        <translation type="unfinished">Удалить &quot;%1&quot; из избранных</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3157"/>
         <location filename="recorder.cpp" line="5150"/>
         <location filename="recorder.cpp" line="5216"/>
         <source>Can&apos;t start player!</source>
-        <translation>Не удается запустить плеер!</translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="3163"/>
-        <location filename="recorder.cpp" line="5157"/>
-        <location filename="recorder.cpp" line="5222"/>
-        <source>Started player with pid #%1!</source>
-        <translation></translation>
+        <translation type="unfinished">Не удается запустить плеер!</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="3683"/>
         <source>here</source>
-        <translation>тут</translation>
+        <translation type="unfinished">тут</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="2017"/>
@@ -3730,59 +3697,101 @@ dataDir: %1
         <translation>Ошибка идентификации</translation>
     </message>
     <message>
+        <location filename="recorder.cpp" line="2791"/>
+        <source>timeRec reports: record done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="2809"/>
+        <source>timeRec reports: record active!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="2833"/>
+        <source>vlcCtrl reports: vlc player ended!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="2853"/>
+        <source>vlcCtrl reports: vlc player active!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="3163"/>
+        <location filename="recorder.cpp" line="5157"/>
+        <location filename="recorder.cpp" line="5222"/>
+        <source>Started player with pid #%1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="3691"/>
+        <source>Program up to date!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="4047"/>
+        <source>Record timer timed out ... end pending record!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="recorder.cpp" line="4093"/>
+        <source>Unknown Message: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="recorder.cpp" line="4372"/>
         <source>Record</source>
-        <translation>Запись</translation>
+        <translation type="unfinished">Запись</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4375"/>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation type="unfinished">О программе</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4376"/>
         <source>Search EPG</source>
-        <translation>Поиск в программе</translation>
+        <translation type="unfinished">Поиск в программе</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4377"/>
         <source>Text Size +</source>
-        <translation>Увеличить размер шрифта</translation>
+        <translation type="unfinished">Увеличить размер шрифта</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4378"/>
         <source>Text Size -</source>
-        <translation>Уменьшить размер шрифта</translation>
+        <translation type="unfinished">Уменьшить размер шрифта</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4380"/>
         <source>Toggle Aspect Ratio</source>
-        <translation>Формат изображения</translation>
+        <translation type="unfinished">Формат изображения</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4381"/>
         <source>Toggle Crop Geometry</source>
-        <translation>Размер кадра</translation>
+        <translation type="unfinished">Размер кадра</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4382"/>
         <source>Toggle Fullscreen</source>
-        <translation>Полноэкранный режим</translation>
+        <translation type="unfinished">Полноэкранный режим</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4385"/>
         <source>Toggle Mute</source>
-        <translation>Включить / Выключить Звук</translation>
+        <translation type="unfinished">Включить / Выключить Звук</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5855"/>
         <source>Playing file &apos;%1&apos; ...</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5861"/>
         <source>Don&apos;t show file &apos;%1&apos;&apos; due to silent timer record ...</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="1473"/>
@@ -3793,33 +3802,33 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="4390"/>
         <source>Next Channel</source>
-        <translation>Следующий канал</translation>
+        <translation type="unfinished">Следующий канал</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4391"/>
         <source>Previous Channel</source>
-        <translation>Предыдущий канал</translation>
+        <translation type="unfinished">Предыдущий канал</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4392"/>
         <source>Play Next Channel</source>
-        <translation>Просмотр след. канала</translation>
+        <translation type="unfinished">Просмотр след. канала</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4393"/>
         <source>Play Prev. Channel</source>
-        <translation>Просмотр пред. канала</translation>
+        <translation type="unfinished">Просмотр пред. канала</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4394"/>
         <source>Show EPG / VOD</source>
-        <translation>Программа / Видеотека</translation>
+        <translation type="unfinished">Программа / Видеотека</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4583"/>
         <source>&amp;restore %1</source>
         <oldsource>&amp;Restore %1!</oldsource>
-        <translation>&amp;показать %1</translation>
+        <translation type="unfinished">&amp;показать %1</translation>
     </message>
     <message>
         <location filename="forms/recorder_inc.ui" line="1642"/>
@@ -3831,35 +3840,25 @@ dataDir: %1
         <location filename="recorder.cpp" line="4604"/>
         <location filename="recorder.cpp" line="4615"/>
         <source>Newest</source>
-        <translation>Последние</translation>
+        <translation type="unfinished">Последние</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4605"/>
         <location filename="recorder.cpp" line="4620"/>
         <source>Best</source>
-        <translation>Лучшие</translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="4925"/>
-        <source>Exclude &apos;%1&apos; from channel list (hidden: %2, protected: %3).</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="recorder.cpp" line="4976"/>
-        <source>Can&apos;t load channel image &quot;%1&quot; ...</source>
-        <translation></translation>
+        <translation type="unfinished">Лучшие</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5060"/>
         <source>Save Stream as</source>
-        <translation>Сохранить поток как</translation>
+        <translation type="unfinished">Сохранить поток как</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5477"/>
         <location filename="recorder.cpp" line="5690"/>
         <source>Favourite %1</source>
         <oldsource>Favoorite %1</oldsource>
-        <translation>Избранное %1</translation>
+        <translation type="unfinished">Избранное %1</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="1926"/>
