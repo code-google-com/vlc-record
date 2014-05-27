@@ -254,6 +254,7 @@ public:
    //! \date    07.08.2013
    //
    //! \param   uiStart (uint) unix time stamp
+   //! \param   tmSync (const QDateTimeSyncro&) synced timer
    //
    //! \return  1 -> available; -1 -> not yet av.; -2 -> no more av.
    //---------------------------------------------------------------------------

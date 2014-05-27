@@ -13,7 +13,6 @@
 #include "crodnoeclient.h"
 #include "small_helpers.h"
 #include "qcustparser.h"
-#include "ctimeshift.h"
 #include "qdatetimesyncro.h"
 
 // global syncronized timer ...
