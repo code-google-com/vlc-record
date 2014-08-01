@@ -33,6 +33,12 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-08-01: Version 2.69B9
+| - better handle network errors
+| - position slider shows timing information also when left
+|   mouse button is pressed
+| - shoe rating in video info
+|
 | 2014-06-04: Version 2.69B8
 | - do not use isOnline stuff from QNetworkConfigurationManager
 |   since it doesn't take care about virtual interfaces
