@@ -2802,12 +2802,12 @@ or start time is later than end time!</source>
     <message>
         <location filename="cvodbrowser.cpp" line="307"/>
         <source>Rating</source>
-        <translation type="unfinished"></translation>
+        <translation>Рейтинг</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="328"/>
         <source>Kinopoisk: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="406"/>
@@ -2852,7 +2852,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="cvodbrowser.cpp" line="318"/>
         <source>IMDB: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="375"/>
@@ -3054,47 +3054,47 @@ or start time is later than end time!</source>
     <message>
         <location filename="qiptvctrlclient.cpp" line="127"/>
         <source>No.#%1, id=%2, type=&apos;%3&apos;, size=%4 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="173"/>
         <source>Error, unknown request type: %1!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="331"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;, data=&apos;%4&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="379"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="484"/>
         <source>Ignore old queued request ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="571"/>
         <source>Online state changed: %1 --&gt; %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="595"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="632"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="748"/>
         <source>http request timed out!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
