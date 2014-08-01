@@ -119,6 +119,7 @@
 #define MAX_LVLC_ARGS     16              // max arguments to give to libVLC at creation
 #define VOD_POSTER_WIDTH  120             // picture size for VOD (width)
 #define VOD_POSTER_HEIGHT 170             // picture size for VOD (height)
+#define HTTP_REQ_TIMEOUT  90000           // 90 seconds (this should be enough)
 
 // a namespace for translators ...
 namespace Msg

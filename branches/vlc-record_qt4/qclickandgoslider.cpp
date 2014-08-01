@@ -114,7 +114,8 @@ void QClickAndGoSlider::setVideo (bool val)
 //---------------------------------------------------------------------------
 void QClickAndGoSlider::init ()
 {
-   _iHandleRange = 80;
+   _iHandleRange    = 80;
+   _clickedPosition = 0;
    setMouseTracking(true);
 }
 
@@ -131,15 +132,15 @@ void QClickAndGoSlider::init ()
 //---------------------------------------------------------------------------
 void QClickAndGoSlider::mouseMoveEvent(QMouseEvent * event)
 {
+   int pos;
+   int range = maximum() - minimum();
+   int dif;
+   QString tt;
+
    // create additional tooltip when using
    // as video slider ...
    if (_isVideo && (event->buttons() == Qt::NoButton))
    {
-      int pos;
-      int range = maximum() - minimum();
-      int dif;
-      QString tt;
-
       if (orientation() == Qt::Vertical)
       {
          pos = (range * (height() - event->y())) / height();
@@ -173,6 +174,33 @@ void QClickAndGoSlider::mouseMoveEvent(QMouseEvent * event)
       // display tooltip ...
       QToolTip::showText(mapToGlobal(event->pos()), tt, this);
    }
+   else if(_isVideo && (event->buttons() == Qt::LeftButton))
+   {
+      // get time from slider handle and mouse position ...
+      QTime tpos = QTime(0, 0).addSecs(value());
+      QTime npos = QTime(0, 0).addSecs(_clickedPosition);
+      QTime tdif = tpos.addSecs(-minimum());
+
+      // remove old tooltip (if exists) ...
+      if (QToolTip::isVisible())
+      {
+         QToolTip::hideText();
+      }
+
+      // get difference between slider handle and mouse position ...
+      dif = npos.secsTo(tpos);
+
+      QTime dtime = QTime(0, 0).addSecs(abs(dif));
+
+      // create tooltip string ...
+      tt = pHtml->htmlTag("p", QString("%1 %2 -> %3").arg((dif < 0) ? "-" : "+")
+                              .arg(dtime.toString((abs(dif) < 3600) ? "m:ss" : "H:mm:ss"))
+                              .arg(tdif.toString("H:mm:ss")), "font-size: 16px; white-space: pre;");
+
+      // display tooltip ...
+      QToolTip::showText(mapToGlobal(event->pos()), tt, this);
+   }
+
 
    QSlider::mouseMoveEvent(event);
 }
@@ -222,6 +250,11 @@ void QClickAndGoSlider::mousePressEvent (QMouseEvent * event)
 
          // no further handling needed ...
          return;
+      }
+      else
+      {
+         // on slider handle ... store position ...
+         _clickedPosition = value();
       }
    }
 

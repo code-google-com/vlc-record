@@ -292,10 +292,48 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    content       += tok;
    _shortContent += tok;
 
-   // add country, year and length ...
-   tok            = pHtml->htmlTag("p", QString("%1 %2, %3 %4").arg(sInfo.sCountry).arg(sInfo.sYear).arg(sInfo.uiLength).arg(tr("min.")), "color: #888;");
+   // add country, year  ...
+   tok = QString("%1 %2").arg(sInfo.sCountry).arg(sInfo.sYear);
+
+   // add length ...
+   if (sInfo.uiLength != 0)
+   {
+      tok += QString(", %1 %2").arg(sInfo.uiLength).arg(tr("min."));
+   }
+
+   // add rating...
+   if (!sInfo.sPgRating.isEmpty())
+   {
+      tok += QString(", %1: %2").arg(tr("Rating")).arg(sInfo.sPgRating);
+   }
+
+   tok  = pHtml->htmlTag("p", tok, "color: #888;");
    content       += tok;
    _shortContent += tok;
+
+   tok = "";
+
+   if (!sInfo.sImdbRating.isEmpty())
+   {
+      tok = tr("IMDB: %1").arg(sInfo.sImdbRating);
+   }
+
+   if (!sInfo.sKinopoiskRating.isEmpty())
+   {
+      if (!tok.isEmpty())
+      {
+         tok += "; ";
+      }
+
+      tok += tr("Kinopoisk: %1").arg(sInfo.sKinopoiskRating);
+   }
+
+   if (!tok.isEmpty())
+   {
+      tok  = pHtml->htmlTag("p", tok, "color: #880;");
+      content       += tok;
+      _shortContent += tok;
+   }
 
    // add director ...
    tok            = pHtml->htmlTag("p", tr("Director: %1").arg(sInfo.sDirector), "color: #800;");

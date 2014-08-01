@@ -588,9 +588,6 @@ color: white;
                        <string notr="true">QLineEdit#lineSearch {
   color: #800;   
   font: bold;
-   background-image: url(:/app/search);
-   background-repeat: no-repeat;
-   background-position: LEFT;
    border: 1px inset;
    border-color: #555;
  }</string>
@@ -819,9 +816,6 @@ color: white;
                 <string notr="true">QLineEdit#lineVodSearch {
   color: #800;   
   font: bold;
-   background-image: url(:/app/search);
-   background-repeat: no-repeat;
-   background-position: LEFT;
    border: 1px inset;
    border-color: #555;
  }</string>

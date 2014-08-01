@@ -26,6 +26,7 @@
 #include <QVector>
 #include <QMutex>
 #include <QTimer>
+#include <QDateTime>
 
 #include "clogfile.h"
 
@@ -73,8 +74,9 @@ public:
    }
 };
 
-#define PROP_TYPE "type"
-#define PROP_ID   "id"
+#define PROP_TYPE   "type"
+#define PROP_ID     "id"
+#define PROP_REQ_NO "reqno"
 
 //---------------------------------------------------------------------------
 //! \class   QIptvCtrlClient
@@ -112,6 +114,7 @@ public:
       QString        sUrl;
       QString        sContent;
       Iptv::eReqType eIptvReqType;
+      uint           uiTimeStamp;
    };
 
    explicit QIptvCtrlClient(QObject* parent = 0);
@@ -126,11 +129,11 @@ public:
    virtual QNetworkReply*  get(int iReqId, const QString& url, Iptv::eReqType t_req);
 
    bool isOnline ();
+   bool busy();
 
 private:
    QVariant          cookies;
    bool              bCSet;
-   bool              bBusy;
    bool              bOnline;
    QVector<SRequest> vCmdQueue;
    QMutex            mtxCmdQueue;
@@ -141,6 +144,10 @@ private:
    Iptv              iptv;
 #endif
    QNetworkConfigurationManager* _pNetConfMgr;
+   QTimer            tWatchdog;
+   QTimer            tConncheck;
+   unsigned long     ulReqNo;
+   unsigned long     ulAckNo;
 
 protected:
    QNetworkRequest& prepareRequest(QNetworkRequest& req, const QString &url, int iSize = -1);
@@ -163,6 +170,8 @@ private slots:
    void slotResponse(QNetworkReply* reply);
    void configChgd (const QNetworkConfiguration & config);
    void startConnectionCheck ();
+   void slotReqTmout();
+   void slotAccessibilityChgd(QNetworkAccessManager::NetworkAccessibility acc);
 };
 
 #endif // __20130315_QIPTVCTRLCLIENT_H

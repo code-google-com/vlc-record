@@ -474,17 +474,20 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
    cparser::SVodFileInfo fInfo;
 
    // init struct ...
-   vidInfo.sActors    = "";
-   vidInfo.sCountry   = "";
-   vidInfo.sDescr     = "";
-   vidInfo.sDirector  = "";
-   vidInfo.sImg       = "";
-   vidInfo.sName      = "";
-   vidInfo.sYear      = "";
-   vidInfo.uiLength   = 0;
-   vidInfo.uiVidId    = 0;
-   vidInfo.bProtected = false;
-   vidInfo.bFavourit  = false;
+   vidInfo.sActors          = "";
+   vidInfo.sCountry         = "";
+   vidInfo.sDescr           = "";
+   vidInfo.sDirector        = "";
+   vidInfo.sImg             = "";
+   vidInfo.sName            = "";
+   vidInfo.sYear            = "";
+   vidInfo.sPgRating        = "";
+   vidInfo.sImdbRating      = "";
+   vidInfo.sKinopoiskRating = "";
+   vidInfo.uiLength         = 0;
+   vidInfo.uiVidId          = 0;
+   vidInfo.bProtected       = false;
+   vidInfo.bFavourit        = false;
    vidInfo.vVodFiles.clear();
 
    contentMap = QtJson::parse(sResp, bOk).toMap();
@@ -493,18 +496,21 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
    {
       contentMap = contentMap.value("film").toMap();
 
-      vidInfo.sActors    = contentMap.value("actors").toString();
-      vidInfo.sCountry   = contentMap.value("country").toString();
-      vidInfo.sDescr     = contentMap.value("description").toString();
-      vidInfo.sDirector  = contentMap.value("director").toString();
-      vidInfo.sImg       = contentMap.value("poster").toString();
-      vidInfo.sName      = contentMap.value("name").toString();
-      vidInfo.sYear      = contentMap.value("year").toString();
-      vidInfo.sGenres    = contentMap.value("genre_str").toString();
-      vidInfo.uiLength   = contentMap.value("lenght").toUInt();
-      vidInfo.uiVidId    = contentMap.value("id").toUInt();
-      vidInfo.bFavourit  = contentMap.value("favorite").toBool();
-      vidInfo.bProtected = contentMap.value("pass_protect").toBool();
+      vidInfo.sActors          = contentMap.value("actors").toString();
+      vidInfo.sCountry         = contentMap.value("country").toString();
+      vidInfo.sDescr           = contentMap.value("description").toString();
+      vidInfo.sDirector        = contentMap.value("director").toString();
+      vidInfo.sImg             = contentMap.value("poster").toString();
+      vidInfo.sName            = contentMap.value("name").toString();
+      vidInfo.sYear            = contentMap.value("year").toString();
+      vidInfo.sGenres          = contentMap.value("genre_str").toString();
+      vidInfo.uiLength         = contentMap.value("lenght").toUInt();
+      vidInfo.uiVidId          = contentMap.value("id").toUInt();
+      vidInfo.bFavourit        = contentMap.value("favorite").toBool();
+      vidInfo.bProtected       = contentMap.value("pass_protect").toBool();
+      vidInfo.sPgRating        = contentMap.value("rate_mpaa").toString();
+      vidInfo.sImdbRating      = contentMap.value("rate_imdb").toString();
+      vidInfo.sKinopoiskRating = contentMap.value("rate_kinopoisk").toString();
 
       foreach (const QVariant& lVideo, contentMap.value("videos").toList())
       {
