@@ -236,7 +236,7 @@ void CVodBrowser::slotSetBufferedHtml()
 void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 {
    int       i;
-   QString   img, content, tab, title, link, page, tok;
+   QString   img, content, tab, title, link, page, tok, back;
    QUrl      url;
    QFileInfo info(sInfo.sImg);
 
@@ -246,18 +246,30 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    // save length in seconds ...
    _uiLength = sInfo.uiLength * 60;
 
+   // back link ...
+   url.clear();
+   url.setPath("videothek");
+   url.addQueryItem("action", "backtolist");
+
+   link  = pHtml->link(url.toEncoded(), tr("Back"));
+   link  = "[ " + link + " ]";
+   back  = pHtml->div(link, "", "center");
+
    // create source url for image ...
    img = QString("%1/%2").arg(pFolders->getVodPixDir()).arg(info.fileName());
 
    // add image ...
-   content  = pHtml->image(QUrl::toPercentEncoding(img), VOD_POSTER_WIDTH, VOD_POSTER_HEIGHT,
+   content = pHtml->image(QUrl::toPercentEncoding(img), VOD_POSTER_WIDTH, VOD_POSTER_HEIGHT,
                            TMPL_IMG_RFLOAT, sInfo.sName);
 
    // add headline ...
-   content += pHtml->htmlTag("h3", sInfo.sName) + "&nbsp;&nbsp;&nbsp;";
+   content += pHtml->htmlTag("h3", QString("%1&nbsp;&nbsp;&nbsp;").arg(sInfo.sName));
 
    // create short from content ...
    _shortContent = content;
+
+   // prepend back link ...
+   content = back + content;
 
    // add favorite link ...
    if (sInfo.bFavourit)
@@ -395,13 +407,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    content += pHtml->htmlTag("p", tab);
 
    // back link ...
-   url.clear();
-   url.setPath("videothek");
-   url.addQueryItem("action", "backtolist");
-
-   link     = pHtml->link(url.toEncoded(), tr("Back"));
-   link     = "[ " + link + " ]";
-   content += pHtml->div(link, "", "center");
+   content += back;
 
    page          = pHtml->htmlPage(content, tr("Video Details"), TMPL_VOD_BODY);
    _shortContent = pHtml->oneCellPage(_shortContent, TMPL_ONE_CELL);
