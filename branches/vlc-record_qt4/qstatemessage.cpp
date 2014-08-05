@@ -36,7 +36,7 @@ QStateMessage::QStateMessage(QWidget* parent, Qt::WindowFlags f) :
 
    connect (&m_tHide, SIGNAL(timeout()), this, SLOT(fadeOut()));
 
-   setOpaque(0.95);
+   setOpaque(1);
 }
 
 //---------------------------------------------------------------------------

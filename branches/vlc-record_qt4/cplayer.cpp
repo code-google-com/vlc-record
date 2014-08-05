@@ -11,12 +11,13 @@
 \*************************************************************/
 
 #include "cplayer.h"
-
 #include "ui_cplayer.h"
-
 #include "qfusioncontrol.h"
-
 #include "qdatetimesyncro.h"
+#include "chtmlwriter.h"
+
+// global html writer ...
+extern CHtmlWriter *pHtml;
 
 // fusion control ...
 extern QFusionControl missionControl;
@@ -1308,7 +1309,8 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
          // make sure archive is already available for this time ...
          if (pos > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
-            emit sigStateMessage((int)QStateMessage::WARNING, tr("Archive is not yet available for this time!"));
+            QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
+            emit sigStateMessage((int)QStateMessage::WARNING, s);
          }
          else
          {
@@ -1497,7 +1499,8 @@ void CPlayer::slotSliderPosChanged()
          // make sure archive is already available for this time ...
          if (position > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
-            emit sigStateMessage((int)QStateMessage::WARNING, tr("Archive is not yet available for this time!"));
+            QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
+            emit sigStateMessage((int)QStateMessage::WARNING, s);
          }
          else if (abs(position - timer.pos()) <= 10)
          {
