@@ -1734,7 +1734,8 @@ void Recorder::slotUnused(const QString &str)
 \----------------------------------------------------------------- */
 void Recorder::slotKartinaErr (QString str, int req, int err)
 {
-   bool bSilent = false;
+   bool bSilent                  = false;
+   IncPlay::ePlayStates psBackup = ePlayState;
 
 #ifdef _USE_QJSON
    // Note: when using json, error isn't parsed correctly!
@@ -1855,6 +1856,9 @@ void Recorder::slotKartinaErr (QString str, int req, int err)
 
    if ((CIptvDefs::EErr)err == CIptvDefs::ERR_MULTIPLE_ACCOUNT_USE)
    {
+      // restore play state as it was before ...
+      ePlayState = psBackup;
+
       // Show must go on:
       // Make silent relogin and try last sent request
       pApiClient->requeue(true);
