@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B8"
+#define BETA_EXT      "B10"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,12 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-08-05: Version 2.69B10
+| - add status message system
+| - when spooling in archive make sure new position is already
+|   available in archive (if not, use status message)
+| - fix a problem with click'n'go slider and time tooltip
+|
 | 2014-08-01: Version 2.69B9
 | - better handle network errors
 | - position slider shows timing information also when left

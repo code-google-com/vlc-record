@@ -539,11 +539,17 @@ void QIptvCtrlClient::requeue(bool withLogin)
       {
          // add request to command queue ...
          lastLogin.uiTimeStamp = QDateTime::currentDateTime().toTime_t();
+
+         mInfo(tr("Prepend login request ..."));
+
          vCmdQueue.append(lastLogin);
       }
 
       // add request to command queue ...
       lastRequest.uiTimeStamp = QDateTime::currentDateTime().toTime_t();
+
+      mInfo(tr("Append last sent request (which triggered error) ..."));
+
       vCmdQueue.append(lastRequest);
 
       mtxCmdQueue.unlock();

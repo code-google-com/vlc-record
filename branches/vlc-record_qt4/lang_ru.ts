@@ -3084,22 +3084,32 @@ or start time is later than end time!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="571"/>
+        <location filename="qiptvctrlclient.cpp" line="543"/>
+        <source>Prepend login request ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="551"/>
+        <source>Append last sent request (which triggered error) ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="577"/>
         <source>Online state changed: %1 --&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="595"/>
+        <location filename="qiptvctrlclient.cpp" line="601"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="632"/>
+        <location filename="qiptvctrlclient.cpp" line="638"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="748"/>
+        <location filename="qiptvctrlclient.cpp" line="754"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>
