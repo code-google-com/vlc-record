@@ -47,6 +47,9 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ee
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QSplitter" name="vSplitterChanEpgPlay">
         <property name="styleSheet">
@@ -1650,8 +1653,8 @@ border-top: 0px;
   <tabstop>btnVodSearch</tabstop>
  </tabstops>
  <resources>
-  <include location="../lcd.qrc"/>
   <include location="../common.qrc"/>
+  <include location="../lcd.qrc"/>
  </resources>
  <connections>
   <connection>

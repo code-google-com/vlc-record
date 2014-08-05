@@ -66,6 +66,7 @@
 #include "qhlscontrol.h"
 #include "qauthdlg.h"
 #include "qwaitwidget.h"
+#include "qstatemessage.h"
 
 //------------------------------------------------------------------
 /// \name definition of start flags
@@ -200,6 +201,7 @@ private:
     QAuthDlg                        authDlg;
     QWaitWidget                     waitWidget;
     reqItem_t                       reRequest;
+    QStateMessage                  *pStateMsg;
 
 protected:
     void setDisplayMode(Ui::EDisplayMode newMode);

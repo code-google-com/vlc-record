@@ -177,19 +177,8 @@ void QClickAndGoSlider::mouseMoveEvent(QMouseEvent * event)
    else if(_isVideo && (event->buttons() == Qt::LeftButton))
    {
       // get time from slider handle and mouse position ...
-      QTime tpos = QTime(0, 0).addSecs(value());
-      QTime npos = QTime(0, 0).addSecs(_clickedPosition);
-      QTime tdif = tpos.addSecs(-minimum());
-
-      // remove old tooltip (if exists) ...
-      if (QToolTip::isVisible())
-      {
-         QToolTip::hideText();
-      }
-
-      // get difference between slider handle and mouse position ...
-      dif = npos.secsTo(tpos);
-
+      dif         = value() - _clickedPosition;
+      QTime tdif  = QTime(0, 0).addSecs(value() - minimum());
       QTime dtime = QTime(0, 0).addSecs(abs(dif));
 
       // create tooltip string ...

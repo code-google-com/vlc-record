@@ -16,6 +16,8 @@
 
 #include "qfusioncontrol.h"
 
+#include "qdatetimesyncro.h"
+
 // fusion control ...
 extern QFusionControl missionControl;
 
@@ -30,6 +32,9 @@ extern CShowInfo showInfo;
 
 // global api client class ...
 extern ApiClient *pApiClient;
+
+// we need syncronized time ...
+extern QDateTimeSyncro tmSync;
 
 // help macros to let QSlider support GMT values ...
 #define mFromGmt(__x__) (int)((__x__) - TIME_OFFSET)
@@ -666,7 +671,7 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
          sMrl.replace('\\', '/');
       }
 
-      if ((p_md = libvlc_media_new_location(pVlcInstance, QUrl::toPercentEncoding(sMrl, "/:?&=%@"))) != NULL)
+      if ((p_md = libvlc_media_new_location(pVlcInstance, QUrl::toPercentEncoding(sMrl, "/:?&=%@+,"))) != NULL)
       {
          mInfo(tr("Media successfully created from MRL:\n --> %1").arg(sMrl));
 
@@ -1300,28 +1305,36 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
          // get new gmt value ...
          pos = timer.pos() + iSeconds;
 
-         // trigger request for the new stream position ...
-         QString req = QString("cid=%1&gmt=%2")
-                          .arg(showInfo.channelId()).arg(pos);
-
-         // mark spooling as active ...
-         bSpoolPending = true;
-
-         enableDisablePlayControl (false);
-
-         // save jump time ...
-         showInfo.setLastJumpTime(pos);
-
-         emit sigStopOnDemand();
-
-         pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
-
-         // do we reach another show?
-         if ((pos < mToGmt(missionControl.posMinimum()))
-             || (pos > mToGmt(missionControl.posMaximum())))
+         // make sure archive is already available for this time ...
+         if (pos > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
-            // yes --> update show info ...
-            emit sigCheckArchProg(pos);
+            emit sigStateMessage((int)QStateMessage::WARNING, tr("Archive is not yet available for this time!"));
+         }
+         else
+         {
+            // trigger request for the new stream position ...
+            QString req = QString("cid=%1&gmt=%2")
+                             .arg(showInfo.channelId()).arg(pos);
+
+            // mark spooling as active ...
+            bSpoolPending = true;
+
+            enableDisablePlayControl (false);
+
+            // save jump time ...
+            showInfo.setLastJumpTime(pos);
+
+            emit sigStopOnDemand();
+
+            pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
+
+            // do we reach another show?
+            if ((pos < mToGmt(missionControl.posMinimum()))
+                || (pos > mToGmt(missionControl.posMaximum())))
+            {
+               // yes --> update show info ...
+               emit sigCheckArchProg(pos);
+            }
          }
       }
    }
@@ -1481,9 +1494,14 @@ void CPlayer::slotSliderPosChanged()
       {
          position = mToGmt(position);
 
-         // check if slider position is in 10 sec. limit ...
-         if (abs(position - timer.pos()) <= 10)
+         // make sure archive is already available for this time ...
+         if (position > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
+            emit sigStateMessage((int)QStateMessage::WARNING, tr("Archive is not yet available for this time!"));
+         }
+         else if (abs(position - timer.pos()) <= 10)
+         {
+            // check if slider position is in 10 sec. limit ...
             mInfo(tr("Ignore slightly slider position change..."));
          }
          else

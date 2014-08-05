@@ -33,6 +33,7 @@
 #include "csettingsdlg.h"
 #include "qvlcvideowidget.h"
 #include "api_inc.h"
+#include "qstatemessage.h"
 
 //===================================================================
 // namespace
@@ -151,6 +152,7 @@ signals:
    void sigBuffPercent(int);
    void sigAudioTracks(QLangVector);
    void sigStopOnDemand();
+   void sigStateMessage(int, const QString&);
 };
 
 #endif /* __022410__CPLAYER_H */

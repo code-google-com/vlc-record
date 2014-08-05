@@ -771,7 +771,7 @@ bool QFusionControl::muted()
 //---------------------------------------------------------------------------
 void QFusionControl::disconnectMute()
 {
-   disconnect(this, SLOT(slotMute(int)));
+   disconnect(this, SLOT(slotMute(bool)));
    _muteButton.clear();
 }
 

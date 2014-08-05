@@ -103,6 +103,10 @@ Recorder::Recorder(QWidget *parent)
    pHlsControl   =  NULL;
    bStayOnTop    =  false;
 
+   // create state message ...
+   pStateMsg     =  new QStateMessage(this, Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+   pStateMsg->hide();
+
    // feed mission control ...
    missionControl.addButton(ui->pushPlay,     QFusionControl::BTN_PLAY);
    missionControl.addButton(ui->pushStop,     QFusionControl::BTN_STOP);
@@ -322,6 +326,7 @@ Recorder::Recorder(QWidget *parent)
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
    connect (this,           SIGNAL(sigLockParentalManager()), &Settings, SLOT(slotLockParentalManager()));
+   connect (ui->player,     SIGNAL(sigStateMessage(int,QString)), pStateMsg, SLOT(showMessage(int,QString)));
 
    // HLS play stuff ...
    connect (pApiClient, SIGNAL(sigM3u(int,QString)), pHlsControl, SLOT(slotM3uResp(int,QString)));
