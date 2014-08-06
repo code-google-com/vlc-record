@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B10"
+#define BETA_EXT      "B11"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,15 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-08-06: Version 2.69B11
+| - use externals_inc.h to include global stuff
+| - VOD search now searches automated without the need
+|   to click on search button
+| - add clear button on channel filter and VOD search
+| - advanced ad handling for VOD
+| - make status message engine
+| - add back link also on top
+|
 | 2014-08-05: Version 2.69B10
 | - add status message system
 | - when spooling in archive make sure new position is already
