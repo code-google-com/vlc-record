@@ -489,11 +489,67 @@ void CPlayer::slotChangeVolumeDelta(const bool up)
 \----------------------------------------------------------------- */
 int CPlayer::play()
 {
-   int  iRV    = 0;
+   int  iRV     = 0;
+   bool bToggle = true;
 
    if (pMedialistPlayer)
    {
-      libvlc_media_list_player_play (pMedialistPlayer);
+      if (showInfo.canCtrlStream())
+      {
+         // go from pause into play ...
+         if (((tPaused.elapsed() / 1000) > PAUSE_WORKS_FOR_SECS) && (pauseResume.id > -1))
+         {
+            // we can not resume play because connection might be stopped
+            // so we request a new stream ...
+            bToggle = false;
+
+            mInfo(tr("Resume after longer pause ..."));
+
+            if (pauseResume.bArch)
+            {
+               // matching position is requested already here ...
+
+               // trigger request for the old stream position ...
+               QString req = QString("cid=%1&gmt=%2")
+                            .arg(pauseResume.id).arg(pauseResume.timeStamp);
+
+               // mark spooling as active ...
+               bSpoolPending = true;
+
+               enableDisablePlayControl (false);
+
+               // save jump time ...
+               showInfo.setLastJumpTime(pauseResume.timeStamp);
+
+               emit sigStopOnDemand();
+
+               enableDisablePlayControl (false);
+
+               emit sigStopOnDemand();
+
+               pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
+
+               // mark as unused ...
+               pauseResume.id = -1;
+            }
+            else
+            {
+               // position can't be requested here ...
+               pApiClient->queueRequest(CIptvDefs::REQ_GETVODURL, pauseResume.id, showInfo.pCode());
+
+               // so we mark the id to be recognized in playMedia() ...
+               pauseResume.id = PAUSE_RESUME_VOD;
+            }
+         }
+      }
+
+      if (bToggle)
+      {
+         // mark as unused ...
+         pauseResume.id = -1;
+
+         libvlc_media_list_player_play (pMedialistPlayer);
+      }
    }
 
    return iRV;
@@ -569,6 +625,13 @@ int CPlayer::pause()
 
    if (pMedialistPlayer && showInfo.canCtrlStream())
    {
+      // go from play into pause ...
+      mInfo(tr("Prepare for long time resume ..."));
+      pauseResume.bArch     = (showInfo.showType() == ShowInfo::Archive);
+      pauseResume.timeStamp = pauseResume.bArch ? (timer.pos() - 5) : (libvlc_media_player_get_time (pMediaPlayer) / 1000);
+      pauseResume.id        = pauseResume.bArch ? showInfo.channelId() : showInfo.vodId();
+      tPaused.start();
+
       libvlc_media_list_player_pause(pMedialistPlayer);
    }
 
@@ -699,6 +762,19 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
             sMrl = QString(":ipv4-timeout=%1").arg(10 * 1000); // 10 sec. timeout for ipv4 connections
             mInfo(tr("Add MRL Option: %1").arg(sMrl));
             libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+
+            ///////////////////////////////////////////////////////////////////////////
+            // resume play from a longer VOD pause
+            ///////////////////////////////////////////////////////////////////////////
+            if (pauseResume.id == PAUSE_RESUME_VOD)
+            {
+               sMrl = QString(":start-time=%1").arg(pauseResume.timeStamp);
+               mInfo(tr("Add MRL Option: %1").arg(sMrl));
+               libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
+
+               // mark as unused ...
+               pauseResume.id = -1;
+            }
          }
 
          ///////////////////////////////////////////////////////////////////////////
@@ -805,7 +881,7 @@ int CPlayer::addAd()
       mInfo(tr("Prepend Ad (Url):\n  --> %1").arg(adUrl));
       if ((p_mdad = libvlc_media_new_location(pVlcInstance, adUrl.toUtf8().constData())) != NULL)
       {
-         sOpt = QString(":http-caching=%1").arg(pSettings->GetBufferTime());
+         sOpt = QString(":network-caching=%1").arg(pSettings->GetBufferTime());
          mInfo(tr("Add MRL Option: %1").arg(sOpt));
          libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
 

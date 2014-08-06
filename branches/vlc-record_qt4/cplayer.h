@@ -37,6 +37,17 @@ namespace Ui
    class CPlayer;
 }
 
+namespace Player
+{
+   struct SPauseResume
+   {
+      SPauseResume() :timeStamp(0),id(-1),bArch(false){}
+      ulong timeStamp;
+      int   id;
+      bool  bArch;
+   };
+}
+
 /********************************************************************\
 |  Class: CPlayer
 |  Date:  14.02.2010 / 11:42:24
@@ -89,6 +100,7 @@ private:
    QTimer                       tAspectShot;
    QTimer                       tEventPoll;
    QTimerEx                     timer;
+   QTime                        tPaused;
    libvlc_instance_t           *pVlcInstance;
    libvlc_media_player_t       *pMediaPlayer;
    libvlc_event_manager_t      *pEMPlay;
@@ -103,6 +115,7 @@ private:
    QVector<QByteArray>          vArgs;
    bool                         bScanAuTrk;
    QLangVector                  vAudTrk;
+   Player::SPauseResume         pauseResume;
 
 private slots:
    void slotPositionChanged(int value);
