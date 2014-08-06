@@ -15,7 +15,6 @@
 #include <QTextBrowser>
 #include <QMap>
 #include "templates.h"
-#include "clogfile.h"
 #include "defdef.h"
 #include "api_inc.h"
 

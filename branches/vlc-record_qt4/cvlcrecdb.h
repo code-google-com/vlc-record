@@ -21,7 +21,6 @@
 #include <QFile>
 #include <QVariant>
 
-#include "cdirstuff.h"
 #include "cparser.h"
 
 #define VLC_REC_DB "vlcrec.db.sqlite"

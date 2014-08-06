@@ -11,13 +11,7 @@
 |
 \=============================================================================*/
 #include "ctelepromclient.h"
-#include "qcustparser.h"
-
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// log file functions ...
-extern CLogFile VlcLog;
+#include "externals_inc.h"
 
 /*-----------------------------------------------------------------------------\
 | Function:    CTelepromClient / constructor

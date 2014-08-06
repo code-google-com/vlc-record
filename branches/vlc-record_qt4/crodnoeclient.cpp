@@ -12,17 +12,7 @@
 \=============================================================================*/
 #include "crodnoeclient.h"
 #include "small_helpers.h"
-#include "qcustparser.h"
-#include "qdatetimesyncro.h"
-
-// global syncronized timer ...
-extern QDateTimeSyncro tmSync;
-
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// log file functions ...
-extern CLogFile VlcLog;
+#include "externals_inc.h"
 
 /*-----------------------------------------------------------------------------\
 | Function:    CRodnoeClient / constructor

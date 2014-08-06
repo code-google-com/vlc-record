@@ -11,49 +11,9 @@
 \*************************************************************/
 #include "recorder.h"
 #include "small_helpers.h"
-
 #include "ui_recorder_inc.h"
-
-#include "qfusioncontrol.h"
-#include "qcustparser.h"
-#include "chtmlwriter.h"
 #include "qoverlayicon.h"
-#include "qdatetimesyncro.h"
-
-// global syncronized time ...
-extern QDateTimeSyncro tmSync;
-
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// fusion control ...
-extern QFusionControl missionControl;
-
-// for logging ...
-extern CLogFile VlcLog;
-
-// for folders ...
-extern CDirStuff *pFolders;
-
-// global showinfo class ...
-extern CShowInfo showInfo;
-
-// global rec db ...
-extern CVlcRecDB *pDb;
-
-// global client api classes ...
-extern ApiClient *pApiClient;
-extern ApiParser *pApiParser;
-
-// global translaters ...
-extern QTranslator *pAppTransl;
-extern QTranslator *pQtTransl;
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
-
-// gloabl channel map ...
-extern QChannelMap *pChanMap;
+#include "externals_inc.h"
 
 /* -----------------------------------------------------------------\
 |  Method: Recorder / constructor
@@ -103,8 +63,12 @@ Recorder::Recorder(QWidget *parent)
    pHlsControl   =  NULL;
    bStayOnTop    =  false;
 
-   // create state message ...
-   pStateMsg     =  new QStateMessage(this, Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+   // vod search timer ....
+   m_tVodSearch.setSingleShot(true);
+   m_tVodSearch.setInterval(666);
+
+   // state message stuff ...
+   pStateMsg->setParent(this, Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
    pStateMsg->hide();
 
    // feed mission control ...
@@ -326,13 +290,16 @@ Recorder::Recorder(QWidget *parent)
    connect (ui->vodBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(slotVodAnchor(QUrl)));
    connect (ui->channelList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(slotCurrentChannelChanged(QModelIndex)));
    connect (this,           SIGNAL(sigLockParentalManager()), &Settings, SLOT(slotLockParentalManager()));
-   connect (ui->player,     SIGNAL(sigStateMessage(int,QString)), pStateMsg, SLOT(showMessage(int,QString)));
 
    // HLS play stuff ...
    connect (pApiClient, SIGNAL(sigM3u(int,QString)), pHlsControl, SLOT(slotM3uResp(int,QString)));
    connect (pApiClient, SIGNAL(sigHls(int,QByteArray)), pHlsControl, SLOT(slotStreamTokResp(int,QByteArray)));
    connect (pHlsControl, SIGNAL(sigPlay(QString)), this, SLOT(slotPlayHls(QString)));
    connect (ui->player, SIGNAL(sigStopOnDemand()), this, SLOT(stopOnDemand()));
+
+   // new VOD search ...
+   connect (ui->lineVodSearch, SIGNAL(textEdited(QString)), &m_tVodSearch, SLOT(start()));
+   connect (&m_tVodSearch,     SIGNAL(timeout()), this, SLOT(slotDoVodSearch()));
 
    // trigger read of saved timer records ...
    timeRec.ReadRecordList();
@@ -1005,7 +972,7 @@ void Recorder::on_cbxVodLang_activated(int index)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: on_btnVodSearch_clicked [slot]
+|  Method: slotDoVodSearch [slot]
 |  Begin: 23.12.2010 / 9:10
 |  Author: Jo2003
 |  Description: search in vod
@@ -1014,18 +981,18 @@ void Recorder::on_cbxVodLang_activated(int index)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::on_btnVodSearch_clicked()
+void Recorder::slotDoVodSearch()
 {
-   int     iGid;
-   QString sType;
-   QUrl    url;
+   int  iGid;
+   QUrl url;
 
+   // since searching on server takes long, search only if there are more the 1 letters ...
+   if ((ui->lineVodSearch->text() != "") && (ui->lineVodSearch->text().length() > 1))
+   {
 #ifdef _HAS_VOD_LANG
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
+      url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
 #endif // _HAS_VOD_LANG
 
-   if (ui->lineVodSearch->text() != "")
-   {
       url.addQueryItem("type", "text");
 
       // when searching show up to 100 results ...
@@ -1038,29 +1005,15 @@ void Recorder::on_btnVodSearch_clicked()
       {
          url.addQueryItem("genre", QString::number(iGid));
       }
+
+      pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
+
+      ui->lineVodSearch->setDisabled(true);
    }
-   else
+   else if (ui->lineVodSearch->text().isEmpty())
    {
-      // no text means normal list ...
-      iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
-      sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
-
-      // make sure type is supported ...
-      if (sType == "vodfav")
-      {
-         sType = "last";
-         ui->cbxLastOrBest->setCurrentIndex(0);
-      }
-
-      url.addQueryItem("type", sType);
-
-      if (iGid != -1)
-      {
-         url.addQueryItem("genre", QString::number(iGid));
-      }
+      on_btnCleanVodSearch_clicked();
    }
-
-   pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 /* -----------------------------------------------------------------\
@@ -1308,6 +1261,50 @@ void Recorder::on_pushWatchList_clicked()
 {
    pWatchList->buildWatchTab();
    pWatchList->exec();
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   clean VOD search line
+//
+//! \author  Jo2003
+//! \date    07.08.2013
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void Recorder::on_btnCleanVodSearch_clicked()
+{
+   int     iGid;
+   QString sType;
+   QUrl    url;
+
+#ifdef _HAS_VOD_LANG
+   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
+#endif // _HAS_VOD_LANG
+
+   ui->lineVodSearch->clear();
+
+   // no text means normal list ...
+   iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
+   sType = ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString();
+
+   // make sure type is supported ...
+   if (sType == "vodfav")
+   {
+      sType = "last";
+      ui->cbxLastOrBest->setCurrentIndex(0);
+   }
+
+   url.addQueryItem("type", sType);
+
+   if (iGid != -1)
+   {
+      url.addQueryItem("genre", QString::number(iGid));
+   }
+
+   pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -3227,6 +3224,9 @@ void Recorder::slotGotVideos(const QString &str, bool bVodFavs)
       touchVodNavBar(gInfo);
       ui->vodBrowser->displayVodList (vVodList, sGenre);
    }
+
+   ui->lineVodSearch->setEnabled(true);
+   ui->lineVodSearch->setFocus();
 }
 
 /* -----------------------------------------------------------------\

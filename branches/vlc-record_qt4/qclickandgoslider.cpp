@@ -14,11 +14,7 @@
 #include "qclickandgoslider.h"
 
 #include "templates.h"
-#include "chtmlwriter.h"
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
-
+#include "externals_inc.h"
 
 //---------------------------------------------------------------------------
 //

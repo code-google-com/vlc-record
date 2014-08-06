@@ -12,10 +12,9 @@
  *
  *///------------------------- (c) 2012 by Jo2003  --------------------------
 #include "qfusioncontrol.h"
-#include "clogfile.h"
 #include "small_helpers.h"
+#include "externals_inc.h"
 
-extern CLogFile VlcLog;
 
 /////////////////////////////////////////////////////////////////////////////
 /// signal docu

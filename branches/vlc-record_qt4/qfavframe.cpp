@@ -13,9 +13,6 @@
  *///------------------------- (c) 2012 by Jo2003  --------------------------
 #include "qfavframe.h"
 
-// log file functions ...
-extern CLogFile VlcLog;
-
 //---------------------------------------------------------------------------
 //! \fn      sigAddFav
 //! \brief   signal will be emitted if we have to add a favourite

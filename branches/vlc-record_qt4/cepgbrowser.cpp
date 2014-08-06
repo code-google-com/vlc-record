@@ -12,17 +12,7 @@
 #include <QUrl>
 #include "cepgbrowser.h"
 #include "small_helpers.h"
-#include "chtmlwriter.h"
-#include "qdatetimesyncro.h"
-
-// global syncronized timer ...
-extern QDateTimeSyncro tmSync;
-
-// log file functions ...
-extern CLogFile VlcLog;
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
+#include "externals_inc.h"
 
 /* -----------------------------------------------------------------\
 |  Method: CEpgBrowser / constructor

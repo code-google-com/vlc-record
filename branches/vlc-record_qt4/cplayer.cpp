@@ -12,30 +12,7 @@
 
 #include "cplayer.h"
 #include "ui_cplayer.h"
-#include "qfusioncontrol.h"
-#include "qdatetimesyncro.h"
-#include "chtmlwriter.h"
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
-
-// fusion control ...
-extern QFusionControl missionControl;
-
-// log file functions ...
-extern CLogFile VlcLog;
-
-// storage db ...
-extern CVlcRecDB *pDb;
-
-// global showinfo class ...
-extern CShowInfo showInfo;
-
-// global api client class ...
-extern ApiClient *pApiClient;
-
-// we need syncronized time ...
-extern QDateTimeSyncro tmSync;
+#include "externals_inc.h"
 
 // help macros to let QSlider support GMT values ...
 #define mFromGmt(__x__) (int)((__x__) - TIME_OFFSET)
@@ -163,6 +140,8 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(this, SIGNAL(sigAudioTracks(QLangVector)), ui->videoWidget, SLOT(slotUpdLangVector(QLangVector)));
    connect(ui->videoWidget, SIGNAL(sigDeinterlace(bool)), this, SLOT(slotDeinterlace(bool)));
    connect(ui->videoWidget, SIGNAL(sigNewATrack(int)), this, SLOT(slotChangeATrack(int)));
+
+   connect (this, SIGNAL(sigStateMessage(int,QString)), pStateMsg, SLOT(showMessage(int,QString)));
 
    // update position slider every second ...
    sliderTimer.start(1000);

@@ -11,16 +11,8 @@
 |
 \=============================================================================*/
 #include "cvodbrowser.h"
-#include "chtmlwriter.h"
 #include <QUrl>
-
-extern CLogFile VlcLog;
-
-// for folders ...
-extern CDirStuff *pFolders;
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
+#include "externals_inc.h"
 
 /* -----------------------------------------------------------------\
 |  Method: CVodBrowser / constructor

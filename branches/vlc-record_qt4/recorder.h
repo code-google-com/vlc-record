@@ -46,27 +46,22 @@
 #include "cvlcctrl.h"
 #include "ctranslit.h"
 #include "cfavaction.h"
-#include "cdirstuff.h"
 #include "cshortcutex.h"
-#include "cshowinfo.h"
 #include "cstreamloader.h"
 #include "qchanlistdelegate.h"
 #include "cepgbrowser.h"
 #include "qseccodedlg.h"
 #include "qhelpdialog.h"
 #include "qrecordtimerwidget.h"
-#include "api_inc.h"
 #include "qupdatenotifydlg.h"
 #include "qexpirenotifydlg.h"
 #include "qstringfilterwidgetaction.h"
 #include "qwatchlistdlg.h"
-#include "qchannelmap.h"
 #include <QStackedLayout>
 #include "qvlcvideowidget.h"
 #include "qhlscontrol.h"
 #include "qauthdlg.h"
 #include "qwaitwidget.h"
-#include "qstatemessage.h"
 
 //------------------------------------------------------------------
 /// \name definition of start flags
@@ -158,6 +153,7 @@ private:
     QSecCodeDlg                     secCodeDlg;
     CStreamLoader                   streamLoader;
     QTimer                          Refresh;
+    QTimer                          m_tVodSearch;
     CPixLoader                      pixCache;
     int                             iEpgOffset;
     QTabBar                        *pEpgNavbar;
@@ -201,7 +197,6 @@ private:
     QAuthDlg                        authDlg;
     QWaitWidget                     waitWidget;
     reqItem_t                       reRequest;
-    QStateMessage                  *pStateMsg;
 
 protected:
     void setDisplayMode(Ui::EDisplayMode newMode);
@@ -248,7 +243,7 @@ private slots:
     void slotFwd();
     void slotToggleFullscreen();
     void slotWindowed();
-    void on_btnVodSearch_clicked();
+    void slotDoVodSearch();
     void on_cbxGenre_activated(int index);
     void on_cbxLastOrBest_activated(int index);
     void on_cbxVodLang_activated(int index);
@@ -335,6 +330,8 @@ private slots:
     void stopOnDemand();
     void slotVodLang(const QString &str);
     void slotChgFontSize (int i);
+
+    void on_btnCleanVodSearch_clicked();
 
 signals:
     void sigShow ();

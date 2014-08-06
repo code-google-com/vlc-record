@@ -18,14 +18,7 @@
 #include <QStackedLayout>
 #include <QPixmap>
 #include <QMessageBox>
-
-#include "qfusioncontrol.h"
-
-// fusion control ...
-extern QFusionControl missionControl;
-
-// log file functions ...
-extern CLogFile VlcLog;
+#include "externals_inc.h"
 
 //---------------------------------------------------------------------------
 //

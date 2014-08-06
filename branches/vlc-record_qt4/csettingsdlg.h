@@ -20,13 +20,11 @@
 #include <QTimer>
 #include <QSystemTrayIcon>
 
-#include "cvlcrecdb.h"
-#include "clogfile.h"
 #include "defdef.h"
-#include "cdirstuff.h"
 #include "cshortcutex.h"
 #include "cshortcutgrabber.h"
-#include "api_inc.h"
+#include "clogfile.h"
+#include "cparser.h"
 
 //===================================================================
 // namespace

@@ -12,15 +12,7 @@
 #include "cshowinfo.h"
 #include "templates.h"
 #include "small_helpers.h"
-#include "chtmlwriter.h"
-#include "qchannelmap.h"
-
-// global html writer ...
-extern CHtmlWriter *pHtml;
-
-// global channel map ..
-extern QChannelMap *pChanMap;
-
+#include "externals_inc.h"
 
 /* -----------------------------------------------------------------\
 |  Method: CShowInfo / constructor

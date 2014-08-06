@@ -12,9 +12,8 @@
 #include "cvlcrecdb.h"
 #include "tables.h"
 #include "small_helpers.h"
+#include "externals_inc.h"
 
-// for folders ...
-extern CDirStuff *pFolders;
 
 /* -----------------------------------------------------------------\
 |  Method: CVlcRecDB / constructor

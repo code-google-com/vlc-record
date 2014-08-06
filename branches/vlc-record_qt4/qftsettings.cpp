@@ -13,21 +13,9 @@
  *///------------------------- (c) 2011 by Jo2003  --------------------------
 #include "qftsettings.h"
 #include "ui_qftsettings.h"
-#include "qcustparser.h"
 #include <QRegExp>
 
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// for folders ...
-extern CDirStuff *pFolders;
-
-// storage db ...
-extern CVlcRecDB *pDb;
-
-// global translaters ...
-extern QTranslator *pAppTransl;
-extern QTranslator *pQtTransl;
+#include "externals_inc.h"
 
 //---------------------------------------------------------------------------
 //

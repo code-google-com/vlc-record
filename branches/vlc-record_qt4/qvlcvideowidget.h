@@ -25,7 +25,6 @@
 #include <QAction>
 #include <QMutex>
 
-#include "clogfile.h"
 #include "cshortcutex.h"
 #include "qoverlayedcontrol.h"
 

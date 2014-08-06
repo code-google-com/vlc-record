@@ -20,8 +20,6 @@
 #include <QDir>
 #include <QResource>
 
-#include "cdirstuff.h"
-
 //---------------------------------------------------------------------------
 //! \class   QCustParser
 //! \date    26.03.2013

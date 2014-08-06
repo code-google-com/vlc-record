@@ -12,32 +12,7 @@
 #include "csettingsdlg.h"
 #include "ui_csettingsdlg.h"
 #include <QRadioButton>
-#include <QTranslator>
-#include "qcustparser.h"
-#include "qdatetimesyncro.h"
-
-// global synchronized timer ...
-extern QDateTimeSyncro tmSync;
-
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// log file functions ...
-extern CLogFile VlcLog;
-
-// for folders ...
-extern CDirStuff *pFolders;
-
-// storage db ...
-extern CVlcRecDB *pDb;
-
-// global client api classes ...
-extern ApiClient *pApiClient;
-extern ApiParser *pApiParser;
-
-// global translaters ...
-extern QTranslator *pAppTransl;
-extern QTranslator *pQtTransl;
+#include "externals_inc.h"
 
 
 /* -----------------------------------------------------------------\

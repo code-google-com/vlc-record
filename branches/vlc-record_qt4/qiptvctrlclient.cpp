@@ -15,13 +15,7 @@
 #include "ciptvdefs.h"
 #include "version_info.h"
 #include "defdef.h"
-#include "qcustparser.h"
-
-// global customization class ...
-extern QCustParser *pCustomization;
-
-// log file functions ...
-extern CLogFile VlcLog;
+#include "externals_inc.h"
 
 /// Gray my friend, is all theory ...
 /// We can't count that the QNetworkConfigurationManager

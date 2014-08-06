@@ -18,7 +18,6 @@
 #include <QtJson>
 #include <QVariantMap>
 
-#include "clogfile.h"
 #include "defdef.h"
 #include "cparser.h"
 #include "capiparser.h"

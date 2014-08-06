@@ -28,8 +28,6 @@
 #include <QTimer>
 #include <QDateTime>
 
-#include "clogfile.h"
-
 //---------------------------------------------------------------------------
 //! \class   Iptv
 //! \date    04.06.2012

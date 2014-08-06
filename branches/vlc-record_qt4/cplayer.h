@@ -23,17 +23,11 @@
 #include <QMutex>
 
 #include <vlc/vlc.h>
-
-#include "cvlcrecdb.h"
-#include "clogfile.h"
 #include "playstates.h"
 #include "defdef.h"
 #include "qtimerex.h"
-#include "cshowinfo.h"
 #include "csettingsdlg.h"
 #include "qvlcvideowidget.h"
-#include "api_inc.h"
-#include "qstatemessage.h"
 
 //===================================================================
 // namespace

@@ -130,7 +130,8 @@ HEADERS += recorder.h \
     qauthdlg.h \
     qwaitwidget.h \
     qdatetimesyncro.h \
-    qstatemessage.h
+    qstatemessage.h \
+    externals_inc.h
 FORMS += forms/csettingsdlg.ui \
     forms/caboutdialog.ui \
     forms/ctimerrec.ui \
