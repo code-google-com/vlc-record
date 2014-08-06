@@ -84,6 +84,7 @@ public:
    static QMutex                       _mtxEvt;
    static float                        _flBuffPrt;
    static void eventCallback (const libvlc_event_t *ev, void *userdata);
+   static libvlc_media_t              *_pCurrentMedia;
 
 protected:
    virtual void changeEvent(QEvent *e);
@@ -101,9 +102,9 @@ private:
    QTimer                       tEventPoll;
    QTimerEx                     timer;
    QTime                        tPaused;
+   libvlc_media_t              *videoMediaItem;
    libvlc_instance_t           *pVlcInstance;
    libvlc_media_player_t       *pMediaPlayer;
-   libvlc_event_manager_t      *pEMPlay;
    libvlc_media_list_player_t  *pMedialistPlayer;
    libvlc_media_list_t         *pMediaList;
    CSettingsDlg                *pSettings;

@@ -374,6 +374,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       url.setPath("videothek");
       url.addQueryItem("action", "play");
       url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+      url.addQueryItem("video_id", QString::number(sInfo.uiVidId));
       url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
 
       img  = pHtml->image(":/png/play", 16, 16, "", tr("Play Movie ..."));
@@ -384,6 +385,7 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       url.setPath("videothek");
       url.addQueryItem("action", "record");
       url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+      url.addQueryItem("video_id", QString::number(sInfo.uiVidId));
       url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
 
       img   = pHtml->image(":/png/record", 16, 16, "", tr("Record Movie ..."));

@@ -36,6 +36,7 @@ CVlcRecDB::CVlcRecDB(QObject *parent) : QObject(parent)
    else
    {
       checkDb();
+      cleanVodSeen();
    }
 }
 
@@ -109,6 +110,11 @@ int CVlcRecDB::checkDb()
    if (!lAllTabs.contains("astream"))
    {
       iRV |= query.exec(TAB_ASTREAM) ? 0 : -1;
+   }
+
+   if (!lAllTabs.contains("vodseen"))
+   {
+      iRV |= query.exec(TAB_VIDEO_SEEN) ? 0 : -1;
    }
 
    // db update ...
@@ -761,6 +767,77 @@ int CVlcRecDB::defAStream (int cid)
    }
 
    return iRet;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   mark video as seen (ad related)
+//
+//! \author  Jo2003
+//! \date    06.08.2014
+//
+//! \param   videoId [in] (int) video id
+//
+//! \return  -1 -> error; else OK
+//---------------------------------------------------------------------------
+int CVlcRecDB::markVod(int videoId)
+{
+   QSqlQuery query;
+
+   query.prepare("REPLACE INTO vodseen VALUES(?, strftime('%s','now'))");
+   query.addBindValue(videoId);
+   return query.exec() ? 0 : -1;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   was video already seen (ad related)?
+//
+//! \author  Jo2003
+//! \date    06.08.2014
+//
+//! \param   videoId [in] (int) video id
+//
+//! \return  true -> was seen; else -> wasn't seen
+//---------------------------------------------------------------------------
+bool CVlcRecDB::videoSeen(int videoId)
+{
+   bool bSeen = false;
+   QSqlQuery query;
+
+   query.prepare("SELECT COUNT(*) as NUMB FROM vodseen WHERE videoid=?");
+   query.addBindValue(videoId);
+   query.exec();
+
+   if (query.first())
+   {
+      bSeen = !!query.value(0).toInt();
+   }
+
+   markVod(videoId);
+
+   return bSeen;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   delete old seen markers (re-enable ads for this video)
+//
+//! \author  Jo2003
+//! \date    06.08.2014
+//
+//---------------------------------------------------------------------------
+void CVlcRecDB::cleanVodSeen()
+{
+   QSqlQuery query;
+
+   // timestamp one week ago ...
+   uint ulTs = QDateTime::currentDateTime().toTime_t() - 7 * 24 * 3600;
+
+   // delete all entries older 1 week ...
+   query.prepare("DELETE FROM vodseen WHERE t_stamp < ?");
+   query.addBindValue(ulTs);
+   query.exec();
 }
 
 /************************* History ***************************\

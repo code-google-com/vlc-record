@@ -23,6 +23,7 @@ QMutex                       CPlayer::_mtxEvt;
 float                        CPlayer::_flBuffPrt = 0.0;
 const char*                  CPlayer::_pAspect[] = {"", "1:1", "4:3", "16:9", "16:10", "221:100", "5:4"};
 const char*                  CPlayer::_pCrop[]   = {"", "1:1", "4:3", "16:9", "16:10", "185:100", "221:100", "235:100", "239:100", "5:4"};
+libvlc_media_t*              CPlayer::_pCurrentMedia;
 
 /* -----------------------------------------------------------------\
 |  Method: CPlayer / constructor
@@ -42,7 +43,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pVlcInstance     = NULL;
    pMedialistPlayer = NULL;
    pMediaList       = NULL;
-   pEMPlay          = NULL;
    pSettings        = NULL;
    bSpoolPending    = true;
    bOmitNextEvent   = false;
@@ -284,11 +284,12 @@ void CPlayer::setSettings(CSettingsDlg *pDlg)
 \----------------------------------------------------------------- */
 int CPlayer::initPlayer(const QString &sOpts)
 {
-   int          iRV     = -1;
-   int          i;
-   int          iEventCount;
-   int          argc    = 0;
-   QStringList  slOpts;
+   int                     iRV     = -1;
+   int                     i;
+   int                     iEventCount;
+   int                     argc    = 0;
+   QStringList             slOpts;
+   libvlc_event_manager_t *pEvtMgr;
 
    vArgs.clear();
 
@@ -385,7 +386,7 @@ int CPlayer::initPlayer(const QString &sOpts)
             libvlc_media_list_player_set_media_player (pMedialistPlayer, pMediaPlayer);
 
             // get event manager ...
-            if ((pEMPlay = libvlc_media_player_event_manager(pMediaPlayer)) != NULL)
+            if ((pEvtMgr = libvlc_media_player_event_manager(pMediaPlayer)) != NULL)
             {
                // if we've got the event manager, register for some events ...
                libvlc_event_type_t eventsMediaPlayer[] = {
@@ -404,7 +405,26 @@ int CPlayer::initPlayer(const QString &sOpts)
                iEventCount = sizeof(eventsMediaPlayer) / sizeof(*eventsMediaPlayer);
                for (i = 0; i < iEventCount; i++)
                {
-                  iRV |= libvlc_event_attach(pEMPlay, eventsMediaPlayer[i],
+                  iRV |= libvlc_event_attach(pEvtMgr, eventsMediaPlayer[i],
+                                            eventCallback, NULL);
+               }
+            }
+
+            // get event manager ...
+            if ((pEvtMgr = libvlc_media_list_player_event_manager(pMedialistPlayer)) != NULL)
+            {
+               // if we've got the event manager, register for some events ...
+               libvlc_event_type_t eventsMediaPlayer[] = {
+                  libvlc_MediaListPlayerNextItemSet,
+               };
+
+               // so far so good ...
+               iRV = 0;
+
+               iEventCount = sizeof(eventsMediaPlayer) / sizeof(*eventsMediaPlayer);
+               for (i = 0; i < iEventCount; i++)
+               {
+                  iRV |= libvlc_event_attach(pEvtMgr, eventsMediaPlayer[i],
                                             eventCallback, NULL);
                }
             }
@@ -718,6 +738,9 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
       {
          mInfo(tr("Media successfully created from MRL:\n --> %1").arg(sMrl));
 
+         // store pointer to main video ...
+         videoMediaItem = p_md;
+
          // do we use GPU acceleration ... ?
          if (pSettings->useGpuAcc())
          {
@@ -876,7 +899,7 @@ int CPlayer::addAd()
    QString         adUrl  = showInfo.adUrl();
    QString         sOpt;
 
-   if ((adUrl != "") && (showInfo.showType() == ShowInfo::VOD) && pSettings->showAds())
+   if ((adUrl != "") && (showInfo.showType() == ShowInfo::VOD) && pSettings->showAds() && !showInfo.noAd())
    {
       mInfo(tr("Prepend Ad (Url):\n  --> %1").arg(adUrl));
       if ((p_mdad = libvlc_media_new_location(pVlcInstance, adUrl.toUtf8().constData())) != NULL)
@@ -1062,7 +1085,12 @@ void CPlayer::eventCallback(const libvlc_event_t *ev, void *userdata)
 
    // store event type so the event poller can handle it...
    CPlayer::_mtxEvt.lock();
-   if (ev->type != libvlc_MediaPlayerBuffering)
+   if (ev->type == libvlc_MediaListPlayerNextItemSet)
+   {
+      CPlayer::_pCurrentMedia = ev->u.media_list_player_next_item_set.item;
+      CPlayer::_eventQueue.append(ev->type);
+   }
+   else if (ev->type != libvlc_MediaPlayerBuffering)
    {
       CPlayer::_eventQueue.append(ev->type);
    }
@@ -1128,6 +1156,20 @@ void CPlayer::slotEventPoll()
 
             // no way to go on ... prepare to use a new instance of libVLC
             cleanupLibVLC();
+            break;
+
+         // TRACK CHANGED ...
+         case libvlc_MediaListPlayerNextItemSet:
+            if (!showInfo.noAd())
+            {
+               // check for main feature ...
+               if (CPlayer::_pCurrentMedia == videoMediaItem)
+               {
+                  // enable spooling ...
+                  bSpoolPending = false;
+                  // emit sigStateMessage((int)QStateMessage::INFO, tr("Found Main Video Track!!"));
+               }
+            }
             break;
 
          // opening media ...
@@ -1465,7 +1507,11 @@ void CPlayer::slotStoredAspectCrop ()
          bool    bErr = false;
 
          // enable spooling again ...
-         bSpoolPending = false;
+         if ((showInfo.showType() != ShowInfo::VOD) || showInfo.noAd())
+         {
+            bSpoolPending = false;
+         }
+
          enableDisablePlayControl (true);
 
          if(!pDb->aspect(showInfo.channelId(), sAspect, sCrop))

@@ -3244,6 +3244,7 @@ void Recorder::slotVodAnchor(const QUrl &link)
    QString action = link.queryItemValue("action");
    bool ok        = false;
    int  id        = 0;
+   int  videoId   = 0;
 
    // check password ...
    if (link.queryItemValue("pass_protect").toInt())
@@ -3313,7 +3314,8 @@ void Recorder::slotVodAnchor(const QUrl &link)
          iDwnReqId = -1;
       }
 
-      id = link.queryItemValue("vid").toInt();
+      id      = link.queryItemValue("vid").toInt();
+      videoId = link.queryItemValue("video_id").toInt();
 
       showInfo.cleanShowInfo();
       showInfo.setShowName(ui->vodBrowser->getName());
@@ -3323,6 +3325,7 @@ void Recorder::slotVodAnchor(const QUrl &link)
       showInfo.setVodId(id);
       showInfo.setStartTime(0);
       showInfo.setEndTime(ui->vodBrowser->getLength());
+      showInfo.setNoAd(pDb->videoSeen(videoId));
 
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());
