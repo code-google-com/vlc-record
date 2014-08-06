@@ -1671,7 +1671,7 @@ void CPlayer::slotPositionChanged(int value)
 \----------------------------------------------------------------- */
 void CPlayer::enableDisablePlayControl (bool bEnable)
 {
-   if (bEnable && showInfo.canCtrlStream())
+   if (bEnable && showInfo.canCtrlStream() && !bSpoolPending)
    {
       missionControl.enablePosSlider(true);
    }

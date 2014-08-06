@@ -1035,64 +1035,59 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1169"/>
-        <source>Found Main Video Track!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="cplayer.cpp" line="1212"/>
+        <location filename="cplayer.cpp" line="1213"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1242"/>
+        <location filename="cplayer.cpp" line="1243"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1266"/>
+        <location filename="cplayer.cpp" line="1267"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1408"/>
-        <location filename="cplayer.cpp" line="1602"/>
+        <location filename="cplayer.cpp" line="1409"/>
+        <location filename="cplayer.cpp" line="1603"/>
         <source>Archive is not yet available for this time!</source>
         <oldsource>Archive doesn&apos;t exist for this time!</oldsource>
         <translation type="unfinished">Archiwum nie jest jeszcze dostępne w tym okresie!</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1608"/>
+        <location filename="cplayer.cpp" line="1609"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1698"/>
+        <location filename="cplayer.cpp" line="1699"/>
         <source>Film length: %1ms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1989"/>
+        <location filename="cplayer.cpp" line="1990"/>
         <source>Error: Can&apos;t delete media item from media list!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2174"/>
+        <location filename="cplayer.cpp" line="2175"/>
         <source>Scan for Audio tracks:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2191"/>
+        <location filename="cplayer.cpp" line="2192"/>
         <source>-&gt; Audio track %1 %2%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2237"/>
+        <location filename="cplayer.cpp" line="2238"/>
         <source>%1 %2 deinterlace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2274"/>
+        <location filename="cplayer.cpp" line="2275"/>
         <source>Change audio track to id %1 (idx %2): %3!</source>
         <translation type="unfinished"></translation>
     </message>
