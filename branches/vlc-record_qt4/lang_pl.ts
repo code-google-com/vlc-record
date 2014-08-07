@@ -1027,12 +1027,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="651"/>
         <source>Prepare for long time resume ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="528"/>
         <source>Resume after longer pause ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="1225"/>
@@ -1054,7 +1054,7 @@ p, li { white-space: pre-wrap; }
         <location filename="cplayer.cpp" line="1615"/>
         <source>Archive is not yet available for this time!</source>
         <oldsource>Archive doesn&apos;t exist for this time!</oldsource>
-        <translation type="unfinished">Archiwum nie jest jeszcze dostępne w tym okresie!</translation>
+        <translation>Archiwum nie jest jeszcze dostępne w tym okresie!</translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="1621"/>
@@ -1064,32 +1064,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="cplayer.cpp" line="1711"/>
         <source>Film length: %1ms.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="2002"/>
         <source>Error: Can&apos;t delete media item from media list!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="2187"/>
         <source>Scan for Audio tracks:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="2204"/>
         <source>-&gt; Audio track %1 %2%3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="2250"/>
         <source>%1 %2 deinterlace</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="cplayer.cpp" line="2287"/>
         <source>Change audio track to id %1 (idx %2): %3!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3076,25 +3076,30 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     <message>
         <location filename="qiptvctrlclient.cpp" line="604"/>
         <source>Network connection established!</source>
-        <translation type="unfinished"></translation>
+        <translation>Podłączone do sieci!</translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="604"/>
         <source>Error connecting to network!</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd połączenia z siecią!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="631"/>
+        <location filename="qiptvctrlclient.cpp" line="613"/>
+        <source>Synchronize request counter and acknowledge: %1 &lt;--&gt; %2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="638"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="668"/>
+        <location filename="qiptvctrlclient.cpp" line="675"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="784"/>
+        <location filename="qiptvctrlclient.cpp" line="791"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>

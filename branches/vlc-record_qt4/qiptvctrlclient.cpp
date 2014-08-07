@@ -606,6 +606,13 @@ void QIptvCtrlClient::setOnline(bool o)
       mInfo(tr("Online state changed: %1 --> %2").arg(bOnline).arg(o));
       emit sigStateMessage(state, msg, tmout);
       bOnline = o;
+
+      if (bOnline)
+      {
+         // make sure request counter are synchronized ...
+         mInfo(tr("Synchronize request counter and acknowledge: %1 <--> %2").arg(ulAckNo).arg(ulReqNo));
+         ulAckNo = ulReqNo;
+      }
    }
 }
 

@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B11"
+#define BETA_EXT      "B12"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,12 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-08-07: Version 2.69B12
+| - add advertising LCD page
+| - add network state change message
+| - use 90 min as ad block for seen videos
+| - try to fix blocking API
+|
 | 2014-08-06: Version 2.69B11
 | - use externals_inc.h to include global stuff
 | - VOD search now searches automated without the need
