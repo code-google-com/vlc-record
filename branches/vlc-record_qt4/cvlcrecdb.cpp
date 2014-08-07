@@ -36,7 +36,6 @@ CVlcRecDB::CVlcRecDB(QObject *parent) : QObject(parent)
    else
    {
       checkDb();
-      cleanVodSeen();
    }
 }
 
@@ -805,6 +804,9 @@ bool CVlcRecDB::videoSeen(int videoId)
    bool bSeen = false;
    QSqlQuery query;
 
+   // clean "old" entries ...
+   cleanVodSeen();
+
    query.prepare("SELECT COUNT(*) as NUMB FROM vodseen WHERE videoid=?");
    query.addBindValue(videoId);
    query.exec();
@@ -832,9 +834,9 @@ void CVlcRecDB::cleanVodSeen()
    QSqlQuery query;
 
    // timestamp one week ago ...
-   uint ulTs = QDateTime::currentDateTime().toTime_t() - 7 * 24 * 3600;
+   uint ulTs = QDateTime::currentDateTime().toTime_t() - ADBLOCK_ACTIVE;
 
-   // delete all entries older 1 week ...
+   // delete all entries older ADBLOCK_ACTIVE seconds ...
    query.prepare("DELETE FROM vodseen WHERE t_stamp < ?");
    query.addBindValue(ulTs);
    query.exec();

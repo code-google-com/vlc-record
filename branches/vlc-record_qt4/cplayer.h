@@ -103,6 +103,7 @@ private:
    QTimerEx                     timer;
    QTime                        tPaused;
    libvlc_media_t              *videoMediaItem;
+   libvlc_media_t              *addMediaItem;
    libvlc_instance_t           *pVlcInstance;
    libvlc_media_player_t       *pMediaPlayer;
    libvlc_media_list_player_t  *pMedialistPlayer;

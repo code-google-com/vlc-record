@@ -40,6 +40,7 @@ namespace lcd
       STOP       = IncPlay::PS_STOP,
       TIMER_REC  = IncPlay::PS_TIMER_RECORD,
       TIMER_STBY = IncPlay::PS_TIMER_STBY,
+      SHOW_ADV   = IncPlay::PS_ADVERTISING,
       BLANK,
       WTF = 255
    };

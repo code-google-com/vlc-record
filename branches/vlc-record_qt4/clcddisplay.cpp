@@ -311,6 +311,9 @@ void CLCDDisplay::loadImage(lcd::eState state)
    case lcd::TIMER_STBY:
       lcdImg.load(":/lcd/timer_stby");
       break;
+   case lcd::SHOW_ADV:
+      lcdImg.load(":/lcd/add");
+      break;
    case lcd::BLANK:
    case lcd::WTF:
    default:

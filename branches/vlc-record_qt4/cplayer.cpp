@@ -44,6 +44,8 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    pMedialistPlayer = NULL;
    pMediaList       = NULL;
    pSettings        = NULL;
+   videoMediaItem   = NULL;
+   addMediaItem     = NULL;
    bSpoolPending    = true;
    bOmitNextEvent   = false;
    bScanAuTrk       = true;
@@ -904,6 +906,9 @@ int CPlayer::addAd()
       mInfo(tr("Prepend Ad (Url):\n  --> %1").arg(adUrl));
       if ((p_mdad = libvlc_media_new_location(pVlcInstance, adUrl.toUtf8().constData())) != NULL)
       {
+         // cache add media item ...
+         addMediaItem = p_mdad;
+
          sOpt = QString(":network-caching=%1").arg(pSettings->GetBufferTime());
          mInfo(tr("Add MRL Option: %1").arg(sOpt));
          libvlc_media_add_option(p_mdad, sOpt.toUtf8().constData());
@@ -1181,7 +1186,14 @@ void CPlayer::slotEventPoll()
          // playing media ...
          case libvlc_MediaPlayerPlaying:
             mInfo("libvlc_MediaPlayerPlaying ...");
-            emit sigPlayState((int)IncPlay::PS_PLAY);
+            if (!showInfo.noAd() && (CPlayer::_pCurrentMedia == addMediaItem))
+            {
+               emit sigPlayState((int)IncPlay::PS_ADVERTISING);
+            }
+            else
+            {
+               emit sigPlayState((int)IncPlay::PS_PLAY);
+            }
             tAspectShot.start();
             startPlayTimer();
             initSlider();

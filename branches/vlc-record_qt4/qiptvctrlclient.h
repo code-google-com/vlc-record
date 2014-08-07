@@ -153,6 +153,7 @@ protected:
    void workOffQueue ();
    void setOnline(bool o);
    void generateStbSerial();
+   bool stillOnlineOnError(QNetworkReply::NetworkError err);
 
 signals:
    void sigStringResponse (int reqId, QString strResp);
@@ -161,6 +162,7 @@ signals:
 
    void sigM3u (int reqId, QString s);
    void sigHls (int reqId, QByteArray bHls);
+   void sigStateMessage (int, QString, int);
 
 public slots:
 

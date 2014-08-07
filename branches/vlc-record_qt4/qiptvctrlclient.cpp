@@ -61,6 +61,7 @@ QIptvCtrlClient::QIptvCtrlClient(QObject* parent) :
    connect(_pNetConfMgr, SIGNAL(configurationChanged(QNetworkConfiguration)), this, SLOT(configChgd(QNetworkConfiguration)));
    connect(&tWatchdog, SIGNAL(timeout()), this, SLOT(slotReqTmout()));
    connect(&tConncheck, SIGNAL(timeout()), this, SLOT(startConnectionCheck()));
+   connect(this, SIGNAL(sigStateMessage(int,QString,int)), pStateMsg, SLOT(showMessage(int,QString,int)));
 
    startConnectionCheck();
 }
@@ -172,8 +173,8 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
    else
    {
       // Oops ... error!
-      // We might be offline ...!
-      setOnline(false);
+      // We might be offline ...?!
+      setOnline(stillOnlineOnError(reply->error()));
 
       if ((Iptv::eReqType)iReqType != Iptv::chkconn)
       {
@@ -201,6 +202,37 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
 
    // check for new requests ...
    workOffQueue();
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   check response error, return if we're still online
+//
+//! \author  Jo2003
+//! \date    07.08.2014
+//
+//! \param   err (QNetworkReply::NetworkError) response error
+//
+//! \return  true -> we're still online
+//---------------------------------------------------------------------------
+bool QIptvCtrlClient::stillOnlineOnError(QNetworkReply::NetworkError err)
+{
+   bool ret = false;
+
+   switch (err)
+   {
+   case QNetworkReply::ContentOperationNotPermittedError:
+   case QNetworkReply::ContentNotFoundError:
+   case QNetworkReply::ContentAccessDenied:
+   case QNetworkReply::AuthenticationRequiredError:
+      ret = true;
+      break;
+
+   default:
+      break;
+   }
+
+   return ret;
 }
 
 //---------------------------------------------------------------------------
@@ -568,7 +600,11 @@ void QIptvCtrlClient::setOnline(bool o)
 {
    if (o != bOnline)
    {
+      int     state = o ? (int)QStateMessage::INFO              : (int)QStateMessage::ERROR;
+      QString msg   = o ? tr("Network connection established!") : tr("Error connecting to network!");
+      int     tmout = o ? 1000                                  : 5000;
       mInfo(tr("Online state changed: %1 --> %2").arg(bOnline).arg(o));
+      emit sigStateMessage(state, msg, tmout);
       bOnline = o;
    }
 }
