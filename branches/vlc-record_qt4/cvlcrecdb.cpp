@@ -816,7 +816,11 @@ bool CVlcRecDB::videoSeen(int videoId)
       bSeen = !!query.value(0).toInt();
    }
 
-   markVod(videoId);
+   // no post trigger ...
+   if (!bSeen)
+   {
+      markVod(videoId);
+   }
 
    return bSeen;
 }
