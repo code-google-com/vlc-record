@@ -1419,7 +1419,7 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
          if (pos > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
             QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
-            emit sigStateMessage((int)QStateMessage::WARNING, s);
+            emit sigStateMessage((int)QStateMessage::S_WARNING, s);
          }
          else
          {
@@ -1613,7 +1613,7 @@ void CPlayer::slotSliderPosChanged()
          if (position > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
             QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
-            emit sigStateMessage((int)QStateMessage::WARNING, s);
+            emit sigStateMessage((int)QStateMessage::S_WARNING, s);
          }
          else if (abs(position - timer.pos()) <= 10)
          {
@@ -1686,10 +1686,16 @@ void CPlayer::enableDisablePlayControl (bool bEnable)
    if (bEnable && showInfo.canCtrlStream() && !bSpoolPending)
    {
       missionControl.enablePosSlider(true);
+      missionControl.enableJumpBox(true);
+      missionControl.enableBtn(true, QFusionControl::BTN_FWD);
+      missionControl.enableBtn(true, QFusionControl::BTN_BWD);
    }
    else
    {
       missionControl.enablePosSlider(false);
+      missionControl.enableJumpBox(false);
+      missionControl.enableBtn(false, QFusionControl::BTN_FWD);
+      missionControl.enableBtn(false, QFusionControl::BTN_BWD);
    }
 }
 

@@ -28,6 +28,16 @@ namespace Ui {
    class QStateMessage;
 }
 
+/*
+/// \brief various states have variuos icons
+enum class StateMsg : uint8_t {
+   INFO,
+   WARNING,
+   ERROR,
+   UNKNOWN,
+   // to be continued ...
+};
+*/
 //---------------------------------------------------------------------------
 //! \class   QStateMessage
 //! \date    05.08.2014
@@ -42,10 +52,10 @@ public:
 
    /// \brief various states have variuos icons
    enum eIcon {
-      INFO,       ///< information only
-      WARNING,    ///< warning
-      ERROR,      ///< error
-      UNKNOWN     ///< unknown or unsupported
+      S_INFO,       ///< information only
+      S_WARNING,    ///< warning
+      S_ERROR,      ///< error
+      S_UNKNOWN     ///< unknown or unsupported
    };
 
    QStateMessage(QWidget* parent = 0, Qt::WindowFlags f = 0);

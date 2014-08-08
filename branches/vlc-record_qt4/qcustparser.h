@@ -19,6 +19,7 @@
 #include <QXmlStreamReader>
 #include <QDir>
 #include <QResource>
+#include <QMap>
 
 //---------------------------------------------------------------------------
 //! \class   QCustParser

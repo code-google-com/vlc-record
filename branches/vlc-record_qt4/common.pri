@@ -17,6 +17,20 @@ INCLUDEPATH += .
 CONFIG += shared
 
 # -------------------------------------
+# support C++11
+# Depending on your compiler you
+# have to use different options
+# to enable C++11
+# MinGW for used for Qt4 needs
+# -std=c++0x!
+# For Qt5 you should use:
+# CONFIG += c++11
+# -------------------------------------
+#win32: QMAKE_CXXFLAGS += -std=c++11
+#else:mac: QMAKE_CXXFLAGS += -std=c++11
+#else:unix: QMAKE_CXXFLAGS += -std=c++11
+
+# -------------------------------------
 # program version
 # -------------------------------------
 PROGMAJ=2

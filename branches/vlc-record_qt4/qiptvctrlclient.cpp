@@ -52,7 +52,6 @@ QIptvCtrlClient::QIptvCtrlClient(QObject* parent) :
 
    // connection check once a minute ...
    tConncheck.setSingleShot(true);
-   tConncheck.setInterval(60000);
 
    connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotResponse(QNetworkReply*)));
    connect(this, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)),
@@ -165,7 +164,7 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
          break;
 
       default:
-         emit sigErr(iReqId, tr("Error, unknown request type: %1!")
+         emit sigApiErr(iReqId, tr("Error, unknown request type: %1!")
                      .arg(iReqType), -1);
          break;
       }
@@ -178,30 +177,27 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
 
       if ((Iptv::eReqType)iReqType != Iptv::chkconn)
       {
+         QString sErr = reply->errorString();
 #ifdef _IS_OEM
          // in case of OEM we should remove the API server string from
          // error messages ...
-         QString sErr = reply->errorString();
          QUrl    sUrl = reply->request().url();
 
          sErr.remove(sUrl.host());
          sErr = sErr.simplified();
-
-         emit sigErr(iReqId, sErr, (int)reply->error());
-
-#else
-         emit sigErr(iReqId, reply->errorString(), (int)reply->error());
 #endif // _IS_OEM
-      }
 
-      QTimer::singleShot(1000, this, SLOT(startConnectionCheck()));
+         mInfo(tr("Network response error #%1:\n  --> %2").arg((int)reply->error()).arg(sErr));
+
+         QTimer::singleShot(1000, this, SLOT(startConnectionCheck()));
+      }
    }
 
    // mark for deletion ...
    reply->deleteLater();
 
    // check for new requests ...
-   workOffQueue();
+   workOffQueue(__FUNCTION__);
 }
 
 //---------------------------------------------------------------------------
@@ -444,7 +440,7 @@ void QIptvCtrlClient::q_post(int iReqId, const QString& url, const QString& cont
    mtxCmdQueue.unlock();
 
    // try to handle request ...
-   workOffQueue();
+   workOffQueue(__FUNCTION__);
 }
 
 //---------------------------------------------------------------------------
@@ -476,7 +472,7 @@ void QIptvCtrlClient::q_get(int iReqId, const QString& url, Iptv::eReqType t_req
    mtxCmdQueue.unlock();
 
    // try to handle request ...
-   workOffQueue();
+   workOffQueue(__FUNCTION__);
 }
 
 //---------------------------------------------------------------------------
@@ -488,10 +484,18 @@ void QIptvCtrlClient::q_get(int iReqId, const QString& url, Iptv::eReqType t_req
 //
 //! \return  --
 //---------------------------------------------------------------------------
-void QIptvCtrlClient::workOffQueue()
+void QIptvCtrlClient::workOffQueue(const QString& caller)
 {
    SRequest reqObj;
    reqObj.eHttpReqType = E_REQ_UNKN;
+
+#ifdef __TRACE
+   if (!caller.isEmpty())
+   {
+      mInfo(tr("called from %1(), busy(): %2, isOnline(): %3")
+            .arg(caller).arg(busy()).arg(isOnline()));
+   }
+#endif // __TRACE
 
    // pending requests ... ?
    if (!busy() && isOnline())
@@ -581,7 +585,7 @@ void QIptvCtrlClient::requeue(bool withLogin)
       mtxCmdQueue.unlock();
 
       // try to handle request ...
-      workOffQueue();
+      workOffQueue(__FUNCTION__);
    }
 }
 
@@ -600,11 +604,11 @@ void QIptvCtrlClient::setOnline(bool o)
 {
    if (o != bOnline)
    {
-      int     state = o ? (int)QStateMessage::INFO              : (int)QStateMessage::ERROR;
+      int     state = o ? (int)QStateMessage::S_INFO            : (int)QStateMessage::S_ERROR;
       QString msg   = o ? tr("Network connection established!") : tr("Error connecting to network!");
       int     tmout = o ? 1000                                  : 5000;
       mInfo(tr("Online state changed: %1 --> %2").arg(bOnline).arg(o));
-      emit sigStateMessage(state, msg, tmout);
+      emit sigStateMessage(state, pHtml->htmlTag("b", msg), tmout);
       bOnline = o;
 
       if (bOnline)
@@ -701,6 +705,8 @@ void QIptvCtrlClient::configChgd(const QNetworkConfiguration& config)
 //---------------------------------------------------------------------------
 void QIptvCtrlClient::slotAccessibilityChgd(QNetworkAccessManager::NetworkAccessibility acc)
 {
+   mInfo(tr("Network accessibility changed: %1").arg((int)acc));
+
    switch (acc)
    {
    case QNetworkAccessManager::NotAccessible:
@@ -756,6 +762,8 @@ bool QIptvCtrlClient::busy()
 //---------------------------------------------------------------------------
 void QIptvCtrlClient::startConnectionCheck()
 {
+   int tmOut;
+
    if (!isOnline())
    {
       QNetworkReply  *pRep;
@@ -772,10 +780,18 @@ void QIptvCtrlClient::startConnectionCheck()
          // mark reply as connection check ...
          prepareReply(pRep, (int)CIptvDefs::REQ_UNKNOWN, Iptv::chkconn);
       }
+
+      // if not connected check online state every 10 seconds ...
+      tmOut = 10 * 1000;
+   }
+   else
+   {
+      // when connected every 60 seconds ...
+      tmOut = 60 * 1000;
    }
 
    // (re-) trigger connection check ...
-   tConncheck.start();
+   tConncheck.start(tmOut);
 }
 
 //---------------------------------------------------------------------------

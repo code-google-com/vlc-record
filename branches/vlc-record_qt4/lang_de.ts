@@ -1028,32 +1028,32 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1711"/>
+        <location filename="cplayer.cpp" line="1717"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2002"/>
+        <location filename="cplayer.cpp" line="2008"/>
         <source>Error: Can&apos;t delete media item from media list!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2187"/>
+        <location filename="cplayer.cpp" line="2193"/>
         <source>Scan for Audio tracks:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2204"/>
+        <location filename="cplayer.cpp" line="2210"/>
         <source>-&gt; Audio track %1 %2%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2250"/>
+        <location filename="cplayer.cpp" line="2256"/>
         <source>%1 %2 deinterlace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2287"/>
+        <location filename="cplayer.cpp" line="2293"/>
         <source>Change audio track to id %1 (idx %2): %3!</source>
         <translation></translation>
     </message>
@@ -3073,72 +3073,88 @@ oder die Startzeit liegt nach der Endzeit!</translation>
 <context>
     <name>QIptvCtrlClient</name>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="122"/>
+        <location filename="qiptvctrlclient.cpp" line="121"/>
         <source>No.#%1, id=%2, type=&apos;%3&apos;, size=%4 bytes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="168"/>
+        <location filename="qiptvctrlclient.cpp" line="167"/>
         <source>Error, unknown request type: %1!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="357"/>
+        <location filename="qiptvctrlclient.cpp" line="190"/>
+        <source>Network response error #%1:
+  --&gt; %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="353"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;, data=&apos;%4&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="405"/>
+        <location filename="qiptvctrlclient.cpp" line="401"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="510"/>
+        <location filename="qiptvctrlclient.cpp" line="514"/>
         <source>Ignore old queued request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="569"/>
+        <location filename="qiptvctrlclient.cpp" line="495"/>
+        <source>called from %1(), busy(): %2, isOnline(): %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="573"/>
         <source>Prepend login request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="577"/>
+        <location filename="qiptvctrlclient.cpp" line="581"/>
         <source>Append last sent request (which triggered error) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="604"/>
+        <location filename="qiptvctrlclient.cpp" line="608"/>
         <source>Network connection established!</source>
         <translation>Netzwerkverbindung hergestellt!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="604"/>
+        <location filename="qiptvctrlclient.cpp" line="608"/>
         <source>Error connecting to network!</source>
         <translation>Netzwerkverbindungsfehler!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="606"/>
+        <location filename="qiptvctrlclient.cpp" line="610"/>
         <source>Online state changed: %1 --&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="613"/>
+        <location filename="qiptvctrlclient.cpp" line="617"/>
         <source>Synchronize request counter and acknowledge: %1 &lt;--&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="638"/>
+        <location filename="qiptvctrlclient.cpp" line="642"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="675"/>
+        <location filename="qiptvctrlclient.cpp" line="679"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="791"/>
+        <location filename="qiptvctrlclient.cpp" line="708"/>
+        <source>Network accessibility changed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="807"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>
@@ -3377,32 +3393,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Erinnere mich: </translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="40"/>
-        <location filename="qupdatenotifydlg.cpp" line="82"/>
+        <location filename="qupdatenotifydlg.cpp" line="31"/>
+        <location filename="qupdatenotifydlg.cpp" line="73"/>
         <source>Update Notification</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="42"/>
-        <location filename="qupdatenotifydlg.cpp" line="86"/>
+        <location filename="qupdatenotifydlg.cpp" line="33"/>
+        <location filename="qupdatenotifydlg.cpp" line="77"/>
         <source>Tomorrow</source>
         <translation>Morgen</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="43"/>
-        <location filename="qupdatenotifydlg.cpp" line="87"/>
+        <location filename="qupdatenotifydlg.cpp" line="34"/>
+        <location filename="qupdatenotifydlg.cpp" line="78"/>
         <source>In one week</source>
         <translation>In einer Woche</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="44"/>
-        <location filename="qupdatenotifydlg.cpp" line="88"/>
+        <location filename="qupdatenotifydlg.cpp" line="35"/>
+        <location filename="qupdatenotifydlg.cpp" line="79"/>
         <source>In one month</source>
         <translation>In einem Monat</translation>
     </message>
     <message>
-        <location filename="qupdatenotifydlg.cpp" line="46"/>
-        <location filename="qupdatenotifydlg.cpp" line="90"/>
+        <location filename="qupdatenotifydlg.cpp" line="37"/>
+        <location filename="qupdatenotifydlg.cpp" line="81"/>
         <source>Never for this release</source>
         <translation>Niemals für diese Version</translation>
     </message>

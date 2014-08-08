@@ -150,7 +150,7 @@ private:
 protected:
    QNetworkRequest& prepareRequest(QNetworkRequest& req, const QString &url, int iSize = -1);
    QNetworkReply*   prepareReply(QNetworkReply* rep, int iReqId, Iptv::eReqType t_req);
-   void workOffQueue ();
+   void workOffQueue (const QString& caller = QString());
    void setOnline(bool o);
    void generateStbSerial();
    bool stillOnlineOnError(QNetworkReply::NetworkError err);
@@ -158,7 +158,7 @@ protected:
 signals:
    void sigStringResponse (int reqId, QString strResp);
    void sigBinResponse (int reqId, QByteArray binResp);
-   void sigErr (int reqId, QString sErr, int iErr);
+   void sigApiErr (int reqId, QString sErr, int iErr);
 
    void sigM3u (int reqId, QString s);
    void sigHls (int reqId, QByteArray bHls);

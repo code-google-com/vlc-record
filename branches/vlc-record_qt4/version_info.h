@@ -33,11 +33,13 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
-| 2014-08-07: Version 2.69B12
+| 2014-08-08: Version 2.69B12
 | - add advertising LCD page
 | - add network state change message
 | - use 90 min as ad block for seen videos
-| - try to fix blocking API
+| - devide between network error and API error
+|   (equal error numbers lead to strange behavior)
+| - show network state message only when parent window exists
 |
 | 2014-08-06: Version 2.69B11
 | - use externals_inc.h to include global stuff

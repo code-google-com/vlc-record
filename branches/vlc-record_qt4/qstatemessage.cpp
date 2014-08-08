@@ -71,15 +71,15 @@ void QStateMessage::showMessage(int icon, const QString &msg, int iTmOut)
    // load pre-defined icons
    switch ((eIcon)icon)
    {
-   case QStateMessage::INFO:
+   case QStateMessage::S_INFO:
       ico.addFile(":/status/s_info");
       break;
 
-   case QStateMessage::WARNING:
+   case QStateMessage::S_WARNING:
       ico.addFile(":/status/s_warn");
       break;
 
-   case QStateMessage::ERROR:
+   case QStateMessage::S_ERROR:
       ico.addFile(":/status/s_error");
       break;
 
@@ -107,40 +107,43 @@ void QStateMessage::showMessage(const QIcon& icon, const QString &msg, int iTmOu
    // get parent widget, needed for positioning
    QWidget *pParent = parentWidget();
 
-   // place icon ...
-   ui->labIcon->setPixmap(icon.pixmap(40, 40));
-
-   // set text ...
-   ui->labMessage->setText(msg);
-
-   // start hide timer ...
-   if (iTmOut > 0)
-   {
-      m_tHide.start(iTmOut);
-   }
-   else
-   {
-      m_tHide.start();
-   }
-
-   // make positioning ...
    if (pParent != NULL)
    {
-      QPoint x = pParent->mapToGlobal(QPoint(0, 0));
-      int    w = pParent->width();
-      int    h = pParent->height();
+      // place icon ...
+      ui->labIcon->setPixmap(icon.pixmap(40, 40));
 
-      // position at center of parent ...
-      // x.setX(x.x() + w / 2 - width()  / 2);
-      // x.setY(x.y() + h / 2 - height() / 2);
+      // set text ...
+      ui->labMessage->setText(msg);
 
-      // position at lower right of parent ...
-      x.setX(x.x() + w - width()  - 50);
-      x.setY(x.y() + h - height() - 50);
+      // start hide timer ...
+      if (iTmOut > 0)
+      {
+         m_tHide.start(iTmOut);
+      }
+      else
+      {
+         m_tHide.start();
+      }
 
-      move(x);
+      // make positioning ...
+      if (pParent != NULL)
+      {
+         QPoint x = pParent->mapToGlobal(QPoint(0, 0));
+         int    w = pParent->width();
+         int    h = pParent->height();
+
+         // position at center of parent ...
+         // x.setX(x.x() + w / 2 - width()  / 2);
+         // x.setY(x.y() + h / 2 - height() / 2);
+
+         // position at lower right of parent ...
+         x.setX(x.x() + w - width()  - 50);
+         x.setY(x.y() + h - height() - 50);
+
+         move(x);
+      }
+
+      // start fade in ...
+      fadeIn();
    }
-
-   // start fade in ...
-   fadeIn();
 }
