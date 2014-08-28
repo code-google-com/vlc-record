@@ -1608,6 +1608,11 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    mkCase(CIptvDefs::REQ_EPG, slotEPG(resp));
 
    ///////////////////////////////////////////////
+   // Fills EPG browser and triggers the load
+   // of VOD genres (if there in account info).
+   mkCase(CIptvDefs::REQ_EPG_EXT, slotEPG(resp, true));
+
+   ///////////////////////////////////////////////
    // update channel map with following info
    mkCase(CIptvDefs::REQ_EPG_CURRENT, slotEPGCurrent (resp));
 
@@ -2186,8 +2191,12 @@ void Recorder::slotChanList (const QString &str)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotEPG(const QString &str)
+void Recorder::slotEPG(const QString &str, bool bExtEpg)
 {
+#ifndef _EXT_EPG
+   Q_UNUSED(bExtEpg)
+#endif // _EXT_EPG
+
    QVector<cparser::SEpg> epg;
 
    QDateTime   epgTime = tmSync.currentDateTimeSync().addDays(iEpgOffset);
@@ -2200,13 +2209,33 @@ void Recorder::slotEPG(const QString &str)
 
       if (!pApiParser->parseEpg(str, epg))
       {
+#ifdef _EXT_EPG
+         // extended EPG will prepend entries from the day before ...
+         if (Settings.extEpg())
+         {
+            if (!bExtEpg)
+            {
+               // buffer epg entry and request EPG one day before ...
+               epgBuff = epg;
+               pApiClient->queueRequest(CIptvDefs::REQ_EPG_EXT, cid, iEpgOffset - 1);
+               return;
+            }
+            else
+            {
+               // append todays epg ...
+               epg += epgBuff;
+            }
+         }
+#endif // _EXT_EPG
+
          cparser::SChan chan;
 
          if (!pChanMap->entry(cid, chan))
          {
             ui->textEpg->DisplayEpg(epg, chan.sName,
                                     cid, epgTime.toTime_t(),
-                                    accountInfo.bHasArchive ? chan.bHasArchive : false, chan.iTs);
+                                    accountInfo.bHasArchive ? chan.bHasArchive : false,
+                                    chan.iTs, Settings.extEpg());
 
             // fill epg control ...
             icon = qvariant_cast<QIcon>(idx.data(channellist::iconRole));

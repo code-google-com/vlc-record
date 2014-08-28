@@ -82,6 +82,10 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    }
 #endif
 
+#ifndef _EXT_EPG
+   m_ui->checkExtEPG->setVisible(false);
+#endif // _EXT_EPG
+
    // fill in values ...
    readSettings();
 }
@@ -225,6 +229,17 @@ void CSettingsDlg::readSettings()
       // enable by default ...
       m_ui->checkAds->setCheckState(Qt::Checked);
    }
+
+#ifdef _EXT_EPG
+   m_ui->checkExtEPG->setCheckState((Qt::CheckState)pDb->intValue("ExtEPG", &iErr));
+
+   // value doesn't exist in database ...
+   if (iErr)
+   {
+      // enable by default ...
+      m_ui->checkExtEPG->setCheckState(Qt::Checked);
+   }
+#endif // _EXT_EPG
 
    m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay", &iErr));
 
@@ -515,6 +530,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("2ClickPlay", (int)m_ui->check2ClicksToPlay->checkState());
    pDb->setValue("GPUAcc", (int)m_ui->checkGPUAcc->checkState());
    pDb->setValue("AdsEnabled", (int)m_ui->checkAds->checkState());
+   pDb->setValue("ExtEPG", (int)m_ui->checkExtEPG->checkState());
 
 #ifndef _HAS_VOD_MANAGER
    /////////////////////////////////////////////////////////////////////////////
@@ -1232,6 +1248,11 @@ bool CSettingsDlg::useGpuAcc()
 bool CSettingsDlg::showAds()
 {
    return m_ui->checkAds->isChecked();
+}
+
+bool CSettingsDlg::extEpg()
+{
+   return m_ui->checkExtEPG->isChecked();
 }
 
 uint CSettingsDlg::libVlcVerboseLevel()

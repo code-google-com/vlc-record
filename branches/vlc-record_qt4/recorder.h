@@ -197,6 +197,7 @@ private:
     QAuthDlg                        authDlg;
     QWaitWidget                     waitWidget;
     reqItem_t                       reRequest;
+    QVector<cparser::SEpg>          epgBuff;
 
 protected:
     void setDisplayMode(Ui::EDisplayMode newMode);
@@ -268,7 +269,7 @@ private slots:
     void on_channelList_clicked(QModelIndex index);
     void on_pushFilter_clicked();
     void slotChanList (const QString &str);
-    void slotEPG(const QString &str);
+    void slotEPG(const QString &str, bool bExtEpg = false);
     void slotEPGCurrent (const QString &str);
     void slotStreamURL (const QString &str);
     void slotArchivURL (const QString &str);

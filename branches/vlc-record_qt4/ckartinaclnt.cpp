@@ -193,6 +193,9 @@ int CKartinaClnt::queueRequest(CIptvDefs::EReq req, const QVariant& par_1, const
       case CIptvDefs::REQ_EPG:
          GetEPG(par_1.toInt(), par_2.toInt());
          break;
+      case CIptvDefs::REQ_EPG_EXT:
+         GetEPG(par_1.toInt(), par_2.toInt(), true);
+         break;
       case CIptvDefs::REQ_SERVER:
          SetServer(par_1.toString());
          break;
@@ -606,13 +609,13 @@ void CKartinaClnt::SetHttpBuffer(int iTime)
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::GetEPG(int iChanID, int iOffset)
+void CKartinaClnt::GetEPG(int iChanID, int iOffset, bool bExtEPG)
 {
    mInfo(tr("Request EPG for Channel %1 ...").arg(iChanID));
 
    QDate now = QDate::currentDate().addDays(iOffset);
 
-   q_get((int)CIptvDefs::REQ_EPG, sApiUrl + QString("epg?cid=%1&day=%2")
+   q_get((int)(bExtEPG ? CIptvDefs::REQ_EPG_EXT : CIptvDefs::REQ_EPG), sApiUrl + QString("epg?cid=%1&day=%2")
        .arg(iChanID).arg(now.toString("ddMMyy")));
 }
 

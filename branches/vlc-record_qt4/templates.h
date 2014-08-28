@@ -59,6 +59,8 @@
    #define TMPL_TAB_STYLE  "color: black; background-color: #036; width: 100%;"
    #define TMPL_A_STYLE    "color: black; background-color: rgb(255, 254, 212); padding: 3px;"
    #define TMPL_B_STYLE    "color: black; background-color: rgb(234, 221, 166); padding: 3px;"
+   #define TMPL_A_STYLE_GRAY "color: black; background-color: rgb(240, 240, 240); padding: 3px;"
+   #define TMPL_B_STYLE_GRAY "color: black; background-color: rgb(220, 220, 220); padding: 3px;"
    #define TMPL_INNER_TAB  "color: black; background-color: rgb(242, 230, 187); padding: 5px;"
    #define TMPL_TH_STYLE   "color: white; background-color: #820; padding: 3px; font: bold; text-align: center; vertical-align: middle;"
    #define TMPL_CUR_STYLE  "color: black; background-color: #fc0; padding: 3px;"

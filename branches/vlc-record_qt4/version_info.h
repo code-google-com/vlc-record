@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B12"
+#define BETA_EXT      "B13"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,9 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-08-08: Version 2.69B13
+| - add extended EPG (might be disabled in advanced settings)
+|
 | 2014-08-08: Version 2.69B12
 | - add advertising LCD page
 | - add network state change message

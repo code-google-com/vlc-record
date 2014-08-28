@@ -5,7 +5,8 @@ TRANSLATIONS = lang_de.ts \
                lang_ru.ts \
                lang_pl.ts
 DEFINES += ENABLE_AD_SWITCH \
-           _HAS_VOD_MANAGER
+           _HAS_VOD_MANAGER \
+           _EXT_EPG
 
 # stuff for QJSON ...
 DEFINES     += _USE_QJSON

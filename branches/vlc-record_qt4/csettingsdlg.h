@@ -74,6 +74,7 @@ public:
     bool doubleClickToPlay();
     bool useGpuAcc();
     bool showAds();
+    bool extEpg();
 
     int GetProxyPort ();
     int GetBufferTime ();
