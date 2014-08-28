@@ -33,7 +33,7 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
-| 2014-08-08: Version 2.69B13
+| 2014-08-28: Version 2.69B13
 | - add extended EPG (might be disabled in advanced settings)
 |
 | 2014-08-08: Version 2.69B12
