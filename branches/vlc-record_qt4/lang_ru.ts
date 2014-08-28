@@ -3376,10 +3376,16 @@ p, li { white-space: pre-wrap; }
     <name>QStringFilterWidgetAction</name>
     <message>
         <location filename="qstringfilterwidgetaction.h" line="105"/>
-        <location filename="qstringfilterwidgetaction.h" line="148"/>
+        <location filename="qstringfilterwidgetaction.h" line="149"/>
         <source>Channel filter: </source>
         <oldsource>Filter Channels for: </oldsource>
         <translation>Фильтр каналов: </translation>
+    </message>
+    <message>
+        <location filename="qstringfilterwidgetaction.h" line="110"/>
+        <source>Reset filter</source>
+        <oldsource>Delete string and reset filter</oldsource>
+        <translation>Сброс фильтра</translation>
     </message>
 </context>
 <context>

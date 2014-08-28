@@ -107,6 +107,7 @@ protected:
       _btnClean      = new QPushButton(ico, "", _me);
       _btnClean->setFlat(true);
       _btnClean->setGeometry(QRect(0, 0, 32, 32));
+      _btnClean->setToolTip(tr("Reset filter"));
 
       l->setSpacing(2);
       l->setMargin(4);
@@ -193,6 +194,7 @@ public slots:
    {
       _line->clear();
       emit sigFilter("");
+      lineFocus();
       // _parent->hide();
    }
 
