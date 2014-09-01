@@ -1894,7 +1894,7 @@ void Recorder::slotLogout(const QString &str)
    }
 
    mInfo(tr("logout done ..."));
-   QDialog::accept ();
+   QDialog::close();
 }
 
 /* -----------------------------------------------------------------\
@@ -4569,6 +4569,7 @@ void Recorder::savePositions()
    Settings.SaveSplitterSizes("spVChanEpg", ui->vSplitterChanEpg->sizes());
    Settings.SaveSplitterSizes("spVChanEpgPlay", ui->vSplitterChanEpgPlay->sizes());
    Settings.SaveSplitterSizes("spHPlay", ui->hSplitterPlayer ->sizes());
+   mInfo(tr("Positions saved ..."));
 }
 
 /* -----------------------------------------------------------------\
