@@ -3816,6 +3816,12 @@ dataDir: %1
         <translation>Ваша подписка истекает через %1 дня/дней.&lt;br /&gt;Посетите %2 продлевать её!</translation>
     </message>
     <message>
+        <location filename="recorder.cpp" line="47"/>
+        <source> - Portable Edition</source>
+        <oldsource>Portable Edition</oldsource>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="recorder.cpp" line="1921"/>
         <source>Authentication error</source>
         <translation>Ошибка идентификации</translation>
@@ -3910,7 +3916,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="4572"/>
         <source>Positions saved ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5888"/>

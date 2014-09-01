@@ -3856,6 +3856,12 @@ dataDir: %1
         <translation>Tutaj dostępna jest %1 of %2 nowa wersja.&lt;br /&gt;Kliknij %3, aby pobrać!</translation>
     </message>
     <message>
+        <location filename="recorder.cpp" line="47"/>
+        <source> - Portable Edition</source>
+        <oldsource>Portable Edition</oldsource>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="recorder.cpp" line="154"/>
         <source>Starting: %1 / Version: %2</source>
         <translation></translation>
@@ -3992,7 +3998,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="4572"/>
         <source>Positions saved ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5888"/>

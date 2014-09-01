@@ -3718,6 +3718,12 @@ dataDir: %1
         <translation>Es ist eine neue Version von %2 verfügbar (%1).&lt;br /&gt;Bitte klicken Sie %3, um das Update downzuladen!</translation>
     </message>
     <message>
+        <location filename="recorder.cpp" line="47"/>
+        <source> - Portable Edition</source>
+        <oldsource>Portable Edition</oldsource>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="recorder.cpp" line="154"/>
         <source>Starting: %1 / Version: %2</source>
         <oldsource>Starting %1 Version: %2</oldsource>
@@ -3895,7 +3901,7 @@ dataDir: %1
     <message>
         <location filename="recorder.cpp" line="4572"/>
         <source>Positions saved ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5888"/>

@@ -44,7 +44,7 @@ Recorder::Recorder(QWidget *parent)
    eOldDMode = Ui::DM_NORMAL;
 
    // set (customized) windows title ...
-   setWindowTitle(pCustomization->strVal("APP_NAME"));
+   setWindowTitle(QString("%1%2").arg(pCustomization->strVal("APP_NAME")).arg(pFolders->portable() ? tr(" - Portable Edition") : ""));
 
 #ifndef _HAS_VOD_LANG
    // hide vod language stuff if needed ...
