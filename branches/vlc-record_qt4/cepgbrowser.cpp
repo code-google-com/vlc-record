@@ -163,6 +163,7 @@ QString CEpgBrowser::createHtmlCode()
          // special handling for extended EPG ...
          if (bExtEPG)
          {
+#ifdef __MY_EXT_EPG
             // don't show entries older then 22:00 last day ...
             if (dtStartThis < dayStart.addSecs(-EXT_EPG_TIME))
             {
@@ -173,6 +174,11 @@ QString CEpgBrowser::createHtmlCode()
             if ((dtStartThis < dayStart) || (dtStartThis > dayStart.addDays(1)))
             {
                bGray = true;
+#else
+            if ((dtStartThis < dayStart) || (dtStartThis > dayStart.addDays(1)))
+            {
+               continue;
+#endif // __MY_EXT_EPG
             }
             else if (iFs == 0)
             {

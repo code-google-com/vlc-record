@@ -223,6 +223,8 @@ else:unix {
    OTHER_FILES += create_install_mak.sh \
                   documentation/create_qthelp.sh
    QMAKE_POST_LINK = ./create_install_mak.sh $$basename(TARGET)
+#   LIBS += -L/home/joergn/libvlc \
+#        -Wl,-rpath lib
 }
 
 #############
