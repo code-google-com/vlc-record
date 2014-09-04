@@ -143,7 +143,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    connect(ui->videoWidget, SIGNAL(sigDeinterlace(bool)), this, SLOT(slotDeinterlace(bool)));
    connect(ui->videoWidget, SIGNAL(sigNewATrack(int)), this, SLOT(slotChangeATrack(int)));
 
-   connect (this, SIGNAL(sigStateMessage(int,QString)), pStateMsg, SLOT(showMessage(int,QString)));
+   connect (this, SIGNAL(sigStateMessage(int,QString,int)), pStateMsg, SLOT(showMessage(int,QString,int)));
 
    // update position slider every second ...
    sliderTimer.start(1000);
@@ -1419,7 +1419,7 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
          if (pos > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
             QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
-            emit sigStateMessage((int)QStateMessage::S_WARNING, s);
+            emit sigStateMessage((int)QStateMessage::S_WARNING, s, 7000);
          }
          else
          {
@@ -1613,7 +1613,7 @@ void CPlayer::slotSliderPosChanged()
          if (position > (tmSync.syncronizedTime_t() - ARCHIV_OFFSET))
          {
             QString s = pHtml->htmlTag("b", tr("Archive is not yet available for this time!"));
-            emit sigStateMessage((int)QStateMessage::S_WARNING, s);
+            emit sigStateMessage((int)QStateMessage::S_WARNING, s, 7000);
          }
          else if (abs(position - timer.pos()) <= 10)
          {

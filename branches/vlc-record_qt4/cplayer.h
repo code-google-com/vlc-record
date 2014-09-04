@@ -161,7 +161,7 @@ signals:
    void sigBuffPercent(int);
    void sigAudioTracks(QLangVector);
    void sigStopOnDemand();
-   void sigStateMessage(int, const QString&);
+   void sigStateMessage(int, const QString&, int);
 };
 
 #endif /* __022410__CPLAYER_H */
