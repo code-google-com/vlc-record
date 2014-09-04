@@ -190,6 +190,14 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
          mInfo(tr("Network response error #%1:\n  --> %2").arg((int)reply->error()).arg(sErr));
 
          QTimer::singleShot(1000, this, SLOT(startConnectionCheck()));
+
+         // an error while downloading an image might appear ...
+         if (((Iptv::eReqType)iReqType == Iptv::Binary)
+            && ((CIptvDefs::EReq)iReqId == CIptvDefs::REQ_DOWN_IMG))
+         {
+            mInfo(tr("Keeping image download chain intact ..."));
+            emit sigBinResponse(iReqId, QByteArray());
+         }
       }
    }
 

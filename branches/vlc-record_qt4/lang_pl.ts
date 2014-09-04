@@ -124,23 +124,23 @@ p, li { white-space: pre-wrap; }
         <translation>Brak informacji!</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="248"/>
+        <location filename="cepgbrowser.cpp" line="254"/>
         <source>play from archive ...</source>
         <translation>Odtwarzaj z archiwum …</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="260"/>
+        <location filename="cepgbrowser.cpp" line="266"/>
         <source>record from archive ...</source>
         <translation>Nagrywaj z archiwum …</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="274"/>
+        <location filename="cepgbrowser.cpp" line="280"/>
         <source>add to watch list ...</source>
         <oldsource>watch later ...</oldsource>
         <translation>Dodaj do listy odtwarzania ...</translation>
     </message>
     <message>
-        <location filename="cepgbrowser.cpp" line="229"/>
+        <location filename="cepgbrowser.cpp" line="235"/>
         <source>add timer record ...</source>
         <translation>Dodaj zegar nagrywania …</translation>
     </message>
@@ -3070,62 +3070,67 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="495"/>
+        <location filename="qiptvctrlclient.cpp" line="198"/>
+        <source>Keeping image download chain intact ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qiptvctrlclient.cpp" line="503"/>
         <source>called from %1(), busy(): %2, isOnline(): %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="514"/>
+        <location filename="qiptvctrlclient.cpp" line="522"/>
         <source>Ignore old queued request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="573"/>
+        <location filename="qiptvctrlclient.cpp" line="581"/>
         <source>Prepend login request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="581"/>
+        <location filename="qiptvctrlclient.cpp" line="589"/>
         <source>Append last sent request (which triggered error) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="608"/>
+        <location filename="qiptvctrlclient.cpp" line="616"/>
         <source>Network connection established!</source>
         <translation>Podłączone do sieci!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="608"/>
+        <location filename="qiptvctrlclient.cpp" line="616"/>
         <source>Error connecting to network!</source>
         <translation>Błąd połączenia z siecią!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="617"/>
+        <location filename="qiptvctrlclient.cpp" line="625"/>
         <source>Synchronize request counter and acknowledge: %1 &lt;--&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="642"/>
+        <location filename="qiptvctrlclient.cpp" line="650"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="679"/>
+        <location filename="qiptvctrlclient.cpp" line="687"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="708"/>
+        <location filename="qiptvctrlclient.cpp" line="716"/>
         <source>Network accessibility changed: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="807"/>
+        <location filename="qiptvctrlclient.cpp" line="815"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="610"/>
+        <location filename="qiptvctrlclient.cpp" line="618"/>
         <source>Online state changed: %1 --&gt; %2</source>
         <translation></translation>
     </message>
@@ -3135,12 +3140,12 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="353"/>
+        <location filename="qiptvctrlclient.cpp" line="361"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;, data=&apos;%4&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="401"/>
+        <location filename="qiptvctrlclient.cpp" line="409"/>
         <source>id=%1, type=&apos;%2&apos;, url=&apos;%3&apos;</source>
         <translation></translation>
     </message>
