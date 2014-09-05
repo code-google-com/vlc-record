@@ -1551,106 +1551,111 @@ p, li { white-space: pre-wrap; }
         <translation>Все протоколы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="451"/>
+        <location filename="csettingsdlg.cpp" line="455"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="446"/>
+        <location filename="csettingsdlg.cpp" line="450"/>
         <source>Executables (*.exe)</source>
         <translation>Программфайл (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="448"/>
+        <location filename="csettingsdlg.cpp" line="452"/>
         <source>Executables (*)</source>
         <translation>Программфайл (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="491"/>
+        <location filename="csettingsdlg.cpp" line="495"/>
         <source>Target Folder</source>
         <translation>Папка для записи</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="697"/>
+        <location filename="csettingsdlg.cpp" line="701"/>
         <source>Mobile</source>
         <translation>Мобильный</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="701"/>
+        <location filename="csettingsdlg.cpp" line="705"/>
         <source>Eco</source>
         <translation>Эко</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="156"/>
         <location filename="forms/csettingsdlg.ui" line="175"/>
-        <location filename="csettingsdlg.cpp" line="705"/>
+        <location filename="csettingsdlg.cpp" line="709"/>
         <source>Standard</source>
         <translation>Стандарт</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="709"/>
+        <location filename="csettingsdlg.cpp" line="713"/>
         <source>Premium</source>
         <translation>Премиум</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="713"/>
+        <location filename="csettingsdlg.cpp" line="717"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation>%1 Кбит/с</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1457"/>
+        <location filename="csettingsdlg.cpp" line="1461"/>
         <source>blood</source>
         <translation>кровь</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1458"/>
+        <location filename="csettingsdlg.cpp" line="1462"/>
         <source>violence</source>
         <translation>насилие</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1461"/>
+        <location filename="csettingsdlg.cpp" line="1465"/>
         <source>porn</source>
         <translation>порнография</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1462"/>
+        <location filename="csettingsdlg.cpp" line="1466"/>
         <source>horror</source>
         <translation>ужасы</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1459"/>
-        <location filename="csettingsdlg.cpp" line="1460"/>
+        <location filename="csettingsdlg.cpp" line="1463"/>
+        <location filename="csettingsdlg.cpp" line="1464"/>
         <source>obscene</source>
         <translation>непристойности</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1494"/>
+        <location filename="csettingsdlg.cpp" line="89"/>
+        <source>EPG day starts at 0:00</source>
+        <translation>Телегид начинается в 0:00</translation>
+    </message>
+    <message>
+        <location filename="csettingsdlg.cpp" line="1498"/>
         <source>hide</source>
         <translation>скрывать</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1495"/>
+        <location filename="csettingsdlg.cpp" line="1499"/>
         <source>show</source>
         <translation>показывать</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1496"/>
+        <location filename="csettingsdlg.cpp" line="1500"/>
         <source>password protected</source>
         <translation>защищен паролем</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1688"/>
+        <location filename="csettingsdlg.cpp" line="1692"/>
         <source>Changed VOD Rate: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1767"/>
+        <location filename="csettingsdlg.cpp" line="1771"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1768"/>
+        <location filename="csettingsdlg.cpp" line="1772"/>
         <source>&lt;b&gt;Please check the data entered.&lt;/b&gt;
 &lt;br /&gt; &lt;br /&gt;
 To change the parent code make sure:
@@ -1682,13 +1687,13 @@ To change the parent code make sure:
 &lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1819"/>
+        <location filename="csettingsdlg.cpp" line="1823"/>
         <source>Information</source>
         <translation>Информация</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1819"/>
-        <location filename="csettingsdlg.cpp" line="1820"/>
+        <location filename="csettingsdlg.cpp" line="1823"/>
+        <location filename="csettingsdlg.cpp" line="1824"/>
         <source>Parent Code successfully changed.</source>
         <translation>Родительский пароль успешно изменен.</translation>
     </message>
@@ -3116,7 +3121,7 @@ or start time is later than end time!</source>
     <message>
         <location filename="qiptvctrlclient.cpp" line="198"/>
         <source>Keeping image download chain intact ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qiptvctrlclient.cpp" line="581"/>
