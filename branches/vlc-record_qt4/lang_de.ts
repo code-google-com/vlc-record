@@ -1551,111 +1551,112 @@ p, li { white-space: pre-wrap; }
         <translation>Logge alles</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="455"/>
+        <location filename="csettingsdlg.cpp" line="457"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="450"/>
+        <location filename="csettingsdlg.cpp" line="452"/>
         <source>Executables (*.exe)</source>
         <translation>ausführbar (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="452"/>
+        <location filename="csettingsdlg.cpp" line="454"/>
         <source>Executables (*)</source>
         <translation>ausführbar (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="495"/>
+        <location filename="csettingsdlg.cpp" line="497"/>
         <source>Target Folder</source>
         <translation>Zielverzeichnis</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="701"/>
+        <location filename="csettingsdlg.cpp" line="703"/>
         <source>Mobile</source>
         <translation>Handy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="705"/>
+        <location filename="csettingsdlg.cpp" line="707"/>
         <source>Eco</source>
         <translation></translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="156"/>
         <location filename="forms/csettingsdlg.ui" line="175"/>
-        <location filename="csettingsdlg.cpp" line="709"/>
+        <location filename="csettingsdlg.cpp" line="711"/>
         <source>Standard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="713"/>
+        <location filename="csettingsdlg.cpp" line="715"/>
         <source>Premium</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="717"/>
+        <location filename="csettingsdlg.cpp" line="719"/>
         <source>%1 Kbit/s</source>
         <oldsource>Bitrate: %1Kbit/s</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1461"/>
+        <location filename="csettingsdlg.cpp" line="1463"/>
         <source>blood</source>
         <translation>blut</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1462"/>
+        <location filename="csettingsdlg.cpp" line="1464"/>
         <source>violence</source>
         <translation>gewalt</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1465"/>
+        <location filename="csettingsdlg.cpp" line="1467"/>
         <source>porn</source>
         <translation>porno</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1466"/>
+        <location filename="csettingsdlg.cpp" line="1468"/>
         <source>horror</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1463"/>
-        <location filename="csettingsdlg.cpp" line="1464"/>
+        <location filename="csettingsdlg.cpp" line="1465"/>
+        <location filename="csettingsdlg.cpp" line="1466"/>
         <source>obscene</source>
         <translation>obszönitäten</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="89"/>
+        <location filename="csettingsdlg.cpp" line="363"/>
         <source>EPG day starts at 0:00</source>
         <translation>EPG startet um 0:00Uhr</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1498"/>
+        <location filename="csettingsdlg.cpp" line="1500"/>
         <source>hide</source>
         <translation>verstecken</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1499"/>
+        <location filename="csettingsdlg.cpp" line="1501"/>
         <source>show</source>
         <translation>zeigen</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1500"/>
+        <location filename="csettingsdlg.cpp" line="1502"/>
         <source>password protected</source>
         <translation>passwortgeschützt</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1692"/>
+        <location filename="csettingsdlg.cpp" line="1694"/>
         <source>Changed VOD Rate: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1771"/>
+        <location filename="csettingsdlg.cpp" line="1773"/>
         <source>Error!</source>
         <translation>Fehler!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1772"/>
+        <location filename="csettingsdlg.cpp" line="1774"/>
         <source>&lt;b&gt;Please check the data entered.&lt;/b&gt;
 &lt;br /&gt; &lt;br /&gt;
 To change the parent code make sure:
@@ -1687,13 +1688,13 @@ Um den Eltern-Code zu ändern, stellen Sie sicher, dass:
 &lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1823"/>
+        <location filename="csettingsdlg.cpp" line="1825"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1823"/>
-        <location filename="csettingsdlg.cpp" line="1824"/>
+        <location filename="csettingsdlg.cpp" line="1825"/>
+        <location filename="csettingsdlg.cpp" line="1826"/>
         <source>Parent Code successfully changed.</source>
         <translation>Eltern-Code erfolgreich geändert.</translation>
     </message>
