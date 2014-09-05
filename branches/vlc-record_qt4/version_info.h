@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B15"
+#define BETA_EXT      "B16"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,10 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-09-05: Version 2.69B16
+| - change icons for mute checkbox to make it more visible
+| - archive not available is shown now for 7 seconds
+|
 | 2014-09-04: Version 2.69B15
 | - bugfix for broken image download chain in case of missing
 |   image
