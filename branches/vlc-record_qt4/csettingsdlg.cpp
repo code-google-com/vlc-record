@@ -12,6 +12,7 @@
 #include "csettingsdlg.h"
 #include "ui_csettingsdlg.h"
 #include <QRadioButton>
+#include <QMessageBox>
 #include "externals_inc.h"
 
 
@@ -44,6 +45,8 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
       connect(pShortVerbLevel, SIGNAL(activated()), this, SLOT(slotEnableVlcVerbLine()));
    }
 
+   m_iServerBitrate   = -1;
+   m_iServerTimeShift = -1;
 
    // set company name for login data ...
    QString s = m_ui->groupAccount->title();
@@ -379,6 +382,78 @@ void CSettingsDlg::changeEvent(QEvent *e)
     }
 }
 
+//---------------------------------------------------------------------------
+//
+//! \brief   check if chosen bitrate and timeshift makes sende
+//
+//! \author  Jo2003
+//! \date    14.09.2014
+//
+//! \param   iBitRate [in] (int) chosen bitrate
+//! \param   iTimeShift [in] (int) chosen timeshift
+//! \param   what [in] (const QString &) what to check
+//
+//! \return  true -> emit changed signal; false -> don't emit
+//---------------------------------------------------------------------------
+bool CSettingsDlg::checkBitrateAndTimeShift(int iBitRate, int iTimeShift, const QString &what)
+{
+   bool bSendSig = true;
+
+   if ((showInfo.playState() == IncPlay::PS_PLAY)
+       && (showInfo.showType() == ShowInfo::Archive))
+   {
+      // get informaion about the channel from showinfo
+      int     cid = showInfo.channelId();
+      bool    bArchHasTs = false;
+      QString msg;
+      QMap<int, QString> brMap;
+      brMap[320]  = tr("Mobile");
+      brMap[900]  = tr("Eco");
+      brMap[1500] = tr("Standard");
+      brMap[2500] = tr("Premium");
+
+      if (pChanMap->contains(cid))
+      {
+         cparser::SChan chan = pChanMap->value(cid);
+
+         for (int i = 0; ((i < chan.vTs.count()) && !bArchHasTs); i ++)
+         {
+            if ((chan.vTs.at(i).iTimeShift == iTimeShift)
+                && (chan.vTs.at(i).iBitRate == iBitRate))
+            {
+               bArchHasTs = true;
+            }
+         }
+
+         if (!bArchHasTs)
+         {
+            QMessageBox::StandardButton btn;
+            msg  = tr("The archive for channel '%1' isn't available in your combination of bitrate (%2) and timeshift (%3)!")
+                  .arg(showInfo.chanName()).arg(brMap[iBitRate]).arg(iTimeShift);
+            msg += "<br>";
+            msg += tr("Following table shows the available combinations:");
+            msg += pHtml->createBitrateTsTable(chan.vTs);
+            msg += "<br> <br>";
+            msg += pHtml->htmlTag("b", tr("Do you want to activate the new %1? The player will switch to 'Live' then.").arg(what));
+
+            btn = QMessageBox::information(this, tr("Information"), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+            if (btn == QMessageBox::No)
+            {
+               bSendSig = false;
+            }
+            else if (btn == QMessageBox::Yes)
+            {
+               // emulate Live show ...
+               showInfo.setShowType(ShowInfo::Live);
+            }
+         }
+      }
+   }
+
+   return bSendSig;
+}
+
 /* -----------------------------------------------------------------\
 |  Method: slotEnableApiServer [slot]
 |  Begin: 02.02.2011 / 12:00
@@ -689,6 +764,9 @@ void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
    QVector<int>::const_iterator cit;
    QString sName;
 
+   // backup bitrate ...
+   m_iServerBitrate = iActrate;
+
    if (!vValues.isEmpty())
    {
       m_ui->cbxBitRate->clear();
@@ -761,6 +839,8 @@ void CSettingsDlg::fillTimeShiftCbx(const QVector<int> &vVals, int iAct)
    int iCount  = 0;
    QVector<int>::const_iterator cit;
 
+   m_iServerTimeShift = iAct;
+
    if (!vVals.isEmpty())
    {
       m_ui->cbxTimeShift->clear();
@@ -820,7 +900,23 @@ void CSettingsDlg::on_cbxStreamServer_activated(int index)
 \----------------------------------------------------------------- */
 void CSettingsDlg::on_cbxBitRate_activated(int index)
 {
-   emit sigSetBitRate(m_ui->cbxBitRate->itemData(index).toInt());
+   int  ts    = m_ui->cbxTimeShift->itemData(m_ui->cbxTimeShift->currentIndex()).toInt();
+   int  br    = m_ui->cbxBitRate->itemData(index).toInt();
+   bool bSend = checkBitrateAndTimeShift(br, ts, tr("bitrate"));
+
+   if (!bSend)
+   {
+      // return to the default bitrate ...
+      if ((index = m_ui->cbxBitRate->findData(m_iServerBitrate)) != -1)
+      {
+         m_ui->cbxBitRate->setCurrentIndex(index);
+      }
+   }
+   else
+   {
+      m_iServerBitrate = br;
+      emit sigSetBitRate(br);
+   }
 }
 
 /* -----------------------------------------------------------------\
@@ -835,10 +931,26 @@ void CSettingsDlg::on_cbxBitRate_activated(int index)
 \----------------------------------------------------------------- */
 void CSettingsDlg::on_cbxTimeShift_activated(int index)
 {
-   // store global ...
-   tmSync.setTimeShift(m_ui->cbxTimeShift->itemData(index).toInt());
+   int  ts    = m_ui->cbxTimeShift->itemData(index).toInt();
+   int  br    = m_ui->cbxBitRate->itemData(m_ui->cbxBitRate->currentIndex()).toInt();
+   bool bSend = checkBitrateAndTimeShift(br, ts, tr("timeshift"));
 
-   emit sigSetTimeShift(m_ui->cbxTimeShift->itemData(index).toInt());
+   if (!bSend)
+   {
+      // return to the default timeshift ...
+      if ((index = m_ui->cbxTimeShift->findData(m_iServerTimeShift)) != -1)
+      {
+         m_ui->cbxTimeShift->setCurrentIndex(index);
+      }
+   }
+   else
+   {
+      m_iServerTimeShift = ts;
+
+      // store global ...
+      tmSync.setTimeShift(ts);
+      emit sigSetTimeShift(ts);
+   }
 }
 
 /* -----------------------------------------------------------------\

@@ -113,6 +113,7 @@ public:
 
 protected:
     virtual void changeEvent(QEvent *e);
+    bool checkBitrateAndTimeShift(int iBitRate, int iTimeShift, const QString& what);
 
 private:
     Ui::CSettingsDlg  *m_ui;
@@ -124,6 +125,8 @@ private:
     QVector<cparser::SVodRate>   vodRatesVector;
     const cparser::SAccountInfo *pAccountInfo;
     bool                         bSettingsRead;
+    int                          m_iServerBitrate;
+    int                          m_iServerTimeShift;
 
 signals:
     void sigReloadLogos ();
