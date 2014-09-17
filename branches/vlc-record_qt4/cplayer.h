@@ -98,7 +98,6 @@ protected:
 private:
    Ui::CPlayer                 *ui;
    QTimer                       sliderTimer;
-   QTimer                       tAspectShot;
    QTimer                       tEventPoll;
    QTimerEx                     timer;
    QTime                        tPaused;

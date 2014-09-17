@@ -1,4 +1,4 @@
-/*********************** Information *************************\
+﻿/*********************** Information *************************\
 | $HeadURL$
 |
 | Author: Jo2003
@@ -98,10 +98,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    missionControl.vidFormCbxClear(QFusionControl::CBX_CROP);
    missionControl.vidFormCbxInsertValues(0, slKey, QFusionControl::CBX_CROP);
 
-   // set aspect shot timer to single shot ...
-   tAspectShot.setSingleShot (true);
-   tAspectShot.setInterval (2500);
-
    // poll for state change events with 250ms interval ...
    tEventPoll.setInterval(250);
 
@@ -123,9 +119,6 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
 
    // connect slider timer with slider position slot ...
    connect(&sliderTimer, SIGNAL(timeout()), this, SLOT(slotUpdateSlider()));
-
-   // connect aspect shot timer with aspect change function ...
-   connect(&tAspectShot, SIGNAL(timeout()), this, SLOT(slotStoredAspectCrop()));
 
    // connect slider click'n'Go ...
    connect(&missionControl, SIGNAL(sigPosClickNGo(int)), this, SLOT(slotSliderPosChanged()));
@@ -398,7 +391,8 @@ int CPlayer::initPlayer(const QString &sOpts)
                   libvlc_MediaPlayerPaused,
                   libvlc_MediaPlayerStopped,
                   libvlc_MediaPlayerEndReached,
-                  libvlc_MediaPlayerBuffering
+                  libvlc_MediaPlayerBuffering,
+                  libvlc_MediaPlayerVout,
                };
 
                // so far so good ...
@@ -1194,8 +1188,6 @@ void CPlayer::slotEventPoll()
             {
                emit sigPlayState((int)IncPlay::PS_PLAY);
             }
-            tAspectShot.start();
-            startPlayTimer();
             initSlider();
             break;
 
@@ -1219,6 +1211,13 @@ void CPlayer::slotEventPoll()
             mInfo("libvlc_MediaPlayerEndReached ...");
             emit sigPlayState((int)IncPlay::PS_END);
             stopPlayTimer();
+            break;
+
+         // showing video ...
+         case libvlc_MediaPlayerVout:
+            mInfo("libvlc_MediaPlayerVout ...");
+            startPlayTimer();
+            slotStoredAspectCrop();
             break;
 
          default:

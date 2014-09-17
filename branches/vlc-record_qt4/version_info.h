@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B16"
+#define BETA_EXT      "B17"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,12 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-09-17: Version 2.69B17
+| - reduce blocking time when spooling is active (as possible)
+| - in case of non existing archive let the user decide
+|   if he wants to force new value or revert to last settings
+| - spooling time can be re-triggered with time update
+|
 | 2014-09-05: Version 2.69B16
 | - change icons for mute checkbox to make it more visible
 | - archive not available is shown now for 7 seconds
