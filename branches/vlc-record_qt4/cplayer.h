@@ -71,7 +71,7 @@ public:
    void setSettings (CSettingsDlg *pDlg);
    bool isPositionable();
    void initSlider ();
-   uint getSilderPos();
+   uint getSliderPos();
    QVlcVideoWidget* getAndRemoveVideoWidget();
    void  addAndEmbedVideoWidget();
    ulong libvlcVersion();

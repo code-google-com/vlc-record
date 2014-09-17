@@ -14,6 +14,7 @@
 #include "ui_recorder_inc.h"
 #include "qoverlayicon.h"
 #include "externals_inc.h"
+#include "QTime"
 
 /* -----------------------------------------------------------------\
 |  Method: Recorder / constructor
@@ -42,6 +43,7 @@ Recorder::Recorder(QWidget *parent)
    ui->vMainLayout->addLayout(stackedLayout);
    eCurDMode = Ui::DM_NORMAL;
    eOldDMode = Ui::DM_NORMAL;
+   m_iJumpValue = 0;
 
    // set (customized) windows title ...
    setWindowTitle(QString("%1%2").arg(pCustomization->strVal("APP_NAME")).arg(pFolders->portable() ? tr(" - Portable Edition") : ""));
@@ -67,6 +69,10 @@ Recorder::Recorder(QWidget *parent)
    m_tVodSearch.setSingleShot(true);
    m_tVodSearch.setInterval(666);
 
+   // time jump timer ...
+   m_tTimeJump.setSingleShot(true);
+   m_tTimeJump.setInterval(1500);
+
    // state message stuff ...
    pStateMsg->setParent(this, Qt::Window | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
    pStateMsg->hide();
@@ -79,6 +85,7 @@ Recorder::Recorder(QWidget *parent)
    missionControl.addButton(ui->pushBwd,      QFusionControl::BTN_BWD);
    missionControl.addButton(ui->pushScrnShot, QFusionControl::BTN_SCRSHOT);
    missionControl.addJumpBox(ui->cbxTimeJumpVal);
+   missionControl.addTargetTimeLabel(ui->labTargetTime);
 
    // init account info ...
    accountInfo.bHasArchive = false;
@@ -300,6 +307,7 @@ Recorder::Recorder(QWidget *parent)
    // new VOD search ...
    connect (ui->lineVodSearch, SIGNAL(textEdited(QString)), &m_tVodSearch, SLOT(start()));
    connect (&m_tVodSearch,     SIGNAL(timeout()), this, SLOT(slotDoVodSearch()));
+   connect (&m_tTimeJump,      SIGNAL(timeout()), this, SLOT(slotFinallyJump()));
 
    // trigger read of saved timer records ...
    timeRec.ReadRecordList();
@@ -611,7 +619,7 @@ void Recorder::on_pushSettings_clicked()
          else if (showInfo.showType() == ShowInfo::Archive)
          {
             // create request to get current channel / position ...
-            quint64 pos = ui->player->getSilderPos();
+            quint64 pos = ui->player->getSliderPos();
             QString req = QString("cid=%1&gmt=%2").arg(showInfo.channelId()).arg(pos);
 
             reRequest.bValid = true;
@@ -1445,7 +1453,7 @@ void Recorder::slotRecord()
          if (AllowAction(IncPlay::PS_RECORD))
          {
             // archive play active ...
-            uint    gmt = ui->player->getSilderPos ();
+            uint    gmt = ui->player->getSliderPos ();
             QString req = QString("cid=%1&gmt=%2").arg(showInfo.channelId()).arg(gmt);
 
             showInfo.setPlayState(IncPlay::PS_RECORD);
@@ -1514,11 +1522,26 @@ void Recorder::slotRecord()
 \----------------------------------------------------------------- */
 void Recorder::slotBwd()
 {
-   // we have minutes but need seconds --> x 60!!!
-   int iJmpVal = missionControl.getJumpValue() * 60;
+   int iNewPos = 0;
+   QTime tm(0, 0, 0);
 
-   // jump ...
-   ui->player->slotTimeJumpRelative(-iJmpVal);
+   // we have minutes but need seconds --> x 60!!!
+   m_iJumpValue -= missionControl.getJumpValue() * 60;
+
+   // compute new position after time jump ...
+   iNewPos  = missionControl.posValue() - missionControl.posMinimum();
+   iNewPos += m_iJumpValue;
+
+   tm = tm.addSecs(iNewPos);
+
+   QString s = QString("%1%2%3 > %4")
+         .arg((m_iJumpValue >= 0) ? "+" : "").arg(m_iJumpValue / 60)
+         .arg(tr("min")).arg(tm.toString("H:mm:ss"));
+
+   missionControl.setTargetTime(s);
+
+   // (re-)trigger jump timer
+   m_tTimeJump.start();
 }
 
 /* -----------------------------------------------------------------\
@@ -1533,12 +1556,44 @@ void Recorder::slotBwd()
 \----------------------------------------------------------------- */
 void Recorder::slotFwd()
 {
-   // we have minutes but need seconds --> x 60!!!
-   int iJmpVal = missionControl.getJumpValue() * 60;
+   int iNewPos = 0;
+   QTime tm(0, 0, 0);
 
-   // jump ...
-   ui->player->slotTimeJumpRelative(iJmpVal);
+   // we have minutes but need seconds --> x 60!!!
+   m_iJumpValue += missionControl.getJumpValue() * 60;
+
+   // compute new position after time jump ...
+   iNewPos  = missionControl.posValue() - missionControl.posMinimum();
+   iNewPos += m_iJumpValue;
+
+   tm = tm.addSecs(iNewPos);
+
+   QString s = QString("%1%2%3 > %4")
+         .arg((m_iJumpValue >= 0) ? "+" : "").arg(m_iJumpValue / 60)
+         .arg(tr("min")).arg(tm.toString("H:mm:ss"));
+
+   missionControl.setTargetTime(s);
+
+   // (re-)trigger jump timer
+   m_tTimeJump.start();
 }
+
+//---------------------------------------------------------------------------
+//
+//! \brief   make time jump [slot]
+//
+//! \author  Jo2003
+//! \date    17.09.2014
+//
+//---------------------------------------------------------------------------
+void Recorder::slotFinallyJump()
+{
+   // jump ...
+   ui->player->slotTimeJumpRelative(m_iJumpValue);
+   m_iJumpValue = 0;
+   missionControl.setTargetTime("");
+}
+
 
 /* -----------------------------------------------------------------\
 |  Method: show [slot]

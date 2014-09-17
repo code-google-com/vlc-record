@@ -55,6 +55,7 @@ QOverlayedControl::QOverlayedControl(QWidget *parent, Qt::WindowFlags f) :
    missionControl.addLengthLab(ui->labLength);
    missionControl.addInfoLab(ui->labMoveHandle);
    missionControl.addMuteBtn(ui->checkMute);
+   missionControl.addTargetTimeLabel(ui->labTargetTime);
 
    missionControl.addVidFormCbx(ui->cbxAspect, QFusionControl::CBX_ASPECT);
    missionControl.addVidFormCbx(ui->cbxCrop, QFusionControl::CBX_CROP);

@@ -198,6 +198,8 @@ private:
     QWaitWidget                     waitWidget;
     reqItem_t                       reRequest;
     QVector<cparser::SEpg>          epgBuff;
+    QTimer                          m_tTimeJump;
+    int                             m_iJumpValue;
 
 protected:
     void setDisplayMode(Ui::EDisplayMode newMode);
@@ -331,6 +333,7 @@ private slots:
     void stopOnDemand();
     void slotVodLang(const QString &str);
     void slotChgFontSize (int i);
+    void slotFinallyJump();
 
     void on_btnCleanVodSearch_clicked();
 

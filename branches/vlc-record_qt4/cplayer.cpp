@@ -1744,7 +1744,7 @@ void CPlayer::initSlider()
 }
 
 /* -----------------------------------------------------------------\
-|  Method: getSilderPos
+|  Method: getSliderPos
 |  Begin: 07.01.2011 / 10:20
 |  Author: Jo2003
 |  Description: get slider position
@@ -1753,9 +1753,16 @@ void CPlayer::initSlider()
 |
 |  Returns: gmt of slider position
 \----------------------------------------------------------------- */
-uint CPlayer::getSilderPos ()
+uint CPlayer::getSliderPos ()
 {
-   return mToGmt(missionControl.posValue());
+   if (!isPositionable())
+   {
+      return mToGmt(missionControl.posValue());
+   }
+   else
+   {
+      return missionControl.posValue();
+   }
 }
 
 /* -----------------------------------------------------------------\
