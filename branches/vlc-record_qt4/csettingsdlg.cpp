@@ -900,11 +900,74 @@ void CSettingsDlg::on_cbxStreamServer_activated(int index)
 \----------------------------------------------------------------- */
 void CSettingsDlg::on_cbxBitRate_activated(int index)
 {
-   int  ts    = m_ui->cbxTimeShift->itemData(m_ui->cbxTimeShift->currentIndex()).toInt();
-   int  br    = m_ui->cbxBitRate->itemData(index).toInt();
-   bool bSend = checkBitrateAndTimeShift(br, ts, tr("bitrate"));
+   int  br       = m_ui->cbxBitRate->itemData(index).toInt();
+   int  i;
+   bool bSendSig = true;
 
-   if (!bSend)
+   if ((showInfo.playState() == IncPlay::PS_PLAY)
+       && (showInfo.showType() == ShowInfo::Archive))
+   {
+      // get informaion about the channel from showinfo
+      int     cid = showInfo.channelId();
+      bool    bArchHasBitrate = false;
+      QString msg;
+      QVector<int> brAvail;
+      QMap<int, QString> brMap;
+      brMap[320]  = tr("Mobile");
+      brMap[900]  = tr("Eco");
+      brMap[1500] = tr("Standard");
+      brMap[2500] = tr("Premium");
+
+      if (pChanMap->contains(cid))
+      {
+         cparser::SChan chan = pChanMap->value(cid);
+
+         for (i = 0; i < chan.vTs.count(); i ++)
+         {
+            if (chan.vTs.at(i).iTimeShift  == 100) // API hack!
+            {
+               brAvail.append(chan.vTs.at(i).iBitRate);
+
+               if (chan.vTs.at(i).iBitRate == br)
+               {
+                  bArchHasBitrate = true;
+               }
+            }
+         }
+
+         if (!bArchHasBitrate)
+         {
+            QMessageBox::StandardButton btn;
+            msg  = tr("The archive for channel '%1' isn't available in the bitrate '%2'!")
+                  .arg(showInfo.chanName()).arg(brMap[br]);
+            msg += "<br> <br>";
+            msg += tr("Following bitrates are available:");
+            msg += "<br>";
+
+            for (i = 0; i < brAvail.count(); i++)
+            {
+               msg += QString("%1, ").arg(brMap.value(brAvail.at(i)));
+            }
+
+            msg += "<br> <br>";
+            msg += pHtml->htmlTag("b", tr("Do you want to activate the new bitrate? The player will switch to 'Live' then."));
+
+            btn = QMessageBox::information(this, tr("Information"), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+            if (btn == QMessageBox::No)
+            {
+               bSendSig = false;
+            }
+            else if (btn == QMessageBox::Yes)
+            {
+               // emulate Live show ...
+               showInfo.setShowType(ShowInfo::Live);
+            }
+         }
+      }
+   }
+
+   if (!bSendSig)
    {
       // return to the default bitrate ...
       if ((index = m_ui->cbxBitRate->findData(m_iServerBitrate)) != -1)
@@ -932,6 +995,9 @@ void CSettingsDlg::on_cbxBitRate_activated(int index)
 void CSettingsDlg::on_cbxTimeShift_activated(int index)
 {
    int  ts    = m_ui->cbxTimeShift->itemData(index).toInt();
+   /*
+    * Maybe later we will add this check here as well ...
+    *
    int  br    = m_ui->cbxBitRate->itemData(m_ui->cbxBitRate->currentIndex()).toInt();
    bool bSend = checkBitrateAndTimeShift(br, ts, tr("timeshift"));
 
@@ -951,6 +1017,14 @@ void CSettingsDlg::on_cbxTimeShift_activated(int index)
       tmSync.setTimeShift(ts);
       emit sigSetTimeShift(ts);
    }
+   */
+
+   m_iServerTimeShift = ts;
+
+   // store global ...
+   tmSync.setTimeShift(ts);
+   emit sigSetTimeShift(ts);
+
 }
 
 /* -----------------------------------------------------------------\

@@ -24,6 +24,7 @@
 #include <QVector>
 #include <QAction>
 #include <QMutex>
+#include <QLabel>
 
 #include "cshortcutex.h"
 #include "qoverlayedcontrol.h"
@@ -107,6 +108,7 @@ private:
    QWidget                *_render;
    QTimer                 *_mouseHide;
    QTimer                 *_placePanel;
+   QTimer                 *_tOverlay;
    QVector<CShortcutEx *> *_shortcuts;
    bool                    _extFullScreen;
    QOverlayedControl      *_ctrlPanel;
@@ -117,6 +119,7 @@ private:
    QLangVector             _langVector;
    QMutex                  _mtxLv;
    vlcvid::ePanelPos       _lastPos;
+   QLabel                 *_labOverlay;
 
 signals:
    void fullScreen();
@@ -138,6 +141,8 @@ public slots:
    void slotMouseLeavesPanel ();
    void slotWheel(bool w);
    void slotUpdLangVector(QLangVector lv);
+   void slotDestroyOverlay();
+   void slotDisplayOverlay (const QString& s, int iTimeOutMs);
 
 private slots:
    void slotCustContextMenu(QPoint pt);

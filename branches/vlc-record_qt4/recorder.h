@@ -351,6 +351,7 @@ signals:
     void sigLockParentalManager();
     void sigWindowed(int);
     void sigWLRecEnded();
+    void sigOverlay (const QString& s, int iTmOut);
 };
 
 #endif /* __011910__RECORDER_H */

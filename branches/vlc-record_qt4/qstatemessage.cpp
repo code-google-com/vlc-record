@@ -31,6 +31,9 @@ QStateMessage::QStateMessage(QWidget* parent, Qt::WindowFlags f) :
 {
    ui->setupUi(this);
 
+   // don't steal focus when activated ...
+   setAttribute(Qt::WA_ShowWithoutActivating);
+
    m_tHide.setSingleShot(true);
    m_tHide.setInterval(4000);
 

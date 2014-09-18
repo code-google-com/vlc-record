@@ -911,7 +911,7 @@ QSplitter#hSplitterPlayer::handle:pressed {
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>40</height>
+                  <height>45</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -934,7 +934,7 @@ border-top: 0px;
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
                  <property name="spacing">
-                  <number>2</number>
+                  <number>4</number>
                  </property>
                  <property name="leftMargin">
                   <number>4</number>
@@ -952,8 +952,8 @@ border-top: 0px;
                   <widget class="QPushButton" name="pushLive">
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -968,8 +968,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -988,8 +988,8 @@ border-top: 0px;
                   <widget class="QPushButton" name="pushPlay">
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1004,8 +1004,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="autoDefault">
@@ -1020,8 +1020,8 @@ border-top: 0px;
                   <widget class="QPushButton" name="pushRecord">
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1036,8 +1036,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="autoDefault">
@@ -1061,8 +1061,8 @@ border-top: 0px;
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1077,8 +1077,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="autoDefault">
@@ -1090,13 +1090,13 @@ border-top: 0px;
                   </widget>
                  </item>
                  <item>
-                  <spacer name="horizontalSpacer_6">
+                  <spacer name="horizontalSpacer_4">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>0</width>
+                     <width>40</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -1109,8 +1109,8 @@ border-top: 0px;
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1125,8 +1125,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -1138,7 +1138,7 @@ border-top: 0px;
                   <widget class="QComboBoxEx" name="cbxTimeJumpVal">
                    <property name="minimumSize">
                     <size>
-                     <width>65</width>
+                     <width>75</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -1184,8 +1184,8 @@ border-top: 0px;
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1200,8 +1200,8 @@ border-top: 0px;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="flat">
@@ -1210,49 +1210,18 @@ border-top: 0px;
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="labTargetTime">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">QLabel#labTargetTime {
-color: white;
-font-weight: bold;
-}</string>
-                   </property>
-                   <property name="text">
-                    <string/>
+                  <widget class="Line" name="line_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
                    </property>
                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item>
                   <widget class="QPushButton" name="pushTimerRec">
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1267,8 +1236,8 @@ font-weight: bold;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="autoDefault">
@@ -1283,8 +1252,8 @@ font-weight: bold;
                   <widget class="QPushButton" name="pushWatchList">
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>34</width>
+                     <height>34</height>
                     </size>
                    </property>
                    <property name="toolTip">
@@ -1299,8 +1268,8 @@ font-weight: bold;
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>28</width>
-                     <height>28</height>
+                     <width>32</width>
+                     <height>32</height>
                     </size>
                    </property>
                    <property name="autoDefault">
@@ -1686,8 +1655,8 @@ border-top: 0px;
   <tabstop>lineVodSearch</tabstop>
  </tabstops>
  <resources>
-  <include location="../lcd.qrc"/>
   <include location="../common.qrc"/>
+  <include location="../lcd.qrc"/>
  </resources>
  <connections>
   <connection>

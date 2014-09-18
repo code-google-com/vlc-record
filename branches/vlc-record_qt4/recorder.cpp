@@ -85,7 +85,6 @@ Recorder::Recorder(QWidget *parent)
    missionControl.addButton(ui->pushBwd,      QFusionControl::BTN_BWD);
    missionControl.addButton(ui->pushScrnShot, QFusionControl::BTN_SCRSHOT);
    missionControl.addJumpBox(ui->cbxTimeJumpVal);
-   missionControl.addTargetTimeLabel(ui->labTargetTime);
 
    // init account info ...
    accountInfo.bHasArchive = false;
@@ -308,6 +307,9 @@ Recorder::Recorder(QWidget *parent)
    connect (ui->lineVodSearch, SIGNAL(textEdited(QString)), &m_tVodSearch, SLOT(start()));
    connect (&m_tVodSearch,     SIGNAL(timeout()), this, SLOT(slotDoVodSearch()));
    connect (&m_tTimeJump,      SIGNAL(timeout()), this, SLOT(slotFinallyJump()));
+
+   // overlay display ...
+   connect (this, SIGNAL(sigOverlay(QString,int)), ui->player->getVideoWidget(), SLOT(slotDisplayOverlay(QString,int)));
 
    // trigger read of saved timer records ...
    timeRec.ReadRecordList();
@@ -1534,11 +1536,11 @@ void Recorder::slotBwd()
 
    tm = tm.addSecs(iNewPos);
 
-   QString s = QString("%1%2%3 > %4")
+   QString s = QString("%1%2 %3. -> %4")
          .arg((m_iJumpValue >= 0) ? "+" : "").arg(m_iJumpValue / 60)
          .arg(tr("min")).arg(tm.toString("H:mm:ss"));
 
-   missionControl.setTargetTime(s);
+   emit sigOverlay(s, 1000);
 
    // (re-)trigger jump timer
    m_tTimeJump.start();
@@ -1568,11 +1570,11 @@ void Recorder::slotFwd()
 
    tm = tm.addSecs(iNewPos);
 
-   QString s = QString("%1%2%3 > %4")
+   QString s = QString("%1%2 %3. -> %4")
          .arg((m_iJumpValue >= 0) ? "+" : "").arg(m_iJumpValue / 60)
          .arg(tr("min")).arg(tm.toString("H:mm:ss"));
 
-   missionControl.setTargetTime(s);
+   emit sigOverlay(s, 1000);
 
    // (re-)trigger jump timer
    m_tTimeJump.start();
@@ -1591,7 +1593,8 @@ void Recorder::slotFinallyJump()
    // jump ...
    ui->player->slotTimeJumpRelative(m_iJumpValue);
    m_iJumpValue = 0;
-   missionControl.setTargetTime("");
+
+   emit sigOverlay("", 1000);
 }
 
 

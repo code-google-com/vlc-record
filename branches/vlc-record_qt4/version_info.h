@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B17"
+#define BETA_EXT      "B18"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,11 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-ß9-18: Version 2.69B18
+| - show jump time as overlay
+| - create pixmap from overlay text to get an outline
+| - remove target time label from GUI
+|
 | 2014-09-17: Version 2.69B17
 | - reduce blocking time when spooling is active (as possible)
 | - in case of non existing archive let the user decide
