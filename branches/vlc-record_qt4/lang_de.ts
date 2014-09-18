@@ -971,7 +971,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CPlayer</name>
     <message>
-        <location filename="cplayer.cpp" line="350"/>
+        <location filename="cplayer.cpp" line="351"/>
         <source>Create libVLC with following global options:
  %1</source>
         <oldsource>Create libVLC with following global options:
@@ -980,35 +980,35 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="436"/>
+        <location filename="cplayer.cpp" line="437"/>
         <source>Error: Can&apos;t create media list!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="743"/>
-        <location filename="cplayer.cpp" line="763"/>
-        <location filename="cplayer.cpp" line="778"/>
+        <location filename="cplayer.cpp" line="747"/>
+        <location filename="cplayer.cpp" line="767"/>
         <location filename="cplayer.cpp" line="782"/>
-        <location filename="cplayer.cpp" line="791"/>
-        <location filename="cplayer.cpp" line="803"/>
-        <location filename="cplayer.cpp" line="817"/>
-        <location filename="cplayer.cpp" line="835"/>
-        <location filename="cplayer.cpp" line="842"/>
-        <location filename="cplayer.cpp" line="848"/>
-        <location filename="cplayer.cpp" line="907"/>
+        <location filename="cplayer.cpp" line="786"/>
+        <location filename="cplayer.cpp" line="795"/>
+        <location filename="cplayer.cpp" line="807"/>
+        <location filename="cplayer.cpp" line="821"/>
+        <location filename="cplayer.cpp" line="839"/>
+        <location filename="cplayer.cpp" line="846"/>
+        <location filename="cplayer.cpp" line="852"/>
         <location filename="cplayer.cpp" line="911"/>
-        <location filename="cplayer.cpp" line="927"/>
+        <location filename="cplayer.cpp" line="915"/>
+        <location filename="cplayer.cpp" line="931"/>
         <source>Add MRL Option: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="769"/>
-        <location filename="cplayer.cpp" line="933"/>
+        <location filename="cplayer.cpp" line="773"/>
+        <location filename="cplayer.cpp" line="937"/>
         <source>Add MRL Option: :http_proxy_pwd=******</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="900"/>
+        <location filename="cplayer.cpp" line="904"/>
         <source>Prepend Ad (Url):
   --&gt; %1</source>
         <oldsource>Show Ad:
@@ -1021,80 +1021,80 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Das Archiv ist für diesen Zeitpunkt noch nicht verfügbar!</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="866"/>
+        <location filename="cplayer.cpp" line="870"/>
         <source>Can&apos;t create media description ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="735"/>
+        <location filename="cplayer.cpp" line="739"/>
         <source>Media successfully created from MRL:
  --&gt; %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="645"/>
+        <location filename="cplayer.cpp" line="646"/>
         <source>Prepare for long time resume ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="522"/>
+        <location filename="cplayer.cpp" line="523"/>
         <source>Resume after longer pause ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1224"/>
+        <location filename="cplayer.cpp" line="1246"/>
         <source>Unknown Event No. %1 received ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1254"/>
+        <location filename="cplayer.cpp" line="1276"/>
         <source>Aspect ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1278"/>
+        <location filename="cplayer.cpp" line="1300"/>
         <source>Crop ratio: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1420"/>
-        <location filename="cplayer.cpp" line="1614"/>
+        <location filename="cplayer.cpp" line="1442"/>
+        <location filename="cplayer.cpp" line="1636"/>
         <source>Archive is not yet available for this time!</source>
         <oldsource>Archive doesn&apos;t exist for this time!</oldsource>
         <translation>Das Archiv ist für diesen Zeitpunkt noch nicht verfügbar!</translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1620"/>
+        <location filename="cplayer.cpp" line="1642"/>
         <source>Ignore slightly slider position change...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="1716"/>
+        <location filename="cplayer.cpp" line="1738"/>
         <source>Film length: %1ms.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2014"/>
+        <location filename="cplayer.cpp" line="2036"/>
         <source>Error: Can&apos;t delete media item from media list!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2199"/>
+        <location filename="cplayer.cpp" line="2221"/>
         <source>Scan for Audio tracks:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2216"/>
+        <location filename="cplayer.cpp" line="2238"/>
         <source>-&gt; Audio track %1 %2%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2262"/>
+        <location filename="cplayer.cpp" line="2284"/>
         <source>%1 %2 deinterlace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2299"/>
+        <location filename="cplayer.cpp" line="2321"/>
         <source>Change audio track to id %1 (idx %2): %3!</source>
         <translation></translation>
     </message>

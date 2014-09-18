@@ -117,6 +117,7 @@ private:
    bool                         bScanAuTrk;
    QLangVector                  vAudTrk;
    Player::SPauseResume         pauseResume;
+   IncPlay::ePlayStates         libPlayState;
 
 private slots:
    void slotPositionChanged(int value);

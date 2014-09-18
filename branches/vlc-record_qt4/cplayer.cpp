@@ -51,6 +51,7 @@ CPlayer::CPlayer(QWidget *parent) : QWidget(parent), ui(new Ui::CPlayer)
    bScanAuTrk       = true;
    uiDuration       = (uint)-1;
    ulLibvlcVersion  = 0;
+   libPlayState     = IncPlay::PS_WTF;
    QStringList slKey;
    uint i;
 
@@ -674,6 +675,9 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
    QStringList::const_iterator cit;
    bool                        bLocal = false;
 
+   // reset internal play state ...
+   libPlayState = IncPlay::PS_WTF;
+
    // reset play timer stuff ...
    timer.reset();
    timer.setOffset(showInfo.lastJump() ? showInfo.lastJump() : showInfo.starts());
@@ -1155,6 +1159,8 @@ void CPlayer::slotEventPoll()
 
             // no way to go on ... prepare to use a new instance of libVLC
             cleanupLibVLC();
+
+            libPlayState = IncPlay::PS_ERROR;
             break;
 
          // TRACK CHANGED ...
@@ -1175,6 +1181,8 @@ void CPlayer::slotEventPoll()
          case libvlc_MediaPlayerOpening:
             mInfo("libvlc_MediaPlayerOpening ...");
             emit sigPlayState((int)IncPlay::PS_OPEN);
+
+            libPlayState = IncPlay::PS_OPEN;
             break;
 
          // playing media ...
@@ -1188,7 +1196,18 @@ void CPlayer::slotEventPoll()
             {
                emit sigPlayState((int)IncPlay::PS_PLAY);
             }
-            initSlider();
+
+            // restart play-timer only after pause ...
+            if (libPlayState == IncPlay::PS_PAUSE)
+            {
+               startPlayTimer();
+            }
+            else
+            {
+               // init slider only at initial play ...
+               initSlider();
+            }
+            libPlayState = IncPlay::PS_PLAY;
             break;
 
          // player paused ...
@@ -1196,6 +1215,7 @@ void CPlayer::slotEventPoll()
             mInfo("libvlc_MediaPlayerPaused ...");
             emit sigPlayState((int)IncPlay::PS_PAUSE);
             pausePlayTimer();
+            libPlayState = IncPlay::PS_PAUSE;
             break;
 
          // player stopped ...
@@ -1204,6 +1224,7 @@ void CPlayer::slotEventPoll()
             emit sigPlayState((int)IncPlay::PS_STOP);
             resetBuffPercent();
             stopPlayTimer();
+            libPlayState = IncPlay::PS_STOP;
             break;
 
          // end of media reached ...
@@ -1211,13 +1232,14 @@ void CPlayer::slotEventPoll()
             mInfo("libvlc_MediaPlayerEndReached ...");
             emit sigPlayState((int)IncPlay::PS_END);
             stopPlayTimer();
+            libPlayState = IncPlay::PS_END;
             break;
 
          // showing video ...
          case libvlc_MediaPlayerVout:
             mInfo("libvlc_MediaPlayerVout ...");
-            startPlayTimer();
             slotStoredAspectCrop();
+            startPlayTimer();
             break;
 
          default:
