@@ -2067,9 +2067,23 @@ void Recorder::slotCookie (const QString &str)
 
             if (tmSync.syncronizedTime_t() > llCheck)
             {
+#ifdef __OWN_BUY_REMINDER
+               // make sure tab text is translated as needed
+               QString content;
+
+               content = pAppTransl->translate("ownBuyReminder", __OWN_BUY_REMINDER);
+
+               if (content.isEmpty())
+               {
+                  content = __OWN_BUY_REMINDER;
+               }
+
+               content = content.arg(iDaysTo);
+#else
                QString content = tr("Your subscription will end in %1 day(s).<br />Visit %2 to renew it!")
                      .arg(iDaysTo)
                      .arg(pCustomization->strVal("COMPANY_LINK"));
+#endif // __OWN_BUY_REMINDER
 
                expNotifier.setNotifyContent(pHtml->htmlPage(content, "Account Info"));
                expNotifier.exec();
