@@ -1,5 +1,6 @@
 RESOURCES += vlc-record.qrc
-HEADERS += tastes/defines_vlc_record.h
+HEADERS += tastes/defines_vlc_record.h \
+           tastes/more_kartina_translations.h
 WINICO = television.ico
 TRANSLATIONS = lang_de.ts \
                lang_ru.ts \

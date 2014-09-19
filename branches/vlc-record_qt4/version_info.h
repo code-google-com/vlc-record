@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR "2"
 #define VERSION_MINOR "69"
-#define BETA_EXT      "B19"
+#define BETA_EXT      "B20"
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -33,6 +33,10 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-09-19: Version 2.69B20
+| - add the possibility to use extended translation
+|   using defines
+|
 | 2014-ß9-18: Version 2.69B19
 | - bugfix: when pausing -> play timer wasn't started
 |

@@ -4287,7 +4287,6 @@ dataDir: %1
 <context>
     <name>ownBuyReminder</name>
     <message>
-        <location filename="tastes/more_kartina_translations.h" line="19"/>
         <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
 You can renew your subscription at following site: 
 &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;,&lt;br&gt;
@@ -4301,7 +4300,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:zakaz.kartina.tv&apos;&gt;zakaz.kartina.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation>&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
 Sie können es auf folgender Webseite erneuern: &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;.&lt;br&gt;
 Oder nutzen Sie das Telefon:
 &lt;table&gt;
@@ -4312,6 +4311,31 @@ Oder nutzen Sie das Telefon:
 &lt;tr&gt;&lt;td&gt;Russland:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;+7 800 77 58 329&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Oder nutzen Sie Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;
 &lt;a href=&apos;callto:zakaz.kartina.tv&apos;&gt;zakaz.kartina.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</translation>
+    </message>
+    <message>
+        <location filename="tastes/more_polsky_translations.h" line="19"/>
+        <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
+You can renew your subscription at following site: 
+&lt;a href=&apos;http://polsky.tv/shop.html&apos;&gt;http://polsky.tv&lt;/a&gt;,&lt;br&gt;
+or by phone:
+&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;International:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;+49 611 945 88 200&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Germany:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;0611 945 88 200&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;USA:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;1 347 767 67 55&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:polsky.tv&apos;&gt;polsky.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</source>
+        <translation>&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
+Sie können es auf folgender Webseite erneuern: &lt;a href=&apos;http://polsky.tv/shop.htm&apos;&gt;http://polsky.tv&lt;/a&gt;.&lt;br&gt;
+Oder nutzen Sie das Telefon:
+&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;International:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;+49 611 945 88 200&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Deutschland:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;0611 945 88 200&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;USA:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;1 347 767 67 55&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Oder nutzen Sie Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;
+&lt;a href=&apos;callto:polsky.tv&apos;&gt;polsky.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </translation>
     </message>
