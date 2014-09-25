@@ -90,7 +90,7 @@ int CStdJsonParser::parseChannelList (const QString &sResp,
 #ifdef _TASTE_CHITRAM_TV
                // due to resource problems chitram.tv hasn't so far
                // normal channel icons ...
-               chan.sIcon        = QString("/dune/chitram/images_v3/s%1.7.png").arg(chan.iId);
+               chan.sIcon        = mChannel.value("big_icon").toString();
 #else
                chan.sIcon        = mChannel.value("icon").toString();
 #endif // _TASTE_CHITRAM_TV

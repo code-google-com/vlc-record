@@ -400,6 +400,12 @@ void CKartinaClnt::GetChannelList (const QString &secCode)
       // normal channel list request ...
       req = QString("show=all&protect_code=%1").arg(secCode);
    }
+#ifdef _TASTE_CHITRAM_TV
+   else
+   {
+      req = "icon=1";
+   }
+#endif // _TASTE_CHITRAM_TV
 
    // request channel list or channel list for settings ...
    q_post((secCode == "") ? (int)CIptvDefs::REQ_CHANNELLIST : (int)CIptvDefs::REQ_CHANLIST_ALL,

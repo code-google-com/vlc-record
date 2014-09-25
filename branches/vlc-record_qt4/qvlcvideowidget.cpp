@@ -1081,6 +1081,17 @@ void QVlcVideoWidget::slotDisplayOverlay(const QString &s, int iTimeOutMs)
 
          // trigger destroy timer ...
          _tOverlay->start(iTimeOutMs);
+
+#ifdef Q_OS_LINUX
+         if(isFullScreen() || _extFullScreen)
+         {
+            // without forcing focus and raising
+            // control panel there is no way to
+            // re-trigger time jump ...
+            _ctrlPanel->setFocus(Qt::OtherFocusReason);
+            _ctrlPanel->raise();
+         }
+#endif // Q_OS_LINUX
       }
    }
 }
