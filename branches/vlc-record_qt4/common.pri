@@ -39,6 +39,9 @@ PROGMIN=69
 # here you can enable traces ...
 DEFINES += __TRACE
 
+# this flag will be checked on linux only!
+# DEFINES += __PORTABLE
+
 SOURCES += main.cpp \
     recorder.cpp \
     csettingsdlg.cpp \
@@ -223,6 +226,10 @@ else:unix {
    OTHER_FILES += create_install_mak.sh \
                   documentation/create_qthelp.sh
    QMAKE_POST_LINK = ./create_install_mak.sh $$basename(TARGET)
+
+   contains(DEFINES,__PORTABLE) {
+        LIBS += -Wl,-rpath ../lib
+   }
 #   LIBS += -L/home/joergn/libvlc \
 #        -Wl,-rpath lib
 }

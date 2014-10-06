@@ -254,7 +254,19 @@ int CDirStuff::initDirectories(bool bCreate)
    if (rx.indexIn(sAppDir) > -1)
    {
       // found bin section --> create path names ...
+#ifdef __PORTABLE
+      // language path ...
+      sLangDir   = QString("%1/share/%2").arg(rx.cap(1)).arg(LANG_DIR);
 
+      // modules path ...
+      sModDir    = QString("%1/share/%2").arg(rx.cap(1)).arg(MOD_DIR);
+
+      // docu folder ...
+      sDocDir    = QString("%1/share/%2").arg(rx.cap(1)).arg(DOC_DIR);
+
+      // resources folder ...
+      sResDir    = QString("%1/share/%2").arg(rx.cap(1)).arg(RES_DIR);
+#else
       // language path ...
       sLangDir   = QString("%1/share/%2/%3").arg(rx.cap(1)).arg(sBinName).arg(LANG_DIR);
 
@@ -266,6 +278,7 @@ int CDirStuff::initDirectories(bool bCreate)
 
       // resources folder ...
       sResDir    = QString("%1/share/%2/%3").arg(rx.cap(1)).arg(sBinName).arg(RES_DIR);
+#endif //__PORTABLE
    }
    else
    {
