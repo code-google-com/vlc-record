@@ -7,6 +7,7 @@
 # (c)2014 By Jo2003 All rights reserved!
 #-----------------------------------------------------------------------
 BIN_NAME=${1}
+PACKAGE=$(echo -n ${BIN_NAME} | sed 's/_/-/')
 OFF_NAME=${2}
 VER="${3}-$(date +%Y%m%d)"
 SERVICE=${4}
@@ -24,7 +25,7 @@ create_folders() {
     mkdir -p "${BUILD_FOLDER}/usr/share/${BIN_NAME}/modules"
     mkdir -p "${BUILD_FOLDER}/usr/share/${BIN_NAME}/doc"
     mkdir -p "${BUILD_FOLDER}/usr/share/${BIN_NAME}/resources"
-    mkdir -p "${BUILD_FOLDER}/usr/share/doc/${BIN_NAME}"
+    mkdir -p "${BUILD_FOLDER}/usr/share/doc/${PACKAGE}"
     mkdir -p "${BUILD_FOLDER}/usr/share/man/man7"
     mkdir -p "${BUILD_FOLDER}/usr/share/applications"
     mkdir -p "${BUILD_FOLDER}/DEBIAN"
@@ -55,7 +56,7 @@ EOF
 
 create_control_file() {
     cat << EOF > "${BUILD_FOLDER}/DEBIAN/control"
-Package: ${BIN_NAME}
+Package: ${PACKAGE}
 Version: ${VER}
 Section: video
 Priority: extra
@@ -73,14 +74,14 @@ EOF
 }
 
 create_changelog() {
-    cat << EOF | gzip -9 -c >"${BUILD_FOLDER}/usr/share/doc/${BIN_NAME}/changelog.Debian.gz"
-${BIN_NAME} (${VER}) precise; urgency=minor
+    cat << EOF | gzip -9 -c >"${BUILD_FOLDER}/usr/share/doc/${PACKAGE}/changelog.Debian.gz"
+${PACKAGE} (${VER}) precise; urgency=minor
 
   * New release, makes us really happy!
 
  -- Jo2003 <olenka.joerg@gmail.com>  $(date -R)
 EOF
-    sed -n -e 's/^|\(.*\)$/\1/p' version_info.h | gzip -9 -c >"${BUILD_FOLDER}/usr/share/doc/${BIN_NAME}/changelog.gz"
+    sed -n -e 's/^|\(.*\)$/\1/p' version_info.h | gzip -9 -c >"${BUILD_FOLDER}/usr/share/doc/${PACKAGE}/changelog.gz"
 }
 
 create_deb() {
@@ -108,7 +109,7 @@ EOF
 }
 
 create_copyright_file() {
-    cat << EOF > "${BUILD_FOLDER}/usr/share/doc/${BIN_NAME}/copyright"
+    cat << EOF > "${BUILD_FOLDER}/usr/share/doc/${PACKAGE}/copyright"
 ${OFF_NAME}
 Copyright 2010-$(date +%Y) Jörg Neubert (olenka.joerg@gmail.com)
 All rights reserved!

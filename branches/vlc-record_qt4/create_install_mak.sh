@@ -48,6 +48,7 @@ fi
 
 
 # get release information ...
+MAJORVER=`sed -n 's/^#define[ \t]*VERSION_MAJOR[^0-9]\+\([^"]\+\).*/\1/p' version_info.h`
 MINORVER=`sed -n 's/^#define[ \t]*VERSION_MINOR[^0-9]\+\([^"]\+\).*/\1/p' version_info.h`
 BETAEXT=`sed -n 's/^#define[ \t]*BETA_EXT[^0-9B]\+\([^"]\+\).*/\1/p' version_info.h`
 
@@ -56,6 +57,6 @@ cat << EOF >install.mak
 all: deb
 
 deb:
-	./create_deb.sh ${NAME} ${OFFNAME} 2.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
+	./create_deb.sh ${NAME} ${OFFNAME} ${MAJORVER}.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
 
 EOF

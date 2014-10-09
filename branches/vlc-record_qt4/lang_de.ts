@@ -3194,7 +3194,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="522"/>
+        <location filename="qiptvctrlclient.cpp" line="524"/>
         <source>Ignore old queued request ...</source>
         <translation></translation>
     </message>
@@ -3209,52 +3209,52 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="581"/>
+        <location filename="qiptvctrlclient.cpp" line="583"/>
         <source>Prepend login request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="589"/>
+        <location filename="qiptvctrlclient.cpp" line="591"/>
         <source>Append last sent request (which triggered error) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="616"/>
+        <location filename="qiptvctrlclient.cpp" line="618"/>
         <source>Network connection established!</source>
         <translation>Netzwerkverbindung hergestellt!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="616"/>
+        <location filename="qiptvctrlclient.cpp" line="618"/>
         <source>Error connecting to network!</source>
         <translation>Netzwerkverbindungsfehler!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="618"/>
+        <location filename="qiptvctrlclient.cpp" line="620"/>
         <source>Online state changed: %1 --&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="625"/>
+        <location filename="qiptvctrlclient.cpp" line="627"/>
         <source>Synchronize request counter and acknowledge: %1 &lt;--&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="650"/>
+        <location filename="qiptvctrlclient.cpp" line="652"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="687"/>
+        <location filename="qiptvctrlclient.cpp" line="689"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="716"/>
+        <location filename="qiptvctrlclient.cpp" line="718"/>
         <source>Network accessibility changed: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="815"/>
+        <location filename="qiptvctrlclient.cpp" line="817"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>

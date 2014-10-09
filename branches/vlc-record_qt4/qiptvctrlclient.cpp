@@ -503,6 +503,8 @@ void QIptvCtrlClient::workOffQueue(const QString& caller)
       mInfo(tr("called from %1(), busy(): %2, isOnline(): %3")
             .arg(caller).arg(busy()).arg(isOnline()));
    }
+#else
+   Q_UNUSED(caller)
 #endif // __TRACE
 
    // pending requests ... ?
