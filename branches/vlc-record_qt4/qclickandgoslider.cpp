@@ -165,7 +165,7 @@ void QClickAndGoSlider::mouseMoveEvent(QMouseEvent * event)
       // create tooltip string ...
       tt = pHtml->htmlTag("p", QString("%1 %2 -> %3").arg((dif < 0) ? "-" : "+")
                               .arg(dtime.toString((abs(dif) < 3600) ? "m:ss" : "H:mm:ss"))
-                              .arg(tpos.toString("H:mm:ss")), "font-size: 16px; white-space: pre;");
+                              .arg(tpos.toString("H:mm:ss")), "font-size: 14px; white-space: pre;");
 
       // display tooltip ...
       QToolTip::showText(mapToGlobal(event->pos()), tt, this);
@@ -180,7 +180,7 @@ void QClickAndGoSlider::mouseMoveEvent(QMouseEvent * event)
       // create tooltip string ...
       tt = pHtml->htmlTag("p", QString("%1 %2 -> %3").arg((dif < 0) ? "-" : "+")
                               .arg(dtime.toString((abs(dif) < 3600) ? "m:ss" : "H:mm:ss"))
-                              .arg(tdif.toString("H:mm:ss")), "font-size: 16px; white-space: pre;");
+                              .arg(tdif.toString("H:mm:ss")), "font-size: 14px; white-space: pre;");
 
       // display tooltip ...
       QToolTip::showText(mapToGlobal(event->pos()), tt, this);

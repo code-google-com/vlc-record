@@ -87,10 +87,6 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
 
 #ifndef _EXT_EPG
    m_ui->checkExtEPG->setVisible(false);
-#else
-   #ifndef __MY_EXT_EPG
-   m_ui->checkExtEPG->setText(tr("EPG day starts at 0:00"));
-   #endif // __MY_EXT_EPG
 #endif // _EXT_EPG
 
    // fill in values ...
@@ -362,9 +358,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
           int iDeiIdx = m_ui->cbxDeintlMode->currentIndex();
 
           m_ui->retranslateUi(this);
-#if (defined _EXT_EPG && !defined __MY_EXT_EPG)
-          m_ui->checkExtEPG->setText(tr("EPG day starts at 0:00"));
-#endif
+
           // re-set index to comboboxes ...
           m_ui->cbxLanguage->setCurrentIndex(iLanIdx);
           m_ui->cbxLogLevel->setCurrentIndex(iLogIdx);

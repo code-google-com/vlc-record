@@ -1882,9 +1882,8 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="713"/>
         <source>Extended daily EPG</source>
-        <translation>Rozszerzone EPG</translation>
+        <translation type="obsolete">Rozszerzone EPG</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="728"/>
@@ -1965,120 +1964,119 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Anuluj</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="527"/>
+        <location filename="csettingsdlg.cpp" line="521"/>
         <source>Executables (*.exe)</source>
         <translation>Pliki wykonywalne (*.exe)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="529"/>
+        <location filename="csettingsdlg.cpp" line="523"/>
         <source>Executables (*)</source>
         <translation>Pliki wykonywalne (*)</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="532"/>
+        <location filename="csettingsdlg.cpp" line="526"/>
         <source>VLC Media Player</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="572"/>
+        <location filename="csettingsdlg.cpp" line="566"/>
         <source>Target Folder</source>
         <translation>Folder docelowy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="941"/>
+        <location filename="csettingsdlg.cpp" line="935"/>
         <source>The archive for channel &apos;%1&apos; isn&apos;t available in the bitrate &apos;%2&apos;!</source>
         <oldsource>The archive for channel &apos;%1&apos; isn&apos;t available in the bitrate &apos;&apos;%2&apos;!</oldsource>
         <translation>Archiwum dla kanału &apos;%1&apos; nie jest dostępna w bitrate &apos;%2&apos;!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="944"/>
+        <location filename="csettingsdlg.cpp" line="938"/>
         <source>Following bitrates are available:</source>
         <translation>Dostępne są następujące wartości bitrate:</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="953"/>
+        <location filename="csettingsdlg.cpp" line="947"/>
         <source>Do you want to activate the new bitrate? The player will switch to &apos;Live&apos; then.</source>
         <translation>Czy chcesz, aby aktywować nowy bitrate? Odtwarzacz przełączy się &quot;na żywo&quot;.</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="410"/>
-        <location filename="csettingsdlg.cpp" line="781"/>
-        <location filename="csettingsdlg.cpp" line="916"/>
+        <location filename="csettingsdlg.cpp" line="404"/>
+        <location filename="csettingsdlg.cpp" line="775"/>
+        <location filename="csettingsdlg.cpp" line="910"/>
         <source>Mobile</source>
         <translation>Przenośny</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="411"/>
-        <location filename="csettingsdlg.cpp" line="785"/>
-        <location filename="csettingsdlg.cpp" line="917"/>
+        <location filename="csettingsdlg.cpp" line="405"/>
+        <location filename="csettingsdlg.cpp" line="779"/>
+        <location filename="csettingsdlg.cpp" line="911"/>
         <source>Eco</source>
         <translation>Eko</translation>
     </message>
     <message>
         <location filename="forms/csettingsdlg.ui" line="156"/>
         <location filename="forms/csettingsdlg.ui" line="175"/>
-        <location filename="csettingsdlg.cpp" line="412"/>
-        <location filename="csettingsdlg.cpp" line="789"/>
-        <location filename="csettingsdlg.cpp" line="918"/>
+        <location filename="csettingsdlg.cpp" line="406"/>
+        <location filename="csettingsdlg.cpp" line="783"/>
+        <location filename="csettingsdlg.cpp" line="912"/>
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="413"/>
-        <location filename="csettingsdlg.cpp" line="793"/>
-        <location filename="csettingsdlg.cpp" line="919"/>
+        <location filename="csettingsdlg.cpp" line="407"/>
+        <location filename="csettingsdlg.cpp" line="787"/>
+        <location filename="csettingsdlg.cpp" line="913"/>
         <source>Premium</source>
         <translation>Wysokiej jakości</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="797"/>
+        <location filename="csettingsdlg.cpp" line="791"/>
         <source>%1 Kbit/s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1649"/>
+        <location filename="csettingsdlg.cpp" line="1643"/>
         <source>blood</source>
         <translation>krwawy</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1650"/>
+        <location filename="csettingsdlg.cpp" line="1644"/>
         <source>violence</source>
         <translation>przemoc</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1653"/>
+        <location filename="csettingsdlg.cpp" line="1647"/>
         <source>porn</source>
         <translation>porno</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1654"/>
+        <location filename="csettingsdlg.cpp" line="1648"/>
         <source>horror</source>
         <translation>horror</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1651"/>
-        <location filename="csettingsdlg.cpp" line="1652"/>
+        <location filename="csettingsdlg.cpp" line="1645"/>
+        <location filename="csettingsdlg.cpp" line="1646"/>
         <source>obscene</source>
         <translation>nieprzyzwoity</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="92"/>
-        <location filename="csettingsdlg.cpp" line="366"/>
+        <location filename="forms/csettingsdlg.ui" line="713"/>
         <source>EPG day starts at 0:00</source>
         <translation>EPG dzień zaczyna się o 00:00</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="431"/>
+        <location filename="csettingsdlg.cpp" line="425"/>
         <source>The archive for channel &apos;%1&apos; isn&apos;t available in your combination of bitrate (%2) and timeshift (%3)!</source>
         <translation>Archiwum dla kanału &apos;%1&apos; nie jest dostępny w Twoim połączeniu bitrate (% 2) i przesunięcia w czasie (% 3)!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="434"/>
+        <location filename="csettingsdlg.cpp" line="428"/>
         <source>Following table shows the available combinations:</source>
         <translation>Poniższa tabela przedstawia dostępne kombinacje:</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="437"/>
+        <location filename="csettingsdlg.cpp" line="431"/>
         <source>Do you want to activate the new %1? The player will switch to &apos;Live&apos; then.</source>
         <translation>Czy chcesz, aby uaktywnić nową %1? Odtwarzacz przełączy się &quot;na żywo&quot;.</translation>
     </message>
@@ -2087,32 +2085,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Przesunięcie czasu</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1686"/>
+        <location filename="csettingsdlg.cpp" line="1680"/>
         <source>hide</source>
         <translation>ukryj</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1687"/>
+        <location filename="csettingsdlg.cpp" line="1681"/>
         <source>show</source>
         <translation>pokaż</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1688"/>
+        <location filename="csettingsdlg.cpp" line="1682"/>
         <source>password protected</source>
         <translation>zabezpieczony hasłem</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1880"/>
+        <location filename="csettingsdlg.cpp" line="1874"/>
         <source>Changed VOD Rate: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1959"/>
+        <location filename="csettingsdlg.cpp" line="1953"/>
         <source>Error!</source>
         <translation>Błąd!</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="1960"/>
+        <location filename="csettingsdlg.cpp" line="1954"/>
         <source>&lt;b&gt;Please check the data entered.&lt;/b&gt;
 &lt;br /&gt; &lt;br /&gt;
 To change the parent code make sure:
@@ -2144,15 +2142,15 @@ Aby zmienić kod kontroli rodzicielskiej upewnij się, że:
 &lt;/ul&gt;</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="439"/>
-        <location filename="csettingsdlg.cpp" line="955"/>
-        <location filename="csettingsdlg.cpp" line="2011"/>
+        <location filename="csettingsdlg.cpp" line="433"/>
+        <location filename="csettingsdlg.cpp" line="949"/>
+        <location filename="csettingsdlg.cpp" line="2005"/>
         <source>Information</source>
         <translation>Informacje</translation>
     </message>
     <message>
-        <location filename="csettingsdlg.cpp" line="2011"/>
-        <location filename="csettingsdlg.cpp" line="2012"/>
+        <location filename="csettingsdlg.cpp" line="2005"/>
+        <location filename="csettingsdlg.cpp" line="2006"/>
         <source>Parent Code successfully changed.</source>
         <translation>Kod kontroli rodzicielskiej został pomyślnie zmieniony.</translation>
     </message>
@@ -4272,7 +4270,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:zakaz.kartina.tv&apos;&gt;zakaz.kartina.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="unfinished">&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
+        <translation>&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
 Można odnowić subskrypcję na poniższej stronie: &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;.&lt;br&gt;
 lub telefonicznie:
 &lt;table&gt;

@@ -710,7 +710,7 @@ color: red;
           <item row="8" column="1">
            <widget class="QCheckBox" name="checkExtEPG">
             <property name="text">
-             <string>Extended daily EPG</string>
+             <string>EPG day starts at 0:00</string>
             </property>
            </widget>
           </item>
