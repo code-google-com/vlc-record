@@ -40,7 +40,7 @@ case ${NAME} in
       ;;
 esac
 
-if [ "$(uname -m)"="x86_64" ] ; then
+if [ "$(uname -m)" = "x86_64" ] ; then
     ARCH=amd64
 else
     ARCH=i386
@@ -57,6 +57,6 @@ cat << EOF >install.mak
 all: deb
 
 deb:
-	./create_deb.sh ${NAME} ${OFFNAME} ${MAJORVER}.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
+    ./create_deb.sh ${NAME} ${OFFNAME} ${MAJORVER}.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
 
 EOF
