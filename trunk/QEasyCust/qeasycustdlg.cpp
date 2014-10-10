@@ -445,10 +445,11 @@ void QEasyCustDlg::on_pushGo_clicked()
          patchFile.trg = QString("%1/install.mak").arg(sUnxContent);
          vPatchFiles.append(patchFile);
 
-         // linux desktop file
-         patchFile.src = QString("%1/%2/linux.desktop").arg(sAppPath).arg(PATH_TMPL);
-         patchFile.trg = QString("%1/%2.desktop").arg(sUnxContent).arg(ui->lineIntName->text());
-         vPatchFiles.append(patchFile);
+         // !!! will be created by new deb shell script!!!
+         // // linux desktop file
+         // patchFile.src = QString("%1/%2/linux.desktop").arg(sAppPath).arg(PATH_TMPL);
+         // patchFile.trg = QString("%1/%2.desktop").arg(sUnxContent).arg(ui->lineIntName->text());
+         // vPatchFiles.append(patchFile);
 
          // help files ...
          for (i = 0; i < ui->listLang->count(); i++)
@@ -559,8 +560,15 @@ void QEasyCustDlg::on_pushGo_clicked()
 
          cmdQueue << cmdLine;
 
-         // copy create deb shell script to linux content ...
+         // copy create_cust_deb.sh script to linux content ...
          cmdLine = QString("\"%1/%2\" \"%1/%3/create_cust_deb.sh\" \"%4/\"")
+               .arg(sAppPath).arg(COPY_EXE).arg(PATH_TMPL)
+               .arg(sUnxContent);
+
+         cmdQueue << cmdLine;
+
+         // copy create_deb.sh script to linux content ...
+         cmdLine = QString("\"%1/%2\" \"%1/%3/create_deb.sh\" \"%4/\"")
                .arg(sAppPath).arg(COPY_EXE).arg(PATH_TMPL)
                .arg(sUnxContent);
 
