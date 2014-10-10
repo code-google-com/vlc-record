@@ -1,13 +1,14 @@
 
-MYARCH := $(shell if [ "$(uname -m)" == "x86_64" ] ; then echo -n "amd64" ; else echo -n "i386" ; fi)
+MYARCH:=$(shell if [ "$$(uname -m)" = "x86_64" ] ; then echo -n "amd64" ; else echo -n "i386" ; fi)
 
 all: pack
 
 prepare:
 	rm -rf release/*
 	cp ${PROGSRC} release/
-	mv release/${PROGSRC} release/[%INT_NAME%]
+	if [ "$$(basename ${PROGSRC})" != "[%INT_NAME%]" ] ; then mv release/$$(basename ${PROGSRC}) release/[%INT_NAME%] ; fi
 	chmod +x release/[%INT_NAME%]
+	cp $$(dirname ${PROGSRC})/../version_info.h .
 	chmod +x create_deb.sh
 
 pack: prepare

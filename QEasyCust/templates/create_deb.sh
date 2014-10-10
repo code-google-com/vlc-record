@@ -33,12 +33,12 @@ create_folders() {
 
 copy_content() {
     strip -s release/${BIN_NAME}
-    cp release/${BIN_NAME} "${BUILD_FOLDER}/usr/bin/"
-    cp language/*.qm "${BUILD_FOLDER}/usr/share/${BIN_NAME}/language/"
-    cp modules/*.mod "${BUILD_FOLDER}/usr/share/${BIN_NAME}/modules/"
-    cp qhc/* "${BUILD_FOLDER}/usr/share/${BIN_NAME}/doc/"
-    cp resources/${BIN_NAME}.png "${BUILD_FOLDER}/usr/share/${BIN_NAME}/"
-    cp resources/${BIN_NAME}.qcr "${BUILD_FOLDER}/usr/share/${BIN_NAME}/resources/"
+    cp -f release/${BIN_NAME} "${BUILD_FOLDER}/usr/bin/"
+    cp -f language/*.qm "${BUILD_FOLDER}/usr/share/${BIN_NAME}/language/"
+    cp -f modules/*.mod "${BUILD_FOLDER}/usr/share/${BIN_NAME}/modules/"
+    cp -f qhc/* "${BUILD_FOLDER}/usr/share/${BIN_NAME}/doc/"
+    cp -f resources/${BIN_NAME}.png "${BUILD_FOLDER}/usr/share/${BIN_NAME}/"
+    cp -f resources/${BIN_NAME}.qcr "${BUILD_FOLDER}/usr/share/${BIN_NAME}/resources/"
 }
 
 create_desktop_file() {
