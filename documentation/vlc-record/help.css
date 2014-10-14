@@ -44,12 +44,12 @@ b {
 /* QTextBrowser doesn't support CSS pseudo classes!
 a:link, a:visited, a:active {
    color: #036;
-   text-decoration: none; 
+   text-decoration: none;
 }
 
 a:hover {
    color: #800;
-   text-decoration: underline; 
+   text-decoration: underline;
 }
 
 .extern:before {
@@ -69,3 +69,8 @@ a {
    padding-right: 14px;
    background-image: url('images/common/external.png');
 } */
+
+pre {
+   font-family: consolas, "courier new", monospace;
+   color: #444;
+}
