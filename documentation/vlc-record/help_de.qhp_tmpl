@@ -37,6 +37,17 @@
                  </section>
              </section>
              <section title="Changelog" ref="changelog.html">
+                 <section title="Version 2.70" ref="changelog.html#2.70" />
+                 <section title="Version 2.68" ref="changelog.html#2.68" />
+                 <section title="Version 2.66" ref="changelog.html#2.66" />
+                 <section title="Version 2.64" ref="changelog.html#2.64" />
+                 <section title="Version 2.62" ref="changelog.html#2.62" />
+                 <section title="Version 2.60" ref="changelog.html#2.60" />
+                 <section title="Version 2.58" ref="changelog.html#2.58" />
+                 <section title="Version 2.56" ref="changelog.html#2.56" />
+                 <section title="Version 2.54" ref="changelog.html#2.54" />
+                 <section title="Version 2.52" ref="changelog.html#2.52" />
+                 <section title="Version 2.50" ref="changelog.html#2.50" />
              </section>
          </toc>
          <keywords>
@@ -54,6 +65,7 @@
          <files>
              <file>help.css</file>
              <file>help_de.html</file>
+             <file>changelog.html</file>
              <file>images/*.png</file>
              <file>images/lang/de/*.png</file>
          </files>
