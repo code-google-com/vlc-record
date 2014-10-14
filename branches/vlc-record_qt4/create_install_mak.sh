@@ -57,6 +57,6 @@ cat << EOF >install.mak
 all: deb
 
 deb:
-    ./create_deb.sh ${NAME} ${OFFNAME} ${MAJORVER}.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
+	./create_deb.sh ${NAME} ${OFFNAME} ${MAJORVER}.${MINORVER}${BETAEXT} ${SSERVER} ${ARCH}
 
 EOF
