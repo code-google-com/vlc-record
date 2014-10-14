@@ -32,9 +32,11 @@
                      <section title="Фильтр списка каналов" ref="help_ru.html#clfilter" />
                      <section title="Список отложенных передач" ref="help_ru.html#watchlist" />
                      <section title="Видео-контекстное меню" ref="help_ru.html#context" />
-                     <section title="Полноэкранный режим" ref="help_ru.html#fullscreen" />
                      <section title="Мини-интерфейс" ref="help_ru.html#minimode" />
+                     <section title="Полноэкранный режим" ref="help_ru.html#fullscreen" />
                  </section>
+             </section>
+             <section title="Changelog" ref="changelog.html">
              </section>
          </toc>
          <keywords>

@@ -17,7 +17,7 @@
    </head>
    <body>
       <h1 id="top">[%PROGRAM%]</h1>
-      <!-- 
+      <!--
         ************************************************************
         * TOC not needed for QtHelp
         * Remove comment to have it available for e.g. web view!
@@ -56,14 +56,14 @@
       </div>
       -->
       <h2 id="about">About</h2>
-      [%PROGRAM%] is a tool to watch / record IPTV streams sent by [%SERVICE%]. 
-      It is written in C++ using the <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" alt="external" /></a>. 
-      The player functionality is realized by using the libvlc library from 
+      [%PROGRAM%] is a tool to watch / record IPTV streams sent by [%SERVICE%].
+      It is written in C++ using the <a class="extern" href="http://qt.digia.com" target="_blank">Qt framework by Digia <img src="images/external.png" alt="external" /></a>.
+      The player functionality is realized by using the libvlc library from
       <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" alt="external" /></a>.
       <!-- [%HIDEPROJECT%]
       <br />
       [%PROGRAM%] is open source. You can always find the source code as well as
-      the latest builds at the <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">projects site <img src="images/external.png" alt="external" /></a> 
+      the latest builds at the <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">projects site <img src="images/external.png" alt="external" /></a>
       (hosted by Google Code).
       [%HIDEPROJECT%] -->
       <h2 id="versions">Versions</h2>
@@ -71,7 +71,7 @@
       <ul>
          <li>Windows (XP or newer)</li>
          <li>Mac OSX 10.6 x86_64 or newer</li>
-         <li>Ubuntu Linux x86 (current version)</li>
+         <li>Ubuntu Linux i386/amd64 (current version)</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Features</h2>
@@ -90,16 +90,16 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="installation">Installation</h2>
       <h3>Windows</h3>
-      The program will be installed by default in your local application folder 
+      The program will be installed by default in your local application folder
       (c:\Users\[User Name]\AppData\Local\[%PROGRAM%]). This means that you don't need
       administrator privileges to install the program.<br />
       The program settings will be stored in your local roaming folder
       (c:\Users\[User Name]\AppData\Roaming\[%PROGRAM%]).
       <h3>Mac OSX</h3>
-      After opening the dmg file you can drag and drop the application bundle into your application folder.<br /> 
+      After opening the dmg file you can drag and drop the application bundle into your application folder.<br />
       The program settings will be stored inside your home folder (~/.[%PROGRAM%]).
       <h3>Ubuntu</h3>
-      After a double click on the deb package all dependencies as well as the program will be installed. 
+      After a double click on the deb package all dependencies as well as the program will be installed.
       A launcher will also be added to your system. To start the program open the dash (Windows Key) and type
       the first letters of the programs name. Now the program should be listed in dash and you can
       start it by clicking on the launcher icon.<br />
@@ -107,7 +107,7 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="ftsettings">First Time Settings</h2><br />
       <img src="images/lang/en/ftsettings.png" alt="First Time Settings Dialog" title="First Time Settings Dialog" /><br />
-      Please enter your account data there. If you want to have erotic channels displayed in your channel list, 
+      Please enter your account data there. If you want to have erotic channels displayed in your channel list,
       check the related checkbox. If you insert your parental code in the lower textfield you can watch these
       channels without the need to enter the parental code. I'd strongly recomment to leave this field blank.
       <b>Please Note: Your parental code is equal to your accounts password as long as you haven't changed this.</b><br />
@@ -129,7 +129,7 @@
          <li>Timeshift - Hours between Moscow time and your localtime.</li>
          <li>Language - Takes effect only after saving the settings.</li>
          <li>Reload Logos - If you encounter erros in channel list (e.g. a logo doesn't match the channel) you can reload all channel logos there.</li>
-         <li>Fix time offset - Compensates small time difference between the API server and your local computer (default: on).</li>
+         <li>Adapt Font Size - Here you can change the font size used in the program.</li>
          <li>Enable Adv. Settings - Enables advanced settings tab (default: off).</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
@@ -146,17 +146,17 @@
       <ul>
          <li>Proxy Server - Configure a proxy server if you can't connect directly to the internet.</li>
          <li>API Server - Change the API server. Activate this field by pressing <b>Ctrl+Alt+A</b><!-- [%HIDEPROJECT%] (default: [%APISERVER%] {Don't touch it!})[%HIDEPROJECT%] -->.</li>
-         <li>Player Module - Player dependent configuration files. Choose between "5_libvlc.mod" and "9_libvlc_odl.mod" (default: 5_libvlc.mod). 
+         <li>Player Module - Player dependent configuration files. Choose between "5_libvlc.mod" and "9_libvlc_odl.mod" (default: 5_libvlc.mod).
          You can have a look at the module files itself to get an idea what's going on there. Don't touch it if you don't know what you're doing!</li>
-         <li>Log Level - Configure what will be written to logfile (default: log everything). If you need help if something doesn't work as you 
+         <li>Log Level - Configure what will be written to logfile (default: log everything). If you need help if something doesn't work as you
          expected - don't change it!</li>
-         <li>Shutdown Command - If you want to shutdown your computer (e.g. after timer record) you can insert a command here. 
+         <li>Shutdown Command - If you want to shutdown your computer (e.g. after timer record) you can insert a command here.
          For Windows a default command is set.</li>
          <li>Ask for Record Filename - Program will ask you for a filename as soon as you want to record any show (default: off).</li>
-         <li>Detach player at startup - If you use an external player it will be detached from [%PROGRAM%]. 
+         <li>Detach player at startup - If you use an external player it will be detached from [%PROGRAM%].
          It then runs as independent process which [%PROGRAM%] can't control at all (default: off).</li>
          <li>Doubleclick starts play - If <b>off</b> play starts as soon as you click on a channel in channel list (default: on).</li>
-         <li>Minimize to Systray - If <b>on</b> program will be hidden from taskbar when minimized. 
+         <li>Minimize to Systray - If <b>on</b> program will be hidden from taskbar when minimized.
          An icon in the tasktray will tell about the running program instead (default: off).</li>
          <li>Translit record filename - Transliterates a record filename from cyrillic into latin letters (default: off).</li>
          <li>GPU acceleration - Uses GPU for video decoding (highly experimental, default: off).</li>
@@ -164,6 +164,7 @@
          <!-- [%HIDDEN%]
          <li>Show Ads - Show commercials at the begin of a video (VOD). Changeable only in VLC-Record (default: on).</li>
          [%HIDDEN%] -->
+         <li>EPG day starts at 0:00 - If enabled the EPG will be shown from 0:00 ... 24:00, if disabled from 03:00 ... 03:00 (default: enabled).</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Parental Manager</h3><br />
@@ -183,21 +184,21 @@
       <img src="images/lang/en/whole_view.png" alt="Whole View" title="Whole View" /><br />
       At the left side you see the channel list. Above the channel list is the area for the channel favourites. At the top left corner
       you can choose between the live program and video on demand (VOD) - where available.<br />
-      In the middle of the GUI you can see the electronic program guide (EPG). It shows the program for the choosen day and channel. 
-      At the top of the EPG view there are buttons to choose a day and to jump one week forward or back. 
+      In the middle of the GUI you can see the electronic program guide (EPG). It shows the program for the choosen day and channel.
+      At the top of the EPG view there are buttons to choose a day and to jump one week forward or back.
       At the lower end you can see a search field which lets you search for words in the currently shown EPG.<br />
       At the upper right side you see the player widget. Below it there are the play control buttons and below these buttons you can see a small
       info widget.<br />
-      At the lower in the middle is the screen shot button located. You'll also find a screenshot button 
+      At the lower in the middle is the screen shot button located. You'll also find a screenshot button
       at the control panel in fullscreen- and minimal mode.<br />
       In the lower right corner you'll find the settings-, the info-, help- and the quit button.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discoverfeatures">Discovering Features</h2>
       <h3 id="favchannels">Favourite Channels</h3><br />
       <img src="images/lang/en/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
-      You can define up to 10 favourite channels - either by doing a right click at the channel in the channel list 
-      and choosing "Add to favourites" or by using drag'n'drop. The channel will now be placed in the area above 
-      the channel list. If you press at a favourite button the channel in channel list will be selected and the 
+      You can define up to 10 favourite channels - either by doing a right click at the channel in the channel list
+      and choosing "Add to favourites" or by using drag'n'drop. The channel will now be placed in the area above
+      the channel list. If you press at a favourite button the channel in channel list will be selected and the
       EPG for this channel will be loaded. You can remove channels from the favourite area by making a right click there.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="vodbrowser">Video on Demand (where available)</h3><br />
@@ -217,7 +218,7 @@
       back to the former site.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="archive">Archive</h3>
-      For most channels a archive is available. This means that you can watch any program which was sent on this channel 
+      For most channels a archive is available. This means that you can watch any program which was sent on this channel
       for the last two weeks.<br />
       <img src="images/lang/en/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
       You can watch or record this program by clicking at the play / record buttons in the EPG browser. If you choose
@@ -225,37 +226,37 @@
       <img src="images/click_n_go_slider.png" alt="Click'n'Go Slider" title="Click'n'Go Slider" /><br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="timerrec">Timer Record</h3>
-      You can open the timer record dialog either by pressing on this 
-      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> button or by clicking 
+      You can open the timer record dialog either by pressing on this
+      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> button or by clicking
       at the clock in the EPG browser.<br />
       <img src="images/lang/en/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Timer Record dialog will open:<br />
       <img src="images/lang/en/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
-      In this dialog you can plan a record job. You can choose the channel to record from. You must give a name 
+      In this dialog you can plan a record job. You can choose the channel to record from. You must give a name
       for the file in which the video will be saved. You have to insert the start and the end time of the program.
       When choosing "silent record" the program only will record the program, but not show. Checking the
       "shutdown" box lets shutdown the computer after all records are completed. This only works if you have set
       a shutdown command in the <a href="#advsettings">settings</a>.
       A click at the <img src="images/add.png" alt="Add Job" title="Add Job" /> button will add this record
-      to the job list. You can edit a stored record job by making a double click at the entry in the job list. 
-      The data will now be displayed in the upper fields. You can now make your changes. A click at the 
-      <img src="images/add.png" alt="Add Job" title="Add Job" /> will save your changes. You can remove a 
-      stored record job by marking it in job list and pressing the 
-      <img src="images/delete.png" alt="Remove Job" title="Remove Job" /> button. When adding a new timer record job the 
-      program will check its validness. 
+      to the job list. You can edit a stored record job by making a double click at the entry in the job list.
+      The data will now be displayed in the upper fields. You can now make your changes. A click at the
+      <img src="images/add.png" alt="Add Job" title="Add Job" /> will save your changes. You can remove a
+      stored record job by marking it in job list and pressing the
+      <img src="images/delete.png" alt="Remove Job" title="Remove Job" /> button. When adding a new timer record job the
+      program will check its validness.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="otr">OTR (One Touch Record)</h3><br />
       <b>Note:</b> This is not <a href="#timerrec">Timer Record</a>!<br />
       You can enable a timer to stop your pending record after a given time. This feature will be activated when
       you record a show either from live stream or from archive. In this case the record button will change from
-      <img src="images/record.png" alt="record" title="record" /> to <img src="images/record_timer.png" alt="record" title="record" />. 
+      <img src="images/record.png" alt="record" title="record" /> to <img src="images/record_timer.png" alt="record" title="record" />.
       If you press this button a new dialog will appear:<br />
       <img src="images/lang/en/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
-      You can choose the time the record should run. A click at the button <img src="images/button_ok.png" alt="set" title="set" /> 
+      You can choose the time the record should run. A click at the button <img src="images/button_ok.png" alt="set" title="set" />
       will activate the timer. You will see the time running. Now you can close this windows.<br />
       <img src="images/lang/en/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
       When time is up the record will be stopped automatically.<br />
-      <b>Please Note:</b> You can change the timer setting or disable the timer by again clicking at the record button. 
+      <b>Please Note:</b> You can change the timer setting or disable the timer by again clicking at the record button.
       A click at <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" /> will cancel the record timer.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="clfilter">Channel List Filter</h3><br />
@@ -264,34 +265,34 @@
       <img src="images/lang/en/chanlist_filter.png" alt="channel list filter" title="channel list filter" /><br /> <br />
       Now you can enter a string:<br />
       <img src="images/lang/en/chanlist_filter_string.png" alt="channel list filter string" title="channel list filter string" /><br /> <br />
-      When accepting the input mask the channel list will be displayed filtered (all channels which contain the filter 
+      When accepting the input mask the channel list will be displayed filtered (all channels which contain the filter
       string in name will be displayed). The filter button will change to <img src="images/filter_active.png" alt="active filter" title="active filter" />
       to reflect the active filter state. To disable the filter remove the filter string and accept the empty filter mask.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="watchlist">Watch List</h3><br />
       The watch list is a list which contains all shows you want to watch at a later time. To add a show to the
-      watch list simply press the <img src="images/page_add.png" alt="add show" title="add show" /> button in the <a href="#archive">EPG window</a>. 
+      watch list simply press the <img src="images/page_add.png" alt="add show" title="add show" /> button in the <a href="#archive">EPG window</a>.
       The watch list button at the right below the player window now shows an updated number of watch list entries:<br />
       <img src="images/watch_list_btn.png" alt="watch list button" title="watch list button" /><br /> <br />
-      To open the watch list, click at this button. A new window opens which contains a table with all added shows. 
-      From this window you can watch or record any show listed there. It is also possible to record all shows at once. 
-      The number of entries in this list isn't limited. You also can remove a show from watch list using the 
+      To open the watch list, click at this button. A new window opens which contains a table with all added shows.
+      From this window you can watch or record any show listed there. It is also possible to record all shows at once.
+      The number of entries in this list isn't limited. You also can remove a show from watch list using the
       <img src="images/del_sm.png" alt="del show" title="del show" /> button.<br />
       <img src="images/lang/en/watchlist.png" alt="watch list" title="watch list" /><br /> <br />
-      <b>Please note:</b> The watch list is only available for channels with archive. Entries which are no longer within the 
-      archive timeframe will be deleted automatically. You also can add shows which aren't yet part of the archive. 
+      <b>Please note:</b> The watch list is only available for channels with archive. Entries which are no longer within the
+      archive timeframe will be deleted automatically. You also can add shows which aren't yet part of the archive.
       In that case the play and record button in the watch list will appear as soon as the show is archived.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="context">Video Context Menu</h3>
-      The video window has a context menu with some useful entries. You can open this menu when clicking with 
-      right mouse button at the video window. Here you can enable / disable the deinterlacer and change the audio 
+      The video window has a context menu with some useful entries. You can open this menu when clicking with
+      right mouse button at the video window. Here you can enable / disable the deinterlacer and change the audio
       language of the video stream (where supported).<br />
       <img src="images/lang/en/play_context_audio.png" alt="player context audio menu" title="player context audio menu" /><br /> <br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="minimode">The Minimal Interface</h3><br />
       When enabling the minimal interface the GUI will be reduced to the player window. Only in this mode you can force
       the player window to stay on top. This is very helpful if you e.g. edit a document, but also need to watch the latest news.
-      You can toggle this minimal interface by button <img src="images/window_accept.png" alt="minimode button" title="minimode button" /> 
+      You can toggle this minimal interface by button <img src="images/window_accept.png" alt="minimode button" title="minimode button" />
       or using the context menu.<br />
       <img src="images/lang/en/play_context.png" alt="player context minimode menu" title="player context minimode menu" /><br /> <br />
       Only in this context menu you can decide if you want to force the player window to stay on top and if you want to hide the
@@ -300,14 +301,14 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="fullscreen">The Full Screen Mode</h3><br />
       <img src="images/fullscreen.png" alt="full screen mode" title="full screen mode" /><br /> <br />
-      [%PROGRAM%] supports a full screen mode. You can switch to full screen either by making a double click 
-      to the video widget, by activating the chosen <a href="#shortcuts">full screen shortcut</a> or by pressing 
+      [%PROGRAM%] supports a full screen mode. You can switch to full screen either by making a double click
+      to the video widget, by activating the chosen <a href="#shortcuts">full screen shortcut</a> or by pressing
       the blue button as shown in next image.<br />
       <img src="images/switch_to_fullscreen.png" alt="switch to full screen" title="switch to full screen" /><br /> <br />
-      On mouse move the control panel will be shown. This panel has the same functionality as the control panel 
-      in normal windowed mode. It stays visible on top as long as the mouse is over it. Moving the mouse outside this panel 
+      On mouse move the control panel will be shown. This panel has the same functionality as the control panel
+      in normal windowed mode. It stays visible on top as long as the mouse is over it. Moving the mouse outside this panel
       will let it fade out after a while.<br />
-      You can move this panel to the position you like. Place the mouse pointer above the move handle as shown in next image. 
+      You can move this panel to the position you like. Place the mouse pointer above the move handle as shown in next image.
       The mouse cursor will turn into a hand. Now press the mouse button and move the control panel as you like.<br />
       <img src="images/lang/en/fullscreen_move_panel.png" alt="Move control panel" title="Move control panel" /><br /> <br />
       You can leave the full screen mode exactly as you entered it:
@@ -315,12 +316,17 @@
         <li>Making a double click on the video widget.</li>
         <li>Activating the chosen shortcut.</li>
         <li>Pressing the button as shown in following image.</li>
-      </ul><br /> <!-- Note: The break is needed here! 
-                       Without it it looks strange in help browser 
+      </ul><br /> <!-- Note: The break is needed here!
+                       Without it it looks strange in help browser
                        ... don't know why!
                   -->
-      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
+      <img src="images/lang/en/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
       <br /> <br />
+      In standard mode the additional settings and informations are hidden:<br />
+      <img src="images/lang/en/panel_hidden_inf.png" alt="Hidden Information" title="Hidden Information" /><br />
+      You can open these settings and informations by clicking at the arrows marked in the screenshot above.<br />
+      <img src="images/lang/en/panel_shown_inf.png" alt="Visible Information" title="Visible Information" /><br /> <br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
+      <!-- <b style='color: red;'>Please translate --&gt;</b>Whatever<b style='color: red;'>&lt;-- Please translate</b> -->
    </body>
 </html>

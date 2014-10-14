@@ -58,11 +58,11 @@
       <h2 id="about">Über das Programm</h2>
       [%PROGRAM%] ist ein Programm, um IPTV Streams von [%SERVICE%] anzusehen oder aufzuzeichen.
       Es wurde in C++ unter der Benutzung von <a class="extern" href="http://qt.digia.com" target="_blank">Digias Qt-Framework <img src="images/external.png" alt="external" /></a> geschrieben.
-      Die Player-Funktion wurde mit Hilfe der libVLC von 
+      Die Player-Funktion wurde mit Hilfe der libVLC von
       <a class="extern" href="http://www.videolan.org/vlc/" target="_blank">Videolans VLC player <img src="images/external.png" alt="external" /></a> realisiert.
       <!-- [%HIDEPROJECT%]
       <br />
-      [%PROGRAM%] ist OpenSource. Sie können den Source-Code als auch die neuesten Builds auf der 
+      [%PROGRAM%] ist OpenSource. Sie können den Source-Code als auch die neuesten Builds auf der
       <a class="extern" href="http://code.google.com/p/vlc-record/" target="_blank">Projektseite <img src="images/external.png" alt="external" /></a> finden (gehostet von Google-Code).
       [%HIDEPROJECT%] -->
       <h2 id="versions">Versionen</h2>
@@ -70,7 +70,7 @@
       <ul>
          <li>Windows (XP oder besser)</li>
          <li>Mac OSX 10.6 x86_64 oder besser</li>
-         <li>Ubuntu Linux x86 (laufende Version)</li>
+         <li>Ubuntu Linux i368/amd64 (laufende Version)</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="features">Features</h2>
@@ -90,7 +90,7 @@
       <h2 id="installation">Installation</h2>
       <h3>Windows</h3>
       Das Programm wird standardmäßig in ihrem lokalen Programmordner installiert
-      (c:\Users\[Benutzername]\AppData\Local\[%PROGRAM%]). Damit benötigen sie 
+      (c:\Users\[Benutzername]\AppData\Local\[%PROGRAM%]). Damit benötigen sie
       keine Administratorrechte, um das Programm zu installieren.<br />
       Die Programmeinstellungen werden in ihrem Ordner für die lokalen Einstellungen gespeichert
       (c:\Users\[Benutzername]\AppData\Roaming\[%PROGRAM%]).
@@ -99,11 +99,11 @@
       kopieren. Die Programmeinstellungen werden in ihrem Benutzerordner gespeicher
       (~/.[%PROGRAM%]).
       <h3>Ubuntu</h3>
-      Nachdem sie einen Doppelklick auf das deb-Paket gemacht haben, wird das Ubuntu Softwarecenter gestartet. Wenn 
+      Nachdem sie einen Doppelklick auf das deb-Paket gemacht haben, wird das Ubuntu Softwarecenter gestartet. Wenn
       sie auf "installieren" klicken, werden das Programm sowie alle benötigten Bibliotheken installiert.
-      Außerdem wird ein Programmstarter angelegt. Um das Programm zu starten, drücken sie bitte kurz die 
-      "Windows-Taste" ihrer Tastatur. Daraufhin können sie im Dash die Anfangsbuchstaben (z.B. vlc-) eingeben. 
-      Jetzt sollte der Starter angezeigt werden. Ein Klick auf den Starter startet das Programm. 
+      Außerdem wird ein Programmstarter angelegt. Um das Programm zu starten, drücken sie bitte kurz die
+      "Windows-Taste" ihrer Tastatur. Daraufhin können sie im Dash die Anfangsbuchstaben (z.B. vlc-) eingeben.
+      Jetzt sollte der Starter angezeigt werden. Ein Klick auf den Starter startet das Programm.
       Sie können das laufende Programm auch an die Unity-Leiste (links) anheften. Dann können sie das Pogramm einfach
       per Klick auf das Programm-Symbol starten.<br />
       Die Programmeinstellungen werden in ihrem Benutzerverzeichnis gespeichert (~/.[%PROGRAM%]).
@@ -119,7 +119,7 @@
       wird dieser Dialog beim nächten Programmstart wieder angezeigt.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="settings">Einstellungen</h2>
-      Sie starten die Einstellungen, wenn sie auf folgendes Icon unten rechts in der Benutzeroberfläche drücken: 
+      Sie starten die Einstellungen, wenn sie auf folgendes Icon unten rechts in der Benutzeroberfläche drücken:
       <img src="images/tools.png" alt="Settings" title="Settings" />
       <h3 id="mainsettings">Haupteinstellungen</h3><br />
       <img src="images/lang/de/set_main.png" alt="Main Settings" title="Main Settings" /><br />
@@ -134,7 +134,7 @@
          <li>Timeshift - Zeitverschiebung in Stunden zwischen moskauer Zeit und ihrer lokalen Zeit.</li>
          <li>Sprache - Die Änderung wird erst übernommen, wenn sie die Einstellungen abspeichern.</li>
          <li>Logos neu laden - Wenn sie Probleme mit den Logos in der Kanalliste sehen (z.B. wenn ein Logo nicht zum Sender passt) können sie hier die Logos neu laden lassen.</li>
-         <li>Versuche Zeitkorrektur - Kompensiert kleine Zeitabweichungen zwischen dem API Server und ihrem PC (Voreinstellung: an).</li>
+         <li>Textgröße anpassen - Hier können sie die Textgröße für das Programm anpassen.</li>
          <li>Erweiterte Einstellungen - Aktiviert die Seite mit den erweiterten Einstellungen (Voreinstellung: aus).</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
@@ -151,17 +151,17 @@
       <ul>
          <li>Proxy Server - Konfigurieren sie hier einen Proxy-Server, wenn sie nicht direkt auf das Internet zugreifen können.</li>
          <li>API Server - Hier können sie den API Server ändern. Drücken sie <b>Strg+Alt+A</b> um dieses Feld zu aktivieren<!-- [%HIDEPROJECT%] (Voreinstellung: [%APISERVER%] {Besser nicht ändern!})[%HIDEPROJECT%] -->.</li>
-         <li>Player Module - Player-abhängige Konfigurationsdateien. Wählen sie zwischen "5_libvlc.mod" und "9_libvlc_odl.mod" (Voreinstellung: 5_libvlc.mod). 
+         <li>Player Module - Player-abhängige Konfigurationsdateien. Wählen sie zwischen "5_libvlc.mod" und "9_libvlc_odl.mod" (Voreinstellung: 5_libvlc.mod).
          Sie können sich diese Dateien in einem Text-Editor ansehen. Nur ändern, wenn sie wirklich wissen was sie tun!</li>
-         <li>Log Level - Hier konfigurieren sie, was alles mitgeloggt wird (Voreinstellung: logge alles). 
+         <li>Log Level - Hier konfigurieren sie, was alles mitgeloggt wird (Voreinstellung: logge alles).
          Wenn sie Hilfe brauchen, weil etwas nicht so funktioniert wie sie es erwarten, ändern sie diese Einstellung besser nicht.</li>
-         <li>Shutdown Kommando - Wenn sie wollen, dass ihr PC nach getaner Arbeit herunter gefahren wird (z.B. nach einer Timer-Aufnahme), 
+         <li>Shutdown Kommando - Wenn sie wollen, dass ihr PC nach getaner Arbeit herunter gefahren wird (z.B. nach einer Timer-Aufnahme),
          geben sie hier bitte das passende Kommando ein. Für Windows gibt es eine Voreinstellung.</li>
          <li>Frage nach Zieldateinamen - Das Programm wird sie nach einem Dateinamen für das aufzuzeichnende Video fragen (Voreinstellung: aus).</li>
          <li>Trenne Player - Wenn sie ein externes Playerprogramm nutzen, wird dieses nach dem Start von [%PROGRAM%] getrennt.
          Es ist dann unabhängig und kann nicht mehr von [%PROGRAM%] kontrolliert werden (Voreinstellung: aus).</li>
          <li>Doppelklick ... startet Player - Wenn diese Option auf <b>an</b> steht, startet die Wiedergabe einer Sendung, wenn sie einen Doppelklick auf einen Sender in der Kanalliste machen (Voreinstellung: an).</li>
-         <li>Ins Systray minimieren - Wenn diese Option auf <b>an</b> steht, wird das Programm von der Taskleiste versteckt, wenn sie es minimieren. 
+         <li>Ins Systray minimieren - Wenn diese Option auf <b>an</b> steht, wird das Programm von der Taskleiste versteckt, wenn sie es minimieren.
          Stattdessen wird ein Icon im Systray über das laufende Programm informieren (Voreinstellung: aus).</li>
          <li>Translit für Dateinamen - Transliteriert den Dateinamen für eine Videoaufnahme in lateinische Buchstaben (Voreinstellung: aus).</li>
          <li>GPU-Beschleunigung - Benutzt die GPU, um das Video zu dekodieren (experimentell, Voreinstellung: aus).</li>
@@ -169,6 +169,7 @@
          <!-- [%HIDDEN%]
          <li>Zeige Reklame - Zeigt Reklame vor einem Video aus der Videothek (änderbar nur in VLC-Record, Voreinstellung: an).</li>
          [%HIDDEN%] -->
+         <li>EPG startet um 0:00 Uhr - Wenn eingeschalten wird das EPG von 0:00 bis 24:00 Uhr angezeigt, ansonsten  03:00 bis 03:00 Uhr (Voreinstellung: ein).</li>
       </ul>
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="parentmanager">Elternmanager</h3><br />
@@ -186,9 +187,9 @@
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h2 id="discovergui">Ein Blick auf die Benutzeroberfläche</h2><br />
       <img src="images/lang/de/whole_view.png" alt="Whole View" title="Whole View" /><br />
-      Auf der linken Seite sehen sie die Kanalliste. Oberhalb der Kanalliste ist der Bereich für ihre Lieblingssender. 
+      Auf der linken Seite sehen sie die Kanalliste. Oberhalb der Kanalliste ist der Bereich für ihre Lieblingssender.
       In der linken oberen Ecke können sie zwischen dem Live-Programm und der Videothek(wo verfügbar) wählen.<br />
-      In der Mitte der Benutzeroberfläche sehen sie die elektronische Programmvorschau. Sie zeigt das Programm des gewählten Senders 
+      In der Mitte der Benutzeroberfläche sehen sie die elektronische Programmvorschau. Sie zeigt das Programm des gewählten Senders
       für den gewählten Tag. Mittels der Button am oberen Ende des EPG können sie einen Tag wählen und eine Woche vor oder zurück springen.
       Am unteren Ende der EPG-Anzeige befindet sich ein Suchfeld mit dem sie nach Stichwörtern in der aktuellen Programmvorschau suchen können.<br />
       In der oberen rechten Ecke befindet sich das Video-Fenster. Darunter befinden sich die Player-Button und darunter ein kleines Infofenster.<br />
@@ -199,7 +200,7 @@
       <h3 id="favchannels">Lieblingssender</h3><br />
       <img src="images/lang/de/chan_add_favourite.png" alt="Add Favourite" title="Add Favourite" /><br />
       Sie können bis zu 10 Lieblingssender auswählen - entweder per Drag und Drop oder indem sie einen Rechtsklick
-      auf den jeweiligen Sender in der Kanalliste machen und "Zu Favoriten hinzufügen" wählen. Der Sender wird nun oberhalb 
+      auf den jeweiligen Sender in der Kanalliste machen und "Zu Favoriten hinzufügen" wählen. Der Sender wird nun oberhalb
       der Kanalliste als Button angezeigt. Wenn sie diesen Button drücken, wird dieser Sender als aktueller Sender markiert
       und die passende Programmvorschau wird geladen. Sie können Lieblingssender entfernen, indem sie einen Rechtsklick
       in den Bereich oberhalb der Kanalliste machen.
@@ -224,39 +225,39 @@
       Das Archiv ist für die meisten Sender verfügbar. Somit können sie jede Sendung, die auf diesem Sender innerhalb
       der letzten 2 Wochen lief, ansehen.<br />
       <img src="images/lang/de/rec_archive.png" alt="Archive Play Record" title="Archive Play Record" /><br />
-      Sie können diese Sendung ansehen oder aufnehmen, indem sie auf die entsprechenden Button in der 
+      Sie können diese Sendung ansehen oder aufnehmen, indem sie auf die entsprechenden Button in der
       Programmvorschau klicken. Während der Wiedergabe können sie mittels des Sliders unterhalb des Videofensters
       zu jedem beliebigen Zeitpunkt der Sendung springen..<br /> <br />
       <img src="images/click_n_go_slider.png" alt="Click'n'Go Slider" title="Click'n'Go Slider" /><br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="timerrec">Aufnahme-Timer</h3>
       Sie können den Aufnahme-Timer entweder durch Klick auf den Button
-      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" /> 
+      <img src="images/timerrec_own.png" alt="Timer Record" title="Timer Record" />
       oder durch Klick auf das Uhrsymbol in der Programmvorschau öffnen.<br />
       <img src="images/lang/de/add_timer_rec.png" alt="Save as Timer" title="Save as Timer" /><br /> <br />
       Der Aufnahme-Timer öffnet sich:<br />
       <img src="images/lang/de/timer_record.png" alt="Timer Record Dialog" title="Timer Record Dialog" /><br />
       In diesem Fenster können sie eine Timer-Aufnahme planen. Sie müssen einen Kanal auswählen, Start- und Endzeit
       eingeben und einen Dateinamen eingeben, unter dem die Sendung aufgezeichnet wird. Wenn sie "Leise Aufnahme"
-      wählen, wird die Sendung aufgezeichnet ohne sie wiederzugeben. Wenn sie "Herunterfahren" wählen, 
+      wählen, wird die Sendung aufgezeichnet ohne sie wiederzugeben. Wenn sie "Herunterfahren" wählen,
       wird der PC ausgeschaltet sobald alle Aufnahmen erledigt sind. Das funktioniert allerdings nur, wenn sie
-      ein Shutdown-Kommando in den <a href="#advsettings">Einstellungen</a> angegeben haben. 
-      Ein Klick auf <img src="images/add.png" alt="Add Job" title="Add Job" /> wird diese Timer-Aufnahme 
+      ein Shutdown-Kommando in den <a href="#advsettings">Einstellungen</a> angegeben haben.
+      Ein Klick auf <img src="images/add.png" alt="Add Job" title="Add Job" /> wird diese Timer-Aufnahme
       in die Aufnahmeliste übernehmen. Sie können jeden Eintrag ändern, wenn sie einen Doppelklick auf den
       jeweiligen Eintrag in der Liste machen. Die Daten werden in die oberen Eingabefelder übernommen und
-      sie können ihre Änderungen vornehmen. Ein weiterer Klick auf <img src="images/add.png" alt="Add Job" title="Add Job" /> 
+      sie können ihre Änderungen vornehmen. Ein weiterer Klick auf <img src="images/add.png" alt="Add Job" title="Add Job" />
       wird ihre Änderungen übernehmen. Sie können eine Timer-Aufnahme aus der Liste entfernen,
-      indem sie den Eintrag markieren und auf <img src="images/delete.png" alt="Remove Job" title="Remove Job" /> 
+      indem sie den Eintrag markieren und auf <img src="images/delete.png" alt="Remove Job" title="Remove Job" />
       klicken. Wenn sie einen Eintrag erstellen, wird überprüft, ob ihre Angaben richtig sind. Bei eventuellen Zeitüberschneidungen
       werden sie gewarnt.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="otr">OTR (Ein-Klick-Aufnahme)</h3><br />
       <b>Übrigens:</b> Es handelt sich hierbei nicht um den normalen <a href="#timerrec">Aufnahme-Timer</a>!<br />
       Dieses Feature ermöglicht es ihnen eine laufende Aufnahme nach einer gewissen Zeit zu stoppen.
-      Es wird aktiviert, wenn sie eine Aufnahme vom Live-Programm oder aus dem Archiv starten. 
-      In diesem Fall wird sich der Aufnahme-Knopf von 
+      Es wird aktiviert, wenn sie eine Aufnahme vom Live-Programm oder aus dem Archiv starten.
+      In diesem Fall wird sich der Aufnahme-Knopf von
       <img src="images/record.png" alt="record" title="record" /> zu
-      <img src="images/record_timer.png" alt="record" title="record" /> verändern. 
+      <img src="images/record_timer.png" alt="record" title="record" /> verändern.
       Wenn sie diesen Knopf drücken, wird folgender Dialog erscheinen:<br />
       <img src="images/lang/de/record_timer.png" alt="record timer" title="record timer" /><br /> <br />
       Hier können sie die Zeit eingeben, die die Aufnahme laufen soll. Wenn sie auf folgendes Symbol klicken
@@ -264,41 +265,41 @@
       Nun können sie dieses Fenster schließen.<br />
       <img src="images/lang/de/close_record_timer.png" alt="close dialog" title="close dialog" /><br /> <br />
       Wenn der Timer abgelaufen ist, wird die Aufnahme automatisch gestoppt.<br />
-      <b>Übrigens:</b> Sie können diese Einstellungen jederzeit ändern, indem sie erneut auf den Aufnahme-Knopf drücken. 
+      <b>Übrigens:</b> Sie können diese Einstellungen jederzeit ändern, indem sie erneut auf den Aufnahme-Knopf drücken.
       Ein Klick auf <img src="images/delete.png" alt="Cancel Timer" title="Cancel Timer" /> deaktiviert den Timer.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="clfilter">Kanallistenfilter</h3><br />
-      Sie können die Kanalliste nach einer bestimmten Zeichenkette filtern / durchsuchen. Um den Filter zu aktivieren, klicken Sie bitte auf den Button 
+      Sie können die Kanalliste nach einer bestimmten Zeichenkette filtern / durchsuchen. Um den Filter zu aktivieren, klicken Sie bitte auf den Button
       rechts neben der Kanalgruppen-Box:<br />
       <img src="images/lang/de/chanlist_filter.png" alt="channel list filter" title="channel list filter" /><br /> <br />
       Nun können Sie die Zeichenkette eingeben:<br />
       <img src="images/lang/de/chanlist_filter_string.png" alt="channel list filter string" title="channel list filter string" /><br /> <br />
-      Wenn Sie die Eingabe bestätigen, wird die Kanalliste gefiltert angezeigt (alle Kanäle, deren Namen die eingegebene Zeichenkette enthält, 
+      Wenn Sie die Eingabe bestätigen, wird die Kanalliste gefiltert angezeigt (alle Kanäle, deren Namen die eingegebene Zeichenkette enthält,
       werden angezeigt). Der Filter-Button ändert sich zu <img src="images/filter_active.png" alt="active filter" title="active filter" />,
       um den aktivierten Filter anzuzeigen. Um den Filter zu deaktivieren, entfernen Sie einfach die Zeichenkette und bestätigen Sie die Eingabemaske.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="watchlist">Merkliste</h3><br />
       Die Merkliste speichert Sendungen, die Sie zu einem späteren Zeitpunkt ansehen wollen. Um eine Sendung in die Merkliste aufzunehmen,
-      klicken Sie bitte auf den <img src="images/page_add.png" alt="add show" title="add show" /> - Button in der <a href="#archive">Programmvorschau</a>. 
+      klicken Sie bitte auf den <img src="images/page_add.png" alt="add show" title="add show" /> - Button in der <a href="#archive">Programmvorschau</a>.
       Der Button der Merkliste rechts unter dem Video-Fenster zeigt die Anzahl der aktuell vorgemerkten Sendungen:<br />
       <img src="images/watch_list_btn.png" alt="watch list button" title="watch list button" /><br /> <br />
       Um die Merkliste zu öffnen, klicken Sie bitte auf diesen Button. Ein neues Fenster mit einer Tabelle der vorgemerkten Sendungen öffnet sich.
       Von diesem Fenster aus können Sie die vorgemerkten Sendungen ansehen oder aufzeichnen. Sie können auch alle Sendungen auf einmal aufnehmen.
-      Die Anzahl der Einträge in dieser Liste ist nicht begrenzt. Sie können Einträge entfernen, indem Sie auf den 
+      Die Anzahl der Einträge in dieser Liste ist nicht begrenzt. Sie können Einträge entfernen, indem Sie auf den
       <img src="images/del_sm.png" alt="del show" title="del show" /> - Button klicken.<br />
       <img src="images/lang/de/watchlist.png" alt="watch list" title="watch list" /><br /> <br />
-      <b>Bitte beachten Sie:</b> Die Merkliste ist nur für Kanäle verfügbar, die ein Archiv haben. Einträge in der Merkliste, 
-      die nicht mehr länger im Archiv liegen, werden automatisch entfernt. Sie können auch Sendungen zur Merkliste hinzufügen, 
-      die noch nicht archiviert sind. In diesem Fall werden die Button zum ansehen und abspielen erst dann angezeigt, 
-      wenn die entsprechende Sendung archiviert wurde. 
+      <b>Bitte beachten Sie:</b> Die Merkliste ist nur für Kanäle verfügbar, die ein Archiv haben. Einträge in der Merkliste,
+      die nicht mehr länger im Archiv liegen, werden automatisch entfernt. Sie können auch Sendungen zur Merkliste hinzufügen,
+      die noch nicht archiviert sind. In diesem Fall werden die Button zum ansehen und abspielen erst dann angezeigt,
+      wenn die entsprechende Sendung archiviert wurde.
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="context">Videokontextmenü</h3>
-      Das Video-Fenster hat ein Kontextmenü, indem Sie das Deinterlacing ein- oder ausschalten können, sowie die 
+      Das Video-Fenster hat ein Kontextmenü, indem Sie das Deinterlacing ein- oder ausschalten können, sowie die
       Sprachfassung des Video-Streams ändern können (wo vorgesehen).<br />
       <img src="images/lang/de/play_context_audio.png" alt="player context audio menu" title="player context audio menu" /><br /> <br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
       <h3 id="minimode">Das Minimale Interface</h3><br />
-      Wenn sie das minimale Interface aktivieren, wird die Programmoberfläche auf das Videofenster reduziert. Nur in diesem Modus ist es möglich, 
+      Wenn sie das minimale Interface aktivieren, wird die Programmoberfläche auf das Videofenster reduziert. Nur in diesem Modus ist es möglich,
       das Videofenster anzupinnen (es immer im Vordergrund zu halten). Das ist sehr nützlich, wenn sie beispielsweise an einem Dokument arbeiten,
       dabei aber die aktuellsten News sehen müssen. Sie können zum Minimal Interface per Button
       <img src="images/window_accept.png" alt="minimode button" title="minimode button" /> oder über das Kontextmenü umschalten.<br />
@@ -323,12 +324,17 @@
         <li>Einen Doppelklick auf das Videofenster machen.</li>
         <li>Die gespeicherte Tastenkombination aktivieren.</li>
         <li>Den blauen Button, wie unten gezeigt, drücken.</li>
-      </ul><br /> <!-- Note: The break is needed here! 
-                       Without it it looks strange in help browser 
+      </ul><br /> <!-- Note: The break is needed here!
+                       Without it it looks strange in help browser
                        ... don't know why!
                   -->
-      <img src="images/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
+      <img src="images/lang/de/fullscreen_to_normal.png" alt="leave full screen" title="leave full screen" />
       <br /> <br />
+      Im Standard-Modus sind die erweiterten Einstellungen und -Informationen ausgeblendet:<br />
+      <img src="images/lang/de/panel_hidden_inf.png" alt="Hidden Information" title="Hidden Information" /><br />
+      Sie können diese Einstellungen und Informationen einblenden, indem sie auf die oben rot markierten Pfeile klicken.<br />
+      <img src="images/lang/de/panel_shown_inf.png" alt="Visible Information" title="Visible Information" /><br /> <br />
       <!-- <div class="toplink"><a href="#top">Top</a></div> -->
+      <!-- <b style='color: red;'>Please translate --&gt;</b>Whatever<b style='color: red;'>&lt;-- Please translate</b> -->
    </body>
 </html>

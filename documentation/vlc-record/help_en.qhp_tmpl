@@ -32,9 +32,11 @@
                      <section title="Channel List Filter" ref="help_en.html#clfilter" />
                      <section title="Watch List" ref="help_en.html#watchlist" />
                      <section title="Video Context Menu" ref="help_en.html#context" />
-                     <section title="The Full Screen Mode" ref="help_en.html#fullscreen" />
                      <section title="The Minimal Interface" ref="help_en.html#minimode" />
+                     <section title="The Full Screen Mode" ref="help_en.html#fullscreen" />
                  </section>
+             </section>
+             <section title="Changelog" ref="changelog.html">
              </section>
          </toc>
          <keywords>

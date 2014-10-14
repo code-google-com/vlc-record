@@ -32,9 +32,11 @@
                      <section title="Filtr listy kanałów" ref="help_pl.html#clfilter" />
                      <section title="Lista odtwarzania" ref="help_pl.html#watchlist" />
                      <section title="Menu kontekstowe wideo" ref="help_pl.html#context" />
-                     <section title="Tryb Pełno-Ekranowy" ref="help_pl.html#fullscreen" />
                      <section title="Tryb Minimalny" ref="help_pl.html#minimode" />
+                     <section title="Tryb Pełno-Ekranowy" ref="help_pl.html#fullscreen" />
                  </section>
+             </section>
+             <section title="Changelog" ref="changelog.html">
              </section>
          </toc>
          <keywords>
