@@ -328,8 +328,11 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
       {
          tok += "; ";
       }
-
+#ifdef _TASTE_POLSKY_TV
+      tok += tr("Filmweb: %1").arg(sInfo.sKinopoiskRating);
+#else
       tok += tr("Kinopoisk: %1").arg(sInfo.sKinopoiskRating);
+#endif // _TASTE_POLSKY_TV
    }
 
    if (!tok.isEmpty())

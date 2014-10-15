@@ -2063,7 +2063,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="forms/csettingsdlg.ui" line="713"/>
         <source>EPG day starts at 0:00</source>
-        <translation>EPG dzień zaczyna się o 00:00</translation>
+        <translation>EPG zaczyna się o 00:00</translation>
     </message>
     <message>
         <location filename="csettingsdlg.cpp" line="425"/>
@@ -2901,7 +2901,7 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Dodaj do ulubionych.</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="406"/>
+        <location filename="cvodbrowser.cpp" line="409"/>
         <source>Video Details</source>
         <translation>Szczegóły wideo</translation>
     </message>
@@ -2927,16 +2927,21 @@ lub czas początkowy jest później niż czas końcowy!</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="332"/>
+        <source>Filmweb: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cvodbrowser.cpp" line="334"/>
         <source>Kinopoisk: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="343"/>
+        <location filename="cvodbrowser.cpp" line="346"/>
         <source>Director: %1</source>
         <translation>Reżyser: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="348"/>
+        <location filename="cvodbrowser.cpp" line="351"/>
         <source>With: %1</source>
         <translation>Z: %1</translation>
     </message>
@@ -2951,17 +2956,17 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation>Powrót</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="361"/>
+        <location filename="cvodbrowser.cpp" line="364"/>
         <source>Part %1</source>
         <translation>Część %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="380"/>
+        <location filename="cvodbrowser.cpp" line="383"/>
         <source>Play Movie ...</source>
         <translation>Odtwarzaj film …</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="391"/>
+        <location filename="cvodbrowser.cpp" line="394"/>
         <source>Record Movie ...</source>
         <translation>Nagrywaj film …</translation>
     </message>
@@ -3170,57 +3175,57 @@ lub czas początkowy jest później niż czas końcowy!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="522"/>
+        <location filename="qiptvctrlclient.cpp" line="524"/>
         <source>Ignore old queued request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="581"/>
+        <location filename="qiptvctrlclient.cpp" line="583"/>
         <source>Prepend login request ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="589"/>
+        <location filename="qiptvctrlclient.cpp" line="591"/>
         <source>Append last sent request (which triggered error) ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="616"/>
+        <location filename="qiptvctrlclient.cpp" line="618"/>
         <source>Network connection established!</source>
         <translation>Podłączone do sieci!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="616"/>
+        <location filename="qiptvctrlclient.cpp" line="618"/>
         <source>Error connecting to network!</source>
         <translation>Błąd połączenia z siecią!</translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="625"/>
+        <location filename="qiptvctrlclient.cpp" line="627"/>
         <source>Synchronize request counter and acknowledge: %1 &lt;--&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="650"/>
+        <location filename="qiptvctrlclient.cpp" line="652"/>
         <source>Interface: &apos;%1&apos;; MAC: %2; IP: %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="687"/>
+        <location filename="qiptvctrlclient.cpp" line="689"/>
         <source>network config &apos;%1&apos;, id &apos;%2&apos; changed; state %3 -&gt; check internet connection!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="716"/>
+        <location filename="qiptvctrlclient.cpp" line="718"/>
         <source>Network accessibility changed: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="815"/>
+        <location filename="qiptvctrlclient.cpp" line="817"/>
         <source>http request timed out!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qiptvctrlclient.cpp" line="618"/>
+        <location filename="qiptvctrlclient.cpp" line="620"/>
         <source>Online state changed: %1 --&gt; %2</source>
         <translation></translation>
     </message>
@@ -4256,7 +4261,6 @@ dataDir: %1
 <context>
     <name>ownBuyReminder</name>
     <message>
-        <location filename="tastes/more_kartina_translations.h" line="19"/>
         <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
 You can renew your subscription at following site: 
 &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;,&lt;br&gt;
@@ -4270,7 +4274,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:zakaz.kartina.tv&apos;&gt;zakaz.kartina.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation>&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
 Można odnowić subskrypcję na poniższej stronie: &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;.&lt;br&gt;
 lub telefonicznie:
 &lt;table&gt;
@@ -4285,6 +4289,7 @@ lub telefonicznie:
 </translation>
     </message>
     <message>
+        <location filename="tastes/more_polsky_translations.h" line="19"/>
         <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
 You can renew your subscription at following site: 
 &lt;a href=&apos;http://polsky.tv/shop.html&apos;&gt;http://polsky.tv&lt;/a&gt;,&lt;br&gt;
@@ -4296,7 +4301,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:polsky.tv&apos;&gt;polsky.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="obsolete">&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
+        <translation>&lt;b&gt;Abonament kończy się w %1 dzień/dni!&lt;/b&gt;&lt;br&gt;
 Można odnowić subskrypcję na poniższej stronie: &lt;a href=&apos;http://polsky.tv/shop.htm&apos;&gt;http://polsky.tv&lt;/a&gt;.&lt;br&gt;
 lub telefonicznie:
 &lt;table&gt;

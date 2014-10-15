@@ -2931,22 +2931,27 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="343"/>
+        <location filename="cvodbrowser.cpp" line="332"/>
+        <source>Filmweb: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="cvodbrowser.cpp" line="346"/>
         <source>Director: %1</source>
         <translation>Regisseur: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="348"/>
+        <location filename="cvodbrowser.cpp" line="351"/>
         <source>With: %1</source>
         <translation>Mit: %1</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="332"/>
+        <location filename="cvodbrowser.cpp" line="334"/>
         <source>Kinopoisk: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="406"/>
+        <location filename="cvodbrowser.cpp" line="409"/>
         <source>Video Details</source>
         <translation></translation>
     </message>
@@ -2961,7 +2966,7 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="361"/>
+        <location filename="cvodbrowser.cpp" line="364"/>
         <source>Part %1</source>
         <translation>Teil %1</translation>
     </message>
@@ -2971,12 +2976,12 @@ oder die Startzeit liegt nach der Endzeit!</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="380"/>
+        <location filename="cvodbrowser.cpp" line="383"/>
         <source>Play Movie ...</source>
         <translation>Film abspielen ...</translation>
     </message>
     <message>
-        <location filename="cvodbrowser.cpp" line="391"/>
+        <location filename="cvodbrowser.cpp" line="394"/>
         <source>Record Movie ...</source>
         <translation>Film aufzeichnen ...</translation>
     </message>
@@ -4285,7 +4290,6 @@ dataDir: %1
 <context>
     <name>ownBuyReminder</name>
     <message>
-        <location filename="tastes/more_kartina_translations.h" line="19"/>
         <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
 You can renew your subscription at following site: 
 &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;,&lt;br&gt;
@@ -4299,7 +4303,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:zakaz.kartina.tv&apos;&gt;zakaz.kartina.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation>&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
 Sie können es auf folgender Webseite erneuern: &lt;a href=&apos;http://kartina.tv/shop&apos;&gt;http://kartina.tv/shop&lt;/a&gt;.&lt;br&gt;
 Oder nutzen Sie das Telefon:
 &lt;table&gt;
@@ -4314,6 +4318,7 @@ Oder nutzen Sie das Telefon:
 </translation>
     </message>
     <message>
+        <location filename="tastes/more_polsky_translations.h" line="19"/>
         <source>&lt;b&gt;Your subscription ends in %1 day(s).&lt;/b&gt;&lt;br&gt;
 You can renew your subscription at following site: 
 &lt;a href=&apos;http://polsky.tv/shop.html&apos;&gt;http://polsky.tv&lt;/a&gt;,&lt;br&gt;
@@ -4325,7 +4330,7 @@ or by phone:
 &lt;tr&gt;&lt;td&gt;Or using Skype:&lt;/td&gt;&lt;td align=&apos;right&apos;&gt;&lt;a href=&apos;callto:polsky.tv&apos;&gt;polsky.tv&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 </source>
-        <translation type="obsolete">&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
+        <translation>&lt;b&gt;Ihr Abonnement läuft in %1 Tagen aus!&lt;/b&gt;&lt;br&gt;
 Sie können es auf folgender Webseite erneuern: &lt;a href=&apos;http://polsky.tv/shop.htm&apos;&gt;http://polsky.tv&lt;/a&gt;.&lt;br&gt;
 Oder nutzen Sie das Telefon:
 &lt;table&gt;
