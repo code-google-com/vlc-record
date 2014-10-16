@@ -646,7 +646,7 @@ int CPlayer::pause()
       mInfo(tr("Prepare for long time resume ..."));
       pauseResume.bArch     = (showInfo.showType() == ShowInfo::Archive);
       pauseResume.timeStamp = pauseResume.bArch ? (timer.pos() - 5) : (libvlc_media_player_get_time (pMediaPlayer) / 1000);
-      pauseResume.id        = pauseResume.bArch ? showInfo.channelId() : showInfo.vodId();
+      pauseResume.id        = pauseResume.bArch ? showInfo.channelId() : showInfo.vodFileId();
       tPaused.start();
 
       libvlc_media_list_player_pause(pMedialistPlayer);
@@ -692,6 +692,7 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
 
    // get MRL ...
    QString     sMrl  = sCmdLine.section(";;", 0, 0);
+   pWatchStats->playStarts(sMrl);
    // QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
 
    // are there mrl options ... ?
@@ -1140,6 +1141,32 @@ void CPlayer::slotEventPoll()
    // signal buffer state ...
    if (isPlaying())
    {
+      // ----------------------------------------------------------
+      //                   underrun error counter
+      // ----------------------------------------------------------
+
+      // we enable underrun error counting
+      // if we once reached a buffering value >= 75% !
+      if (!errHelper.enabled && (int(buffPercent) > 75))
+      {
+         errHelper.enabled = true;
+      }
+
+      /// A little tricky - we won't count too much!
+      /// Therefore we should find a value which will trigger a count once and will
+      /// be exceeded next time! We hope a value of 5% is a good value to compare!
+      if (errHelper.enabled                              // error counter enabled for underrun
+          && (int(buffPercent) < 5)                      // < 5% of buffer value
+          && (errHelper.lastBuffer != int(buffPercent))) // buffer value changed since last count
+      {
+         errHelper.errCount ++;
+      }
+
+      errHelper.lastBuffer = int(buffPercent);
+      // ----------------------------------------------------------
+      //                  /underrun error counter
+      // ----------------------------------------------------------
+
       emit sigBuffPercent((int)buffPercent);
       missionControl.setBuff((int)buffPercent);
    }
@@ -1161,6 +1188,7 @@ void CPlayer::slotEventPoll()
             cleanupLibVLC();
 
             libPlayState = IncPlay::PS_ERROR;
+            errHelper.errCount ++;
             break;
 
          // TRACK CHANGED ...
@@ -1183,6 +1211,9 @@ void CPlayer::slotEventPoll()
             emit sigPlayState((int)IncPlay::PS_OPEN);
 
             libPlayState = IncPlay::PS_OPEN;
+
+            // reset error count ...
+            errHelper = Player::SErrHelper();
             break;
 
          // playing media ...
@@ -1225,6 +1256,7 @@ void CPlayer::slotEventPoll()
             resetBuffPercent();
             stopPlayTimer();
             libPlayState = IncPlay::PS_STOP;
+            pWatchStats->playEnds(errHelper.errCount);
             break;
 
          // end of media reached ...
@@ -1233,6 +1265,7 @@ void CPlayer::slotEventPoll()
             emit sigPlayState((int)IncPlay::PS_END);
             stopPlayTimer();
             libPlayState = IncPlay::PS_END;
+            pWatchStats->playEnds(errHelper.errCount);
             break;
 
          // showing video ...

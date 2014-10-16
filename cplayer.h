@@ -46,6 +46,14 @@ namespace Player
       int   id;
       bool  bArch;
    };
+
+   struct SErrHelper
+   {
+      SErrHelper():errCount(0), lastBuffer(0), enabled(false){}
+      int  errCount;
+      int  lastBuffer;
+      bool enabled;
+   };
 }
 
 /********************************************************************\
@@ -118,6 +126,7 @@ private:
    QLangVector                  vAudTrk;
    Player::SPauseResume         pauseResume;
    IncPlay::ePlayStates         libPlayState;
+   Player::SErrHelper           errHelper;
 
 private slots:
    void slotPositionChanged(int value);
