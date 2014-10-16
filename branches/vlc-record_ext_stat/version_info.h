@@ -13,10 +13,19 @@
    #define __011910__VERSION_INFO_H
 #include <QtGlobal>
 
+#ifdef __ARCH__I386
+   #define __ARCH "i386"
+#elif defined __ARCH__X86_64
+   #define __ARCH "x86_64"
+#else
+   #define __ARCH ""
+#endif
+
+
 #if defined Q_OS_WIN32
    #define MY_BUILD_SYS "Windows"
 #elif defined Q_OS_LINUX
-   #define MY_BUILD_SYS "Linux (x86)"
+   #define MY_BUILD_SYS "Linux " __ARCH
 #elif defined Q_OS_MAC
    #define MY_BUILD_SYS "Mac"
 #else
@@ -24,9 +33,9 @@
 #endif
 
 #define VERSION_MAJOR "2"
-#define VERSION_MINOR "70"
-// #define BETA_EXT      "B20"
-#define BETA_EXT
+#define VERSION_MINOR "70x"
+#define BETA_EXT      "B3"
+// #define BETA_EXT
 
 #define __MY__VERSION__ \
    VERSION_MAJOR "." VERSION_MINOR BETA_EXT " - " MY_BUILD_SYS ", built at " __DATE__
@@ -34,6 +43,9 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2014-10-16: Version 2.70xV3
+| - add service and statistics for polsky.tv
+|
 | 2014-10-09: Version 2.70RC1
 | - adapt build system for better debian packages
 | - small changes in font size for click'n'go slider
