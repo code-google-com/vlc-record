@@ -50,9 +50,10 @@ namespace Player
    struct SErrHelper
    {
       SErrHelper():errCount(0), lastBuffer(0), enabled(false){}
-      int  errCount;
-      int  lastBuffer;
-      bool enabled;
+      QString mrl;
+      int     errCount;
+      int     lastBuffer;
+      bool    enabled;
    };
 }
 
@@ -85,6 +86,7 @@ public:
    ulong libvlcVersion();
    void resetBuffPercent();
    QVlcVideoWidget*& getVideoWidget();
+   void aboutToClose();
 
    static QVector<libvlc_event_type_t> _eventQueue;
    static const char*                  _pAspect[];
