@@ -51,6 +51,7 @@ public:
    void playStarts(const QString& sUrl);
    void playEnds(int iErrCount);
    QString serialize(const QString& devId);
+   QString osVersion();
 
 
 private:

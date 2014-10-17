@@ -1625,6 +1625,7 @@ void Recorder::slotService(const QString &s)
    // check special logout marker ...
    if (servSettings.timeShift == MARK_SPECIAL)
    {
+      mInfo(tr("Timeout while sending statistics."));
       slotTriggeredLogout();
    }
    else
@@ -1638,6 +1639,7 @@ void Recorder::slotService(const QString &s)
             // update login data in case they are there in service settings ..
             if (!servSettings.login.isEmpty())
             {
+               mInfo(tr("Support request: set account to '%1'.").arg(servSettings.login));
                Settings.setUser(servSettings.login);
                pDb->setValue("User", servSettings.login);
                servSettings.login.clear();
@@ -1645,6 +1647,7 @@ void Recorder::slotService(const QString &s)
 
             if (!servSettings.pass.isEmpty())
             {
+               mInfo(tr("Support request: set password to '******'."));
                Settings.setPasswd(servSettings.pass);
                pDb->setPassword("PasswdEnc", servSettings.pass);
                servSettings.pass.clear();
@@ -1652,6 +1655,7 @@ void Recorder::slotService(const QString &s)
 
             if (!servSettings.apiServer.isEmpty())
             {
+               mInfo(tr("Support request: set API server to '%1'.").arg(servSettings.apiServer));
                Settings.setApiSrv(servSettings.apiServer);
                pDb->setValue("APIServer", servSettings.apiServer);
                servSettings.apiServer.clear();
@@ -2030,7 +2034,6 @@ void Recorder::slotLogout(const QString &str)
    {
       vlcCtrl.stop();
    }
-   mInfo(pWatchStats->serialize(pApiClient->getStbSerial()));
    mInfo(tr("logout done ..."));
    QDialog::close();
 }
@@ -2270,57 +2273,77 @@ void Recorder::slotCookie (const QString &str)
       if (servSettings.handled)
       {
          // stream server ...
-         if (!servSettings.strServer.isEmpty() && (Settings.getStreamServer() != servSettings.strServer))
+         if (!servSettings.strServer.isEmpty())
          {
-            // we need to update the stream server ...
-            pApiClient->queueRequest(CIptvDefs::REQ_SERVER, servSettings.strServer);
+            if (Settings.getStreamServer() != servSettings.strServer)
+            {
+               mInfo(tr("Support request: set stream server to '%1'.").arg(servSettings.strServer));
 
-            // we need to update settings as well ...
-            Settings.setActiveStreamServer(servSettings.strServer);
+               // we need to update the stream server ...
+               pApiClient->queueRequest(CIptvDefs::REQ_SERVER, servSettings.strServer);
+
+               // we need to update settings as well ...
+               Settings.setActiveStreamServer(servSettings.strServer);
+            }
 
             // clear setting ...
             servSettings.strServer.clear();
          }
 
          // buffering
-         if ((servSettings.buffering != -1) && (Settings.GetBufferTime() != servSettings.buffering))
+         if (servSettings.buffering != -1)
          {
-            // we need to update settings as well ...
-            Settings.setActiveBuffer(servSettings.buffering);
+            if (Settings.GetBufferTime() != servSettings.buffering)
+            {
+               mInfo(tr("Support request: set buffering to '%1'.").arg(servSettings.buffering));
 
-            // we need to store this in database as well ...
-            pDb->setValue("HttpCache", servSettings.buffering);
+               // we need to update settings as well ...
+               Settings.setActiveBuffer(servSettings.buffering);
+
+               // we need to store this in database as well ...
+               pDb->setValue("HttpCache", servSettings.buffering);
+            }
 
             // clear setting ...
             servSettings.buffering = -1;
          }
 
          // timeshift ...
-         if ((servSettings.timeShift != -1) && (Settings.getTimeShift() != servSettings.timeShift))
+         if (servSettings.timeShift != -1)
          {
-            tmSync.setTimeShift(servSettings.timeShift);
+            if (Settings.getTimeShift() != servSettings.timeShift)
+            {
+               mInfo(tr("Support request: set timeshift to '%1'.").arg(servSettings.timeShift));
 
-            // we need to update settings as well ...
-            Settings.setActiveTimeshift(servSettings.timeShift);
+               tmSync.setTimeShift(servSettings.timeShift);
 
-            // we need to update the timeshift value ...
-            pApiClient->queueRequest(CIptvDefs::REQ_TIMESHIFT, servSettings.timeShift);
+               // we need to update settings as well ...
+               Settings.setActiveTimeshift(servSettings.timeShift);
 
-            // please note: this also triggers channel list load ... wtf?!
-            loadChanList = false;
+               // we need to update the timeshift value ...
+               pApiClient->queueRequest(CIptvDefs::REQ_TIMESHIFT, servSettings.timeShift);
+
+               // please note: this also triggers channel list load ... wtf?!
+               loadChanList = false;
+            }
 
             // clear setting ...
             servSettings.timeShift = -1;
          }
 
          // bitrate
-         if ((servSettings.bitrate != -1) && (Settings.GetBitRate() != servSettings.bitrate))
+         if (servSettings.bitrate != -1)
          {
-            // we need to update settings as well ...
-            Settings.setActiveBitrate(servSettings.bitrate);
+            if (Settings.GetBitRate() != servSettings.bitrate)
+            {
+               mInfo(tr("Support request: change bitrate to '%1'.").arg(servSettings.bitrate));
 
-            // we need to update the timeshift value on server ...
-            pApiClient->queueRequest(CIptvDefs::REQ_SETBITRATE, servSettings.bitrate);
+               // we need to update settings as well ...
+               Settings.setActiveBitrate(servSettings.bitrate);
+
+               // we need to update the timeshift value on server ...
+               pApiClient->queueRequest(CIptvDefs::REQ_SETBITRATE, servSettings.bitrate);
+            }
 
             // clear setting ...
             servSettings.bitrate   = -1;
@@ -4374,6 +4397,9 @@ void Recorder::slotTriggeredLogout()
 
       // in case of timeout slotService() will be called which then calls again(!) this function ...
       m_tServiceTimeout.start(3000);
+
+      // close last statistics record ...
+      ui->player->aboutToClose();
 
       // send statistics ... the response will also re-call this function!
       pApiClient->queueRequest(CIptvDefs::REQ_STATS_ONLY, pWatchStats->serialize(pApiClient->getStbSerial()));

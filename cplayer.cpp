@@ -691,8 +691,10 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
    missionControl.setLength(showInfo.ends() - showInfo.starts());
 
    // get MRL ...
-   QString     sMrl  = sCmdLine.section(";;", 0, 0);
-   pWatchStats->playStarts(sMrl);
+   QString sMrl  = sCmdLine.section(";;", 0, 0);
+
+   // set mrl for statistic usage
+   errHelper.mrl = sMrl;
    // QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
 
    // are there mrl options ... ?
@@ -1207,13 +1209,27 @@ void CPlayer::slotEventPoll()
 
          // opening media ...
          case libvlc_MediaPlayerOpening:
-            mInfo("libvlc_MediaPlayerOpening ...");
-            emit sigPlayState((int)IncPlay::PS_OPEN);
+            {
+               mInfo("libvlc_MediaPlayerOpening ...");
 
-            libPlayState = IncPlay::PS_OPEN;
+               emit sigPlayState((int)IncPlay::PS_OPEN);
 
-            // reset error count ...
-            errHelper = Player::SErrHelper();
+               libPlayState = IncPlay::PS_OPEN;
+
+               // get current media pointer ...
+               libvlc_media_t* pMd = libvlc_media_player_get_media(pMediaPlayer);
+
+               // we don't want to log errors for the ads!
+               if ((pMd != NULL) && (pMd == videoMediaItem))
+               {
+                  mInfo("Showing main feature ...");
+
+                  pWatchStats->playStarts(errHelper.mrl);
+
+                  // reset error count ...
+                  errHelper = Player::SErrHelper();
+               }
+            }
             break;
 
          // playing media ...
@@ -2390,6 +2406,19 @@ void CPlayer::slotTakeScreenShot()
 QVlcVideoWidget*& CPlayer::getVideoWidget()
 {
    return ui->videoWidget;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   we're about to close -> mark play end for statistics
+//
+//! \author  Jo2003
+//! \date    17.10.2014
+//
+//---------------------------------------------------------------------------
+void CPlayer::aboutToClose()
+{
+   pWatchStats->playEnds(errHelper.errCount);
 }
 
 /************************* History ***************************\

@@ -13,6 +13,7 @@
  *///------------------------- (c) 2014 by Jo2003  --------------------------
 #include "qwatchstats.h"
 #include "version_info.h"
+#include <QSysInfo>
 
 // external stuuf can't be included from our include header since we
 // are global as well ...
@@ -160,12 +161,14 @@ void QWatchStats::playEnds(int iErrCount)
 QString QWatchStats::serialize(const QString& devId)
 {
    WStats::StatsEntry entry;
+   QString fwVersion = VERSION_MAJOR "." VERSION_MINOR BETA_EXT;
 
    entry["server_address"]   = mpSettings->GetAPIServer();
    entry["account_number"]   = mpSettings->GetUser();
    entry["device_id"]        = devId;
    entry["device_type"]      = QString("%1%2-%3").arg(pCustomization->strVal("APPLICATION_SHORTCUT")).arg(OP_SYS).arg(SOFTID_DEVELOPER);
-   entry["firmware_version"] = QString(__MY__VERSION__);
+   entry["firmware_version"] = fwVersion;
+   entry["os_version"]       = osVersion();
 
    if (!mEntryList.isEmpty())
    {
@@ -177,4 +180,73 @@ QString QWatchStats::serialize(const QString& devId)
    mbStartSet = false;
 
    return ret;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   create string with OS version
+//
+//! \author  Jo2003
+//! \date    17.10.2014
+//
+//! \return  OS string
+//---------------------------------------------------------------------------
+QString QWatchStats::osVersion()
+{
+   QString os;
+#ifdef Q_OS_LINUX
+   os = QString("Linux (%1)").arg((QSysInfo::WordSize == 32) ? "i386" : (QSysInfo::WordSize == 64) ? "amd64" : "unknown");
+#elif defined Q_OS_WIN
+   switch (QSysInfo::windowsVersion())
+   {
+   case QSysInfo::WV_XP:
+      os = QString("Windows XP (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case QSysInfo::WV_VISTA:
+      os = QString("Windows Vista (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case QSysInfo::WV_WINDOWS7:
+      os = QString("Windows 7 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   #ifdef QSysInfo::WV_6_2
+   case QSysInfo::WV_WINDOWS8:
+      os = QString("Windows 8 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   #endif // QSysInfo::WV_6_2
+   #ifdef QSysInfo::WV_6_3
+   case QSysInfo::WV_WINDOWS8_1:
+      os = QString("Windows 8.1 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   #endif // QSysInfo::WV_6_3
+   default:
+      os = QString("Windows (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   }
+#elif defined Q_OS_MAC
+   switch (QSysInfo::MacintoshVersion)
+   {
+   case QSysInfo::MV_10_6:
+      os = QString("MacOS X 10.6 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case QSysInfo::MV_10_7:
+      os = QString("MacOS X 10.7 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case QSysInfo::MV_10_8:
+      os = QString("MacOS X 10.8 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case QSysInfo::MV_10_9:
+      os = QString("MacOS X 10.9 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   case 0x000c: // yosmite
+      os = QString("MacOS X 10.10 (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   default:
+      os = QString("MacOS X (%1 bit)").arg(QSysInfo::WordSize);
+      break;
+   }
+#else
+   os = QString("Unknown (%1 bit)").arg(QSysInfo::WordSize);
+#endif
+
+   return os;
 }
