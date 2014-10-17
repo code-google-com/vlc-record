@@ -230,7 +230,7 @@ QString QWatchStats::osVersion()
    case QSysInfo::MV_10_8:
       os = QString("MacOS X 10.8 (%1 bit)").arg(QSysInfo::WordSize);
       break;
-   case QSysInfo::MV_10_9:
+   case 0x000b: // QSysInfo::MV_10_9:
       os = QString("MacOS X 10.9 (%1 bit)").arg(QSysInfo::WordSize);
       break;
    case 0x000c: // yosmite
