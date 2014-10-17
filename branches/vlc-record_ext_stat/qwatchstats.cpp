@@ -208,16 +208,12 @@ QString QWatchStats::osVersion()
    case QSysInfo::WV_WINDOWS7:
       os = QString("Windows 7 (%1 bit)").arg(QSysInfo::WordSize);
       break;
-   #ifdef QSysInfo::WV_6_2
    case QSysInfo::WV_WINDOWS8:
       os = QString("Windows 8 (%1 bit)").arg(QSysInfo::WordSize);
       break;
-   #endif // QSysInfo::WV_6_2
-   #ifdef QSysInfo::WV_6_3
-   case QSysInfo::WV_WINDOWS8_1:
+   case 0x00b0: // QSysInfo::WV_WINDOWS8_1:
       os = QString("Windows 8.1 (%1 bit)").arg(QSysInfo::WordSize);
       break;
-   #endif // QSysInfo::WV_6_3
    default:
       os = QString("Windows (%1 bit)").arg(QSysInfo::WordSize);
       break;
