@@ -37,7 +37,7 @@ PROGMAJ=2
 PROGMIN=70
 
 # here you can enable traces ...
-DEFINES += __TRACE
+# DEFINES += __TRACE
 
 # this flag will be checked on linux only!
 # DEFINES += __PORTABLE
