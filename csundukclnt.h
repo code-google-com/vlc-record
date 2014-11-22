@@ -32,9 +32,16 @@ public:
    virtual ~CSundukClnt();
 
 protected:
+   virtual void GetCookie ();
    virtual void GetStreamURL (int iChanID, const QString &secCode, bool bTimerRec = false);
    virtual void GetArchivURL (const QString &prepared, const QString &secCode);
    virtual void GetVodUrl (int iVidId, const QString &secCode);
+
+public slots:
+   void slotStrProto(QString p);
+
+protected:
+   QString sStrProto;
 };
 
 #endif // __20131212_CSUNDUKCLNT_H

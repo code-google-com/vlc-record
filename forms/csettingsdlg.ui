@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>609</width>
-    <height>551</height>
+    <height>557</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -750,6 +750,36 @@ color: red;
             </property>
            </widget>
           </item>
+          <item row="8" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <widget class="QLabel" name="label_28">
+              <property name="text">
+               <string>Stream Protocol:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbxStreamFormat">
+              <item>
+               <property name="text">
+                <string>hls</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>hds</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>rtsp</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -905,8 +935,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>16</width>
-                     <height>16</height>
+                     <width>96</width>
+                     <height>26</height>
                     </rect>
                    </property>
                   </widget>
@@ -1057,8 +1087,8 @@ color: red;
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>75</width>
-                     <height>676</height>
+                     <width>96</width>
+                     <height>489</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_10">

@@ -116,6 +116,7 @@ public:
 
    virtual QNetworkReply* post(int iReqId, const QString& url, const QString& content, Iptv::eReqType t_req);
    virtual QNetworkReply*  get(int iReqId, const QString& url, Iptv::eReqType t_req);
+   const QString& getStbSerial();
 
 private:
    QVariant          cookies;
@@ -123,11 +124,13 @@ private:
    bool              bBusy;
    QVector<SRequest> vCmdQueue;
    QMutex            mtxCmdQueue;
+   QString           sStbSerial;
 #ifdef __TRACE
    Iptv              iptv;
 #endif
 
 protected:
+   void generateStbSerial();
    QNetworkRequest& prepareRequest(QNetworkRequest& req, const QString &url, int iSize = -1);
    QNetworkReply*   prepareReply(QNetworkReply* rep, int iReqId, Iptv::eReqType t_req);
    void workOffQueue ();

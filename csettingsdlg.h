@@ -65,6 +65,7 @@ public:
     QString GetCookie ();
     QString GetAPIServer ();
     QString getDeinlMode ();
+    QString getStreamType ();
 
     bool UseProxy ();
     bool AllowEros ();
@@ -129,6 +130,7 @@ signals:
     void sigSetBitRate (int brType, QString sVal);
     void sigSetBuffer (int iBuffer);
     void sigSetTimeShift (int iShift);
+    void sigStreamProto (QString p);
 
 private slots:
     void on_btnResetShortcuts_clicked();
@@ -152,6 +154,8 @@ private slots:
     void on_linePasswd_returnPressed();
     void on_cbxLanguage_currentIndexChanged(const QString &lng);
     void on_cbxLanguage_activated(const QString &lng);
+
+    void on_cbxStreamFormat_activated(const QString &arg1);
 
 public slots:
     void slotSplashStateChgd (bool bChecked);
