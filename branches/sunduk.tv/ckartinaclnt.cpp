@@ -12,6 +12,7 @@
 \=============================================================================*/
 #include "ckartinaclnt.h"
 #include "qcustparser.h"
+#include "cparser.h"
 
 // global customization class ...
 extern QCustParser *pCustomization;
@@ -243,7 +244,7 @@ int CKartinaClnt::queueRequest(CIptvDefs::EReq req, const QVariant& par_1, const
          GetBitRate();
          break;
       case CIptvDefs::REQ_SETBITRATE:
-         SetBitRate(par_1.toInt());
+         SetBitRate(par_1.toInt(), par_2.toString());
          break;
       case CIptvDefs::REQ_SETCHAN_HIDE:
          setChanHide(par_1.toString(), par_2.toString());
@@ -520,12 +521,33 @@ void CKartinaClnt::GetBitRate()
 |
 | Returns:     --
 \-----------------------------------------------------------------------------*/
-void CKartinaClnt::SetBitRate(int iRate)
+void CKartinaClnt::SetBitRate(int brType, QString sVal)
 {
-   mInfo(tr("Set BitRate to %1 kbit/s ...").arg(iRate));
+   mInfo(tr("Set BitRate #%1 to %2 ...").arg(brType).arg(sVal));
+   QString cont;
 
-   q_post((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set",
-               QString("var=bitrate&val=%1").arg(iRate));
+   switch ((cparser::BitrateType)brType)
+   {
+   case cparser::BT_LIVE_SD:
+      cont = QString("var=bitrate&val=%1").arg(sVal);
+      break;
+   case cparser::BT_LIVE_HD:
+      cont = QString("var=bitratehd&val=%1").arg(sVal);
+      break;
+   case cparser::BT_ARCH_SD:
+      cont = QString("var=archivebitratesd&val=%1").arg(sVal);
+      break;
+   case cparser::BT_ARCH_HD:
+      cont = QString("var=archivebitratehd&val=%1").arg(sVal);
+      break;
+   default:
+      break;
+   }
+
+   if (!cont.isEmpty())
+   {
+      q_post((int)CIptvDefs::REQ_SETBITRATE, sApiUrl + "settings_set", cont);
+   }
 }
 
 /*-----------------------------------------------------------------------------\

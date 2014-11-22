@@ -301,7 +301,7 @@ Recorder::Recorder(QWidget *parent)
    connect (ui->textEpg,   SIGNAL(anchorClicked(QUrl)), this, SLOT(slotEpgAnchor(QUrl)));
    connect (&Settings,     SIGNAL(sigReloadLogos()), this, SLOT(slotReloadLogos()));
    connect (&Settings,     SIGNAL(sigSetServer(QString)), this, SLOT(slotSetSServer(QString)));
-   connect (&Settings,     SIGNAL(sigSetBitRate(int)), this, SLOT(slotSetBitrate(int)));
+   connect (&Settings,     SIGNAL(sigSetBitRate(int, QString)), this, SLOT(slotSetBitrate(int, QString)));
    connect (&Settings,     SIGNAL(sigSetTimeShift(int)), this, SLOT(slotSetTimeShift(int)));
    connect (&timeRec,      SIGNAL(sigRecDone()), this, SLOT(slotTimerRecordDone()));
    connect (&timeRec,      SIGNAL(sigRecActive(int)), this, SLOT(slotTimerRecActive(int)));
@@ -2036,12 +2036,11 @@ void Recorder::slotCookie (const QString &str)
       pTs->setTimeShift(Settings.getTimeShift());
 
       // bitrate
-      values.clear();
-      actVal = -1;
-      if (!pApiParser->parseSetting(str, "bitrate", values, actVal))
+      QMap<cparser::BitrateType, QString> brMap;
+      if (!pApiParser->parseBitrates(str, brMap))
       {
-         Settings.SetBitrateCbx(values, actVal);
-         mInfo (tr("Using Bitrate %1 kbit/s ...").arg(actVal));
+         Settings.SetBitrateCbx(brMap);
+         mInfo (tr("Using Bitrate %1 ...").arg(actVal));
       }
 
       // stream server
@@ -2686,9 +2685,9 @@ void Recorder::slotSetSServer(QString sIp)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void Recorder::slotSetBitrate(int iRate)
+void Recorder::slotSetBitrate(int brType, QString sVal)
 {
-   pApiClient->queueRequest(CIptvDefs::REQ_SETBITRATE, iRate);
+   pApiClient->queueRequest(CIptvDefs::REQ_SETBITRATE, brType, sVal);
 }
 
 /* -----------------------------------------------------------------\

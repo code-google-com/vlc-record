@@ -284,7 +284,7 @@ private slots:
     void slotVodAnchor (const QUrl &link);
     void slotGotVideoInfo (const QString &str);
     void slotVodURL(const QString &str);
-    void slotSetBitrate (int iRate);
+    void slotSetBitrate (int brType, QString sVal);
     void slotSetTimeShift (int iShift);
     void slotChannelDown();
     void slotChannelUp();
