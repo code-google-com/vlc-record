@@ -640,6 +640,7 @@ int CStdJsonParser::parseSetting(const QString& sResp, const QString &sName, QVe
    if (bOk)
    {
       contentMap = contentMap.value("settings").toMap();
+
       contentMap = contentMap.value(sName).toMap();
 
       iActVal = contentMap.value("value").toInt();
@@ -648,6 +649,58 @@ int CStdJsonParser::parseSetting(const QString& sResp, const QString &sName, QVe
       {
          vValues.append(val.toInt());
       }
+   }
+   else
+   {
+      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
+
+      iRV = -1;
+   }
+
+   return iRV;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   parse bitrates response
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//! \param   sResp (const QString &) ref. to response string
+//! \param   vals (QMap<cparser::BitrateType, QString> &) ref. to val map
+//
+//! \return  0 --> ok; -1 --> any error
+//---------------------------------------------------------------------------
+int CStdJsonParser::parseBitrates(const QString &sResp, QMap<cparser::BitrateType, QString> &vals)
+{
+   int  iRV = 0;
+   bool bOk = false;
+   QVariantMap contentMap;
+
+   // clear vector ...
+   vals.clear();
+
+   contentMap = QtJson::parse(sResp, bOk).toMap();
+
+   if (bOk)
+   {
+      QVariantMap mv;
+      contentMap = contentMap.value("settings").toMap();
+
+      mv = contentMap.value("bitrate").toMap();
+      vals.insert(cparser::BT_LIVE_SD, mv.value("value").toString());
+
+      mv = contentMap.value("bitratehd").toMap();
+      vals.insert(cparser::BT_LIVE_HD, mv.value("value").toString());
+
+      mv = contentMap.value("archivebitratesd").toMap();
+      vals.insert(cparser::BT_ARCH_SD, mv.value("value").toString());
+
+      mv = contentMap.value("archivebitratehd").toMap();
+      vals.insert(cparser::BT_ARCH_HD, mv.value("value").toString());
    }
    else
    {

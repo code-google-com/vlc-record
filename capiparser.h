@@ -43,6 +43,7 @@ public:
    virtual int parseChannelList (const QString &sResp, QVector<cparser::SChan> &chanList, bool bFixTime) = 0;
    virtual int parseEpg (const QString &sResp, QVector<cparser::SEpg> &epgList) = 0;
    virtual int parseSetting(const QString& sResp, const QString &sName, QVector<int>& vValues, int& iActVal) = 0;
+   virtual int parseBitrates(const QString& sResp, QMap<cparser::BitrateType, QString>& vals) = 0;
    virtual int parseSServersLogin (const QString& sResp, QVector<cparser::SSrv>& vSrv, QString& sActIp) = 0;
    virtual int parseVodList (const QString& sResp, QVector<cparser::SVodVideo>& vVodList, cparser::SGenreInfo &gInfo) = 0;
    virtual int parseUrl (const QString& sResp, QString& sUrl) = 0;

@@ -61,7 +61,7 @@ protected:
    void GetVodGenres ();
    void SetServer (const QString& sIp);
    void GetServer ();
-   void SetBitRate (int iRate);
+   void SetBitRate (int brType, QString sVal);
    void GetBitRate ();
    void SetHttpBuffer (int iTime);
    void GetEPG (int iChanID, int iOffset = 0);

@@ -106,6 +106,9 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    }
 #endif
 
+   // bitrate boxes
+   touchBitRateCBXs();
+
    // fill in values ...
    readSettings();
 }
@@ -370,6 +373,7 @@ void CSettingsDlg::changeEvent(QEvent *e)
           // set company name ...
           QString s = m_ui->groupAccount->title();
           m_ui->groupAccount->setTitle(s.arg(pCustomization->strVal("COMPANY_NAME")));
+          touchBitRateCBXs();
        }
        break;
     default:
@@ -672,74 +676,52 @@ void CSettingsDlg::SetStreamServerCbx (const QVector<cparser::SSrv> &vSrvList, c
 
 /* -----------------------------------------------------------------\
 |  Method: SetBitrateCbx
-|  Begin: 14.01.2011 / 14:15
+|  Begin: 22.11.2014
 |  Author: Jo2003
-|  Description: fill / mark combobox for bitrate
+|  Description: mark comboboxes for bitrate
 |
-|  Parameters: ref. to bitrate vector, act bitrate
+|  Parameters: ref. to bitrate map
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::SetBitrateCbx (const QVector<int>& vValues, int iActrate)
+void CSettingsDlg::SetBitrateCbx (const QMap<cparser::BitrateType, QString> &currVals)
 {
-   int iActIdx = 0;
-   int iCount  = 0;
-   QVector<int>::const_iterator cit;
-   QString sName;
+   int idx;
 
-   if (!vValues.isEmpty())
+   if (currVals.contains(cparser::BT_LIVE_SD))
    {
-      m_ui->cbxBitRate->clear();
-
-      // add all available bitrates ...
-      for (cit = vValues.constBegin(); cit != vValues.constEnd(); cit++)
+      idx = m_ui->cbxBitRateLiveSD->findData(currVals.value(cparser::BT_LIVE_SD));
+      if (idx != -1)
       {
-         // build name ...
-         switch (*cit)
-         {
-         case 320:
-            sName = tr("Mobile");
-            break;
-
-         case 900:
-            sName = tr("Eco");
-            break;
-
-         case 1500:
-            sName = tr("Standard");
-            break;
-
-         case 2500:
-            sName = tr("Premium");
-            break;
-
-         default:
-            sName = tr("%1 Kbit/s").arg(*cit);
-            break;
-         }
-
-         m_ui->cbxBitRate->addItem(sName, QVariant(*cit));
-
-         if (*cit == iActrate)
-         {
-            iActIdx = iCount;
-         }
-
-         iCount ++;
+         m_ui->cbxBitRateLiveSD->setCurrentIndex(idx);
       }
-
-      // mark active rate ...
-      m_ui->cbxBitRate->setCurrentIndex(iActIdx);
    }
 
-   // make sure the box isn't touched if there is only one entry ...
-   if (vValues.count() < 2)
+   if (currVals.contains(cparser::BT_LIVE_HD))
    {
-      m_ui->cbxBitRate->setDisabled(true);
+      idx = m_ui->cbxBitRateLiveHD->findData(currVals.value(cparser::BT_LIVE_HD));
+      if (idx != -1)
+      {
+         m_ui->cbxBitRateLiveHD->setCurrentIndex(idx);
+      }
    }
-   else
+
+   if (currVals.contains(cparser::BT_ARCH_SD))
    {
-      m_ui->cbxBitRate->setEnabled(true);
+      idx = m_ui->cbxBitRateArchSD->findData(currVals.value(cparser::BT_ARCH_SD));
+      if (idx != -1)
+      {
+         m_ui->cbxBitRateArchSD->setCurrentIndex(idx);
+      }
+   }
+
+   if (currVals.contains(cparser::BT_ARCH_HD))
+   {
+      idx = m_ui->cbxBitRateArchHD->findData(currVals.value(cparser::BT_ARCH_HD));
+      if (idx != -1)
+      {
+         m_ui->cbxBitRateArchHD->setCurrentIndex(idx);
+      }
    }
 }
 
@@ -807,7 +789,7 @@ void CSettingsDlg::on_cbxStreamServer_activated(int index)
 }
 
 /* -----------------------------------------------------------------\
-|  Method: on_cbxBitRate_activated
+|  Method: on_cbxBitRateLiveSD_activated
 |  Begin: 14.09.2011 / 09:40
 |  Author: Jo2003
 |  Description: set bitrate
@@ -816,9 +798,54 @@ void CSettingsDlg::on_cbxStreamServer_activated(int index)
 |
 |  Returns: --
 \----------------------------------------------------------------- */
-void CSettingsDlg::on_cbxBitRate_activated(int index)
+void CSettingsDlg::on_cbxBitRateLiveSD_activated(int index)
 {
-   emit sigSetBitRate(m_ui->cbxBitRate->itemData(index).toInt());
+   emit sigSetBitRate((int)cparser::BT_LIVE_SD, m_ui->cbxBitRateLiveSD->itemData(index).toString());
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxBitRateLiveHD_activated
+|  Begin: 14.09.2011 / 09:40
+|  Author: Jo2003
+|  Description: set bitrate
+|
+|  Parameters: actual index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_cbxBitRateLiveHD_activated(int index)
+{
+   emit sigSetBitRate((int)cparser::BT_LIVE_HD, m_ui->cbxBitRateLiveHD->itemData(index).toString());
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxBitRateArchSD_activated
+|  Begin: 14.09.2011 / 09:40
+|  Author: Jo2003
+|  Description: set bitrate
+|
+|  Parameters: actual index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_cbxBitRateArchSD_activated(int index)
+{
+   emit sigSetBitRate((int)cparser::BT_ARCH_SD, m_ui->cbxBitRateArchSD->itemData(index).toString());
+}
+
+/* -----------------------------------------------------------------\
+|  Method: on_cbxBitRateArchHD_activated
+|  Begin: 14.09.2011 / 09:40
+|  Author: Jo2003
+|  Description: set bitrate
+|
+|  Parameters: actual index
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void CSettingsDlg::on_cbxBitRateArchHD_activated(int index)
+{
+   emit sigSetBitRate((int)cparser::BT_ARCH_HD, m_ui->cbxBitRateArchHD->itemData(index).toString());
 }
 
 /* -----------------------------------------------------------------\
@@ -1229,11 +1256,6 @@ QString CSettingsDlg::GetShutdownCmd()
 bool CSettingsDlg::DisableSplashScreen()
 {
    return (pDb->intValue("NoSplash")) ? true : false;
-}
-
-int  CSettingsDlg::GetBitRate()
-{
-   return m_ui->cbxBitRate->currentText().toInt();
 }
 
 QString CSettingsDlg::GetAPIServer()
@@ -1910,6 +1932,45 @@ int CSettingsDlg::setLanguage(const QString &lng)
    }
 
    return (idx > -1) ? 0 : idx;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   create / translate bitrate comboboxes
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//---------------------------------------------------------------------------
+void CSettingsDlg::touchBitRateCBXs()
+{
+   int idx;
+
+   idx = m_ui->cbxBitRateLiveSD->currentIndex();
+   m_ui->cbxBitRateLiveSD->clear();
+   m_ui->cbxBitRateLiveSD->insertItem(0, tr("Standard"), QVariant("Standart"));
+   m_ui->cbxBitRateLiveSD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateLiveSD->insertItem(2, tr("Automatic"), QVariant("Automatic"));
+   m_ui->cbxBitRateLiveSD->setCurrentIndex(idx);
+
+   idx = m_ui->cbxBitRateLiveHD->currentIndex();
+   m_ui->cbxBitRateLiveHD->clear();
+   m_ui->cbxBitRateLiveHD->insertItem(0, tr("Standard"), QVariant("Standart"));
+   m_ui->cbxBitRateLiveHD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateLiveHD->insertItem(2, tr("Automatic"), QVariant("Automatic"));
+   m_ui->cbxBitRateLiveHD->setCurrentIndex(idx);
+
+   idx = m_ui->cbxBitRateArchSD->currentIndex();
+   m_ui->cbxBitRateArchSD->clear();
+   m_ui->cbxBitRateArchSD->insertItem(0, tr("Standard"), QVariant("Standart"));
+   m_ui->cbxBitRateArchSD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateArchSD->setCurrentIndex(idx);
+
+   idx = m_ui->cbxBitRateArchHD->currentIndex();
+   m_ui->cbxBitRateArchHD->clear();
+   m_ui->cbxBitRateArchHD->insertItem(0, tr("Standard"), QVariant("Standart"));
+   m_ui->cbxBitRateArchHD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateArchHD->setCurrentIndex(idx);
 }
 
 /************************* History ***************************\

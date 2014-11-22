@@ -89,10 +89,9 @@ public:
     void  SaveFavourites (const QList<int> &favList);
     QList<int> GetFavourites (bool *ok = NULL);
     void  SetStreamServerCbx (const QVector<cparser::SSrv>& vSrvList, const QString& sActSrv);
-    void  SetBitrateCbx (const QVector<int>& vValues, int iActrate);
+    void  SetBitrateCbx (const QMap<cparser::BitrateType, QString>& currVals);
     void  SaveCookie (const QString &str);
     bool  DisableSplashScreen ();
-    int   GetBitRate ();
     void  addShortCut (const QString& descr, const QString& target, const QString& slot, const QString& keys);
     void  delShortCut (const QString& target, const QString& slot);
     void  updateShortcutDescr(const QString& descr, const QString& target, const QString& slot);
@@ -109,6 +108,7 @@ public:
     void setGeometry(const QByteArray &ba);
     QByteArray getGeometry();
     int setLanguage (const QString& lng);
+    void touchBitRateCBXs();
 
 protected:
     virtual void changeEvent(QEvent *e);
@@ -126,7 +126,7 @@ private:
 signals:
     void sigReloadLogos ();
     void sigSetServer (QString sIp);
-    void sigSetBitRate (int iRate);
+    void sigSetBitRate (int brType, QString sVal);
     void sigSetBuffer (int iBuffer);
     void sigSetTimeShift (int iShift);
 
@@ -140,7 +140,10 @@ private slots:
     void slotEnableApiServer ();
     void slotEnableVlcVerbLine ();
     void on_cbxStreamServer_activated(int index);
-    void on_cbxBitRate_activated(int index);
+    void on_cbxBitRateLiveSD_activated(int index);
+    void on_cbxBitRateLiveHD_activated(int index);
+    void on_cbxBitRateArchSD_activated(int index);
+    void on_cbxBitRateArchHD_activated(int index);
     void on_cbxTimeShift_activated(int index);
     void on_btnSaveExitManager_clicked();
     void on_btnEnterManager_clicked();

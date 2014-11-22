@@ -149,6 +149,15 @@ namespace cparser
       uint    uiEnd;
       QString sShow;
    };
+
+   enum BitrateType
+   {
+      BT_LIVE_SD,
+      BT_LIVE_HD,
+      BT_ARCH_SD,
+      BT_ARCH_HD,
+      BT_UNKNOWN
+   };
 }
 
 // make life easier ...
