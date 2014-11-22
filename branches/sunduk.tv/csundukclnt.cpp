@@ -12,6 +12,11 @@
  *
  *///------------------------- (c) 2013 by Jo2003  --------------------------
 #include "csundukclnt.h"
+#include "qcustparser.h"
+
+
+// global customization class ...
+extern QCustParser *pCustomization;
 
 // log file functions ...
 extern CLogFile VlcLog;
@@ -29,7 +34,7 @@ extern CLogFile VlcLog;
 //---------------------------------------------------------------------------
 CSundukClnt::CSundukClnt(QObject *parent) : CKartinaClnt(parent)
 {
-   // nothing to do so far ...
+   sStrProto = "hls";
 }
 
 //---------------------------------------------------------------------------
@@ -50,6 +55,30 @@ CSundukClnt::~CSundukClnt()
 
 //---------------------------------------------------------------------------
 //
+//! \brief   login
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//! \param   --
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void CSundukClnt::GetCookie()
+{
+   mInfo(tr("Request Authentication ..."));
+
+   q_post((int)CIptvDefs::REQ_COOKIE, apiUrl() + "login",
+        QString("login=%1&pass=%2&settings=all&softid=%3%4-%5&deviceId=%6")
+            .arg(sUsr).arg(sPw)
+            .arg(pCustomization->strVal("APPLICATION_SHORTCUT"))
+            .arg(OP_SYS).arg(SOFTID_DEVELOPER)
+            .arg(getStbSerial()),
+        Iptv::Login);
+}
+
+//---------------------------------------------------------------------------
+//
 //! \brief   get url for video stream
 //
 //! \author  Jo2003
@@ -65,7 +94,7 @@ void CSundukClnt::GetStreamURL (int iChanID, const QString &secCode, bool bTimer
 {
    mInfo(tr("Request URL for channel %1 ...").arg(iChanID));
 
-   QString req = QString("cid=%1&stream_protocol=hls").arg(iChanID);
+   QString req = QString("cid=%1&stream_protocol=%2").arg(iChanID).arg(sStrProto);
 
    if (secCode != "")
    {
@@ -93,7 +122,7 @@ void CSundukClnt::GetArchivURL (const QString &prepared, const QString &secCode)
    mInfo(tr("Request Archiv URL ..."));
 
    QString req = QUrl::fromPercentEncoding(prepared.toUtf8());
-   req += "&stream_protocol=hls";
+   req += "&stream_protocol=" + sStrProto;
 
    if (secCode != "")
    {
@@ -119,8 +148,8 @@ void CSundukClnt::GetVodUrl (int iVidId, const QString &secCode)
 {
    mInfo(tr("Request Video Url for video %1...").arg(iVidId));
 
-   QString req = QString("vod_geturl?fileid=%1&ad=1&stream_protocol=hls")
-         .arg(iVidId);
+   QString req = QString("vod_geturl?fileid=%1&ad=1&stream_protocol=%2")
+         .arg(iVidId).arg(sStrProto);
 
    if (secCode != "")
    {
@@ -128,4 +157,20 @@ void CSundukClnt::GetVodUrl (int iVidId, const QString &secCode)
    }
 
    q_get((int)CIptvDefs::REQ_GETVODURL, apiUrl() + req);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   set stream protocol
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//! \param   p (QString) new protocol
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void CSundukClnt::slotStrProto(QString p)
+{
+   sStrProto = p;
 }

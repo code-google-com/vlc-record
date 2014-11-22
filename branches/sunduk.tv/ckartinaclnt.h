@@ -50,7 +50,7 @@ public:
 
 
 protected:
-   void GetCookie ();
+   virtual void GetCookie ();
    void Logout ();
    void GetChannelList (const QString &secCode = QString());
    void SetTimeShift (int iHours);
@@ -81,9 +81,11 @@ protected:
    virtual void getVodLang();
    const QString& apiUrl();
 
-private:
+   // variables ...
    QString   sUsr;
    QString   sPw;
+
+private:
    QString   sApiUrl;
    QString   sCookie;
    QErrorMap errMap;

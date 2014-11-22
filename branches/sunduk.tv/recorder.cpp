@@ -152,6 +152,10 @@ Recorder::Recorder(QWidget *parent)
    pMnLangFilter = pFilterMenu->addMenu(tr("Language Filter"));
 #endif // _TASTE_IPTV_RECORD
 
+#ifdef _TASTE_SUNDUK_TV
+   pApiClient->slotStrProto(Settings.getStreamType());
+#endif // _TASTE_SUNDUK_TV
+
    // watch list ...
    pWatchList = new QWatchListDlg (this);
 
@@ -281,6 +285,10 @@ Recorder::Recorder(QWidget *parent)
 #ifdef _TASTE_IPTV_RECORD
    connect (pMnLangFilter, SIGNAL(triggered(QAction*)), this, SLOT(slotLangFilterChannelList(QAction*)));
 #endif // _TASTE_IPTV_RECORD
+
+#ifdef _TASTE_SUNDUK_TV
+   connect (&Settings,     SIGNAL(sigStreamProto(QString)), pApiClient, SLOT(slotStrProto(QString)));
+#endif // _TASTE_SUNDUK_TV
    connect (pWatchList,    SIGNAL(sigClick(QUrl)), this, SLOT(slotWlClick(QUrl)));
    connect (pWatchList,    SIGNAL(sigUpdCount()), this, SLOT(slotUpdWatchListCount()));
    connect (pFilterWidget, SIGNAL(sigFilter(QString)), this, SLOT(slotFilterChannelList(QString)));

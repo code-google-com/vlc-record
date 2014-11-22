@@ -15,6 +15,8 @@
 #include "version_info.h"
 #include "defdef.h"
 #include "qcustparser.h"
+#include <QNetworkInterface>
+#include <QNetworkAddressEntry>
 
 // global customization class ...
 extern QCustParser *pCustomization;
@@ -55,6 +57,49 @@ QIptvCtrlClient::QIptvCtrlClient(QObject* parent) :
 QIptvCtrlClient::~QIptvCtrlClient()
 {
    // nothing to do so far ...
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   create STB serial from MAC address of the 1st active interface
+//
+//! \author  Jo2003
+//! \date    04.06.2014
+//
+//---------------------------------------------------------------------------
+void QIptvCtrlClient::generateStbSerial()
+{
+   foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces())
+   {
+      if (interface.flags().testFlag(QNetworkInterface::IsUp)
+         && (!interface.flags().testFlag(QNetworkInterface::IsLoopBack)))
+      {
+         foreach (QNetworkAddressEntry entry, interface.addressEntries())
+         {
+            if(entry.ip().protocol() == QAbstractSocket::IPv4Protocol)
+            {
+               mInfo(tr("Interface: '%1'; MAC: %2; IP: %3")
+                     .arg(interface.name())
+                     .arg(interface.hardwareAddress())
+                     .arg(entry.ip().toString()));
+
+               sStbSerial = interface.hardwareAddress();
+            }
+
+            // no need to go on ...
+            if (!sStbSerial.isEmpty())
+            {
+               break;
+            }
+         }
+      }
+
+      // no need to go on ...
+      if (!sStbSerial.isEmpty())
+      {
+         break;
+      }
+   }
 }
 
 //---------------------------------------------------------------------------
@@ -294,6 +339,24 @@ QNetworkReply* QIptvCtrlClient::get(int iReqId, const QString& url,
    }
 
    return pReply;
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   create / return stb serial
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//! \return  stb serial
+//---------------------------------------------------------------------------
+const QString &QIptvCtrlClient::getStbSerial()
+{
+   if (sStbSerial.isEmpty())
+   {
+      generateStbSerial();
+   }
+   return sStbSerial;
 }
 
 //---------------------------------------------------------------------------

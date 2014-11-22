@@ -305,6 +305,9 @@ void CSettingsDlg::readSettings()
    iIdx = m_ui->cbxBufferSeconds->findData(pDb->intValue("HttpCache"));
    m_ui->cbxBufferSeconds->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
 
+   iIdx = m_ui->cbxStreamFormat->findData(pDb->intValue("StreamFormat"));
+   m_ui->cbxStreamFormat->setCurrentIndex((iIdx < 0) ? 0 : iIdx);
+
    m_ui->cbxLogLevel->setCurrentIndex((int)pDb->intValue("LogLevel"));
 
    // deinterlace mode ...
@@ -557,6 +560,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("LogLevel", m_ui->cbxLogLevel->currentIndex());
    pDb->setValue("PlayerModule", m_ui->cbxPlayerMod->currentText());
    pDb->setValue("DeintlMode", m_ui->cbxDeintlMode->currentText());
+   pDb->setValue("StreamFormat", m_ui->cbxStreamFormat->currentIndex());
 
    // short cuts ...
    CShortCutGrabber *pGrab;
@@ -1196,6 +1200,11 @@ QString CSettingsDlg::GetPlayerModule()
 QString CSettingsDlg::getDeinlMode()
 {
    return m_ui->cbxDeintlMode->currentText();
+}
+
+QString CSettingsDlg::getStreamType()
+{
+   return m_ui->cbxStreamFormat->currentText();
 }
 
 bool CSettingsDlg::UseProxy ()
@@ -1971,6 +1980,29 @@ void CSettingsDlg::touchBitRateCBXs()
    m_ui->cbxBitRateArchHD->insertItem(0, tr("Standard"), QVariant("Standart"));
    m_ui->cbxBitRateArchHD->insertItem(1, tr("Economy"), QVariant("Economy"));
    m_ui->cbxBitRateArchHD->setCurrentIndex(idx);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   create a warning un unsupported stream type
+//
+//! \author  Jo2003
+//! \date    22.11.2014
+//
+//! \param   arg1 (const QString&) stream type value
+//
+//---------------------------------------------------------------------------
+void CSettingsDlg::on_cbxStreamFormat_activated(const QString &arg1)
+{
+   if ((arg1 == "hds") || (arg1 == "rtsp"))
+   {
+      QMessageBox::warning(this, tr("Warning!"),
+                           tr("<b>Please note:</b><br>"
+                              "&quot;%1&quot; might not be supported by the VLC player library at all!")
+                           .arg(arg1));
+   }
+
+   emit sigStreamProto(arg1);
 }
 
 /************************* History ***************************\

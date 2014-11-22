@@ -23,5 +23,7 @@
 #define VERSION_APPENDIX
 #define ApiClient      CSundukClnt
 
+#define APPLICATION_SHORTCUT "sdk"
+
 #endif // __20131212__DEFINES_SUNDUK_TV_H
 
