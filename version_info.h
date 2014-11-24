@@ -24,7 +24,7 @@
 #endif
 
 #define VERSION_MAJOR 2
-#define VERSION_MINOR 68
+#define VERSION_MINOR 69
 #define VERSION_BUILD 0
 #define BETA_EXT      ""
 
