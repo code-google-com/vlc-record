@@ -10,7 +10,7 @@ Since Linux is such a wide field it's impossible to provide you with all possibl
 At least we need subversion, a compiler (gcc with g++), the qt4 dev framework, the libvlc-dev package, make and in addition checkinstall. To get these things on Ubuntu we run:
 
 {{{
-sudo apt-get install make g++ libqt4-dev libvlc-dev vlc gtk2-engines-pixbuf checkinstall subversion
+sudo apt-get install libqt4-dev libx11-dev vlc-nox libvlc-dev build-essential gawk gtk2-engines-pixbuf subversion
 }}}
 
 This also will install some additional packages our packages depend on. 
