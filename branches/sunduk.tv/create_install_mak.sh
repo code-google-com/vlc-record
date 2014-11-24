@@ -41,7 +41,9 @@ esac
 
 
 # get release information ...
-MINORVER=`sed -n 's/^#define[ \t]*VERSION_MINOR[^0-9]\+\([^"]\+\).*/\1/p' version_info.h`
+MAJORVER=`sed -n 's/^#define[ \t]*VERSION_MAJOR[^0-9]\+\([0-9]\+\).*/\1/p' version_info.h`
+MINORVER=`sed -n 's/^#define[ \t]*VERSION_MINOR[^0-9]\+\([0-9]\+\).*/\1/p' version_info.h`
+BUILDVER=`sed -n 's/^#define[ \t]*VERSION_BUILD[^0-9]\+\([0-9]\+\).*/\1/p' version_info.h`
 BETAEXT=`sed -n 's/^#define[ \t]*BETA_EXT[^0-9B]\+\([^"]\+\).*/\1/p' version_info.h`
 
 # create application launcher ...
@@ -74,7 +76,7 @@ REQUIRES=--requires "libqtcore4, libqtgui4, libqt4-network, libqt4-sql-sqlite, v
 REQUIRESCLC=--requires "libqtcore4, libqtgui4, libqt4-network, libqt4-sql-sqlite, vlc, libqt4-xml, libqt4-help, gtk2-engines-pixbuf"
 MAINT=--maintainer "Jo2003 \(coujo@gmx.net\)"
 PKGVERCL=--pkgversion 1.${MINORVER}${BETAEXT}
-PKGVERNW=--pkgversion 2.${MINORVER}${BETAEXT}
+PKGVERNW=--pkgversion ${MAJORVER}.${MINORVER}.${BUILDVER}${BETAEXT}
 PKGGRP=--pkggroup video
 PKGSRC=--pkgsource "https://code.google.com/p/vlc-record"
 
