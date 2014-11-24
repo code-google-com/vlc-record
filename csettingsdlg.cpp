@@ -1958,27 +1958,27 @@ void CSettingsDlg::touchBitRateCBXs()
    idx = m_ui->cbxBitRateLiveSD->currentIndex();
    m_ui->cbxBitRateLiveSD->clear();
    m_ui->cbxBitRateLiveSD->insertItem(0, tr("Standard"), QVariant("Standart"));
-   m_ui->cbxBitRateLiveSD->insertItem(1, tr("Economy"), QVariant("Economy"));
-   m_ui->cbxBitRateLiveSD->insertItem(2, tr("Automatic"), QVariant("Automatic"));
+   m_ui->cbxBitRateLiveSD->insertItem(1, tr("Eco"), QVariant("Economy"));
+   m_ui->cbxBitRateLiveSD->insertItem(2, tr("Auto"), QVariant("Automatic"));
    m_ui->cbxBitRateLiveSD->setCurrentIndex(idx);
 
    idx = m_ui->cbxBitRateLiveHD->currentIndex();
    m_ui->cbxBitRateLiveHD->clear();
    m_ui->cbxBitRateLiveHD->insertItem(0, tr("Standard"), QVariant("Standart"));
-   m_ui->cbxBitRateLiveHD->insertItem(1, tr("Economy"), QVariant("Economy"));
-   m_ui->cbxBitRateLiveHD->insertItem(2, tr("Automatic"), QVariant("Automatic"));
+   m_ui->cbxBitRateLiveHD->insertItem(1, tr("Eco"), QVariant("Economy"));
+   m_ui->cbxBitRateLiveHD->insertItem(2, tr("Auto"), QVariant("Automatic"));
    m_ui->cbxBitRateLiveHD->setCurrentIndex(idx);
 
    idx = m_ui->cbxBitRateArchSD->currentIndex();
    m_ui->cbxBitRateArchSD->clear();
    m_ui->cbxBitRateArchSD->insertItem(0, tr("Standard"), QVariant("Standart"));
-   m_ui->cbxBitRateArchSD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateArchSD->insertItem(1, tr("Eco"), QVariant("Economy"));
    m_ui->cbxBitRateArchSD->setCurrentIndex(idx);
 
    idx = m_ui->cbxBitRateArchHD->currentIndex();
    m_ui->cbxBitRateArchHD->clear();
    m_ui->cbxBitRateArchHD->insertItem(0, tr("Standard"), QVariant("Standart"));
-   m_ui->cbxBitRateArchHD->insertItem(1, tr("Economy"), QVariant("Economy"));
+   m_ui->cbxBitRateArchHD->insertItem(1, tr("Eco"), QVariant("Economy"));
    m_ui->cbxBitRateArchHD->setCurrentIndex(idx);
 }
 
