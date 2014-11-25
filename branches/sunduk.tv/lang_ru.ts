@@ -1713,7 +1713,7 @@ To change the parent code make sure:
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1076"/>
+        <location filename="forms/csettingsdlg.ui" line="1094"/>
         <source>Allow Adult Channels</source>
         <translation>Разрешить каналы для взрослых</translation>
     </message>
@@ -1822,18 +1822,18 @@ To change the parent code make sure:
         <translation>Показать рекламу</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="884"/>
+        <location filename="forms/csettingsdlg.ui" line="902"/>
         <source>Select Channels to hide:</source>
         <translation>Пометить каналы, чтобы скрыть:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="910"/>
+        <location filename="forms/csettingsdlg.ui" line="928"/>
         <source> VOD Manager </source>
         <oldsource>VOD Manager</oldsource>
         <translation>Менеджер видеотеки</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1169"/>
+        <location filename="forms/csettingsdlg.ui" line="1187"/>
         <source>Save and E&amp;xit</source>
         <oldsource>Save and &amp;Exit</oldsource>
         <translation>Сохр&amp;анить и выйти</translation>
@@ -1864,7 +1864,7 @@ To change the parent code make sure:
         <translation>Синхронизировать время</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1114"/>
+        <location filename="forms/csettingsdlg.ui" line="1132"/>
         <source>Parent Code: </source>
         <translation>Родительский пароль: </translation>
     </message>
@@ -2027,74 +2027,74 @@ To change the parent code make sure:
         <translation>&amp;Родительский контроль</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="813"/>
+        <location filename="forms/csettingsdlg.ui" line="822"/>
         <source>Please enter your parent code:</source>
         <oldsource>Please enter security code:</oldsource>
         <translation>Пожалуйста, введите родительский пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="829"/>
+        <location filename="forms/csettingsdlg.ui" line="838"/>
         <source>&amp;Enter Site</source>
         <oldsource>Enter Site</oldsource>
         <translation>Дос&amp;туп</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="866"/>
+        <location filename="forms/csettingsdlg.ui" line="884"/>
         <source> Channel Manager </source>
         <oldsource>Channel Manager</oldsource>
         <translation>Менеджер каналов</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="955"/>
+        <location filename="forms/csettingsdlg.ui" line="973"/>
         <source>Parent Code</source>
         <oldsource>Parental Code</oldsource>
         <translation>Родительский пароль</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="964"/>
+        <location filename="forms/csettingsdlg.ui" line="982"/>
         <source>Old Code:</source>
         <translation>Старый пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="971"/>
-        <location filename="forms/csettingsdlg.ui" line="988"/>
-        <location filename="forms/csettingsdlg.ui" line="1005"/>
+        <location filename="forms/csettingsdlg.ui" line="989"/>
+        <location filename="forms/csettingsdlg.ui" line="1006"/>
+        <location filename="forms/csettingsdlg.ui" line="1023"/>
         <source>Number only (0 ... 9)!</source>
         <translation>Использовать только цифры (0 ... 9)!</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="981"/>
+        <location filename="forms/csettingsdlg.ui" line="999"/>
         <source>New Code:</source>
         <translation>Новый пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="998"/>
+        <location filename="forms/csettingsdlg.ui" line="1016"/>
         <source>Confirm Code:</source>
         <translation>Подтвердите пароль:</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1030"/>
+        <location filename="forms/csettingsdlg.ui" line="1048"/>
         <source>Chan&amp;ge</source>
         <oldsource>&amp;Change</oldsource>
         <translation>Смен&amp;ить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1055"/>
+        <location filename="forms/csettingsdlg.ui" line="1073"/>
         <source>Adult Channels</source>
         <translation>Каналы для взрослых</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1098"/>
+        <location filename="forms/csettingsdlg.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Please Note:&lt;/span&gt;&lt;br/&gt;If you insert the parental code below you&apos;re able to watch any adult channel without the need to insert the parent code. &lt;/p&gt;&lt;p&gt;Leaving this field blank you&apos;ll have to enter the parent code each time you want to watch an adult channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Пожалуста, имейте в виду:&lt;/span&gt;&lt;br/&gt;Если Вы введете родительский пароль внизу, у Вас будет возможность смотреть любой канал для взрослых без необходимости ввода каждый раз родительского пароля. &lt;/p&gt;&lt;p&gt;Если Вы оставите это поле пустым, Вам будет необходимо вводитить родительский пароль каждый раз, когда Вы захотите смотреть канал для взрослых.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1214"/>
+        <location filename="forms/csettingsdlg.ui" line="1232"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="forms/csettingsdlg.ui" line="1234"/>
+        <location filename="forms/csettingsdlg.ui" line="1252"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Отменить</translation>
     </message>
