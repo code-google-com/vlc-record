@@ -233,15 +233,6 @@ void CShowInfo::setAdUrl(const QString &adUrl)
    sAdUrl = adUrl;
 }
 
-///
-/// \brief CShowInfo::setLastUrl
-/// \param url last used url
-///
-void CShowInfo::setLastUrl(const QString &url)
-{
-   sLastUrl = url;
-}
-
 /* -----------------------------------------------------------------\
 |  Method: setPCode
 |  Begin: 01.06.2012
@@ -550,15 +541,6 @@ const QString& CShowInfo::htmlDescr()
 const QString& CShowInfo::adUrl()
 {
    return sAdUrl;
-}
-
-///
-/// \brief CShowInfo::lastUrl
-/// \return last used url
-///
-const QString& CShowInfo::lastUrl()
-{
-   return sLastUrl;
 }
 
 /* -----------------------------------------------------------------\

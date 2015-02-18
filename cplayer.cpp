@@ -627,6 +627,7 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
    // get MRL ...
    QString     sMrl  = sCmdLine.section(";;", 0, 0);
    // QString     sMrl  = "http://172.25.1.145/~joergn/hobbit.mov";
+   // QString     sMrl  = "http://tv9.sunduk.tv:80/vteka/00/00/00/00/03.mp4/playlist.m3u8";
 
    // are there mrl options ... ?
    if (sCmdLine.contains(";;"))
@@ -667,8 +668,6 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
          // replace all backslashes with slashes ...
          sMrl.replace('\\', '/');
       }
-
-      showInfo.setLastUrl(sCmdLine);
 
       if ((p_md = libvlc_media_new_location(pVlcInstance, QUrl::toPercentEncoding(sMrl, "/:?&=%@"))) != NULL)
       {
@@ -902,20 +901,31 @@ void CPlayer::slotUpdateSlider()
          {
             pos = timer.pos();
 
-            if (!missionControl.isPosSliderDown())
+            if (showInfo.showType() == ShowInfo::VOD)
             {
-               // reaching the end of this show ... ?
-               if (pos > mToGmt(missionControl.posMaximum()))
+               if (!missionControl.isPosSliderDown())
                {
-                  // check archive program ...
-                  emit sigCheckArchProg(pos);
+                  missionControl.setPosValue(pos);
+                  missionControl.setTime(pos);
                }
+            }
+            else
+            {
+               if (!missionControl.isPosSliderDown())
+               {
+                  // reaching the end of this show ... ?
+                  if (pos > mToGmt(missionControl.posMaximum()))
+                  {
+                     // check archive program ...
+                     emit sigCheckArchProg(pos);
+                  }
 
-               missionControl.setPosValue(mFromGmt(pos));
+                  missionControl.setPosValue(mFromGmt(pos));
 
-               pos -= showInfo.starts();
+                  pos -= showInfo.starts();
 
-               missionControl.setTime(pos);
+                  missionControl.setTime(pos);
+               }
             }
          }
       }
@@ -1301,42 +1311,19 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
       }
       else
       {
+         // get new position value ...
+         pos = timer.pos() + iSeconds;
+
          if (showInfo.showType() == ShowInfo::VOD)
          {
-//            QRegExp rx("/[0-9]+/[0-9]+/[0-9]+/[0-9]+/");
-//            int h, m, s;
-//            QString lastUrl = showInfo.lastUrl();
-//            QString timeTok;
-
-            pos = timer.pos() + iSeconds;
-
-//            h =  pos / 3600;
-//            m = (pos % 3600) / 60;
-//            s =  pos % 60;
-
-
-//            timeTok = QString("/%1/%2/%3/00/").arg(h, 2, 10, QChar('0')).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
-//            lastUrl.replace(rx, timeTok);
-
-            mInfo(tr("Prepare new VOD url NOW (%1)!").arg(pos));
-
-//            // mark spooling as active ...
-//            bSpoolPending = true;
-
-//            enableDisablePlayControl (false);
-
-//            // save jump time ...
-//            showInfo.setLastJumpTime(pos);
-
-//            emit sigStopOnDemand();
-
-//            playMedia(lastUrl, "");
+            // try to position with HLS ...
+            // this will NOT work exactly!
+            libvlc_media_player_set_position(pMediaPlayer, (float)pos / (float)showInfo.ends());
+            missionControl.setPosValue(pos);
+            timer.setPos(pos);
          }
          else
          {
-            // get new gmt value ...
-            pos = timer.pos() + iSeconds;
-
             // trigger request for the new stream position ...
             QString req = QString("cid=%1&gmt=%2")
                              .arg(showInfo.channelId()).arg(pos);
@@ -1517,32 +1504,40 @@ void CPlayer::slotSliderPosChanged()
       }
       else
       {
-         position = mToGmt(position);
-
-         // check if slider position is in 10 sec. limit ...
-         if (abs(position - timer.pos()) <= 10)
+         if (showInfo.showType() == ShowInfo::VOD)
          {
-            mInfo(tr("Ignore slightly slider position change..."));
+            libvlc_media_player_set_position(pMediaPlayer, (float)position / (float)showInfo.ends());
+            timer.setPos(position);
          }
          else
          {
-            // request new stream ...
-            QString req = QString("cid=%1&gmt=%2")
-                         .arg(showInfo.channelId())
-                         .arg(position);
+            position = mToGmt(position);
 
-            // mark spooling as active ...
-            bSpoolPending = true;
+            // check if slider position is in 10 sec. limit ...
+            if (abs(position - timer.pos()) <= 10)
+            {
+               mInfo(tr("Ignore slightly slider position change..."));
+            }
+            else
+            {
+               // request new stream ...
+               QString req = QString("cid=%1&gmt=%2")
+                            .arg(showInfo.channelId())
+                            .arg(position);
 
-            enableDisablePlayControl (false);
+               // mark spooling as active ...
+               bSpoolPending = true;
 
-            // save new start value ...
-            showInfo.setLastJumpTime(position);
+               enableDisablePlayControl (false);
 
-            emit sigStopOnDemand();
+               // save new start value ...
+               showInfo.setLastJumpTime(position);
 
-            // trigger stream request ...
-            pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
+               emit sigStopOnDemand();
+
+               // trigger stream request ...
+               pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
+            }
          }
       }
 
@@ -1567,8 +1562,11 @@ void CPlayer::slotPositionChanged(int value)
    {
       if (!isPositionable() || showInfo.isHls())
       {
-         value  = mToGmt(value);
-         value -= showInfo.starts();
+         if (showInfo.showType() != ShowInfo::VOD)
+         {
+            value  = mToGmt(value);
+            value -= showInfo.starts();
+         }
       }
 
       missionControl.setTime(value);
