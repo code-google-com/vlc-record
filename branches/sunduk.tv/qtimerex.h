@@ -80,7 +80,7 @@ public:
    {
       uiOffset = uiOffs;
    }
-   
+
    //---------------------------------------------------------------------------
    //
    //! \brief   get position + offset
@@ -95,6 +95,21 @@ public:
    uint pos ()
    {
       return uiElapsed + uiOffset;
+   }
+
+   //---------------------------------------------------------------------------
+   //
+   //! \brief   set position
+   //
+   //! \author  Jo2003
+   //! \date    18.12.2012
+   //
+   //! \param   uiPos new position
+   //
+   //---------------------------------------------------------------------------
+   void setPos(uint uiPos)
+   {
+      uiElapsed = uiPos;
    }
    
 public slots:
