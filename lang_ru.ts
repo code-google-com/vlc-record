@@ -2879,12 +2879,12 @@ or start time is later than end time!</source>
     <message>
         <location filename="cvodbrowser.cpp" line="367"/>
         <source>Standard</source>
-        <translation>Стандарт</translation>
+        <translation>Стандартный</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="368"/>
         <source>Economy</source>
-        <translation>Экономно</translation>
+        <translation>Экономный</translation>
     </message>
     <message>
         <location filename="cvodbrowser.cpp" line="369"/>
@@ -3828,13 +3828,13 @@ dataDir: %1
         <location filename="recorder.cpp" line="4545"/>
         <location filename="recorder.cpp" line="4560"/>
         <source>Movies</source>
-        <translation>Кино</translation>
+        <translation>Фильмы</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="4546"/>
         <location filename="recorder.cpp" line="4565"/>
         <source>TV Series</source>
-        <translation>ТВ Сериал</translation>
+        <translation>Сериалы</translation>
     </message>
     <message>
         <location filename="recorder.cpp" line="5816"/>
