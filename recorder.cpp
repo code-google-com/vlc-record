@@ -85,12 +85,6 @@ Recorder::Recorder(QWidget *parent)
    // set (customized) windows title ...
    setWindowTitle(pCustomization->strVal("APP_NAME"));
 
-#ifndef _HAS_VOD_LANG
-   // hide vod language stuff if needed ...
-   ui->cbxVodLang->hide();
-   ui->labVodLang->hide();
-#endif // _HAS_VOD_LANG
-
    ePlayState    =  IncPlay::PS_WTF;
    iEpgOffset    =  0;
    iFontSzChg    =  0;
@@ -361,6 +355,9 @@ Recorder::Recorder(QWidget *parent)
    // fill type combo box ...
    touchLastOrBestCbx();
 
+   // fill VOD type CBX ...
+   touchVodtypeCbx();
+
    // start refresh timer, if needed ...
    Refresh.start(60000); // update chan list every minute ...
 }
@@ -443,6 +440,9 @@ void Recorder::changeEvent(QEvent *e)
 
       // translate type cbx ...
       touchLastOrBestCbx();
+
+      // translate VOD type CBX ...
+      touchVodtypeCbx();
 
       // translate genre cbx ...
       touchGenreCbx();
@@ -919,10 +919,8 @@ void Recorder::on_cbxGenre_activated(int index)
    }
 
    url.addQueryItem("type", sType);
-
-#ifdef _HAS_VOD_LANG
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+   url.addQueryItem("nums", "20");
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
    if (iGid != -1)
    {
@@ -956,15 +954,14 @@ void Recorder::on_cbxLastOrBest_activated(int index)
       QUrl url;
 
       url.addQueryItem("type", sType);
+      url.addQueryItem("nums", "20");
 
       if (iGid != -1)
       {
          url.addQueryItem("genre", QString::number(iGid));
       }
 
-#ifdef _HAS_VOD_LANG
-      url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+      url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
       pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
    }
@@ -972,7 +969,7 @@ void Recorder::on_cbxLastOrBest_activated(int index)
 
 //---------------------------------------------------------------------------
 //
-//! \brief   VOD language was changed -> request videos
+//! \brief   VOD Type was changed -> request videos
 //
 //! \author  Jo2003
 //! \date    28.01.2014
@@ -981,13 +978,13 @@ void Recorder::on_cbxLastOrBest_activated(int index)
 //
 //! \return  --
 //---------------------------------------------------------------------------
-void Recorder::on_cbxVodLang_activated(int index)
+void Recorder::on_cbxVodType_activated(int index)
 {
    int  iGid  = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
 
    QUrl url;
    url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(index).toString());
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(index).toString());
    url.addQueryItem("nums", "20");
    if (iGid != -1)
    {
@@ -1012,9 +1009,7 @@ void Recorder::on_btnVodSearch_clicked()
    QString sType;
    QUrl    url;
 
-#ifdef _HAS_VOD_LANG
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
    if (ui->lineVodSearch->text() != "")
    {
@@ -1075,11 +1070,9 @@ void Recorder::on_cbxSites_activated(int index)
       int     iGenre = ui->cbxGenre->itemData(ui->cbxGenre->currentIndex()).toInt();
 
       url.addQueryItem("type", sType);
+      url.addQueryItem("nums", "20");
       url.addQueryItem("page", QString::number(index + 1));
-
-#ifdef _HAS_VOD_LANG
-      url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+      url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
       if (iGenre != -1)
       {
@@ -1108,11 +1101,9 @@ void Recorder::on_btnPrevSite_clicked()
    int     iPage  = ui->cbxSites->currentIndex() + 1;
 
    url.addQueryItem("type", sType);
+   url.addQueryItem("nums", "20");
    url.addQueryItem("page", QString::number(iPage - 1));
-
-#ifdef _HAS_VOD_LANG
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
    if (iGenre != -1)
    {
@@ -1140,11 +1131,9 @@ void Recorder::on_btnNextSite_clicked()
    int     iPage  = ui->cbxSites->currentIndex() + 1;
 
    url.addQueryItem("type", sType);
+   url.addQueryItem("nums", "20");
    url.addQueryItem("page", QString::number(iPage + 1));
-
-#ifdef _HAS_VOD_LANG
-   url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-#endif // _HAS_VOD_LANG
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
 
    if (iGenre != -1)
    {
@@ -1669,10 +1658,6 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    ///////////////////////////////////////////////
    // response for available audio streams (where supported) ...
    mkCase(CIptvDefs::REQ_GET_ALANG, slotALang(resp));
-
-   ///////////////////////////////////////////////
-   // response for available VOD languages (where supported) ...
-   mkCase(CIptvDefs::REQ_VOD_LANG, slotVodLang(resp));
 
    ///////////////////////////////////////////////
    // Make sure the unused responses are listed
@@ -3140,17 +3125,12 @@ void Recorder::slotGotVodGenres(const QString &str)
 
    ui->cbxGenre->setCurrentIndex(0);
 
-#ifdef _HAS_VOD_LANG
-   // before asking for vidoes get a list of available languages ...
-   pApiClient->queueRequest(CIptvDefs::REQ_VOD_LANG);
-
-#else
    // trigger video load ...
    QUrl url;
    url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
    url.addQueryItem("nums", "20");
    pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
-#endif // _HAS_VOD_LANG
 }
 
 /* -----------------------------------------------------------------\
@@ -3263,19 +3243,30 @@ void Recorder::slotVodAnchor(const QUrl &link)
 
       id = link.queryItemValue("vid").toInt();
 
+      QUrl dst;
+      dst.addQueryItem("vid", link.queryItemValue("vid"));
+      dst.addQueryItem("seccode", secCodeDlg.passWd());
+
+      if (link.hasEncodedQueryItem("format"))
+      {
+         dst.addQueryItem("format", link.queryItemValue("format"));
+      }
+
       showInfo.cleanShowInfo();
       showInfo.setShowName(ui->vodBrowser->getName());
       showInfo.setShowType(ShowInfo::VOD);
       showInfo.setPlayState(ePlayState);
       showInfo.setHtmlDescr(ui->vodBrowser->getShortContent());
       showInfo.setVodId(id);
+      showInfo.setStartTime(0);
+      showInfo.setEndTime(link.queryItemValue("length").toInt());
 
       ui->labState->setHeader(tr("Video On Demand"));
       ui->labState->setFooter(showInfo.showName());
 
       stopOnDemand();
 
-      pApiClient->queueRequest(CIptvDefs::REQ_GETVODURL, id, secCodeDlg.passWd());
+      pApiClient->queueRequest(CIptvDefs::REQ_GETVODURL_EX, dst);
    }
 }
 
@@ -4196,42 +4187,6 @@ void Recorder::slotALang(const QString &str)
 
 //---------------------------------------------------------------------------
 //
-//! \brief   server response for available VOD languages
-//
-//! \author  Jo2003
-//! \date    28.01.2014
-//
-//! \param   str (QString) server response with VOD languages
-//
-//! \return  --
-//---------------------------------------------------------------------------
-void Recorder::slotVodLang(const QString &str)
-{
-   QVodLangMap lMap;
-
-   if (!pApiParser->parseVodLang(str, lMap))
-   {
-      ui->cbxVodLang->clear();
-
-      // fill vod lang combobox ...
-      QVodLangMap::const_iterator cit;
-      for (cit = lMap.constBegin(); cit != lMap.constEnd(); cit++)
-      {
-         ui->cbxVodLang->addItem(cit.key(), cit.value());
-      }
-
-      // request videos ...
-      // trigger video load ...
-      QUrl url;
-      url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
-      url.addQueryItem("lang", ui->cbxVodLang->itemData(ui->cbxVodLang->currentIndex()).toString());
-      url.addQueryItem("nums", "20");
-      pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
-   }
-}
-
-//---------------------------------------------------------------------------
-//
 //! \brief   update overlay number for watchlist button icon [slot]
 //
 //! \author  Jo2003
@@ -4452,6 +4407,9 @@ void Recorder::initDialog ()
    fillShortCutTab();
    InitShortCuts ();
 
+
+
+
    // check for program updates ...
    pApiClient->queueRequest(CIptvDefs::REQ_UPDATE_CHECK, pCustomization->strVal("UPD_CHECK_URL"));
 
@@ -4564,6 +4522,47 @@ void Recorder::touchLastOrBestCbx ()
       if ((idx = ui->cbxLastOrBest->findData("vodfav")) > -1)
       {
          ui->cbxLastOrBest->setItemText(idx, tr("My Favourites"));
+      }
+   }
+}
+
+/* -----------------------------------------------------------------\
+|  Method: touchVodtypeCbx
+|  Begin: 17.02.2015
+|  Author: Jo2003
+|  Description: create vod type combo box
+|
+|  Parameters: --
+|
+|  Returns: --
+\----------------------------------------------------------------- */
+void Recorder::touchVodtypeCbx()
+{
+   // fill / update vod type cbx ...
+   if (!ui->cbxVodType->count())
+   {
+      ui->cbxVodType->addItem(tr("All"), "all");
+      ui->cbxVodType->addItem(tr("Movies"), "movie");
+      ui->cbxVodType->addItem(tr("TV Series"), "tvseries");
+      ui->cbxVodType->setCurrentIndex(0);
+   }
+   else
+   {
+      int idx;
+
+      if ((idx = ui->cbxLastOrBest->findData("all")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("All"));
+      }
+
+      if ((idx = ui->cbxLastOrBest->findData("movie")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("Movies"));
+      }
+
+      if ((idx = ui->cbxLastOrBest->findData("tvseries")) > -1)
+      {
+         ui->cbxLastOrBest->setItemText(idx, tr("TV Series"));
       }
    }
 }

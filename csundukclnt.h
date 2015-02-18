@@ -16,6 +16,7 @@
 
 #include "ckartinaclnt.h"
 #include <QObject>
+#include <QUrl>
 
 //---------------------------------------------------------------------------
 //! \class   CSundukClnt
@@ -30,12 +31,14 @@ class CSundukClnt : public CKartinaClnt
 public:
    CSundukClnt(QObject *parent);
    virtual ~CSundukClnt();
+   virtual int queueRequest(CIptvDefs::EReq req, const QVariant& par_1 = QVariant(), const QVariant& par_2 = QVariant());
 
 protected:
    virtual void GetCookie ();
    virtual void GetStreamURL (int iChanID, const QString &secCode, bool bTimerRec = false);
    virtual void GetArchivURL (const QString &prepared, const QString &secCode);
    virtual void GetVodUrl (int iVidId, const QString &secCode);
+   virtual void GetVodUrl (const QUrl &dst);
 
 public slots:
    void slotStrProto(QString p);
