@@ -53,6 +53,42 @@ CSundukClnt::~CSundukClnt()
    // nothing to do so far ...
 }
 
+
+//---------------------------------------------------------------------------
+//
+//! \brief   overload queueRequest function
+//
+//! \author  Jo2003
+//! \date    17.02.2015
+//
+//! \param   [in] req (CIptvDefs::EReq) request type
+//! \param   [in] par_1 (const QVariant&) first parameter
+//! \param   [in] par_2 (const QVariant&) second parameter
+//
+//! \return  0 -> ok; -1 -> error
+//---------------------------------------------------------------------------
+int CSundukClnt::queueRequest(CIptvDefs::EReq req, const QVariant& par_1, const QVariant& par_2)
+{
+   int iRet;
+
+   // handled in parent class ... ?
+   if ((iRet = CKartinaClnt::queueRequest(req, par_1, par_2)) < 0)
+   {
+      switch (req)
+      {
+      case CIptvDefs::REQ_GETVODURL_EX:
+         GetVodUrl(par_1.toUrl());
+         break;
+
+      default:
+         iRet = -1;
+         break;
+      }
+   }
+
+   return iRet;
+}
+
 //---------------------------------------------------------------------------
 //
 //! \brief   login
@@ -154,6 +190,37 @@ void CSundukClnt::GetVodUrl (int iVidId, const QString &secCode)
    if (secCode != "")
    {
       req += QString("&protect_code=%1").arg(secCode);
+   }
+
+   q_get((int)CIptvDefs::REQ_GETVODURL, apiUrl() + req);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   get url for vod stream
+//
+//! \author  Jo2003
+//! \date    12.12.2013
+//
+//! \param   [in] dst (const QUrl&) prepared query
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void CSundukClnt::GetVodUrl (const QUrl& dst)
+{
+   mInfo(tr("Request Video Url for url '%1' ...").arg(dst.toString()));
+
+   QString req = QString("vod_geturl?fileid=%1&ad=1&stream_protocol=%2")
+         .arg(dst.queryItemValue("vid")).arg(sStrProto);
+
+   if (dst.hasEncodedQueryItem("format"))
+   {
+      req += QString("&format=%1").arg(dst.queryItemValue("format"));
+   }
+
+   if (dst.queryItemValue("seccode") != "")
+   {
+      req += QString("&protect_code=%1").arg(dst.queryItemValue("seccode"));
    }
 
    q_get((int)CIptvDefs::REQ_GETVODURL, apiUrl() + req);

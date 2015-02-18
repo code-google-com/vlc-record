@@ -234,7 +234,7 @@ void CVodBrowser::slotSetBufferedHtml()
 \----------------------------------------------------------------- */
 void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
 {
-   int       i;
+   int       i, j;
    QString   img, content, tab, title, link, page, tok;
    QUrl      url;
    QFileInfo info(sInfo.sImg);
@@ -311,41 +311,114 @@ void CVodBrowser::displayVideoDetails(const cparser::SVodVideo &sInfo)
    // add play / record links ...
    for (i = 0; i < sInfo.vVodFiles.count(); i ++)
    {
-      // add stream title ...
-      title = sInfo.vVodFiles[i].sTitle.isEmpty() ? tr("Part %1").arg(i + 1) : sInfo.vVodFiles[i].sTitle;
-      title = pHtml->htmlTag("b", title);
+      // check for multi format title ...
+      if (!sInfo.vVodFiles[i].sFormat.contains(","))
+      {
+         // standard title ...
 
-      tok   = pHtml->tableCell(title, "padding: 3px;");
+         // add stream title ...
+         title = sInfo.vVodFiles[i].sTitle.isEmpty() ? tr("Part %1").arg(i + 1) : sInfo.vVodFiles[i].sTitle;
+         title = pHtml->htmlTag("b", title);
 
-      // add codec ...
-      title = QString("(%1; %2)").arg(sInfo.vVodFiles[i].sFormat).arg(sInfo.vVodFiles[i].sCodec);
-      title = pHtml->span(title, "color: #888");
+         tok   = pHtml->tableCell(title, "padding: 3px;");
 
-      tok  += pHtml->tableCell(title, "padding: 3px;");
+         // add codec ...
+         title = QString("(%1; %2)").arg(sInfo.vVodFiles[i].sFormat).arg(sInfo.vVodFiles[i].sCodec);
+         title = pHtml->span(title, "color: #888");
 
-      // add play button ...
-      url.clear();
-      url.setPath("videothek");
-      url.addQueryItem("action", "play");
-      url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
-      url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+         tok  += pHtml->tableCell(title, "padding: 3px;");
 
-      img  = pHtml->image(":/png/play", 16, 16, "", tr("Play Movie ..."));
-      link = pHtml->link(url.toEncoded(), img) + "&nbsp;";
+         // add play button ...
+         url.clear();
+         url.setPath("videothek");
+         url.addQueryItem("action", "play");
+         url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+         url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+         url.addQueryItem("length", QString::number(sInfo.vVodFiles[i].iLength));
 
-      // add record button ...
-      url.clear();
-      url.setPath("videothek");
-      url.addQueryItem("action", "record");
-      url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
-      url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+         img  = pHtml->image(":/png/play", 16, 16, "", tr("Play Movie ..."));
+         link = pHtml->link(url.toEncoded(), img) + "&nbsp;";
 
-      img   = pHtml->image(":/png/record", 16, 16, "", tr("Record Movie ..."));
-      link += pHtml->link(url.toEncoded(), img);
+         // add record button ...
+         url.clear();
+         url.setPath("videothek");
+         url.addQueryItem("action", "record");
+         url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+         url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+         url.addQueryItem("length", QString::number(sInfo.vVodFiles[i].iLength));
 
-      tok += pHtml->tableCell(link, "padding: 3px;");
+         img   = pHtml->image(":/png/record", 16, 16, "", tr("Record Movie ..."));
+         link += pHtml->link(url.toEncoded(), img);
 
-      tab += pHtml->tableRow(tok);
+         tok += pHtml->tableCell(link, "padding: 3px;");
+
+         tab += pHtml->tableRow(tok);
+      }
+      else
+      {
+         // multi format title ...
+
+         // get formats ...
+         QStringList slFormats = sInfo.vVodFiles[i].sFormat.split(",", QString::SkipEmptyParts);
+         QString     sFmt;
+
+         // make sure to not(!) display wrong translations ...
+         QMap<QString, QString> transMap;
+         transMap.insert("standart", tr("Standard"));
+         transMap.insert("economy" , tr("Economy"));
+         transMap.insert("hd"      , tr("HD"));
+         transMap.insert("fullhd"  , tr("Full HD"));
+         transMap.insert("3d"      , tr("3D"));
+         transMap.insert("dvd"     , tr("DVD"));
+
+         // add stream title ...
+         title  = sInfo.vVodFiles[i].sTitle.isEmpty() ? tr("Part %1").arg(i + 1) : sInfo.vVodFiles[i].sTitle;
+         title += ":";
+         title  = pHtml->htmlTag("b", title);
+         tok    = pHtml->tableCell(title, "padding: 3px;", 3);
+         tab   += pHtml->tableRow(tok);
+
+         for (j = 0; j < slFormats.count(); j++)
+         {
+            // get translation, if available ...
+            sFmt   = transMap.contains(slFormats.at(j).trimmed()) ? transMap.value(slFormats.at(j).trimmed()) : slFormats.at(j).trimmed();
+
+            // format ...
+            tok    = pHtml->tableCell(sFmt, "padding: 3px;");
+
+            // codec ...
+            title  = pHtml->span(QString("(%1)").arg(sInfo.vVodFiles[i].sCodec), "color: #888");
+            tok   += pHtml->tableCell(title, "padding: 3px;");
+
+            // add play button ...
+            url.clear();
+            url.setPath("videothek");
+            url.addQueryItem("action", "play");
+            url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+            url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+            url.addQueryItem("format", slFormats.at(j).trimmed());
+            url.addQueryItem("length", QString::number(sInfo.vVodFiles[i].iLength));
+
+            img  = pHtml->image(":/png/play", 16, 16, "", tr("Play Movie ..."));
+            link = pHtml->link(url.toEncoded(), img) + "&nbsp;";
+
+            // add record button ...
+            url.clear();
+            url.setPath("videothek");
+            url.addQueryItem("action", "record");
+            url.addQueryItem("vid", QString::number(sInfo.vVodFiles[i].iId));
+            url.addQueryItem("pass_protect", sInfo.bProtected ? "1" : "0");
+            url.addQueryItem("format", slFormats.at(j).trimmed());
+            url.addQueryItem("length", QString::number(sInfo.vVodFiles[i].iLength));
+
+            img   = pHtml->image(":/png/record", 16, 16, "", tr("Record Movie ..."));
+            link += pHtml->link(url.toEncoded(), img);
+
+            tok += pHtml->tableCell(link, "padding: 3px;");
+
+            tab += pHtml->tableRow(tok);
+         }
+      }
    }
 
    tab      = pHtml->htmlTag("table", tab);

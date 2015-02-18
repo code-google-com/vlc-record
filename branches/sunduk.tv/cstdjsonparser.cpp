@@ -478,6 +478,7 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
 {
    int  iRV = 0;
    bool bOk = false;
+   int  i;
    QVariantMap contentMap;
    cparser::SVodFileInfo fInfo;
 
@@ -516,11 +517,24 @@ int CStdJsonParser::parseVideoInfo(const QString &sResp, cparser::SVodVideo &vid
 
       foreach (const QVariant& lVideo, contentMap.value("videos").toList())
       {
-         QVariantMap mVideo = lVideo.toMap();
+         QVariantMap mVideo   = lVideo.toMap();
+
+         // "lenght" - typo in API ...
+         QString     sLength  = mVideo.value("lenght").toString();
+         QStringList slLength = sLength.split(".");
+
+         // minutes to seconds ...
+         fInfo.iLength = slLength.at(0).trimmed().toInt() * 60;
+
+         // add seconds
+         if (slLength.count() > 1)
+         {
+            i = slLength.at(1).trimmed().left(2).toInt();
+            fInfo.iLength += ((i * 60) / 100) + 1;
+         }
 
          fInfo.iHeight = mVideo.value("height").toInt();
          fInfo.iId     = mVideo.value("id").toInt();
-         fInfo.iLength = mVideo.value("length").toInt();
          fInfo.iSize   = mVideo.value("size").toInt();
          fInfo.iWidth  = mVideo.value("width").toInt();
          fInfo.sCodec  = mVideo.value("codec").toString();

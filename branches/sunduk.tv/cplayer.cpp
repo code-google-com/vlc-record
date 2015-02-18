@@ -668,6 +668,8 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
          sMrl.replace('\\', '/');
       }
 
+      showInfo.setLastUrl(sCmdLine);
+
       if ((p_md = libvlc_media_new_location(pVlcInstance, QUrl::toPercentEncoding(sMrl, "/:?&=%@"))) != NULL)
       {
          mInfo(tr("Media successfully created from MRL:\n --> %1").arg(sMrl));
@@ -1299,31 +1301,65 @@ int CPlayer::slotTimeJumpRelative (int iSeconds)
       }
       else
       {
-         // get new gmt value ...
-         pos = timer.pos() + iSeconds;
-
-         // trigger request for the new stream position ...
-         QString req = QString("cid=%1&gmt=%2")
-                          .arg(showInfo.channelId()).arg(pos);
-
-         // mark spooling as active ...
-         bSpoolPending = true;
-
-         enableDisablePlayControl (false);
-
-         // save jump time ...
-         showInfo.setLastJumpTime(pos);
-
-         emit sigStopOnDemand();
-
-         pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
-
-         // do we reach another show?
-         if ((pos < mToGmt(missionControl.posMinimum()))
-             || (pos > mToGmt(missionControl.posMaximum())))
+         if (showInfo.showType() == ShowInfo::VOD)
          {
-            // yes --> update show info ...
-            emit sigCheckArchProg(pos);
+//            QRegExp rx("/[0-9]+/[0-9]+/[0-9]+/[0-9]+/");
+//            int h, m, s;
+//            QString lastUrl = showInfo.lastUrl();
+//            QString timeTok;
+
+            pos = timer.pos() + iSeconds;
+
+//            h =  pos / 3600;
+//            m = (pos % 3600) / 60;
+//            s =  pos % 60;
+
+
+//            timeTok = QString("/%1/%2/%3/00/").arg(h, 2, 10, QChar('0')).arg(m, 2, 10, QChar('0')).arg(s, 2, 10, QChar('0'));
+//            lastUrl.replace(rx, timeTok);
+
+            mInfo(tr("Prepare new VOD url NOW (%1)!").arg(pos));
+
+//            // mark spooling as active ...
+//            bSpoolPending = true;
+
+//            enableDisablePlayControl (false);
+
+//            // save jump time ...
+//            showInfo.setLastJumpTime(pos);
+
+//            emit sigStopOnDemand();
+
+//            playMedia(lastUrl, "");
+         }
+         else
+         {
+            // get new gmt value ...
+            pos = timer.pos() + iSeconds;
+
+            // trigger request for the new stream position ...
+            QString req = QString("cid=%1&gmt=%2")
+                             .arg(showInfo.channelId()).arg(pos);
+
+            // mark spooling as active ...
+            bSpoolPending = true;
+
+            enableDisablePlayControl (false);
+
+            // save jump time ...
+            showInfo.setLastJumpTime(pos);
+
+            emit sigStopOnDemand();
+
+            pApiClient->queueRequest(CIptvDefs::REQ_ARCHIV, req, showInfo.pCode());
+
+            // do we reach another show?
+            if ((pos < mToGmt(missionControl.posMinimum()))
+                || (pos > mToGmt(missionControl.posMaximum())))
+            {
+               // yes --> update show info ...
+               emit sigCheckArchProg(pos);
+            }
          }
       }
    }
@@ -1587,20 +1623,39 @@ void CPlayer::initSlider()
    }
    else
    {
-      // set slider range to seconds ...
-      missionControl.setPosRange(mFromGmt(showInfo.starts()), mFromGmt(showInfo.ends()));
-
-      if (showInfo.lastJump())
+      if (showInfo.showType() == ShowInfo::VOD)
       {
-         missionControl.setPosValue(mFromGmt(showInfo.lastJump()));
+         // set slider range to seconds ...
+         missionControl.setPosRange(showInfo.starts(), showInfo.ends());
 
-         missionControl.setTime(showInfo.lastJump() - showInfo.starts());
+         if (showInfo.lastJump())
+         {
+            missionControl.setPosValue(showInfo.lastJump());
+            missionControl.setTime(showInfo.lastJump() - showInfo.starts());
+         }
+         else
+         {
+            missionControl.setPosValue(showInfo.starts());
+            missionControl.setTime(0);
+         }
       }
       else
       {
-         missionControl.setPosValue(mFromGmt(showInfo.starts()));
+         // set slider range to seconds ...
+         missionControl.setPosRange(mFromGmt(showInfo.starts()), mFromGmt(showInfo.ends()));
 
-         missionControl.setTime(0);
+         if (showInfo.lastJump())
+         {
+            missionControl.setPosValue(mFromGmt(showInfo.lastJump()));
+
+            missionControl.setTime(showInfo.lastJump() - showInfo.starts());
+         }
+         else
+         {
+            missionControl.setPosValue(mFromGmt(showInfo.starts()));
+
+            missionControl.setTime(0);
+         }
       }
    }
 }
