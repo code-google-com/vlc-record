@@ -16,6 +16,7 @@
 #include <QString>
 #include <QDate>
 #include <QRegExp>
+#include <QTimer>
 
 #include "qiptvctrlclient.h"
 #include "clogfile.h"
@@ -96,9 +97,11 @@ private:
    CIptvDefs karTrace;
    QString   sChanListBuffer;
    QString   sLangFilter;
+   QTimer    tPing;
 
 public slots:
    void slotDownImg(const QString& url);
+   void slotPing();
 
 private slots:
    void slotStringResponse (int reqId, QString strResp);

@@ -47,6 +47,7 @@ public:
       Stream,
       m3u,
       hls,
+      noop,
       Unknown
    };
 
