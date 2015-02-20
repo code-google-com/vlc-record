@@ -47,8 +47,11 @@ CRodnoeClient::CRodnoeClient(QObject *parent) :QIptvCtrlClient(parent)
    connect(this, SIGNAL(sigStringResponse(int,QString)), this, SLOT(slotStringResponse(int,QString)));
    connect(this, SIGNAL(sigBinResponse(int,QByteArray)), this, SLOT(slotBinResponse(int,QByteArray)));
    connect(this, SIGNAL(sigErr(int,QString,int)), this, SLOT(slotErr(int,QString,int)));
+   connect(&tPing, SIGNAL(timeout()), this, SLOT(slotPing()));
 
    setObjectName("CRodnoeClient");
+   tPing.setInterval(60000);
+   tPing.start();
 }
 
 /*-----------------------------------------------------------------------------\
@@ -1136,6 +1139,24 @@ void CRodnoeClient::slotDownImg(const QString &url)
    mInfo(tr("Download image ..."));
 
    q_get((int)CIptvDefs::REQ_DOWN_IMG, url, Iptv::Binary);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   send PING to API server
+//
+//! \author  Jo2003
+//! \date    20.02.2015
+//
+//---------------------------------------------------------------------------
+void CRodnoeClient::slotPing()
+{
+   if (sCookie != "")
+   {
+      QString req = QString("%1noop?%2").arg(sApiUrl).arg(sCookie);
+      get(CIptvDefs::REQ_NOOP, req, Iptv::noop);
+      mInfo(tr("Noop Ping"));
+   }
 }
 
 //---------------------------------------------------------------------------

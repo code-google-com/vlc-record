@@ -119,6 +119,13 @@ void QIptvCtrlClient::slotResponse(QNetworkReply* reply)
          emit sigHls (iReqId, ba);
          break;
 
+      case Iptv::noop:
+#ifdef __TRACE
+         mInfo(tr("Response:\n ==8<==8<==8<==\n%1\n ==>8==>8==>8==")
+            .arg(QString(ba)));
+#endif // __TRACE
+         break;
+
       case Iptv::Stream:
          // nothing to do here ...
          break;
