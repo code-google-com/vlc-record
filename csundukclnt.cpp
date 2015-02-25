@@ -129,16 +129,16 @@ void CSundukClnt::GetCookie()
 void CSundukClnt::GetStreamURL (int iChanID, const QString &secCode, bool bTimerRec)
 {
    mInfo(tr("Request URL for channel %1 ...").arg(iChanID));
+   CIptvDefs::EReq ereq = bTimerRec ? CIptvDefs::REQ_TIMERREC : CIptvDefs::REQ_STREAM;
 
-   QString req = QString("cid=%1&stream_protocol=%2").arg(iChanID).arg(sStrProto);
+   QString req = QString("cid=%1&stream_protocol=%2").arg(iChanID).arg(getStreamProtocol(ereq));
 
    if (secCode != "")
    {
       req += QString("&protect_code=%1").arg(secCode);
    }
 
-   q_post((bTimerRec) ? (int)CIptvDefs::REQ_TIMERREC : (int)CIptvDefs::REQ_STREAM,
-          apiUrl() + "get_url", req);
+   q_post((int)ereq, apiUrl() + "get_url", req);
 }
 
 //---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void CSundukClnt::GetArchivURL (const QString &prepared, const QString &secCode)
    mInfo(tr("Request Archiv URL ..."));
 
    QString req = QUrl::fromPercentEncoding(prepared.toUtf8());
-   req += "&stream_protocol=" + sStrProto;
+   req += "&stream_protocol=" + getStreamProtocol(CIptvDefs::REQ_ARCHIV);
 
    if (secCode != "")
    {
@@ -185,7 +185,7 @@ void CSundukClnt::GetVodUrl (int iVidId, const QString &secCode)
    mInfo(tr("Request Video Url for video %1...").arg(iVidId));
 
    QString req = QString("vod_geturl?fileid=%1&ad=1&stream_protocol=%2")
-         .arg(iVidId).arg(sStrProto);
+         .arg(iVidId).arg(getStreamProtocol(CIptvDefs::REQ_GETVODURL));
 
    if (secCode != "")
    {
@@ -211,7 +211,7 @@ void CSundukClnt::GetVodUrl (const QUrl& dst)
    mInfo(tr("Request Video Url for url '%1' ...").arg(dst.toString()));
 
    QString req = QString("vod_geturl?fileid=%1&ad=1&stream_protocol=%2")
-         .arg(dst.queryItemValue("vid")).arg(sStrProto);
+         .arg(dst.queryItemValue("vid")).arg(getStreamProtocol(CIptvDefs::REQ_GETVODURL));
 
    if (dst.hasEncodedQueryItem("format"))
    {
@@ -224,6 +224,46 @@ void CSundukClnt::GetVodUrl (const QUrl& dst)
    }
 
    q_get((int)CIptvDefs::REQ_GETVODURL, apiUrl() + req);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   get stream protocol string
+//
+//! \author  Jo2003
+//! \date    25.02.2015
+//
+//! \param   [in] req (CIptvDefs::EReq) request type
+//
+//! \return  stream protocol string
+//---------------------------------------------------------------------------
+QString CSundukClnt::getStreamProtocol(CIptvDefs::EReq req)
+{
+   // to support hls and mpegts within one setup
+   // we created the string "mpegts / hls" as option.
+   QString ret = sStrProto;
+
+   if (sStrProto.contains("/"))
+   {
+      QStringList sl = sStrProto.split("/");
+
+      switch(req)
+      {
+      case CIptvDefs::REQ_STREAM:
+      case CIptvDefs::REQ_TIMERREC:
+      case CIptvDefs::REQ_ARCHIV:
+         // index 0: mpegts
+         ret = sl.at(0).trimmed();
+         break;
+
+      default:
+         // index 1: hls
+         ret = sl.at(1).trimmed();
+         break;
+      }
+   }
+
+   return ret;
 }
 
 //---------------------------------------------------------------------------

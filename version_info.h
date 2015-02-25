@@ -41,6 +41,11 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2015-02-25: Version 2.69.1
+| - add build part to version number
+| - supports format choise within serials
+| - supports extended bitrate choise in settings
+|
 | 2014-01-26: Version 2.68RC1
 | - updated help and language files
 | - when exiting fullscreen restore previous display mode
