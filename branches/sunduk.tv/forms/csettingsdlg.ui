@@ -776,6 +776,11 @@ color: red;
                 <string>rtsp</string>
                </property>
               </item>
+              <item>
+               <property name="text">
+                <string>mpegts / hls</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>
