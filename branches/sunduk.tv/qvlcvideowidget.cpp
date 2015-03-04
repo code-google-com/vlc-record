@@ -730,6 +730,7 @@ void QVlcVideoWidget::touchContextMenu()
    bool                    bOnTop      = false;
    QMenu*                  pSubm       = NULL;
    QString                 name;
+   QString                 sIco;
 
    // in case of retranslation or update we should take care of
    // interlaced setting ...
@@ -884,7 +885,8 @@ void QVlcVideoWidget::touchContextMenu()
          }
 
          // create context menu entry ...
-         pAct = pSubm->addAction(QIcon(_langVector.at(i).current ? ":/player/atrack" : ""), name);
+         sIco = _langVector.at(i).current ? ":/player/atrack" : ":/player/nothing";
+         pAct = pSubm->addAction(QIcon(sIco), name);
 
          // prepare data ...
          contAct.actType = vlcvid::ACT_ChgLang;
