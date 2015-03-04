@@ -204,7 +204,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="5,5">
          <item>
           <widget class="QGroupBox" name="groupStreamServer">
            <property name="title">
