@@ -2032,6 +2032,8 @@ void CPlayer::resetBuffPercent()
 void CPlayer::slotFinallyPlays(int percent)
 {
    libvlc_track_description_t* pAuTracks = NULL;
+   libvlc_track_description_t* pCurTrack = NULL;
+
    int               iAuIdx;
    vlcvid::SContLang al;
    bool              bHaveCurrent = false;
@@ -2053,33 +2055,39 @@ void CPlayer::slotFinallyPlays(int percent)
          // get current index ...
          iAuIdx    = libvlc_audio_get_track(pMediaPlayer);
 
-         mInfo(tr("Scan for Audio tracks:"));
-
-         while (pAuTracks != NULL)
+         if (pAuTracks != NULL)
          {
-            if (pAuTracks->i_id >= 0)
+            mInfo(tr("Scan for Audio tracks:"));
+
+            pCurTrack = pAuTracks;
+
+            while (pCurTrack != NULL)
             {
-               al.desc    = QString::fromUtf8(pAuTracks->psz_name);
-               al.id      = pAuTracks->i_id;
-               al.current = (iAuIdx == pAuTracks->i_id) ? true : false;
-
-               if (al.current)
+               if (pCurTrack->i_id >= 0)
                {
-                  bHaveCurrent = true;
+                  al.desc    = QString::fromUtf8(pCurTrack->psz_name);
+                  al.id      = pCurTrack->i_id;
+                  al.current = (iAuIdx == pCurTrack->i_id) ? true : false;
+
+                  if (al.current)
+                  {
+                     bHaveCurrent = true;
+                  }
+
+                  vAudTrk.append(al);
+
+                  mInfo(tr("-> Audio track %1 %2%3")
+                        .arg(pCurTrack->i_id)
+                        .arg(QString::fromUtf8(pCurTrack->psz_name))
+                        .arg((iAuIdx == pCurTrack->i_id) ? " (current)" : ""));
                }
-
-               vAudTrk.append(al);
-
-               mInfo(tr("-> Audio track %1 %2%3")
-                     .arg(pAuTracks->i_id)
-                     .arg(QString::fromUtf8(pAuTracks->psz_name))
-                     .arg((iAuIdx == pAuTracks->i_id) ? " (current)" : ""));
+               pCurTrack = pCurTrack->p_next;
             }
-            pAuTracks = pAuTracks->p_next;
+
+            libvlc_track_description_list_release(pAuTracks);
          }
 
-         // do we have current audio ... ?
-         if (!bHaveCurrent && !vAudTrk.isEmpty())
+         if (!vAudTrk.isEmpty() && !bHaveCurrent)
          {
             // use first audio stream ...
             al = vAudTrk.first();

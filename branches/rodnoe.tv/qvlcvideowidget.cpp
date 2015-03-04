@@ -58,8 +58,17 @@ QVlcVideoWidget::QVlcVideoWidget(QWidget *parent) :
    _render              = new QWidget(this);
    _mouseHide           = new QTimer(this);
    _placePanel          = new QTimer(this);
-
+#ifdef Q_OS_LINUX
+   /// double click emulator on Linux only
+   _tDoubleClick        = new QTimer(this);
+   _tDoubleClick->setSingleShot(true);
+   _tDoubleClick->setInterval(500);
+#elif defined Q_OS_WIN
+   /// Strange! On Windows WA_TransparentForMouseEvents alone doesn't
+   /// work. So we need to enable mouse tracking.
    _render->setMouseTracking(true);
+#endif // Q_OS_WIN
+   _render->setAttribute(Qt::WA_TransparentForMouseEvents);
    _render->setAutoFillBackground(true);
    _render->setObjectName("renderView");
    _render->setStyleSheet("QWidget#renderView {"
@@ -178,12 +187,15 @@ WId QVlcVideoWidget::widgetId()
 //
 //! \return  --
 //---------------------------------------------------------------------------
+#ifndef Q_OS_LINUX
+/// workaround for Qt bug. Have a look at mousePressEvent() below for details!
 void QVlcVideoWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
    emit fullScreen();
 
    QWidget::mouseDoubleClickEvent(event);
 }
+#endif // Q_OS_LINUX
 
 //---------------------------------------------------------------------------
 //
@@ -246,7 +258,27 @@ void QVlcVideoWidget::mousePressEvent(QMouseEvent *event)
       QApplication::restoreOverrideCursor();
       emit rightClick(event->globalPos());
    }
-
+#ifdef Q_OS_LINUX
+   /// When making render widget transparent for mouse
+   /// clicks we are not able to catch any double
+   /// click event on Linux (wtf?)!
+   /// So we catch single left clicks and try to find
+   /// out if this is a double click!
+   /// Another piece of shit in this code!
+   else if(event->button() == Qt::LeftButton)
+   {
+      if(!_tDoubleClick->isActive())
+      {
+         _tDoubleClick->start();
+      }
+      else
+      {
+         mInfo(tr("Emulate double click!"));
+         _tDoubleClick->stop();
+         emit fullScreen();
+      }
+   }
+#endif // Q_OS_LINUX
    QWidget::mousePressEvent(event);
 }
 
@@ -710,9 +742,29 @@ void QVlcVideoWidget::touchContextMenu()
          {
             bIntl  = contActions.at(i)->isChecked();
          }
-         else if (contActions.at(i)->objectName() == "Act_stontop")
+         else if (contActions.at(i)->objectName() == "mini_sub")
          {
-            bOnTop = contActions.at(i)->isChecked();
+            pSubm  = contActions.at(i)->menu();
+         }
+      }
+   }
+
+   // take care for values in submenu ...
+   if (pSubm)
+   {
+      contActions = pSubm->actions();
+
+      if (!contActions.isEmpty())
+      {
+         for (i = 0; i < contActions.count(); i++)
+         {
+            // search for current check states ...
+            if (contActions.at(i)->objectName() == "Act_stontop")
+            {
+               bOnTop = contActions.at(i)->isChecked();
+               // we search only one ...
+               break;
+            }
          }
       }
    }
@@ -741,6 +793,7 @@ void QVlcVideoWidget::touchContextMenu()
    // mini interface stuff ...
    // --------------------------------------------------------
    pSubm = _contextMenu->addMenu(tr("Minimal Interface"));
+   pSubm->menuAction()->setObjectName("mini_sub");
 
    // minmal mode stuff ...
    pAct = pSubm->addAction(tr("Enable"));

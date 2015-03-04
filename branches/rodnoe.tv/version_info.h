@@ -41,9 +41,10 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
-| 2015-02-20: Version 2.69.0
+| 2015-03-04: Version 2.69.0
 | - add NOOP ping
 | - use libVLC 2.2.0
+| - merge bugfixes only from 2.70
 |
 | 2014-01-26: Version 2.68RC1
 | - updated help and language files

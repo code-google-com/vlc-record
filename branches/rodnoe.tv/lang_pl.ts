@@ -1039,22 +1039,22 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2056"/>
+        <location filename="cplayer.cpp" line="2060"/>
         <source>Scan for Audio tracks:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2073"/>
+        <location filename="cplayer.cpp" line="2079"/>
         <source>-&gt; Audio track %1 %2%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2115"/>
+        <location filename="cplayer.cpp" line="2123"/>
         <source>%1 %2 deinterlace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cplayer.cpp" line="2152"/>
+        <location filename="cplayer.cpp" line="2160"/>
         <source>Change audio track to id %1 (idx %2): %3!</source>
         <translation></translation>
     </message>
@@ -3239,44 +3239,49 @@ lub czas początkowy jest później niż czas końcowy!</translation>
 <context>
     <name>QVlcVideoWidget</name>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="427"/>
+        <location filename="qvlcvideowidget.cpp" line="276"/>
+        <source>Emulate double click!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qvlcvideowidget.cpp" line="459"/>
         <source>Activate shortcut: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="724"/>
+        <location filename="qvlcvideowidget.cpp" line="776"/>
         <source>Deinterlacing</source>
         <oldsource>Deinterlacing Video</oldsource>
         <translation>Usunięcie przeplotu</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="743"/>
+        <location filename="qvlcvideowidget.cpp" line="795"/>
         <source>Minimal Interface</source>
         <oldsource>Minimal Mode</oldsource>
         <translation>Minimalny Interfejs</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="746"/>
+        <location filename="qvlcvideowidget.cpp" line="799"/>
         <source>Enable</source>
         <translation>Umożliwiać</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="760"/>
+        <location filename="qvlcvideowidget.cpp" line="813"/>
         <source>Stay on top</source>
         <translation>Przypinanie okna</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="783"/>
+        <location filename="qvlcvideowidget.cpp" line="836"/>
         <source>Show Control Panel</source>
         <translation>Pokaż panel sterowania</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="817"/>
+        <location filename="qvlcvideowidget.cpp" line="870"/>
         <source>Audio Streams</source>
         <translation>Strumienie audio</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="830"/>
+        <location filename="qvlcvideowidget.cpp" line="883"/>
         <source>Audio %1</source>
         <translation></translation>
     </message>
