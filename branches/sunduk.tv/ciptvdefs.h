@@ -73,6 +73,7 @@ public:
       REQ_GET_ALANG,
       REQ_VOD_LANG,
       REQ_GETVODURL_EX,
+      REQ_GET_VODTYPES,
       REQ_UNKNOWN = 255
    };
 
