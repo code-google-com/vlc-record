@@ -31,7 +31,7 @@ namespace cparser
 
    struct SChan
    {
-      SChan():uiStart(0),uiEnd(0),uiDefAud(0),iTs(0),iId(0),bIsVideo(false),
+      SChan():uiStart(0),uiEnd(0),iDefAud(-1),iTs(0),iId(0),bIsVideo(false),
          bIsProtected(false),bHasArchive(false),bIsGroup(false),
          bIsHidden(false),bHasTsInfo(false){}
       QString sName;
@@ -39,7 +39,7 @@ namespace cparser
       QString sIcon;
       uint    uiStart;
       uint    uiEnd;
-      uint    uiDefAud;
+      uint    iDefAud;
       int     iTs;
       int     iId;
       bool    bIsVideo;
