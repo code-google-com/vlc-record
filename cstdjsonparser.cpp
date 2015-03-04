@@ -908,3 +908,43 @@ int CStdJsonParser::parseVodLang(const QString &sResp, QVodLangMap &lMap)
 
    return iRV;
 }
+
+//---------------------------------------------------------------------------
+//
+//! \brief   parse VOD types for filtering
+//
+//! \author  Jo2003
+//! \date    04.03.2015
+//
+//! \param   sResp (const QString &) ref. to response string
+//! \param   lMap (QVodLangMap &) ref. to language map
+//
+//! \return  0 --> ok; -1 --> any error
+//---------------------------------------------------------------------------
+int CStdJsonParser::parseVodFilter(const QString &sResp, QVodLangMap &lMap)
+{
+   int  iRV = 0;
+   bool bOk = false;
+   QVariantMap contentMap;
+
+   contentMap = QtJson::parse(sResp, bOk).toMap();
+
+   if (bOk)
+   {
+      foreach (const QVariant& lRow, contentMap.value("types").toList())
+      {
+         QVariantMap mRow = lRow.toMap();
+         lMap.insert(mRow.value("id").toString(), mRow.value("name").toString());
+      }
+   }
+   else
+   {
+      emit sigError((int)Msg::Error, tr("Error in %1").arg(__FUNCTION__),
+                    tr("QtJson parser error in %1 %2():%3")
+                    .arg(__FILE__).arg(__FUNCTION__).arg(__LINE__));
+
+      iRV = -1;
+   }
+
+   return iRV;
+}

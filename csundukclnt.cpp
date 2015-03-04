@@ -80,6 +80,10 @@ int CSundukClnt::queueRequest(CIptvDefs::EReq req, const QVariant& par_1, const 
          GetVodUrl(par_1.toUrl());
          break;
 
+      case CIptvDefs::REQ_GET_VODTYPES:
+         GetVodTypes();
+         break;
+
       default:
          iRet = -1;
          break;
@@ -224,6 +228,20 @@ void CSundukClnt::GetVodUrl (const QUrl& dst)
    }
 
    q_get((int)CIptvDefs::REQ_GETVODURL, apiUrl() + req);
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   get vod types
+//
+//! \author  Jo2003
+//! \date    04.03.2015
+//
+//---------------------------------------------------------------------------
+void CSundukClnt::GetVodTypes()
+{
+   mInfo(tr("Request VOD Types..."));
+   q_get((int)CIptvDefs::REQ_GET_VODTYPES, apiUrl() + "vod_types");
 }
 
 //---------------------------------------------------------------------------

@@ -192,7 +192,6 @@ protected:
     void setDisplayMode(Ui::EDisplayMode newMode);
     void fillShortCutTab();
     void touchLastOrBestCbx ();
-    void touchVodtypeCbx ();
     void touchGenreCbx();
     int FillChannelList (const QVector<cparser::SChan> &chanlist);
     int StartVlcRec (const QString &sURL, const QString &sChannel);
@@ -317,6 +316,7 @@ private slots:
     void slotStayOnTop(bool on);
     void slotPlayHls(const QString& s);
     void stopOnDemand();
+    void slotVodTypes(const QString& str);
 
 signals:
     void sigShow ();

@@ -45,6 +45,7 @@
 | - set default audio language to ru
 |   (change in settings CTRL+SHIFT+L)
 | - bugfixes of videowidget merged from 2.70
+| - get vod types filter content from API server
 |
 | 2015-02-25: Version 2.69.1
 | - add build part to version number

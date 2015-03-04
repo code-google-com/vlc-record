@@ -52,6 +52,7 @@ public:
    virtual int parseEpgCurrent (const QString& sResp, QCurrentMap &currentEpg);
    virtual int parseError (const QString& sResp, QString& sMsg, int& eCode);
    virtual int parseVodLang(const QString &sResp, QVodLangMap &lMap);
+   virtual int parseVodFilter(const QString &sResp, QVodLangMap &lMap);
 };
 
 #endif // __20130415_CSTDJSONPARSER_H

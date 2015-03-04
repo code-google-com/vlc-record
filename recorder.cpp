@@ -355,9 +355,6 @@ Recorder::Recorder(QWidget *parent)
    // fill type combo box ...
    touchLastOrBestCbx();
 
-   // fill VOD type CBX ...
-   touchVodtypeCbx();
-
    // start refresh timer, if needed ...
    Refresh.start(60000); // update chan list every minute ...
 }
@@ -440,9 +437,6 @@ void Recorder::changeEvent(QEvent *e)
 
       // translate type cbx ...
       touchLastOrBestCbx();
-
-      // translate VOD type CBX ...
-      touchVodtypeCbx();
 
       // translate genre cbx ...
       touchGenreCbx();
@@ -1658,6 +1652,10 @@ void Recorder::slotKartinaResponse(QString resp, int req)
    ///////////////////////////////////////////////
    // response for available audio streams (where supported) ...
    mkCase(CIptvDefs::REQ_GET_ALANG, slotALang(resp));
+
+   ///////////////////////////////////////////////
+   // response for available vod types (for filtering) ...
+   mkCase(CIptvDefs::REQ_GET_VODTYPES, slotVodTypes(resp));
 
    ///////////////////////////////////////////////
    // Make sure the unused responses are listed
@@ -3125,12 +3123,8 @@ void Recorder::slotGotVodGenres(const QString &str)
 
    ui->cbxGenre->setCurrentIndex(0);
 
-   // trigger video load ...
-   QUrl url;
-   url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
-   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
-   url.addQueryItem("nums", "20");
-   pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
+   // trigger vod type load ...
+   pApiClient->queueRequest(CIptvDefs::REQ_GET_VODTYPES);
 }
 
 /* -----------------------------------------------------------------\
@@ -4522,47 +4516,6 @@ void Recorder::touchLastOrBestCbx ()
       if ((idx = ui->cbxLastOrBest->findData("vodfav")) > -1)
       {
          ui->cbxLastOrBest->setItemText(idx, tr("My Favourites"));
-      }
-   }
-}
-
-/* -----------------------------------------------------------------\
-|  Method: touchVodtypeCbx
-|  Begin: 17.02.2015
-|  Author: Jo2003
-|  Description: create vod type combo box
-|
-|  Parameters: --
-|
-|  Returns: --
-\----------------------------------------------------------------- */
-void Recorder::touchVodtypeCbx()
-{
-   // fill / update vod type cbx ...
-   if (!ui->cbxVodType->count())
-   {
-      ui->cbxVodType->addItem(tr("All"), "all");
-      ui->cbxVodType->addItem(tr("Movies"), "movie");
-      ui->cbxVodType->addItem(tr("TV Series"), "tvseries");
-      ui->cbxVodType->setCurrentIndex(0);
-   }
-   else
-   {
-      int idx;
-
-      if ((idx = ui->cbxLastOrBest->findData("all")) > -1)
-      {
-         ui->cbxLastOrBest->setItemText(idx, tr("All"));
-      }
-
-      if ((idx = ui->cbxLastOrBest->findData("movie")) > -1)
-      {
-         ui->cbxLastOrBest->setItemText(idx, tr("Movies"));
-      }
-
-      if ((idx = ui->cbxLastOrBest->findData("tvseries")) > -1)
-      {
-         ui->cbxLastOrBest->setItemText(idx, tr("TV Series"));
       }
    }
 }
@@ -6065,6 +6018,42 @@ void Recorder::stopOnDemand()
 
       pHlsControl->stop();
    }
+}
+
+//---------------------------------------------------------------------------
+//
+//! \brief   fill vod types cbx
+//
+//! \author  Jo2003
+//! \date    04.03.2015
+//
+//! \param   [in] str (const QString&) response
+//
+//! \return  --
+//---------------------------------------------------------------------------
+void Recorder::slotVodTypes(const QString &str)
+{
+   QVodLangMap lMap;
+
+   if (pApiParser->parseVodFilter(str, lMap) == 0)
+   {
+      int i = 0;
+      ui->cbxVodType->clear();
+      ui->cbxVodType->insertItem(i++, tr("All"), QString("all"));
+
+      for(QVodLangMap::Iterator it = lMap.begin(); it != lMap.end(); it ++)
+      {
+         ui->cbxVodType->insertItem(i++, it.value(), it.key());
+      }
+
+      ui->cbxVodType->setCurrentIndex(0);
+   }
+
+   QUrl url;
+   url.addQueryItem("type", ui->cbxLastOrBest->itemData(ui->cbxLastOrBest->currentIndex()).toString());
+   url.addQueryItem("vod_type", ui->cbxVodType->itemData(ui->cbxVodType->currentIndex()).toString());
+   url.addQueryItem("nums", "20");
+   pApiClient->queueRequest(CIptvDefs::REQ_GETVIDEOS, QString(url.encodedQuery()));
 }
 
 /************************* History ***************************\

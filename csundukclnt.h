@@ -39,6 +39,7 @@ protected:
    virtual void GetArchivURL (const QString &prepared, const QString &secCode);
    virtual void GetVodUrl (int iVidId, const QString &secCode);
    virtual void GetVodUrl (const QUrl &dst);
+   virtual void GetVodTypes();
    QString getStreamProtocol(CIptvDefs::EReq req);
 
 public slots:
