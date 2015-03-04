@@ -3393,39 +3393,39 @@ or start time is later than end time!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="776"/>
+        <location filename="qvlcvideowidget.cpp" line="777"/>
         <source>Deinterlacing</source>
         <oldsource>Deinterlacing Video</oldsource>
         <translation>Деинтерлейсинг</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="795"/>
+        <location filename="qvlcvideowidget.cpp" line="796"/>
         <source>Minimal Interface</source>
         <oldsource>Minimal Mode</oldsource>
         <translation>Мини-интерфейс</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="799"/>
+        <location filename="qvlcvideowidget.cpp" line="800"/>
         <source>Enable</source>
         <translation>Включать</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="813"/>
+        <location filename="qvlcvideowidget.cpp" line="814"/>
         <source>Stay on top</source>
         <translation>Закрепление окна</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="836"/>
+        <location filename="qvlcvideowidget.cpp" line="837"/>
         <source>Show Control Panel</source>
         <translation>Показать панель управления</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="870"/>
+        <location filename="qvlcvideowidget.cpp" line="871"/>
         <source>Audio Streams</source>
         <translation>Аудио-дорожка</translation>
     </message>
     <message>
-        <location filename="qvlcvideowidget.cpp" line="883"/>
+        <location filename="qvlcvideowidget.cpp" line="884"/>
         <source>Audio %1</source>
         <translation>Аудио %1</translation>
     </message>
