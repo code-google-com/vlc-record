@@ -78,7 +78,4 @@
         <file alias="unlocked">resources/lock_open.png</file>
         <file alias="locked">resources/lock_closed.png</file>
     </qresource>
-    <qresource prefix="/">
-        <file>resources/nothing.png</file>
-    </qresource>
 </RCC>
