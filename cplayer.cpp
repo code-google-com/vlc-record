@@ -713,10 +713,6 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
             sMrl = QString(":input-timeshift-granularity=%1").arg(0x7FFFFFFF); // max. positive integer value (about 2047MB)  ...
             mInfo(tr("Add MRL Option: %1").arg(sMrl));
             libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
-
-            sMrl = QString(":ipv4-timeout=%1").arg(10 * 1000); // 10 sec. timeout for ipv4 connections
-            mInfo(tr("Add MRL Option: %1").arg(sMrl));
-            libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
          }
 
          ///////////////////////////////////////////////////////////////////////////
@@ -736,7 +732,17 @@ int CPlayer::playMedia(const QString &sCmdLine, const QString &sOpts)
                iAidx = showInfo.defAStream();
             }
 
-            sMrl = QString(":audio-track=%1").arg(iAidx);
+            if (iAidx > -1)
+            {
+               // index given ...
+               sMrl = QString(":audio-track=%1").arg(iAidx);
+            }
+            else
+            {
+               // language string ...
+               sMrl = QString(":audio-language=%1").arg(pSettings->aLang());
+            }
+
             mInfo(tr("Add MRL Option: %1").arg(sMrl));
             libvlc_media_add_option(p_md, sMrl.toUtf8().constData());
          }
@@ -2085,6 +2091,8 @@ void CPlayer::resetBuffPercent()
 void CPlayer::slotFinallyPlays(int percent)
 {
    libvlc_track_description_t* pAuTracks = NULL;
+   libvlc_track_description_t* pCurTrack = NULL;
+
    int               iAuIdx;
    vlcvid::SContLang al;
    bool              bHaveCurrent = false;
@@ -2106,33 +2114,39 @@ void CPlayer::slotFinallyPlays(int percent)
          // get current index ...
          iAuIdx    = libvlc_audio_get_track(pMediaPlayer);
 
-         mInfo(tr("Scan for Audio tracks:"));
-
-         while (pAuTracks != NULL)
+         if (pAuTracks != NULL)
          {
-            if (pAuTracks->i_id >= 0)
+            mInfo(tr("Scan for Audio tracks:"));
+
+            pCurTrack = pAuTracks;
+
+            while (pCurTrack != NULL)
             {
-               al.desc    = QString::fromUtf8(pAuTracks->psz_name);
-               al.id      = pAuTracks->i_id;
-               al.current = (iAuIdx == pAuTracks->i_id) ? true : false;
-
-               if (al.current)
+               if (pCurTrack->i_id >= 0)
                {
-                  bHaveCurrent = true;
+                  al.desc    = QString::fromUtf8(pCurTrack->psz_name);
+                  al.id      = pCurTrack->i_id;
+                  al.current = (iAuIdx == pCurTrack->i_id) ? true : false;
+
+                  if (al.current)
+                  {
+                     bHaveCurrent = true;
+                  }
+
+                  vAudTrk.append(al);
+
+                  mInfo(tr("-> Audio track %1 %2%3")
+                        .arg(pCurTrack->i_id)
+                        .arg(QString::fromUtf8(pCurTrack->psz_name))
+                        .arg((iAuIdx == pCurTrack->i_id) ? " (current)" : ""));
                }
-
-               vAudTrk.append(al);
-
-               mInfo(tr("-> Audio track %1 %2%3")
-                     .arg(pAuTracks->i_id)
-                     .arg(QString::fromUtf8(pAuTracks->psz_name))
-                     .arg((iAuIdx == pAuTracks->i_id) ? " (current)" : ""));
+               pCurTrack = pCurTrack->p_next;
             }
-            pAuTracks = pAuTracks->p_next;
+
+            libvlc_track_description_list_release(pAuTracks);
          }
 
-         // do we have current audio ... ?
-         if (!bHaveCurrent && !vAudTrk.isEmpty())
+         if (!vAudTrk.isEmpty() && !bHaveCurrent)
          {
             // use first audio stream ...
             al = vAudTrk.first();

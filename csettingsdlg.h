@@ -104,6 +104,7 @@ public:
     int lastChannel();
     void saveEpgDay(const QString &dateString);
     QString lastEpgDay();
+    QString aLang();
     uint libVlcVerboseLevel();
     void setAccountInfo(const cparser::SAccountInfo *pInfo);
     void setGeometry(const QByteArray &ba);
@@ -119,6 +120,7 @@ private:
     QString            sTempPasswd;
     CShortcutEx       *pShortApiServer;
     CShortcutEx       *pShortVerbLevel;
+    CShortcutEx       *pDefAudio;
     QVector<float>     vBuffs;
     QVector<cparser::SChan>      channelVector;
     QVector<cparser::SVodRate>   vodRatesVector;
@@ -141,6 +143,7 @@ private slots:
     void on_pushVLC_clicked();
     void slotEnableApiServer ();
     void slotEnableVlcVerbLine ();
+    void slotEnableDefAudioLine ();
     void on_cbxStreamServer_activated(int index);
     void on_cbxBitRateLiveSD_activated(int index);
     void on_cbxBitRateLiveHD_activated(int index);

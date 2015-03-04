@@ -25,7 +25,7 @@
 
 #define VERSION_MAJOR 2
 #define VERSION_MINOR 69
-#define VERSION_BUILD 1
+#define VERSION_BUILD 2
 #define BETA_EXT      ""
 
 #define __APPVERSION unsigned long((VERSION_MAJOR << 16) | (VERSION_MINOR << 8) | VERSION_BUILD)
@@ -41,6 +41,11 @@
 #endif /* __011910__VERSION_INFO_H */
 /************************* History ***************************\
 | --- new since last version ---
+| 2015-03-04: Version 2.69.2
+| - set default audio language to ru
+|   (change in settings CTRL+SHIFT+L)
+| - bugfixes of videowidget merged from 2.70
+|
 | 2015-02-25: Version 2.69.1
 | - add build part to version number
 | - supports format choise within serials

@@ -57,6 +57,7 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
    pAccountInfo    = NULL;
    pShortApiServer = new CShortcutEx(QKeySequence("CTRL+ALT+A"), this);
    pShortVerbLevel = new CShortcutEx(QKeySequence("CTRL+ALT+V"), this);
+   pDefAudio       = new CShortcutEx(QKeySequence("CTRL+SHIFT+L"), this);
 
    if (pShortApiServer)
    {
@@ -68,6 +69,10 @@ CSettingsDlg::CSettingsDlg(QWidget *parent) :
       connect(pShortVerbLevel, SIGNAL(activated()), this, SLOT(slotEnableVlcVerbLine()));
    }
 
+   if (pDefAudio)
+   {
+      connect(pDefAudio, SIGNAL(activated()), this, SLOT(slotEnableDefAudioLine()));
+   }
 
    // set company name for login data ...
    QString s = m_ui->groupAccount->title();
@@ -252,6 +257,14 @@ void CSettingsDlg::readSettings()
    {
       // enable by default ...
       m_ui->checkAds->setCheckState(Qt::Checked);
+   }
+
+   // default audio language ...
+   m_ui->lineALang->setText(pDb->stringValue("aLang", &iErr));
+
+   if (iErr)
+   {
+      m_ui->lineALang->setText("ru");
    }
 
    m_ui->check2ClicksToPlay->setCheckState((Qt::CheckState)pDb->intValue("2ClickPlay", &iErr));
@@ -441,6 +454,26 @@ void CSettingsDlg::slotEnableVlcVerbLine()
    }
 }
 
+//---------------------------------------------------------------------------
+//
+//! \brief   enable / disable default audio line
+//
+//! \author  Jo2003
+//! \date    04.03.2015
+//
+//---------------------------------------------------------------------------
+void CSettingsDlg::slotEnableDefAudioLine()
+{
+   if (m_ui->lineALang->isEnabled())
+   {
+      m_ui->lineALang->setEnabled(false);
+   }
+   else
+   {
+      m_ui->lineALang->setEnabled(true);
+   }
+}
+
 /* -----------------------------------------------------------------\
 |  Method: on_pushVLC_clicked
 |  Begin: 19.01.2010 / 15:46:47
@@ -530,6 +563,7 @@ void CSettingsDlg::on_pushSave_clicked()
    pDb->setValue("ShutdwnCmd", m_ui->lineShutdown->text());
    pDb->setValue("APIServer", m_ui->lineApiServer->text());
    pDb->setValue("libVlcLogLevel", m_ui->lineVlcVerbose->text());
+   pDb->setValue("aLang", m_ui->lineALang->text());
 
    // check boxes ...
    pDb->setValue("UseProxy", (int)m_ui->useProxy->checkState());
@@ -1303,6 +1337,11 @@ void CSettingsDlg::saveEpgDay(const QString &dateString)
 QString CSettingsDlg::lastEpgDay()
 {
    return pDb->stringValue("epgDay");
+}
+
+QString CSettingsDlg::aLang()
+{
+   return m_ui->lineALang->text();
 }
 
 bool CSettingsDlg::doubleClickToPlay()

@@ -56,15 +56,15 @@ void CShowInfo::cleanShowInfo()
    sPCode         = "";
    iChannelId     = -1;
    iVodId         = -1;
-   ePlayState     = IncPlay::PS_STOP;
-   eShowType      = ShowInfo::Live;
-   uiStart        = 0;
-   uiEnd          = 0;
-   uiJumpTime     = 0;
-   bStreamLoader  = false;
-   bHls           = false;
-   ulLastEpgUpd   = 0;
-   iDefAStream    = 0;
+   ePlayState     =  IncPlay::PS_STOP;
+   eShowType      =  ShowInfo::Live;
+   uiStart        =  0;
+   uiEnd          =  0;
+   uiJumpTime     =  0;
+   bStreamLoader  =  false;
+   bHls           =  false;
+   ulLastEpgUpd   =  0;
+   iDefAStream    = -1;
    epgMap.clear();
 }
 
