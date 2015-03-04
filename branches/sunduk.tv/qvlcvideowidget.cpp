@@ -730,7 +730,6 @@ void QVlcVideoWidget::touchContextMenu()
    bool                    bOnTop      = false;
    QMenu*                  pSubm       = NULL;
    QString                 name;
-   QString                 sIco;
 
    // in case of retranslation or update we should take care of
    // interlaced setting ...
@@ -883,11 +882,15 @@ void QVlcVideoWidget::touchContextMenu()
             // filter doesn't match so give it a understandable name ...
             name = tr("Audio %1").arg(i + 1);
          }
-
+#ifndef Q_OS_LINUX
          // create context menu entry ...
-         sIco = _langVector.at(i).current ? ":/player/atrack" : ":/player/nothing";
-         pAct = pSubm->addAction(QIcon(sIco), name);
-
+         pAct = pSubm->addAction(QIcon(_langVector.at(i).current ? ":/player/atrack" : ""), name);
+#else
+         // linux doesn't support icons on context menu within this context ...
+         pAct = pSubm->addAction(name);
+         pAct->setCheckable(true);
+         pAct->setChecked(_langVector.at(i).current);
+#endif
          // prepare data ...
          contAct.actType = vlcvid::ACT_ChgLang;
          contAct.actName = _langVector.at(i).desc;
